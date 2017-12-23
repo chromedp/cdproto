@@ -18,10 +18,17 @@ package dom
 
 import (
 	"context"
+	"encoding/json"
 
-	cdp "github.com/knq/chromedp/cdp"
-	"github.com/knq/chromedp/cdp/runtime"
+	cdp "github.com/chromedp/cdproto/cdp"
+	"github.com/chromedp/cdproto/runtime"
 )
+
+// Executor is the common interface for executing a command.
+type Executor interface {
+	// Execute executes the command.
+	Execute(context.Context, string, json.Marshaler, json.Unmarshaler) error
+}
 
 // CollectClassNamesFromSubtreeParams collects class names for the node with
 // given id and all of it's child nodes.
@@ -45,15 +52,14 @@ type CollectClassNamesFromSubtreeReturns struct {
 	ClassNames []string `json:"classNames,omitempty"` // Class name list.
 }
 
-// Do executes DOM.collectClassNamesFromSubtree against the provided context and
-// target handler.
+// Do executes DOM.collectClassNamesFromSubtree against the provided context.
 //
 // returns:
 //   classNames - Class name list.
-func (p *CollectClassNamesFromSubtreeParams) Do(ctxt context.Context, h cdp.Handler) (classNames []string, err error) {
+func (p *CollectClassNamesFromSubtreeParams) Do(ctxt context.Context, h Executor) (classNames []string, err error) {
 	// execute
 	var res CollectClassNamesFromSubtreeReturns
-	err = h.Execute(ctxt, cdp.CommandDOMCollectClassNamesFromSubtree, p, &res)
+	err = h.Execute(ctxt, CommandCollectClassNamesFromSubtree, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -94,15 +100,14 @@ type CopyToReturns struct {
 	NodeID cdp.NodeID `json:"nodeId,omitempty"` // Id of the node clone.
 }
 
-// Do executes DOM.copyTo against the provided context and
-// target handler.
+// Do executes DOM.copyTo against the provided context.
 //
 // returns:
 //   nodeID - Id of the node clone.
-func (p *CopyToParams) Do(ctxt context.Context, h cdp.Handler) (nodeID cdp.NodeID, err error) {
+func (p *CopyToParams) Do(ctxt context.Context, h Executor) (nodeID cdp.NodeID, err error) {
 	// execute
 	var res CopyToReturns
-	err = h.Execute(ctxt, cdp.CommandDOMCopyTo, p, &res)
+	err = h.Execute(ctxt, CommandCopyTo, p, &res)
 	if err != nil {
 		return 0, err
 	}
@@ -166,15 +171,14 @@ type DescribeNodeReturns struct {
 	Node *cdp.Node `json:"node,omitempty"` // Node description.
 }
 
-// Do executes DOM.describeNode against the provided context and
-// target handler.
+// Do executes DOM.describeNode against the provided context.
 //
 // returns:
 //   node - Node description.
-func (p *DescribeNodeParams) Do(ctxt context.Context, h cdp.Handler) (node *cdp.Node, err error) {
+func (p *DescribeNodeParams) Do(ctxt context.Context, h Executor) (node *cdp.Node, err error) {
 	// execute
 	var res DescribeNodeReturns
-	err = h.Execute(ctxt, cdp.CommandDOMDescribeNode, p, &res)
+	err = h.Execute(ctxt, CommandDescribeNode, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -190,10 +194,9 @@ func Disable() *DisableParams {
 	return &DisableParams{}
 }
 
-// Do executes DOM.disable against the provided context and
-// target handler.
-func (p *DisableParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandDOMDisable, nil, nil)
+// Do executes DOM.disable against the provided context.
+func (p *DisableParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandDisable, nil, nil)
 }
 
 // DiscardSearchResultsParams discards search results from the session with
@@ -213,10 +216,9 @@ func DiscardSearchResults(searchID string) *DiscardSearchResultsParams {
 	}
 }
 
-// Do executes DOM.discardSearchResults against the provided context and
-// target handler.
-func (p *DiscardSearchResultsParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandDOMDiscardSearchResults, p, nil)
+// Do executes DOM.discardSearchResults against the provided context.
+func (p *DiscardSearchResultsParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandDiscardSearchResults, p, nil)
 }
 
 // EnableParams enables DOM agent for the given page.
@@ -227,10 +229,9 @@ func Enable() *EnableParams {
 	return &EnableParams{}
 }
 
-// Do executes DOM.enable against the provided context and
-// target handler.
-func (p *EnableParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandDOMEnable, nil, nil)
+// Do executes DOM.enable against the provided context.
+func (p *EnableParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandEnable, nil, nil)
 }
 
 // FocusParams focuses the given element.
@@ -265,10 +266,9 @@ func (p FocusParams) WithObjectID(objectID runtime.RemoteObjectID) *FocusParams 
 	return &p
 }
 
-// Do executes DOM.focus against the provided context and
-// target handler.
-func (p *FocusParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandDOMFocus, p, nil)
+// Do executes DOM.focus against the provided context.
+func (p *FocusParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandFocus, p, nil)
 }
 
 // GetAttributesParams returns attributes for the specified node.
@@ -291,15 +291,14 @@ type GetAttributesReturns struct {
 	Attributes []string `json:"attributes,omitempty"` // An interleaved array of node attribute names and values.
 }
 
-// Do executes DOM.getAttributes against the provided context and
-// target handler.
+// Do executes DOM.getAttributes against the provided context.
 //
 // returns:
 //   attributes - An interleaved array of node attribute names and values.
-func (p *GetAttributesParams) Do(ctxt context.Context, h cdp.Handler) (attributes []string, err error) {
+func (p *GetAttributesParams) Do(ctxt context.Context, h Executor) (attributes []string, err error) {
 	// execute
 	var res GetAttributesReturns
-	err = h.Execute(ctxt, cdp.CommandDOMGetAttributes, p, &res)
+	err = h.Execute(ctxt, CommandGetAttributes, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -344,15 +343,14 @@ type GetBoxModelReturns struct {
 	Model *BoxModel `json:"model,omitempty"` // Box model for the node.
 }
 
-// Do executes DOM.getBoxModel against the provided context and
-// target handler.
+// Do executes DOM.getBoxModel against the provided context.
 //
 // returns:
 //   model - Box model for the node.
-func (p *GetBoxModelParams) Do(ctxt context.Context, h cdp.Handler) (model *BoxModel, err error) {
+func (p *GetBoxModelParams) Do(ctxt context.Context, h Executor) (model *BoxModel, err error) {
 	// execute
 	var res GetBoxModelReturns
-	err = h.Execute(ctxt, cdp.CommandDOMGetBoxModel, p, &res)
+	err = h.Execute(ctxt, CommandGetBoxModel, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -395,15 +393,14 @@ type GetDocumentReturns struct {
 	Root *cdp.Node `json:"root,omitempty"` // Resulting node.
 }
 
-// Do executes DOM.getDocument against the provided context and
-// target handler.
+// Do executes DOM.getDocument against the provided context.
 //
 // returns:
 //   root - Resulting node.
-func (p *GetDocumentParams) Do(ctxt context.Context, h cdp.Handler) (root *cdp.Node, err error) {
+func (p *GetDocumentParams) Do(ctxt context.Context, h Executor) (root *cdp.Node, err error) {
 	// execute
 	var res GetDocumentReturns
-	err = h.Execute(ctxt, cdp.CommandDOMGetDocument, p, &res)
+	err = h.Execute(ctxt, CommandGetDocument, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -446,15 +443,14 @@ type GetFlattenedDocumentReturns struct {
 	Nodes []*cdp.Node `json:"nodes,omitempty"` // Resulting node.
 }
 
-// Do executes DOM.getFlattenedDocument against the provided context and
-// target handler.
+// Do executes DOM.getFlattenedDocument against the provided context.
 //
 // returns:
 //   nodes - Resulting node.
-func (p *GetFlattenedDocumentParams) Do(ctxt context.Context, h cdp.Handler) (nodes []*cdp.Node, err error) {
+func (p *GetFlattenedDocumentParams) Do(ctxt context.Context, h Executor) (nodes []*cdp.Node, err error) {
 	// execute
 	var res GetFlattenedDocumentReturns
-	err = h.Execute(ctxt, cdp.CommandDOMGetFlattenedDocument, p, &res)
+	err = h.Execute(ctxt, CommandGetFlattenedDocument, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -493,15 +489,14 @@ type GetNodeForLocationReturns struct {
 	NodeID cdp.NodeID `json:"nodeId,omitempty"` // Id of the node at given coordinates.
 }
 
-// Do executes DOM.getNodeForLocation against the provided context and
-// target handler.
+// Do executes DOM.getNodeForLocation against the provided context.
 //
 // returns:
 //   nodeID - Id of the node at given coordinates.
-func (p *GetNodeForLocationParams) Do(ctxt context.Context, h cdp.Handler) (nodeID cdp.NodeID, err error) {
+func (p *GetNodeForLocationParams) Do(ctxt context.Context, h Executor) (nodeID cdp.NodeID, err error) {
 	// execute
 	var res GetNodeForLocationReturns
-	err = h.Execute(ctxt, cdp.CommandDOMGetNodeForLocation, p, &res)
+	err = h.Execute(ctxt, CommandGetNodeForLocation, p, &res)
 	if err != nil {
 		return 0, err
 	}
@@ -546,15 +541,14 @@ type GetOuterHTMLReturns struct {
 	OuterHTML string `json:"outerHTML,omitempty"` // Outer HTML markup.
 }
 
-// Do executes DOM.getOuterHTML against the provided context and
-// target handler.
+// Do executes DOM.getOuterHTML against the provided context.
 //
 // returns:
 //   outerHTML - Outer HTML markup.
-func (p *GetOuterHTMLParams) Do(ctxt context.Context, h cdp.Handler) (outerHTML string, err error) {
+func (p *GetOuterHTMLParams) Do(ctxt context.Context, h Executor) (outerHTML string, err error) {
 	// execute
 	var res GetOuterHTMLReturns
-	err = h.Execute(ctxt, cdp.CommandDOMGetOuterHTML, p, &res)
+	err = h.Execute(ctxt, CommandGetOuterHTML, p, &res)
 	if err != nil {
 		return "", err
 	}
@@ -584,15 +578,14 @@ type GetRelayoutBoundaryReturns struct {
 	NodeID cdp.NodeID `json:"nodeId,omitempty"` // Relayout boundary node id for the given node.
 }
 
-// Do executes DOM.getRelayoutBoundary against the provided context and
-// target handler.
+// Do executes DOM.getRelayoutBoundary against the provided context.
 //
 // returns:
 //   nodeID - Relayout boundary node id for the given node.
-func (p *GetRelayoutBoundaryParams) Do(ctxt context.Context, h cdp.Handler) (nodeID cdp.NodeID, err error) {
+func (p *GetRelayoutBoundaryParams) Do(ctxt context.Context, h Executor) (nodeID cdp.NodeID, err error) {
 	// execute
 	var res GetRelayoutBoundaryReturns
-	err = h.Execute(ctxt, cdp.CommandDOMGetRelayoutBoundary, p, &res)
+	err = h.Execute(ctxt, CommandGetRelayoutBoundary, p, &res)
 	if err != nil {
 		return 0, err
 	}
@@ -628,15 +621,14 @@ type GetSearchResultsReturns struct {
 	NodeIds []cdp.NodeID `json:"nodeIds,omitempty"` // Ids of the search result nodes.
 }
 
-// Do executes DOM.getSearchResults against the provided context and
-// target handler.
+// Do executes DOM.getSearchResults against the provided context.
 //
 // returns:
 //   nodeIds - Ids of the search result nodes.
-func (p *GetSearchResultsParams) Do(ctxt context.Context, h cdp.Handler) (nodeIds []cdp.NodeID, err error) {
+func (p *GetSearchResultsParams) Do(ctxt context.Context, h Executor) (nodeIds []cdp.NodeID, err error) {
 	// execute
 	var res GetSearchResultsReturns
-	err = h.Execute(ctxt, cdp.CommandDOMGetSearchResults, p, &res)
+	err = h.Execute(ctxt, CommandGetSearchResults, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -652,10 +644,9 @@ func MarkUndoableState() *MarkUndoableStateParams {
 	return &MarkUndoableStateParams{}
 }
 
-// Do executes DOM.markUndoableState against the provided context and
-// target handler.
-func (p *MarkUndoableStateParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandDOMMarkUndoableState, nil, nil)
+// Do executes DOM.markUndoableState against the provided context.
+func (p *MarkUndoableStateParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandMarkUndoableState, nil, nil)
 }
 
 // MoveToParams moves node into the new container, places it before the given
@@ -691,15 +682,14 @@ type MoveToReturns struct {
 	NodeID cdp.NodeID `json:"nodeId,omitempty"` // New id of the moved node.
 }
 
-// Do executes DOM.moveTo against the provided context and
-// target handler.
+// Do executes DOM.moveTo against the provided context.
 //
 // returns:
 //   nodeID - New id of the moved node.
-func (p *MoveToParams) Do(ctxt context.Context, h cdp.Handler) (nodeID cdp.NodeID, err error) {
+func (p *MoveToParams) Do(ctxt context.Context, h Executor) (nodeID cdp.NodeID, err error) {
 	// execute
 	var res MoveToReturns
-	err = h.Execute(ctxt, cdp.CommandDOMMoveTo, p, &res)
+	err = h.Execute(ctxt, CommandMoveTo, p, &res)
 	if err != nil {
 		return 0, err
 	}
@@ -739,16 +729,15 @@ type PerformSearchReturns struct {
 	ResultCount int64  `json:"resultCount,omitempty"` // Number of search results.
 }
 
-// Do executes DOM.performSearch against the provided context and
-// target handler.
+// Do executes DOM.performSearch against the provided context.
 //
 // returns:
 //   searchID - Unique search session identifier.
 //   resultCount - Number of search results.
-func (p *PerformSearchParams) Do(ctxt context.Context, h cdp.Handler) (searchID string, resultCount int64, err error) {
+func (p *PerformSearchParams) Do(ctxt context.Context, h Executor) (searchID string, resultCount int64, err error) {
 	// execute
 	var res PerformSearchReturns
-	err = h.Execute(ctxt, cdp.CommandDOMPerformSearch, p, &res)
+	err = h.Execute(ctxt, CommandPerformSearch, p, &res)
 	if err != nil {
 		return "", 0, err
 	}
@@ -778,15 +767,14 @@ type PushNodeByPathToFrontendReturns struct {
 	NodeID cdp.NodeID `json:"nodeId,omitempty"` // Id of the node for given path.
 }
 
-// Do executes DOM.pushNodeByPathToFrontend against the provided context and
-// target handler.
+// Do executes DOM.pushNodeByPathToFrontend against the provided context.
 //
 // returns:
 //   nodeID - Id of the node for given path.
-func (p *PushNodeByPathToFrontendParams) Do(ctxt context.Context, h cdp.Handler) (nodeID cdp.NodeID, err error) {
+func (p *PushNodeByPathToFrontendParams) Do(ctxt context.Context, h Executor) (nodeID cdp.NodeID, err error) {
 	// execute
 	var res PushNodeByPathToFrontendReturns
-	err = h.Execute(ctxt, cdp.CommandDOMPushNodeByPathToFrontend, p, &res)
+	err = h.Execute(ctxt, CommandPushNodeByPathToFrontend, p, &res)
 	if err != nil {
 		return 0, err
 	}
@@ -816,15 +804,14 @@ type PushNodesByBackendIdsToFrontendReturns struct {
 	NodeIds []cdp.NodeID `json:"nodeIds,omitempty"` // The array of ids of pushed nodes that correspond to the backend ids specified in backendNodeIds.
 }
 
-// Do executes DOM.pushNodesByBackendIdsToFrontend against the provided context and
-// target handler.
+// Do executes DOM.pushNodesByBackendIdsToFrontend against the provided context.
 //
 // returns:
 //   nodeIds - The array of ids of pushed nodes that correspond to the backend ids specified in backendNodeIds.
-func (p *PushNodesByBackendIdsToFrontendParams) Do(ctxt context.Context, h cdp.Handler) (nodeIds []cdp.NodeID, err error) {
+func (p *PushNodesByBackendIdsToFrontendParams) Do(ctxt context.Context, h Executor) (nodeIds []cdp.NodeID, err error) {
 	// execute
 	var res PushNodesByBackendIdsToFrontendReturns
-	err = h.Execute(ctxt, cdp.CommandDOMPushNodesByBackendIdsToFrontend, p, &res)
+	err = h.Execute(ctxt, CommandPushNodesByBackendIdsToFrontend, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -855,15 +842,14 @@ type QuerySelectorReturns struct {
 	NodeID cdp.NodeID `json:"nodeId,omitempty"` // Query selector result.
 }
 
-// Do executes DOM.querySelector against the provided context and
-// target handler.
+// Do executes DOM.querySelector against the provided context.
 //
 // returns:
 //   nodeID - Query selector result.
-func (p *QuerySelectorParams) Do(ctxt context.Context, h cdp.Handler) (nodeID cdp.NodeID, err error) {
+func (p *QuerySelectorParams) Do(ctxt context.Context, h Executor) (nodeID cdp.NodeID, err error) {
 	// execute
 	var res QuerySelectorReturns
-	err = h.Execute(ctxt, cdp.CommandDOMQuerySelector, p, &res)
+	err = h.Execute(ctxt, CommandQuerySelector, p, &res)
 	if err != nil {
 		return 0, err
 	}
@@ -894,15 +880,14 @@ type QuerySelectorAllReturns struct {
 	NodeIds []cdp.NodeID `json:"nodeIds,omitempty"` // Query selector result.
 }
 
-// Do executes DOM.querySelectorAll against the provided context and
-// target handler.
+// Do executes DOM.querySelectorAll against the provided context.
 //
 // returns:
 //   nodeIds - Query selector result.
-func (p *QuerySelectorAllParams) Do(ctxt context.Context, h cdp.Handler) (nodeIds []cdp.NodeID, err error) {
+func (p *QuerySelectorAllParams) Do(ctxt context.Context, h Executor) (nodeIds []cdp.NodeID, err error) {
 	// execute
 	var res QuerySelectorAllReturns
-	err = h.Execute(ctxt, cdp.CommandDOMQuerySelectorAll, p, &res)
+	err = h.Execute(ctxt, CommandQuerySelectorAll, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -918,10 +903,9 @@ func Redo() *RedoParams {
 	return &RedoParams{}
 }
 
-// Do executes DOM.redo against the provided context and
-// target handler.
-func (p *RedoParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandDOMRedo, nil, nil)
+// Do executes DOM.redo against the provided context.
+func (p *RedoParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandRedo, nil, nil)
 }
 
 // RemoveAttributeParams removes attribute with given name from an element
@@ -944,10 +928,9 @@ func RemoveAttribute(nodeID cdp.NodeID, name string) *RemoveAttributeParams {
 	}
 }
 
-// Do executes DOM.removeAttribute against the provided context and
-// target handler.
-func (p *RemoveAttributeParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandDOMRemoveAttribute, p, nil)
+// Do executes DOM.removeAttribute against the provided context.
+func (p *RemoveAttributeParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandRemoveAttribute, p, nil)
 }
 
 // RemoveNodeParams removes node with given id.
@@ -965,10 +948,9 @@ func RemoveNode(nodeID cdp.NodeID) *RemoveNodeParams {
 	}
 }
 
-// Do executes DOM.removeNode against the provided context and
-// target handler.
-func (p *RemoveNodeParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandDOMRemoveNode, p, nil)
+// Do executes DOM.removeNode against the provided context.
+func (p *RemoveNodeParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandRemoveNode, p, nil)
 }
 
 // RequestChildNodesParams requests that children of the node with given id
@@ -1009,10 +991,9 @@ func (p RequestChildNodesParams) WithPierce(pierce bool) *RequestChildNodesParam
 	return &p
 }
 
-// Do executes DOM.requestChildNodes against the provided context and
-// target handler.
-func (p *RequestChildNodesParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandDOMRequestChildNodes, p, nil)
+// Do executes DOM.requestChildNodes against the provided context.
+func (p *RequestChildNodesParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandRequestChildNodes, p, nil)
 }
 
 // RequestNodeParams requests that the node is sent to the caller given the
@@ -1041,15 +1022,14 @@ type RequestNodeReturns struct {
 	NodeID cdp.NodeID `json:"nodeId,omitempty"` // Node id for given object.
 }
 
-// Do executes DOM.requestNode against the provided context and
-// target handler.
+// Do executes DOM.requestNode against the provided context.
 //
 // returns:
 //   nodeID - Node id for given object.
-func (p *RequestNodeParams) Do(ctxt context.Context, h cdp.Handler) (nodeID cdp.NodeID, err error) {
+func (p *RequestNodeParams) Do(ctxt context.Context, h Executor) (nodeID cdp.NodeID, err error) {
 	// execute
 	var res RequestNodeReturns
-	err = h.Execute(ctxt, cdp.CommandDOMRequestNode, p, &res)
+	err = h.Execute(ctxt, CommandRequestNode, p, &res)
 	if err != nil {
 		return 0, err
 	}
@@ -1097,15 +1077,14 @@ type ResolveNodeReturns struct {
 	Object *runtime.RemoteObject `json:"object,omitempty"` // JavaScript object wrapper for given node.
 }
 
-// Do executes DOM.resolveNode against the provided context and
-// target handler.
+// Do executes DOM.resolveNode against the provided context.
 //
 // returns:
 //   object - JavaScript object wrapper for given node.
-func (p *ResolveNodeParams) Do(ctxt context.Context, h cdp.Handler) (object *runtime.RemoteObject, err error) {
+func (p *ResolveNodeParams) Do(ctxt context.Context, h Executor) (object *runtime.RemoteObject, err error) {
 	// execute
 	var res ResolveNodeReturns
-	err = h.Execute(ctxt, cdp.CommandDOMResolveNode, p, &res)
+	err = h.Execute(ctxt, CommandResolveNode, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -1134,10 +1113,9 @@ func SetAttributeValue(nodeID cdp.NodeID, name string, value string) *SetAttribu
 	}
 }
 
-// Do executes DOM.setAttributeValue against the provided context and
-// target handler.
-func (p *SetAttributeValueParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandDOMSetAttributeValue, p, nil)
+// Do executes DOM.setAttributeValue against the provided context.
+func (p *SetAttributeValueParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandSetAttributeValue, p, nil)
 }
 
 // SetAttributesAsTextParams sets attributes on element with given id. This
@@ -1170,10 +1148,9 @@ func (p SetAttributesAsTextParams) WithName(name string) *SetAttributesAsTextPar
 	return &p
 }
 
-// Do executes DOM.setAttributesAsText against the provided context and
-// target handler.
-func (p *SetAttributesAsTextParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandDOMSetAttributesAsText, p, nil)
+// Do executes DOM.setAttributesAsText against the provided context.
+func (p *SetAttributesAsTextParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandSetAttributesAsText, p, nil)
 }
 
 // SetFileInputFilesParams sets files for the given file input element.
@@ -1212,10 +1189,9 @@ func (p SetFileInputFilesParams) WithObjectID(objectID runtime.RemoteObjectID) *
 	return &p
 }
 
-// Do executes DOM.setFileInputFiles against the provided context and
-// target handler.
-func (p *SetFileInputFilesParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandDOMSetFileInputFiles, p, nil)
+// Do executes DOM.setFileInputFiles against the provided context.
+func (p *SetFileInputFilesParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandSetFileInputFiles, p, nil)
 }
 
 // SetInspectedNodeParams enables console to refer to the node with given id
@@ -1235,10 +1211,9 @@ func SetInspectedNode(nodeID cdp.NodeID) *SetInspectedNodeParams {
 	}
 }
 
-// Do executes DOM.setInspectedNode against the provided context and
-// target handler.
-func (p *SetInspectedNodeParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandDOMSetInspectedNode, p, nil)
+// Do executes DOM.setInspectedNode against the provided context.
+func (p *SetInspectedNodeParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandSetInspectedNode, p, nil)
 }
 
 // SetNodeNameParams sets node name for a node with given id.
@@ -1264,15 +1239,14 @@ type SetNodeNameReturns struct {
 	NodeID cdp.NodeID `json:"nodeId,omitempty"` // New node's id.
 }
 
-// Do executes DOM.setNodeName against the provided context and
-// target handler.
+// Do executes DOM.setNodeName against the provided context.
 //
 // returns:
 //   nodeID - New node's id.
-func (p *SetNodeNameParams) Do(ctxt context.Context, h cdp.Handler) (nodeID cdp.NodeID, err error) {
+func (p *SetNodeNameParams) Do(ctxt context.Context, h Executor) (nodeID cdp.NodeID, err error) {
 	// execute
 	var res SetNodeNameReturns
-	err = h.Execute(ctxt, cdp.CommandDOMSetNodeName, p, &res)
+	err = h.Execute(ctxt, CommandSetNodeName, p, &res)
 	if err != nil {
 		return 0, err
 	}
@@ -1298,10 +1272,9 @@ func SetNodeValue(nodeID cdp.NodeID, value string) *SetNodeValueParams {
 	}
 }
 
-// Do executes DOM.setNodeValue against the provided context and
-// target handler.
-func (p *SetNodeValueParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandDOMSetNodeValue, p, nil)
+// Do executes DOM.setNodeValue against the provided context.
+func (p *SetNodeValueParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandSetNodeValue, p, nil)
 }
 
 // SetOuterHTMLParams sets node HTML markup, returns new node id.
@@ -1322,10 +1295,9 @@ func SetOuterHTML(nodeID cdp.NodeID, outerHTML string) *SetOuterHTMLParams {
 	}
 }
 
-// Do executes DOM.setOuterHTML against the provided context and
-// target handler.
-func (p *SetOuterHTMLParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandDOMSetOuterHTML, p, nil)
+// Do executes DOM.setOuterHTML against the provided context.
+func (p *SetOuterHTMLParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandSetOuterHTML, p, nil)
 }
 
 // UndoParams undoes the last performed action.
@@ -1336,8 +1308,47 @@ func Undo() *UndoParams {
 	return &UndoParams{}
 }
 
-// Do executes DOM.undo against the provided context and
-// target handler.
-func (p *UndoParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandDOMUndo, nil, nil)
+// Do executes DOM.undo against the provided context.
+func (p *UndoParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandUndo, nil, nil)
 }
+
+// Command names.
+const (
+	CommandCollectClassNamesFromSubtree    = "DOM.collectClassNamesFromSubtree"
+	CommandCopyTo                          = "DOM.copyTo"
+	CommandDescribeNode                    = "DOM.describeNode"
+	CommandDisable                         = "DOM.disable"
+	CommandDiscardSearchResults            = "DOM.discardSearchResults"
+	CommandEnable                          = "DOM.enable"
+	CommandFocus                           = "DOM.focus"
+	CommandGetAttributes                   = "DOM.getAttributes"
+	CommandGetBoxModel                     = "DOM.getBoxModel"
+	CommandGetDocument                     = "DOM.getDocument"
+	CommandGetFlattenedDocument            = "DOM.getFlattenedDocument"
+	CommandGetNodeForLocation              = "DOM.getNodeForLocation"
+	CommandGetOuterHTML                    = "DOM.getOuterHTML"
+	CommandGetRelayoutBoundary             = "DOM.getRelayoutBoundary"
+	CommandGetSearchResults                = "DOM.getSearchResults"
+	CommandMarkUndoableState               = "DOM.markUndoableState"
+	CommandMoveTo                          = "DOM.moveTo"
+	CommandPerformSearch                   = "DOM.performSearch"
+	CommandPushNodeByPathToFrontend        = "DOM.pushNodeByPathToFrontend"
+	CommandPushNodesByBackendIdsToFrontend = "DOM.pushNodesByBackendIdsToFrontend"
+	CommandQuerySelector                   = "DOM.querySelector"
+	CommandQuerySelectorAll                = "DOM.querySelectorAll"
+	CommandRedo                            = "DOM.redo"
+	CommandRemoveAttribute                 = "DOM.removeAttribute"
+	CommandRemoveNode                      = "DOM.removeNode"
+	CommandRequestChildNodes               = "DOM.requestChildNodes"
+	CommandRequestNode                     = "DOM.requestNode"
+	CommandResolveNode                     = "DOM.resolveNode"
+	CommandSetAttributeValue               = "DOM.setAttributeValue"
+	CommandSetAttributesAsText             = "DOM.setAttributesAsText"
+	CommandSetFileInputFiles               = "DOM.setFileInputFiles"
+	CommandSetInspectedNode                = "DOM.setInspectedNode"
+	CommandSetNodeName                     = "DOM.setNodeName"
+	CommandSetNodeValue                    = "DOM.setNodeValue"
+	CommandSetOuterHTML                    = "DOM.setOuterHTML"
+	CommandUndo                            = "DOM.undo"
+)

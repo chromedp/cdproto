@@ -11,12 +11,19 @@ package overlay
 
 import (
 	"context"
+	"encoding/json"
 
-	cdp "github.com/knq/chromedp/cdp"
-	"github.com/knq/chromedp/cdp/dom"
-	"github.com/knq/chromedp/cdp/runtime"
+	cdp "github.com/chromedp/cdproto/cdp"
+	"github.com/chromedp/cdproto/dom"
+	"github.com/chromedp/cdproto/runtime"
 	"github.com/mailru/easyjson"
 )
+
+// Executor is the common interface for executing a command.
+type Executor interface {
+	// Execute executes the command.
+	Execute(context.Context, string, json.Marshaler, json.Unmarshaler) error
+}
 
 // DisableParams disables domain notifications.
 type DisableParams struct{}
@@ -26,10 +33,9 @@ func Disable() *DisableParams {
 	return &DisableParams{}
 }
 
-// Do executes Overlay.disable against the provided context and
-// target handler.
-func (p *DisableParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandOverlayDisable, nil, nil)
+// Do executes Overlay.disable against the provided context.
+func (p *DisableParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandDisable, nil, nil)
 }
 
 // EnableParams enables domain notifications.
@@ -40,10 +46,9 @@ func Enable() *EnableParams {
 	return &EnableParams{}
 }
 
-// Do executes Overlay.enable against the provided context and
-// target handler.
-func (p *EnableParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandOverlayEnable, nil, nil)
+// Do executes Overlay.enable against the provided context.
+func (p *EnableParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandEnable, nil, nil)
 }
 
 // GetHighlightObjectForTestParams for testing.
@@ -66,15 +71,14 @@ type GetHighlightObjectForTestReturns struct {
 	Highlight easyjson.RawMessage `json:"highlight,omitempty"`
 }
 
-// Do executes Overlay.getHighlightObjectForTest against the provided context and
-// target handler.
+// Do executes Overlay.getHighlightObjectForTest against the provided context.
 //
 // returns:
 //   highlight - Highlight data for the node.
-func (p *GetHighlightObjectForTestParams) Do(ctxt context.Context, h cdp.Handler) (highlight easyjson.RawMessage, err error) {
+func (p *GetHighlightObjectForTestParams) Do(ctxt context.Context, h Executor) (highlight easyjson.RawMessage, err error) {
 	// execute
 	var res GetHighlightObjectForTestReturns
-	err = h.Execute(ctxt, cdp.CommandOverlayGetHighlightObjectForTest, p, &res)
+	err = h.Execute(ctxt, CommandGetHighlightObjectForTest, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -90,10 +94,9 @@ func HideHighlight() *HideHighlightParams {
 	return &HideHighlightParams{}
 }
 
-// Do executes Overlay.hideHighlight against the provided context and
-// target handler.
-func (p *HideHighlightParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandOverlayHideHighlight, nil, nil)
+// Do executes Overlay.hideHighlight against the provided context.
+func (p *HideHighlightParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandHideHighlight, nil, nil)
 }
 
 // HighlightFrameParams highlights owner element of the frame with given id.
@@ -127,10 +130,9 @@ func (p HighlightFrameParams) WithContentOutlineColor(contentOutlineColor *cdp.R
 	return &p
 }
 
-// Do executes Overlay.highlightFrame against the provided context and
-// target handler.
-func (p *HighlightFrameParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandOverlayHighlightFrame, p, nil)
+// Do executes Overlay.highlightFrame against the provided context.
+func (p *HighlightFrameParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandHighlightFrame, p, nil)
 }
 
 // HighlightNodeParams highlights DOM node with given id or with the given
@@ -171,10 +173,9 @@ func (p HighlightNodeParams) WithObjectID(objectID runtime.RemoteObjectID) *High
 	return &p
 }
 
-// Do executes Overlay.highlightNode against the provided context and
-// target handler.
-func (p *HighlightNodeParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandOverlayHighlightNode, p, nil)
+// Do executes Overlay.highlightNode against the provided context.
+func (p *HighlightNodeParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandHighlightNode, p, nil)
 }
 
 // HighlightQuadParams highlights given quad. Coordinates are absolute with
@@ -208,10 +209,9 @@ func (p HighlightQuadParams) WithOutlineColor(outlineColor *cdp.RGBA) *Highlight
 	return &p
 }
 
-// Do executes Overlay.highlightQuad against the provided context and
-// target handler.
-func (p *HighlightQuadParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandOverlayHighlightQuad, p, nil)
+// Do executes Overlay.highlightQuad against the provided context.
+func (p *HighlightQuadParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandHighlightQuad, p, nil)
 }
 
 // HighlightRectParams highlights given rectangle. Coordinates are absolute
@@ -254,10 +254,9 @@ func (p HighlightRectParams) WithOutlineColor(outlineColor *cdp.RGBA) *Highlight
 	return &p
 }
 
-// Do executes Overlay.highlightRect against the provided context and
-// target handler.
-func (p *HighlightRectParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandOverlayHighlightRect, p, nil)
+// Do executes Overlay.highlightRect against the provided context.
+func (p *HighlightRectParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandHighlightRect, p, nil)
 }
 
 // SetInspectModeParams enters the 'inspect' mode. In this mode, elements
@@ -287,10 +286,9 @@ func (p SetInspectModeParams) WithHighlightConfig(highlightConfig *HighlightConf
 	return &p
 }
 
-// Do executes Overlay.setInspectMode against the provided context and
-// target handler.
-func (p *SetInspectModeParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandOverlaySetInspectMode, p, nil)
+// Do executes Overlay.setInspectMode against the provided context.
+func (p *SetInspectModeParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandSetInspectMode, p, nil)
 }
 
 // SetPausedInDebuggerMessageParams [no description].
@@ -312,10 +310,9 @@ func (p SetPausedInDebuggerMessageParams) WithMessage(message string) *SetPaused
 	return &p
 }
 
-// Do executes Overlay.setPausedInDebuggerMessage against the provided context and
-// target handler.
-func (p *SetPausedInDebuggerMessageParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandOverlaySetPausedInDebuggerMessage, p, nil)
+// Do executes Overlay.setPausedInDebuggerMessage against the provided context.
+func (p *SetPausedInDebuggerMessageParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandSetPausedInDebuggerMessage, p, nil)
 }
 
 // SetShowDebugBordersParams requests that backend shows debug borders on
@@ -334,10 +331,9 @@ func SetShowDebugBorders(show bool) *SetShowDebugBordersParams {
 	}
 }
 
-// Do executes Overlay.setShowDebugBorders against the provided context and
-// target handler.
-func (p *SetShowDebugBordersParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandOverlaySetShowDebugBorders, p, nil)
+// Do executes Overlay.setShowDebugBorders against the provided context.
+func (p *SetShowDebugBordersParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandSetShowDebugBorders, p, nil)
 }
 
 // SetShowFPSCounterParams requests that backend shows the FPS counter.
@@ -355,10 +351,9 @@ func SetShowFPSCounter(show bool) *SetShowFPSCounterParams {
 	}
 }
 
-// Do executes Overlay.setShowFPSCounter against the provided context and
-// target handler.
-func (p *SetShowFPSCounterParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandOverlaySetShowFPSCounter, p, nil)
+// Do executes Overlay.setShowFPSCounter against the provided context.
+func (p *SetShowFPSCounterParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandSetShowFPSCounter, p, nil)
 }
 
 // SetShowPaintRectsParams requests that backend shows paint rectangles.
@@ -376,10 +371,9 @@ func SetShowPaintRects(result bool) *SetShowPaintRectsParams {
 	}
 }
 
-// Do executes Overlay.setShowPaintRects against the provided context and
-// target handler.
-func (p *SetShowPaintRectsParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandOverlaySetShowPaintRects, p, nil)
+// Do executes Overlay.setShowPaintRects against the provided context.
+func (p *SetShowPaintRectsParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandSetShowPaintRects, p, nil)
 }
 
 // SetShowScrollBottleneckRectsParams requests that backend shows scroll
@@ -399,10 +393,9 @@ func SetShowScrollBottleneckRects(show bool) *SetShowScrollBottleneckRectsParams
 	}
 }
 
-// Do executes Overlay.setShowScrollBottleneckRects against the provided context and
-// target handler.
-func (p *SetShowScrollBottleneckRectsParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandOverlaySetShowScrollBottleneckRects, p, nil)
+// Do executes Overlay.setShowScrollBottleneckRects against the provided context.
+func (p *SetShowScrollBottleneckRectsParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandSetShowScrollBottleneckRects, p, nil)
 }
 
 // SetShowViewportSizeOnResizeParams paints viewport size upon main frame
@@ -421,10 +414,9 @@ func SetShowViewportSizeOnResize(show bool) *SetShowViewportSizeOnResizeParams {
 	}
 }
 
-// Do executes Overlay.setShowViewportSizeOnResize against the provided context and
-// target handler.
-func (p *SetShowViewportSizeOnResizeParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandOverlaySetShowViewportSizeOnResize, p, nil)
+// Do executes Overlay.setShowViewportSizeOnResize against the provided context.
+func (p *SetShowViewportSizeOnResizeParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandSetShowViewportSizeOnResize, p, nil)
 }
 
 // SetSuspendedParams [no description].
@@ -442,8 +434,27 @@ func SetSuspended(suspended bool) *SetSuspendedParams {
 	}
 }
 
-// Do executes Overlay.setSuspended against the provided context and
-// target handler.
-func (p *SetSuspendedParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandOverlaySetSuspended, p, nil)
+// Do executes Overlay.setSuspended against the provided context.
+func (p *SetSuspendedParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandSetSuspended, p, nil)
 }
+
+// Command names.
+const (
+	CommandDisable                      = "Overlay.disable"
+	CommandEnable                       = "Overlay.enable"
+	CommandGetHighlightObjectForTest    = "Overlay.getHighlightObjectForTest"
+	CommandHideHighlight                = "Overlay.hideHighlight"
+	CommandHighlightFrame               = "Overlay.highlightFrame"
+	CommandHighlightNode                = "Overlay.highlightNode"
+	CommandHighlightQuad                = "Overlay.highlightQuad"
+	CommandHighlightRect                = "Overlay.highlightRect"
+	CommandSetInspectMode               = "Overlay.setInspectMode"
+	CommandSetPausedInDebuggerMessage   = "Overlay.setPausedInDebuggerMessage"
+	CommandSetShowDebugBorders          = "Overlay.setShowDebugBorders"
+	CommandSetShowFPSCounter            = "Overlay.setShowFPSCounter"
+	CommandSetShowPaintRects            = "Overlay.setShowPaintRects"
+	CommandSetShowScrollBottleneckRects = "Overlay.setShowScrollBottleneckRects"
+	CommandSetShowViewportSizeOnResize  = "Overlay.setShowViewportSizeOnResize"
+	CommandSetSuspended                 = "Overlay.setSuspended"
+)

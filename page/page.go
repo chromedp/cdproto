@@ -12,12 +12,19 @@ package page
 import (
 	"context"
 	"encoding/base64"
+	"encoding/json"
 
-	cdp "github.com/knq/chromedp/cdp"
-	"github.com/knq/chromedp/cdp/debugger"
-	"github.com/knq/chromedp/cdp/dom"
-	"github.com/knq/chromedp/cdp/runtime"
+	cdp "github.com/chromedp/cdproto/cdp"
+	"github.com/chromedp/cdproto/debugger"
+	"github.com/chromedp/cdproto/dom"
+	"github.com/chromedp/cdproto/runtime"
 )
+
+// Executor is the common interface for executing a command.
+type Executor interface {
+	// Execute executes the command.
+	Execute(context.Context, string, json.Marshaler, json.Unmarshaler) error
+}
 
 // AddScriptToEvaluateOnNewDocumentParams evaluates given script in every
 // frame upon creation (before loading frame's scripts).
@@ -41,15 +48,14 @@ type AddScriptToEvaluateOnNewDocumentReturns struct {
 	Identifier ScriptIdentifier `json:"identifier,omitempty"` // Identifier of the added script.
 }
 
-// Do executes Page.addScriptToEvaluateOnNewDocument against the provided context and
-// target handler.
+// Do executes Page.addScriptToEvaluateOnNewDocument against the provided context.
 //
 // returns:
 //   identifier - Identifier of the added script.
-func (p *AddScriptToEvaluateOnNewDocumentParams) Do(ctxt context.Context, h cdp.Handler) (identifier ScriptIdentifier, err error) {
+func (p *AddScriptToEvaluateOnNewDocumentParams) Do(ctxt context.Context, h Executor) (identifier ScriptIdentifier, err error) {
 	// execute
 	var res AddScriptToEvaluateOnNewDocumentReturns
-	err = h.Execute(ctxt, cdp.CommandPageAddScriptToEvaluateOnNewDocument, p, &res)
+	err = h.Execute(ctxt, CommandAddScriptToEvaluateOnNewDocument, p, &res)
 	if err != nil {
 		return "", err
 	}
@@ -65,10 +71,9 @@ func BringToFront() *BringToFrontParams {
 	return &BringToFrontParams{}
 }
 
-// Do executes Page.bringToFront against the provided context and
-// target handler.
-func (p *BringToFrontParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandPageBringToFront, nil, nil)
+// Do executes Page.bringToFront against the provided context.
+func (p *BringToFrontParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandBringToFront, nil, nil)
 }
 
 // CaptureScreenshotParams capture page screenshot.
@@ -116,15 +121,14 @@ type CaptureScreenshotReturns struct {
 	Data string `json:"data,omitempty"` // Base64-encoded image data.
 }
 
-// Do executes Page.captureScreenshot against the provided context and
-// target handler.
+// Do executes Page.captureScreenshot against the provided context.
 //
 // returns:
 //   data - Base64-encoded image data.
-func (p *CaptureScreenshotParams) Do(ctxt context.Context, h cdp.Handler) (data []byte, err error) {
+func (p *CaptureScreenshotParams) Do(ctxt context.Context, h Executor) (data []byte, err error) {
 	// execute
 	var res CaptureScreenshotReturns
-	err = h.Execute(ctxt, cdp.CommandPageCaptureScreenshot, p, &res)
+	err = h.Execute(ctxt, CommandCaptureScreenshot, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -173,15 +177,14 @@ type CreateIsolatedWorldReturns struct {
 	ExecutionContextID runtime.ExecutionContextID `json:"executionContextId,omitempty"` // Execution context of the isolated world.
 }
 
-// Do executes Page.createIsolatedWorld against the provided context and
-// target handler.
+// Do executes Page.createIsolatedWorld against the provided context.
 //
 // returns:
 //   executionContextID - Execution context of the isolated world.
-func (p *CreateIsolatedWorldParams) Do(ctxt context.Context, h cdp.Handler) (executionContextID runtime.ExecutionContextID, err error) {
+func (p *CreateIsolatedWorldParams) Do(ctxt context.Context, h Executor) (executionContextID runtime.ExecutionContextID, err error) {
 	// execute
 	var res CreateIsolatedWorldReturns
-	err = h.Execute(ctxt, cdp.CommandPageCreateIsolatedWorld, p, &res)
+	err = h.Execute(ctxt, CommandCreateIsolatedWorld, p, &res)
 	if err != nil {
 		return 0, err
 	}
@@ -197,10 +200,9 @@ func Disable() *DisableParams {
 	return &DisableParams{}
 }
 
-// Do executes Page.disable against the provided context and
-// target handler.
-func (p *DisableParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandPageDisable, nil, nil)
+// Do executes Page.disable against the provided context.
+func (p *DisableParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandDisable, nil, nil)
 }
 
 // EnableParams enables page domain notifications.
@@ -211,10 +213,9 @@ func Enable() *EnableParams {
 	return &EnableParams{}
 }
 
-// Do executes Page.enable against the provided context and
-// target handler.
-func (p *EnableParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandPageEnable, nil, nil)
+// Do executes Page.enable against the provided context.
+func (p *EnableParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandEnable, nil, nil)
 }
 
 // GetAppManifestParams [no description].
@@ -232,17 +233,16 @@ type GetAppManifestReturns struct {
 	Data   string              `json:"data,omitempty"` // Manifest content.
 }
 
-// Do executes Page.getAppManifest against the provided context and
-// target handler.
+// Do executes Page.getAppManifest against the provided context.
 //
 // returns:
 //   url - Manifest location.
 //   errors
 //   data - Manifest content.
-func (p *GetAppManifestParams) Do(ctxt context.Context, h cdp.Handler) (url string, errors []*AppManifestError, data string, err error) {
+func (p *GetAppManifestParams) Do(ctxt context.Context, h Executor) (url string, errors []*AppManifestError, data string, err error) {
 	// execute
 	var res GetAppManifestReturns
-	err = h.Execute(ctxt, cdp.CommandPageGetAppManifest, nil, &res)
+	err = h.Execute(ctxt, CommandGetAppManifest, nil, &res)
 	if err != nil {
 		return "", nil, "", err
 	}
@@ -263,15 +263,14 @@ type GetFrameTreeReturns struct {
 	FrameTree *FrameTree `json:"frameTree,omitempty"` // Present frame tree structure.
 }
 
-// Do executes Page.getFrameTree against the provided context and
-// target handler.
+// Do executes Page.getFrameTree against the provided context.
 //
 // returns:
 //   frameTree - Present frame tree structure.
-func (p *GetFrameTreeParams) Do(ctxt context.Context, h cdp.Handler) (frameTree *FrameTree, err error) {
+func (p *GetFrameTreeParams) Do(ctxt context.Context, h Executor) (frameTree *FrameTree, err error) {
 	// execute
 	var res GetFrameTreeReturns
-	err = h.Execute(ctxt, cdp.CommandPageGetFrameTree, nil, &res)
+	err = h.Execute(ctxt, CommandGetFrameTree, nil, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -296,17 +295,16 @@ type GetLayoutMetricsReturns struct {
 	ContentSize    *dom.Rect       `json:"contentSize,omitempty"`    // Size of scrollable area.
 }
 
-// Do executes Page.getLayoutMetrics against the provided context and
-// target handler.
+// Do executes Page.getLayoutMetrics against the provided context.
 //
 // returns:
 //   layoutViewport - Metrics relating to the layout viewport.
 //   visualViewport - Metrics relating to the visual viewport.
 //   contentSize - Size of scrollable area.
-func (p *GetLayoutMetricsParams) Do(ctxt context.Context, h cdp.Handler) (layoutViewport *LayoutViewport, visualViewport *VisualViewport, contentSize *dom.Rect, err error) {
+func (p *GetLayoutMetricsParams) Do(ctxt context.Context, h Executor) (layoutViewport *LayoutViewport, visualViewport *VisualViewport, contentSize *dom.Rect, err error) {
 	// execute
 	var res GetLayoutMetricsReturns
-	err = h.Execute(ctxt, cdp.CommandPageGetLayoutMetrics, nil, &res)
+	err = h.Execute(ctxt, CommandGetLayoutMetrics, nil, &res)
 	if err != nil {
 		return nil, nil, nil, err
 	}
@@ -329,16 +327,15 @@ type GetNavigationHistoryReturns struct {
 	Entries      []*NavigationEntry `json:"entries,omitempty"`      // Array of navigation history entries.
 }
 
-// Do executes Page.getNavigationHistory against the provided context and
-// target handler.
+// Do executes Page.getNavigationHistory against the provided context.
 //
 // returns:
 //   currentIndex - Index of the current navigation history entry.
 //   entries - Array of navigation history entries.
-func (p *GetNavigationHistoryParams) Do(ctxt context.Context, h cdp.Handler) (currentIndex int64, entries []*NavigationEntry, err error) {
+func (p *GetNavigationHistoryParams) Do(ctxt context.Context, h Executor) (currentIndex int64, entries []*NavigationEntry, err error) {
 	// execute
 	var res GetNavigationHistoryReturns
-	err = h.Execute(ctxt, cdp.CommandPageGetNavigationHistory, nil, &res)
+	err = h.Execute(ctxt, CommandGetNavigationHistory, nil, &res)
 	if err != nil {
 		return 0, nil, err
 	}
@@ -370,15 +367,14 @@ type GetResourceContentReturns struct {
 	Base64encoded bool   `json:"base64Encoded,omitempty"` // True, if content was served as base64.
 }
 
-// Do executes Page.getResourceContent against the provided context and
-// target handler.
+// Do executes Page.getResourceContent against the provided context.
 //
 // returns:
 //   content - Resource content.
-func (p *GetResourceContentParams) Do(ctxt context.Context, h cdp.Handler) (content []byte, err error) {
+func (p *GetResourceContentParams) Do(ctxt context.Context, h Executor) (content []byte, err error) {
 	// execute
 	var res GetResourceContentReturns
-	err = h.Execute(ctxt, cdp.CommandPageGetResourceContent, p, &res)
+	err = h.Execute(ctxt, CommandGetResourceContent, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -409,15 +405,14 @@ type GetResourceTreeReturns struct {
 	FrameTree *FrameResourceTree `json:"frameTree,omitempty"` // Present frame / resource tree structure.
 }
 
-// Do executes Page.getResourceTree against the provided context and
-// target handler.
+// Do executes Page.getResourceTree against the provided context.
 //
 // returns:
 //   frameTree - Present frame / resource tree structure.
-func (p *GetResourceTreeParams) Do(ctxt context.Context, h cdp.Handler) (frameTree *FrameResourceTree, err error) {
+func (p *GetResourceTreeParams) Do(ctxt context.Context, h Executor) (frameTree *FrameResourceTree, err error) {
 	// execute
 	var res GetResourceTreeReturns
-	err = h.Execute(ctxt, cdp.CommandPageGetResourceTree, nil, &res)
+	err = h.Execute(ctxt, CommandGetResourceTree, nil, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -450,10 +445,9 @@ func (p HandleJavaScriptDialogParams) WithPromptText(promptText string) *HandleJ
 	return &p
 }
 
-// Do executes Page.handleJavaScriptDialog against the provided context and
-// target handler.
-func (p *HandleJavaScriptDialogParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandPageHandleJavaScriptDialog, p, nil)
+// Do executes Page.handleJavaScriptDialog against the provided context.
+func (p *HandleJavaScriptDialogParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandHandleJavaScriptDialog, p, nil)
 }
 
 // NavigateParams navigates current page to the given URL.
@@ -492,17 +486,16 @@ type NavigateReturns struct {
 	ErrorText string       `json:"errorText,omitempty"` // User friendly error message, present if and only if navigation has failed.
 }
 
-// Do executes Page.navigate against the provided context and
-// target handler.
+// Do executes Page.navigate against the provided context.
 //
 // returns:
 //   frameID - Frame id that has navigated (or failed to navigate)
 //   loaderID - Loader identifier.
 //   errorText - User friendly error message, present if and only if navigation has failed.
-func (p *NavigateParams) Do(ctxt context.Context, h cdp.Handler) (frameID cdp.FrameID, loaderID cdp.LoaderID, errorText string, err error) {
+func (p *NavigateParams) Do(ctxt context.Context, h Executor) (frameID cdp.FrameID, loaderID cdp.LoaderID, errorText string, err error) {
 	// execute
 	var res NavigateReturns
-	err = h.Execute(ctxt, cdp.CommandPageNavigate, p, &res)
+	err = h.Execute(ctxt, CommandNavigate, p, &res)
 	if err != nil {
 		return "", "", "", err
 	}
@@ -526,10 +519,9 @@ func NavigateToHistoryEntry(entryID int64) *NavigateToHistoryEntryParams {
 	}
 }
 
-// Do executes Page.navigateToHistoryEntry against the provided context and
-// target handler.
-func (p *NavigateToHistoryEntryParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandPageNavigateToHistoryEntry, p, nil)
+// Do executes Page.navigateToHistoryEntry against the provided context.
+func (p *NavigateToHistoryEntryParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandNavigateToHistoryEntry, p, nil)
 }
 
 // PrintToPDFParams print page as PDF.
@@ -654,15 +646,14 @@ type PrintToPDFReturns struct {
 	Data string `json:"data,omitempty"` // Base64-encoded pdf data.
 }
 
-// Do executes Page.printToPDF against the provided context and
-// target handler.
+// Do executes Page.printToPDF against the provided context.
 //
 // returns:
 //   data - Base64-encoded pdf data.
-func (p *PrintToPDFParams) Do(ctxt context.Context, h cdp.Handler) (data []byte, err error) {
+func (p *PrintToPDFParams) Do(ctxt context.Context, h Executor) (data []byte, err error) {
 	// execute
 	var res PrintToPDFReturns
-	err = h.Execute(ctxt, cdp.CommandPagePrintToPDF, p, &res)
+	err = h.Execute(ctxt, CommandPrintToPDF, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -704,10 +695,9 @@ func (p ReloadParams) WithScriptToEvaluateOnLoad(scriptToEvaluateOnLoad string) 
 	return &p
 }
 
-// Do executes Page.reload against the provided context and
-// target handler.
-func (p *ReloadParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandPageReload, p, nil)
+// Do executes Page.reload against the provided context.
+func (p *ReloadParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandReload, p, nil)
 }
 
 // RemoveScriptToEvaluateOnNewDocumentParams removes given script from the
@@ -726,10 +716,9 @@ func RemoveScriptToEvaluateOnNewDocument(identifier ScriptIdentifier) *RemoveScr
 	}
 }
 
-// Do executes Page.removeScriptToEvaluateOnNewDocument against the provided context and
-// target handler.
-func (p *RemoveScriptToEvaluateOnNewDocumentParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandPageRemoveScriptToEvaluateOnNewDocument, p, nil)
+// Do executes Page.removeScriptToEvaluateOnNewDocument against the provided context.
+func (p *RemoveScriptToEvaluateOnNewDocumentParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandRemoveScriptToEvaluateOnNewDocument, p, nil)
 }
 
 // RequestAppBannerParams [no description].
@@ -740,10 +729,9 @@ func RequestAppBanner() *RequestAppBannerParams {
 	return &RequestAppBannerParams{}
 }
 
-// Do executes Page.requestAppBanner against the provided context and
-// target handler.
-func (p *RequestAppBannerParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandPageRequestAppBanner, nil, nil)
+// Do executes Page.requestAppBanner against the provided context.
+func (p *RequestAppBannerParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandRequestAppBanner, nil, nil)
 }
 
 // ScreencastFrameAckParams acknowledges that a screencast frame has been
@@ -763,10 +751,9 @@ func ScreencastFrameAck(sessionID int64) *ScreencastFrameAckParams {
 	}
 }
 
-// Do executes Page.screencastFrameAck against the provided context and
-// target handler.
-func (p *ScreencastFrameAckParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandPageScreencastFrameAck, p, nil)
+// Do executes Page.screencastFrameAck against the provided context.
+func (p *ScreencastFrameAckParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandScreencastFrameAck, p, nil)
 }
 
 // SearchInResourceParams searches for given string in resource content.
@@ -809,15 +796,14 @@ type SearchInResourceReturns struct {
 	Result []*debugger.SearchMatch `json:"result,omitempty"` // List of search matches.
 }
 
-// Do executes Page.searchInResource against the provided context and
-// target handler.
+// Do executes Page.searchInResource against the provided context.
 //
 // returns:
 //   result - List of search matches.
-func (p *SearchInResourceParams) Do(ctxt context.Context, h cdp.Handler) (result []*debugger.SearchMatch, err error) {
+func (p *SearchInResourceParams) Do(ctxt context.Context, h Executor) (result []*debugger.SearchMatch, err error) {
 	// execute
 	var res SearchInResourceReturns
-	err = h.Execute(ctxt, cdp.CommandPageSearchInResource, p, &res)
+	err = h.Execute(ctxt, CommandSearchInResource, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -841,10 +827,9 @@ func SetAdBlockingEnabled(enabled bool) *SetAdBlockingEnabledParams {
 	}
 }
 
-// Do executes Page.setAdBlockingEnabled against the provided context and
-// target handler.
-func (p *SetAdBlockingEnabledParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandPageSetAdBlockingEnabled, p, nil)
+// Do executes Page.setAdBlockingEnabled against the provided context.
+func (p *SetAdBlockingEnabledParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandSetAdBlockingEnabled, p, nil)
 }
 
 // SetAutoAttachToCreatedPagesParams controls whether browser will open a new
@@ -864,10 +849,9 @@ func SetAutoAttachToCreatedPages(autoAttach bool) *SetAutoAttachToCreatedPagesPa
 	}
 }
 
-// Do executes Page.setAutoAttachToCreatedPages against the provided context and
-// target handler.
-func (p *SetAutoAttachToCreatedPagesParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandPageSetAutoAttachToCreatedPages, p, nil)
+// Do executes Page.setAutoAttachToCreatedPages against the provided context.
+func (p *SetAutoAttachToCreatedPagesParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandSetAutoAttachToCreatedPages, p, nil)
 }
 
 // SetDocumentContentParams sets given markup as the document's HTML.
@@ -888,10 +872,9 @@ func SetDocumentContent(frameID cdp.FrameID, html string) *SetDocumentContentPar
 	}
 }
 
-// Do executes Page.setDocumentContent against the provided context and
-// target handler.
-func (p *SetDocumentContentParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandPageSetDocumentContent, p, nil)
+// Do executes Page.setDocumentContent against the provided context.
+func (p *SetDocumentContentParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandSetDocumentContent, p, nil)
 }
 
 // SetDownloadBehaviorParams set the behavior when downloading a file.
@@ -917,10 +900,9 @@ func (p SetDownloadBehaviorParams) WithDownloadPath(downloadPath string) *SetDow
 	return &p
 }
 
-// Do executes Page.setDownloadBehavior against the provided context and
-// target handler.
-func (p *SetDownloadBehaviorParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandPageSetDownloadBehavior, p, nil)
+// Do executes Page.setDownloadBehavior against the provided context.
+func (p *SetDownloadBehaviorParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandSetDownloadBehavior, p, nil)
 }
 
 // SetLifecycleEventsEnabledParams controls whether page will emit lifecycle
@@ -940,10 +922,9 @@ func SetLifecycleEventsEnabled(enabled bool) *SetLifecycleEventsEnabledParams {
 	}
 }
 
-// Do executes Page.setLifecycleEventsEnabled against the provided context and
-// target handler.
-func (p *SetLifecycleEventsEnabledParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandPageSetLifecycleEventsEnabled, p, nil)
+// Do executes Page.setLifecycleEventsEnabled against the provided context.
+func (p *SetLifecycleEventsEnabledParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandSetLifecycleEventsEnabled, p, nil)
 }
 
 // StartScreencastParams starts sending each frame using the screencastFrame
@@ -993,10 +974,9 @@ func (p StartScreencastParams) WithEveryNthFrame(everyNthFrame int64) *StartScre
 	return &p
 }
 
-// Do executes Page.startScreencast against the provided context and
-// target handler.
-func (p *StartScreencastParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandPageStartScreencast, p, nil)
+// Do executes Page.startScreencast against the provided context.
+func (p *StartScreencastParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandStartScreencast, p, nil)
 }
 
 // StopLoadingParams force the page stop all navigations and pending resource
@@ -1009,10 +989,9 @@ func StopLoading() *StopLoadingParams {
 	return &StopLoadingParams{}
 }
 
-// Do executes Page.stopLoading against the provided context and
-// target handler.
-func (p *StopLoadingParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandPageStopLoading, nil, nil)
+// Do executes Page.stopLoading against the provided context.
+func (p *StopLoadingParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandStopLoading, nil, nil)
 }
 
 // StopScreencastParams stops sending each frame in the screencastFrame.
@@ -1023,8 +1002,40 @@ func StopScreencast() *StopScreencastParams {
 	return &StopScreencastParams{}
 }
 
-// Do executes Page.stopScreencast against the provided context and
-// target handler.
-func (p *StopScreencastParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandPageStopScreencast, nil, nil)
+// Do executes Page.stopScreencast against the provided context.
+func (p *StopScreencastParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandStopScreencast, nil, nil)
 }
+
+// Command names.
+const (
+	CommandAddScriptToEvaluateOnNewDocument    = "Page.addScriptToEvaluateOnNewDocument"
+	CommandBringToFront                        = "Page.bringToFront"
+	CommandCaptureScreenshot                   = "Page.captureScreenshot"
+	CommandCreateIsolatedWorld                 = "Page.createIsolatedWorld"
+	CommandDisable                             = "Page.disable"
+	CommandEnable                              = "Page.enable"
+	CommandGetAppManifest                      = "Page.getAppManifest"
+	CommandGetFrameTree                        = "Page.getFrameTree"
+	CommandGetLayoutMetrics                    = "Page.getLayoutMetrics"
+	CommandGetNavigationHistory                = "Page.getNavigationHistory"
+	CommandGetResourceContent                  = "Page.getResourceContent"
+	CommandGetResourceTree                     = "Page.getResourceTree"
+	CommandHandleJavaScriptDialog              = "Page.handleJavaScriptDialog"
+	CommandNavigate                            = "Page.navigate"
+	CommandNavigateToHistoryEntry              = "Page.navigateToHistoryEntry"
+	CommandPrintToPDF                          = "Page.printToPDF"
+	CommandReload                              = "Page.reload"
+	CommandRemoveScriptToEvaluateOnNewDocument = "Page.removeScriptToEvaluateOnNewDocument"
+	CommandRequestAppBanner                    = "Page.requestAppBanner"
+	CommandScreencastFrameAck                  = "Page.screencastFrameAck"
+	CommandSearchInResource                    = "Page.searchInResource"
+	CommandSetAdBlockingEnabled                = "Page.setAdBlockingEnabled"
+	CommandSetAutoAttachToCreatedPages         = "Page.setAutoAttachToCreatedPages"
+	CommandSetDocumentContent                  = "Page.setDocumentContent"
+	CommandSetDownloadBehavior                 = "Page.setDownloadBehavior"
+	CommandSetLifecycleEventsEnabled           = "Page.setLifecycleEventsEnabled"
+	CommandStartScreencast                     = "Page.startScreencast"
+	CommandStopLoading                         = "Page.stopLoading"
+	CommandStopScreencast                      = "Page.stopScreencast"
+)

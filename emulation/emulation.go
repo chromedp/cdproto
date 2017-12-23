@@ -10,11 +10,18 @@ package emulation
 
 import (
 	"context"
+	"encoding/json"
 
-	cdp "github.com/knq/chromedp/cdp"
-	"github.com/knq/chromedp/cdp/page"
-	"github.com/knq/chromedp/cdp/runtime"
+	cdp "github.com/chromedp/cdproto/cdp"
+	"github.com/chromedp/cdproto/page"
+	"github.com/chromedp/cdproto/runtime"
 )
+
+// Executor is the common interface for executing a command.
+type Executor interface {
+	// Execute executes the command.
+	Execute(context.Context, string, json.Marshaler, json.Unmarshaler) error
+}
 
 // CanEmulateParams tells whether emulation is supported.
 type CanEmulateParams struct{}
@@ -29,15 +36,14 @@ type CanEmulateReturns struct {
 	Result bool `json:"result,omitempty"` // True if emulation is supported.
 }
 
-// Do executes Emulation.canEmulate against the provided context and
-// target handler.
+// Do executes Emulation.canEmulate against the provided context.
 //
 // returns:
 //   result - True if emulation is supported.
-func (p *CanEmulateParams) Do(ctxt context.Context, h cdp.Handler) (result bool, err error) {
+func (p *CanEmulateParams) Do(ctxt context.Context, h Executor) (result bool, err error) {
 	// execute
 	var res CanEmulateReturns
-	err = h.Execute(ctxt, cdp.CommandEmulationCanEmulate, nil, &res)
+	err = h.Execute(ctxt, CommandCanEmulate, nil, &res)
 	if err != nil {
 		return false, err
 	}
@@ -53,10 +59,9 @@ func ClearDeviceMetricsOverride() *ClearDeviceMetricsOverrideParams {
 	return &ClearDeviceMetricsOverrideParams{}
 }
 
-// Do executes Emulation.clearDeviceMetricsOverride against the provided context and
-// target handler.
-func (p *ClearDeviceMetricsOverrideParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandEmulationClearDeviceMetricsOverride, nil, nil)
+// Do executes Emulation.clearDeviceMetricsOverride against the provided context.
+func (p *ClearDeviceMetricsOverrideParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandClearDeviceMetricsOverride, nil, nil)
 }
 
 // ClearGeolocationOverrideParams clears the overridden Geolocation Position
@@ -69,10 +74,9 @@ func ClearGeolocationOverride() *ClearGeolocationOverrideParams {
 	return &ClearGeolocationOverrideParams{}
 }
 
-// Do executes Emulation.clearGeolocationOverride against the provided context and
-// target handler.
-func (p *ClearGeolocationOverrideParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandEmulationClearGeolocationOverride, nil, nil)
+// Do executes Emulation.clearGeolocationOverride against the provided context.
+func (p *ClearGeolocationOverrideParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandClearGeolocationOverride, nil, nil)
 }
 
 // ResetPageScaleFactorParams requests that page scale factor is reset to
@@ -85,10 +89,9 @@ func ResetPageScaleFactor() *ResetPageScaleFactorParams {
 	return &ResetPageScaleFactorParams{}
 }
 
-// Do executes Emulation.resetPageScaleFactor against the provided context and
-// target handler.
-func (p *ResetPageScaleFactorParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandEmulationResetPageScaleFactor, nil, nil)
+// Do executes Emulation.resetPageScaleFactor against the provided context.
+func (p *ResetPageScaleFactorParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandResetPageScaleFactor, nil, nil)
 }
 
 // SetCPUThrottlingRateParams enables CPU throttling to emulate slow CPUs.
@@ -106,10 +109,9 @@ func SetCPUThrottlingRate(rate float64) *SetCPUThrottlingRateParams {
 	}
 }
 
-// Do executes Emulation.setCPUThrottlingRate against the provided context and
-// target handler.
-func (p *SetCPUThrottlingRateParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandEmulationSetCPUThrottlingRate, p, nil)
+// Do executes Emulation.setCPUThrottlingRate against the provided context.
+func (p *SetCPUThrottlingRateParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandSetCPUThrottlingRate, p, nil)
 }
 
 // SetDefaultBackgroundColorOverrideParams sets or clears an override of the
@@ -135,10 +137,9 @@ func (p SetDefaultBackgroundColorOverrideParams) WithColor(color *cdp.RGBA) *Set
 	return &p
 }
 
-// Do executes Emulation.setDefaultBackgroundColorOverride against the provided context and
-// target handler.
-func (p *SetDefaultBackgroundColorOverrideParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandEmulationSetDefaultBackgroundColorOverride, p, nil)
+// Do executes Emulation.setDefaultBackgroundColorOverride against the provided context.
+func (p *SetDefaultBackgroundColorOverrideParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandSetDefaultBackgroundColorOverride, p, nil)
 }
 
 // SetDeviceMetricsOverrideParams overrides the values of device screen
@@ -234,10 +235,9 @@ func (p SetDeviceMetricsOverrideParams) WithViewport(viewport *page.Viewport) *S
 	return &p
 }
 
-// Do executes Emulation.setDeviceMetricsOverride against the provided context and
-// target handler.
-func (p *SetDeviceMetricsOverrideParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandEmulationSetDeviceMetricsOverride, p, nil)
+// Do executes Emulation.setDeviceMetricsOverride against the provided context.
+func (p *SetDeviceMetricsOverrideParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandSetDeviceMetricsOverride, p, nil)
 }
 
 // SetEmitTouchEventsForMouseParams [no description].
@@ -263,10 +263,9 @@ func (p SetEmitTouchEventsForMouseParams) WithConfiguration(configuration SetEmi
 	return &p
 }
 
-// Do executes Emulation.setEmitTouchEventsForMouse against the provided context and
-// target handler.
-func (p *SetEmitTouchEventsForMouseParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandEmulationSetEmitTouchEventsForMouse, p, nil)
+// Do executes Emulation.setEmitTouchEventsForMouse against the provided context.
+func (p *SetEmitTouchEventsForMouseParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandSetEmitTouchEventsForMouse, p, nil)
 }
 
 // SetEmulatedMediaParams emulates the given media for CSS media queries.
@@ -284,10 +283,9 @@ func SetEmulatedMedia(media string) *SetEmulatedMediaParams {
 	}
 }
 
-// Do executes Emulation.setEmulatedMedia against the provided context and
-// target handler.
-func (p *SetEmulatedMediaParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandEmulationSetEmulatedMedia, p, nil)
+// Do executes Emulation.setEmulatedMedia against the provided context.
+func (p *SetEmulatedMediaParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandSetEmulatedMedia, p, nil)
 }
 
 // SetGeolocationOverrideParams overrides the Geolocation Position or Error.
@@ -324,10 +322,9 @@ func (p SetGeolocationOverrideParams) WithAccuracy(accuracy float64) *SetGeoloca
 	return &p
 }
 
-// Do executes Emulation.setGeolocationOverride against the provided context and
-// target handler.
-func (p *SetGeolocationOverrideParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandEmulationSetGeolocationOverride, p, nil)
+// Do executes Emulation.setGeolocationOverride against the provided context.
+func (p *SetGeolocationOverrideParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandSetGeolocationOverride, p, nil)
 }
 
 // SetNavigatorOverridesParams overrides value returned by the javascript
@@ -347,10 +344,9 @@ func SetNavigatorOverrides(platform string) *SetNavigatorOverridesParams {
 	}
 }
 
-// Do executes Emulation.setNavigatorOverrides against the provided context and
-// target handler.
-func (p *SetNavigatorOverridesParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandEmulationSetNavigatorOverrides, p, nil)
+// Do executes Emulation.setNavigatorOverrides against the provided context.
+func (p *SetNavigatorOverridesParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandSetNavigatorOverrides, p, nil)
 }
 
 // SetPageScaleFactorParams sets a specified page scale factor.
@@ -368,10 +364,9 @@ func SetPageScaleFactor(pageScaleFactor float64) *SetPageScaleFactorParams {
 	}
 }
 
-// Do executes Emulation.setPageScaleFactor against the provided context and
-// target handler.
-func (p *SetPageScaleFactorParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandEmulationSetPageScaleFactor, p, nil)
+// Do executes Emulation.setPageScaleFactor against the provided context.
+func (p *SetPageScaleFactorParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandSetPageScaleFactor, p, nil)
 }
 
 // SetScriptExecutionDisabledParams switches script execution in the page.
@@ -389,10 +384,9 @@ func SetScriptExecutionDisabled(value bool) *SetScriptExecutionDisabledParams {
 	}
 }
 
-// Do executes Emulation.setScriptExecutionDisabled against the provided context and
-// target handler.
-func (p *SetScriptExecutionDisabledParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandEmulationSetScriptExecutionDisabled, p, nil)
+// Do executes Emulation.setScriptExecutionDisabled against the provided context.
+func (p *SetScriptExecutionDisabledParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandSetScriptExecutionDisabled, p, nil)
 }
 
 // SetTouchEmulationEnabledParams enables touch on platforms which do not
@@ -419,10 +413,9 @@ func (p SetTouchEmulationEnabledParams) WithMaxTouchPoints(maxTouchPoints int64)
 	return &p
 }
 
-// Do executes Emulation.setTouchEmulationEnabled against the provided context and
-// target handler.
-func (p *SetTouchEmulationEnabledParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandEmulationSetTouchEmulationEnabled, p, nil)
+// Do executes Emulation.setTouchEmulationEnabled against the provided context.
+func (p *SetTouchEmulationEnabledParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandSetTouchEmulationEnabled, p, nil)
 }
 
 // SetVirtualTimePolicyParams turns on virtual time for all frames (replacing
@@ -466,18 +459,36 @@ type SetVirtualTimePolicyReturns struct {
 	VirtualTimeBase *runtime.Timestamp `json:"virtualTimeBase,omitempty"` // Absolute timestamp at which virtual time was first enabled (milliseconds since epoch).
 }
 
-// Do executes Emulation.setVirtualTimePolicy against the provided context and
-// target handler.
+// Do executes Emulation.setVirtualTimePolicy against the provided context.
 //
 // returns:
 //   virtualTimeBase - Absolute timestamp at which virtual time was first enabled (milliseconds since epoch).
-func (p *SetVirtualTimePolicyParams) Do(ctxt context.Context, h cdp.Handler) (virtualTimeBase *runtime.Timestamp, err error) {
+func (p *SetVirtualTimePolicyParams) Do(ctxt context.Context, h Executor) (virtualTimeBase *runtime.Timestamp, err error) {
 	// execute
 	var res SetVirtualTimePolicyReturns
-	err = h.Execute(ctxt, cdp.CommandEmulationSetVirtualTimePolicy, p, &res)
+	err = h.Execute(ctxt, CommandSetVirtualTimePolicy, p, &res)
 	if err != nil {
 		return nil, err
 	}
 
 	return res.VirtualTimeBase, nil
 }
+
+// Command names.
+const (
+	CommandCanEmulate                        = "Emulation.canEmulate"
+	CommandClearDeviceMetricsOverride        = "Emulation.clearDeviceMetricsOverride"
+	CommandClearGeolocationOverride          = "Emulation.clearGeolocationOverride"
+	CommandResetPageScaleFactor              = "Emulation.resetPageScaleFactor"
+	CommandSetCPUThrottlingRate              = "Emulation.setCPUThrottlingRate"
+	CommandSetDefaultBackgroundColorOverride = "Emulation.setDefaultBackgroundColorOverride"
+	CommandSetDeviceMetricsOverride          = "Emulation.setDeviceMetricsOverride"
+	CommandSetEmitTouchEventsForMouse        = "Emulation.setEmitTouchEventsForMouse"
+	CommandSetEmulatedMedia                  = "Emulation.setEmulatedMedia"
+	CommandSetGeolocationOverride            = "Emulation.setGeolocationOverride"
+	CommandSetNavigatorOverrides             = "Emulation.setNavigatorOverrides"
+	CommandSetPageScaleFactor                = "Emulation.setPageScaleFactor"
+	CommandSetScriptExecutionDisabled        = "Emulation.setScriptExecutionDisabled"
+	CommandSetTouchEmulationEnabled          = "Emulation.setTouchEmulationEnabled"
+	CommandSetVirtualTimePolicy              = "Emulation.setVirtualTimePolicy"
+)

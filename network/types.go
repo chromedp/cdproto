@@ -5,10 +5,10 @@ package network
 import (
 	"errors"
 
-	cdp "github.com/knq/chromedp/cdp"
-	"github.com/knq/chromedp/cdp/page"
-	"github.com/knq/chromedp/cdp/runtime"
-	"github.com/knq/chromedp/cdp/security"
+	cdp "github.com/chromedp/cdproto/cdp"
+	"github.com/chromedp/cdproto/page"
+	"github.com/chromedp/cdproto/runtime"
+	"github.com/chromedp/cdproto/security"
 	"github.com/mailru/easyjson"
 	"github.com/mailru/easyjson/jlexer"
 	"github.com/mailru/easyjson/jwriter"

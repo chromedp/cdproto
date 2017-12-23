@@ -17,7 +17,7 @@ var (
 	_ easyjson.Marshaler
 )
 
-func easyjsonC5a4559bDecodeGithubComKnqChromedpCdpDeviceorientation(in *jlexer.Lexer, out *SetDeviceOrientationOverrideParams) {
+func easyjsonC5a4559bDecodeGithubComChromedpCdprotoDeviceorientation(in *jlexer.Lexer, out *SetDeviceOrientationOverrideParams) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -52,7 +52,7 @@ func easyjsonC5a4559bDecodeGithubComKnqChromedpCdpDeviceorientation(in *jlexer.L
 		in.Consumed()
 	}
 }
-func easyjsonC5a4559bEncodeGithubComKnqChromedpCdpDeviceorientation(out *jwriter.Writer, in SetDeviceOrientationOverrideParams) {
+func easyjsonC5a4559bEncodeGithubComChromedpCdprotoDeviceorientation(out *jwriter.Writer, in SetDeviceOrientationOverrideParams) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -92,27 +92,27 @@ func easyjsonC5a4559bEncodeGithubComKnqChromedpCdpDeviceorientation(out *jwriter
 // MarshalJSON supports json.Marshaler interface
 func (v SetDeviceOrientationOverrideParams) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonC5a4559bEncodeGithubComKnqChromedpCdpDeviceorientation(&w, v)
+	easyjsonC5a4559bEncodeGithubComChromedpCdprotoDeviceorientation(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v SetDeviceOrientationOverrideParams) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonC5a4559bEncodeGithubComKnqChromedpCdpDeviceorientation(w, v)
+	easyjsonC5a4559bEncodeGithubComChromedpCdprotoDeviceorientation(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *SetDeviceOrientationOverrideParams) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonC5a4559bDecodeGithubComKnqChromedpCdpDeviceorientation(&r, v)
+	easyjsonC5a4559bDecodeGithubComChromedpCdprotoDeviceorientation(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *SetDeviceOrientationOverrideParams) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonC5a4559bDecodeGithubComKnqChromedpCdpDeviceorientation(l, v)
+	easyjsonC5a4559bDecodeGithubComChromedpCdprotoDeviceorientation(l, v)
 }
-func easyjsonC5a4559bDecodeGithubComKnqChromedpCdpDeviceorientation1(in *jlexer.Lexer, out *ClearDeviceOrientationOverrideParams) {
+func easyjsonC5a4559bDecodeGithubComChromedpCdprotoDeviceorientation1(in *jlexer.Lexer, out *ClearDeviceOrientationOverrideParams) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -141,7 +141,7 @@ func easyjsonC5a4559bDecodeGithubComKnqChromedpCdpDeviceorientation1(in *jlexer.
 		in.Consumed()
 	}
 }
-func easyjsonC5a4559bEncodeGithubComKnqChromedpCdpDeviceorientation1(out *jwriter.Writer, in ClearDeviceOrientationOverrideParams) {
+func easyjsonC5a4559bEncodeGithubComChromedpCdprotoDeviceorientation1(out *jwriter.Writer, in ClearDeviceOrientationOverrideParams) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -151,23 +151,23 @@ func easyjsonC5a4559bEncodeGithubComKnqChromedpCdpDeviceorientation1(out *jwrite
 // MarshalJSON supports json.Marshaler interface
 func (v ClearDeviceOrientationOverrideParams) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonC5a4559bEncodeGithubComKnqChromedpCdpDeviceorientation1(&w, v)
+	easyjsonC5a4559bEncodeGithubComChromedpCdprotoDeviceorientation1(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v ClearDeviceOrientationOverrideParams) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonC5a4559bEncodeGithubComKnqChromedpCdpDeviceorientation1(w, v)
+	easyjsonC5a4559bEncodeGithubComChromedpCdprotoDeviceorientation1(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *ClearDeviceOrientationOverrideParams) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonC5a4559bDecodeGithubComKnqChromedpCdpDeviceorientation1(&r, v)
+	easyjsonC5a4559bDecodeGithubComChromedpCdprotoDeviceorientation1(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *ClearDeviceOrientationOverrideParams) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonC5a4559bDecodeGithubComKnqChromedpCdpDeviceorientation1(l, v)
+	easyjsonC5a4559bDecodeGithubComChromedpCdprotoDeviceorientation1(l, v)
 }

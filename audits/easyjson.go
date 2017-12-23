@@ -4,7 +4,7 @@ package audits
 
 import (
 	json "encoding/json"
-	network "github.com/knq/chromedp/cdp/network"
+	network "github.com/chromedp/cdproto/network"
 	easyjson "github.com/mailru/easyjson"
 	jlexer "github.com/mailru/easyjson/jlexer"
 	jwriter "github.com/mailru/easyjson/jwriter"
@@ -18,7 +18,7 @@ var (
 	_ easyjson.Marshaler
 )
 
-func easyjsonC5a4559bDecodeGithubComKnqChromedpCdpAudits(in *jlexer.Lexer, out *GetEncodedResponseReturns) {
+func easyjsonC5a4559bDecodeGithubComChromedpCdprotoAudits(in *jlexer.Lexer, out *GetEncodedResponseReturns) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -53,7 +53,7 @@ func easyjsonC5a4559bDecodeGithubComKnqChromedpCdpAudits(in *jlexer.Lexer, out *
 		in.Consumed()
 	}
 }
-func easyjsonC5a4559bEncodeGithubComKnqChromedpCdpAudits(out *jwriter.Writer, in GetEncodedResponseReturns) {
+func easyjsonC5a4559bEncodeGithubComChromedpCdprotoAudits(out *jwriter.Writer, in GetEncodedResponseReturns) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -93,27 +93,27 @@ func easyjsonC5a4559bEncodeGithubComKnqChromedpCdpAudits(out *jwriter.Writer, in
 // MarshalJSON supports json.Marshaler interface
 func (v GetEncodedResponseReturns) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonC5a4559bEncodeGithubComKnqChromedpCdpAudits(&w, v)
+	easyjsonC5a4559bEncodeGithubComChromedpCdprotoAudits(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v GetEncodedResponseReturns) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonC5a4559bEncodeGithubComKnqChromedpCdpAudits(w, v)
+	easyjsonC5a4559bEncodeGithubComChromedpCdprotoAudits(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *GetEncodedResponseReturns) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonC5a4559bDecodeGithubComKnqChromedpCdpAudits(&r, v)
+	easyjsonC5a4559bDecodeGithubComChromedpCdprotoAudits(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *GetEncodedResponseReturns) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonC5a4559bDecodeGithubComKnqChromedpCdpAudits(l, v)
+	easyjsonC5a4559bDecodeGithubComChromedpCdprotoAudits(l, v)
 }
-func easyjsonC5a4559bDecodeGithubComKnqChromedpCdpAudits1(in *jlexer.Lexer, out *GetEncodedResponseParams) {
+func easyjsonC5a4559bDecodeGithubComChromedpCdprotoAudits1(in *jlexer.Lexer, out *GetEncodedResponseParams) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -150,7 +150,7 @@ func easyjsonC5a4559bDecodeGithubComKnqChromedpCdpAudits1(in *jlexer.Lexer, out 
 		in.Consumed()
 	}
 }
-func easyjsonC5a4559bEncodeGithubComKnqChromedpCdpAudits1(out *jwriter.Writer, in GetEncodedResponseParams) {
+func easyjsonC5a4559bEncodeGithubComChromedpCdprotoAudits1(out *jwriter.Writer, in GetEncodedResponseParams) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -200,23 +200,23 @@ func easyjsonC5a4559bEncodeGithubComKnqChromedpCdpAudits1(out *jwriter.Writer, i
 // MarshalJSON supports json.Marshaler interface
 func (v GetEncodedResponseParams) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonC5a4559bEncodeGithubComKnqChromedpCdpAudits1(&w, v)
+	easyjsonC5a4559bEncodeGithubComChromedpCdprotoAudits1(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v GetEncodedResponseParams) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonC5a4559bEncodeGithubComKnqChromedpCdpAudits1(w, v)
+	easyjsonC5a4559bEncodeGithubComChromedpCdprotoAudits1(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *GetEncodedResponseParams) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonC5a4559bDecodeGithubComKnqChromedpCdpAudits1(&r, v)
+	easyjsonC5a4559bDecodeGithubComChromedpCdprotoAudits1(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *GetEncodedResponseParams) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonC5a4559bDecodeGithubComKnqChromedpCdpAudits1(l, v)
+	easyjsonC5a4559bDecodeGithubComChromedpCdprotoAudits1(l, v)
 }

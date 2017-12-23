@@ -8,9 +8,16 @@ package applicationcache
 
 import (
 	"context"
+	"encoding/json"
 
-	cdp "github.com/knq/chromedp/cdp"
+	cdp "github.com/chromedp/cdproto/cdp"
 )
+
+// Executor is the common interface for executing a command.
+type Executor interface {
+	// Execute executes the command.
+	Execute(context.Context, string, json.Marshaler, json.Unmarshaler) error
+}
 
 // EnableParams enables application cache domain notifications.
 type EnableParams struct{}
@@ -20,10 +27,9 @@ func Enable() *EnableParams {
 	return &EnableParams{}
 }
 
-// Do executes ApplicationCache.enable against the provided context and
-// target handler.
-func (p *EnableParams) Do(ctxt context.Context, h cdp.Handler) (err error) {
-	return h.Execute(ctxt, cdp.CommandApplicationCacheEnable, nil, nil)
+// Do executes ApplicationCache.enable against the provided context.
+func (p *EnableParams) Do(ctxt context.Context, h Executor) (err error) {
+	return h.Execute(ctxt, CommandEnable, nil, nil)
 }
 
 // GetApplicationCacheForFrameParams returns relevant application cache data
@@ -48,15 +54,14 @@ type GetApplicationCacheForFrameReturns struct {
 	ApplicationCache *ApplicationCache `json:"applicationCache,omitempty"` // Relevant application cache data for the document in given frame.
 }
 
-// Do executes ApplicationCache.getApplicationCacheForFrame against the provided context and
-// target handler.
+// Do executes ApplicationCache.getApplicationCacheForFrame against the provided context.
 //
 // returns:
 //   applicationCache - Relevant application cache data for the document in given frame.
-func (p *GetApplicationCacheForFrameParams) Do(ctxt context.Context, h cdp.Handler) (applicationCache *ApplicationCache, err error) {
+func (p *GetApplicationCacheForFrameParams) Do(ctxt context.Context, h Executor) (applicationCache *ApplicationCache, err error) {
 	// execute
 	var res GetApplicationCacheForFrameReturns
-	err = h.Execute(ctxt, cdp.CommandApplicationCacheGetApplicationCacheForFrame, p, &res)
+	err = h.Execute(ctxt, CommandGetApplicationCacheForFrame, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -81,15 +86,14 @@ type GetFramesWithManifestsReturns struct {
 	FrameIds []*FrameWithManifest `json:"frameIds,omitempty"` // Array of frame identifiers with manifest urls for each frame containing a document associated with some application cache.
 }
 
-// Do executes ApplicationCache.getFramesWithManifests against the provided context and
-// target handler.
+// Do executes ApplicationCache.getFramesWithManifests against the provided context.
 //
 // returns:
 //   frameIds - Array of frame identifiers with manifest urls for each frame containing a document associated with some application cache.
-func (p *GetFramesWithManifestsParams) Do(ctxt context.Context, h cdp.Handler) (frameIds []*FrameWithManifest, err error) {
+func (p *GetFramesWithManifestsParams) Do(ctxt context.Context, h Executor) (frameIds []*FrameWithManifest, err error) {
 	// execute
 	var res GetFramesWithManifestsReturns
-	err = h.Execute(ctxt, cdp.CommandApplicationCacheGetFramesWithManifests, nil, &res)
+	err = h.Execute(ctxt, CommandGetFramesWithManifests, nil, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -118,18 +122,25 @@ type GetManifestForFrameReturns struct {
 	ManifestURL string `json:"manifestURL,omitempty"` // Manifest URL for document in the given frame.
 }
 
-// Do executes ApplicationCache.getManifestForFrame against the provided context and
-// target handler.
+// Do executes ApplicationCache.getManifestForFrame against the provided context.
 //
 // returns:
 //   manifestURL - Manifest URL for document in the given frame.
-func (p *GetManifestForFrameParams) Do(ctxt context.Context, h cdp.Handler) (manifestURL string, err error) {
+func (p *GetManifestForFrameParams) Do(ctxt context.Context, h Executor) (manifestURL string, err error) {
 	// execute
 	var res GetManifestForFrameReturns
-	err = h.Execute(ctxt, cdp.CommandApplicationCacheGetManifestForFrame, p, &res)
+	err = h.Execute(ctxt, CommandGetManifestForFrame, p, &res)
 	if err != nil {
 		return "", err
 	}
 
 	return res.ManifestURL, nil
 }
+
+// Command names.
+const (
+	CommandEnable                      = "ApplicationCache.enable"
+	CommandGetApplicationCacheForFrame = "ApplicationCache.getApplicationCacheForFrame"
+	CommandGetFramesWithManifests      = "ApplicationCache.getFramesWithManifests"
+	CommandGetManifestForFrame         = "ApplicationCache.getManifestForFrame"
+)
