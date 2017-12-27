@@ -18,17 +18,10 @@ package dom
 
 import (
 	"context"
-	"encoding/json"
 
 	cdp "github.com/chromedp/cdproto/cdp"
 	"github.com/chromedp/cdproto/runtime"
 )
-
-// Executor is the common interface for executing a command.
-type Executor interface {
-	// Execute executes the command.
-	Execute(context.Context, string, json.Marshaler, json.Unmarshaler) error
-}
 
 // CollectClassNamesFromSubtreeParams collects class names for the node with
 // given id and all of it's child nodes.
@@ -56,7 +49,7 @@ type CollectClassNamesFromSubtreeReturns struct {
 //
 // returns:
 //   classNames - Class name list.
-func (p *CollectClassNamesFromSubtreeParams) Do(ctxt context.Context, h Executor) (classNames []string, err error) {
+func (p *CollectClassNamesFromSubtreeParams) Do(ctxt context.Context, h cdp.Executor) (classNames []string, err error) {
 	// execute
 	var res CollectClassNamesFromSubtreeReturns
 	err = h.Execute(ctxt, CommandCollectClassNamesFromSubtree, p, &res)
@@ -104,7 +97,7 @@ type CopyToReturns struct {
 //
 // returns:
 //   nodeID - Id of the node clone.
-func (p *CopyToParams) Do(ctxt context.Context, h Executor) (nodeID cdp.NodeID, err error) {
+func (p *CopyToParams) Do(ctxt context.Context, h cdp.Executor) (nodeID cdp.NodeID, err error) {
 	// execute
 	var res CopyToReturns
 	err = h.Execute(ctxt, CommandCopyTo, p, &res)
@@ -175,7 +168,7 @@ type DescribeNodeReturns struct {
 //
 // returns:
 //   node - Node description.
-func (p *DescribeNodeParams) Do(ctxt context.Context, h Executor) (node *cdp.Node, err error) {
+func (p *DescribeNodeParams) Do(ctxt context.Context, h cdp.Executor) (node *cdp.Node, err error) {
 	// execute
 	var res DescribeNodeReturns
 	err = h.Execute(ctxt, CommandDescribeNode, p, &res)
@@ -195,7 +188,7 @@ func Disable() *DisableParams {
 }
 
 // Do executes DOM.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *DisableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandDisable, nil, nil)
 }
 
@@ -217,7 +210,7 @@ func DiscardSearchResults(searchID string) *DiscardSearchResultsParams {
 }
 
 // Do executes DOM.discardSearchResults against the provided context.
-func (p *DiscardSearchResultsParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *DiscardSearchResultsParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandDiscardSearchResults, p, nil)
 }
 
@@ -230,7 +223,7 @@ func Enable() *EnableParams {
 }
 
 // Do executes DOM.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *EnableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandEnable, nil, nil)
 }
 
@@ -267,7 +260,7 @@ func (p FocusParams) WithObjectID(objectID runtime.RemoteObjectID) *FocusParams 
 }
 
 // Do executes DOM.focus against the provided context.
-func (p *FocusParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *FocusParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandFocus, p, nil)
 }
 
@@ -295,7 +288,7 @@ type GetAttributesReturns struct {
 //
 // returns:
 //   attributes - An interleaved array of node attribute names and values.
-func (p *GetAttributesParams) Do(ctxt context.Context, h Executor) (attributes []string, err error) {
+func (p *GetAttributesParams) Do(ctxt context.Context, h cdp.Executor) (attributes []string, err error) {
 	// execute
 	var res GetAttributesReturns
 	err = h.Execute(ctxt, CommandGetAttributes, p, &res)
@@ -347,7 +340,7 @@ type GetBoxModelReturns struct {
 //
 // returns:
 //   model - Box model for the node.
-func (p *GetBoxModelParams) Do(ctxt context.Context, h Executor) (model *BoxModel, err error) {
+func (p *GetBoxModelParams) Do(ctxt context.Context, h cdp.Executor) (model *BoxModel, err error) {
 	// execute
 	var res GetBoxModelReturns
 	err = h.Execute(ctxt, CommandGetBoxModel, p, &res)
@@ -397,7 +390,7 @@ type GetDocumentReturns struct {
 //
 // returns:
 //   root - Resulting node.
-func (p *GetDocumentParams) Do(ctxt context.Context, h Executor) (root *cdp.Node, err error) {
+func (p *GetDocumentParams) Do(ctxt context.Context, h cdp.Executor) (root *cdp.Node, err error) {
 	// execute
 	var res GetDocumentReturns
 	err = h.Execute(ctxt, CommandGetDocument, p, &res)
@@ -447,7 +440,7 @@ type GetFlattenedDocumentReturns struct {
 //
 // returns:
 //   nodes - Resulting node.
-func (p *GetFlattenedDocumentParams) Do(ctxt context.Context, h Executor) (nodes []*cdp.Node, err error) {
+func (p *GetFlattenedDocumentParams) Do(ctxt context.Context, h cdp.Executor) (nodes []*cdp.Node, err error) {
 	// execute
 	var res GetFlattenedDocumentReturns
 	err = h.Execute(ctxt, CommandGetFlattenedDocument, p, &res)
@@ -493,7 +486,7 @@ type GetNodeForLocationReturns struct {
 //
 // returns:
 //   nodeID - Id of the node at given coordinates.
-func (p *GetNodeForLocationParams) Do(ctxt context.Context, h Executor) (nodeID cdp.NodeID, err error) {
+func (p *GetNodeForLocationParams) Do(ctxt context.Context, h cdp.Executor) (nodeID cdp.NodeID, err error) {
 	// execute
 	var res GetNodeForLocationReturns
 	err = h.Execute(ctxt, CommandGetNodeForLocation, p, &res)
@@ -545,7 +538,7 @@ type GetOuterHTMLReturns struct {
 //
 // returns:
 //   outerHTML - Outer HTML markup.
-func (p *GetOuterHTMLParams) Do(ctxt context.Context, h Executor) (outerHTML string, err error) {
+func (p *GetOuterHTMLParams) Do(ctxt context.Context, h cdp.Executor) (outerHTML string, err error) {
 	// execute
 	var res GetOuterHTMLReturns
 	err = h.Execute(ctxt, CommandGetOuterHTML, p, &res)
@@ -582,7 +575,7 @@ type GetRelayoutBoundaryReturns struct {
 //
 // returns:
 //   nodeID - Relayout boundary node id for the given node.
-func (p *GetRelayoutBoundaryParams) Do(ctxt context.Context, h Executor) (nodeID cdp.NodeID, err error) {
+func (p *GetRelayoutBoundaryParams) Do(ctxt context.Context, h cdp.Executor) (nodeID cdp.NodeID, err error) {
 	// execute
 	var res GetRelayoutBoundaryReturns
 	err = h.Execute(ctxt, CommandGetRelayoutBoundary, p, &res)
@@ -625,7 +618,7 @@ type GetSearchResultsReturns struct {
 //
 // returns:
 //   nodeIds - Ids of the search result nodes.
-func (p *GetSearchResultsParams) Do(ctxt context.Context, h Executor) (nodeIds []cdp.NodeID, err error) {
+func (p *GetSearchResultsParams) Do(ctxt context.Context, h cdp.Executor) (nodeIds []cdp.NodeID, err error) {
 	// execute
 	var res GetSearchResultsReturns
 	err = h.Execute(ctxt, CommandGetSearchResults, p, &res)
@@ -645,7 +638,7 @@ func MarkUndoableState() *MarkUndoableStateParams {
 }
 
 // Do executes DOM.markUndoableState against the provided context.
-func (p *MarkUndoableStateParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *MarkUndoableStateParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandMarkUndoableState, nil, nil)
 }
 
@@ -686,7 +679,7 @@ type MoveToReturns struct {
 //
 // returns:
 //   nodeID - New id of the moved node.
-func (p *MoveToParams) Do(ctxt context.Context, h Executor) (nodeID cdp.NodeID, err error) {
+func (p *MoveToParams) Do(ctxt context.Context, h cdp.Executor) (nodeID cdp.NodeID, err error) {
 	// execute
 	var res MoveToReturns
 	err = h.Execute(ctxt, CommandMoveTo, p, &res)
@@ -734,7 +727,7 @@ type PerformSearchReturns struct {
 // returns:
 //   searchID - Unique search session identifier.
 //   resultCount - Number of search results.
-func (p *PerformSearchParams) Do(ctxt context.Context, h Executor) (searchID string, resultCount int64, err error) {
+func (p *PerformSearchParams) Do(ctxt context.Context, h cdp.Executor) (searchID string, resultCount int64, err error) {
 	// execute
 	var res PerformSearchReturns
 	err = h.Execute(ctxt, CommandPerformSearch, p, &res)
@@ -771,7 +764,7 @@ type PushNodeByPathToFrontendReturns struct {
 //
 // returns:
 //   nodeID - Id of the node for given path.
-func (p *PushNodeByPathToFrontendParams) Do(ctxt context.Context, h Executor) (nodeID cdp.NodeID, err error) {
+func (p *PushNodeByPathToFrontendParams) Do(ctxt context.Context, h cdp.Executor) (nodeID cdp.NodeID, err error) {
 	// execute
 	var res PushNodeByPathToFrontendReturns
 	err = h.Execute(ctxt, CommandPushNodeByPathToFrontend, p, &res)
@@ -808,7 +801,7 @@ type PushNodesByBackendIdsToFrontendReturns struct {
 //
 // returns:
 //   nodeIds - The array of ids of pushed nodes that correspond to the backend ids specified in backendNodeIds.
-func (p *PushNodesByBackendIdsToFrontendParams) Do(ctxt context.Context, h Executor) (nodeIds []cdp.NodeID, err error) {
+func (p *PushNodesByBackendIdsToFrontendParams) Do(ctxt context.Context, h cdp.Executor) (nodeIds []cdp.NodeID, err error) {
 	// execute
 	var res PushNodesByBackendIdsToFrontendReturns
 	err = h.Execute(ctxt, CommandPushNodesByBackendIdsToFrontend, p, &res)
@@ -846,7 +839,7 @@ type QuerySelectorReturns struct {
 //
 // returns:
 //   nodeID - Query selector result.
-func (p *QuerySelectorParams) Do(ctxt context.Context, h Executor) (nodeID cdp.NodeID, err error) {
+func (p *QuerySelectorParams) Do(ctxt context.Context, h cdp.Executor) (nodeID cdp.NodeID, err error) {
 	// execute
 	var res QuerySelectorReturns
 	err = h.Execute(ctxt, CommandQuerySelector, p, &res)
@@ -884,7 +877,7 @@ type QuerySelectorAllReturns struct {
 //
 // returns:
 //   nodeIds - Query selector result.
-func (p *QuerySelectorAllParams) Do(ctxt context.Context, h Executor) (nodeIds []cdp.NodeID, err error) {
+func (p *QuerySelectorAllParams) Do(ctxt context.Context, h cdp.Executor) (nodeIds []cdp.NodeID, err error) {
 	// execute
 	var res QuerySelectorAllReturns
 	err = h.Execute(ctxt, CommandQuerySelectorAll, p, &res)
@@ -904,7 +897,7 @@ func Redo() *RedoParams {
 }
 
 // Do executes DOM.redo against the provided context.
-func (p *RedoParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *RedoParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandRedo, nil, nil)
 }
 
@@ -929,7 +922,7 @@ func RemoveAttribute(nodeID cdp.NodeID, name string) *RemoveAttributeParams {
 }
 
 // Do executes DOM.removeAttribute against the provided context.
-func (p *RemoveAttributeParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *RemoveAttributeParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandRemoveAttribute, p, nil)
 }
 
@@ -949,7 +942,7 @@ func RemoveNode(nodeID cdp.NodeID) *RemoveNodeParams {
 }
 
 // Do executes DOM.removeNode against the provided context.
-func (p *RemoveNodeParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *RemoveNodeParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandRemoveNode, p, nil)
 }
 
@@ -992,7 +985,7 @@ func (p RequestChildNodesParams) WithPierce(pierce bool) *RequestChildNodesParam
 }
 
 // Do executes DOM.requestChildNodes against the provided context.
-func (p *RequestChildNodesParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *RequestChildNodesParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandRequestChildNodes, p, nil)
 }
 
@@ -1026,7 +1019,7 @@ type RequestNodeReturns struct {
 //
 // returns:
 //   nodeID - Node id for given object.
-func (p *RequestNodeParams) Do(ctxt context.Context, h Executor) (nodeID cdp.NodeID, err error) {
+func (p *RequestNodeParams) Do(ctxt context.Context, h cdp.Executor) (nodeID cdp.NodeID, err error) {
 	// execute
 	var res RequestNodeReturns
 	err = h.Execute(ctxt, CommandRequestNode, p, &res)
@@ -1081,7 +1074,7 @@ type ResolveNodeReturns struct {
 //
 // returns:
 //   object - JavaScript object wrapper for given node.
-func (p *ResolveNodeParams) Do(ctxt context.Context, h Executor) (object *runtime.RemoteObject, err error) {
+func (p *ResolveNodeParams) Do(ctxt context.Context, h cdp.Executor) (object *runtime.RemoteObject, err error) {
 	// execute
 	var res ResolveNodeReturns
 	err = h.Execute(ctxt, CommandResolveNode, p, &res)
@@ -1114,7 +1107,7 @@ func SetAttributeValue(nodeID cdp.NodeID, name string, value string) *SetAttribu
 }
 
 // Do executes DOM.setAttributeValue against the provided context.
-func (p *SetAttributeValueParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *SetAttributeValueParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandSetAttributeValue, p, nil)
 }
 
@@ -1149,7 +1142,7 @@ func (p SetAttributesAsTextParams) WithName(name string) *SetAttributesAsTextPar
 }
 
 // Do executes DOM.setAttributesAsText against the provided context.
-func (p *SetAttributesAsTextParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *SetAttributesAsTextParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandSetAttributesAsText, p, nil)
 }
 
@@ -1190,7 +1183,7 @@ func (p SetFileInputFilesParams) WithObjectID(objectID runtime.RemoteObjectID) *
 }
 
 // Do executes DOM.setFileInputFiles against the provided context.
-func (p *SetFileInputFilesParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *SetFileInputFilesParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandSetFileInputFiles, p, nil)
 }
 
@@ -1212,7 +1205,7 @@ func SetInspectedNode(nodeID cdp.NodeID) *SetInspectedNodeParams {
 }
 
 // Do executes DOM.setInspectedNode against the provided context.
-func (p *SetInspectedNodeParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *SetInspectedNodeParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandSetInspectedNode, p, nil)
 }
 
@@ -1243,7 +1236,7 @@ type SetNodeNameReturns struct {
 //
 // returns:
 //   nodeID - New node's id.
-func (p *SetNodeNameParams) Do(ctxt context.Context, h Executor) (nodeID cdp.NodeID, err error) {
+func (p *SetNodeNameParams) Do(ctxt context.Context, h cdp.Executor) (nodeID cdp.NodeID, err error) {
 	// execute
 	var res SetNodeNameReturns
 	err = h.Execute(ctxt, CommandSetNodeName, p, &res)
@@ -1273,7 +1266,7 @@ func SetNodeValue(nodeID cdp.NodeID, value string) *SetNodeValueParams {
 }
 
 // Do executes DOM.setNodeValue against the provided context.
-func (p *SetNodeValueParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *SetNodeValueParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandSetNodeValue, p, nil)
 }
 
@@ -1296,7 +1289,7 @@ func SetOuterHTML(nodeID cdp.NodeID, outerHTML string) *SetOuterHTMLParams {
 }
 
 // Do executes DOM.setOuterHTML against the provided context.
-func (p *SetOuterHTMLParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *SetOuterHTMLParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandSetOuterHTML, p, nil)
 }
 
@@ -1309,7 +1302,7 @@ func Undo() *UndoParams {
 }
 
 // Do executes DOM.undo against the provided context.
-func (p *UndoParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *UndoParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandUndo, nil, nil)
 }
 

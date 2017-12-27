@@ -8,16 +8,9 @@ package applicationcache
 
 import (
 	"context"
-	"encoding/json"
 
 	cdp "github.com/chromedp/cdproto/cdp"
 )
-
-// Executor is the common interface for executing a command.
-type Executor interface {
-	// Execute executes the command.
-	Execute(context.Context, string, json.Marshaler, json.Unmarshaler) error
-}
 
 // EnableParams enables application cache domain notifications.
 type EnableParams struct{}
@@ -28,7 +21,7 @@ func Enable() *EnableParams {
 }
 
 // Do executes ApplicationCache.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *EnableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandEnable, nil, nil)
 }
 
@@ -58,7 +51,7 @@ type GetApplicationCacheForFrameReturns struct {
 //
 // returns:
 //   applicationCache - Relevant application cache data for the document in given frame.
-func (p *GetApplicationCacheForFrameParams) Do(ctxt context.Context, h Executor) (applicationCache *ApplicationCache, err error) {
+func (p *GetApplicationCacheForFrameParams) Do(ctxt context.Context, h cdp.Executor) (applicationCache *ApplicationCache, err error) {
 	// execute
 	var res GetApplicationCacheForFrameReturns
 	err = h.Execute(ctxt, CommandGetApplicationCacheForFrame, p, &res)
@@ -90,7 +83,7 @@ type GetFramesWithManifestsReturns struct {
 //
 // returns:
 //   frameIds - Array of frame identifiers with manifest urls for each frame containing a document associated with some application cache.
-func (p *GetFramesWithManifestsParams) Do(ctxt context.Context, h Executor) (frameIds []*FrameWithManifest, err error) {
+func (p *GetFramesWithManifestsParams) Do(ctxt context.Context, h cdp.Executor) (frameIds []*FrameWithManifest, err error) {
 	// execute
 	var res GetFramesWithManifestsReturns
 	err = h.Execute(ctxt, CommandGetFramesWithManifests, nil, &res)
@@ -126,7 +119,7 @@ type GetManifestForFrameReturns struct {
 //
 // returns:
 //   manifestURL - Manifest URL for document in the given frame.
-func (p *GetManifestForFrameParams) Do(ctxt context.Context, h Executor) (manifestURL string, err error) {
+func (p *GetManifestForFrameParams) Do(ctxt context.Context, h cdp.Executor) (manifestURL string, err error) {
 	// execute
 	var res GetManifestForFrameReturns
 	err = h.Execute(ctxt, CommandGetManifestForFrame, p, &res)

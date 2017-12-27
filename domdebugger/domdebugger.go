@@ -12,17 +12,10 @@ package domdebugger
 
 import (
 	"context"
-	"encoding/json"
 
 	cdp "github.com/chromedp/cdproto/cdp"
 	"github.com/chromedp/cdproto/runtime"
 )
-
-// Executor is the common interface for executing a command.
-type Executor interface {
-	// Execute executes the command.
-	Execute(context.Context, string, json.Marshaler, json.Unmarshaler) error
-}
 
 // GetEventListenersParams returns event listeners of the given object.
 type GetEventListenersParams struct {
@@ -66,7 +59,7 @@ type GetEventListenersReturns struct {
 //
 // returns:
 //   listeners - Array of relevant listeners.
-func (p *GetEventListenersParams) Do(ctxt context.Context, h Executor) (listeners []*EventListener, err error) {
+func (p *GetEventListenersParams) Do(ctxt context.Context, h cdp.Executor) (listeners []*EventListener, err error) {
 	// execute
 	var res GetEventListenersReturns
 	err = h.Execute(ctxt, CommandGetEventListeners, p, &res)
@@ -98,7 +91,7 @@ func RemoveDOMBreakpoint(nodeID cdp.NodeID, typeVal DOMBreakpointType) *RemoveDO
 }
 
 // Do executes DOMDebugger.removeDOMBreakpoint against the provided context.
-func (p *RemoveDOMBreakpointParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *RemoveDOMBreakpointParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandRemoveDOMBreakpoint, p, nil)
 }
 
@@ -126,7 +119,7 @@ func (p RemoveEventListenerBreakpointParams) WithTargetName(targetName string) *
 }
 
 // Do executes DOMDebugger.removeEventListenerBreakpoint against the provided context.
-func (p *RemoveEventListenerBreakpointParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *RemoveEventListenerBreakpointParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandRemoveEventListenerBreakpoint, p, nil)
 }
 
@@ -148,7 +141,7 @@ func RemoveInstrumentationBreakpoint(eventName string) *RemoveInstrumentationBre
 }
 
 // Do executes DOMDebugger.removeInstrumentationBreakpoint against the provided context.
-func (p *RemoveInstrumentationBreakpointParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *RemoveInstrumentationBreakpointParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandRemoveInstrumentationBreakpoint, p, nil)
 }
 
@@ -168,7 +161,7 @@ func RemoveXHRBreakpoint(url string) *RemoveXHRBreakpointParams {
 }
 
 // Do executes DOMDebugger.removeXHRBreakpoint against the provided context.
-func (p *RemoveXHRBreakpointParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *RemoveXHRBreakpointParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandRemoveXHRBreakpoint, p, nil)
 }
 
@@ -191,7 +184,7 @@ func SetDOMBreakpoint(nodeID cdp.NodeID, typeVal DOMBreakpointType) *SetDOMBreak
 }
 
 // Do executes DOMDebugger.setDOMBreakpoint against the provided context.
-func (p *SetDOMBreakpointParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *SetDOMBreakpointParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandSetDOMBreakpoint, p, nil)
 }
 
@@ -219,7 +212,7 @@ func (p SetEventListenerBreakpointParams) WithTargetName(targetName string) *Set
 }
 
 // Do executes DOMDebugger.setEventListenerBreakpoint against the provided context.
-func (p *SetEventListenerBreakpointParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *SetEventListenerBreakpointParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandSetEventListenerBreakpoint, p, nil)
 }
 
@@ -240,7 +233,7 @@ func SetInstrumentationBreakpoint(eventName string) *SetInstrumentationBreakpoin
 }
 
 // Do executes DOMDebugger.setInstrumentationBreakpoint against the provided context.
-func (p *SetInstrumentationBreakpointParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *SetInstrumentationBreakpointParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandSetInstrumentationBreakpoint, p, nil)
 }
 
@@ -260,7 +253,7 @@ func SetXHRBreakpoint(url string) *SetXHRBreakpointParams {
 }
 
 // Do executes DOMDebugger.setXHRBreakpoint against the provided context.
-func (p *SetXHRBreakpointParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *SetXHRBreakpointParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandSetXHRBreakpoint, p, nil)
 }
 

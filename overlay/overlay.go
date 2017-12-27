@@ -11,19 +11,12 @@ package overlay
 
 import (
 	"context"
-	"encoding/json"
 
 	cdp "github.com/chromedp/cdproto/cdp"
 	"github.com/chromedp/cdproto/dom"
 	"github.com/chromedp/cdproto/runtime"
 	"github.com/mailru/easyjson"
 )
-
-// Executor is the common interface for executing a command.
-type Executor interface {
-	// Execute executes the command.
-	Execute(context.Context, string, json.Marshaler, json.Unmarshaler) error
-}
 
 // DisableParams disables domain notifications.
 type DisableParams struct{}
@@ -34,7 +27,7 @@ func Disable() *DisableParams {
 }
 
 // Do executes Overlay.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *DisableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandDisable, nil, nil)
 }
 
@@ -47,7 +40,7 @@ func Enable() *EnableParams {
 }
 
 // Do executes Overlay.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *EnableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandEnable, nil, nil)
 }
 
@@ -75,7 +68,7 @@ type GetHighlightObjectForTestReturns struct {
 //
 // returns:
 //   highlight - Highlight data for the node.
-func (p *GetHighlightObjectForTestParams) Do(ctxt context.Context, h Executor) (highlight easyjson.RawMessage, err error) {
+func (p *GetHighlightObjectForTestParams) Do(ctxt context.Context, h cdp.Executor) (highlight easyjson.RawMessage, err error) {
 	// execute
 	var res GetHighlightObjectForTestReturns
 	err = h.Execute(ctxt, CommandGetHighlightObjectForTest, p, &res)
@@ -95,7 +88,7 @@ func HideHighlight() *HideHighlightParams {
 }
 
 // Do executes Overlay.hideHighlight against the provided context.
-func (p *HideHighlightParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *HideHighlightParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandHideHighlight, nil, nil)
 }
 
@@ -131,7 +124,7 @@ func (p HighlightFrameParams) WithContentOutlineColor(contentOutlineColor *cdp.R
 }
 
 // Do executes Overlay.highlightFrame against the provided context.
-func (p *HighlightFrameParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *HighlightFrameParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandHighlightFrame, p, nil)
 }
 
@@ -174,7 +167,7 @@ func (p HighlightNodeParams) WithObjectID(objectID runtime.RemoteObjectID) *High
 }
 
 // Do executes Overlay.highlightNode against the provided context.
-func (p *HighlightNodeParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *HighlightNodeParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandHighlightNode, p, nil)
 }
 
@@ -210,7 +203,7 @@ func (p HighlightQuadParams) WithOutlineColor(outlineColor *cdp.RGBA) *Highlight
 }
 
 // Do executes Overlay.highlightQuad against the provided context.
-func (p *HighlightQuadParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *HighlightQuadParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandHighlightQuad, p, nil)
 }
 
@@ -255,7 +248,7 @@ func (p HighlightRectParams) WithOutlineColor(outlineColor *cdp.RGBA) *Highlight
 }
 
 // Do executes Overlay.highlightRect against the provided context.
-func (p *HighlightRectParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *HighlightRectParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandHighlightRect, p, nil)
 }
 
@@ -287,7 +280,7 @@ func (p SetInspectModeParams) WithHighlightConfig(highlightConfig *HighlightConf
 }
 
 // Do executes Overlay.setInspectMode against the provided context.
-func (p *SetInspectModeParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *SetInspectModeParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandSetInspectMode, p, nil)
 }
 
@@ -311,7 +304,7 @@ func (p SetPausedInDebuggerMessageParams) WithMessage(message string) *SetPaused
 }
 
 // Do executes Overlay.setPausedInDebuggerMessage against the provided context.
-func (p *SetPausedInDebuggerMessageParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *SetPausedInDebuggerMessageParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandSetPausedInDebuggerMessage, p, nil)
 }
 
@@ -332,7 +325,7 @@ func SetShowDebugBorders(show bool) *SetShowDebugBordersParams {
 }
 
 // Do executes Overlay.setShowDebugBorders against the provided context.
-func (p *SetShowDebugBordersParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *SetShowDebugBordersParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandSetShowDebugBorders, p, nil)
 }
 
@@ -352,7 +345,7 @@ func SetShowFPSCounter(show bool) *SetShowFPSCounterParams {
 }
 
 // Do executes Overlay.setShowFPSCounter against the provided context.
-func (p *SetShowFPSCounterParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *SetShowFPSCounterParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandSetShowFPSCounter, p, nil)
 }
 
@@ -372,7 +365,7 @@ func SetShowPaintRects(result bool) *SetShowPaintRectsParams {
 }
 
 // Do executes Overlay.setShowPaintRects against the provided context.
-func (p *SetShowPaintRectsParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *SetShowPaintRectsParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandSetShowPaintRects, p, nil)
 }
 
@@ -394,7 +387,7 @@ func SetShowScrollBottleneckRects(show bool) *SetShowScrollBottleneckRectsParams
 }
 
 // Do executes Overlay.setShowScrollBottleneckRects against the provided context.
-func (p *SetShowScrollBottleneckRectsParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *SetShowScrollBottleneckRectsParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandSetShowScrollBottleneckRects, p, nil)
 }
 
@@ -415,7 +408,7 @@ func SetShowViewportSizeOnResize(show bool) *SetShowViewportSizeOnResizeParams {
 }
 
 // Do executes Overlay.setShowViewportSizeOnResize against the provided context.
-func (p *SetShowViewportSizeOnResizeParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *SetShowViewportSizeOnResizeParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandSetShowViewportSizeOnResize, p, nil)
 }
 
@@ -435,7 +428,7 @@ func SetSuspended(suspended bool) *SetSuspendedParams {
 }
 
 // Do executes Overlay.setSuspended against the provided context.
-func (p *SetSuspendedParams) Do(ctxt context.Context, h Executor) (err error) {
+func (p *SetSuspendedParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandSetSuspended, p, nil)
 }
 

@@ -8,16 +8,9 @@ package accessibility
 
 import (
 	"context"
-	"encoding/json"
 
 	cdp "github.com/chromedp/cdproto/cdp"
 )
-
-// Executor is the common interface for executing a command.
-type Executor interface {
-	// Execute executes the command.
-	Execute(context.Context, string, json.Marshaler, json.Unmarshaler) error
-}
 
 // GetPartialAXTreeParams fetches the accessibility node and partial
 // accessibility tree for this DOM node, if it exists.
@@ -53,7 +46,7 @@ type GetPartialAXTreeReturns struct {
 //
 // returns:
 //   nodes - The Accessibility.AXNode for this DOM node, if it exists, plus its ancestors, siblings and children, if requested.
-func (p *GetPartialAXTreeParams) Do(ctxt context.Context, h Executor) (nodes []*AXNode, err error) {
+func (p *GetPartialAXTreeParams) Do(ctxt context.Context, h cdp.Executor) (nodes []*AXNode, err error) {
 	// execute
 	var res GetPartialAXTreeReturns
 	err = h.Execute(ctxt, CommandGetPartialAXTree, p, &res)
