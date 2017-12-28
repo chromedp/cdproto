@@ -9,7 +9,7 @@ package heapprofiler
 import (
 	"context"
 
-	cdp "github.com/chromedp/cdproto/cdp"
+	"github.com/chromedp/cdproto/cdp"
 	"github.com/chromedp/cdproto/runtime"
 )
 

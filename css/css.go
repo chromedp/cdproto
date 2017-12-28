@@ -18,7 +18,7 @@ package css
 import (
 	"context"
 
-	cdp "github.com/chromedp/cdproto/cdp"
+	"github.com/chromedp/cdproto/cdp"
 )
 
 // AddRuleParams inserts a new rule with the given ruleText in a stylesheet

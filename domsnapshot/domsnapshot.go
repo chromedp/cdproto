@@ -12,7 +12,7 @@ package domsnapshot
 import (
 	"context"
 
-	cdp "github.com/chromedp/cdproto/cdp"
+	"github.com/chromedp/cdproto/cdp"
 )
 
 // GetSnapshotParams returns a document snapshot, including the full DOM tree

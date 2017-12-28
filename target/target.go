@@ -11,7 +11,7 @@ package target
 import (
 	"context"
 
-	cdp "github.com/chromedp/cdproto/cdp"
+	"github.com/chromedp/cdproto/cdp"
 )
 
 // ActivateTargetParams activates (focuses) the target.

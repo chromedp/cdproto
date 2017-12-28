@@ -14,7 +14,7 @@ import (
 	"context"
 	"encoding/base64"
 
-	cdp "github.com/chromedp/cdproto/cdp"
+	"github.com/chromedp/cdproto/cdp"
 	"github.com/chromedp/cdproto/debugger"
 )
 

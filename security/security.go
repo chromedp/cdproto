@@ -11,7 +11,7 @@ package security
 import (
 	"context"
 
-	cdp "github.com/chromedp/cdproto/cdp"
+	"github.com/chromedp/cdproto/cdp"
 )
 
 // DisableParams disables tracking security state changes.

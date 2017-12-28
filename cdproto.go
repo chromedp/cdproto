@@ -33,9 +33,9 @@ import (
 	"github.com/chromedp/cdproto/indexeddb"
 	"github.com/chromedp/cdproto/input"
 	"github.com/chromedp/cdproto/inspector"
-	iodom "github.com/chromedp/cdproto/io"
+	"github.com/chromedp/cdproto/io"
 	"github.com/chromedp/cdproto/layertree"
-	logdom "github.com/chromedp/cdproto/log"
+	"github.com/chromedp/cdproto/log"
 	"github.com/chromedp/cdproto/memory"
 	"github.com/chromedp/cdproto/network"
 	"github.com/chromedp/cdproto/overlay"
@@ -277,9 +277,9 @@ const (
 	EventHeapProfilerLastSeenObjectID                      = "HeapProfiler.lastSeenObjectId"
 	EventHeapProfilerReportHeapSnapshotProgress            = "HeapProfiler.reportHeapSnapshotProgress"
 	EventHeapProfilerResetProfiles                         = "HeapProfiler.resetProfiles"
-	CommandIOClose                                         = iodom.CommandClose
-	CommandIORead                                          = iodom.CommandRead
-	CommandIOResolveBlob                                   = iodom.CommandResolveBlob
+	CommandIOClose                                         = io.CommandClose
+	CommandIORead                                          = io.CommandRead
+	CommandIOResolveBlob                                   = io.CommandResolveBlob
 	CommandIndexedDBClearObjectStore                       = indexeddb.CommandClearObjectStore
 	CommandIndexedDBDeleteDatabase                         = indexeddb.CommandDeleteDatabase
 	CommandIndexedDBDeleteObjectStoreEntries               = indexeddb.CommandDeleteObjectStoreEntries
@@ -311,11 +311,11 @@ const (
 	CommandLayerTreeSnapshotCommandLog                     = layertree.CommandSnapshotCommandLog
 	EventLayerTreeLayerPainted                             = "LayerTree.layerPainted"
 	EventLayerTreeLayerTreeDidChange                       = "LayerTree.layerTreeDidChange"
-	CommandLogClear                                        = logdom.CommandClear
-	CommandLogDisable                                      = logdom.CommandDisable
-	CommandLogEnable                                       = logdom.CommandEnable
-	CommandLogStartViolationsReport                        = logdom.CommandStartViolationsReport
-	CommandLogStopViolationsReport                         = logdom.CommandStopViolationsReport
+	CommandLogClear                                        = log.CommandClear
+	CommandLogDisable                                      = log.CommandDisable
+	CommandLogEnable                                       = log.CommandEnable
+	CommandLogStartViolationsReport                        = log.CommandStartViolationsReport
+	CommandLogStopViolationsReport                         = log.CommandStopViolationsReport
 	EventLogEntryAdded                                     = "Log.entryAdded"
 	CommandMemoryGetDOMCounters                            = memory.CommandGetDOMCounters
 	CommandMemoryPrepareForLeakDetection                   = memory.CommandPrepareForLeakDetection
@@ -1186,10 +1186,10 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		return emptyVal, nil
 
 	case CommandIORead:
-		v = new(iodom.ReadReturns)
+		v = new(io.ReadReturns)
 
 	case CommandIOResolveBlob:
-		v = new(iodom.ResolveBlobReturns)
+		v = new(io.ResolveBlobReturns)
 
 	case CommandIndexedDBClearObjectStore:
 		return emptyVal, nil
@@ -1300,7 +1300,7 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		return emptyVal, nil
 
 	case EventLogEntryAdded:
-		v = new(logdom.EventEntryAdded)
+		v = new(log.EventEntryAdded)
 
 	case CommandMemoryGetDOMCounters:
 		v = new(memory.GetDOMCountersReturns)

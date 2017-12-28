@@ -9,7 +9,7 @@ package accessibility
 import (
 	"context"
 
-	cdp "github.com/chromedp/cdproto/cdp"
+	"github.com/chromedp/cdproto/cdp"
 )
 
 // GetPartialAXTreeParams fetches the accessibility node and partial

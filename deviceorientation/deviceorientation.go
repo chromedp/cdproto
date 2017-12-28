@@ -9,7 +9,7 @@ package deviceorientation
 import (
 	"context"
 
-	cdp "github.com/chromedp/cdproto/cdp"
+	"github.com/chromedp/cdproto/cdp"
 )
 
 // ClearDeviceOrientationOverrideParams clears the overridden Device
