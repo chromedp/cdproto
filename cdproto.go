@@ -401,7 +401,6 @@ const (
 	CommandPageScreencastFrameAck                          = page.CommandScreencastFrameAck
 	CommandPageSearchInResource                            = page.CommandSearchInResource
 	CommandPageSetAdBlockingEnabled                        = page.CommandSetAdBlockingEnabled
-	CommandPageSetAutoAttachToCreatedPages                 = page.CommandSetAutoAttachToCreatedPages
 	CommandPageSetDocumentContent                          = page.CommandSetDocumentContent
 	CommandPageSetDownloadBehavior                         = page.CommandSetDownloadBehavior
 	CommandPageSetLifecycleEventsEnabled                   = page.CommandSetLifecycleEventsEnabled
@@ -1552,9 +1551,6 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		v = new(page.SearchInResourceReturns)
 
 	case CommandPageSetAdBlockingEnabled:
-		return emptyVal, nil
-
-	case CommandPageSetAutoAttachToCreatedPages:
 		return emptyVal, nil
 
 	case CommandPageSetDocumentContent:

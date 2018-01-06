@@ -5777,6 +5777,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork45(in *jlexer.Lexer, o
 			}
 		case "encodedDataLength":
 			out.EncodedDataLength = float64(in.Float64())
+		case "blockedCrossSiteDocument":
+			out.BlockedCrossSiteDocument = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -5824,6 +5826,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoNetwork45(out *jwriter.Writer
 			out.RawString(prefix)
 		}
 		out.Float64(float64(in.EncodedDataLength))
+	}
+	if in.BlockedCrossSiteDocument {
+		const prefix string = ",\"blockedCrossSiteDocument\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Bool(bool(in.BlockedCrossSiteDocument))
 	}
 	out.RawByte('}')
 }

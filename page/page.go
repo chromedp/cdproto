@@ -825,28 +825,6 @@ func (p *SetAdBlockingEnabledParams) Do(ctxt context.Context, h cdp.Executor) (e
 	return h.Execute(ctxt, CommandSetAdBlockingEnabled, p, nil)
 }
 
-// SetAutoAttachToCreatedPagesParams controls whether browser will open a new
-// inspector window for connected pages.
-type SetAutoAttachToCreatedPagesParams struct {
-	AutoAttach bool `json:"autoAttach"` // If true, browser will open a new inspector window for every page created from this one.
-}
-
-// SetAutoAttachToCreatedPages controls whether browser will open a new
-// inspector window for connected pages.
-//
-// parameters:
-//   autoAttach - If true, browser will open a new inspector window for every page created from this one.
-func SetAutoAttachToCreatedPages(autoAttach bool) *SetAutoAttachToCreatedPagesParams {
-	return &SetAutoAttachToCreatedPagesParams{
-		AutoAttach: autoAttach,
-	}
-}
-
-// Do executes Page.setAutoAttachToCreatedPages against the provided context.
-func (p *SetAutoAttachToCreatedPagesParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetAutoAttachToCreatedPages, p, nil)
-}
-
 // SetDocumentContentParams sets given markup as the document's HTML.
 type SetDocumentContentParams struct {
 	FrameID cdp.FrameID `json:"frameId"` // Frame id to set HTML for.
@@ -1024,7 +1002,6 @@ const (
 	CommandScreencastFrameAck                  = "Page.screencastFrameAck"
 	CommandSearchInResource                    = "Page.searchInResource"
 	CommandSetAdBlockingEnabled                = "Page.setAdBlockingEnabled"
-	CommandSetAutoAttachToCreatedPages         = "Page.setAutoAttachToCreatedPages"
 	CommandSetDocumentContent                  = "Page.setDocumentContent"
 	CommandSetDownloadBehavior                 = "Page.setDownloadBehavior"
 	CommandSetLifecycleEventsEnabled           = "Page.setLifecycleEventsEnabled"

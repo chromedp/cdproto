@@ -37,9 +37,10 @@ type EventLoadingFailed struct {
 
 // EventLoadingFinished fired when HTTP request has finished loading.
 type EventLoadingFinished struct {
-	RequestID         RequestID          `json:"requestId"`         // Request identifier.
-	Timestamp         *cdp.MonotonicTime `json:"timestamp"`         // Timestamp.
-	EncodedDataLength float64            `json:"encodedDataLength"` // Total number of bytes received for this request.
+	RequestID                RequestID          `json:"requestId"`                          // Request identifier.
+	Timestamp                *cdp.MonotonicTime `json:"timestamp"`                          // Timestamp.
+	EncodedDataLength        float64            `json:"encodedDataLength"`                  // Total number of bytes received for this request.
+	BlockedCrossSiteDocument bool               `json:"blockedCrossSiteDocument,omitempty"` // Set when response was blocked due to being cross-site document response.
 }
 
 // EventRequestIntercepted details of an intercepted HTTP request, which must
