@@ -21,7 +21,8 @@ import (
 // style information for the nodes. Shadow DOM in the returned DOM tree is
 // flattened.
 type GetSnapshotParams struct {
-	ComputedStyleWhitelist []string `json:"computedStyleWhitelist"` // Whitelist of computed styles to return.
+	ComputedStyleWhitelist []string `json:"computedStyleWhitelist"`          // Whitelist of computed styles to return.
+	IncludeEventListeners  bool     `json:"includeEventListeners,omitempty"` // Whether or not to retrieve details of DOM listeners (default false).
 }
 
 // GetSnapshot returns a document snapshot, including the full DOM tree of
@@ -35,6 +36,13 @@ func GetSnapshot(computedStyleWhitelist []string) *GetSnapshotParams {
 	return &GetSnapshotParams{
 		ComputedStyleWhitelist: computedStyleWhitelist,
 	}
+}
+
+// WithIncludeEventListeners whether or not to retrieve details of DOM
+// listeners (default false).
+func (p GetSnapshotParams) WithIncludeEventListeners(includeEventListeners bool) *GetSnapshotParams {
+	p.IncludeEventListeners = includeEventListeners
+	return &p
 }
 
 // GetSnapshotReturns return values.

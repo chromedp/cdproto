@@ -64,6 +64,81 @@ func (p *GetVersionParams) Do(ctxt context.Context, h cdp.Executor) (protocolVer
 	return res.ProtocolVersion, res.Product, res.Revision, res.UserAgent, res.JsVersion, nil
 }
 
+// GetHistogramsParams get Chrome histograms.
+type GetHistogramsParams struct {
+	Query string `json:"query,omitempty"` // Requested substring in name. Only histograms which have query as a substring in their name are extracted. An empty or absent query returns all histograms.
+}
+
+// GetHistograms get Chrome histograms.
+//
+// parameters:
+func GetHistograms() *GetHistogramsParams {
+	return &GetHistogramsParams{}
+}
+
+// WithQuery requested substring in name. Only histograms which have query as
+// a substring in their name are extracted. An empty or absent query returns all
+// histograms.
+func (p GetHistogramsParams) WithQuery(query string) *GetHistogramsParams {
+	p.Query = query
+	return &p
+}
+
+// GetHistogramsReturns return values.
+type GetHistogramsReturns struct {
+	Histograms []*Histogram `json:"histograms,omitempty"` // Histograms.
+}
+
+// Do executes Browser.getHistograms against the provided context.
+//
+// returns:
+//   histograms - Histograms.
+func (p *GetHistogramsParams) Do(ctxt context.Context, h cdp.Executor) (histograms []*Histogram, err error) {
+	// execute
+	var res GetHistogramsReturns
+	err = h.Execute(ctxt, CommandGetHistograms, p, &res)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.Histograms, nil
+}
+
+// GetHistogramParams get a Chrome histogram by name.
+type GetHistogramParams struct {
+	Name string `json:"name"` // Requested histogram name.
+}
+
+// GetHistogram get a Chrome histogram by name.
+//
+// parameters:
+//   name - Requested histogram name.
+func GetHistogram(name string) *GetHistogramParams {
+	return &GetHistogramParams{
+		Name: name,
+	}
+}
+
+// GetHistogramReturns return values.
+type GetHistogramReturns struct {
+	Histogram *Histogram `json:"histogram,omitempty"` // Histogram.
+}
+
+// Do executes Browser.getHistogram against the provided context.
+//
+// returns:
+//   histogram - Histogram.
+func (p *GetHistogramParams) Do(ctxt context.Context, h cdp.Executor) (histogram *Histogram, err error) {
+	// execute
+	var res GetHistogramReturns
+	err = h.Execute(ctxt, CommandGetHistogram, p, &res)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.Histogram, nil
+}
+
 // GetWindowBoundsParams get position and size of the browser window.
 type GetWindowBoundsParams struct {
 	WindowID WindowID `json:"windowId"` // Browser window id.
@@ -165,6 +240,8 @@ func (p *SetWindowBoundsParams) Do(ctxt context.Context, h cdp.Executor) (err er
 const (
 	CommandClose              = "Browser.close"
 	CommandGetVersion         = "Browser.getVersion"
+	CommandGetHistograms      = "Browser.getHistograms"
+	CommandGetHistogram       = "Browser.getHistogram"
 	CommandGetWindowBounds    = "Browser.getWindowBounds"
 	CommandGetWindowForTarget = "Browser.getWindowForTarget"
 	CommandSetWindowBounds    = "Browser.setWindowBounds"

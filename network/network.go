@@ -230,6 +230,7 @@ func (p *EmulateNetworkConditionsParams) Do(ctxt context.Context, h cdp.Executor
 type EnableParams struct {
 	MaxTotalBufferSize    int64 `json:"maxTotalBufferSize,omitempty"`    // Buffer size in bytes to use when preserving network payloads (XHRs, etc).
 	MaxResourceBufferSize int64 `json:"maxResourceBufferSize,omitempty"` // Per-resource buffer size in bytes to use when preserving network payloads (XHRs, etc).
+	MaxPostDataSize       int64 `json:"maxPostDataSize,omitempty"`       // Longest post body size (in bytes) that would be included in requestWillBeSent notification
 }
 
 // Enable enables network tracking, network events will now be delivered to
@@ -251,6 +252,13 @@ func (p EnableParams) WithMaxTotalBufferSize(maxTotalBufferSize int64) *EnablePa
 // preserving network payloads (XHRs, etc).
 func (p EnableParams) WithMaxResourceBufferSize(maxResourceBufferSize int64) *EnableParams {
 	p.MaxResourceBufferSize = maxResourceBufferSize
+	return &p
+}
+
+// WithMaxPostDataSize longest post body size (in bytes) that would be
+// included in requestWillBeSent notification.
+func (p EnableParams) WithMaxPostDataSize(maxPostDataSize int64) *EnableParams {
+	p.MaxPostDataSize = maxPostDataSize
 	return &p
 }
 
@@ -408,6 +416,49 @@ func (p *GetResponseBodyParams) Do(ctxt context.Context, h cdp.Executor) (body [
 		}
 	} else {
 		dec = []byte(res.Body)
+	}
+	return dec, nil
+}
+
+// GetRequestPostDataParams returns post data sent with the request. Returns
+// an error when no data was sent with the request.
+type GetRequestPostDataParams struct {
+	RequestID RequestID `json:"requestId"` // Identifier of the network request to get content for.
+}
+
+// GetRequestPostData returns post data sent with the request. Returns an
+// error when no data was sent with the request.
+//
+// parameters:
+//   requestID - Identifier of the network request to get content for.
+func GetRequestPostData(requestID RequestID) *GetRequestPostDataParams {
+	return &GetRequestPostDataParams{
+		RequestID: requestID,
+	}
+}
+
+// GetRequestPostDataReturns return values.
+type GetRequestPostDataReturns struct {
+	PostData string `json:"postData,omitempty"` // Base64-encoded request body.
+}
+
+// Do executes Network.getRequestPostData against the provided context.
+//
+// returns:
+//   postData - Base64-encoded request body.
+func (p *GetRequestPostDataParams) Do(ctxt context.Context, h cdp.Executor) (postData []byte, err error) {
+	// execute
+	var res GetRequestPostDataReturns
+	err = h.Execute(ctxt, CommandGetRequestPostData, p, &res)
+	if err != nil {
+		return nil, err
+	}
+
+	// decode
+	var dec []byte
+	dec, err = base64.StdEncoding.DecodeString(res.PostData)
+	if err != nil {
+		return nil, err
 	}
 	return dec, nil
 }
@@ -813,6 +864,7 @@ const (
 	CommandGetCertificate                 = "Network.getCertificate"
 	CommandGetCookies                     = "Network.getCookies"
 	CommandGetResponseBody                = "Network.getResponseBody"
+	CommandGetRequestPostData             = "Network.getRequestPostData"
 	CommandGetResponseBodyForInterception = "Network.getResponseBodyForInterception"
 	CommandReplayXHR                      = "Network.replayXHR"
 	CommandSearchInResponseBody           = "Network.searchInResponseBody"

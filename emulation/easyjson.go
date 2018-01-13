@@ -124,6 +124,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoEmulation1(in *jlexer.Lexer, 
 			out.Budget = float64(in.Float64())
 		case "maxVirtualTimeTaskStarvationCount":
 			out.MaxVirtualTimeTaskStarvationCount = int64(in.Int64())
+		case "waitForNavigation":
+			out.WaitForNavigation = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -167,6 +169,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoEmulation1(out *jwriter.Write
 			out.RawString(prefix)
 		}
 		out.Int64(int64(in.MaxVirtualTimeTaskStarvationCount))
+	}
+	if in.WaitForNavigation {
+		const prefix string = ",\"waitForNavigation\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Bool(bool(in.WaitForNavigation))
 	}
 	out.RawByte('}')
 }

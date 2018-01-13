@@ -418,6 +418,7 @@ type SetVirtualTimePolicyParams struct {
 	Policy                            VirtualTimePolicy `json:"policy"`
 	Budget                            float64           `json:"budget,omitempty"`                            // If set, after this many virtual milliseconds have elapsed virtual time will be paused and a virtualTimeBudgetExpired event is sent.
 	MaxVirtualTimeTaskStarvationCount int64             `json:"maxVirtualTimeTaskStarvationCount,omitempty"` // If set this specifies the maximum number of tasks that can be run before virtual is forced forwards to prevent deadlock.
+	WaitForNavigation                 bool              `json:"waitForNavigation,omitempty"`                 // If set the virtual time policy change should be deferred until any frame starts navigating. Note any previous deferred policy change is superseded.
 }
 
 // SetVirtualTimePolicy turns on virtual time for all frames (replacing
@@ -444,6 +445,14 @@ func (p SetVirtualTimePolicyParams) WithBudget(budget float64) *SetVirtualTimePo
 // deadlock.
 func (p SetVirtualTimePolicyParams) WithMaxVirtualTimeTaskStarvationCount(maxVirtualTimeTaskStarvationCount int64) *SetVirtualTimePolicyParams {
 	p.MaxVirtualTimeTaskStarvationCount = maxVirtualTimeTaskStarvationCount
+	return &p
+}
+
+// WithWaitForNavigation if set the virtual time policy change should be
+// deferred until any frame starts navigating. Note any previous deferred policy
+// change is superseded.
+func (p SetVirtualTimePolicyParams) WithWaitForNavigation(waitForNavigation bool) *SetVirtualTimePolicyParams {
+	p.WaitForNavigation = waitForNavigation
 	return &p
 }
 

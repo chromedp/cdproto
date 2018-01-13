@@ -74,3 +74,18 @@ type Bounds struct {
 	Height      int64       `json:"height,omitempty"`      // The window height in pixels.
 	WindowState WindowState `json:"windowState,omitempty"` // The window state. Default to normal.
 }
+
+// Bucket chrome histogram bucket.
+type Bucket struct {
+	Low   int64 `json:"low"`   // Minimum value (inclusive).
+	High  int64 `json:"high"`  // Maximum value (exclusive).
+	Count int64 `json:"count"` // Number of samples.
+}
+
+// Histogram chrome histogram.
+type Histogram struct {
+	Name    string    `json:"name"`    // Name.
+	Sum     int64     `json:"sum"`     // Sum of sample values.
+	Count   int64     `json:"count"`   // Total number of samples.
+	Buckets []*Bucket `json:"buckets"` // Buckets.
+}

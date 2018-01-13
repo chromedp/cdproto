@@ -965,6 +965,19 @@ func (p *StopLoadingParams) Do(ctxt context.Context, h cdp.Executor) (err error)
 	return h.Execute(ctxt, CommandStopLoading, nil, nil)
 }
 
+// CrashParams crashes renderer on the IO thread, generates minidumps.
+type CrashParams struct{}
+
+// Crash crashes renderer on the IO thread, generates minidumps.
+func Crash() *CrashParams {
+	return &CrashParams{}
+}
+
+// Do executes Page.crash against the provided context.
+func (p *CrashParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
+	return h.Execute(ctxt, CommandCrash, nil, nil)
+}
+
 // StopScreencastParams stops sending each frame in the screencastFrame.
 type StopScreencastParams struct{}
 
@@ -1007,5 +1020,6 @@ const (
 	CommandSetLifecycleEventsEnabled           = "Page.setLifecycleEventsEnabled"
 	CommandStartScreencast                     = "Page.startScreencast"
 	CommandStopLoading                         = "Page.stopLoading"
+	CommandCrash                               = "Page.crash"
 	CommandStopScreencast                      = "Page.stopScreencast"
 )

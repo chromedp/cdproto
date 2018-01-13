@@ -92,6 +92,8 @@ const (
 	CommandAuditsGetEncodedResponse                        = audits.CommandGetEncodedResponse
 	CommandBrowserClose                                    = browser.CommandClose
 	CommandBrowserGetVersion                               = browser.CommandGetVersion
+	CommandBrowserGetHistograms                            = browser.CommandGetHistograms
+	CommandBrowserGetHistogram                             = browser.CommandGetHistogram
 	CommandBrowserGetWindowBounds                          = browser.CommandGetWindowBounds
 	CommandBrowserGetWindowForTarget                       = browser.CommandGetWindowForTarget
 	CommandBrowserSetWindowBounds                          = browser.CommandSetWindowBounds
@@ -332,6 +334,7 @@ const (
 	CommandNetworkGetCertificate                           = network.CommandGetCertificate
 	CommandNetworkGetCookies                               = network.CommandGetCookies
 	CommandNetworkGetResponseBody                          = network.CommandGetResponseBody
+	CommandNetworkGetRequestPostData                       = network.CommandGetRequestPostData
 	CommandNetworkGetResponseBodyForInterception           = network.CommandGetResponseBodyForInterception
 	CommandNetworkReplayXHR                                = network.CommandReplayXHR
 	CommandNetworkSearchInResponseBody                     = network.CommandSearchInResponseBody
@@ -406,6 +409,7 @@ const (
 	CommandPageSetLifecycleEventsEnabled                   = page.CommandSetLifecycleEventsEnabled
 	CommandPageStartScreencast                             = page.CommandStartScreencast
 	CommandPageStopLoading                                 = page.CommandStopLoading
+	CommandPageCrash                                       = page.CommandCrash
 	CommandPageStopScreencast                              = page.CommandStopScreencast
 	EventPageDomContentEventFired                          = "Page.domContentEventFired"
 	EventPageFrameAttached                                 = "Page.frameAttached"
@@ -625,6 +629,12 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandBrowserGetVersion:
 		v = new(browser.GetVersionReturns)
+
+	case CommandBrowserGetHistograms:
+		v = new(browser.GetHistogramsReturns)
+
+	case CommandBrowserGetHistogram:
+		v = new(browser.GetHistogramReturns)
 
 	case CommandBrowserGetWindowBounds:
 		v = new(browser.GetWindowBoundsReturns)
@@ -1346,6 +1356,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandNetworkGetResponseBody:
 		v = new(network.GetResponseBodyReturns)
 
+	case CommandNetworkGetRequestPostData:
+		v = new(network.GetRequestPostDataReturns)
+
 	case CommandNetworkGetResponseBodyForInterception:
 		v = new(network.GetResponseBodyForInterceptionReturns)
 
@@ -1566,6 +1579,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		return emptyVal, nil
 
 	case CommandPageStopLoading:
+		return emptyVal, nil
+
+	case CommandPageCrash:
 		return emptyVal, nil
 
 	case CommandPageStopScreencast:
