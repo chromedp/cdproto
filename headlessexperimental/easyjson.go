@@ -485,6 +485,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoHeadlessexperimental6(in *jle
 			}
 		case "interval":
 			out.Interval = float64(in.Float64())
+		case "noDisplayUpdates":
+			out.NoDisplayUpdates = bool(in.Bool())
 		case "screenshot":
 			if in.IsNull() {
 				in.Skip()
@@ -538,6 +540,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoHeadlessexperimental6(out *jw
 			out.RawString(prefix)
 		}
 		out.Float64(float64(in.Interval))
+	}
+	if in.NoDisplayUpdates {
+		const prefix string = ",\"noDisplayUpdates\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Bool(bool(in.NoDisplayUpdates))
 	}
 	if in.Screenshot != nil {
 		const prefix string = ",\"screenshot\":"
