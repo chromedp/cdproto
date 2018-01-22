@@ -101,10 +101,84 @@ func (p *SimulatePressureNotificationParams) Do(ctxt context.Context, h cdp.Exec
 	return h.Execute(ctxt, CommandSimulatePressureNotification, p, nil)
 }
 
+// StartSamplingParams start collecting native memory profile.
+type StartSamplingParams struct {
+	SamplingInterval   int64 `json:"samplingInterval,omitempty"`   // Average number of bytes between samples.
+	SuppressRandomness bool  `json:"suppressRandomness,omitempty"` // Do not randomize intervals between samples.
+}
+
+// StartSampling start collecting native memory profile.
+//
+// parameters:
+func StartSampling() *StartSamplingParams {
+	return &StartSamplingParams{}
+}
+
+// WithSamplingInterval average number of bytes between samples.
+func (p StartSamplingParams) WithSamplingInterval(samplingInterval int64) *StartSamplingParams {
+	p.SamplingInterval = samplingInterval
+	return &p
+}
+
+// WithSuppressRandomness do not randomize intervals between samples.
+func (p StartSamplingParams) WithSuppressRandomness(suppressRandomness bool) *StartSamplingParams {
+	p.SuppressRandomness = suppressRandomness
+	return &p
+}
+
+// Do executes Memory.startSampling against the provided context.
+func (p *StartSamplingParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
+	return h.Execute(ctxt, CommandStartSampling, p, nil)
+}
+
+// StopSamplingParams stop collecting native memory profile.
+type StopSamplingParams struct{}
+
+// StopSampling stop collecting native memory profile.
+func StopSampling() *StopSamplingParams {
+	return &StopSamplingParams{}
+}
+
+// Do executes Memory.stopSampling against the provided context.
+func (p *StopSamplingParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
+	return h.Execute(ctxt, CommandStopSampling, nil, nil)
+}
+
+// GetSamplingProfileParams retrieve collected native memory profile.
+type GetSamplingProfileParams struct{}
+
+// GetSamplingProfile retrieve collected native memory profile.
+func GetSamplingProfile() *GetSamplingProfileParams {
+	return &GetSamplingProfileParams{}
+}
+
+// GetSamplingProfileReturns return values.
+type GetSamplingProfileReturns struct {
+	Profile *SamplingProfile `json:"profile,omitempty"`
+}
+
+// Do executes Memory.getSamplingProfile against the provided context.
+//
+// returns:
+//   profile
+func (p *GetSamplingProfileParams) Do(ctxt context.Context, h cdp.Executor) (profile *SamplingProfile, err error) {
+	// execute
+	var res GetSamplingProfileReturns
+	err = h.Execute(ctxt, CommandGetSamplingProfile, nil, &res)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.Profile, nil
+}
+
 // Command names.
 const (
 	CommandGetDOMCounters                     = "Memory.getDOMCounters"
 	CommandPrepareForLeakDetection            = "Memory.prepareForLeakDetection"
 	CommandSetPressureNotificationsSuppressed = "Memory.setPressureNotificationsSuppressed"
 	CommandSimulatePressureNotification       = "Memory.simulatePressureNotification"
+	CommandStartSampling                      = "Memory.startSampling"
+	CommandStopSampling                       = "Memory.stopSampling"
+	CommandGetSamplingProfile                 = "Memory.getSamplingProfile"
 )

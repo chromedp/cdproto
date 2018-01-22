@@ -165,6 +165,7 @@ const (
 	CommandDOMSetNodeValue                                 = dom.CommandSetNodeValue
 	CommandDOMSetOuterHTML                                 = dom.CommandSetOuterHTML
 	CommandDOMUndo                                         = dom.CommandUndo
+	CommandDOMGetFrameOwner                                = dom.CommandGetFrameOwner
 	EventDOMAttributeModified                              = "DOM.attributeModified"
 	EventDOMAttributeRemoved                               = "DOM.attributeRemoved"
 	EventDOMCharacterDataModified                          = "DOM.characterDataModified"
@@ -323,6 +324,9 @@ const (
 	CommandMemoryPrepareForLeakDetection                   = memory.CommandPrepareForLeakDetection
 	CommandMemorySetPressureNotificationsSuppressed        = memory.CommandSetPressureNotificationsSuppressed
 	CommandMemorySimulatePressureNotification              = memory.CommandSimulatePressureNotification
+	CommandMemoryStartSampling                             = memory.CommandStartSampling
+	CommandMemoryStopSampling                              = memory.CommandStopSampling
+	CommandMemoryGetSamplingProfile                        = memory.CommandGetSamplingProfile
 	CommandNetworkClearBrowserCache                        = network.CommandClearBrowserCache
 	CommandNetworkClearBrowserCookies                      = network.CommandClearBrowserCookies
 	CommandNetworkContinueInterceptedRequest               = network.CommandContinueInterceptedRequest
@@ -849,6 +853,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandDOMUndo:
 		return emptyVal, nil
 
+	case CommandDOMGetFrameOwner:
+		v = new(dom.GetFrameOwnerReturns)
+
 	case EventDOMAttributeModified:
 		v = new(dom.EventAttributeModified)
 
@@ -1322,6 +1329,15 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandMemorySimulatePressureNotification:
 		return emptyVal, nil
+
+	case CommandMemoryStartSampling:
+		return emptyVal, nil
+
+	case CommandMemoryStopSampling:
+		return emptyVal, nil
+
+	case CommandMemoryGetSamplingProfile:
+		v = new(memory.GetSamplingProfileReturns)
 
 	case CommandNetworkClearBrowserCache:
 		return emptyVal, nil

@@ -1306,6 +1306,42 @@ func (p *UndoParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandUndo, nil, nil)
 }
 
+// GetFrameOwnerParams returns iframe node that owns iframe with the given
+// domain.
+type GetFrameOwnerParams struct {
+	FrameID cdp.FrameID `json:"frameId"`
+}
+
+// GetFrameOwner returns iframe node that owns iframe with the given domain.
+//
+// parameters:
+//   frameID
+func GetFrameOwner(frameID cdp.FrameID) *GetFrameOwnerParams {
+	return &GetFrameOwnerParams{
+		FrameID: frameID,
+	}
+}
+
+// GetFrameOwnerReturns return values.
+type GetFrameOwnerReturns struct {
+	NodeID cdp.NodeID `json:"nodeId,omitempty"`
+}
+
+// Do executes DOM.getFrameOwner against the provided context.
+//
+// returns:
+//   nodeID
+func (p *GetFrameOwnerParams) Do(ctxt context.Context, h cdp.Executor) (nodeID cdp.NodeID, err error) {
+	// execute
+	var res GetFrameOwnerReturns
+	err = h.Execute(ctxt, CommandGetFrameOwner, p, &res)
+	if err != nil {
+		return 0, err
+	}
+
+	return res.NodeID, nil
+}
+
 // Command names.
 const (
 	CommandCollectClassNamesFromSubtree    = "DOM.collectClassNamesFromSubtree"
@@ -1344,4 +1380,5 @@ const (
 	CommandSetNodeValue                    = "DOM.setNodeValue"
 	CommandSetOuterHTML                    = "DOM.setOuterHTML"
 	CommandUndo                            = "DOM.undo"
+	CommandGetFrameOwner                   = "DOM.getFrameOwner"
 )

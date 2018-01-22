@@ -51,3 +51,15 @@ func (t *PressureLevel) UnmarshalEasyJSON(in *jlexer.Lexer) {
 func (t *PressureLevel) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
+
+// SamplingProfileNode heap profile sample.
+type SamplingProfileNode struct {
+	Size  float64  `json:"size"`  // Size of the sampled allocation.
+	Count float64  `json:"count"` // Number of sampled allocations of that size.
+	Stack []string `json:"stack"` // Execution stack at the point of allocation.
+}
+
+// SamplingProfile array of heap profile samples.
+type SamplingProfile struct {
+	Samples []*SamplingProfileNode `json:"samples"`
+}

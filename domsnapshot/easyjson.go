@@ -887,6 +887,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoDomsnapshot5(in *jlexer.Lexer
 				}
 				in.Delim(']')
 			}
+		case "currentSourceURL":
+			out.CurrentSourceURL = string(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -1194,6 +1196,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoDomsnapshot5(out *jwriter.Wri
 			}
 			out.RawByte(']')
 		}
+	}
+	if in.CurrentSourceURL != "" {
+		const prefix string = ",\"currentSourceURL\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(in.CurrentSourceURL))
 	}
 	out.RawByte('}')
 }
