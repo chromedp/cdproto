@@ -448,6 +448,7 @@ type NavigateParams struct {
 	URL            string         `json:"url"`                      // URL to navigate the page to.
 	Referrer       string         `json:"referrer,omitempty"`       // Referrer URL.
 	TransitionType TransitionType `json:"transitionType,omitempty"` // Intended transition type.
+	FrameID        cdp.FrameID    `json:"frameId,omitempty"`        // Frame id to navigate, if not specified navigates the top frame.
 }
 
 // Navigate navigates current page to the given URL.
@@ -469,6 +470,13 @@ func (p NavigateParams) WithReferrer(referrer string) *NavigateParams {
 // WithTransitionType intended transition type.
 func (p NavigateParams) WithTransitionType(transitionType TransitionType) *NavigateParams {
 	p.TransitionType = transitionType
+	return &p
+}
+
+// WithFrameID frame id to navigate, if not specified navigates the top
+// frame.
+func (p NavigateParams) WithFrameID(frameID cdp.FrameID) *NavigateParams {
+	p.FrameID = frameID
 	return &p
 }
 

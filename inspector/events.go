@@ -10,3 +10,7 @@ type EventDetached struct {
 
 // EventTargetCrashed fired when debugging target has crashed.
 type EventTargetCrashed struct{}
+
+// EventTargetReloadedAfterCrash fired when debugging target has reloaded
+// after crash.
+type EventTargetReloadedAfterCrash struct{}

@@ -247,8 +247,8 @@ type EmulateTouchFromMouseEventParams struct {
 	Type       MouseType       `json:"type"`                 // Type of the mouse event.
 	X          int64           `json:"x"`                    // X coordinate of the mouse pointer in DIP.
 	Y          int64           `json:"y"`                    // Y coordinate of the mouse pointer in DIP.
-	Timestamp  *TimeSinceEpoch `json:"timestamp"`            // Time at which the event occurred.
 	Button     ButtonType      `json:"button"`               // Mouse button.
+	Timestamp  *TimeSinceEpoch `json:"timestamp,omitempty"`  // Time at which the event occurred (default: current time).
 	DeltaX     float64         `json:"deltaX,omitempty"`     // X delta in DIP for mouse wheel event (default: 0).
 	DeltaY     float64         `json:"deltaY,omitempty"`     // Y delta in DIP for mouse wheel event (default: 0).
 	Modifiers  Modifier        `json:"modifiers,omitempty"`  // Bit field representing pressed modifier keys. Alt=1, Ctrl=2, Meta/Command=4, Shift=8 (default: 0).
@@ -262,16 +262,20 @@ type EmulateTouchFromMouseEventParams struct {
 //   type - Type of the mouse event.
 //   x - X coordinate of the mouse pointer in DIP.
 //   y - Y coordinate of the mouse pointer in DIP.
-//   timestamp - Time at which the event occurred.
 //   button - Mouse button.
-func EmulateTouchFromMouseEvent(typeVal MouseType, x int64, y int64, timestamp *TimeSinceEpoch, button ButtonType) *EmulateTouchFromMouseEventParams {
+func EmulateTouchFromMouseEvent(typeVal MouseType, x int64, y int64, button ButtonType) *EmulateTouchFromMouseEventParams {
 	return &EmulateTouchFromMouseEventParams{
-		Type:      typeVal,
-		X:         x,
-		Y:         y,
-		Timestamp: timestamp,
-		Button:    button,
+		Type:   typeVal,
+		X:      x,
+		Y:      y,
+		Button: button,
 	}
+}
+
+// WithTimestamp time at which the event occurred (default: current time).
+func (p EmulateTouchFromMouseEventParams) WithTimestamp(timestamp *TimeSinceEpoch) *EmulateTouchFromMouseEventParams {
+	p.Timestamp = timestamp
+	return &p
 }
 
 // WithDeltaX X delta in DIP for mouse wheel event (default: 0).

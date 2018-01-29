@@ -303,6 +303,7 @@ const (
 	CommandInspectorEnable                                 = inspector.CommandEnable
 	EventInspectorDetached                                 = "Inspector.detached"
 	EventInspectorTargetCrashed                            = "Inspector.targetCrashed"
+	EventInspectorTargetReloadedAfterCrash                 = "Inspector.targetReloadedAfterCrash"
 	CommandLayerTreeCompositingReasons                     = layertree.CommandCompositingReasons
 	CommandLayerTreeDisable                                = layertree.CommandDisable
 	CommandLayerTreeEnable                                 = layertree.CommandEnable
@@ -326,6 +327,7 @@ const (
 	CommandMemorySimulatePressureNotification              = memory.CommandSimulatePressureNotification
 	CommandMemoryStartSampling                             = memory.CommandStartSampling
 	CommandMemoryStopSampling                              = memory.CommandStopSampling
+	CommandMemoryGetAllTimeSamplingProfile                 = memory.CommandGetAllTimeSamplingProfile
 	CommandMemoryGetSamplingProfile                        = memory.CommandGetSamplingProfile
 	CommandNetworkClearBrowserCache                        = network.CommandClearBrowserCache
 	CommandNetworkClearBrowserCookies                      = network.CommandClearBrowserCookies
@@ -1267,6 +1269,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case EventInspectorTargetCrashed:
 		v = new(inspector.EventTargetCrashed)
 
+	case EventInspectorTargetReloadedAfterCrash:
+		v = new(inspector.EventTargetReloadedAfterCrash)
+
 	case CommandLayerTreeCompositingReasons:
 		v = new(layertree.CompositingReasonsReturns)
 
@@ -1335,6 +1340,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandMemoryStopSampling:
 		return emptyVal, nil
+
+	case CommandMemoryGetAllTimeSamplingProfile:
+		v = new(memory.GetAllTimeSamplingProfileReturns)
 
 	case CommandMemoryGetSamplingProfile:
 		v = new(memory.GetSamplingProfileReturns)

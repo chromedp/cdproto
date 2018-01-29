@@ -144,10 +144,42 @@ func (p *StopSamplingParams) Do(ctxt context.Context, h cdp.Executor) (err error
 	return h.Execute(ctxt, CommandStopSampling, nil, nil)
 }
 
-// GetSamplingProfileParams retrieve collected native memory profile.
+// GetAllTimeSamplingProfileParams retrieve native memory allocations profile
+// collected since process startup.
+type GetAllTimeSamplingProfileParams struct{}
+
+// GetAllTimeSamplingProfile retrieve native memory allocations profile
+// collected since process startup.
+func GetAllTimeSamplingProfile() *GetAllTimeSamplingProfileParams {
+	return &GetAllTimeSamplingProfileParams{}
+}
+
+// GetAllTimeSamplingProfileReturns return values.
+type GetAllTimeSamplingProfileReturns struct {
+	Profile *SamplingProfile `json:"profile,omitempty"`
+}
+
+// Do executes Memory.getAllTimeSamplingProfile against the provided context.
+//
+// returns:
+//   profile
+func (p *GetAllTimeSamplingProfileParams) Do(ctxt context.Context, h cdp.Executor) (profile *SamplingProfile, err error) {
+	// execute
+	var res GetAllTimeSamplingProfileReturns
+	err = h.Execute(ctxt, CommandGetAllTimeSamplingProfile, nil, &res)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.Profile, nil
+}
+
+// GetSamplingProfileParams retrieve native memory allocations profile
+// collected since last startSampling call.
 type GetSamplingProfileParams struct{}
 
-// GetSamplingProfile retrieve collected native memory profile.
+// GetSamplingProfile retrieve native memory allocations profile collected
+// since last startSampling call.
 func GetSamplingProfile() *GetSamplingProfileParams {
 	return &GetSamplingProfileParams{}
 }
@@ -180,5 +212,6 @@ const (
 	CommandSimulatePressureNotification       = "Memory.simulatePressureNotification"
 	CommandStartSampling                      = "Memory.startSampling"
 	CommandStopSampling                       = "Memory.stopSampling"
+	CommandGetAllTimeSamplingProfile          = "Memory.getAllTimeSamplingProfile"
 	CommandGetSamplingProfile                 = "Memory.getSamplingProfile"
 )

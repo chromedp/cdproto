@@ -697,6 +697,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoInput5(in *jlexer.Lexer, out 
 			out.X = int64(in.Int64())
 		case "y":
 			out.Y = int64(in.Int64())
+		case "button":
+			(out.Button).UnmarshalEasyJSON(in)
 		case "timestamp":
 			if in.IsNull() {
 				in.Skip()
@@ -707,8 +709,6 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoInput5(in *jlexer.Lexer, out 
 				}
 				(*out.Timestamp).UnmarshalEasyJSON(in)
 			}
-		case "button":
-			(out.Button).UnmarshalEasyJSON(in)
 		case "deltaX":
 			out.DeltaX = float64(in.Float64())
 		case "deltaY":
@@ -762,20 +762,6 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoInput5(out *jwriter.Writer, i
 		out.Int64(int64(in.Y))
 	}
 	{
-		const prefix string = ",\"timestamp\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
-		if in.Timestamp == nil {
-			out.RawString("null")
-		} else {
-			(*in.Timestamp).MarshalEasyJSON(out)
-		}
-	}
-	{
 		const prefix string = ",\"button\":"
 		if first {
 			first = false
@@ -784,6 +770,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoInput5(out *jwriter.Writer, i
 			out.RawString(prefix)
 		}
 		(in.Button).MarshalEasyJSON(out)
+	}
+	if in.Timestamp != nil {
+		const prefix string = ",\"timestamp\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		(*in.Timestamp).MarshalEasyJSON(out)
 	}
 	if in.DeltaX != 0 {
 		const prefix string = ",\"deltaX\":"

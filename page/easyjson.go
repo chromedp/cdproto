@@ -2103,6 +2103,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoPage21(in *jlexer.Lexer, out 
 			out.Referrer = string(in.String())
 		case "transitionType":
 			(out.TransitionType).UnmarshalEasyJSON(in)
+		case "frameId":
+			(out.FrameID).UnmarshalEasyJSON(in)
 		default:
 			in.SkipRecursive()
 		}
@@ -2146,6 +2148,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoPage21(out *jwriter.Writer, i
 			out.RawString(prefix)
 		}
 		(in.TransitionType).MarshalEasyJSON(out)
+	}
+	if in.FrameID != "" {
+		const prefix string = ",\"frameId\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(in.FrameID))
 	}
 	out.RawByte('}')
 }
