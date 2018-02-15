@@ -328,6 +328,7 @@ const (
 	CommandMemoryStartSampling                             = memory.CommandStartSampling
 	CommandMemoryStopSampling                              = memory.CommandStopSampling
 	CommandMemoryGetAllTimeSamplingProfile                 = memory.CommandGetAllTimeSamplingProfile
+	CommandMemoryGetBrowserSamplingProfile                 = memory.CommandGetBrowserSamplingProfile
 	CommandMemoryGetSamplingProfile                        = memory.CommandGetSamplingProfile
 	CommandNetworkClearBrowserCache                        = network.CommandClearBrowserCache
 	CommandNetworkClearBrowserCookies                      = network.CommandClearBrowserCookies
@@ -1342,6 +1343,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandMemoryGetAllTimeSamplingProfile:
 		v = new(memory.GetAllTimeSamplingProfileReturns)
+
+	case CommandMemoryGetBrowserSamplingProfile:
+		v = new(memory.GetBrowserSamplingProfileReturns)
 
 	case CommandMemoryGetSamplingProfile:
 		v = new(memory.GetSamplingProfileReturns)
