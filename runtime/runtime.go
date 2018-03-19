@@ -706,6 +706,21 @@ func (p *SetCustomObjectFormatterEnabledParams) Do(ctxt context.Context, h cdp.E
 	return h.Execute(ctxt, CommandSetCustomObjectFormatterEnabled, p, nil)
 }
 
+// TerminateExecutionParams terminate current or next JavaScript execution.
+// Will cancel the termination when the outer-most script execution ends.
+type TerminateExecutionParams struct{}
+
+// TerminateExecution terminate current or next JavaScript execution. Will
+// cancel the termination when the outer-most script execution ends.
+func TerminateExecution() *TerminateExecutionParams {
+	return &TerminateExecutionParams{}
+}
+
+// Do executes Runtime.terminateExecution against the provided context.
+func (p *TerminateExecutionParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
+	return h.Execute(ctxt, CommandTerminateExecution, nil, nil)
+}
+
 // Command names.
 const (
 	CommandAwaitPromise                    = "Runtime.awaitPromise"
@@ -723,4 +738,5 @@ const (
 	CommandRunIfWaitingForDebugger         = "Runtime.runIfWaitingForDebugger"
 	CommandRunScript                       = "Runtime.runScript"
 	CommandSetCustomObjectFormatterEnabled = "Runtime.setCustomObjectFormatterEnabled"
+	CommandTerminateExecution              = "Runtime.terminateExecution"
 )

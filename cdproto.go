@@ -470,6 +470,7 @@ const (
 	CommandRuntimeRunIfWaitingForDebugger                  = runtime.CommandRunIfWaitingForDebugger
 	CommandRuntimeRunScript                                = runtime.CommandRunScript
 	CommandRuntimeSetCustomObjectFormatterEnabled          = runtime.CommandSetCustomObjectFormatterEnabled
+	CommandRuntimeTerminateExecution                       = runtime.CommandTerminateExecution
 	EventRuntimeConsoleAPICalled                           = "Runtime.consoleAPICalled"
 	EventRuntimeExceptionRevoked                           = "Runtime.exceptionRevoked"
 	EventRuntimeExceptionThrown                            = "Runtime.exceptionThrown"
@@ -1769,6 +1770,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		v = new(runtime.RunScriptReturns)
 
 	case CommandRuntimeSetCustomObjectFormatterEnabled:
+		return emptyVal, nil
+
+	case CommandRuntimeTerminateExecution:
 		return emptyVal, nil
 
 	case EventRuntimeConsoleAPICalled:
