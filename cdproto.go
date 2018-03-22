@@ -462,6 +462,8 @@ const (
 	CommandRuntimeDiscardConsoleEntries                    = runtime.CommandDiscardConsoleEntries
 	CommandRuntimeEnable                                   = runtime.CommandEnable
 	CommandRuntimeEvaluate                                 = runtime.CommandEvaluate
+	CommandRuntimeGetIsolateID                             = runtime.CommandGetIsolateID
+	CommandRuntimeGetHeapUsage                             = runtime.CommandGetHeapUsage
 	CommandRuntimeGetProperties                            = runtime.CommandGetProperties
 	CommandRuntimeGlobalLexicalScopeNames                  = runtime.CommandGlobalLexicalScopeNames
 	CommandRuntimeQueryObjects                             = runtime.CommandQueryObjects
@@ -1747,6 +1749,12 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandRuntimeEvaluate:
 		v = new(runtime.EvaluateReturns)
+
+	case CommandRuntimeGetIsolateID:
+		v = new(runtime.GetIsolateIDReturns)
+
+	case CommandRuntimeGetHeapUsage:
+		v = new(runtime.GetHeapUsageReturns)
 
 	case CommandRuntimeGetProperties:
 		v = new(runtime.GetPropertiesReturns)
