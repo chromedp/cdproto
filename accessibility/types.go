@@ -282,7 +282,7 @@ const (
 	AXPropertyNameRelevant         AXPropertyName = "relevant"
 	AXPropertyNameRoot             AXPropertyName = "root"
 	AXPropertyNameAutocomplete     AXPropertyName = "autocomplete"
-	AXPropertyNameHaspopup         AXPropertyName = "haspopup"
+	AXPropertyNameHasPopup         AXPropertyName = "hasPopup"
 	AXPropertyNameLevel            AXPropertyName = "level"
 	AXPropertyNameMultiselectable  AXPropertyName = "multiselectable"
 	AXPropertyNameOrientation      AXPropertyName = "orientation"
@@ -344,8 +344,8 @@ func (t *AXPropertyName) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = AXPropertyNameRoot
 	case AXPropertyNameAutocomplete:
 		*t = AXPropertyNameAutocomplete
-	case AXPropertyNameHaspopup:
-		*t = AXPropertyNameHaspopup
+	case AXPropertyNameHasPopup:
+		*t = AXPropertyNameHasPopup
 	case AXPropertyNameLevel:
 		*t = AXPropertyNameLevel
 	case AXPropertyNameMultiselectable:
