@@ -87,6 +87,13 @@ type EventResourceChangedPriority struct {
 	Timestamp   *cdp.MonotonicTime `json:"timestamp"`   // Timestamp.
 }
 
+// EventSignedExchangeReceived fired when a signed exchange was received over
+// the network.
+type EventSignedExchangeReceived struct {
+	RequestID RequestID           `json:"requestId"` // Request identifier.
+	Info      *SignedExchangeInfo `json:"info"`      // Information about the signed exchange response.
+}
+
 // EventResponseReceived fired when HTTP response is available.
 type EventResponseReceived struct {
 	RequestID RequestID          `json:"requestId"`         // Request identifier.

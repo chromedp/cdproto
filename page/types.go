@@ -21,19 +21,20 @@ func (t ResourceType) String() string {
 
 // ResourceType values.
 const (
-	ResourceTypeDocument    ResourceType = "Document"
-	ResourceTypeStylesheet  ResourceType = "Stylesheet"
-	ResourceTypeImage       ResourceType = "Image"
-	ResourceTypeMedia       ResourceType = "Media"
-	ResourceTypeFont        ResourceType = "Font"
-	ResourceTypeScript      ResourceType = "Script"
-	ResourceTypeTextTrack   ResourceType = "TextTrack"
-	ResourceTypeXHR         ResourceType = "XHR"
-	ResourceTypeFetch       ResourceType = "Fetch"
-	ResourceTypeEventSource ResourceType = "EventSource"
-	ResourceTypeWebSocket   ResourceType = "WebSocket"
-	ResourceTypeManifest    ResourceType = "Manifest"
-	ResourceTypeOther       ResourceType = "Other"
+	ResourceTypeDocument       ResourceType = "Document"
+	ResourceTypeStylesheet     ResourceType = "Stylesheet"
+	ResourceTypeImage          ResourceType = "Image"
+	ResourceTypeMedia          ResourceType = "Media"
+	ResourceTypeFont           ResourceType = "Font"
+	ResourceTypeScript         ResourceType = "Script"
+	ResourceTypeTextTrack      ResourceType = "TextTrack"
+	ResourceTypeXHR            ResourceType = "XHR"
+	ResourceTypeFetch          ResourceType = "Fetch"
+	ResourceTypeEventSource    ResourceType = "EventSource"
+	ResourceTypeWebSocket      ResourceType = "WebSocket"
+	ResourceTypeManifest       ResourceType = "Manifest"
+	ResourceTypeSignedExchange ResourceType = "SignedExchange"
+	ResourceTypeOther          ResourceType = "Other"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -73,6 +74,8 @@ func (t *ResourceType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = ResourceTypeWebSocket
 	case ResourceTypeManifest:
 		*t = ResourceTypeManifest
+	case ResourceTypeSignedExchange:
+		*t = ResourceTypeSignedExchange
 	case ResourceTypeOther:
 		*t = ResourceTypeOther
 

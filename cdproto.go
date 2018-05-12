@@ -365,6 +365,7 @@ const (
 	EventNetworkRequestServedFromCache                     = "Network.requestServedFromCache"
 	EventNetworkRequestWillBeSent                          = "Network.requestWillBeSent"
 	EventNetworkResourceChangedPriority                    = "Network.resourceChangedPriority"
+	EventNetworkSignedExchangeReceived                     = "Network.signedExchangeReceived"
 	EventNetworkResponseReceived                           = "Network.responseReceived"
 	EventNetworkWebSocketClosed                            = "Network.webSocketClosed"
 	EventNetworkWebSocketCreated                           = "Network.webSocketCreated"
@@ -520,6 +521,7 @@ const (
 	CommandTargetAttachToTarget                            = target.CommandAttachToTarget
 	CommandTargetCloseTarget                               = target.CommandCloseTarget
 	CommandTargetCreateBrowserContext                      = target.CommandCreateBrowserContext
+	CommandTargetGetBrowserContexts                        = target.CommandGetBrowserContexts
 	CommandTargetCreateTarget                              = target.CommandCreateTarget
 	CommandTargetDetachFromTarget                          = target.CommandDetachFromTarget
 	CommandTargetDisposeBrowserContext                     = target.CommandDisposeBrowserContext
@@ -1465,6 +1467,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case EventNetworkResourceChangedPriority:
 		v = new(network.EventResourceChangedPriority)
 
+	case EventNetworkSignedExchangeReceived:
+		v = new(network.EventSignedExchangeReceived)
+
 	case EventNetworkResponseReceived:
 		v = new(network.EventResponseReceived)
 
@@ -1930,6 +1935,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandTargetCreateBrowserContext:
 		v = new(target.CreateBrowserContextReturns)
 
+	case CommandTargetGetBrowserContexts:
+		v = new(target.GetBrowserContextsReturns)
+
 	case CommandTargetCreateTarget:
 		v = new(target.CreateTargetReturns)
 
@@ -1937,7 +1945,7 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		return emptyVal, nil
 
 	case CommandTargetDisposeBrowserContext:
-		v = new(target.DisposeBrowserContextReturns)
+		return emptyVal, nil
 
 	case CommandTargetGetTargetInfo:
 		v = new(target.GetTargetInfoReturns)
