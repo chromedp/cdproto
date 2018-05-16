@@ -52,6 +52,8 @@ const (
 	ErrorReasonNameNotResolved      ErrorReason = "NameNotResolved"
 	ErrorReasonInternetDisconnected ErrorReason = "InternetDisconnected"
 	ErrorReasonAddressUnreachable   ErrorReason = "AddressUnreachable"
+	ErrorReasonBlockedByClient      ErrorReason = "BlockedByClient"
+	ErrorReasonBlockedByResponse    ErrorReason = "BlockedByResponse"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -91,6 +93,10 @@ func (t *ErrorReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = ErrorReasonInternetDisconnected
 	case ErrorReasonAddressUnreachable:
 		*t = ErrorReasonAddressUnreachable
+	case ErrorReasonBlockedByClient:
+		*t = ErrorReasonBlockedByClient
+	case ErrorReasonBlockedByResponse:
+		*t = ErrorReasonBlockedByResponse
 
 	default:
 		in.AddError(errors.New("unknown ErrorReason value"))
