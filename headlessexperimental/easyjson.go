@@ -4,7 +4,6 @@ package headlessexperimental
 
 import (
 	json "encoding/json"
-	runtime "github.com/chromedp/cdproto/runtime"
 	easyjson "github.com/mailru/easyjson"
 	jlexer "github.com/mailru/easyjson/jlexer"
 	jwriter "github.com/mailru/easyjson/jwriter"
@@ -392,30 +391,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoHeadlessexperimental5(in *jle
 			continue
 		}
 		switch key {
-		case "frameTime":
-			if in.IsNull() {
-				in.Skip()
-				out.FrameTime = nil
-			} else {
-				if out.FrameTime == nil {
-					out.FrameTime = new(runtime.Timestamp)
-				}
-				(*out.FrameTime).UnmarshalEasyJSON(in)
-			}
 		case "frameTimeTicks":
 			out.FrameTimeTicks = float64(in.Float64())
-		case "deadline":
-			if in.IsNull() {
-				in.Skip()
-				out.Deadline = nil
-			} else {
-				if out.Deadline == nil {
-					out.Deadline = new(runtime.Timestamp)
-				}
-				(*out.Deadline).UnmarshalEasyJSON(in)
-			}
-		case "deadlineTicks":
-			out.DeadlineTicks = float64(in.Float64())
 		case "interval":
 			out.Interval = float64(in.Float64())
 		case "noDisplayUpdates":
@@ -444,16 +421,6 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoHeadlessexperimental5(out *jw
 	out.RawByte('{')
 	first := true
 	_ = first
-	if in.FrameTime != nil {
-		const prefix string = ",\"frameTime\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
-		(*in.FrameTime).MarshalEasyJSON(out)
-	}
 	if in.FrameTimeTicks != 0 {
 		const prefix string = ",\"frameTimeTicks\":"
 		if first {
@@ -463,26 +430,6 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoHeadlessexperimental5(out *jw
 			out.RawString(prefix)
 		}
 		out.Float64(float64(in.FrameTimeTicks))
-	}
-	if in.Deadline != nil {
-		const prefix string = ",\"deadline\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
-		(*in.Deadline).MarshalEasyJSON(out)
-	}
-	if in.DeadlineTicks != 0 {
-		const prefix string = ",\"deadlineTicks\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
-		out.Float64(float64(in.DeadlineTicks))
 	}
 	if in.Interval != 0 {
 		const prefix string = ",\"interval\":"

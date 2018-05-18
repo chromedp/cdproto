@@ -589,9 +589,33 @@ type RequestPattern struct {
 	InterceptionStage InterceptionStage `json:"interceptionStage,omitempty"` // Stage at which to begin intercepting requests. Default is Request.
 }
 
+// SignedExchangeSignature information about a signed exchange signature.
+// https://wicg.github.io/webpackage/draft-yasskin-httpbis-origin-signed-exchanges-impl.html#rfc.section.3.1.
+type SignedExchangeSignature struct {
+	Label       string `json:"label"`       // Signed exchange signature label.
+	Integrity   string `json:"integrity"`   // Signed exchange signature integrity.
+	CertURL     string `json:"certUrl"`     // Signed exchange signature cert Url.
+	ValidityURL string `json:"validityUrl"` // Signed exchange signature validity Url.
+	Date        int64  `json:"date"`        // Signed exchange signature date.
+	Expires     int64  `json:"expires"`     // Signed exchange signature expires.
+}
+
+// SignedExchangeHeader information about a signed exchange header.
+// https://wicg.github.io/webpackage/draft-yasskin-httpbis-origin-signed-exchanges-impl.html#cbor-representation.
+type SignedExchangeHeader struct {
+	RequestURL      string                     `json:"requestUrl"`      // Signed exchange request URL.
+	RequestMethod   string                     `json:"requestMethod"`   // Signed exchange request method.
+	ResponseCode    int64                      `json:"responseCode"`    // Signed exchange response code.
+	ResponseHeaders Headers                    `json:"responseHeaders"` // Signed exchange response headers.
+	Signatures      []*SignedExchangeSignature `json:"signatures"`      // Signed exchange response signature.
+}
+
 // SignedExchangeInfo information about a signed exchange response.
 type SignedExchangeInfo struct {
-	OuterResponse *Response `json:"outerResponse"` // The outer response of signed HTTP exchange which was received from network.
+	OuterResponse   *Response             `json:"outerResponse"`             // The outer response of signed HTTP exchange which was received from network.
+	Header          *SignedExchangeHeader `json:"header,omitempty"`          // Information about the signed exchange header.
+	SecurityDetails *SecurityDetails      `json:"securityDetails,omitempty"` // Security details for the signed exchange header.
+	Errors          []string              `json:"errors,omitempty"`          // Errors occurred while handling the signed exchagne.
 }
 
 // ReferrerPolicy the referrer policy of the request, as defined in

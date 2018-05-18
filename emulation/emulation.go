@@ -13,7 +13,6 @@ import (
 
 	"github.com/chromedp/cdproto/cdp"
 	"github.com/chromedp/cdproto/page"
-	"github.com/chromedp/cdproto/runtime"
 )
 
 // CanEmulateParams tells whether emulation is supported.
@@ -466,24 +465,22 @@ func (p SetVirtualTimePolicyParams) WithInitialVirtualTime(initialVirtualTime *c
 
 // SetVirtualTimePolicyReturns return values.
 type SetVirtualTimePolicyReturns struct {
-	VirtualTimeBase      *runtime.Timestamp `json:"virtualTimeBase,omitempty"`      // Absolute timestamp at which virtual time was first enabled (milliseconds since epoch).
-	VirtualTimeTicksBase float64            `json:"virtualTimeTicksBase,omitempty"` // Absolute timestamp at which virtual time was first enabled (up time in milliseconds).
+	VirtualTimeTicksBase float64 `json:"virtualTimeTicksBase,omitempty"` // Absolute timestamp at which virtual time was first enabled (up time in milliseconds).
 }
 
 // Do executes Emulation.setVirtualTimePolicy against the provided context.
 //
 // returns:
-//   virtualTimeBase - Absolute timestamp at which virtual time was first enabled (milliseconds since epoch).
 //   virtualTimeTicksBase - Absolute timestamp at which virtual time was first enabled (up time in milliseconds).
-func (p *SetVirtualTimePolicyParams) Do(ctxt context.Context, h cdp.Executor) (virtualTimeBase *runtime.Timestamp, virtualTimeTicksBase float64, err error) {
+func (p *SetVirtualTimePolicyParams) Do(ctxt context.Context, h cdp.Executor) (virtualTimeTicksBase float64, err error) {
 	// execute
 	var res SetVirtualTimePolicyReturns
 	err = h.Execute(ctxt, CommandSetVirtualTimePolicy, p, &res)
 	if err != nil {
-		return nil, 0, err
+		return 0, err
 	}
 
-	return res.VirtualTimeBase, res.VirtualTimeTicksBase, nil
+	return res.VirtualTimeTicksBase, nil
 }
 
 // Command names.
