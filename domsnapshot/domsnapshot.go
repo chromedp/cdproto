@@ -15,6 +15,32 @@ import (
 	"github.com/chromedp/cdproto/cdp"
 )
 
+// DisableParams disables DOM snapshot agent for the given page.
+type DisableParams struct{}
+
+// Disable disables DOM snapshot agent for the given page.
+func Disable() *DisableParams {
+	return &DisableParams{}
+}
+
+// Do executes DOMSnapshot.disable against the provided context.
+func (p *DisableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
+	return h.Execute(ctxt, CommandDisable, nil, nil)
+}
+
+// EnableParams enables DOM snapshot agent for the given page.
+type EnableParams struct{}
+
+// Enable enables DOM snapshot agent for the given page.
+func Enable() *EnableParams {
+	return &EnableParams{}
+}
+
+// Do executes DOMSnapshot.enable against the provided context.
+func (p *EnableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
+	return h.Execute(ctxt, CommandEnable, nil, nil)
+}
+
 // GetSnapshotParams returns a document snapshot, including the full DOM tree
 // of the root node (including iframes, template contents, and imported
 // documents) in a flattened array, as well as layout and white-listed computed
@@ -87,5 +113,7 @@ func (p *GetSnapshotParams) Do(ctxt context.Context, h cdp.Executor) (domNodes [
 
 // Command names.
 const (
+	CommandDisable     = "DOMSnapshot.disable"
+	CommandEnable      = "DOMSnapshot.enable"
 	CommandGetSnapshot = "DOMSnapshot.getSnapshot"
 )

@@ -190,6 +190,8 @@ const (
 	CommandDOMDebuggerSetEventListenerBreakpoint           = domdebugger.CommandSetEventListenerBreakpoint
 	CommandDOMDebuggerSetInstrumentationBreakpoint         = domdebugger.CommandSetInstrumentationBreakpoint
 	CommandDOMDebuggerSetXHRBreakpoint                     = domdebugger.CommandSetXHRBreakpoint
+	CommandDOMSnapshotDisable                              = domsnapshot.CommandDisable
+	CommandDOMSnapshotEnable                               = domsnapshot.CommandEnable
 	CommandDOMSnapshotGetSnapshot                          = domsnapshot.CommandGetSnapshot
 	CommandDOMStorageClear                                 = domstorage.CommandClear
 	CommandDOMStorageDisable                               = domstorage.CommandDisable
@@ -939,6 +941,12 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		return emptyVal, nil
 
 	case CommandDOMDebuggerSetXHRBreakpoint:
+		return emptyVal, nil
+
+	case CommandDOMSnapshotDisable:
+		return emptyVal, nil
+
+	case CommandDOMSnapshotEnable:
 		return emptyVal, nil
 
 	case CommandDOMSnapshotGetSnapshot:

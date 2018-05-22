@@ -492,7 +492,7 @@ type CachedResource struct {
 type Initiator struct {
 	Type       InitiatorType       `json:"type"`                 // Type of this initiator.
 	Stack      *runtime.StackTrace `json:"stack,omitempty"`      // Initiator JavaScript stack trace, set for Script only.
-	URL        string              `json:"url,omitempty"`        // Initiator URL, set for Parser type or for Script type (when script is importing module).
+	URL        string              `json:"url,omitempty"`        // Initiator URL, set for Parser type or for Script type (when script is importing module) or for SignedExchange type.
 	LineNumber float64             `json:"lineNumber,omitempty"` // Initiator line number, set for Parser type or for Script type (when script is importing module) (0-based).
 }
 
@@ -689,10 +689,11 @@ func (t InitiatorType) String() string {
 
 // InitiatorType values.
 const (
-	InitiatorTypeParser  InitiatorType = "parser"
-	InitiatorTypeScript  InitiatorType = "script"
-	InitiatorTypePreload InitiatorType = "preload"
-	InitiatorTypeOther   InitiatorType = "other"
+	InitiatorTypeParser         InitiatorType = "parser"
+	InitiatorTypeScript         InitiatorType = "script"
+	InitiatorTypePreload        InitiatorType = "preload"
+	InitiatorTypeSignedExchange InitiatorType = "SignedExchange"
+	InitiatorTypeOther          InitiatorType = "other"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -714,6 +715,8 @@ func (t *InitiatorType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = InitiatorTypeScript
 	case InitiatorTypePreload:
 		*t = InitiatorTypePreload
+	case InitiatorTypeSignedExchange:
+		*t = InitiatorTypeSignedExchange
 	case InitiatorTypeOther:
 		*t = InitiatorTypeOther
 
