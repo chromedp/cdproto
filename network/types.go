@@ -592,12 +592,15 @@ type RequestPattern struct {
 // SignedExchangeSignature information about a signed exchange signature.
 // https://wicg.github.io/webpackage/draft-yasskin-httpbis-origin-signed-exchanges-impl.html#rfc.section.3.1.
 type SignedExchangeSignature struct {
-	Label       string `json:"label"`       // Signed exchange signature label.
-	Integrity   string `json:"integrity"`   // Signed exchange signature integrity.
-	CertURL     string `json:"certUrl"`     // Signed exchange signature cert Url.
-	ValidityURL string `json:"validityUrl"` // Signed exchange signature validity Url.
-	Date        int64  `json:"date"`        // Signed exchange signature date.
-	Expires     int64  `json:"expires"`     // Signed exchange signature expires.
+	Label        string   `json:"label"`                  // Signed exchange signature label.
+	Signature    string   `json:"signature"`              // The hex string of signed exchange signature.
+	Integrity    string   `json:"integrity"`              // Signed exchange signature integrity.
+	CertURL      string   `json:"certUrl,omitempty"`      // Signed exchange signature cert Url.
+	CertSha256   string   `json:"certSha256,omitempty"`   // The hex string of signed exchange signature cert sha256.
+	ValidityURL  string   `json:"validityUrl"`            // Signed exchange signature validity Url.
+	Date         int64    `json:"date"`                   // Signed exchange signature date.
+	Expires      int64    `json:"expires"`                // Signed exchange signature expires.
+	Certificates []string `json:"certificates,omitempty"` // The encoded certificates.
 }
 
 // SignedExchangeHeader information about a signed exchange header.
@@ -610,12 +613,73 @@ type SignedExchangeHeader struct {
 	Signatures      []*SignedExchangeSignature `json:"signatures"`      // Signed exchange response signature.
 }
 
+// SignedExchangeErrorField field type for a signed exchange related error.
+type SignedExchangeErrorField string
+
+// String returns the SignedExchangeErrorField as string value.
+func (t SignedExchangeErrorField) String() string {
+	return string(t)
+}
+
+// SignedExchangeErrorField values.
+const (
+	SignedExchangeErrorFieldSignatureSig         SignedExchangeErrorField = "signatureSig"
+	SignedExchangeErrorFieldSignatureIntegrity   SignedExchangeErrorField = "signatureIntegrity"
+	SignedExchangeErrorFieldSignatureCertURL     SignedExchangeErrorField = "signatureCertUrl"
+	SignedExchangeErrorFieldSignatureCertSha256  SignedExchangeErrorField = "signatureCertSha256"
+	SignedExchangeErrorFieldSignatureValidityURL SignedExchangeErrorField = "signatureValidityUrl"
+	SignedExchangeErrorFieldSignatureTimestamps  SignedExchangeErrorField = "signatureTimestamps"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t SignedExchangeErrorField) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t SignedExchangeErrorField) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *SignedExchangeErrorField) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	switch SignedExchangeErrorField(in.String()) {
+	case SignedExchangeErrorFieldSignatureSig:
+		*t = SignedExchangeErrorFieldSignatureSig
+	case SignedExchangeErrorFieldSignatureIntegrity:
+		*t = SignedExchangeErrorFieldSignatureIntegrity
+	case SignedExchangeErrorFieldSignatureCertURL:
+		*t = SignedExchangeErrorFieldSignatureCertURL
+	case SignedExchangeErrorFieldSignatureCertSha256:
+		*t = SignedExchangeErrorFieldSignatureCertSha256
+	case SignedExchangeErrorFieldSignatureValidityURL:
+		*t = SignedExchangeErrorFieldSignatureValidityURL
+	case SignedExchangeErrorFieldSignatureTimestamps:
+		*t = SignedExchangeErrorFieldSignatureTimestamps
+
+	default:
+		in.AddError(errors.New("unknown SignedExchangeErrorField value"))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *SignedExchangeErrorField) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
+// SignedExchangeError information about a signed exchange response.
+type SignedExchangeError struct {
+	Message        string                   `json:"message"`                  // Error message.
+	SignatureIndex int64                    `json:"signatureIndex,omitempty"` // The index of the signature which caused the error.
+	ErrorField     SignedExchangeErrorField `json:"errorField,omitempty"`     // The field which caused the error.
+}
+
 // SignedExchangeInfo information about a signed exchange response.
 type SignedExchangeInfo struct {
-	OuterResponse   *Response             `json:"outerResponse"`             // The outer response of signed HTTP exchange which was received from network.
-	Header          *SignedExchangeHeader `json:"header,omitempty"`          // Information about the signed exchange header.
-	SecurityDetails *SecurityDetails      `json:"securityDetails,omitempty"` // Security details for the signed exchange header.
-	Errors          []string              `json:"errors,omitempty"`          // Errors occurred while handling the signed exchagne.
+	OuterResponse   *Response              `json:"outerResponse"`             // The outer response of signed HTTP exchange which was received from network.
+	Header          *SignedExchangeHeader  `json:"header,omitempty"`          // Information about the signed exchange header.
+	SecurityDetails *SecurityDetails       `json:"securityDetails,omitempty"` // Security details for the signed exchange header.
+	Errors          []*SignedExchangeError `json:"errors,omitempty"`          // Errors occurred while handling the signed exchagne.
 }
 
 // ReferrerPolicy the referrer policy of the request, as defined in

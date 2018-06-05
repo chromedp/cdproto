@@ -232,6 +232,26 @@ func (p *SetDeviceMetricsOverrideParams) Do(ctxt context.Context, h cdp.Executor
 	return h.Execute(ctxt, CommandSetDeviceMetricsOverride, p, nil)
 }
 
+// SetScrollbarsHiddenParams [no description].
+type SetScrollbarsHiddenParams struct {
+	Hidden bool `json:"hidden"` // Whether scrollbars should be always hidden.
+}
+
+// SetScrollbarsHidden [no description].
+//
+// parameters:
+//   hidden - Whether scrollbars should be always hidden.
+func SetScrollbarsHidden(hidden bool) *SetScrollbarsHiddenParams {
+	return &SetScrollbarsHiddenParams{
+		Hidden: hidden,
+	}
+}
+
+// Do executes Emulation.setScrollbarsHidden against the provided context.
+func (p *SetScrollbarsHiddenParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
+	return h.Execute(ctxt, CommandSetScrollbarsHidden, p, nil)
+}
+
 // SetEmitTouchEventsForMouseParams [no description].
 type SetEmitTouchEventsForMouseParams struct {
 	Enabled       bool                                    `json:"enabled"`                 // Whether touch emulation based on mouse input should be enabled.
@@ -317,28 +337,6 @@ func (p SetGeolocationOverrideParams) WithAccuracy(accuracy float64) *SetGeoloca
 // Do executes Emulation.setGeolocationOverride against the provided context.
 func (p *SetGeolocationOverrideParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandSetGeolocationOverride, p, nil)
-}
-
-// SetNavigatorOverridesParams overrides value returned by the javascript
-// navigator object.
-type SetNavigatorOverridesParams struct {
-	Platform string `json:"platform"` // The platform navigator.platform should return.
-}
-
-// SetNavigatorOverrides overrides value returned by the javascript navigator
-// object.
-//
-// parameters:
-//   platform - The platform navigator.platform should return.
-func SetNavigatorOverrides(platform string) *SetNavigatorOverridesParams {
-	return &SetNavigatorOverridesParams{
-		Platform: platform,
-	}
-}
-
-// Do executes Emulation.setNavigatorOverrides against the provided context.
-func (p *SetNavigatorOverridesParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetNavigatorOverrides, p, nil)
 }
 
 // SetPageScaleFactorParams sets a specified page scale factor.
@@ -483,6 +481,41 @@ func (p *SetVirtualTimePolicyParams) Do(ctxt context.Context, h cdp.Executor) (v
 	return res.VirtualTimeTicksBase, nil
 }
 
+// SetUserAgentOverrideParams allows overriding user agent with the given
+// string.
+type SetUserAgentOverrideParams struct {
+	UserAgent      string `json:"userAgent"`                // User agent to use.
+	AcceptLanguage string `json:"acceptLanguage,omitempty"` // Browser langugage to emulate.
+	Platform       string `json:"platform,omitempty"`       // The platform navigator.platform should return.
+}
+
+// SetUserAgentOverride allows overriding user agent with the given string.
+//
+// parameters:
+//   userAgent - User agent to use.
+func SetUserAgentOverride(userAgent string) *SetUserAgentOverrideParams {
+	return &SetUserAgentOverrideParams{
+		UserAgent: userAgent,
+	}
+}
+
+// WithAcceptLanguage browser langugage to emulate.
+func (p SetUserAgentOverrideParams) WithAcceptLanguage(acceptLanguage string) *SetUserAgentOverrideParams {
+	p.AcceptLanguage = acceptLanguage
+	return &p
+}
+
+// WithPlatform the platform navigator.platform should return.
+func (p SetUserAgentOverrideParams) WithPlatform(platform string) *SetUserAgentOverrideParams {
+	p.Platform = platform
+	return &p
+}
+
+// Do executes Emulation.setUserAgentOverride against the provided context.
+func (p *SetUserAgentOverrideParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
+	return h.Execute(ctxt, CommandSetUserAgentOverride, p, nil)
+}
+
 // Command names.
 const (
 	CommandCanEmulate                        = "Emulation.canEmulate"
@@ -492,12 +525,13 @@ const (
 	CommandSetCPUThrottlingRate              = "Emulation.setCPUThrottlingRate"
 	CommandSetDefaultBackgroundColorOverride = "Emulation.setDefaultBackgroundColorOverride"
 	CommandSetDeviceMetricsOverride          = "Emulation.setDeviceMetricsOverride"
+	CommandSetScrollbarsHidden               = "Emulation.setScrollbarsHidden"
 	CommandSetEmitTouchEventsForMouse        = "Emulation.setEmitTouchEventsForMouse"
 	CommandSetEmulatedMedia                  = "Emulation.setEmulatedMedia"
 	CommandSetGeolocationOverride            = "Emulation.setGeolocationOverride"
-	CommandSetNavigatorOverrides             = "Emulation.setNavigatorOverrides"
 	CommandSetPageScaleFactor                = "Emulation.setPageScaleFactor"
 	CommandSetScriptExecutionDisabled        = "Emulation.setScriptExecutionDisabled"
 	CommandSetTouchEmulationEnabled          = "Emulation.setTouchEmulationEnabled"
 	CommandSetVirtualTimePolicy              = "Emulation.setVirtualTimePolicy"
+	CommandSetUserAgentOverride              = "Emulation.setUserAgentOverride"
 )

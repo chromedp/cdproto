@@ -251,14 +251,15 @@ const (
 	CommandEmulationSetCPUThrottlingRate                   = emulation.CommandSetCPUThrottlingRate
 	CommandEmulationSetDefaultBackgroundColorOverride      = emulation.CommandSetDefaultBackgroundColorOverride
 	CommandEmulationSetDeviceMetricsOverride               = emulation.CommandSetDeviceMetricsOverride
+	CommandEmulationSetScrollbarsHidden                    = emulation.CommandSetScrollbarsHidden
 	CommandEmulationSetEmitTouchEventsForMouse             = emulation.CommandSetEmitTouchEventsForMouse
 	CommandEmulationSetEmulatedMedia                       = emulation.CommandSetEmulatedMedia
 	CommandEmulationSetGeolocationOverride                 = emulation.CommandSetGeolocationOverride
-	CommandEmulationSetNavigatorOverrides                  = emulation.CommandSetNavigatorOverrides
 	CommandEmulationSetPageScaleFactor                     = emulation.CommandSetPageScaleFactor
 	CommandEmulationSetScriptExecutionDisabled             = emulation.CommandSetScriptExecutionDisabled
 	CommandEmulationSetTouchEmulationEnabled               = emulation.CommandSetTouchEmulationEnabled
 	CommandEmulationSetVirtualTimePolicy                   = emulation.CommandSetVirtualTimePolicy
+	CommandEmulationSetUserAgentOverride                   = emulation.CommandSetUserAgentOverride
 	EventEmulationVirtualTimeAdvanced                      = "Emulation.virtualTimeAdvanced"
 	EventEmulationVirtualTimeBudgetExpired                 = "Emulation.virtualTimeBudgetExpired"
 	EventEmulationVirtualTimePaused                        = "Emulation.virtualTimePaused"
@@ -357,7 +358,6 @@ const (
 	CommandNetworkSetDataSizeLimitsForTest                 = network.CommandSetDataSizeLimitsForTest
 	CommandNetworkSetExtraHTTPHeaders                      = network.CommandSetExtraHTTPHeaders
 	CommandNetworkSetRequestInterception                   = network.CommandSetRequestInterception
-	CommandNetworkSetUserAgentOverride                     = network.CommandSetUserAgentOverride
 	EventNetworkDataReceived                               = "Network.dataReceived"
 	EventNetworkEventSourceMessageReceived                 = "Network.eventSourceMessageReceived"
 	EventNetworkLoadingFailed                              = "Network.loadingFailed"
@@ -480,7 +480,11 @@ const (
 	CommandRuntimeRunIfWaitingForDebugger                  = runtime.CommandRunIfWaitingForDebugger
 	CommandRuntimeRunScript                                = runtime.CommandRunScript
 	CommandRuntimeSetCustomObjectFormatterEnabled          = runtime.CommandSetCustomObjectFormatterEnabled
+	CommandRuntimeSetMaxCallStackSizeToCapture             = runtime.CommandSetMaxCallStackSizeToCapture
 	CommandRuntimeTerminateExecution                       = runtime.CommandTerminateExecution
+	CommandRuntimeAddBinding                               = runtime.CommandAddBinding
+	CommandRuntimeRemoveBinding                            = runtime.CommandRemoveBinding
+	EventRuntimeBindingCalled                              = "Runtime.bindingCalled"
 	EventRuntimeConsoleAPICalled                           = "Runtime.consoleAPICalled"
 	EventRuntimeExceptionRevoked                           = "Runtime.exceptionRevoked"
 	EventRuntimeExceptionThrown                            = "Runtime.exceptionThrown"
@@ -537,6 +541,7 @@ const (
 	EventTargetReceivedMessageFromTarget                   = "Target.receivedMessageFromTarget"
 	EventTargetTargetCreated                               = "Target.targetCreated"
 	EventTargetTargetDestroyed                             = "Target.targetDestroyed"
+	EventTargetTargetCrashed                               = "Target.targetCrashed"
 	EventTargetTargetInfoChanged                           = "Target.targetInfoChanged"
 	CommandTetheringBind                                   = tethering.CommandBind
 	CommandTetheringUnbind                                 = tethering.CommandUnbind
@@ -1126,6 +1131,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandEmulationSetDeviceMetricsOverride:
 		return emptyVal, nil
 
+	case CommandEmulationSetScrollbarsHidden:
+		return emptyVal, nil
+
 	case CommandEmulationSetEmitTouchEventsForMouse:
 		return emptyVal, nil
 
@@ -1133,9 +1141,6 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		return emptyVal, nil
 
 	case CommandEmulationSetGeolocationOverride:
-		return emptyVal, nil
-
-	case CommandEmulationSetNavigatorOverrides:
 		return emptyVal, nil
 
 	case CommandEmulationSetPageScaleFactor:
@@ -1149,6 +1154,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandEmulationSetVirtualTimePolicy:
 		v = new(emulation.SetVirtualTimePolicyReturns)
+
+	case CommandEmulationSetUserAgentOverride:
+		return emptyVal, nil
 
 	case EventEmulationVirtualTimeAdvanced:
 		v = new(emulation.EventVirtualTimeAdvanced)
@@ -1442,9 +1450,6 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		return emptyVal, nil
 
 	case CommandNetworkSetRequestInterception:
-		return emptyVal, nil
-
-	case CommandNetworkSetUserAgentOverride:
 		return emptyVal, nil
 
 	case EventNetworkDataReceived:
@@ -1813,8 +1818,20 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandRuntimeSetCustomObjectFormatterEnabled:
 		return emptyVal, nil
 
+	case CommandRuntimeSetMaxCallStackSizeToCapture:
+		return emptyVal, nil
+
 	case CommandRuntimeTerminateExecution:
 		return emptyVal, nil
+
+	case CommandRuntimeAddBinding:
+		return emptyVal, nil
+
+	case CommandRuntimeRemoveBinding:
+		return emptyVal, nil
+
+	case EventRuntimeBindingCalled:
+		v = new(runtime.EventBindingCalled)
 
 	case EventRuntimeConsoleAPICalled:
 		v = new(runtime.EventConsoleAPICalled)
@@ -1983,6 +2000,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case EventTargetTargetDestroyed:
 		v = new(target.EventTargetDestroyed)
+
+	case EventTargetTargetCrashed:
+		v = new(target.EventTargetCrashed)
 
 	case EventTargetTargetInfoChanged:
 		v = new(target.EventTargetInfoChanged)
