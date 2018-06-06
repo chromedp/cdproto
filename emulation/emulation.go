@@ -252,6 +252,26 @@ func (p *SetScrollbarsHiddenParams) Do(ctxt context.Context, h cdp.Executor) (er
 	return h.Execute(ctxt, CommandSetScrollbarsHidden, p, nil)
 }
 
+// SetDocumentCookieDisabledParams [no description].
+type SetDocumentCookieDisabledParams struct {
+	Disabled bool `json:"disabled"` // Whether document.coookie API should be disabled.
+}
+
+// SetDocumentCookieDisabled [no description].
+//
+// parameters:
+//   disabled - Whether document.coookie API should be disabled.
+func SetDocumentCookieDisabled(disabled bool) *SetDocumentCookieDisabledParams {
+	return &SetDocumentCookieDisabledParams{
+		Disabled: disabled,
+	}
+}
+
+// Do executes Emulation.setDocumentCookieDisabled against the provided context.
+func (p *SetDocumentCookieDisabledParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
+	return h.Execute(ctxt, CommandSetDocumentCookieDisabled, p, nil)
+}
+
 // SetEmitTouchEventsForMouseParams [no description].
 type SetEmitTouchEventsForMouseParams struct {
 	Enabled       bool                                    `json:"enabled"`                 // Whether touch emulation based on mouse input should be enabled.
@@ -526,6 +546,7 @@ const (
 	CommandSetDefaultBackgroundColorOverride = "Emulation.setDefaultBackgroundColorOverride"
 	CommandSetDeviceMetricsOverride          = "Emulation.setDeviceMetricsOverride"
 	CommandSetScrollbarsHidden               = "Emulation.setScrollbarsHidden"
+	CommandSetDocumentCookieDisabled         = "Emulation.setDocumentCookieDisabled"
 	CommandSetEmitTouchEventsForMouse        = "Emulation.setEmitTouchEventsForMouse"
 	CommandSetEmulatedMedia                  = "Emulation.setEmulatedMedia"
 	CommandSetGeolocationOverride            = "Emulation.setGeolocationOverride"

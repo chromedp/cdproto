@@ -808,20 +808,25 @@ func (p *TerminateExecutionParams) Do(ctxt context.Context, h cdp.Executor) (err
 	return h.Execute(ctxt, CommandTerminateExecution, nil, nil)
 }
 
-// AddBindingParams adds binding with the given name on the global objects of
-// all inspected contexts, including those created later. Bindings survive
-// reloads. Binding function takes exactly one argument, this argument should be
-// string, in case of any other input, function throws an exception. Each
-// binding function call produces Runtime.bindingCalled notification.
+// AddBindingParams if executionContextId is empty, adds binding with the
+// given name on the global objects of all inspected contexts, including those
+// created later, bindings survive reloads. If executionContextId is specified,
+// adds binding only on global object of given execution context. Binding
+// function takes exactly one argument, this argument should be string, in case
+// of any other input, function throws an exception. Each binding function call
+// produces Runtime.bindingCalled notification.
 type AddBindingParams struct {
-	Name string `json:"name"`
+	Name               string             `json:"name"`
+	ExecutionContextID ExecutionContextID `json:"executionContextId,omitempty"`
 }
 
-// AddBinding adds binding with the given name on the global objects of all
-// inspected contexts, including those created later. Bindings survive reloads.
-// Binding function takes exactly one argument, this argument should be string,
-// in case of any other input, function throws an exception. Each binding
-// function call produces Runtime.bindingCalled notification.
+// AddBinding if executionContextId is empty, adds binding with the given
+// name on the global objects of all inspected contexts, including those created
+// later, bindings survive reloads. If executionContextId is specified, adds
+// binding only on global object of given execution context. Binding function
+// takes exactly one argument, this argument should be string, in case of any
+// other input, function throws an exception. Each binding function call
+// produces Runtime.bindingCalled notification.
 //
 // parameters:
 //   name
@@ -829,6 +834,12 @@ func AddBinding(name string) *AddBindingParams {
 	return &AddBindingParams{
 		Name: name,
 	}
+}
+
+// WithExecutionContextID [no description].
+func (p AddBindingParams) WithExecutionContextID(executionContextID ExecutionContextID) *AddBindingParams {
+	p.ExecutionContextID = executionContextID
+	return &p
 }
 
 // Do executes Runtime.addBinding against the provided context.

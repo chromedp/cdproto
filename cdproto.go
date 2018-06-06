@@ -252,6 +252,7 @@ const (
 	CommandEmulationSetDefaultBackgroundColorOverride      = emulation.CommandSetDefaultBackgroundColorOverride
 	CommandEmulationSetDeviceMetricsOverride               = emulation.CommandSetDeviceMetricsOverride
 	CommandEmulationSetScrollbarsHidden                    = emulation.CommandSetScrollbarsHidden
+	CommandEmulationSetDocumentCookieDisabled              = emulation.CommandSetDocumentCookieDisabled
 	CommandEmulationSetEmitTouchEventsForMouse             = emulation.CommandSetEmitTouchEventsForMouse
 	CommandEmulationSetEmulatedMedia                       = emulation.CommandSetEmulatedMedia
 	CommandEmulationSetGeolocationOverride                 = emulation.CommandSetGeolocationOverride
@@ -417,6 +418,7 @@ const (
 	CommandPageSearchInResource                            = page.CommandSearchInResource
 	CommandPageSetAdBlockingEnabled                        = page.CommandSetAdBlockingEnabled
 	CommandPageSetBypassCSP                                = page.CommandSetBypassCSP
+	CommandPageSetFontFamilies                             = page.CommandSetFontFamilies
 	CommandPageSetDocumentContent                          = page.CommandSetDocumentContent
 	CommandPageSetDownloadBehavior                         = page.CommandSetDownloadBehavior
 	CommandPageSetLifecycleEventsEnabled                   = page.CommandSetLifecycleEventsEnabled
@@ -1134,6 +1136,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandEmulationSetScrollbarsHidden:
 		return emptyVal, nil
 
+	case CommandEmulationSetDocumentCookieDisabled:
+		return emptyVal, nil
+
 	case CommandEmulationSetEmitTouchEventsForMouse:
 		return emptyVal, nil
 
@@ -1627,6 +1632,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		return emptyVal, nil
 
 	case CommandPageSetBypassCSP:
+		return emptyVal, nil
+
+	case CommandPageSetFontFamilies:
 		return emptyVal, nil
 
 	case CommandPageSetDocumentContent:

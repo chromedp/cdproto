@@ -6812,8 +6812,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork53(in *jlexer.Lexer, o
 			}
 		case "encodedDataLength":
 			out.EncodedDataLength = float64(in.Float64())
-		case "blockedCrossSiteDocument":
-			out.BlockedCrossSiteDocument = bool(in.Bool())
+		case "shouldReportCorbBlocking":
+			out.ShouldReportCorbBlocking = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -6862,15 +6862,15 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoNetwork53(out *jwriter.Writer
 		}
 		out.Float64(float64(in.EncodedDataLength))
 	}
-	if in.BlockedCrossSiteDocument {
-		const prefix string = ",\"blockedCrossSiteDocument\":"
+	if in.ShouldReportCorbBlocking {
+		const prefix string = ",\"shouldReportCorbBlocking\":"
 		if first {
 			first = false
 			out.RawString(prefix[1:])
 		} else {
 			out.RawString(prefix)
 		}
-		out.Bool(bool(in.BlockedCrossSiteDocument))
+		out.Bool(bool(in.ShouldReportCorbBlocking))
 	}
 	out.RawByte('}')
 }

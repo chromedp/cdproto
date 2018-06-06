@@ -298,6 +298,17 @@ type Viewport struct {
 	Scale  float64 `json:"scale"`  // Page scale factor.
 }
 
+// FontFamilies generic font families collection.
+type FontFamilies struct {
+	Standard   string `json:"standard,omitempty"`   // The standard font-family.
+	Fixed      string `json:"fixed,omitempty"`      // The fixed font-family.
+	Serif      string `json:"serif,omitempty"`      // The serif font-family.
+	SansSerif  string `json:"sansSerif,omitempty"`  // The sansSerif font-family.
+	Cursive    string `json:"cursive,omitempty"`    // The cursive font-family.
+	Fantasy    string `json:"fantasy,omitempty"`    // The fantasy font-family.
+	Pictograph string `json:"pictograph,omitempty"` // The pictograph font-family.
+}
+
 // FrameScheduledNavigationReason the reason for the navigation.
 type FrameScheduledNavigationReason string
 

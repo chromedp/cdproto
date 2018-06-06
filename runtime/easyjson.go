@@ -5437,6 +5437,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoRuntime51(in *jlexer.Lexer, o
 		switch key {
 		case "name":
 			out.Name = string(in.String())
+		case "executionContextId":
+			out.ExecutionContextID = ExecutionContextID(in.Int64())
 		default:
 			in.SkipRecursive()
 		}
@@ -5460,6 +5462,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoRuntime51(out *jwriter.Writer
 			out.RawString(prefix)
 		}
 		out.String(string(in.Name))
+	}
+	if in.ExecutionContextID != 0 {
+		const prefix string = ",\"executionContextId\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Int64(int64(in.ExecutionContextID))
 	}
 	out.RawByte('}')
 }

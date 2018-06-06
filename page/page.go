@@ -862,6 +862,26 @@ func (p *SetBypassCSPParams) Do(ctxt context.Context, h cdp.Executor) (err error
 	return h.Execute(ctxt, CommandSetBypassCSP, p, nil)
 }
 
+// SetFontFamiliesParams set commonly used font families.
+type SetFontFamiliesParams struct {
+	FontFamilies *FontFamilies `json:"fontFamilies"` // Specifies font families to set. If a font family is not set, it won't be changed.
+}
+
+// SetFontFamilies set commonly used font families.
+//
+// parameters:
+//   fontFamilies - Specifies font families to set. If a font family is not set, it won't be changed.
+func SetFontFamilies(fontFamilies *FontFamilies) *SetFontFamiliesParams {
+	return &SetFontFamiliesParams{
+		FontFamilies: fontFamilies,
+	}
+}
+
+// Do executes Page.setFontFamilies against the provided context.
+func (p *SetFontFamiliesParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
+	return h.Execute(ctxt, CommandSetFontFamilies, p, nil)
+}
+
 // SetDocumentContentParams sets given markup as the document's HTML.
 type SetDocumentContentParams struct {
 	FrameID cdp.FrameID `json:"frameId"` // Frame id to set HTML for.
@@ -1090,6 +1110,7 @@ const (
 	CommandSearchInResource                    = "Page.searchInResource"
 	CommandSetAdBlockingEnabled                = "Page.setAdBlockingEnabled"
 	CommandSetBypassCSP                        = "Page.setBypassCSP"
+	CommandSetFontFamilies                     = "Page.setFontFamilies"
 	CommandSetDocumentContent                  = "Page.setDocumentContent"
 	CommandSetDownloadBehavior                 = "Page.setDownloadBehavior"
 	CommandSetLifecycleEventsEnabled           = "Page.setLifecycleEventsEnabled"
