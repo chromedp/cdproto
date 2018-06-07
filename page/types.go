@@ -309,6 +309,12 @@ type FontFamilies struct {
 	Pictograph string `json:"pictograph,omitempty"` // The pictograph font-family.
 }
 
+// FontSizes default font sizes.
+type FontSizes struct {
+	Standard int64 `json:"standard,omitempty"` // Default standard font size.
+	Fixed    int64 `json:"fixed,omitempty"`    // Default fixed font size.
+}
+
 // FrameScheduledNavigationReason the reason for the navigation.
 type FrameScheduledNavigationReason string
 

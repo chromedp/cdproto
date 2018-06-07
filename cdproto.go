@@ -419,6 +419,7 @@ const (
 	CommandPageSetAdBlockingEnabled                        = page.CommandSetAdBlockingEnabled
 	CommandPageSetBypassCSP                                = page.CommandSetBypassCSP
 	CommandPageSetFontFamilies                             = page.CommandSetFontFamilies
+	CommandPageSetFontSizes                                = page.CommandSetFontSizes
 	CommandPageSetDocumentContent                          = page.CommandSetDocumentContent
 	CommandPageSetDownloadBehavior                         = page.CommandSetDownloadBehavior
 	CommandPageSetLifecycleEventsEnabled                   = page.CommandSetLifecycleEventsEnabled
@@ -1635,6 +1636,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		return emptyVal, nil
 
 	case CommandPageSetFontFamilies:
+		return emptyVal, nil
+
+	case CommandPageSetFontSizes:
 		return emptyVal, nil
 
 	case CommandPageSetDocumentContent:
