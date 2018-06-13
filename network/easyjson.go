@@ -3658,6 +3658,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork25(in *jlexer.Lexer, o
 		switch key {
 		case "url":
 			out.URL = string(in.String())
+		case "urlFragment":
+			out.URLFragment = string(in.String())
 		case "method":
 			out.Method = string(in.String())
 		case "headers":
@@ -3721,6 +3723,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoNetwork25(out *jwriter.Writer
 			out.RawString(prefix)
 		}
 		out.String(string(in.URL))
+	}
+	if in.URLFragment != "" {
+		const prefix string = ",\"urlFragment\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(in.URLFragment))
 	}
 	{
 		const prefix string = ",\"method\":"

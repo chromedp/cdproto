@@ -291,7 +291,8 @@ func (t *ResourcePriority) UnmarshalJSON(buf []byte) error {
 
 // Request HTTP request data.
 type Request struct {
-	URL              string                    `json:"url"`                        // Request URL.
+	URL              string                    `json:"url"`                        // Request URL (without fragment).
+	URLFragment      string                    `json:"urlFragment,omitempty"`      // Fragment of the requested URL starting with hash, if present.
 	Method           string                    `json:"method"`                     // HTTP request method.
 	Headers          Headers                   `json:"headers"`                    // HTTP request headers.
 	PostData         string                    `json:"postData,omitempty"`         // HTTP POST request data.

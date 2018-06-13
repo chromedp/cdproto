@@ -21,20 +21,22 @@ func (t ResourceType) String() string {
 
 // ResourceType values.
 const (
-	ResourceTypeDocument       ResourceType = "Document"
-	ResourceTypeStylesheet     ResourceType = "Stylesheet"
-	ResourceTypeImage          ResourceType = "Image"
-	ResourceTypeMedia          ResourceType = "Media"
-	ResourceTypeFont           ResourceType = "Font"
-	ResourceTypeScript         ResourceType = "Script"
-	ResourceTypeTextTrack      ResourceType = "TextTrack"
-	ResourceTypeXHR            ResourceType = "XHR"
-	ResourceTypeFetch          ResourceType = "Fetch"
-	ResourceTypeEventSource    ResourceType = "EventSource"
-	ResourceTypeWebSocket      ResourceType = "WebSocket"
-	ResourceTypeManifest       ResourceType = "Manifest"
-	ResourceTypeSignedExchange ResourceType = "SignedExchange"
-	ResourceTypeOther          ResourceType = "Other"
+	ResourceTypeDocument           ResourceType = "Document"
+	ResourceTypeStylesheet         ResourceType = "Stylesheet"
+	ResourceTypeImage              ResourceType = "Image"
+	ResourceTypeMedia              ResourceType = "Media"
+	ResourceTypeFont               ResourceType = "Font"
+	ResourceTypeScript             ResourceType = "Script"
+	ResourceTypeTextTrack          ResourceType = "TextTrack"
+	ResourceTypeXHR                ResourceType = "XHR"
+	ResourceTypeFetch              ResourceType = "Fetch"
+	ResourceTypeEventSource        ResourceType = "EventSource"
+	ResourceTypeWebSocket          ResourceType = "WebSocket"
+	ResourceTypeManifest           ResourceType = "Manifest"
+	ResourceTypeSignedExchange     ResourceType = "SignedExchange"
+	ResourceTypePing               ResourceType = "Ping"
+	ResourceTypeCSPViolationReport ResourceType = "CSPViolationReport"
+	ResourceTypeOther              ResourceType = "Other"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -76,6 +78,10 @@ func (t *ResourceType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = ResourceTypeManifest
 	case ResourceTypeSignedExchange:
 		*t = ResourceTypeSignedExchange
+	case ResourceTypePing:
+		*t = ResourceTypePing
+	case ResourceTypeCSPViolationReport:
+		*t = ResourceTypeCSPViolationReport
 	case ResourceTypeOther:
 		*t = ResourceTypeOther
 
