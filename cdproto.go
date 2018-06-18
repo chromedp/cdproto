@@ -528,6 +528,7 @@ const (
 	CommandTargetActivateTarget                            = target.CommandActivateTarget
 	CommandTargetAttachToTarget                            = target.CommandAttachToTarget
 	CommandTargetCloseTarget                               = target.CommandCloseTarget
+	CommandTargetExposeDevToolsProtocol                    = target.CommandExposeDevToolsProtocol
 	CommandTargetCreateBrowserContext                      = target.CommandCreateBrowserContext
 	CommandTargetGetBrowserContexts                        = target.CommandGetBrowserContexts
 	CommandTargetCreateTarget                              = target.CommandCreateTarget
@@ -1964,6 +1965,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandTargetCloseTarget:
 		v = new(target.CloseTargetReturns)
+
+	case CommandTargetExposeDevToolsProtocol:
+		return emptyVal, nil
 
 	case CommandTargetCreateBrowserContext:
 		v = new(target.CreateBrowserContextReturns)
