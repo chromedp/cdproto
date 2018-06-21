@@ -396,6 +396,7 @@ const (
 	BlockedReasonInspector         BlockedReason = "inspector"
 	BlockedReasonSubresourceFilter BlockedReason = "subresource-filter"
 	BlockedReasonContentType       BlockedReason = "content-type"
+	BlockedReasonCollapsedByClient BlockedReason = "collapsed-by-client"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -425,6 +426,8 @@ func (t *BlockedReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = BlockedReasonSubresourceFilter
 	case BlockedReasonContentType:
 		*t = BlockedReasonContentType
+	case BlockedReasonCollapsedByClient:
+		*t = BlockedReasonCollapsedByClient
 
 	default:
 		in.AddError(errors.New("unknown BlockedReason value"))
