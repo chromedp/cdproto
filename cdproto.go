@@ -139,6 +139,7 @@ const (
 	CommandDOMFocus                                        = dom.CommandFocus
 	CommandDOMGetAttributes                                = dom.CommandGetAttributes
 	CommandDOMGetBoxModel                                  = dom.CommandGetBoxModel
+	CommandDOMGetContentQuads                              = dom.CommandGetContentQuads
 	CommandDOMGetDocument                                  = dom.CommandGetDocument
 	CommandDOMGetFlattenedDocument                         = dom.CommandGetFlattenedDocument
 	CommandDOMGetNodeForLocation                           = dom.CommandGetNodeForLocation
@@ -192,7 +193,7 @@ const (
 	CommandDOMDebuggerSetXHRBreakpoint                     = domdebugger.CommandSetXHRBreakpoint
 	CommandDOMSnapshotDisable                              = domsnapshot.CommandDisable
 	CommandDOMSnapshotEnable                               = domsnapshot.CommandEnable
-	CommandDOMSnapshotGetSnapshot                          = domsnapshot.CommandGetSnapshot
+	CommandDOMSnapshotCaptureSnapshot                      = domsnapshot.CommandCaptureSnapshot
 	CommandDOMStorageClear                                 = domstorage.CommandClear
 	CommandDOMStorageDisable                               = domstorage.CommandDisable
 	CommandDOMStorageEnable                                = domstorage.CommandEnable
@@ -799,6 +800,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandDOMGetBoxModel:
 		v = new(dom.GetBoxModelReturns)
 
+	case CommandDOMGetContentQuads:
+		v = new(dom.GetContentQuadsReturns)
+
 	case CommandDOMGetDocument:
 		v = new(dom.GetDocumentReturns)
 
@@ -958,8 +962,8 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandDOMSnapshotEnable:
 		return emptyVal, nil
 
-	case CommandDOMSnapshotGetSnapshot:
-		v = new(domsnapshot.GetSnapshotReturns)
+	case CommandDOMSnapshotCaptureSnapshot:
+		v = new(domsnapshot.CaptureSnapshotReturns)
 
 	case CommandDOMStorageClear:
 		return emptyVal, nil
