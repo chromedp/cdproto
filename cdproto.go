@@ -567,12 +567,12 @@ type Error struct {
 	Message string `json:"message"` // Error message.
 }
 
-// Error satisfies error interface.
+// Error satisfies the error interface.
 func (e *Error) Error() string {
 	return fmt.Sprintf("%s (%d)", e.Message, e.Code)
 }
 
-// Message chrome Debugging Protocol message sent to/read over websocket
+// Message chrome Debugging Protocol message sent/read over websocket
 // connection.
 type Message struct {
 	ID     int64               `json:"id,omitempty"`     // Unique message identifier.

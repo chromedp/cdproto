@@ -315,17 +315,20 @@ func (p *DisposeBrowserContextParams) Do(ctxt context.Context, h cdp.Executor) (
 
 // GetTargetInfoParams returns information about a target.
 type GetTargetInfoParams struct {
-	TargetID ID `json:"targetId"`
+	TargetID ID `json:"targetId,omitempty"`
 }
 
 // GetTargetInfo returns information about a target.
 //
 // parameters:
-//   targetID
-func GetTargetInfo(targetID ID) *GetTargetInfoParams {
-	return &GetTargetInfoParams{
-		TargetID: targetID,
-	}
+func GetTargetInfo() *GetTargetInfoParams {
+	return &GetTargetInfoParams{}
+}
+
+// WithTargetID [no description].
+func (p GetTargetInfoParams) WithTargetID(targetID ID) *GetTargetInfoParams {
+	p.TargetID = targetID
+	return &p
 }
 
 // GetTargetInfoReturns return values.
