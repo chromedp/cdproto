@@ -24,9 +24,9 @@ type DispatchKeyEventParams struct {
 	Key                   string          `json:"key,omitempty"`                   // Unique DOM defined string value describing the meaning of the key in the context of active modifiers, keyboard layout, etc (e.g., 'AltGr') (default: "").
 	WindowsVirtualKeyCode int64           `json:"windowsVirtualKeyCode,omitempty"` // Windows virtual key code (default: 0).
 	NativeVirtualKeyCode  int64           `json:"nativeVirtualKeyCode,omitempty"`  // Native virtual key code (default: 0).
-	AutoRepeat            bool            `json:"autoRepeat,omitempty"`            // Whether the event was generated from auto repeat (default: false).
-	IsKeypad              bool            `json:"isKeypad,omitempty"`              // Whether the event was generated from the keypad (default: false).
-	IsSystemKey           bool            `json:"isSystemKey,omitempty"`           // Whether the event was a system key event (default: false).
+	AutoRepeat            bool            `json:"autoRepeat"`                      // Whether the event was generated from auto repeat (default: false).
+	IsKeypad              bool            `json:"isKeypad"`                        // Whether the event was generated from the keypad (default: false).
+	IsSystemKey           bool            `json:"isSystemKey"`                     // Whether the event was a system key event (default: false).
 	Location              int64           `json:"location,omitempty"`              // Whether the event was from the left or right side of the keyboard. 1=Left, 2=Right (default: 0).
 }
 
