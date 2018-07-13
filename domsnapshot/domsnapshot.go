@@ -1,4 +1,4 @@
-// Package domsnapshot provides the Chrome Debugging Protocol
+// Package domsnapshot provides the Chrome DevTools Protocol
 // commands, types, and events for the DOMSnapshot domain.
 //
 // This domain facilitates obtaining document snapshots with DOM, layout, and

@@ -1,4 +1,4 @@
-// Package har provides the Chrome Debugging Protocol
+// Package har provides the Chrome DevTools Protocol
 // commands, types, and events for the HAR domain.
 //
 // HTTP Archive Format.
