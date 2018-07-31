@@ -226,6 +226,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoTarget2(in *jlexer.Lexer, out
 			out.AutoAttach = bool(in.Bool())
 		case "waitForDebuggerOnStart":
 			out.WaitForDebuggerOnStart = bool(in.Bool())
+		case "flatten":
+			out.Flatten = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -259,6 +261,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoTarget2(out *jwriter.Writer, 
 			out.RawString(prefix)
 		}
 		out.Bool(bool(in.WaitForDebuggerOnStart))
+	}
+	if in.Flatten {
+		const prefix string = ",\"flatten\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Bool(bool(in.Flatten))
 	}
 	out.RawByte('}')
 }

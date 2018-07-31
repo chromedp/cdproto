@@ -298,6 +298,7 @@ const (
 	CommandIndexedDBRequestDatabase                        = indexeddb.CommandRequestDatabase
 	CommandIndexedDBRequestDatabaseNames                   = indexeddb.CommandRequestDatabaseNames
 	CommandInputDispatchKeyEvent                           = input.CommandDispatchKeyEvent
+	CommandInputInsertText                                 = input.CommandInsertText
 	CommandInputDispatchMouseEvent                         = input.CommandDispatchMouseEvent
 	CommandInputDispatchTouchEvent                         = input.CommandDispatchTouchEvent
 	CommandInputEmulateTouchFromMouseEvent                 = input.CommandEmulateTouchFromMouseEvent
@@ -1280,6 +1281,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		v = new(indexeddb.RequestDatabaseNamesReturns)
 
 	case CommandInputDispatchKeyEvent:
+		return emptyVal, nil
+
+	case CommandInputInsertText:
 		return emptyVal, nil
 
 	case CommandInputDispatchMouseEvent:

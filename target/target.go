@@ -452,6 +452,7 @@ func (p *SendMessageToTargetParams) Do(ctxt context.Context, h cdp.Executor) (er
 type SetAutoAttachParams struct {
 	AutoAttach             bool `json:"autoAttach"`             // Whether to auto-attach to related targets.
 	WaitForDebuggerOnStart bool `json:"waitForDebuggerOnStart"` // Whether to pause new targets when attaching to them. Use Runtime.runIfWaitingForDebugger to run paused targets.
+	Flatten                bool `json:"flatten,omitempty"`      // Enables "flat" access to the session via specifying sessionId attribute in the commands.
 }
 
 // SetAutoAttach controls whether to automatically attach to new targets
@@ -467,6 +468,13 @@ func SetAutoAttach(autoAttach bool, waitForDebuggerOnStart bool) *SetAutoAttachP
 		AutoAttach:             autoAttach,
 		WaitForDebuggerOnStart: waitForDebuggerOnStart,
 	}
+}
+
+// WithFlatten enables "flat" access to the session via specifying sessionId
+// attribute in the commands.
+func (p SetAutoAttachParams) WithFlatten(flatten bool) *SetAutoAttachParams {
+	p.Flatten = flatten
+	return &p
 }
 
 // Do executes Target.setAutoAttach against the provided context.

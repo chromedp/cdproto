@@ -134,6 +134,28 @@ func (p *DispatchKeyEventParams) Do(ctxt context.Context, h cdp.Executor) (err e
 	return h.Execute(ctxt, CommandDispatchKeyEvent, p, nil)
 }
 
+// InsertTextParams this method emulates inserting text that doesn't come
+// from a key press, for example an emoji keyboard or an IME.
+type InsertTextParams struct {
+	Text string `json:"text"` // The text to insert.
+}
+
+// InsertText this method emulates inserting text that doesn't come from a
+// key press, for example an emoji keyboard or an IME.
+//
+// parameters:
+//   text - The text to insert.
+func InsertText(text string) *InsertTextParams {
+	return &InsertTextParams{
+		Text: text,
+	}
+}
+
+// Do executes Input.insertText against the provided context.
+func (p *InsertTextParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
+	return h.Execute(ctxt, CommandInsertText, p, nil)
+}
+
 // DispatchMouseEventParams dispatches a mouse event to the page.
 type DispatchMouseEventParams struct {
 	Type       MouseType       `json:"type"`                 // Type of the mouse event.
@@ -527,6 +549,7 @@ func (p *SynthesizeTapGestureParams) Do(ctxt context.Context, h cdp.Executor) (e
 // Command names.
 const (
 	CommandDispatchKeyEvent           = "Input.dispatchKeyEvent"
+	CommandInsertText                 = "Input.insertText"
 	CommandDispatchMouseEvent         = "Input.dispatchMouseEvent"
 	CommandDispatchTouchEvent         = "Input.dispatchTouchEvent"
 	CommandEmulateTouchFromMouseEvent = "Input.emulateTouchFromMouseEvent"
