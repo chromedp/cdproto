@@ -90,6 +90,8 @@ const (
 	EventApplicationCacheApplicationCacheStatusUpdated     = "ApplicationCache.applicationCacheStatusUpdated"
 	EventApplicationCacheNetworkStateUpdated               = "ApplicationCache.networkStateUpdated"
 	CommandAuditsGetEncodedResponse                        = audits.CommandGetEncodedResponse
+	CommandBrowserGrantPermissions                         = browser.CommandGrantPermissions
+	CommandBrowserResetPermissions                         = browser.CommandResetPermissions
 	CommandBrowserClose                                    = browser.CommandClose
 	CommandBrowserGetVersion                               = browser.CommandGetVersion
 	CommandBrowserGetBrowserCommandLine                    = browser.CommandGetBrowserCommandLine
@@ -658,6 +660,12 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandAuditsGetEncodedResponse:
 		v = new(audits.GetEncodedResponseReturns)
+
+	case CommandBrowserGrantPermissions:
+		return emptyVal, nil
+
+	case CommandBrowserResetPermissions:
+		return emptyVal, nil
 
 	case CommandBrowserClose:
 		return emptyVal, nil

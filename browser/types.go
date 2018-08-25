@@ -75,6 +75,87 @@ type Bounds struct {
 	WindowState WindowState `json:"windowState,omitempty"` // The window state. Default to normal.
 }
 
+// PermissionType [no description].
+type PermissionType string
+
+// String returns the PermissionType as string value.
+func (t PermissionType) String() string {
+	return string(t)
+}
+
+// PermissionType values.
+const (
+	PermissionTypeAccessibilityEvents      PermissionType = "accessibilityEvents"
+	PermissionTypeAudioCapture             PermissionType = "audioCapture"
+	PermissionTypeBackgroundSync           PermissionType = "backgroundSync"
+	PermissionTypeClipboardRead            PermissionType = "clipboardRead"
+	PermissionTypeClipboardWrite           PermissionType = "clipboardWrite"
+	PermissionTypeDurableStorage           PermissionType = "durableStorage"
+	PermissionTypeFlash                    PermissionType = "flash"
+	PermissionTypeGeolocation              PermissionType = "geolocation"
+	PermissionTypeMidi                     PermissionType = "midi"
+	PermissionTypeMidiSysex                PermissionType = "midiSysex"
+	PermissionTypeNotifications            PermissionType = "notifications"
+	PermissionTypePaymentHandler           PermissionType = "paymentHandler"
+	PermissionTypeProtectedMediaIdentifier PermissionType = "protectedMediaIdentifier"
+	PermissionTypeSensors                  PermissionType = "sensors"
+	PermissionTypeVideoCapture             PermissionType = "videoCapture"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t PermissionType) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t PermissionType) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *PermissionType) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	switch PermissionType(in.String()) {
+	case PermissionTypeAccessibilityEvents:
+		*t = PermissionTypeAccessibilityEvents
+	case PermissionTypeAudioCapture:
+		*t = PermissionTypeAudioCapture
+	case PermissionTypeBackgroundSync:
+		*t = PermissionTypeBackgroundSync
+	case PermissionTypeClipboardRead:
+		*t = PermissionTypeClipboardRead
+	case PermissionTypeClipboardWrite:
+		*t = PermissionTypeClipboardWrite
+	case PermissionTypeDurableStorage:
+		*t = PermissionTypeDurableStorage
+	case PermissionTypeFlash:
+		*t = PermissionTypeFlash
+	case PermissionTypeGeolocation:
+		*t = PermissionTypeGeolocation
+	case PermissionTypeMidi:
+		*t = PermissionTypeMidi
+	case PermissionTypeMidiSysex:
+		*t = PermissionTypeMidiSysex
+	case PermissionTypeNotifications:
+		*t = PermissionTypeNotifications
+	case PermissionTypePaymentHandler:
+		*t = PermissionTypePaymentHandler
+	case PermissionTypeProtectedMediaIdentifier:
+		*t = PermissionTypeProtectedMediaIdentifier
+	case PermissionTypeSensors:
+		*t = PermissionTypeSensors
+	case PermissionTypeVideoCapture:
+		*t = PermissionTypeVideoCapture
+
+	default:
+		in.AddError(errors.New("unknown PermissionType value"))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *PermissionType) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
 // Bucket chrome histogram bucket.
 type Bucket struct {
 	Low   int64 `json:"low"`   // Minimum value (inclusive).

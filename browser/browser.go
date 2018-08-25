@@ -15,6 +15,63 @@ import (
 	"github.com/chromedp/cdproto/target"
 )
 
+// GrantPermissionsParams grant specific permissions to the given origin and
+// reject all others.
+type GrantPermissionsParams struct {
+	Origin           string                  `json:"origin"`
+	Permissions      []PermissionType        `json:"permissions"`
+	BrowserContextID target.BrowserContextID `json:"browserContextId,omitempty"` // BrowserContext to override permissions. When omitted, default browser context is used.
+}
+
+// GrantPermissions grant specific permissions to the given origin and reject
+// all others.
+//
+// parameters:
+//   origin
+//   permissions
+func GrantPermissions(origin string, permissions []PermissionType) *GrantPermissionsParams {
+	return &GrantPermissionsParams{
+		Origin:      origin,
+		Permissions: permissions,
+	}
+}
+
+// WithBrowserContextID browserContext to override permissions. When omitted,
+// default browser context is used.
+func (p GrantPermissionsParams) WithBrowserContextID(browserContextID target.BrowserContextID) *GrantPermissionsParams {
+	p.BrowserContextID = browserContextID
+	return &p
+}
+
+// Do executes Browser.grantPermissions against the provided context.
+func (p *GrantPermissionsParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
+	return h.Execute(ctxt, CommandGrantPermissions, p, nil)
+}
+
+// ResetPermissionsParams reset all permission management for all origins.
+type ResetPermissionsParams struct {
+	BrowserContextID target.BrowserContextID `json:"browserContextId,omitempty"` // BrowserContext to reset permissions. When omitted, default browser context is used.
+}
+
+// ResetPermissions reset all permission management for all origins.
+//
+// parameters:
+func ResetPermissions() *ResetPermissionsParams {
+	return &ResetPermissionsParams{}
+}
+
+// WithBrowserContextID browserContext to reset permissions. When omitted,
+// default browser context is used.
+func (p ResetPermissionsParams) WithBrowserContextID(browserContextID target.BrowserContextID) *ResetPermissionsParams {
+	p.BrowserContextID = browserContextID
+	return &p
+}
+
+// Do executes Browser.resetPermissions against the provided context.
+func (p *ResetPermissionsParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
+	return h.Execute(ctxt, CommandResetPermissions, p, nil)
+}
+
 // CloseParams close browser gracefully.
 type CloseParams struct{}
 
@@ -282,6 +339,8 @@ func (p *SetWindowBoundsParams) Do(ctxt context.Context, h cdp.Executor) (err er
 
 // Command names.
 const (
+	CommandGrantPermissions      = "Browser.grantPermissions"
+	CommandResetPermissions      = "Browser.resetPermissions"
 	CommandClose                 = "Browser.close"
 	CommandGetVersion            = "Browser.getVersion"
 	CommandGetBrowserCommandLine = "Browser.getBrowserCommandLine"
