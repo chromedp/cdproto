@@ -48,6 +48,7 @@ import (
 	"github.com/chromedp/cdproto/storage"
 	"github.com/chromedp/cdproto/systeminfo"
 	"github.com/chromedp/cdproto/target"
+	"github.com/chromedp/cdproto/testing"
 	"github.com/chromedp/cdproto/tethering"
 	"github.com/chromedp/cdproto/tracing"
 	"github.com/mailru/easyjson"
@@ -436,6 +437,7 @@ const (
 	CommandPageSetProduceCompilationCache                  = page.CommandSetProduceCompilationCache
 	CommandPageAddCompilationCache                         = page.CommandAddCompilationCache
 	CommandPageClearCompilationCache                       = page.CommandClearCompilationCache
+	CommandPageGenerateTestReport                          = page.CommandGenerateTestReport
 	EventPageDomContentEventFired                          = "Page.domContentEventFired"
 	EventPageFrameAttached                                 = "Page.frameAttached"
 	EventPageFrameClearedScheduledNavigation               = "Page.frameClearedScheduledNavigation"
@@ -556,6 +558,7 @@ const (
 	EventTargetTargetDestroyed                             = "Target.targetDestroyed"
 	EventTargetTargetCrashed                               = "Target.targetCrashed"
 	EventTargetTargetInfoChanged                           = "Target.targetInfoChanged"
+	CommandTestingGenerateTestReport                       = testing.CommandGenerateTestReport
 	CommandTetheringBind                                   = tethering.CommandBind
 	CommandTetheringUnbind                                 = tethering.CommandUnbind
 	EventTetheringAccepted                                 = "Tethering.accepted"
@@ -1699,6 +1702,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandPageClearCompilationCache:
 		return emptyVal, nil
 
+	case CommandPageGenerateTestReport:
+		return emptyVal, nil
+
 	case EventPageDomContentEventFired:
 		v = new(page.EventDomContentEventFired)
 
@@ -2058,6 +2064,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case EventTargetTargetInfoChanged:
 		v = new(target.EventTargetInfoChanged)
+
+	case CommandTestingGenerateTestReport:
+		return emptyVal, nil
 
 	case CommandTetheringBind:
 		return emptyVal, nil
