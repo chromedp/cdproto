@@ -94,6 +94,7 @@ const (
 	CommandBrowserGrantPermissions                         = browser.CommandGrantPermissions
 	CommandBrowserResetPermissions                         = browser.CommandResetPermissions
 	CommandBrowserClose                                    = browser.CommandClose
+	CommandBrowserCrash                                    = browser.CommandCrash
 	CommandBrowserGetVersion                               = browser.CommandGetVersion
 	CommandBrowserGetBrowserCommandLine                    = browser.CommandGetBrowserCommandLine
 	CommandBrowserGetHistograms                            = browser.CommandGetHistograms
@@ -671,6 +672,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		return emptyVal, nil
 
 	case CommandBrowserClose:
+		return emptyVal, nil
+
+	case CommandBrowserCrash:
 		return emptyVal, nil
 
 	case CommandBrowserGetVersion:

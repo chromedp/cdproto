@@ -2039,6 +2039,10 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoDomsnapshot10(in *jlexer.Lexe
 				}
 				(*out.TextBoxes).UnmarshalEasyJSON(in)
 			}
+		case "scrollOffsetX":
+			out.ScrollOffsetX = float64(in.Float64())
+		case "scrollOffsetY":
+			out.ScrollOffsetY = float64(in.Float64())
 		default:
 			in.SkipRecursive()
 		}
@@ -2164,6 +2168,26 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoDomsnapshot10(out *jwriter.Wr
 		} else {
 			(*in.TextBoxes).MarshalEasyJSON(out)
 		}
+	}
+	if in.ScrollOffsetX != 0 {
+		const prefix string = ",\"scrollOffsetX\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Float64(float64(in.ScrollOffsetX))
+	}
+	if in.ScrollOffsetY != 0 {
+		const prefix string = ",\"scrollOffsetY\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Float64(float64(in.ScrollOffsetY))
 	}
 	out.RawByte('}')
 }
@@ -2421,6 +2445,10 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoDomsnapshot12(in *jlexer.Lexe
 			out.CurrentSourceURL = string(in.String())
 		case "originURL":
 			out.OriginURL = string(in.String())
+		case "scrollOffsetX":
+			out.ScrollOffsetX = float64(in.Float64())
+		case "scrollOffsetY":
+			out.ScrollOffsetY = float64(in.Float64())
 		default:
 			in.SkipRecursive()
 		}
@@ -2738,6 +2766,26 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoDomsnapshot12(out *jwriter.Wr
 			out.RawString(prefix)
 		}
 		out.String(string(in.OriginURL))
+	}
+	if in.ScrollOffsetX != 0 {
+		const prefix string = ",\"scrollOffsetX\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Float64(float64(in.ScrollOffsetX))
+	}
+	if in.ScrollOffsetY != 0 {
+		const prefix string = ",\"scrollOffsetY\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Float64(float64(in.ScrollOffsetY))
 	}
 	out.RawByte('}')
 }

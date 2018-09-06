@@ -85,6 +85,19 @@ func (p *CloseParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandClose, nil, nil)
 }
 
+// CrashParams crashes browser on the main thread.
+type CrashParams struct{}
+
+// Crash crashes browser on the main thread.
+func Crash() *CrashParams {
+	return &CrashParams{}
+}
+
+// Do executes Browser.crash against the provided context.
+func (p *CrashParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
+	return h.Execute(ctxt, CommandCrash, nil, nil)
+}
+
 // GetVersionParams returns version information.
 type GetVersionParams struct{}
 
@@ -342,6 +355,7 @@ const (
 	CommandGrantPermissions      = "Browser.grantPermissions"
 	CommandResetPermissions      = "Browser.resetPermissions"
 	CommandClose                 = "Browser.close"
+	CommandCrash                 = "Browser.crash"
 	CommandGetVersion            = "Browser.getVersion"
 	CommandGetBrowserCommandLine = "Browser.getBrowserCommandLine"
 	CommandGetHistograms         = "Browser.getHistograms"

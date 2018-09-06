@@ -140,6 +140,7 @@ func (t TransitionType) String() string {
 const (
 	TransitionTypeLink             TransitionType = "link"
 	TransitionTypeTyped            TransitionType = "typed"
+	TransitionTypeAddressBar       TransitionType = "address_bar"
 	TransitionTypeAutoBookmark     TransitionType = "auto_bookmark"
 	TransitionTypeAutoSubframe     TransitionType = "auto_subframe"
 	TransitionTypeManualSubframe   TransitionType = "manual_subframe"
@@ -169,6 +170,8 @@ func (t *TransitionType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = TransitionTypeLink
 	case TransitionTypeTyped:
 		*t = TransitionTypeTyped
+	case TransitionTypeAddressBar:
+		*t = TransitionTypeAddressBar
 	case TransitionTypeAutoBookmark:
 		*t = TransitionTypeAutoBookmark
 	case TransitionTypeAutoSubframe:
