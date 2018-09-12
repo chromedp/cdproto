@@ -86,6 +86,28 @@ func (p *ResetPageScaleFactorParams) Do(ctxt context.Context, h cdp.Executor) (e
 	return h.Execute(ctxt, CommandResetPageScaleFactor, nil, nil)
 }
 
+// SetFocusEmulationEnabledParams enables or disables simulating a focused
+// and active page.
+type SetFocusEmulationEnabledParams struct {
+	Enabled bool `json:"enabled"` // Whether to enable to disable focus emulation.
+}
+
+// SetFocusEmulationEnabled enables or disables simulating a focused and
+// active page.
+//
+// parameters:
+//   enabled - Whether to enable to disable focus emulation.
+func SetFocusEmulationEnabled(enabled bool) *SetFocusEmulationEnabledParams {
+	return &SetFocusEmulationEnabledParams{
+		Enabled: enabled,
+	}
+}
+
+// Do executes Emulation.setFocusEmulationEnabled against the provided context.
+func (p *SetFocusEmulationEnabledParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
+	return h.Execute(ctxt, CommandSetFocusEmulationEnabled, p, nil)
+}
+
 // SetCPUThrottlingRateParams enables CPU throttling to emulate slow CPUs.
 type SetCPUThrottlingRateParams struct {
 	Rate float64 `json:"rate"` // Throttling rate as a slowdown factor (1 is no throttle, 2 is 2x slowdown, etc).
@@ -542,6 +564,7 @@ const (
 	CommandClearDeviceMetricsOverride        = "Emulation.clearDeviceMetricsOverride"
 	CommandClearGeolocationOverride          = "Emulation.clearGeolocationOverride"
 	CommandResetPageScaleFactor              = "Emulation.resetPageScaleFactor"
+	CommandSetFocusEmulationEnabled          = "Emulation.setFocusEmulationEnabled"
 	CommandSetCPUThrottlingRate              = "Emulation.setCPUThrottlingRate"
 	CommandSetDefaultBackgroundColorOverride = "Emulation.setDefaultBackgroundColorOverride"
 	CommandSetDeviceMetricsOverride          = "Emulation.setDeviceMetricsOverride"

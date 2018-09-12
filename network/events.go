@@ -4,7 +4,6 @@ package network
 
 import (
 	"github.com/chromedp/cdproto/cdp"
-	"github.com/chromedp/cdproto/page"
 )
 
 // EventDataReceived fired when data chunk was received over the network.
@@ -29,7 +28,7 @@ type EventEventSourceMessageReceived struct {
 type EventLoadingFailed struct {
 	RequestID     RequestID          `json:"requestId"`               // Request identifier.
 	Timestamp     *cdp.MonotonicTime `json:"timestamp"`               // Timestamp.
-	Type          page.ResourceType  `json:"type"`                    // Resource type.
+	Type          ResourceType       `json:"type"`                    // Resource type.
 	ErrorText     string             `json:"errorText"`               // User friendly error message.
 	Canceled      bool               `json:"canceled,omitempty"`      // True if loading was canceled.
 	BlockedReason BlockedReason      `json:"blockedReason,omitempty"` // The reason why loading was blocked, if any.
@@ -46,17 +45,17 @@ type EventLoadingFinished struct {
 // EventRequestIntercepted details of an intercepted HTTP request, which must
 // be either allowed, blocked, modified or mocked.
 type EventRequestIntercepted struct {
-	InterceptionID      InterceptionID    `json:"interceptionId"` // Each request the page makes will have a unique id, however if any redirects are encountered while processing that fetch, they will be reported with the same id as the original fetch. Likewise if HTTP authentication is needed then the same fetch id will be used.
-	Request             *Request          `json:"request"`
-	FrameID             cdp.FrameID       `json:"frameId"`                       // The id of the frame that initiated the request.
-	ResourceType        page.ResourceType `json:"resourceType"`                  // How the requested resource will be used.
-	IsNavigationRequest bool              `json:"isNavigationRequest"`           // Whether this is a navigation request, which can abort the navigation completely.
-	IsDownload          bool              `json:"isDownload,omitempty"`          // Set if the request is a navigation that will result in a download. Only present after response is received from the server (i.e. HeadersReceived stage).
-	RedirectURL         string            `json:"redirectUrl,omitempty"`         // Redirect location, only sent if a redirect was intercepted.
-	AuthChallenge       *AuthChallenge    `json:"authChallenge,omitempty"`       // Details of the Authorization Challenge encountered. If this is set then continueInterceptedRequest must contain an authChallengeResponse.
-	ResponseErrorReason ErrorReason       `json:"responseErrorReason,omitempty"` // Response error if intercepted at response stage or if redirect occurred while intercepting request.
-	ResponseStatusCode  int64             `json:"responseStatusCode,omitempty"`  // Response code if intercepted at response stage or if redirect occurred while intercepting request or auth retry occurred.
-	ResponseHeaders     Headers           `json:"responseHeaders,omitempty"`     // Response headers if intercepted at the response stage or if redirect occurred while intercepting request or auth retry occurred.
+	InterceptionID      InterceptionID `json:"interceptionId"` // Each request the page makes will have a unique id, however if any redirects are encountered while processing that fetch, they will be reported with the same id as the original fetch. Likewise if HTTP authentication is needed then the same fetch id will be used.
+	Request             *Request       `json:"request"`
+	FrameID             cdp.FrameID    `json:"frameId"`                       // The id of the frame that initiated the request.
+	ResourceType        ResourceType   `json:"resourceType"`                  // How the requested resource will be used.
+	IsNavigationRequest bool           `json:"isNavigationRequest"`           // Whether this is a navigation request, which can abort the navigation completely.
+	IsDownload          bool           `json:"isDownload,omitempty"`          // Set if the request is a navigation that will result in a download. Only present after response is received from the server (i.e. HeadersReceived stage).
+	RedirectURL         string         `json:"redirectUrl,omitempty"`         // Redirect location, only sent if a redirect was intercepted.
+	AuthChallenge       *AuthChallenge `json:"authChallenge,omitempty"`       // Details of the Authorization Challenge encountered. If this is set then continueInterceptedRequest must contain an authChallengeResponse.
+	ResponseErrorReason ErrorReason    `json:"responseErrorReason,omitempty"` // Response error if intercepted at response stage or if redirect occurred while intercepting request.
+	ResponseStatusCode  int64          `json:"responseStatusCode,omitempty"`  // Response code if intercepted at response stage or if redirect occurred while intercepting request or auth retry occurred.
+	ResponseHeaders     Headers        `json:"responseHeaders,omitempty"`     // Response headers if intercepted at the response stage or if redirect occurred while intercepting request or auth retry occurred.
 }
 
 // EventRequestServedFromCache fired if request ended up loading from cache.
@@ -74,7 +73,7 @@ type EventRequestWillBeSent struct {
 	WallTime         *cdp.TimeSinceEpoch `json:"wallTime"`                   // Timestamp.
 	Initiator        *Initiator          `json:"initiator"`                  // Request initiator.
 	RedirectResponse *Response           `json:"redirectResponse,omitempty"` // Redirect response data.
-	Type             page.ResourceType   `json:"type,omitempty"`             // Type of this resource.
+	Type             ResourceType        `json:"type,omitempty"`             // Type of this resource.
 	FrameID          cdp.FrameID         `json:"frameId,omitempty"`          // Frame identifier.
 	HasUserGesture   bool                `json:"hasUserGesture,omitempty"`   // Whether the request is initiated by a user gesture. Defaults to false.
 }
@@ -99,7 +98,7 @@ type EventResponseReceived struct {
 	RequestID RequestID          `json:"requestId"`         // Request identifier.
 	LoaderID  cdp.LoaderID       `json:"loaderId"`          // Loader identifier. Empty string if the request is fetched from worker.
 	Timestamp *cdp.MonotonicTime `json:"timestamp"`         // Timestamp.
-	Type      page.ResourceType  `json:"type"`              // Resource type.
+	Type      ResourceType       `json:"type"`              // Resource type.
 	Response  *Response          `json:"response"`          // Response data.
 	FrameID   cdp.FrameID        `json:"frameId,omitempty"` // Frame identifier.
 }

@@ -6,104 +6,21 @@ import (
 	"errors"
 
 	"github.com/chromedp/cdproto/cdp"
+	"github.com/chromedp/cdproto/network"
 	"github.com/mailru/easyjson"
 	"github.com/mailru/easyjson/jlexer"
 	"github.com/mailru/easyjson/jwriter"
 )
 
-// ResourceType resource type as it was perceived by the rendering engine.
-type ResourceType string
-
-// String returns the ResourceType as string value.
-func (t ResourceType) String() string {
-	return string(t)
-}
-
-// ResourceType values.
-const (
-	ResourceTypeDocument           ResourceType = "Document"
-	ResourceTypeStylesheet         ResourceType = "Stylesheet"
-	ResourceTypeImage              ResourceType = "Image"
-	ResourceTypeMedia              ResourceType = "Media"
-	ResourceTypeFont               ResourceType = "Font"
-	ResourceTypeScript             ResourceType = "Script"
-	ResourceTypeTextTrack          ResourceType = "TextTrack"
-	ResourceTypeXHR                ResourceType = "XHR"
-	ResourceTypeFetch              ResourceType = "Fetch"
-	ResourceTypeEventSource        ResourceType = "EventSource"
-	ResourceTypeWebSocket          ResourceType = "WebSocket"
-	ResourceTypeManifest           ResourceType = "Manifest"
-	ResourceTypeSignedExchange     ResourceType = "SignedExchange"
-	ResourceTypePing               ResourceType = "Ping"
-	ResourceTypeCSPViolationReport ResourceType = "CSPViolationReport"
-	ResourceTypeOther              ResourceType = "Other"
-)
-
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t ResourceType) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
-
-// MarshalJSON satisfies json.Marshaler.
-func (t ResourceType) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *ResourceType) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	switch ResourceType(in.String()) {
-	case ResourceTypeDocument:
-		*t = ResourceTypeDocument
-	case ResourceTypeStylesheet:
-		*t = ResourceTypeStylesheet
-	case ResourceTypeImage:
-		*t = ResourceTypeImage
-	case ResourceTypeMedia:
-		*t = ResourceTypeMedia
-	case ResourceTypeFont:
-		*t = ResourceTypeFont
-	case ResourceTypeScript:
-		*t = ResourceTypeScript
-	case ResourceTypeTextTrack:
-		*t = ResourceTypeTextTrack
-	case ResourceTypeXHR:
-		*t = ResourceTypeXHR
-	case ResourceTypeFetch:
-		*t = ResourceTypeFetch
-	case ResourceTypeEventSource:
-		*t = ResourceTypeEventSource
-	case ResourceTypeWebSocket:
-		*t = ResourceTypeWebSocket
-	case ResourceTypeManifest:
-		*t = ResourceTypeManifest
-	case ResourceTypeSignedExchange:
-		*t = ResourceTypeSignedExchange
-	case ResourceTypePing:
-		*t = ResourceTypePing
-	case ResourceTypeCSPViolationReport:
-		*t = ResourceTypeCSPViolationReport
-	case ResourceTypeOther:
-		*t = ResourceTypeOther
-
-	default:
-		in.AddError(errors.New("unknown ResourceType value"))
-	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *ResourceType) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
-}
-
 // FrameResource information about the Resource on the page.
 type FrameResource struct {
-	URL          string              `json:"url"`                    // Resource URL.
-	Type         ResourceType        `json:"type"`                   // Type of this resource.
-	MimeType     string              `json:"mimeType"`               // Resource mimeType as determined by the browser.
-	LastModified *cdp.TimeSinceEpoch `json:"lastModified,omitempty"` // last-modified timestamp as reported by server.
-	ContentSize  float64             `json:"contentSize,omitempty"`  // Resource content size.
-	Failed       bool                `json:"failed,omitempty"`       // True if the resource failed to load.
-	Canceled     bool                `json:"canceled,omitempty"`     // True if the resource was canceled during loading.
+	URL          string               `json:"url"`                    // Resource URL.
+	Type         network.ResourceType `json:"type"`                   // Type of this resource.
+	MimeType     string               `json:"mimeType"`               // Resource mimeType as determined by the browser.
+	LastModified *cdp.TimeSinceEpoch  `json:"lastModified,omitempty"` // last-modified timestamp as reported by server.
+	ContentSize  float64              `json:"contentSize,omitempty"`  // Resource content size.
+	Failed       bool                 `json:"failed,omitempty"`       // True if the resource failed to load.
+	Canceled     bool                 `json:"canceled,omitempty"`     // True if the resource was canceled during loading.
 }
 
 // FrameResourceTree information about the Frame hierarchy along with their

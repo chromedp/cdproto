@@ -253,6 +253,7 @@ const (
 	CommandEmulationClearDeviceMetricsOverride             = emulation.CommandClearDeviceMetricsOverride
 	CommandEmulationClearGeolocationOverride               = emulation.CommandClearGeolocationOverride
 	CommandEmulationResetPageScaleFactor                   = emulation.CommandResetPageScaleFactor
+	CommandEmulationSetFocusEmulationEnabled               = emulation.CommandSetFocusEmulationEnabled
 	CommandEmulationSetCPUThrottlingRate                   = emulation.CommandSetCPUThrottlingRate
 	CommandEmulationSetDefaultBackgroundColorOverride      = emulation.CommandSetDefaultBackgroundColorOverride
 	CommandEmulationSetDeviceMetricsOverride               = emulation.CommandSetDeviceMetricsOverride
@@ -1149,6 +1150,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		return emptyVal, nil
 
 	case CommandEmulationResetPageScaleFactor:
+		return emptyVal, nil
+
+	case CommandEmulationSetFocusEmulationEnabled:
 		return emptyVal, nil
 
 	case CommandEmulationSetCPUThrottlingRate:
