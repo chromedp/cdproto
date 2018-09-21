@@ -78,7 +78,36 @@ func (p *GetPartialAXTreeParams) Do(ctxt context.Context, h cdp.Executor) (nodes
 	return res.Nodes, nil
 }
 
+// GetFullAXTreeParams fetches the entire accessibility tree.
+type GetFullAXTreeParams struct{}
+
+// GetFullAXTree fetches the entire accessibility tree.
+func GetFullAXTree() *GetFullAXTreeParams {
+	return &GetFullAXTreeParams{}
+}
+
+// GetFullAXTreeReturns return values.
+type GetFullAXTreeReturns struct {
+	Nodes []*Node `json:"nodes,omitempty"`
+}
+
+// Do executes Accessibility.getFullAXTree against the provided context.
+//
+// returns:
+//   nodes
+func (p *GetFullAXTreeParams) Do(ctxt context.Context, h cdp.Executor) (nodes []*Node, err error) {
+	// execute
+	var res GetFullAXTreeReturns
+	err = h.Execute(ctxt, CommandGetFullAXTree, nil, &res)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.Nodes, nil
+}
+
 // Command names.
 const (
 	CommandGetPartialAXTree = "Accessibility.getPartialAXTree"
+	CommandGetFullAXTree    = "Accessibility.getFullAXTree"
 )

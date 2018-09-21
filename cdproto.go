@@ -71,6 +71,7 @@ func (t MethodType) Domain() string {
 // MethodType values.
 const (
 	CommandAccessibilityGetPartialAXTree                   = accessibility.CommandGetPartialAXTree
+	CommandAccessibilityGetFullAXTree                      = accessibility.CommandGetFullAXTree
 	CommandAnimationDisable                                = animation.CommandDisable
 	CommandAnimationEnable                                 = animation.CommandEnable
 	CommandAnimationGetCurrentTime                         = animation.CommandGetCurrentTime
@@ -605,6 +606,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	switch msg.Method {
 	case CommandAccessibilityGetPartialAXTree:
 		v = new(accessibility.GetPartialAXTreeReturns)
+
+	case CommandAccessibilityGetFullAXTree:
+		v = new(accessibility.GetFullAXTreeReturns)
 
 	case CommandAnimationDisable:
 		return emptyVal, nil
