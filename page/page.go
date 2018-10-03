@@ -22,7 +22,8 @@ import (
 // AddScriptToEvaluateOnNewDocumentParams evaluates given script in every
 // frame upon creation (before loading frame's scripts).
 type AddScriptToEvaluateOnNewDocumentParams struct {
-	Source string `json:"source"`
+	Source    string `json:"source"`
+	WorldName string `json:"worldName,omitempty"` // If specified, creates an isolated world with the given name and evaluates given script in it. This world name will be used as the ExecutionContextDescription::name when the corresponding event is emitted.
 }
 
 // AddScriptToEvaluateOnNewDocument evaluates given script in every frame
@@ -34,6 +35,14 @@ func AddScriptToEvaluateOnNewDocument(source string) *AddScriptToEvaluateOnNewDo
 	return &AddScriptToEvaluateOnNewDocumentParams{
 		Source: source,
 	}
+}
+
+// WithWorldName if specified, creates an isolated world with the given name
+// and evaluates given script in it. This world name will be used as the
+// ExecutionContextDescription::name when the corresponding event is emitted.
+func (p AddScriptToEvaluateOnNewDocumentParams) WithWorldName(worldName string) *AddScriptToEvaluateOnNewDocumentParams {
+	p.WorldName = worldName
+	return &p
 }
 
 // AddScriptToEvaluateOnNewDocumentReturns return values.

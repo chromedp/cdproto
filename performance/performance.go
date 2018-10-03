@@ -38,6 +38,32 @@ func (p *EnableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandEnable, nil, nil)
 }
 
+// SetTimeDomainParams sets time domain to use for collecting and reporting
+// duration metrics. Note that this must be called before enabling metrics
+// collection. Calling this method while metrics collection is enabled returns
+// an error.
+type SetTimeDomainParams struct {
+	TimeDomain SetTimeDomainTimeDomain `json:"timeDomain"` // Time domain
+}
+
+// SetTimeDomain sets time domain to use for collecting and reporting
+// duration metrics. Note that this must be called before enabling metrics
+// collection. Calling this method while metrics collection is enabled returns
+// an error.
+//
+// parameters:
+//   timeDomain - Time domain
+func SetTimeDomain(timeDomain SetTimeDomainTimeDomain) *SetTimeDomainParams {
+	return &SetTimeDomainParams{
+		TimeDomain: timeDomain,
+	}
+}
+
+// Do executes Performance.setTimeDomain against the provided context.
+func (p *SetTimeDomainParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
+	return h.Execute(ctxt, CommandSetTimeDomain, p, nil)
+}
+
 // GetMetricsParams retrieve current values of run-time metrics.
 type GetMetricsParams struct{}
 
@@ -68,7 +94,8 @@ func (p *GetMetricsParams) Do(ctxt context.Context, h cdp.Executor) (metrics []*
 
 // Command names.
 const (
-	CommandDisable    = "Performance.disable"
-	CommandEnable     = "Performance.enable"
-	CommandGetMetrics = "Performance.getMetrics"
+	CommandDisable       = "Performance.disable"
+	CommandEnable        = "Performance.enable"
+	CommandSetTimeDomain = "Performance.setTimeDomain"
+	CommandGetMetrics    = "Performance.getMetrics"
 )

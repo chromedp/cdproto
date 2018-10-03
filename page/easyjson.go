@@ -7185,6 +7185,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoPage79(in *jlexer.Lexer, out 
 		switch key {
 		case "source":
 			out.Source = string(in.String())
+		case "worldName":
+			out.WorldName = string(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -7208,6 +7210,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoPage79(out *jwriter.Writer, i
 			out.RawString(prefix)
 		}
 		out.String(string(in.Source))
+	}
+	if in.WorldName != "" {
+		const prefix string = ",\"worldName\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(in.WorldName))
 	}
 	out.RawByte('}')
 }
