@@ -505,14 +505,16 @@ func (p *GetFlattenedDocumentParams) Do(ctxt context.Context, h cdp.Executor) (n
 	return res.Nodes, nil
 }
 
-// GetNodeForLocationParams returns node id at given location.
+// GetNodeForLocationParams returns node id at given location. Depending on
+// whether DOM domain is enabled, nodeId is either returned or not.
 type GetNodeForLocationParams struct {
 	X                         int64 `json:"x"`                                   // X coordinate.
 	Y                         int64 `json:"y"`                                   // Y coordinate.
 	IncludeUserAgentShadowDOM bool  `json:"includeUserAgentShadowDOM,omitempty"` // False to skip to the nearest non-UA shadow root ancestor (default: false).
 }
 
-// GetNodeForLocation returns node id at given location.
+// GetNodeForLocation returns node id at given location. Depending on whether
+// DOM domain is enabled, nodeId is either returned or not.
 //
 // parameters:
 //   x - X coordinate.
@@ -533,22 +535,24 @@ func (p GetNodeForLocationParams) WithIncludeUserAgentShadowDOM(includeUserAgent
 
 // GetNodeForLocationReturns return values.
 type GetNodeForLocationReturns struct {
-	NodeID cdp.NodeID `json:"nodeId,omitempty"` // Id of the node at given coordinates.
+	BackendNodeID cdp.BackendNodeID `json:"backendNodeId,omitempty"` // Resulting node.
+	NodeID        cdp.NodeID        `json:"nodeId,omitempty"`        // Id of the node at given coordinates, only when enabled.
 }
 
 // Do executes DOM.getNodeForLocation against the provided context.
 //
 // returns:
-//   nodeID - Id of the node at given coordinates.
-func (p *GetNodeForLocationParams) Do(ctxt context.Context, h cdp.Executor) (nodeID cdp.NodeID, err error) {
+//   backendNodeID - Resulting node.
+//   nodeID - Id of the node at given coordinates, only when enabled.
+func (p *GetNodeForLocationParams) Do(ctxt context.Context, h cdp.Executor) (backendNodeID cdp.BackendNodeID, nodeID cdp.NodeID, err error) {
 	// execute
 	var res GetNodeForLocationReturns
 	err = h.Execute(ctxt, CommandGetNodeForLocation, p, &res)
 	if err != nil {
-		return 0, err
+		return 0, 0, err
 	}
 
-	return res.NodeID, nil
+	return res.BackendNodeID, res.NodeID, nil
 }
 
 // GetOuterHTMLParams returns node's HTML markup.
@@ -1378,22 +1382,24 @@ func GetFrameOwner(frameID cdp.FrameID) *GetFrameOwnerParams {
 
 // GetFrameOwnerReturns return values.
 type GetFrameOwnerReturns struct {
-	NodeID cdp.NodeID `json:"nodeId,omitempty"`
+	BackendNodeID cdp.BackendNodeID `json:"backendNodeId,omitempty"` // Resulting node.
+	NodeID        cdp.NodeID        `json:"nodeId,omitempty"`        // Id of the node at given coordinates, only when enabled.
 }
 
 // Do executes DOM.getFrameOwner against the provided context.
 //
 // returns:
-//   nodeID
-func (p *GetFrameOwnerParams) Do(ctxt context.Context, h cdp.Executor) (nodeID cdp.NodeID, err error) {
+//   backendNodeID - Resulting node.
+//   nodeID - Id of the node at given coordinates, only when enabled.
+func (p *GetFrameOwnerParams) Do(ctxt context.Context, h cdp.Executor) (backendNodeID cdp.BackendNodeID, nodeID cdp.NodeID, err error) {
 	// execute
 	var res GetFrameOwnerReturns
 	err = h.Execute(ctxt, CommandGetFrameOwner, p, &res)
 	if err != nil {
-		return 0, err
+		return 0, 0, err
 	}
 
-	return res.NodeID, nil
+	return res.BackendNodeID, res.NodeID, nil
 }
 
 // Command names.

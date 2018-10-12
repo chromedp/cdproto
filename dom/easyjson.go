@@ -3318,6 +3318,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoDom38(in *jlexer.Lexer, out *
 			continue
 		}
 		switch key {
+		case "backendNodeId":
+			(out.BackendNodeID).UnmarshalEasyJSON(in)
 		case "nodeId":
 			(out.NodeID).UnmarshalEasyJSON(in)
 		default:
@@ -3334,6 +3336,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoDom38(out *jwriter.Writer, in
 	out.RawByte('{')
 	first := true
 	_ = first
+	if in.BackendNodeID != 0 {
+		const prefix string = ",\"backendNodeId\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Int64(int64(in.BackendNodeID))
+	}
 	if in.NodeID != 0 {
 		const prefix string = ",\"nodeId\":"
 		if first {
@@ -3484,6 +3496,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoDom40(in *jlexer.Lexer, out *
 			continue
 		}
 		switch key {
+		case "backendNodeId":
+			(out.BackendNodeID).UnmarshalEasyJSON(in)
 		case "nodeId":
 			(out.NodeID).UnmarshalEasyJSON(in)
 		default:
@@ -3500,6 +3514,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoDom40(out *jwriter.Writer, in
 	out.RawByte('{')
 	first := true
 	_ = first
+	if in.BackendNodeID != 0 {
+		const prefix string = ",\"backendNodeId\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Int64(int64(in.BackendNodeID))
+	}
 	if in.NodeID != 0 {
 		const prefix string = ",\"nodeId\":"
 		if first {
