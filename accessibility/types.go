@@ -272,10 +272,14 @@ func (t PropertyName) String() string {
 const (
 	PropertyNameBusy             PropertyName = "busy"
 	PropertyNameDisabled         PropertyName = "disabled"
+	PropertyNameEditable         PropertyName = "editable"
+	PropertyNameFocusable        PropertyName = "focusable"
+	PropertyNameFocused          PropertyName = "focused"
 	PropertyNameHidden           PropertyName = "hidden"
 	PropertyNameHiddenRoot       PropertyName = "hiddenRoot"
 	PropertyNameInvalid          PropertyName = "invalid"
 	PropertyNameKeyshortcuts     PropertyName = "keyshortcuts"
+	PropertyNameSettable         PropertyName = "settable"
 	PropertyNameRoledescription  PropertyName = "roledescription"
 	PropertyNameLive             PropertyName = "live"
 	PropertyNameAtomic           PropertyName = "atomic"
@@ -324,6 +328,12 @@ func (t *PropertyName) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PropertyNameBusy
 	case PropertyNameDisabled:
 		*t = PropertyNameDisabled
+	case PropertyNameEditable:
+		*t = PropertyNameEditable
+	case PropertyNameFocusable:
+		*t = PropertyNameFocusable
+	case PropertyNameFocused:
+		*t = PropertyNameFocused
 	case PropertyNameHidden:
 		*t = PropertyNameHidden
 	case PropertyNameHiddenRoot:
@@ -332,6 +342,8 @@ func (t *PropertyName) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PropertyNameInvalid
 	case PropertyNameKeyshortcuts:
 		*t = PropertyNameKeyshortcuts
+	case PropertyNameSettable:
+		*t = PropertyNameSettable
 	case PropertyNameRoledescription:
 		*t = PropertyNameRoledescription
 	case PropertyNameLive:
