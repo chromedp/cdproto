@@ -13,6 +13,36 @@ import (
 	"github.com/chromedp/cdproto/runtime"
 )
 
+// DisableParams disables the accessibility domain.
+type DisableParams struct{}
+
+// Disable disables the accessibility domain.
+func Disable() *DisableParams {
+	return &DisableParams{}
+}
+
+// Do executes Accessibility.disable against the provided context.
+func (p *DisableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
+	return h.Execute(ctxt, CommandDisable, nil, nil)
+}
+
+// EnableParams enables the accessibility domain which causes AXNodeIds to
+// remain consistent between method calls. This turns on accessibility for the
+// page, which can impact performance until accessibility is disabled.
+type EnableParams struct{}
+
+// Enable enables the accessibility domain which causes AXNodeIds to remain
+// consistent between method calls. This turns on accessibility for the page,
+// which can impact performance until accessibility is disabled.
+func Enable() *EnableParams {
+	return &EnableParams{}
+}
+
+// Do executes Accessibility.enable against the provided context.
+func (p *EnableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
+	return h.Execute(ctxt, CommandEnable, nil, nil)
+}
+
 // GetPartialAXTreeParams fetches the accessibility node and partial
 // accessibility tree for this DOM node, if it exists.
 type GetPartialAXTreeParams struct {
@@ -108,6 +138,8 @@ func (p *GetFullAXTreeParams) Do(ctxt context.Context, h cdp.Executor) (nodes []
 
 // Command names.
 const (
+	CommandDisable          = "Accessibility.disable"
+	CommandEnable           = "Accessibility.enable"
 	CommandGetPartialAXTree = "Accessibility.getPartialAXTree"
 	CommandGetFullAXTree    = "Accessibility.getFullAXTree"
 )

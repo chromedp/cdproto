@@ -70,6 +70,8 @@ func (t MethodType) Domain() string {
 
 // MethodType values.
 const (
+	CommandAccessibilityDisable                            = accessibility.CommandDisable
+	CommandAccessibilityEnable                             = accessibility.CommandEnable
 	CommandAccessibilityGetPartialAXTree                   = accessibility.CommandGetPartialAXTree
 	CommandAccessibilityGetFullAXTree                      = accessibility.CommandGetFullAXTree
 	CommandAnimationDisable                                = animation.CommandDisable
@@ -605,6 +607,12 @@ var emptyVal = &empty{}
 func UnmarshalMessage(msg *Message) (interface{}, error) {
 	var v easyjson.Unmarshaler
 	switch msg.Method {
+	case CommandAccessibilityDisable:
+		return emptyVal, nil
+
+	case CommandAccessibilityEnable:
+		return emptyVal, nil
+
 	case CommandAccessibilityGetPartialAXTree:
 		v = new(accessibility.GetPartialAXTreeReturns)
 
