@@ -4392,14 +4392,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoRuntime42(in *jlexer.Lexer, o
 		switch key {
 		case "header":
 			out.Header = string(in.String())
-		case "hasBody":
-			out.HasBody = bool(in.Bool())
-		case "formatterObjectId":
-			out.FormatterObjectID = RemoteObjectID(in.String())
-		case "bindRemoteObjectFunctionId":
-			out.BindRemoteObjectFunctionID = RemoteObjectID(in.String())
-		case "configObjectId":
-			out.ConfigObjectID = RemoteObjectID(in.String())
+		case "bodyGetterId":
+			out.BodyGetterID = RemoteObjectID(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -4424,45 +4418,15 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoRuntime42(out *jwriter.Writer
 		}
 		out.String(string(in.Header))
 	}
-	{
-		const prefix string = ",\"hasBody\":"
+	if in.BodyGetterID != "" {
+		const prefix string = ",\"bodyGetterId\":"
 		if first {
 			first = false
 			out.RawString(prefix[1:])
 		} else {
 			out.RawString(prefix)
 		}
-		out.Bool(bool(in.HasBody))
-	}
-	{
-		const prefix string = ",\"formatterObjectId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
-		out.String(string(in.FormatterObjectID))
-	}
-	{
-		const prefix string = ",\"bindRemoteObjectFunctionId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
-		out.String(string(in.BindRemoteObjectFunctionID))
-	}
-	if in.ConfigObjectID != "" {
-		const prefix string = ",\"configObjectId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
-		out.String(string(in.ConfigObjectID))
+		out.String(string(in.BodyGetterID))
 	}
 	out.RawByte('}')
 }
