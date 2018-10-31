@@ -28,6 +28,7 @@ import (
 	"github.com/chromedp/cdproto/domsnapshot"
 	"github.com/chromedp/cdproto/domstorage"
 	"github.com/chromedp/cdproto/emulation"
+	"github.com/chromedp/cdproto/fetch"
 	"github.com/chromedp/cdproto/headlessexperimental"
 	"github.com/chromedp/cdproto/heapprofiler"
 	"github.com/chromedp/cdproto/indexeddb"
@@ -273,6 +274,16 @@ const (
 	EventEmulationVirtualTimeAdvanced                      = "Emulation.virtualTimeAdvanced"
 	EventEmulationVirtualTimeBudgetExpired                 = "Emulation.virtualTimeBudgetExpired"
 	EventEmulationVirtualTimePaused                        = "Emulation.virtualTimePaused"
+	CommandFetchDisable                                    = fetch.CommandDisable
+	CommandFetchEnable                                     = fetch.CommandEnable
+	CommandFetchFailRequest                                = fetch.CommandFailRequest
+	CommandFetchFulfillRequest                             = fetch.CommandFulfillRequest
+	CommandFetchContinueRequest                            = fetch.CommandContinueRequest
+	CommandFetchContinueWithAuth                           = fetch.CommandContinueWithAuth
+	CommandFetchGetResponseBody                            = fetch.CommandGetResponseBody
+	CommandFetchTakeResponseBodyAsStream                   = fetch.CommandTakeResponseBodyAsStream
+	EventFetchRequestPaused                                = "Fetch.requestPaused"
+	EventFetchAuthRequired                                 = "Fetch.authRequired"
 	CommandHeadlessExperimentalBeginFrame                  = headlessexperimental.CommandBeginFrame
 	CommandHeadlessExperimentalDisable                     = headlessexperimental.CommandDisable
 	CommandHeadlessExperimentalEnable                      = headlessexperimental.CommandEnable
@@ -541,6 +552,7 @@ const (
 	EventStorageIndexedDBContentUpdated                    = "Storage.indexedDBContentUpdated"
 	EventStorageIndexedDBListUpdated                       = "Storage.indexedDBListUpdated"
 	CommandSystemInfoGetInfo                               = systeminfo.CommandGetInfo
+	CommandSystemInfoGetProcessInfo                        = systeminfo.CommandGetProcessInfo
 	CommandTargetActivateTarget                            = target.CommandActivateTarget
 	CommandTargetAttachToTarget                            = target.CommandAttachToTarget
 	CommandTargetAttachToBrowserTarget                     = target.CommandAttachToBrowserTarget
@@ -1215,6 +1227,36 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case EventEmulationVirtualTimePaused:
 		v = new(emulation.EventVirtualTimePaused)
+
+	case CommandFetchDisable:
+		return emptyVal, nil
+
+	case CommandFetchEnable:
+		return emptyVal, nil
+
+	case CommandFetchFailRequest:
+		return emptyVal, nil
+
+	case CommandFetchFulfillRequest:
+		return emptyVal, nil
+
+	case CommandFetchContinueRequest:
+		return emptyVal, nil
+
+	case CommandFetchContinueWithAuth:
+		return emptyVal, nil
+
+	case CommandFetchGetResponseBody:
+		v = new(fetch.GetResponseBodyReturns)
+
+	case CommandFetchTakeResponseBodyAsStream:
+		v = new(fetch.TakeResponseBodyAsStreamReturns)
+
+	case EventFetchRequestPaused:
+		v = new(fetch.EventRequestPaused)
+
+	case EventFetchAuthRequired:
+		v = new(fetch.EventAuthRequired)
 
 	case CommandHeadlessExperimentalBeginFrame:
 		v = new(headlessexperimental.BeginFrameReturns)
@@ -2019,6 +2061,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandSystemInfoGetInfo:
 		v = new(systeminfo.GetInfoReturns)
+
+	case CommandSystemInfoGetProcessInfo:
+		v = new(systeminfo.GetProcessInfoReturns)
 
 	case CommandTargetActivateTarget:
 		return emptyVal, nil

@@ -294,21 +294,23 @@ func (t Subtype) String() string {
 
 // Subtype values.
 const (
-	SubtypeArray      Subtype = "array"
-	SubtypeNull       Subtype = "null"
-	SubtypeNode       Subtype = "node"
-	SubtypeRegexp     Subtype = "regexp"
-	SubtypeDate       Subtype = "date"
-	SubtypeMap        Subtype = "map"
-	SubtypeSet        Subtype = "set"
-	SubtypeWeakmap    Subtype = "weakmap"
-	SubtypeWeakset    Subtype = "weakset"
-	SubtypeIterator   Subtype = "iterator"
-	SubtypeGenerator  Subtype = "generator"
-	SubtypeError      Subtype = "error"
-	SubtypeProxy      Subtype = "proxy"
-	SubtypePromise    Subtype = "promise"
-	SubtypeTypedarray Subtype = "typedarray"
+	SubtypeArray       Subtype = "array"
+	SubtypeNull        Subtype = "null"
+	SubtypeNode        Subtype = "node"
+	SubtypeRegexp      Subtype = "regexp"
+	SubtypeDate        Subtype = "date"
+	SubtypeMap         Subtype = "map"
+	SubtypeSet         Subtype = "set"
+	SubtypeWeakmap     Subtype = "weakmap"
+	SubtypeWeakset     Subtype = "weakset"
+	SubtypeIterator    Subtype = "iterator"
+	SubtypeGenerator   Subtype = "generator"
+	SubtypeError       Subtype = "error"
+	SubtypeProxy       Subtype = "proxy"
+	SubtypePromise     Subtype = "promise"
+	SubtypeTypedarray  Subtype = "typedarray"
+	SubtypeArraybuffer Subtype = "arraybuffer"
+	SubtypeDataview    Subtype = "dataview"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -354,6 +356,10 @@ func (t *Subtype) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = SubtypePromise
 	case SubtypeTypedarray:
 		*t = SubtypeTypedarray
+	case SubtypeArraybuffer:
+		*t = SubtypeArraybuffer
+	case SubtypeDataview:
+		*t = SubtypeDataview
 
 	default:
 		in.AddError(errors.New("unknown Subtype value"))

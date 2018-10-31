@@ -49,7 +49,36 @@ func (p *GetInfoParams) Do(ctxt context.Context, h cdp.Executor) (gpu *GPUInfo, 
 	return res.Gpu, res.ModelName, res.ModelVersion, res.CommandLine, nil
 }
 
+// GetProcessInfoParams returns information about all running processes.
+type GetProcessInfoParams struct{}
+
+// GetProcessInfo returns information about all running processes.
+func GetProcessInfo() *GetProcessInfoParams {
+	return &GetProcessInfoParams{}
+}
+
+// GetProcessInfoReturns return values.
+type GetProcessInfoReturns struct {
+	ProcessInfo []*ProcessInfo `json:"processInfo,omitempty"` // An array of process info blocks.
+}
+
+// Do executes SystemInfo.getProcessInfo against the provided context.
+//
+// returns:
+//   processInfo - An array of process info blocks.
+func (p *GetProcessInfoParams) Do(ctxt context.Context, h cdp.Executor) (processInfo []*ProcessInfo, err error) {
+	// execute
+	var res GetProcessInfoReturns
+	err = h.Execute(ctxt, CommandGetProcessInfo, nil, &res)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.ProcessInfo, nil
+}
+
 // Command names.
 const (
-	CommandGetInfo = "SystemInfo.getInfo"
+	CommandGetInfo        = "SystemInfo.getInfo"
+	CommandGetProcessInfo = "SystemInfo.getProcessInfo"
 )

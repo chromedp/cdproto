@@ -880,6 +880,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoCachestorage9(in *jlexer.Lexe
 			out.ResponseStatus = int64(in.Int64())
 		case "responseStatusText":
 			out.ResponseStatusText = string(in.String())
+		case "responseType":
+			(out.ResponseType).UnmarshalEasyJSON(in)
 		case "responseHeaders":
 			if in.IsNull() {
 				in.Skip()
@@ -999,6 +1001,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoCachestorage9(out *jwriter.Wr
 			out.RawString(prefix)
 		}
 		out.String(string(in.ResponseStatusText))
+	}
+	{
+		const prefix string = ",\"responseType\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		(in.ResponseType).MarshalEasyJSON(out)
 	}
 	{
 		const prefix string = ",\"responseHeaders\":"

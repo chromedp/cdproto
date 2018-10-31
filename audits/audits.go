@@ -11,6 +11,7 @@ package audits
 
 import (
 	"context"
+	"encoding/base64"
 
 	"github.com/chromedp/cdproto/cdp"
 	"github.com/chromedp/cdproto/network"
@@ -64,15 +65,21 @@ type GetEncodedResponseReturns struct {
 //   body - The encoded body as a base64 string. Omitted if sizeOnly is true.
 //   originalSize - Size before re-encoding.
 //   encodedSize - Size after re-encoding.
-func (p *GetEncodedResponseParams) Do(ctxt context.Context, h cdp.Executor) (body string, originalSize int64, encodedSize int64, err error) {
+func (p *GetEncodedResponseParams) Do(ctxt context.Context, h cdp.Executor) (body []byte, originalSize int64, encodedSize int64, err error) {
 	// execute
 	var res GetEncodedResponseReturns
 	err = h.Execute(ctxt, CommandGetEncodedResponse, p, &res)
 	if err != nil {
-		return "", 0, 0, err
+		return nil, 0, 0, err
 	}
 
-	return res.Body, res.OriginalSize, res.EncodedSize, nil
+	// decode
+	var dec []byte
+	dec, err = base64.StdEncoding.DecodeString(res.Body)
+	if err != nil {
+		return nil, 0, 0, err
+	}
+	return dec, res.OriginalSize, res.EncodedSize, nil
 }
 
 // Command names.
