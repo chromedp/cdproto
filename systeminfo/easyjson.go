@@ -37,7 +37,7 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoSysteminfo(in *jlexer.Lexer, 
 		}
 		switch key {
 		case "type":
-			(out.Type).UnmarshalEasyJSON(in)
+			out.Type = string(in.String())
 		case "id":
 			out.ID = int64(in.Int64())
 		case "cpuTime":
@@ -64,7 +64,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoSysteminfo(out *jwriter.Write
 		} else {
 			out.RawString(prefix)
 		}
-		(in.Type).MarshalEasyJSON(out)
+		out.String(string(in.Type))
 	}
 	{
 		const prefix string = ",\"id\":"
