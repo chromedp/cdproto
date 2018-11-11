@@ -419,6 +419,7 @@ const (
 	CommandPageAddScriptToEvaluateOnNewDocument            = page.CommandAddScriptToEvaluateOnNewDocument
 	CommandPageBringToFront                                = page.CommandBringToFront
 	CommandPageCaptureScreenshot                           = page.CommandCaptureScreenshot
+	CommandPageCaptureSnapshot                             = page.CommandCaptureSnapshot
 	CommandPageCreateIsolatedWorld                         = page.CommandCreateIsolatedWorld
 	CommandPageDisable                                     = page.CommandDisable
 	CommandPageEnable                                      = page.CommandEnable
@@ -1662,6 +1663,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandPageCaptureScreenshot:
 		v = new(page.CaptureScreenshotReturns)
+
+	case CommandPageCaptureSnapshot:
+		v = new(page.CaptureSnapshotReturns)
 
 	case CommandPageCreateIsolatedWorld:
 		v = new(page.CreateIsolatedWorldReturns)

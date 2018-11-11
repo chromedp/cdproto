@@ -340,6 +340,45 @@ func (t *CaptureScreenshotFormat) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 
+// CaptureSnapshotFormat format (defaults to mhtml).
+type CaptureSnapshotFormat string
+
+// String returns the CaptureSnapshotFormat as string value.
+func (t CaptureSnapshotFormat) String() string {
+	return string(t)
+}
+
+// CaptureSnapshotFormat values.
+const (
+	CaptureSnapshotFormatMhtml CaptureSnapshotFormat = "mhtml"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t CaptureSnapshotFormat) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t CaptureSnapshotFormat) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *CaptureSnapshotFormat) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	switch CaptureSnapshotFormat(in.String()) {
+	case CaptureSnapshotFormatMhtml:
+		*t = CaptureSnapshotFormatMhtml
+
+	default:
+		in.AddError(errors.New("unknown CaptureSnapshotFormat value"))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *CaptureSnapshotFormat) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
 // SetDownloadBehaviorBehavior whether to allow all or deny all download
 // requests, or use default Chrome behavior if available (otherwise deny).
 type SetDownloadBehaviorBehavior string

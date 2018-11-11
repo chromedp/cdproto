@@ -144,6 +144,48 @@ func (p *CaptureScreenshotParams) Do(ctxt context.Context, h cdp.Executor) (data
 	return dec, nil
 }
 
+// CaptureSnapshotParams returns a snapshot of the page as a string. For
+// MHTML format, the serialization includes iframes, shadow DOM, external
+// resources, and element-inline styles.
+type CaptureSnapshotParams struct {
+	Format CaptureSnapshotFormat `json:"format,omitempty"` // Format (defaults to mhtml).
+}
+
+// CaptureSnapshot returns a snapshot of the page as a string. For MHTML
+// format, the serialization includes iframes, shadow DOM, external resources,
+// and element-inline styles.
+//
+// parameters:
+func CaptureSnapshot() *CaptureSnapshotParams {
+	return &CaptureSnapshotParams{}
+}
+
+// WithFormat format (defaults to mhtml).
+func (p CaptureSnapshotParams) WithFormat(format CaptureSnapshotFormat) *CaptureSnapshotParams {
+	p.Format = format
+	return &p
+}
+
+// CaptureSnapshotReturns return values.
+type CaptureSnapshotReturns struct {
+	Data string `json:"data,omitempty"` // Serialized page data.
+}
+
+// Do executes Page.captureSnapshot against the provided context.
+//
+// returns:
+//   data - Serialized page data.
+func (p *CaptureSnapshotParams) Do(ctxt context.Context, h cdp.Executor) (data string, err error) {
+	// execute
+	var res CaptureSnapshotReturns
+	err = h.Execute(ctxt, CommandCaptureSnapshot, p, &res)
+	if err != nil {
+		return "", err
+	}
+
+	return res.Data, nil
+}
+
 // CreateIsolatedWorldParams creates an isolated world for the given frame.
 type CreateIsolatedWorldParams struct {
 	FrameID             cdp.FrameID `json:"frameId"`                       // Id of the frame in which the isolated world should be created.
@@ -1206,6 +1248,7 @@ const (
 	CommandAddScriptToEvaluateOnNewDocument    = "Page.addScriptToEvaluateOnNewDocument"
 	CommandBringToFront                        = "Page.bringToFront"
 	CommandCaptureScreenshot                   = "Page.captureScreenshot"
+	CommandCaptureSnapshot                     = "Page.captureSnapshot"
 	CommandCreateIsolatedWorld                 = "Page.createIsolatedWorld"
 	CommandDisable                             = "Page.disable"
 	CommandEnable                              = "Page.enable"
