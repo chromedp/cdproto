@@ -588,7 +588,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoBrowser5(out *jwriter.Writer,
 	out.RawByte('{')
 	first := true
 	_ = first
-	{
+	if in.TargetID != "" {
 		const prefix string = ",\"targetId\":"
 		if first {
 			first = false

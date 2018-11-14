@@ -411,6 +411,7 @@ const (
 	CommandOverlaySetShowFPSCounter                        = overlay.CommandSetShowFPSCounter
 	CommandOverlaySetShowPaintRects                        = overlay.CommandSetShowPaintRects
 	CommandOverlaySetShowScrollBottleneckRects             = overlay.CommandSetShowScrollBottleneckRects
+	CommandOverlaySetShowHitTestBorders                    = overlay.CommandSetShowHitTestBorders
 	CommandOverlaySetShowViewportSizeOnResize              = overlay.CommandSetShowViewportSizeOnResize
 	CommandOverlaySetSuspended                             = overlay.CommandSetSuspended
 	EventOverlayInspectNodeRequested                       = "Overlay.inspectNodeRequested"
@@ -1638,6 +1639,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		return emptyVal, nil
 
 	case CommandOverlaySetShowScrollBottleneckRects:
+		return emptyVal, nil
+
+	case CommandOverlaySetShowHitTestBorders:
 		return emptyVal, nil
 
 	case CommandOverlaySetShowViewportSizeOnResize:

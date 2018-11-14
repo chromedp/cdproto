@@ -291,18 +291,22 @@ func (p *GetWindowBoundsParams) Do(ctxt context.Context, h cdp.Executor) (bounds
 // GetWindowForTargetParams get the browser window that contains the devtools
 // target.
 type GetWindowForTargetParams struct {
-	TargetID target.ID `json:"targetId"` // Devtools agent host id.
+	TargetID target.ID `json:"targetId,omitempty"` // Devtools agent host id. If called as a part of the session, associated targetId is used.
 }
 
 // GetWindowForTarget get the browser window that contains the devtools
 // target.
 //
 // parameters:
-//   targetID - Devtools agent host id.
-func GetWindowForTarget(targetID target.ID) *GetWindowForTargetParams {
-	return &GetWindowForTargetParams{
-		TargetID: targetID,
-	}
+func GetWindowForTarget() *GetWindowForTargetParams {
+	return &GetWindowForTargetParams{}
+}
+
+// WithTargetID devtools agent host id. If called as a part of the session,
+// associated targetId is used.
+func (p GetWindowForTargetParams) WithTargetID(targetID target.ID) *GetWindowForTargetParams {
+	p.TargetID = targetID
+	return &p
 }
 
 // GetWindowForTargetReturns return values.

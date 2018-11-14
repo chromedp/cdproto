@@ -391,6 +391,28 @@ func (p *SetShowScrollBottleneckRectsParams) Do(ctxt context.Context, h cdp.Exec
 	return h.Execute(ctxt, CommandSetShowScrollBottleneckRects, p, nil)
 }
 
+// SetShowHitTestBordersParams requests that backend shows hit-test borders
+// on layers.
+type SetShowHitTestBordersParams struct {
+	Show bool `json:"show"` // True for showing hit-test borders
+}
+
+// SetShowHitTestBorders requests that backend shows hit-test borders on
+// layers.
+//
+// parameters:
+//   show - True for showing hit-test borders
+func SetShowHitTestBorders(show bool) *SetShowHitTestBordersParams {
+	return &SetShowHitTestBordersParams{
+		Show: show,
+	}
+}
+
+// Do executes Overlay.setShowHitTestBorders against the provided context.
+func (p *SetShowHitTestBordersParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
+	return h.Execute(ctxt, CommandSetShowHitTestBorders, p, nil)
+}
+
 // SetShowViewportSizeOnResizeParams paints viewport size upon main frame
 // resize.
 type SetShowViewportSizeOnResizeParams struct {
@@ -448,6 +470,7 @@ const (
 	CommandSetShowFPSCounter            = "Overlay.setShowFPSCounter"
 	CommandSetShowPaintRects            = "Overlay.setShowPaintRects"
 	CommandSetShowScrollBottleneckRects = "Overlay.setShowScrollBottleneckRects"
+	CommandSetShowHitTestBorders        = "Overlay.setShowHitTestBorders"
 	CommandSetShowViewportSizeOnResize  = "Overlay.setShowViewportSizeOnResize"
 	CommandSetSuspended                 = "Overlay.setSuspended"
 )
