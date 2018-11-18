@@ -354,6 +354,36 @@ func (p *SetWindowBoundsParams) Do(ctxt context.Context, h cdp.Executor) (err er
 	return h.Execute(ctxt, CommandSetWindowBounds, p, nil)
 }
 
+// SetDockTileParams set dock tile details, platform-specific.
+type SetDockTileParams struct {
+	BadgeLabel string `json:"badgeLabel,omitempty"`
+	Image      string `json:"image,omitempty"` // Png encoded image.
+}
+
+// SetDockTile set dock tile details, platform-specific.
+//
+// parameters:
+func SetDockTile() *SetDockTileParams {
+	return &SetDockTileParams{}
+}
+
+// WithBadgeLabel [no description].
+func (p SetDockTileParams) WithBadgeLabel(badgeLabel string) *SetDockTileParams {
+	p.BadgeLabel = badgeLabel
+	return &p
+}
+
+// WithImage png encoded image.
+func (p SetDockTileParams) WithImage(image string) *SetDockTileParams {
+	p.Image = image
+	return &p
+}
+
+// Do executes Browser.setDockTile against the provided context.
+func (p *SetDockTileParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
+	return h.Execute(ctxt, CommandSetDockTile, p, nil)
+}
+
 // Command names.
 const (
 	CommandGrantPermissions      = "Browser.grantPermissions"
@@ -367,4 +397,5 @@ const (
 	CommandGetWindowBounds       = "Browser.getWindowBounds"
 	CommandGetWindowForTarget    = "Browser.getWindowForTarget"
 	CommandSetWindowBounds       = "Browser.setWindowBounds"
+	CommandSetDockTile           = "Browser.setDockTile"
 )

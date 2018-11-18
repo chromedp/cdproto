@@ -106,6 +106,7 @@ const (
 	CommandBrowserGetWindowBounds                          = browser.CommandGetWindowBounds
 	CommandBrowserGetWindowForTarget                       = browser.CommandGetWindowForTarget
 	CommandBrowserSetWindowBounds                          = browser.CommandSetWindowBounds
+	CommandBrowserSetDockTile                              = browser.CommandSetDockTile
 	CommandCSSAddRule                                      = css.CommandAddRule
 	CommandCSSCollectClassNames                            = css.CommandCollectClassNames
 	CommandCSSCreateStyleSheet                             = css.CommandCreateStyleSheet
@@ -724,6 +725,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		v = new(browser.GetWindowForTargetReturns)
 
 	case CommandBrowserSetWindowBounds:
+		return emptyVal, nil
+
+	case CommandBrowserSetDockTile:
 		return emptyVal, nil
 
 	case CommandCSSAddRule:
