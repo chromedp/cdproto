@@ -440,28 +440,22 @@ func GetRequestPostData(requestID RequestID) *GetRequestPostDataParams {
 
 // GetRequestPostDataReturns return values.
 type GetRequestPostDataReturns struct {
-	PostData string `json:"postData,omitempty"` // Base64-encoded request body.
+	PostData string `json:"postData,omitempty"` // Request body string, omitting files from multipart requests
 }
 
 // Do executes Network.getRequestPostData against the provided context.
 //
 // returns:
-//   postData - Base64-encoded request body.
-func (p *GetRequestPostDataParams) Do(ctxt context.Context, h cdp.Executor) (postData []byte, err error) {
+//   postData - Request body string, omitting files from multipart requests
+func (p *GetRequestPostDataParams) Do(ctxt context.Context, h cdp.Executor) (postData string, err error) {
 	// execute
 	var res GetRequestPostDataReturns
 	err = h.Execute(ctxt, CommandGetRequestPostData, p, &res)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 
-	// decode
-	var dec []byte
-	dec, err = base64.StdEncoding.DecodeString(res.PostData)
-	if err != nil {
-		return nil, err
-	}
-	return dec, nil
+	return res.PostData, nil
 }
 
 // GetResponseBodyForInterceptionParams returns content served for the given

@@ -411,27 +411,6 @@ func (p *ResumeParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandResume, nil, nil)
 }
 
-// ScheduleStepIntoAsyncParams this method is deprecated - use
-// Debugger.stepInto with breakOnAsyncCall and Debugger.pauseOnAsyncTask
-// instead. Steps into next scheduled async task if any is scheduled before next
-// pause. Returns success when async task is actually scheduled, returns error
-// if no task were scheduled or another scheduleStepIntoAsync was called.
-type ScheduleStepIntoAsyncParams struct{}
-
-// ScheduleStepIntoAsync this method is deprecated - use Debugger.stepInto
-// with breakOnAsyncCall and Debugger.pauseOnAsyncTask instead. Steps into next
-// scheduled async task if any is scheduled before next pause. Returns success
-// when async task is actually scheduled, returns error if no task were
-// scheduled or another scheduleStepIntoAsync was called.
-func ScheduleStepIntoAsync() *ScheduleStepIntoAsyncParams {
-	return &ScheduleStepIntoAsyncParams{}
-}
-
-// Do executes Debugger.scheduleStepIntoAsync against the provided context.
-func (p *ScheduleStepIntoAsyncParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandScheduleStepIntoAsync, nil, nil)
-}
-
 // SearchInContentParams searches for given string in script content.
 type SearchInContentParams struct {
 	ScriptID      runtime.ScriptID `json:"scriptId"`                // Id of the script to search in.
@@ -977,7 +956,6 @@ const (
 	CommandRemoveBreakpoint            = "Debugger.removeBreakpoint"
 	CommandRestartFrame                = "Debugger.restartFrame"
 	CommandResume                      = "Debugger.resume"
-	CommandScheduleStepIntoAsync       = "Debugger.scheduleStepIntoAsync"
 	CommandSearchInContent             = "Debugger.searchInContent"
 	CommandSetAsyncCallStackDepth      = "Debugger.setAsyncCallStackDepth"
 	CommandSetBlackboxPatterns         = "Debugger.setBlackboxPatterns"

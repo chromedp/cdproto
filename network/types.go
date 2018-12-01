@@ -560,11 +560,12 @@ type WebSocketResponse struct {
 	RequestHeadersText string  `json:"requestHeadersText,omitempty"` // HTTP request headers text.
 }
 
-// WebSocketFrame webSocket frame data.
+// WebSocketFrame webSocket message data. This represents an entire WebSocket
+// message, not just a fragmented frame as the name suggests.
 type WebSocketFrame struct {
-	Opcode      float64 `json:"opcode"`      // WebSocket frame opcode.
-	Mask        bool    `json:"mask"`        // WebSocke frame mask.
-	PayloadData string  `json:"payloadData"` // WebSocke frame payload data.
+	Opcode      float64 `json:"opcode"`      // WebSocket message opcode.
+	Mask        bool    `json:"mask"`        // WebSocket message mask.
+	PayloadData string  `json:"payloadData"` // WebSocket message payload data.
 }
 
 // CachedResource information about the cached resource.

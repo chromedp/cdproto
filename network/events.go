@@ -116,21 +116,21 @@ type EventWebSocketCreated struct {
 	Initiator *Initiator `json:"initiator,omitempty"` // Request initiator.
 }
 
-// EventWebSocketFrameError fired when WebSocket frame error occurs.
+// EventWebSocketFrameError fired when WebSocket message error occurs.
 type EventWebSocketFrameError struct {
 	RequestID    RequestID          `json:"requestId"`    // Request identifier.
 	Timestamp    *cdp.MonotonicTime `json:"timestamp"`    // Timestamp.
-	ErrorMessage string             `json:"errorMessage"` // WebSocket frame error message.
+	ErrorMessage string             `json:"errorMessage"` // WebSocket error message.
 }
 
-// EventWebSocketFrameReceived fired when WebSocket frame is received.
+// EventWebSocketFrameReceived fired when WebSocket message is received.
 type EventWebSocketFrameReceived struct {
 	RequestID RequestID          `json:"requestId"` // Request identifier.
 	Timestamp *cdp.MonotonicTime `json:"timestamp"` // Timestamp.
 	Response  *WebSocketFrame    `json:"response"`  // WebSocket response data.
 }
 
-// EventWebSocketFrameSent fired when WebSocket frame is sent.
+// EventWebSocketFrameSent fired when WebSocket message is sent.
 type EventWebSocketFrameSent struct {
 	RequestID RequestID          `json:"requestId"` // Request identifier.
 	Timestamp *cdp.MonotonicTime `json:"timestamp"` // Timestamp.
