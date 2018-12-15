@@ -164,6 +164,7 @@ type DispatchMouseEventParams struct {
 	Modifiers  Modifier        `json:"modifiers"`            // Bit field representing pressed modifier keys. Alt=1, Ctrl=2, Meta/Command=4, Shift=8 (default: 0).
 	Timestamp  *TimeSinceEpoch `json:"timestamp,omitempty"`  // Time at which the event occurred.
 	Button     ButtonType      `json:"button,omitempty"`     // Mouse button (default: "none").
+	Buttons    int64           `json:"buttons,omitempty"`    // A number indicating which buttons are pressed on the mouse when a mouse event is triggered. Left=1, Right=2, Middle=4, Back=8, Forward=16, None=0.
 	ClickCount int64           `json:"clickCount,omitempty"` // Number of times the mouse button was clicked (default: 0).
 	DeltaX     float64         `json:"deltaX,omitempty"`     // X delta in CSS pixels for mouse wheel event (default: 0).
 	DeltaY     float64         `json:"deltaY,omitempty"`     // Y delta in CSS pixels for mouse wheel event (default: 0).
@@ -199,6 +200,14 @@ func (p DispatchMouseEventParams) WithTimestamp(timestamp *TimeSinceEpoch) *Disp
 // WithButton mouse button (default: "none").
 func (p DispatchMouseEventParams) WithButton(button ButtonType) *DispatchMouseEventParams {
 	p.Button = button
+	return &p
+}
+
+// WithButtons a number indicating which buttons are pressed on the mouse
+// when a mouse event is triggered. Left=1, Right=2, Middle=4, Back=8,
+// Forward=16, None=0.
+func (p DispatchMouseEventParams) WithButtons(buttons int64) *DispatchMouseEventParams {
+	p.Buttons = buttons
 	return &p
 }
 

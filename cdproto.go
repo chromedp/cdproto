@@ -171,6 +171,7 @@ const (
 	CommandDOMSetAttributeValue                            = dom.CommandSetAttributeValue
 	CommandDOMSetAttributesAsText                          = dom.CommandSetAttributesAsText
 	CommandDOMSetFileInputFiles                            = dom.CommandSetFileInputFiles
+	CommandDOMGetFileInfo                                  = dom.CommandGetFileInfo
 	CommandDOMSetInspectedNode                             = dom.CommandSetInspectedNode
 	CommandDOMSetNodeName                                  = dom.CommandSetNodeName
 	CommandDOMSetNodeValue                                 = dom.CommandSetNodeValue
@@ -428,6 +429,7 @@ const (
 	CommandPageGetFrameTree                                = page.CommandGetFrameTree
 	CommandPageGetLayoutMetrics                            = page.CommandGetLayoutMetrics
 	CommandPageGetNavigationHistory                        = page.CommandGetNavigationHistory
+	CommandPageResetNavigationHistory                      = page.CommandResetNavigationHistory
 	CommandPageGetResourceContent                          = page.CommandGetResourceContent
 	CommandPageGetResourceTree                             = page.CommandGetResourceTree
 	CommandPageHandleJavaScriptDialog                      = page.CommandHandleJavaScriptDialog
@@ -456,6 +458,7 @@ const (
 	CommandPageAddCompilationCache                         = page.CommandAddCompilationCache
 	CommandPageClearCompilationCache                       = page.CommandClearCompilationCache
 	CommandPageGenerateTestReport                          = page.CommandGenerateTestReport
+	CommandPageWaitForDebugger                             = page.CommandWaitForDebugger
 	EventPageDomContentEventFired                          = "Page.domContentEventFired"
 	EventPageFrameAttached                                 = "Page.frameAttached"
 	EventPageFrameClearedScheduledNavigation               = "Page.frameClearedScheduledNavigation"
@@ -920,6 +923,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandDOMSetFileInputFiles:
 		return emptyVal, nil
+
+	case CommandDOMGetFileInfo:
+		v = new(dom.GetFileInfoReturns)
 
 	case CommandDOMSetInspectedNode:
 		return emptyVal, nil
@@ -1692,6 +1698,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandPageGetNavigationHistory:
 		v = new(page.GetNavigationHistoryReturns)
 
+	case CommandPageResetNavigationHistory:
+		return emptyVal, nil
+
 	case CommandPageGetResourceContent:
 		v = new(page.GetResourceContentReturns)
 
@@ -1774,6 +1783,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		return emptyVal, nil
 
 	case CommandPageGenerateTestReport:
+		return emptyVal, nil
+
+	case CommandPageWaitForDebugger:
 		return emptyVal, nil
 
 	case EventPageDomContentEventFired:

@@ -1245,6 +1245,41 @@ func (p *SetFileInputFilesParams) Do(ctxt context.Context, h cdp.Executor) (err 
 	return h.Execute(ctxt, CommandSetFileInputFiles, p, nil)
 }
 
+// GetFileInfoParams returns file information for the given File wrapper.
+type GetFileInfoParams struct {
+	ObjectID runtime.RemoteObjectID `json:"objectId"` // JavaScript object id of the node wrapper.
+}
+
+// GetFileInfo returns file information for the given File wrapper.
+//
+// parameters:
+//   objectID - JavaScript object id of the node wrapper.
+func GetFileInfo(objectID runtime.RemoteObjectID) *GetFileInfoParams {
+	return &GetFileInfoParams{
+		ObjectID: objectID,
+	}
+}
+
+// GetFileInfoReturns return values.
+type GetFileInfoReturns struct {
+	Path string `json:"path,omitempty"`
+}
+
+// Do executes DOM.getFileInfo against the provided context.
+//
+// returns:
+//   path
+func (p *GetFileInfoParams) Do(ctxt context.Context, h cdp.Executor) (path string, err error) {
+	// execute
+	var res GetFileInfoReturns
+	err = h.Execute(ctxt, CommandGetFileInfo, p, &res)
+	if err != nil {
+		return "", err
+	}
+
+	return res.Path, nil
+}
+
 // SetInspectedNodeParams enables console to refer to the node with given id
 // via $x (see Command Line API for more details $x functions).
 type SetInspectedNodeParams struct {
@@ -1436,6 +1471,7 @@ const (
 	CommandSetAttributeValue               = "DOM.setAttributeValue"
 	CommandSetAttributesAsText             = "DOM.setAttributesAsText"
 	CommandSetFileInputFiles               = "DOM.setFileInputFiles"
+	CommandGetFileInfo                     = "DOM.getFileInfo"
 	CommandSetInspectedNode                = "DOM.setInspectedNode"
 	CommandSetNodeName                     = "DOM.setNodeName"
 	CommandSetNodeValue                    = "DOM.setNodeValue"

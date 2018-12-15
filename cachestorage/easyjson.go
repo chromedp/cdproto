@@ -167,6 +167,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoCachestorage1(in *jlexer.Lexe
 			out.SkipCount = int64(in.Int64())
 		case "pageSize":
 			out.PageSize = int64(in.Int64())
+		case "pathFilter":
+			out.PathFilter = string(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -210,6 +212,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoCachestorage1(out *jwriter.Wr
 			out.RawString(prefix)
 		}
 		out.Int64(int64(in.PageSize))
+	}
+	if in.PathFilter != "" {
+		const prefix string = ",\"pathFilter\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(in.PathFilter))
 	}
 	out.RawByte('}')
 }

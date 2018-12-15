@@ -278,10 +278,12 @@ func (t ButtonType) String() string {
 
 // ButtonType values.
 const (
-	ButtonNone   ButtonType = "none"
-	ButtonLeft   ButtonType = "left"
-	ButtonMiddle ButtonType = "middle"
-	ButtonRight  ButtonType = "right"
+	ButtonNone    ButtonType = "none"
+	ButtonLeft    ButtonType = "left"
+	ButtonMiddle  ButtonType = "middle"
+	ButtonRight   ButtonType = "right"
+	ButtonBack    ButtonType = "back"
+	ButtonForward ButtonType = "forward"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -305,6 +307,10 @@ func (t *ButtonType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = ButtonMiddle
 	case ButtonRight:
 		*t = ButtonRight
+	case ButtonBack:
+		*t = ButtonBack
+	case ButtonForward:
+		*t = ButtonForward
 
 	default:
 		in.AddError(errors.New("unknown ButtonType value"))

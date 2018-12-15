@@ -92,14 +92,14 @@ func (p *RequestCacheNamesParams) Do(ctxt context.Context, h cdp.Executor) (cach
 
 // RequestCachedResponseParams fetches cache entry.
 type RequestCachedResponseParams struct {
-	CacheID    CacheID `json:"cacheId"`    // Id of cache that contains the enty.
+	CacheID    CacheID `json:"cacheId"`    // Id of cache that contains the entry.
 	RequestURL string  `json:"requestURL"` // URL spec of the request.
 }
 
 // RequestCachedResponse fetches cache entry.
 //
 // parameters:
-//   cacheID - Id of cache that contains the enty.
+//   cacheID - Id of cache that contains the entry.
 //   requestURL - URL spec of the request.
 func RequestCachedResponse(cacheID CacheID, requestURL string) *RequestCachedResponseParams {
 	return &RequestCachedResponseParams{
@@ -130,9 +130,10 @@ func (p *RequestCachedResponseParams) Do(ctxt context.Context, h cdp.Executor) (
 
 // RequestEntriesParams requests data from cache.
 type RequestEntriesParams struct {
-	CacheID   CacheID `json:"cacheId"`   // ID of cache to get entries from.
-	SkipCount int64   `json:"skipCount"` // Number of records to skip.
-	PageSize  int64   `json:"pageSize"`  // Number of records to fetch.
+	CacheID    CacheID `json:"cacheId"`              // ID of cache to get entries from.
+	SkipCount  int64   `json:"skipCount"`            // Number of records to skip.
+	PageSize   int64   `json:"pageSize"`             // Number of records to fetch.
+	PathFilter string  `json:"pathFilter,omitempty"` // If present, only return the entries containing this substring in the path
 }
 
 // RequestEntries requests data from cache.
@@ -147,6 +148,13 @@ func RequestEntries(cacheID CacheID, skipCount int64, pageSize int64) *RequestEn
 		SkipCount: skipCount,
 		PageSize:  pageSize,
 	}
+}
+
+// WithPathFilter if present, only return the entries containing this
+// substring in the path.
+func (p RequestEntriesParams) WithPathFilter(pathFilter string) *RequestEntriesParams {
+	p.PathFilter = pathFilter
+	return &p
 }
 
 // RequestEntriesReturns return values.

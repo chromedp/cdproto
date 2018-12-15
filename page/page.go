@@ -387,6 +387,20 @@ func (p *GetNavigationHistoryParams) Do(ctxt context.Context, h cdp.Executor) (c
 	return res.CurrentIndex, res.Entries, nil
 }
 
+// ResetNavigationHistoryParams resets navigation history for the current
+// page.
+type ResetNavigationHistoryParams struct{}
+
+// ResetNavigationHistory resets navigation history for the current page.
+func ResetNavigationHistory() *ResetNavigationHistoryParams {
+	return &ResetNavigationHistoryParams{}
+}
+
+// Do executes Page.resetNavigationHistory against the provided context.
+func (p *ResetNavigationHistoryParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
+	return h.Execute(ctxt, CommandResetNavigationHistory, nil, nil)
+}
+
 // GetResourceContentParams returns content of the given resource.
 type GetResourceContentParams struct {
 	FrameID cdp.FrameID `json:"frameId"` // Frame id to get resource for.
@@ -1243,6 +1257,21 @@ func (p *GenerateTestReportParams) Do(ctxt context.Context, h cdp.Executor) (err
 	return h.Execute(ctxt, CommandGenerateTestReport, p, nil)
 }
 
+// WaitForDebuggerParams pauses page execution. Can be resumed using generic
+// Runtime.runIfWaitingForDebugger.
+type WaitForDebuggerParams struct{}
+
+// WaitForDebugger pauses page execution. Can be resumed using generic
+// Runtime.runIfWaitingForDebugger.
+func WaitForDebugger() *WaitForDebuggerParams {
+	return &WaitForDebuggerParams{}
+}
+
+// Do executes Page.waitForDebugger against the provided context.
+func (p *WaitForDebuggerParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
+	return h.Execute(ctxt, CommandWaitForDebugger, nil, nil)
+}
+
 // Command names.
 const (
 	CommandAddScriptToEvaluateOnNewDocument    = "Page.addScriptToEvaluateOnNewDocument"
@@ -1256,6 +1285,7 @@ const (
 	CommandGetFrameTree                        = "Page.getFrameTree"
 	CommandGetLayoutMetrics                    = "Page.getLayoutMetrics"
 	CommandGetNavigationHistory                = "Page.getNavigationHistory"
+	CommandResetNavigationHistory              = "Page.resetNavigationHistory"
 	CommandGetResourceContent                  = "Page.getResourceContent"
 	CommandGetResourceTree                     = "Page.getResourceTree"
 	CommandHandleJavaScriptDialog              = "Page.handleJavaScriptDialog"
@@ -1284,4 +1314,5 @@ const (
 	CommandAddCompilationCache                 = "Page.addCompilationCache"
 	CommandClearCompilationCache               = "Page.clearCompilationCache"
 	CommandGenerateTestReport                  = "Page.generateTestReport"
+	CommandWaitForDebugger                     = "Page.waitForDebugger"
 )

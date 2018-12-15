@@ -1116,6 +1116,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoInput8(in *jlexer.Lexer, out 
 			}
 		case "button":
 			(out.Button).UnmarshalEasyJSON(in)
+		case "buttons":
+			out.Buttons = int64(in.Int64())
 		case "clickCount":
 			out.ClickCount = int64(in.Int64())
 		case "deltaX":
@@ -1195,6 +1197,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoInput8(out *jwriter.Writer, i
 			out.RawString(prefix)
 		}
 		(in.Button).MarshalEasyJSON(out)
+	}
+	if in.Buttons != 0 {
+		const prefix string = ",\"buttons\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Int64(int64(in.Buttons))
 	}
 	if in.ClickCount != 0 {
 		const prefix string = ",\"clickCount\":"
