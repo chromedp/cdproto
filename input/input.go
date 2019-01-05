@@ -158,16 +158,17 @@ func (p *InsertTextParams) Do(ctxt context.Context, h cdp.Executor) (err error) 
 
 // DispatchMouseEventParams dispatches a mouse event to the page.
 type DispatchMouseEventParams struct {
-	Type       MouseType       `json:"type"`                 // Type of the mouse event.
-	X          float64         `json:"x"`                    // X coordinate of the event relative to the main frame's viewport in CSS pixels.
-	Y          float64         `json:"y"`                    // Y coordinate of the event relative to the main frame's viewport in CSS pixels. 0 refers to the top of the viewport and Y increases as it proceeds towards the bottom of the viewport.
-	Modifiers  Modifier        `json:"modifiers"`            // Bit field representing pressed modifier keys. Alt=1, Ctrl=2, Meta/Command=4, Shift=8 (default: 0).
-	Timestamp  *TimeSinceEpoch `json:"timestamp,omitempty"`  // Time at which the event occurred.
-	Button     ButtonType      `json:"button,omitempty"`     // Mouse button (default: "none").
-	Buttons    int64           `json:"buttons,omitempty"`    // A number indicating which buttons are pressed on the mouse when a mouse event is triggered. Left=1, Right=2, Middle=4, Back=8, Forward=16, None=0.
-	ClickCount int64           `json:"clickCount,omitempty"` // Number of times the mouse button was clicked (default: 0).
-	DeltaX     float64         `json:"deltaX,omitempty"`     // X delta in CSS pixels for mouse wheel event (default: 0).
-	DeltaY     float64         `json:"deltaY,omitempty"`     // Y delta in CSS pixels for mouse wheel event (default: 0).
+	Type        MouseType                     `json:"type"`                  // Type of the mouse event.
+	X           float64                       `json:"x"`                     // X coordinate of the event relative to the main frame's viewport in CSS pixels.
+	Y           float64                       `json:"y"`                     // Y coordinate of the event relative to the main frame's viewport in CSS pixels. 0 refers to the top of the viewport and Y increases as it proceeds towards the bottom of the viewport.
+	Modifiers   Modifier                      `json:"modifiers"`             // Bit field representing pressed modifier keys. Alt=1, Ctrl=2, Meta/Command=4, Shift=8 (default: 0).
+	Timestamp   *TimeSinceEpoch               `json:"timestamp,omitempty"`   // Time at which the event occurred.
+	Button      ButtonType                    `json:"button,omitempty"`      // Mouse button (default: "none").
+	Buttons     int64                         `json:"buttons,omitempty"`     // A number indicating which buttons are pressed on the mouse when a mouse event is triggered. Left=1, Right=2, Middle=4, Back=8, Forward=16, None=0.
+	ClickCount  int64                         `json:"clickCount,omitempty"`  // Number of times the mouse button was clicked (default: 0).
+	DeltaX      float64                       `json:"deltaX,omitempty"`      // X delta in CSS pixels for mouse wheel event (default: 0).
+	DeltaY      float64                       `json:"deltaY,omitempty"`      // Y delta in CSS pixels for mouse wheel event (default: 0).
+	PointerType DispatchMouseEventPointerType `json:"pointerType,omitempty"` // Pointer type (default: "mouse").
 }
 
 // DispatchMouseEvent dispatches a mouse event to the page.
@@ -226,6 +227,12 @@ func (p DispatchMouseEventParams) WithDeltaX(deltaX float64) *DispatchMouseEvent
 // WithDeltaY Y delta in CSS pixels for mouse wheel event (default: 0).
 func (p DispatchMouseEventParams) WithDeltaY(deltaY float64) *DispatchMouseEventParams {
 	p.DeltaY = deltaY
+	return &p
+}
+
+// WithPointerType pointer type (default: "mouse").
+func (p DispatchMouseEventParams) WithPointerType(pointerType DispatchMouseEventPointerType) *DispatchMouseEventParams {
+	p.PointerType = pointerType
 	return &p
 }
 

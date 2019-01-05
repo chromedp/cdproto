@@ -15,14 +15,14 @@ import (
 // ClearDataForOriginParams clears storage for origin.
 type ClearDataForOriginParams struct {
 	Origin       string `json:"origin"`       // Security origin.
-	StorageTypes string `json:"storageTypes"` // Comma separated origin names.
+	StorageTypes string `json:"storageTypes"` // Comma separated list of StorageType to clear.
 }
 
 // ClearDataForOrigin clears storage for origin.
 //
 // parameters:
 //   origin - Security origin.
-//   storageTypes - Comma separated origin names.
+//   storageTypes - Comma separated list of StorageType to clear.
 func ClearDataForOrigin(origin string, storageTypes string) *ClearDataForOriginParams {
 	return &ClearDataForOriginParams{
 		Origin:       origin,

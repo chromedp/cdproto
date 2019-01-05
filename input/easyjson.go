@@ -1124,6 +1124,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoInput8(in *jlexer.Lexer, out 
 			out.DeltaX = float64(in.Float64())
 		case "deltaY":
 			out.DeltaY = float64(in.Float64())
+		case "pointerType":
+			(out.PointerType).UnmarshalEasyJSON(in)
 		default:
 			in.SkipRecursive()
 		}
@@ -1237,6 +1239,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoInput8(out *jwriter.Writer, i
 			out.RawString(prefix)
 		}
 		out.Float64(float64(in.DeltaY))
+	}
+	if in.PointerType != "" {
+		const prefix string = ",\"pointerType\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		(in.PointerType).MarshalEasyJSON(out)
 	}
 	out.RawByte('}')
 }

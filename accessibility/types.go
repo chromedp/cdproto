@@ -255,12 +255,12 @@ type Value struct {
 	Sources      []*ValueSource      `json:"sources,omitempty"`      // The sources which contributed to the computation of this property.
 }
 
-// PropertyName values of AXProperty name: from 'busy' to 'roledescription' -
-// states which apply to every AX node, from 'live' to 'root' - attributes which
-// apply to nodes in live regions, from 'autocomplete' to 'valuetext' -
-// attributes which apply to widgets, from 'checked' to 'selected' - states
-// which apply to widgets, from 'activedescendant' to 'owns' - relationships
-// between elements other than parent/child/sibling.
+// PropertyName values of AXProperty name: - from 'busy' to
+// 'roledescription': states which apply to every AX node - from 'live' to
+// 'root': attributes which apply to nodes in live regions - from 'autocomplete'
+// to 'valuetext': attributes which apply to widgets - from 'checked' to
+// 'selected': states which apply to widgets - from 'activedescendant' to 'owns'
+// - relationships between elements other than parent/child/sibling.
 type PropertyName string
 
 // String returns the PropertyName as string value.
