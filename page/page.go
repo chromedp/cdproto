@@ -796,19 +796,6 @@ func (p *RemoveScriptToEvaluateOnNewDocumentParams) Do(ctxt context.Context, h c
 	return h.Execute(ctxt, CommandRemoveScriptToEvaluateOnNewDocument, p, nil)
 }
 
-// RequestAppBannerParams [no description].
-type RequestAppBannerParams struct{}
-
-// RequestAppBanner [no description].
-func RequestAppBanner() *RequestAppBannerParams {
-	return &RequestAppBannerParams{}
-}
-
-// Do executes Page.requestAppBanner against the provided context.
-func (p *RequestAppBannerParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandRequestAppBanner, nil, nil)
-}
-
 // ScreencastFrameAckParams acknowledges that a screencast frame has been
 // received by the frontend.
 type ScreencastFrameAckParams struct {
@@ -1294,7 +1281,6 @@ const (
 	CommandPrintToPDF                          = "Page.printToPDF"
 	CommandReload                              = "Page.reload"
 	CommandRemoveScriptToEvaluateOnNewDocument = "Page.removeScriptToEvaluateOnNewDocument"
-	CommandRequestAppBanner                    = "Page.requestAppBanner"
 	CommandScreencastFrameAck                  = "Page.screencastFrameAck"
 	CommandSearchInResource                    = "Page.searchInResource"
 	CommandSetAdBlockingEnabled                = "Page.setAdBlockingEnabled"

@@ -1661,7 +1661,7 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoIndexeddb15(in *jlexer.Lexer,
 		case "name":
 			out.Name = string(in.String())
 		case "version":
-			out.Version = int64(in.Int64())
+			out.Version = float64(in.Float64())
 		case "objectStores":
 			if in.IsNull() {
 				in.Skip()
@@ -1725,7 +1725,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoIndexeddb15(out *jwriter.Writ
 		} else {
 			out.RawString(prefix)
 		}
-		out.Int64(int64(in.Version))
+		out.Float64(float64(in.Version))
 	}
 	{
 		const prefix string = ",\"objectStores\":"

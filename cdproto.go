@@ -19,6 +19,7 @@ import (
 	"github.com/chromedp/cdproto/audits"
 	"github.com/chromedp/cdproto/browser"
 	"github.com/chromedp/cdproto/cachestorage"
+	"github.com/chromedp/cdproto/cast"
 	"github.com/chromedp/cdproto/css"
 	"github.com/chromedp/cdproto/database"
 	"github.com/chromedp/cdproto/debugger"
@@ -139,6 +140,13 @@ const (
 	CommandCacheStorageRequestCacheNames                   = cachestorage.CommandRequestCacheNames
 	CommandCacheStorageRequestCachedResponse               = cachestorage.CommandRequestCachedResponse
 	CommandCacheStorageRequestEntries                      = cachestorage.CommandRequestEntries
+	CommandCastEnable                                      = cast.CommandEnable
+	CommandCastDisable                                     = cast.CommandDisable
+	CommandCastSetSinkToUse                                = cast.CommandSetSinkToUse
+	CommandCastStartTabMirroring                           = cast.CommandStartTabMirroring
+	CommandCastStopCasting                                 = cast.CommandStopCasting
+	EventCastSinksUpdated                                  = "Cast.sinksUpdated"
+	EventCastIssueUpdated                                  = "Cast.issueUpdated"
 	CommandDOMCollectClassNamesFromSubtree                 = dom.CommandCollectClassNamesFromSubtree
 	CommandDOMCopyTo                                       = dom.CommandCopyTo
 	CommandDOMDescribeNode                                 = dom.CommandDescribeNode
@@ -438,7 +446,6 @@ const (
 	CommandPagePrintToPDF                                  = page.CommandPrintToPDF
 	CommandPageReload                                      = page.CommandReload
 	CommandPageRemoveScriptToEvaluateOnNewDocument         = page.CommandRemoveScriptToEvaluateOnNewDocument
-	CommandPageRequestAppBanner                            = page.CommandRequestAppBanner
 	CommandPageScreencastFrameAck                          = page.CommandScreencastFrameAck
 	CommandPageSearchInResource                            = page.CommandSearchInResource
 	CommandPageSetAdBlockingEnabled                        = page.CommandSetAdBlockingEnabled
@@ -827,6 +834,27 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandCacheStorageRequestEntries:
 		v = new(cachestorage.RequestEntriesReturns)
+
+	case CommandCastEnable:
+		return emptyVal, nil
+
+	case CommandCastDisable:
+		return emptyVal, nil
+
+	case CommandCastSetSinkToUse:
+		return emptyVal, nil
+
+	case CommandCastStartTabMirroring:
+		return emptyVal, nil
+
+	case CommandCastStopCasting:
+		return emptyVal, nil
+
+	case EventCastSinksUpdated:
+		v = new(cast.EventSinksUpdated)
+
+	case EventCastIssueUpdated:
+		v = new(cast.EventIssueUpdated)
 
 	case CommandDOMCollectClassNamesFromSubtree:
 		v = new(dom.CollectClassNamesFromSubtreeReturns)
@@ -1723,9 +1751,6 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		return emptyVal, nil
 
 	case CommandPageRemoveScriptToEvaluateOnNewDocument:
-		return emptyVal, nil
-
-	case CommandPageRequestAppBanner:
 		return emptyVal, nil
 
 	case CommandPageScreencastFrameAck:

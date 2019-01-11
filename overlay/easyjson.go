@@ -1221,12 +1221,12 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoOverlay13(in *jlexer.Lexer, o
 		switch key {
 		case "showInfo":
 			out.ShowInfo = bool(in.Bool())
+		case "showStyles":
+			out.ShowStyles = bool(in.Bool())
 		case "showRulers":
 			out.ShowRulers = bool(in.Bool())
 		case "showExtensionLines":
 			out.ShowExtensionLines = bool(in.Bool())
-		case "displayAsMaterial":
-			out.DisplayAsMaterial = bool(in.Bool())
 		case "contentColor":
 			if in.IsNull() {
 				in.Skip()
@@ -1333,6 +1333,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoOverlay13(out *jwriter.Writer
 		}
 		out.Bool(bool(in.ShowInfo))
 	}
+	if in.ShowStyles {
+		const prefix string = ",\"showStyles\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Bool(bool(in.ShowStyles))
+	}
 	if in.ShowRulers {
 		const prefix string = ",\"showRulers\":"
 		if first {
@@ -1352,16 +1362,6 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoOverlay13(out *jwriter.Writer
 			out.RawString(prefix)
 		}
 		out.Bool(bool(in.ShowExtensionLines))
-	}
-	if in.DisplayAsMaterial {
-		const prefix string = ",\"displayAsMaterial\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
-		out.Bool(bool(in.DisplayAsMaterial))
 	}
 	if in.ContentColor != nil {
 		const prefix string = ",\"contentColor\":"
