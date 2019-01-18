@@ -23,5 +23,5 @@ type EventNodeHighlightRequested struct {
 // EventScreenshotRequested fired when user asks to capture screenshot of
 // some area on the page.
 type EventScreenshotRequested struct {
-	Viewport *page.Viewport `json:"viewport"` // Viewport to capture, in CSS.
+	Viewport *page.Viewport `json:"viewport"` // Viewport to capture, in device independent pixels (dip).
 }

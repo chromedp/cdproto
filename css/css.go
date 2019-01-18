@@ -208,10 +208,9 @@ func GetBackgroundColors(nodeID cdp.NodeID) *GetBackgroundColorsParams {
 
 // GetBackgroundColorsReturns return values.
 type GetBackgroundColorsReturns struct {
-	BackgroundColors     []string `json:"backgroundColors,omitempty"`     // The range of background colors behind this element, if it contains any visible text. If no visible text is present, this will be undefined. In the case of a flat background color, this will consist of simply that color. In the case of a gradient, this will consist of each of the color stops. For anything more complicated, this will be an empty array. Images will be ignored (as if the image had failed to load).
-	ComputedFontSize     string   `json:"computedFontSize,omitempty"`     // The computed font size for this node, as a CSS computed value string (e.g. '12px').
-	ComputedFontWeight   string   `json:"computedFontWeight,omitempty"`   // The computed font weight for this node, as a CSS computed value string (e.g. 'normal' or '100').
-	ComputedBodyFontSize string   `json:"computedBodyFontSize,omitempty"` // The computed font size for the document body, as a computed CSS value string (e.g. '16px').
+	BackgroundColors   []string `json:"backgroundColors,omitempty"`   // The range of background colors behind this element, if it contains any visible text. If no visible text is present, this will be undefined. In the case of a flat background color, this will consist of simply that color. In the case of a gradient, this will consist of each of the color stops. For anything more complicated, this will be an empty array. Images will be ignored (as if the image had failed to load).
+	ComputedFontSize   string   `json:"computedFontSize,omitempty"`   // The computed font size for this node, as a CSS computed value string (e.g. '12px').
+	ComputedFontWeight string   `json:"computedFontWeight,omitempty"` // The computed font weight for this node, as a CSS computed value string (e.g. 'normal' or '100').
 }
 
 // Do executes CSS.getBackgroundColors against the provided context.
@@ -220,16 +219,15 @@ type GetBackgroundColorsReturns struct {
 //   backgroundColors - The range of background colors behind this element, if it contains any visible text. If no visible text is present, this will be undefined. In the case of a flat background color, this will consist of simply that color. In the case of a gradient, this will consist of each of the color stops. For anything more complicated, this will be an empty array. Images will be ignored (as if the image had failed to load).
 //   computedFontSize - The computed font size for this node, as a CSS computed value string (e.g. '12px').
 //   computedFontWeight - The computed font weight for this node, as a CSS computed value string (e.g. 'normal' or '100').
-//   computedBodyFontSize - The computed font size for the document body, as a computed CSS value string (e.g. '16px').
-func (p *GetBackgroundColorsParams) Do(ctxt context.Context, h cdp.Executor) (backgroundColors []string, computedFontSize string, computedFontWeight string, computedBodyFontSize string, err error) {
+func (p *GetBackgroundColorsParams) Do(ctxt context.Context, h cdp.Executor) (backgroundColors []string, computedFontSize string, computedFontWeight string, err error) {
 	// execute
 	var res GetBackgroundColorsReturns
 	err = h.Execute(ctxt, CommandGetBackgroundColors, p, &res)
 	if err != nil {
-		return nil, "", "", "", err
+		return nil, "", "", err
 	}
 
-	return res.BackgroundColors, res.ComputedFontSize, res.ComputedFontWeight, res.ComputedBodyFontSize, nil
+	return res.BackgroundColors, res.ComputedFontSize, res.ComputedFontWeight, nil
 }
 
 // GetComputedStyleForNodeParams returns the computed style for a DOM node

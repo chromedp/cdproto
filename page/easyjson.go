@@ -113,6 +113,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoPage1(in *jlexer.Lexer, out *
 			out.ClientHeight = float64(in.Float64())
 		case "scale":
 			out.Scale = float64(in.Float64())
+		case "zoom":
+			out.Zoom = float64(in.Float64())
 		default:
 			in.SkipRecursive()
 		}
@@ -196,6 +198,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoPage1(out *jwriter.Writer, in
 			out.RawString(prefix)
 		}
 		out.Float64(float64(in.Scale))
+	}
+	if in.Zoom != 0 {
+		const prefix string = ",\"zoom\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Float64(float64(in.Zoom))
 	}
 	out.RawByte('}')
 }

@@ -5340,8 +5340,6 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoCss47(in *jlexer.Lexer, out *
 			out.ComputedFontSize = string(in.String())
 		case "computedFontWeight":
 			out.ComputedFontWeight = string(in.String())
-		case "computedBodyFontSize":
-			out.ComputedBodyFontSize = string(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -5394,16 +5392,6 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoCss47(out *jwriter.Writer, in
 			out.RawString(prefix)
 		}
 		out.String(string(in.ComputedFontWeight))
-	}
-	if in.ComputedBodyFontSize != "" {
-		const prefix string = ",\"computedBodyFontSize\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
-		out.String(string(in.ComputedBodyFontSize))
 	}
 	out.RawByte('}')
 }
