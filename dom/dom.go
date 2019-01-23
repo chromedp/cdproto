@@ -1091,9 +1091,10 @@ func (p *RequestNodeParams) Do(ctxt context.Context, h cdp.Executor) (nodeID cdp
 // ResolveNodeParams resolves the JavaScript node object for a given NodeId
 // or BackendNodeId.
 type ResolveNodeParams struct {
-	NodeID        cdp.NodeID        `json:"nodeId,omitempty"`        // Id of the node to resolve.
-	BackendNodeID cdp.BackendNodeID `json:"backendNodeId,omitempty"` // Backend identifier of the node to resolve.
-	ObjectGroup   string            `json:"objectGroup,omitempty"`   // Symbolic group name that can be used to release multiple objects.
+	NodeID             cdp.NodeID                 `json:"nodeId,omitempty"`             // Id of the node to resolve.
+	BackendNodeID      cdp.BackendNodeID          `json:"backendNodeId,omitempty"`      // Backend identifier of the node to resolve.
+	ObjectGroup        string                     `json:"objectGroup,omitempty"`        // Symbolic group name that can be used to release multiple objects.
+	ExecutionContextID runtime.ExecutionContextID `json:"executionContextId,omitempty"` // Execution context in which to resolve the node.
 }
 
 // ResolveNode resolves the JavaScript node object for a given NodeId or
@@ -1120,6 +1121,12 @@ func (p ResolveNodeParams) WithBackendNodeID(backendNodeID cdp.BackendNodeID) *R
 // objects.
 func (p ResolveNodeParams) WithObjectGroup(objectGroup string) *ResolveNodeParams {
 	p.ObjectGroup = objectGroup
+	return &p
+}
+
+// WithExecutionContextID execution context in which to resolve the node.
+func (p ResolveNodeParams) WithExecutionContextID(executionContextID runtime.ExecutionContextID) *ResolveNodeParams {
+	p.ExecutionContextID = executionContextID
 	return &p
 }
 

@@ -25,3 +25,6 @@ type EventNodeHighlightRequested struct {
 type EventScreenshotRequested struct {
 	Viewport *page.Viewport `json:"viewport"` // Viewport to capture, in device independent pixels (dip).
 }
+
+// EventInspectModeCanceled fired when user cancels the inspect mode.
+type EventInspectModeCanceled struct{}

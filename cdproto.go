@@ -415,6 +415,7 @@ const (
 	CommandOverlayHighlightQuad                            = overlay.CommandHighlightQuad
 	CommandOverlayHighlightRect                            = overlay.CommandHighlightRect
 	CommandOverlaySetInspectMode                           = overlay.CommandSetInspectMode
+	CommandOverlaySetShowAdHighlights                      = overlay.CommandSetShowAdHighlights
 	CommandOverlaySetPausedInDebuggerMessage               = overlay.CommandSetPausedInDebuggerMessage
 	CommandOverlaySetShowDebugBorders                      = overlay.CommandSetShowDebugBorders
 	CommandOverlaySetShowFPSCounter                        = overlay.CommandSetShowFPSCounter
@@ -426,6 +427,7 @@ const (
 	EventOverlayInspectNodeRequested                       = "Overlay.inspectNodeRequested"
 	EventOverlayNodeHighlightRequested                     = "Overlay.nodeHighlightRequested"
 	EventOverlayScreenshotRequested                        = "Overlay.screenshotRequested"
+	EventOverlayInspectModeCanceled                        = "Overlay.inspectModeCanceled"
 	CommandPageAddScriptToEvaluateOnNewDocument            = page.CommandAddScriptToEvaluateOnNewDocument
 	CommandPageBringToFront                                = page.CommandBringToFront
 	CommandPageCaptureScreenshot                           = page.CommandCaptureScreenshot
@@ -1660,6 +1662,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandOverlaySetInspectMode:
 		return emptyVal, nil
 
+	case CommandOverlaySetShowAdHighlights:
+		return emptyVal, nil
+
 	case CommandOverlaySetPausedInDebuggerMessage:
 		return emptyVal, nil
 
@@ -1692,6 +1697,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case EventOverlayScreenshotRequested:
 		v = new(overlay.EventScreenshotRequested)
+
+	case EventOverlayInspectModeCanceled:
+		v = new(overlay.EventInspectModeCanceled)
 
 	case CommandPageAddScriptToEvaluateOnNewDocument:
 		v = new(page.AddScriptToEvaluateOnNewDocumentReturns)

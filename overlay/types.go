@@ -24,7 +24,6 @@ type HighlightConfig struct {
 	EventTargetColor   *cdp.RGBA `json:"eventTargetColor,omitempty"`   // The event target element highlight fill color (default: transparent).
 	ShapeColor         *cdp.RGBA `json:"shapeColor,omitempty"`         // The shape outside fill color (default: transparent).
 	ShapeMarginColor   *cdp.RGBA `json:"shapeMarginColor,omitempty"`   // The shape margin fill color (default: transparent).
-	SelectorList       string    `json:"selectorList,omitempty"`       // Selectors to highlight relevant nodes.
 	CSSGridColor       *cdp.RGBA `json:"cssGridColor,omitempty"`       // The grid layout color (default: transparent).
 }
 
@@ -38,9 +37,10 @@ func (t InspectMode) String() string {
 
 // InspectMode values.
 const (
-	InspectModeSearchForNode        InspectMode = "searchForNode"
-	InspectModeSearchForUAShadowDOM InspectMode = "searchForUAShadowDOM"
-	InspectModeNone                 InspectMode = "none"
+	InspectModeSearchForNode         InspectMode = "searchForNode"
+	InspectModeSearchForUAShadowDOM  InspectMode = "searchForUAShadowDOM"
+	InspectModeCaptureAreaScreenshot InspectMode = "captureAreaScreenshot"
+	InspectModeNone                  InspectMode = "none"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -60,6 +60,8 @@ func (t *InspectMode) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = InspectModeSearchForNode
 	case InspectModeSearchForUAShadowDOM:
 		*t = InspectModeSearchForUAShadowDOM
+	case InspectModeCaptureAreaScreenshot:
+		*t = InspectModeCaptureAreaScreenshot
 	case InspectModeNone:
 		*t = InspectModeNone
 

@@ -135,6 +135,7 @@ type HighlightNodeParams struct {
 	NodeID          cdp.NodeID             `json:"nodeId,omitempty"`        // Identifier of the node to highlight.
 	BackendNodeID   cdp.BackendNodeID      `json:"backendNodeId,omitempty"` // Identifier of the backend node to highlight.
 	ObjectID        runtime.RemoteObjectID `json:"objectId,omitempty"`      // JavaScript object id of the node to be highlighted.
+	Selector        string                 `json:"selector,omitempty"`      // Selectors to highlight relevant nodes.
 }
 
 // HighlightNode highlights DOM node with given id or with the given
@@ -163,6 +164,12 @@ func (p HighlightNodeParams) WithBackendNodeID(backendNodeID cdp.BackendNodeID) 
 // WithObjectID JavaScript object id of the node to be highlighted.
 func (p HighlightNodeParams) WithObjectID(objectID runtime.RemoteObjectID) *HighlightNodeParams {
 	p.ObjectID = objectID
+	return &p
+}
+
+// WithSelector selectors to highlight relevant nodes.
+func (p HighlightNodeParams) WithSelector(selector string) *HighlightNodeParams {
+	p.Selector = selector
 	return &p
 }
 
@@ -282,6 +289,28 @@ func (p SetInspectModeParams) WithHighlightConfig(highlightConfig *HighlightConf
 // Do executes Overlay.setInspectMode against the provided context.
 func (p *SetInspectModeParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandSetInspectMode, p, nil)
+}
+
+// SetShowAdHighlightsParams highlights owner element of all frames detected
+// to be ads.
+type SetShowAdHighlightsParams struct {
+	Show bool `json:"show"` // True for showing ad highlights
+}
+
+// SetShowAdHighlights highlights owner element of all frames detected to be
+// ads.
+//
+// parameters:
+//   show - True for showing ad highlights
+func SetShowAdHighlights(show bool) *SetShowAdHighlightsParams {
+	return &SetShowAdHighlightsParams{
+		Show: show,
+	}
+}
+
+// Do executes Overlay.setShowAdHighlights against the provided context.
+func (p *SetShowAdHighlightsParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
+	return h.Execute(ctxt, CommandSetShowAdHighlights, p, nil)
 }
 
 // SetPausedInDebuggerMessageParams [no description].
@@ -465,6 +494,7 @@ const (
 	CommandHighlightQuad                = "Overlay.highlightQuad"
 	CommandHighlightRect                = "Overlay.highlightRect"
 	CommandSetInspectMode               = "Overlay.setInspectMode"
+	CommandSetShowAdHighlights          = "Overlay.setShowAdHighlights"
 	CommandSetPausedInDebuggerMessage   = "Overlay.setPausedInDebuggerMessage"
 	CommandSetShowDebugBorders          = "Overlay.setShowDebugBorders"
 	CommandSetShowFPSCounter            = "Overlay.setShowFPSCounter"
