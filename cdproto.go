@@ -358,6 +358,7 @@ const (
 	EventLogEntryAdded                                     = "Log.entryAdded"
 	CommandMemoryGetDOMCounters                            = memory.CommandGetDOMCounters
 	CommandMemoryPrepareForLeakDetection                   = memory.CommandPrepareForLeakDetection
+	CommandMemoryForciblyPurgeJavaScriptMemory             = memory.CommandForciblyPurgeJavaScriptMemory
 	CommandMemorySetPressureNotificationsSuppressed        = memory.CommandSetPressureNotificationsSuppressed
 	CommandMemorySimulatePressureNotification              = memory.CommandSimulatePressureNotification
 	CommandMemoryStartSampling                             = memory.CommandStartSampling
@@ -1489,6 +1490,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		v = new(memory.GetDOMCountersReturns)
 
 	case CommandMemoryPrepareForLeakDetection:
+		return emptyVal, nil
+
+	case CommandMemoryForciblyPurgeJavaScriptMemory:
 		return emptyVal, nil
 
 	case CommandMemorySetPressureNotificationsSuppressed:

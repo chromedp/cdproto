@@ -57,6 +57,21 @@ func (p *PrepareForLeakDetectionParams) Do(ctxt context.Context, h cdp.Executor)
 	return h.Execute(ctxt, CommandPrepareForLeakDetection, nil, nil)
 }
 
+// ForciblyPurgeJavaScriptMemoryParams simulate OomIntervention by purging V8
+// memory.
+type ForciblyPurgeJavaScriptMemoryParams struct{}
+
+// ForciblyPurgeJavaScriptMemory simulate OomIntervention by purging V8
+// memory.
+func ForciblyPurgeJavaScriptMemory() *ForciblyPurgeJavaScriptMemoryParams {
+	return &ForciblyPurgeJavaScriptMemoryParams{}
+}
+
+// Do executes Memory.forciblyPurgeJavaScriptMemory against the provided context.
+func (p *ForciblyPurgeJavaScriptMemoryParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
+	return h.Execute(ctxt, CommandForciblyPurgeJavaScriptMemory, nil, nil)
+}
+
 // SetPressureNotificationsSuppressedParams enable/disable suppressing memory
 // pressure notifications in all processes.
 type SetPressureNotificationsSuppressedParams struct {
@@ -238,6 +253,7 @@ func (p *GetSamplingProfileParams) Do(ctxt context.Context, h cdp.Executor) (pro
 const (
 	CommandGetDOMCounters                     = "Memory.getDOMCounters"
 	CommandPrepareForLeakDetection            = "Memory.prepareForLeakDetection"
+	CommandForciblyPurgeJavaScriptMemory      = "Memory.forciblyPurgeJavaScriptMemory"
 	CommandSetPressureNotificationsSuppressed = "Memory.setPressureNotificationsSuppressed"
 	CommandSimulatePressureNotification       = "Memory.simulatePressureNotification"
 	CommandStartSampling                      = "Memory.startSampling"

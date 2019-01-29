@@ -992,8 +992,6 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork7(in *jlexer.Lexer, ou
 		switch key {
 		case "requestUrl":
 			out.RequestURL = string(in.String())
-		case "requestMethod":
-			out.RequestMethod = string(in.String())
 		case "responseCode":
 			out.ResponseCode = int64(in.Int64())
 		case "responseHeaders":
@@ -1076,16 +1074,6 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoNetwork7(out *jwriter.Writer,
 			out.RawString(prefix)
 		}
 		out.String(string(in.RequestURL))
-	}
-	{
-		const prefix string = ",\"requestMethod\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
-		out.String(string(in.RequestMethod))
 	}
 	{
 		const prefix string = ",\"responseCode\":"

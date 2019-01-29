@@ -536,14 +536,14 @@ func (p GetNodeForLocationParams) WithIncludeUserAgentShadowDOM(includeUserAgent
 // GetNodeForLocationReturns return values.
 type GetNodeForLocationReturns struct {
 	BackendNodeID cdp.BackendNodeID `json:"backendNodeId,omitempty"` // Resulting node.
-	NodeID        cdp.NodeID        `json:"nodeId,omitempty"`        // Id of the node at given coordinates, only when enabled.
+	NodeID        cdp.NodeID        `json:"nodeId,omitempty"`        // Id of the node at given coordinates, only when enabled and requested document.
 }
 
 // Do executes DOM.getNodeForLocation against the provided context.
 //
 // returns:
 //   backendNodeID - Resulting node.
-//   nodeID - Id of the node at given coordinates, only when enabled.
+//   nodeID - Id of the node at given coordinates, only when enabled and requested document.
 func (p *GetNodeForLocationParams) Do(ctxt context.Context, h cdp.Executor) (backendNodeID cdp.BackendNodeID, nodeID cdp.NodeID, err error) {
 	// execute
 	var res GetNodeForLocationReturns
@@ -1425,14 +1425,14 @@ func GetFrameOwner(frameID cdp.FrameID) *GetFrameOwnerParams {
 // GetFrameOwnerReturns return values.
 type GetFrameOwnerReturns struct {
 	BackendNodeID cdp.BackendNodeID `json:"backendNodeId,omitempty"` // Resulting node.
-	NodeID        cdp.NodeID        `json:"nodeId,omitempty"`        // Id of the node at given coordinates, only when enabled.
+	NodeID        cdp.NodeID        `json:"nodeId,omitempty"`        // Id of the node at given coordinates, only when enabled and requested document.
 }
 
 // Do executes DOM.getFrameOwner against the provided context.
 //
 // returns:
 //   backendNodeID - Resulting node.
-//   nodeID - Id of the node at given coordinates, only when enabled.
+//   nodeID - Id of the node at given coordinates, only when enabled and requested document.
 func (p *GetFrameOwnerParams) Do(ctxt context.Context, h cdp.Executor) (backendNodeID cdp.BackendNodeID, nodeID cdp.NodeID, err error) {
 	// execute
 	var res GetFrameOwnerReturns
