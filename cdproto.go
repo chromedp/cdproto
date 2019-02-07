@@ -280,9 +280,7 @@ const (
 	CommandEmulationSetTouchEmulationEnabled               = emulation.CommandSetTouchEmulationEnabled
 	CommandEmulationSetVirtualTimePolicy                   = emulation.CommandSetVirtualTimePolicy
 	CommandEmulationSetUserAgentOverride                   = emulation.CommandSetUserAgentOverride
-	EventEmulationVirtualTimeAdvanced                      = "Emulation.virtualTimeAdvanced"
 	EventEmulationVirtualTimeBudgetExpired                 = "Emulation.virtualTimeBudgetExpired"
-	EventEmulationVirtualTimePaused                        = "Emulation.virtualTimePaused"
 	CommandFetchDisable                                    = fetch.CommandDisable
 	CommandFetchEnable                                     = fetch.CommandEnable
 	CommandFetchFailRequest                                = fetch.CommandFailRequest
@@ -1258,14 +1256,8 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandEmulationSetUserAgentOverride:
 		return emptyVal, nil
 
-	case EventEmulationVirtualTimeAdvanced:
-		v = new(emulation.EventVirtualTimeAdvanced)
-
 	case EventEmulationVirtualTimeBudgetExpired:
 		v = new(emulation.EventVirtualTimeBudgetExpired)
-
-	case EventEmulationVirtualTimePaused:
-		v = new(emulation.EventVirtualTimePaused)
 
 	case CommandFetchDisable:
 		return emptyVal, nil
