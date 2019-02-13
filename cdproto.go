@@ -100,6 +100,7 @@ const (
 	CommandBrowserResetPermissions                         = browser.CommandResetPermissions
 	CommandBrowserClose                                    = browser.CommandClose
 	CommandBrowserCrash                                    = browser.CommandCrash
+	CommandBrowserCrashGpuProcess                          = browser.CommandCrashGpuProcess
 	CommandBrowserGetVersion                               = browser.CommandGetVersion
 	CommandBrowserGetBrowserCommandLine                    = browser.CommandGetBrowserCommandLine
 	CommandBrowserGetHistograms                            = browser.CommandGetHistograms
@@ -714,6 +715,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		return emptyVal, nil
 
 	case CommandBrowserCrash:
+		return emptyVal, nil
+
+	case CommandBrowserCrashGpuProcess:
 		return emptyVal, nil
 
 	case CommandBrowserGetVersion:

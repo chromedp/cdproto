@@ -98,6 +98,19 @@ func (p *CrashParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 	return h.Execute(ctxt, CommandCrash, nil, nil)
 }
 
+// CrashGpuProcessParams crashes GPU process.
+type CrashGpuProcessParams struct{}
+
+// CrashGpuProcess crashes GPU process.
+func CrashGpuProcess() *CrashGpuProcessParams {
+	return &CrashGpuProcessParams{}
+}
+
+// Do executes Browser.crashGpuProcess against the provided context.
+func (p *CrashGpuProcessParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
+	return h.Execute(ctxt, CommandCrashGpuProcess, nil, nil)
+}
+
 // GetVersionParams returns version information.
 type GetVersionParams struct{}
 
@@ -390,6 +403,7 @@ const (
 	CommandResetPermissions      = "Browser.resetPermissions"
 	CommandClose                 = "Browser.close"
 	CommandCrash                 = "Browser.crash"
+	CommandCrashGpuProcess       = "Browser.crashGpuProcess"
 	CommandGetVersion            = "Browser.getVersion"
 	CommandGetBrowserCommandLine = "Browser.getBrowserCommandLine"
 	CommandGetHistograms         = "Browser.getHistograms"

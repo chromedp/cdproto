@@ -92,8 +92,9 @@ func (p *RequestCacheNamesParams) Do(ctxt context.Context, h cdp.Executor) (cach
 
 // RequestCachedResponseParams fetches cache entry.
 type RequestCachedResponseParams struct {
-	CacheID    CacheID `json:"cacheId"`    // Id of cache that contains the entry.
-	RequestURL string  `json:"requestURL"` // URL spec of the request.
+	CacheID        CacheID   `json:"cacheId"`        // Id of cache that contains the entry.
+	RequestURL     string    `json:"requestURL"`     // URL spec of the request.
+	RequestHeaders []*Header `json:"requestHeaders"` // headers of the request.
 }
 
 // RequestCachedResponse fetches cache entry.
@@ -101,10 +102,12 @@ type RequestCachedResponseParams struct {
 // parameters:
 //   cacheID - Id of cache that contains the entry.
 //   requestURL - URL spec of the request.
-func RequestCachedResponse(cacheID CacheID, requestURL string) *RequestCachedResponseParams {
+//   requestHeaders - headers of the request.
+func RequestCachedResponse(cacheID CacheID, requestURL string, requestHeaders []*Header) *RequestCachedResponseParams {
 	return &RequestCachedResponseParams{
-		CacheID:    cacheID,
-		RequestURL: requestURL,
+		CacheID:        cacheID,
+		RequestURL:     requestURL,
+		RequestHeaders: requestHeaders,
 	}
 }
 
