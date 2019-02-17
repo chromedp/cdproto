@@ -176,6 +176,49 @@ func (p *RequestDataParams) Do(ctxt context.Context, h cdp.Executor) (objectStor
 	return res.ObjectStoreDataEntries, res.HasMore, nil
 }
 
+// GetKeyGeneratorCurrentNumberParams gets the auto increment number of an
+// object store. Only meaningful when objectStore.autoIncrement is true.
+type GetKeyGeneratorCurrentNumberParams struct {
+	SecurityOrigin  string `json:"securityOrigin"`  // Security origin.
+	DatabaseName    string `json:"databaseName"`    // Database name.
+	ObjectStoreName string `json:"objectStoreName"` // Object store name.
+}
+
+// GetKeyGeneratorCurrentNumber gets the auto increment number of an object
+// store. Only meaningful when objectStore.autoIncrement is true.
+//
+// parameters:
+//   securityOrigin - Security origin.
+//   databaseName - Database name.
+//   objectStoreName - Object store name.
+func GetKeyGeneratorCurrentNumber(securityOrigin string, databaseName string, objectStoreName string) *GetKeyGeneratorCurrentNumberParams {
+	return &GetKeyGeneratorCurrentNumberParams{
+		SecurityOrigin:  securityOrigin,
+		DatabaseName:    databaseName,
+		ObjectStoreName: objectStoreName,
+	}
+}
+
+// GetKeyGeneratorCurrentNumberReturns return values.
+type GetKeyGeneratorCurrentNumberReturns struct {
+	CurrentNumber float64 `json:"currentNumber,omitempty"` // the current value of key generator, to become the next inserted key into the object store.
+}
+
+// Do executes IndexedDB.getKeyGeneratorCurrentNumber against the provided context.
+//
+// returns:
+//   currentNumber - the current value of key generator, to become the next inserted key into the object store.
+func (p *GetKeyGeneratorCurrentNumberParams) Do(ctxt context.Context, h cdp.Executor) (currentNumber float64, err error) {
+	// execute
+	var res GetKeyGeneratorCurrentNumberReturns
+	err = h.Execute(ctxt, CommandGetKeyGeneratorCurrentNumber, p, &res)
+	if err != nil {
+		return 0, err
+	}
+
+	return res.CurrentNumber, nil
+}
+
 // RequestDatabaseParams requests database with given name in given frame.
 type RequestDatabaseParams struct {
 	SecurityOrigin string `json:"securityOrigin"` // Security origin.
@@ -252,12 +295,13 @@ func (p *RequestDatabaseNamesParams) Do(ctxt context.Context, h cdp.Executor) (d
 
 // Command names.
 const (
-	CommandClearObjectStore         = "IndexedDB.clearObjectStore"
-	CommandDeleteDatabase           = "IndexedDB.deleteDatabase"
-	CommandDeleteObjectStoreEntries = "IndexedDB.deleteObjectStoreEntries"
-	CommandDisable                  = "IndexedDB.disable"
-	CommandEnable                   = "IndexedDB.enable"
-	CommandRequestData              = "IndexedDB.requestData"
-	CommandRequestDatabase          = "IndexedDB.requestDatabase"
-	CommandRequestDatabaseNames     = "IndexedDB.requestDatabaseNames"
+	CommandClearObjectStore             = "IndexedDB.clearObjectStore"
+	CommandDeleteDatabase               = "IndexedDB.deleteDatabase"
+	CommandDeleteObjectStoreEntries     = "IndexedDB.deleteObjectStoreEntries"
+	CommandDisable                      = "IndexedDB.disable"
+	CommandEnable                       = "IndexedDB.enable"
+	CommandRequestData                  = "IndexedDB.requestData"
+	CommandGetKeyGeneratorCurrentNumber = "IndexedDB.getKeyGeneratorCurrentNumber"
+	CommandRequestDatabase              = "IndexedDB.requestDatabase"
+	CommandRequestDatabaseNames         = "IndexedDB.requestDatabaseNames"
 )

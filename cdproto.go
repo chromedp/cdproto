@@ -322,6 +322,7 @@ const (
 	CommandIndexedDBDisable                                = indexeddb.CommandDisable
 	CommandIndexedDBEnable                                 = indexeddb.CommandEnable
 	CommandIndexedDBRequestData                            = indexeddb.CommandRequestData
+	CommandIndexedDBGetKeyGeneratorCurrentNumber           = indexeddb.CommandGetKeyGeneratorCurrentNumber
 	CommandIndexedDBRequestDatabase                        = indexeddb.CommandRequestDatabase
 	CommandIndexedDBRequestDatabaseNames                   = indexeddb.CommandRequestDatabaseNames
 	CommandInputDispatchKeyEvent                           = input.CommandDispatchKeyEvent
@@ -1382,6 +1383,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandIndexedDBRequestData:
 		v = new(indexeddb.RequestDataReturns)
+
+	case CommandIndexedDBGetKeyGeneratorCurrentNumber:
+		v = new(indexeddb.GetKeyGeneratorCurrentNumberReturns)
 
 	case CommandIndexedDBRequestDatabase:
 		v = new(indexeddb.RequestDatabaseReturns)
