@@ -17,6 +17,7 @@ import (
 	"github.com/chromedp/cdproto/animation"
 	"github.com/chromedp/cdproto/applicationcache"
 	"github.com/chromedp/cdproto/audits"
+	"github.com/chromedp/cdproto/backgroundservice"
 	"github.com/chromedp/cdproto/browser"
 	"github.com/chromedp/cdproto/cachestorage"
 	"github.com/chromedp/cdproto/cast"
@@ -96,6 +97,10 @@ const (
 	EventApplicationCacheApplicationCacheStatusUpdated     = "ApplicationCache.applicationCacheStatusUpdated"
 	EventApplicationCacheNetworkStateUpdated               = "ApplicationCache.networkStateUpdated"
 	CommandAuditsGetEncodedResponse                        = audits.CommandGetEncodedResponse
+	CommandBackgroundServiceEnable                         = backgroundservice.CommandEnable
+	CommandBackgroundServiceDisable                        = backgroundservice.CommandDisable
+	CommandBackgroundServiceSetRecording                   = backgroundservice.CommandSetRecording
+	EventBackgroundServiceRecordingStateChanged            = "BackgroundService.recordingStateChanged"
 	CommandBrowserGrantPermissions                         = browser.CommandGrantPermissions
 	CommandBrowserResetPermissions                         = browser.CommandResetPermissions
 	CommandBrowserClose                                    = browser.CommandClose
@@ -705,6 +710,18 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandAuditsGetEncodedResponse:
 		v = new(audits.GetEncodedResponseReturns)
+
+	case CommandBackgroundServiceEnable:
+		return emptyVal, nil
+
+	case CommandBackgroundServiceDisable:
+		return emptyVal, nil
+
+	case CommandBackgroundServiceSetRecording:
+		return emptyVal, nil
+
+	case EventBackgroundServiceRecordingStateChanged:
+		v = new(backgroundservice.EventRecordingStateChanged)
 
 	case CommandBrowserGrantPermissions:
 		return emptyVal, nil
