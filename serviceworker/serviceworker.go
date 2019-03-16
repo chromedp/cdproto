@@ -14,9 +14,9 @@ import (
 
 // DeliverPushMessageParams [no description].
 type DeliverPushMessageParams struct {
-	Origin         string `json:"origin"`
-	RegistrationID string `json:"registrationId"`
-	Data           string `json:"data"`
+	Origin         string         `json:"origin"`
+	RegistrationID RegistrationID `json:"registrationId"`
+	Data           string         `json:"data"`
 }
 
 // DeliverPushMessage [no description].
@@ -25,7 +25,7 @@ type DeliverPushMessageParams struct {
 //   origin
 //   registrationID
 //   data
-func DeliverPushMessage(origin string, registrationID string, data string) *DeliverPushMessageParams {
+func DeliverPushMessage(origin string, registrationID RegistrationID, data string) *DeliverPushMessageParams {
 	return &DeliverPushMessageParams{
 		Origin:         origin,
 		RegistrationID: registrationID,
@@ -53,10 +53,10 @@ func (p *DisableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 
 // DispatchSyncEventParams [no description].
 type DispatchSyncEventParams struct {
-	Origin         string `json:"origin"`
-	RegistrationID string `json:"registrationId"`
-	Tag            string `json:"tag"`
-	LastChance     bool   `json:"lastChance"`
+	Origin         string         `json:"origin"`
+	RegistrationID RegistrationID `json:"registrationId"`
+	Tag            string         `json:"tag"`
+	LastChance     bool           `json:"lastChance"`
 }
 
 // DispatchSyncEvent [no description].
@@ -66,7 +66,7 @@ type DispatchSyncEventParams struct {
 //   registrationID
 //   tag
 //   lastChance
-func DispatchSyncEvent(origin string, registrationID string, tag string, lastChance bool) *DispatchSyncEventParams {
+func DispatchSyncEvent(origin string, registrationID RegistrationID, tag string, lastChance bool) *DispatchSyncEventParams {
 	return &DispatchSyncEventParams{
 		Origin:         origin,
 		RegistrationID: registrationID,

@@ -97,10 +97,12 @@ const (
 	EventApplicationCacheApplicationCacheStatusUpdated     = "ApplicationCache.applicationCacheStatusUpdated"
 	EventApplicationCacheNetworkStateUpdated               = "ApplicationCache.networkStateUpdated"
 	CommandAuditsGetEncodedResponse                        = audits.CommandGetEncodedResponse
-	CommandBackgroundServiceEnable                         = backgroundservice.CommandEnable
-	CommandBackgroundServiceDisable                        = backgroundservice.CommandDisable
+	CommandBackgroundServiceStartObserving                 = backgroundservice.CommandStartObserving
+	CommandBackgroundServiceStopObserving                  = backgroundservice.CommandStopObserving
 	CommandBackgroundServiceSetRecording                   = backgroundservice.CommandSetRecording
+	CommandBackgroundServiceClearEvents                    = backgroundservice.CommandClearEvents
 	EventBackgroundServiceRecordingStateChanged            = "BackgroundService.recordingStateChanged"
+	EventBackgroundServiceBackgroundServiceEventReceived   = "BackgroundService.backgroundServiceEventReceived"
 	CommandBrowserGrantPermissions                         = browser.CommandGrantPermissions
 	CommandBrowserResetPermissions                         = browser.CommandResetPermissions
 	CommandBrowserClose                                    = browser.CommandClose
@@ -429,7 +431,6 @@ const (
 	CommandOverlaySetShowScrollBottleneckRects             = overlay.CommandSetShowScrollBottleneckRects
 	CommandOverlaySetShowHitTestBorders                    = overlay.CommandSetShowHitTestBorders
 	CommandOverlaySetShowViewportSizeOnResize              = overlay.CommandSetShowViewportSizeOnResize
-	CommandOverlaySetSuspended                             = overlay.CommandSetSuspended
 	EventOverlayInspectNodeRequested                       = "Overlay.inspectNodeRequested"
 	EventOverlayNodeHighlightRequested                     = "Overlay.nodeHighlightRequested"
 	EventOverlayScreenshotRequested                        = "Overlay.screenshotRequested"
@@ -711,17 +712,23 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandAuditsGetEncodedResponse:
 		v = new(audits.GetEncodedResponseReturns)
 
-	case CommandBackgroundServiceEnable:
+	case CommandBackgroundServiceStartObserving:
 		return emptyVal, nil
 
-	case CommandBackgroundServiceDisable:
+	case CommandBackgroundServiceStopObserving:
 		return emptyVal, nil
 
 	case CommandBackgroundServiceSetRecording:
 		return emptyVal, nil
 
+	case CommandBackgroundServiceClearEvents:
+		return emptyVal, nil
+
 	case EventBackgroundServiceRecordingStateChanged:
 		v = new(backgroundservice.EventRecordingStateChanged)
+
+	case EventBackgroundServiceBackgroundServiceEventReceived:
+		v = new(backgroundservice.EventBackgroundServiceEventReceived)
 
 	case CommandBrowserGrantPermissions:
 		return emptyVal, nil
@@ -1705,9 +1712,6 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		return emptyVal, nil
 
 	case CommandOverlaySetShowViewportSizeOnResize:
-		return emptyVal, nil
-
-	case CommandOverlaySetSuspended:
 		return emptyVal, nil
 
 	case EventOverlayInspectNodeRequested:

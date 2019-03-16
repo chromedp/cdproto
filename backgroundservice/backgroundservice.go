@@ -14,44 +14,44 @@ import (
 	"github.com/chromedp/cdproto/cdp"
 )
 
-// EnableParams [no description].
-type EnableParams struct {
+// StartObservingParams enables event updates for the service.
+type StartObservingParams struct {
 	Service ServiceName `json:"service"`
 }
 
-// Enable [no description].
+// StartObserving enables event updates for the service.
 //
 // parameters:
 //   service
-func Enable(service ServiceName) *EnableParams {
-	return &EnableParams{
+func StartObserving(service ServiceName) *StartObservingParams {
+	return &StartObservingParams{
 		Service: service,
 	}
 }
 
-// Do executes BackgroundService.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandEnable, p, nil)
+// Do executes BackgroundService.startObserving against the provided context.
+func (p *StartObservingParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
+	return h.Execute(ctxt, CommandStartObserving, p, nil)
 }
 
-// DisableParams [no description].
-type DisableParams struct {
+// StopObservingParams disables event updates for the service.
+type StopObservingParams struct {
 	Service ServiceName `json:"service"`
 }
 
-// Disable [no description].
+// StopObserving disables event updates for the service.
 //
 // parameters:
 //   service
-func Disable(service ServiceName) *DisableParams {
-	return &DisableParams{
+func StopObserving(service ServiceName) *StopObservingParams {
+	return &StopObservingParams{
 		Service: service,
 	}
 }
 
-// Do executes BackgroundService.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandDisable, p, nil)
+// Do executes BackgroundService.stopObserving against the provided context.
+func (p *StopObservingParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
+	return h.Execute(ctxt, CommandStopObserving, p, nil)
 }
 
 // SetRecordingParams set the recording state for the service.
@@ -77,9 +77,30 @@ func (p *SetRecordingParams) Do(ctxt context.Context, h cdp.Executor) (err error
 	return h.Execute(ctxt, CommandSetRecording, p, nil)
 }
 
+// ClearEventsParams clears all stored data for the service.
+type ClearEventsParams struct {
+	Service ServiceName `json:"service"`
+}
+
+// ClearEvents clears all stored data for the service.
+//
+// parameters:
+//   service
+func ClearEvents(service ServiceName) *ClearEventsParams {
+	return &ClearEventsParams{
+		Service: service,
+	}
+}
+
+// Do executes BackgroundService.clearEvents against the provided context.
+func (p *ClearEventsParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
+	return h.Execute(ctxt, CommandClearEvents, p, nil)
+}
+
 // Command names.
 const (
-	CommandEnable       = "BackgroundService.enable"
-	CommandDisable      = "BackgroundService.disable"
-	CommandSetRecording = "BackgroundService.setRecording"
+	CommandStartObserving = "BackgroundService.startObserving"
+	CommandStopObserving  = "BackgroundService.stopObserving"
+	CommandSetRecording   = "BackgroundService.setRecording"
+	CommandClearEvents    = "BackgroundService.clearEvents"
 )

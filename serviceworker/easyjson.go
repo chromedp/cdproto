@@ -40,7 +40,7 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoServiceworker(in *jlexer.Lexe
 		case "versionId":
 			out.VersionID = string(in.String())
 		case "registrationId":
-			out.RegistrationID = string(in.String())
+			out.RegistrationID = RegistrationID(in.String())
 		case "scriptURL":
 			out.ScriptURL = string(in.String())
 		case "runningStatus":
@@ -720,7 +720,7 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoServiceworker8(in *jlexer.Lex
 		}
 		switch key {
 		case "registrationId":
-			out.RegistrationID = string(in.String())
+			out.RegistrationID = RegistrationID(in.String())
 		case "scopeURL":
 			out.ScopeURL = string(in.String())
 		case "isDeleted":
@@ -1201,7 +1201,7 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoServiceworker13(in *jlexer.Le
 		case "errorMessage":
 			out.ErrorMessage = string(in.String())
 		case "registrationId":
-			out.RegistrationID = string(in.String())
+			out.RegistrationID = RegistrationID(in.String())
 		case "versionId":
 			out.VersionID = string(in.String())
 		case "sourceURL":
@@ -1391,7 +1391,7 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoServiceworker15(in *jlexer.Le
 		case "origin":
 			out.Origin = string(in.String())
 		case "registrationId":
-			out.RegistrationID = string(in.String())
+			out.RegistrationID = RegistrationID(in.String())
 		case "tag":
 			out.Tag = string(in.String())
 		case "lastChance":
@@ -1557,7 +1557,7 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoServiceworker17(in *jlexer.Le
 		case "origin":
 			out.Origin = string(in.String())
 		case "registrationId":
-			out.RegistrationID = string(in.String())
+			out.RegistrationID = RegistrationID(in.String())
 		case "data":
 			out.Data = string(in.String())
 		default:

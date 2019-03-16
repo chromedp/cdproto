@@ -8,3 +8,10 @@ type EventRecordingStateChanged struct {
 	IsRecording bool        `json:"isRecording"`
 	Service     ServiceName `json:"service"`
 }
+
+// EventBackgroundServiceEventReceived called with all existing
+// backgroundServiceEvents when enabled, and all new events afterwards if
+// enabled and recording.
+type EventBackgroundServiceEventReceived struct {
+	BackgroundServiceEvent *Event `json:"backgroundServiceEvent"`
+}

@@ -11,11 +11,19 @@ import (
 	"github.com/mailru/easyjson/jwriter"
 )
 
+// RegistrationID [no description].
+type RegistrationID string
+
+// String returns the RegistrationID as string value.
+func (t RegistrationID) String() string {
+	return string(t)
+}
+
 // Registration serviceWorker registration.
 type Registration struct {
-	RegistrationID string `json:"registrationId"`
-	ScopeURL       string `json:"scopeURL"`
-	IsDeleted      bool   `json:"isDeleted"`
+	RegistrationID RegistrationID `json:"registrationId"`
+	ScopeURL       string         `json:"scopeURL"`
+	IsDeleted      bool           `json:"isDeleted"`
 }
 
 // VersionRunningStatus [no description].
@@ -123,7 +131,7 @@ func (t *VersionStatus) UnmarshalJSON(buf []byte) error {
 // Version serviceWorker version.
 type Version struct {
 	VersionID          string               `json:"versionId"`
-	RegistrationID     string               `json:"registrationId"`
+	RegistrationID     RegistrationID       `json:"registrationId"`
 	ScriptURL          string               `json:"scriptURL"`
 	RunningStatus      VersionRunningStatus `json:"runningStatus"`
 	Status             VersionStatus        `json:"status"`
@@ -135,10 +143,10 @@ type Version struct {
 
 // ErrorMessage serviceWorker error message.
 type ErrorMessage struct {
-	ErrorMessage   string `json:"errorMessage"`
-	RegistrationID string `json:"registrationId"`
-	VersionID      string `json:"versionId"`
-	SourceURL      string `json:"sourceURL"`
-	LineNumber     int64  `json:"lineNumber"`
-	ColumnNumber   int64  `json:"columnNumber"`
+	ErrorMessage   string         `json:"errorMessage"`
+	RegistrationID RegistrationID `json:"registrationId"`
+	VersionID      string         `json:"versionId"`
+	SourceURL      string         `json:"sourceURL"`
+	LineNumber     int64          `json:"lineNumber"`
+	ColumnNumber   int64          `json:"columnNumber"`
 }

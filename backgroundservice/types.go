@@ -5,6 +5,8 @@ package backgroundservice
 import (
 	"errors"
 
+	"github.com/chromedp/cdproto/cdp"
+	"github.com/chromedp/cdproto/serviceworker"
 	"github.com/mailru/easyjson"
 	"github.com/mailru/easyjson/jlexer"
 	"github.com/mailru/easyjson/jwriter"
@@ -52,4 +54,22 @@ func (t *ServiceName) UnmarshalEasyJSON(in *jlexer.Lexer) {
 // UnmarshalJSON satisfies json.Unmarshaler.
 func (t *ServiceName) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
+}
+
+// EventMetadata a key-value pair for additional event information to pass
+// along.
+type EventMetadata struct {
+	Key   string `json:"key"`
+	Value string `json:"value"`
+}
+
+// Event [no description].
+type Event struct {
+	Timestamp                   *cdp.TimeSinceEpoch          `json:"timestamp"`                   // Timestamp of the event (in seconds).
+	Origin                      string                       `json:"origin"`                      // The origin this event belongs to.
+	ServiceWorkerRegistrationID serviceworker.RegistrationID `json:"serviceWorkerRegistrationId"` // The Service Worker ID that initiated the event.
+	Service                     ServiceName                  `json:"service"`                     // The Background Service this event belongs to.
+	EventName                   string                       `json:"eventName"`                   // A description of the event.
+	InstanceID                  string                       `json:"instanceId"`                  // An identifier that groups related events together.
+	EventMetadata               []*EventMetadata             `json:"eventMetadata"`               // A list of event-specific information.
 }

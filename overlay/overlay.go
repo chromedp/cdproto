@@ -463,26 +463,6 @@ func (p *SetShowViewportSizeOnResizeParams) Do(ctxt context.Context, h cdp.Execu
 	return h.Execute(ctxt, CommandSetShowViewportSizeOnResize, p, nil)
 }
 
-// SetSuspendedParams [no description].
-type SetSuspendedParams struct {
-	Suspended bool `json:"suspended"` // Whether overlay should be suspended and not consume any resources until resumed.
-}
-
-// SetSuspended [no description].
-//
-// parameters:
-//   suspended - Whether overlay should be suspended and not consume any resources until resumed.
-func SetSuspended(suspended bool) *SetSuspendedParams {
-	return &SetSuspendedParams{
-		Suspended: suspended,
-	}
-}
-
-// Do executes Overlay.setSuspended against the provided context.
-func (p *SetSuspendedParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetSuspended, p, nil)
-}
-
 // Command names.
 const (
 	CommandDisable                      = "Overlay.disable"
@@ -502,5 +482,4 @@ const (
 	CommandSetShowScrollBottleneckRects = "Overlay.setShowScrollBottleneckRects"
 	CommandSetShowHitTestBorders        = "Overlay.setShowHitTestBorders"
 	CommandSetShowViewportSizeOnResize  = "Overlay.setShowViewportSizeOnResize"
-	CommandSetSuspended                 = "Overlay.setSuspended"
 )

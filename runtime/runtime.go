@@ -499,6 +499,7 @@ func (p GetPropertiesParams) WithGeneratePreview(generatePreview bool) *GetPrope
 type GetPropertiesReturns struct {
 	Result             []*PropertyDescriptor         `json:"result,omitempty"`             // Object properties.
 	InternalProperties []*InternalPropertyDescriptor `json:"internalProperties,omitempty"` // Internal object properties (only of the element itself).
+	PrivateProperties  []*PrivatePropertyDescriptor  `json:"privateProperties,omitempty"`  // Object private properties.
 	ExceptionDetails   *ExceptionDetails             `json:"exceptionDetails,omitempty"`   // Exception details.
 }
 
@@ -507,16 +508,17 @@ type GetPropertiesReturns struct {
 // returns:
 //   result - Object properties.
 //   internalProperties - Internal object properties (only of the element itself).
+//   privateProperties - Object private properties.
 //   exceptionDetails - Exception details.
-func (p *GetPropertiesParams) Do(ctxt context.Context, h cdp.Executor) (result []*PropertyDescriptor, internalProperties []*InternalPropertyDescriptor, exceptionDetails *ExceptionDetails, err error) {
+func (p *GetPropertiesParams) Do(ctxt context.Context, h cdp.Executor) (result []*PropertyDescriptor, internalProperties []*InternalPropertyDescriptor, privateProperties []*PrivatePropertyDescriptor, exceptionDetails *ExceptionDetails, err error) {
 	// execute
 	var res GetPropertiesReturns
 	err = h.Execute(ctxt, CommandGetProperties, p, &res)
 	if err != nil {
-		return nil, nil, nil, err
+		return nil, nil, nil, nil, err
 	}
 
-	return res.Result, res.InternalProperties, res.ExceptionDetails, nil
+	return res.Result, res.InternalProperties, res.PrivateProperties, res.ExceptionDetails, nil
 }
 
 // GlobalLexicalScopeNamesParams returns all let, const and class variables
