@@ -61,12 +61,24 @@ func (p *DisableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
 // EnableParams enables debugger for the given page. Clients should not
 // assume that the debugging has been enabled until the result for this command
 // is received.
-type EnableParams struct{}
+type EnableParams struct {
+	MaxScriptsCacheSize float64 `json:"maxScriptsCacheSize,omitempty"` // The maximum size in bytes of collected scripts (not referenced by other heap objects) the debugger can hold. Puts no limit if parameter is omitted.
+}
 
 // Enable enables debugger for the given page. Clients should not assume that
 // the debugging has been enabled until the result for this command is received.
+//
+// parameters:
 func Enable() *EnableParams {
 	return &EnableParams{}
+}
+
+// WithMaxScriptsCacheSize the maximum size in bytes of collected scripts
+// (not referenced by other heap objects) the debugger can hold. Puts no limit
+// if parameter is omitted.
+func (p EnableParams) WithMaxScriptsCacheSize(maxScriptsCacheSize float64) *EnableParams {
+	p.MaxScriptsCacheSize = maxScriptsCacheSize
+	return &p
 }
 
 // EnableReturns return values.
@@ -81,7 +93,7 @@ type EnableReturns struct {
 func (p *EnableParams) Do(ctxt context.Context, h cdp.Executor) (debuggerID runtime.UniqueDebuggerID, err error) {
 	// execute
 	var res EnableReturns
-	err = h.Execute(ctxt, CommandEnable, nil, &res)
+	err = h.Execute(ctxt, CommandEnable, p, &res)
 	if err != nil {
 		return "", err
 	}

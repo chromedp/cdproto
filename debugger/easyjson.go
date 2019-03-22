@@ -4688,6 +4688,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoDebugger45(in *jlexer.Lexer, 
 			continue
 		}
 		switch key {
+		case "maxScriptsCacheSize":
+			out.MaxScriptsCacheSize = float64(in.Float64())
 		default:
 			in.SkipRecursive()
 		}
@@ -4702,6 +4704,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoDebugger45(out *jwriter.Write
 	out.RawByte('{')
 	first := true
 	_ = first
+	if in.MaxScriptsCacheSize != 0 {
+		const prefix string = ",\"maxScriptsCacheSize\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Float64(float64(in.MaxScriptsCacheSize))
+	}
 	out.RawByte('}')
 }
 

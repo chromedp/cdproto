@@ -176,47 +176,47 @@ func (p *RequestDataParams) Do(ctxt context.Context, h cdp.Executor) (objectStor
 	return res.ObjectStoreDataEntries, res.HasMore, nil
 }
 
-// GetKeyGeneratorCurrentNumberParams gets the auto increment number of an
-// object store. Only meaningful when objectStore.autoIncrement is true.
-type GetKeyGeneratorCurrentNumberParams struct {
+// GetMetadataParams gets metadata of an object store.
+type GetMetadataParams struct {
 	SecurityOrigin  string `json:"securityOrigin"`  // Security origin.
 	DatabaseName    string `json:"databaseName"`    // Database name.
 	ObjectStoreName string `json:"objectStoreName"` // Object store name.
 }
 
-// GetKeyGeneratorCurrentNumber gets the auto increment number of an object
-// store. Only meaningful when objectStore.autoIncrement is true.
+// GetMetadata gets metadata of an object store.
 //
 // parameters:
 //   securityOrigin - Security origin.
 //   databaseName - Database name.
 //   objectStoreName - Object store name.
-func GetKeyGeneratorCurrentNumber(securityOrigin string, databaseName string, objectStoreName string) *GetKeyGeneratorCurrentNumberParams {
-	return &GetKeyGeneratorCurrentNumberParams{
+func GetMetadata(securityOrigin string, databaseName string, objectStoreName string) *GetMetadataParams {
+	return &GetMetadataParams{
 		SecurityOrigin:  securityOrigin,
 		DatabaseName:    databaseName,
 		ObjectStoreName: objectStoreName,
 	}
 }
 
-// GetKeyGeneratorCurrentNumberReturns return values.
-type GetKeyGeneratorCurrentNumberReturns struct {
-	CurrentNumber float64 `json:"currentNumber,omitempty"` // the current value of key generator, to become the next inserted key into the object store.
+// GetMetadataReturns return values.
+type GetMetadataReturns struct {
+	EntriesCount      float64 `json:"entriesCount,omitempty"`      // the entries count
+	KeyGeneratorValue float64 `json:"keyGeneratorValue,omitempty"` // the current value of key generator, to become the next inserted key into the object store. Valid if objectStore.autoIncrement is true.
 }
 
-// Do executes IndexedDB.getKeyGeneratorCurrentNumber against the provided context.
+// Do executes IndexedDB.getMetadata against the provided context.
 //
 // returns:
-//   currentNumber - the current value of key generator, to become the next inserted key into the object store.
-func (p *GetKeyGeneratorCurrentNumberParams) Do(ctxt context.Context, h cdp.Executor) (currentNumber float64, err error) {
+//   entriesCount - the entries count
+//   keyGeneratorValue - the current value of key generator, to become the next inserted key into the object store. Valid if objectStore.autoIncrement is true.
+func (p *GetMetadataParams) Do(ctxt context.Context, h cdp.Executor) (entriesCount float64, keyGeneratorValue float64, err error) {
 	// execute
-	var res GetKeyGeneratorCurrentNumberReturns
-	err = h.Execute(ctxt, CommandGetKeyGeneratorCurrentNumber, p, &res)
+	var res GetMetadataReturns
+	err = h.Execute(ctxt, CommandGetMetadata, p, &res)
 	if err != nil {
-		return 0, err
+		return 0, 0, err
 	}
 
-	return res.CurrentNumber, nil
+	return res.EntriesCount, res.KeyGeneratorValue, nil
 }
 
 // RequestDatabaseParams requests database with given name in given frame.
@@ -295,13 +295,13 @@ func (p *RequestDatabaseNamesParams) Do(ctxt context.Context, h cdp.Executor) (d
 
 // Command names.
 const (
-	CommandClearObjectStore             = "IndexedDB.clearObjectStore"
-	CommandDeleteDatabase               = "IndexedDB.deleteDatabase"
-	CommandDeleteObjectStoreEntries     = "IndexedDB.deleteObjectStoreEntries"
-	CommandDisable                      = "IndexedDB.disable"
-	CommandEnable                       = "IndexedDB.enable"
-	CommandRequestData                  = "IndexedDB.requestData"
-	CommandGetKeyGeneratorCurrentNumber = "IndexedDB.getKeyGeneratorCurrentNumber"
-	CommandRequestDatabase              = "IndexedDB.requestDatabase"
-	CommandRequestDatabaseNames         = "IndexedDB.requestDatabaseNames"
+	CommandClearObjectStore         = "IndexedDB.clearObjectStore"
+	CommandDeleteDatabase           = "IndexedDB.deleteDatabase"
+	CommandDeleteObjectStoreEntries = "IndexedDB.deleteObjectStoreEntries"
+	CommandDisable                  = "IndexedDB.disable"
+	CommandEnable                   = "IndexedDB.enable"
+	CommandRequestData              = "IndexedDB.requestData"
+	CommandGetMetadata              = "IndexedDB.getMetadata"
+	CommandRequestDatabase          = "IndexedDB.requestDatabase"
+	CommandRequestDatabaseNames     = "IndexedDB.requestDatabaseNames"
 )
