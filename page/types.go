@@ -242,60 +242,60 @@ type FontSizes struct {
 	Fixed    int64 `json:"fixed,omitempty"`    // Default fixed font size.
 }
 
-// FrameScheduledNavigationReason the reason for the navigation.
-type FrameScheduledNavigationReason string
+// ClientNavigationReason [no description].
+type ClientNavigationReason string
 
-// String returns the FrameScheduledNavigationReason as string value.
-func (t FrameScheduledNavigationReason) String() string {
+// String returns the ClientNavigationReason as string value.
+func (t ClientNavigationReason) String() string {
 	return string(t)
 }
 
-// FrameScheduledNavigationReason values.
+// ClientNavigationReason values.
 const (
-	FrameScheduledNavigationReasonFormSubmissionGet     FrameScheduledNavigationReason = "formSubmissionGet"
-	FrameScheduledNavigationReasonFormSubmissionPost    FrameScheduledNavigationReason = "formSubmissionPost"
-	FrameScheduledNavigationReasonHTTPHeaderRefresh     FrameScheduledNavigationReason = "httpHeaderRefresh"
-	FrameScheduledNavigationReasonScriptInitiated       FrameScheduledNavigationReason = "scriptInitiated"
-	FrameScheduledNavigationReasonMetaTagRefresh        FrameScheduledNavigationReason = "metaTagRefresh"
-	FrameScheduledNavigationReasonPageBlockInterstitial FrameScheduledNavigationReason = "pageBlockInterstitial"
-	FrameScheduledNavigationReasonReload                FrameScheduledNavigationReason = "reload"
+	ClientNavigationReasonFormSubmissionGet     ClientNavigationReason = "formSubmissionGet"
+	ClientNavigationReasonFormSubmissionPost    ClientNavigationReason = "formSubmissionPost"
+	ClientNavigationReasonHTTPHeaderRefresh     ClientNavigationReason = "httpHeaderRefresh"
+	ClientNavigationReasonScriptInitiated       ClientNavigationReason = "scriptInitiated"
+	ClientNavigationReasonMetaTagRefresh        ClientNavigationReason = "metaTagRefresh"
+	ClientNavigationReasonPageBlockInterstitial ClientNavigationReason = "pageBlockInterstitial"
+	ClientNavigationReasonReload                ClientNavigationReason = "reload"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t FrameScheduledNavigationReason) MarshalEasyJSON(out *jwriter.Writer) {
+func (t ClientNavigationReason) MarshalEasyJSON(out *jwriter.Writer) {
 	out.String(string(t))
 }
 
 // MarshalJSON satisfies json.Marshaler.
-func (t FrameScheduledNavigationReason) MarshalJSON() ([]byte, error) {
+func (t ClientNavigationReason) MarshalJSON() ([]byte, error) {
 	return easyjson.Marshal(t)
 }
 
 // UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *FrameScheduledNavigationReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	switch FrameScheduledNavigationReason(in.String()) {
-	case FrameScheduledNavigationReasonFormSubmissionGet:
-		*t = FrameScheduledNavigationReasonFormSubmissionGet
-	case FrameScheduledNavigationReasonFormSubmissionPost:
-		*t = FrameScheduledNavigationReasonFormSubmissionPost
-	case FrameScheduledNavigationReasonHTTPHeaderRefresh:
-		*t = FrameScheduledNavigationReasonHTTPHeaderRefresh
-	case FrameScheduledNavigationReasonScriptInitiated:
-		*t = FrameScheduledNavigationReasonScriptInitiated
-	case FrameScheduledNavigationReasonMetaTagRefresh:
-		*t = FrameScheduledNavigationReasonMetaTagRefresh
-	case FrameScheduledNavigationReasonPageBlockInterstitial:
-		*t = FrameScheduledNavigationReasonPageBlockInterstitial
-	case FrameScheduledNavigationReasonReload:
-		*t = FrameScheduledNavigationReasonReload
+func (t *ClientNavigationReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	switch ClientNavigationReason(in.String()) {
+	case ClientNavigationReasonFormSubmissionGet:
+		*t = ClientNavigationReasonFormSubmissionGet
+	case ClientNavigationReasonFormSubmissionPost:
+		*t = ClientNavigationReasonFormSubmissionPost
+	case ClientNavigationReasonHTTPHeaderRefresh:
+		*t = ClientNavigationReasonHTTPHeaderRefresh
+	case ClientNavigationReasonScriptInitiated:
+		*t = ClientNavigationReasonScriptInitiated
+	case ClientNavigationReasonMetaTagRefresh:
+		*t = ClientNavigationReasonMetaTagRefresh
+	case ClientNavigationReasonPageBlockInterstitial:
+		*t = ClientNavigationReasonPageBlockInterstitial
+	case ClientNavigationReasonReload:
+		*t = ClientNavigationReasonReload
 
 	default:
-		in.AddError(errors.New("unknown FrameScheduledNavigationReason value"))
+		in.AddError(errors.New("unknown ClientNavigationReason value"))
 	}
 }
 
 // UnmarshalJSON satisfies json.Unmarshaler.
-func (t *FrameScheduledNavigationReason) UnmarshalJSON(buf []byte) error {
+func (t *ClientNavigationReason) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 

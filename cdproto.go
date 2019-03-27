@@ -477,11 +477,10 @@ const (
 	CommandPageWaitForDebugger                             = page.CommandWaitForDebugger
 	EventPageDomContentEventFired                          = "Page.domContentEventFired"
 	EventPageFrameAttached                                 = "Page.frameAttached"
-	EventPageFrameClearedScheduledNavigation               = "Page.frameClearedScheduledNavigation"
 	EventPageFrameDetached                                 = "Page.frameDetached"
 	EventPageFrameNavigated                                = "Page.frameNavigated"
 	EventPageFrameResized                                  = "Page.frameResized"
-	EventPageFrameScheduledNavigation                      = "Page.frameScheduledNavigation"
+	EventPageFrameRequestedNavigation                      = "Page.frameRequestedNavigation"
 	EventPageFrameStartedLoading                           = "Page.frameStartedLoading"
 	EventPageFrameStoppedLoading                           = "Page.frameStoppedLoading"
 	EventPageInterstitialHidden                            = "Page.interstitialHidden"
@@ -1852,9 +1851,6 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case EventPageFrameAttached:
 		v = new(page.EventFrameAttached)
 
-	case EventPageFrameClearedScheduledNavigation:
-		v = new(page.EventFrameClearedScheduledNavigation)
-
 	case EventPageFrameDetached:
 		v = new(page.EventFrameDetached)
 
@@ -1864,8 +1860,8 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case EventPageFrameResized:
 		v = new(page.EventFrameResized)
 
-	case EventPageFrameScheduledNavigation:
-		v = new(page.EventFrameScheduledNavigation)
+	case EventPageFrameRequestedNavigation:
+		v = new(page.EventFrameRequestedNavigation)
 
 	case EventPageFrameStartedLoading:
 		v = new(page.EventFrameStartedLoading)

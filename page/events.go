@@ -19,12 +19,6 @@ type EventFrameAttached struct {
 	Stack         *runtime.StackTrace `json:"stack,omitempty"` // JavaScript stack trace of when frame was attached, only set if frame initiated from script.
 }
 
-// EventFrameClearedScheduledNavigation fired when frame no longer has a
-// scheduled navigation.
-type EventFrameClearedScheduledNavigation struct {
-	FrameID cdp.FrameID `json:"frameId"` // Id of the frame that has cleared its scheduled navigation.
-}
-
 // EventFrameDetached fired when frame has been detached from its parent.
 type EventFrameDetached struct {
 	FrameID cdp.FrameID `json:"frameId"` // Id of the frame that has been detached.
@@ -39,13 +33,12 @@ type EventFrameNavigated struct {
 // EventFrameResized [no description].
 type EventFrameResized struct{}
 
-// EventFrameScheduledNavigation fired when frame schedules a potential
-// navigation.
-type EventFrameScheduledNavigation struct {
-	FrameID cdp.FrameID                    `json:"frameId"` // Id of the frame that has scheduled a navigation.
-	Delay   float64                        `json:"delay"`   // Delay (in seconds) until the navigation is scheduled to begin. The navigation is not guaranteed to start.
-	Reason  FrameScheduledNavigationReason `json:"reason"`  // The reason for the navigation.
-	URL     string                         `json:"url"`     // The destination URL for the scheduled navigation.
+// EventFrameRequestedNavigation fired when a renderer-initiated navigation
+// is requested. Navigation may still be cancelled after the event is issued.
+type EventFrameRequestedNavigation struct {
+	FrameID cdp.FrameID            `json:"frameId"` // Id of the frame that has scheduled a navigation.
+	Reason  ClientNavigationReason `json:"reason"`  // The reason for the navigation.
+	URL     string                 `json:"url"`     // The destination URL for the requested navigation.
 }
 
 // EventFrameStartedLoading fired when frame has started loading.
