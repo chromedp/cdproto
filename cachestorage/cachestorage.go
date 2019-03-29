@@ -163,23 +163,23 @@ func (p RequestEntriesParams) WithPathFilter(pathFilter string) *RequestEntriesP
 // RequestEntriesReturns return values.
 type RequestEntriesReturns struct {
 	CacheDataEntries []*DataEntry `json:"cacheDataEntries,omitempty"` // Array of object store data entries.
-	HasMore          bool         `json:"hasMore,omitempty"`          // If true, there are more entries to fetch in the given range.
+	ReturnCount      float64      `json:"returnCount,omitempty"`      // Count of returned entries from this storage. If pathFilter is empty, it is the count of all entries from this storage.
 }
 
 // Do executes CacheStorage.requestEntries against the provided context.
 //
 // returns:
 //   cacheDataEntries - Array of object store data entries.
-//   hasMore - If true, there are more entries to fetch in the given range.
-func (p *RequestEntriesParams) Do(ctxt context.Context, h cdp.Executor) (cacheDataEntries []*DataEntry, hasMore bool, err error) {
+//   returnCount - Count of returned entries from this storage. If pathFilter is empty, it is the count of all entries from this storage.
+func (p *RequestEntriesParams) Do(ctxt context.Context, h cdp.Executor) (cacheDataEntries []*DataEntry, returnCount float64, err error) {
 	// execute
 	var res RequestEntriesReturns
 	err = h.Execute(ctxt, CommandRequestEntries, p, &res)
 	if err != nil {
-		return nil, false, err
+		return nil, 0, err
 	}
 
-	return res.CacheDataEntries, res.HasMore, nil
+	return res.CacheDataEntries, res.ReturnCount, nil
 }
 
 // Command names.

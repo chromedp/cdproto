@@ -51,7 +51,6 @@ import (
 	"github.com/chromedp/cdproto/storage"
 	"github.com/chromedp/cdproto/systeminfo"
 	"github.com/chromedp/cdproto/target"
-	"github.com/chromedp/cdproto/testing"
 	"github.com/chromedp/cdproto/tethering"
 	"github.com/chromedp/cdproto/tracing"
 	"github.com/mailru/easyjson"
@@ -596,7 +595,6 @@ const (
 	EventTargetTargetDestroyed                             = "Target.targetDestroyed"
 	EventTargetTargetCrashed                               = "Target.targetCrashed"
 	EventTargetTargetInfoChanged                           = "Target.targetInfoChanged"
-	CommandTestingGenerateTestReport                       = testing.CommandGenerateTestReport
 	CommandTetheringBind                                   = tethering.CommandBind
 	CommandTetheringUnbind                                 = tethering.CommandUnbind
 	EventTetheringAccepted                                 = "Tethering.accepted"
@@ -2207,9 +2205,6 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case EventTargetTargetInfoChanged:
 		v = new(target.EventTargetInfoChanged)
-
-	case CommandTestingGenerateTestReport:
-		return emptyVal, nil
 
 	case CommandTetheringBind:
 		return emptyVal, nil

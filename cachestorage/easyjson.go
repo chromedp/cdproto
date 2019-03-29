@@ -67,8 +67,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoCachestorage(in *jlexer.Lexer
 				}
 				in.Delim(']')
 			}
-		case "hasMore":
-			out.HasMore = bool(in.Bool())
+		case "returnCount":
+			out.ReturnCount = float64(in.Float64())
 		default:
 			in.SkipRecursive()
 		}
@@ -106,15 +106,15 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoCachestorage(out *jwriter.Wri
 			out.RawByte(']')
 		}
 	}
-	if in.HasMore {
-		const prefix string = ",\"hasMore\":"
+	if in.ReturnCount != 0 {
+		const prefix string = ",\"returnCount\":"
 		if first {
 			first = false
 			out.RawString(prefix[1:])
 		} else {
 			out.RawString(prefix)
 		}
-		out.Bool(bool(in.HasMore))
+		out.Float64(float64(in.ReturnCount))
 	}
 	out.RawByte('}')
 }
