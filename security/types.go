@@ -127,17 +127,6 @@ type StateExplanation struct {
 	Recommendations  []string         `json:"recommendations,omitempty"` // Recommendations to fix any issues.
 }
 
-// InsecureContentStatus information about insecure content on the page.
-type InsecureContentStatus struct {
-	RanMixedContent                bool  `json:"ranMixedContent"`                // True if the page was loaded over HTTPS and ran mixed (HTTP) content such as scripts.
-	DisplayedMixedContent          bool  `json:"displayedMixedContent"`          // True if the page was loaded over HTTPS and displayed mixed (HTTP) content such as images.
-	ContainedMixedForm             bool  `json:"containedMixedForm"`             // True if the page was loaded over HTTPS and contained a form targeting an insecure url.
-	RanContentWithCertErrors       bool  `json:"ranContentWithCertErrors"`       // True if the page was loaded over HTTPS without certificate errors, and ran content such as scripts that were loaded with certificate errors.
-	DisplayedContentWithCertErrors bool  `json:"displayedContentWithCertErrors"` // True if the page was loaded over HTTPS without certificate errors, and displayed content such as images that were loaded with certificate errors.
-	RanInsecureContentStyle        State `json:"ranInsecureContentStyle"`        // Security state representing a page that ran insecure content.
-	DisplayedInsecureContentStyle  State `json:"displayedInsecureContentStyle"`  // Security state representing a page that displayed insecure content.
-}
-
 // CertificateErrorAction the action to take when a certificate error occurs.
 // continue will continue processing the request and cancel will cancel the
 // request.
