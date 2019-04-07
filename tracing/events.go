@@ -25,5 +25,6 @@ type EventDataCollected struct {
 // buffers pending flush, all data were delivered via dataCollected events.
 type EventTracingComplete struct {
 	Stream            io.StreamHandle   `json:"stream,omitempty"`            // A handle of the stream that holds resulting trace data.
+	TraceFormat       StreamFormat      `json:"traceFormat,omitempty"`       // Trace data format of returned stream.
 	StreamCompression StreamCompression `json:"streamCompression,omitempty"` // Compression format of returned stream.
 }

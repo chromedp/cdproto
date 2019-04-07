@@ -26,6 +26,50 @@ type TraceConfig struct {
 	MemoryDumpConfig     *MemoryDumpConfig `json:"memoryDumpConfig,omitempty"`     // Configuration for memory dump triggers. Used only when "memory-infra" category is enabled.
 }
 
+// StreamFormat data format of a trace. Can be either the legacy JSON format
+// or the protocol buffer format. Note that the JSON format will be deprecated
+// soon.
+type StreamFormat string
+
+// String returns the StreamFormat as string value.
+func (t StreamFormat) String() string {
+	return string(t)
+}
+
+// StreamFormat values.
+const (
+	StreamFormatJSON  StreamFormat = "json"
+	StreamFormatProto StreamFormat = "proto"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t StreamFormat) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t StreamFormat) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *StreamFormat) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	switch StreamFormat(in.String()) {
+	case StreamFormatJSON:
+		*t = StreamFormatJSON
+	case StreamFormatProto:
+		*t = StreamFormatProto
+
+	default:
+		in.AddError(errors.New("unknown StreamFormat value"))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *StreamFormat) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
 // StreamCompression compression type to use for traces returned via streams.
 type StreamCompression string
 

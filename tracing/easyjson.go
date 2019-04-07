@@ -294,6 +294,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoTracing1(in *jlexer.Lexer, ou
 			out.BufferUsageReportingInterval = float64(in.Float64())
 		case "transferMode":
 			(out.TransferMode).UnmarshalEasyJSON(in)
+		case "streamFormat":
+			(out.StreamFormat).UnmarshalEasyJSON(in)
 		case "streamCompression":
 			(out.StreamCompression).UnmarshalEasyJSON(in)
 		case "traceConfig":
@@ -339,6 +341,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoTracing1(out *jwriter.Writer,
 			out.RawString(prefix)
 		}
 		(in.TransferMode).MarshalEasyJSON(out)
+	}
+	if in.StreamFormat != "" {
+		const prefix string = ",\"streamFormat\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		(in.StreamFormat).MarshalEasyJSON(out)
 	}
 	if in.StreamCompression != "" {
 		const prefix string = ",\"streamCompression\":"
@@ -839,6 +851,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoTracing8(in *jlexer.Lexer, ou
 		switch key {
 		case "stream":
 			out.Stream = io.StreamHandle(in.String())
+		case "traceFormat":
+			(out.TraceFormat).UnmarshalEasyJSON(in)
 		case "streamCompression":
 			(out.StreamCompression).UnmarshalEasyJSON(in)
 		default:
@@ -864,6 +878,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoTracing8(out *jwriter.Writer,
 			out.RawString(prefix)
 		}
 		out.String(string(in.Stream))
+	}
+	if in.TraceFormat != "" {
+		const prefix string = ",\"traceFormat\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		(in.TraceFormat).MarshalEasyJSON(out)
 	}
 	if in.StreamCompression != "" {
 		const prefix string = ",\"streamCompression\":"

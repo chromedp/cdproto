@@ -846,13 +846,13 @@ func (p *SetExtraHTTPHeadersParams) Do(ctxt context.Context, h cdp.Executor) (er
 	return h.Execute(ctxt, CommandSetExtraHTTPHeaders, p, nil)
 }
 
-// SetRequestInterceptionParams sets the requests to intercept that match a
-// the provided patterns and optionally resource types.
+// SetRequestInterceptionParams sets the requests to intercept that match the
+// provided patterns and optionally resource types.
 type SetRequestInterceptionParams struct {
 	Patterns []*RequestPattern `json:"patterns"` // Requests matching any of these patterns will be forwarded and wait for the corresponding continueInterceptedRequest call.
 }
 
-// SetRequestInterception sets the requests to intercept that match a the
+// SetRequestInterception sets the requests to intercept that match the
 // provided patterns and optionally resource types.
 //
 // parameters:

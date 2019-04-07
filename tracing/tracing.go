@@ -107,6 +107,7 @@ func (p *RequestMemoryDumpParams) Do(ctxt context.Context, h cdp.Executor) (dump
 type StartParams struct {
 	BufferUsageReportingInterval float64           `json:"bufferUsageReportingInterval,omitempty"` // If set, the agent will issue bufferUsage events at this interval, specified in milliseconds
 	TransferMode                 TransferMode      `json:"transferMode,omitempty"`                 // Whether to report trace events as series of dataCollected events or to save trace to a stream (defaults to ReportEvents).
+	StreamFormat                 StreamFormat      `json:"streamFormat,omitempty"`                 // Trace data format to use. This only applies when using ReturnAsStream transfer mode (defaults to json).
 	StreamCompression            StreamCompression `json:"streamCompression,omitempty"`            // Compression format to use. This only applies when using ReturnAsStream transfer mode (defaults to none)
 	TraceConfig                  *TraceConfig      `json:"traceConfig,omitempty"`
 }
@@ -129,6 +130,13 @@ func (p StartParams) WithBufferUsageReportingInterval(bufferUsageReportingInterv
 // events or to save trace to a stream (defaults to ReportEvents).
 func (p StartParams) WithTransferMode(transferMode TransferMode) *StartParams {
 	p.TransferMode = transferMode
+	return &p
+}
+
+// WithStreamFormat trace data format to use. This only applies when using
+// ReturnAsStream transfer mode (defaults to json).
+func (p StartParams) WithStreamFormat(streamFormat StreamFormat) *StartParams {
+	p.StreamFormat = streamFormat
 	return &p
 }
 

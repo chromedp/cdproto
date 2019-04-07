@@ -40,6 +40,7 @@ const (
 	InspectModeSearchForNode         InspectMode = "searchForNode"
 	InspectModeSearchForUAShadowDOM  InspectMode = "searchForUAShadowDOM"
 	InspectModeCaptureAreaScreenshot InspectMode = "captureAreaScreenshot"
+	InspectModeShowDistances         InspectMode = "showDistances"
 	InspectModeNone                  InspectMode = "none"
 )
 
@@ -62,6 +63,8 @@ func (t *InspectMode) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = InspectModeSearchForUAShadowDOM
 	case InspectModeCaptureAreaScreenshot:
 		*t = InspectModeCaptureAreaScreenshot
+	case InspectModeShowDistances:
+		*t = InspectModeShowDistances
 	case InspectModeNone:
 		*t = InspectModeNone
 

@@ -809,6 +809,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoFetch8(in *jlexer.Lexer, out 
 				}
 				in.Delim(']')
 			}
+		case "networkId":
+			out.NetworkID = RequestID(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -909,6 +911,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoFetch8(out *jwriter.Writer, i
 			}
 			out.RawByte(']')
 		}
+	}
+	if in.NetworkID != "" {
+		const prefix string = ",\"networkId\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(in.NetworkID))
 	}
 	out.RawByte('}')
 }
