@@ -294,6 +294,34 @@ func (p *GetAppManifestParams) Do(ctxt context.Context, h cdp.Executor) (url str
 	return res.URL, res.Errors, res.Data, nil
 }
 
+// GetInstallabilityErrorsParams [no description].
+type GetInstallabilityErrorsParams struct{}
+
+// GetInstallabilityErrors [no description].
+func GetInstallabilityErrors() *GetInstallabilityErrorsParams {
+	return &GetInstallabilityErrorsParams{}
+}
+
+// GetInstallabilityErrorsReturns return values.
+type GetInstallabilityErrorsReturns struct {
+	Errors []string `json:"errors,omitempty"`
+}
+
+// Do executes Page.getInstallabilityErrors against the provided context.
+//
+// returns:
+//   errors
+func (p *GetInstallabilityErrorsParams) Do(ctxt context.Context, h cdp.Executor) (errors []string, err error) {
+	// execute
+	var res GetInstallabilityErrorsReturns
+	err = h.Execute(ctxt, CommandGetInstallabilityErrors, nil, &res)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.Errors, nil
+}
+
 // GetFrameTreeParams returns present frame tree structure.
 type GetFrameTreeParams struct{}
 
@@ -1269,6 +1297,7 @@ const (
 	CommandDisable                             = "Page.disable"
 	CommandEnable                              = "Page.enable"
 	CommandGetAppManifest                      = "Page.getAppManifest"
+	CommandGetInstallabilityErrors             = "Page.getInstallabilityErrors"
 	CommandGetFrameTree                        = "Page.getFrameTree"
 	CommandGetLayoutMetrics                    = "Page.getLayoutMetrics"
 	CommandGetNavigationHistory                = "Page.getNavigationHistory"

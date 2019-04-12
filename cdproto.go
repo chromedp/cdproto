@@ -442,6 +442,7 @@ const (
 	CommandPageDisable                                     = page.CommandDisable
 	CommandPageEnable                                      = page.CommandEnable
 	CommandPageGetAppManifest                              = page.CommandGetAppManifest
+	CommandPageGetInstallabilityErrors                     = page.CommandGetInstallabilityErrors
 	CommandPageGetFrameTree                                = page.CommandGetFrameTree
 	CommandPageGetLayoutMetrics                            = page.CommandGetLayoutMetrics
 	CommandPageGetNavigationHistory                        = page.CommandGetNavigationHistory
@@ -1746,6 +1747,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandPageGetAppManifest:
 		v = new(page.GetAppManifestReturns)
+
+	case CommandPageGetInstallabilityErrors:
+		v = new(page.GetInstallabilityErrorsReturns)
 
 	case CommandPageGetFrameTree:
 		v = new(page.GetFrameTreeReturns)
