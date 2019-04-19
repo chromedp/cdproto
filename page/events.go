@@ -36,7 +36,7 @@ type EventFrameResized struct{}
 // EventFrameRequestedNavigation fired when a renderer-initiated navigation
 // is requested. Navigation may still be cancelled after the event is issued.
 type EventFrameRequestedNavigation struct {
-	FrameID cdp.FrameID            `json:"frameId"` // Id of the frame that has scheduled a navigation.
+	FrameID cdp.FrameID            `json:"frameId"` // Id of the frame that is being navigated.
 	Reason  ClientNavigationReason `json:"reason"`  // The reason for the navigation.
 	URL     string                 `json:"url"`     // The destination URL for the requested navigation.
 }

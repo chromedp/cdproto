@@ -53,6 +53,7 @@ import (
 	"github.com/chromedp/cdproto/target"
 	"github.com/chromedp/cdproto/tethering"
 	"github.com/chromedp/cdproto/tracing"
+	"github.com/chromedp/cdproto/webaudio"
 	"github.com/mailru/easyjson"
 )
 
@@ -607,6 +608,12 @@ const (
 	EventTracingBufferUsage                                = "Tracing.bufferUsage"
 	EventTracingDataCollected                              = "Tracing.dataCollected"
 	EventTracingTracingComplete                            = "Tracing.tracingComplete"
+	CommandWebAudioEnable                                  = webaudio.CommandEnable
+	CommandWebAudioDisable                                 = webaudio.CommandDisable
+	CommandWebAudioGetRealtimeData                         = webaudio.CommandGetRealtimeData
+	EventWebAudioContextCreated                            = "WebAudio.contextCreated"
+	EventWebAudioContextDestroyed                          = "WebAudio.contextDestroyed"
+	EventWebAudioContextChanged                            = "WebAudio.contextChanged"
 )
 
 // Error error type.
@@ -2242,6 +2249,24 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case EventTracingTracingComplete:
 		v = new(tracing.EventTracingComplete)
+
+	case CommandWebAudioEnable:
+		return emptyVal, nil
+
+	case CommandWebAudioDisable:
+		return emptyVal, nil
+
+	case CommandWebAudioGetRealtimeData:
+		v = new(webaudio.GetRealtimeDataReturns)
+
+	case EventWebAudioContextCreated:
+		v = new(webaudio.EventContextCreated)
+
+	case EventWebAudioContextDestroyed:
+		v = new(webaudio.EventContextDestroyed)
+
+	case EventWebAudioContextChanged:
+		v = new(webaudio.EventContextChanged)
 
 	default:
 		return nil, fmt.Errorf("unknown command or event %q", msg.Method)
