@@ -1,6 +1,5 @@
 language: go
 go:
-  - 1.11.x
   - 1.12.x
 addons:
   apt:
@@ -8,7 +7,6 @@ addons:
 before_install:
   - go get -d github.com/chromedp/chromedp
 script:
-  - export GO111MODULE=on CHROMEDP_TEST_RUNNER=google-chrome-stable CHROMEDP_DISABLE_GPU=true
   - go build ./...
   - cd $GOPATH/src/github.com/chromedp/chromedp
   - go test -v
