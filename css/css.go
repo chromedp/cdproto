@@ -53,10 +53,10 @@ type AddRuleReturns struct {
 //
 // returns:
 //   rule - The newly created rule.
-func (p *AddRuleParams) Do(ctxt context.Context, h cdp.Executor) (rule *Rule, err error) {
+func (p *AddRuleParams) Do(ctxt context.Context) (rule *Rule, err error) {
 	// execute
 	var res AddRuleReturns
-	err = h.Execute(ctxt, CommandAddRule, p, &res)
+	err = cdp.Execute(ctxt, CommandAddRule, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -88,10 +88,10 @@ type CollectClassNamesReturns struct {
 //
 // returns:
 //   classNames - Class name list.
-func (p *CollectClassNamesParams) Do(ctxt context.Context, h cdp.Executor) (classNames []string, err error) {
+func (p *CollectClassNamesParams) Do(ctxt context.Context) (classNames []string, err error) {
 	// execute
 	var res CollectClassNamesReturns
-	err = h.Execute(ctxt, CommandCollectClassNames, p, &res)
+	err = cdp.Execute(ctxt, CommandCollectClassNames, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -125,10 +125,10 @@ type CreateStyleSheetReturns struct {
 //
 // returns:
 //   styleSheetID - Identifier of the created "via-inspector" stylesheet.
-func (p *CreateStyleSheetParams) Do(ctxt context.Context, h cdp.Executor) (styleSheetID StyleSheetID, err error) {
+func (p *CreateStyleSheetParams) Do(ctxt context.Context) (styleSheetID StyleSheetID, err error) {
 	// execute
 	var res CreateStyleSheetReturns
-	err = h.Execute(ctxt, CommandCreateStyleSheet, p, &res)
+	err = cdp.Execute(ctxt, CommandCreateStyleSheet, p, &res)
 	if err != nil {
 		return "", err
 	}
@@ -145,8 +145,8 @@ func Disable() *DisableParams {
 }
 
 // Do executes CSS.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandDisable, nil, nil)
+func (p *DisableParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandDisable, nil, nil)
 }
 
 // EnableParams enables the CSS agent for the given page. Clients should not
@@ -162,8 +162,8 @@ func Enable() *EnableParams {
 }
 
 // Do executes CSS.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandEnable, nil, nil)
+func (p *EnableParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandEnable, nil, nil)
 }
 
 // ForcePseudoStateParams ensures that the given node will have specified
@@ -187,8 +187,8 @@ func ForcePseudoState(nodeID cdp.NodeID, forcedPseudoClasses []string) *ForcePse
 }
 
 // Do executes CSS.forcePseudoState against the provided context.
-func (p *ForcePseudoStateParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandForcePseudoState, p, nil)
+func (p *ForcePseudoStateParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandForcePseudoState, p, nil)
 }
 
 // GetBackgroundColorsParams [no description].
@@ -219,10 +219,10 @@ type GetBackgroundColorsReturns struct {
 //   backgroundColors - The range of background colors behind this element, if it contains any visible text. If no visible text is present, this will be undefined. In the case of a flat background color, this will consist of simply that color. In the case of a gradient, this will consist of each of the color stops. For anything more complicated, this will be an empty array. Images will be ignored (as if the image had failed to load).
 //   computedFontSize - The computed font size for this node, as a CSS computed value string (e.g. '12px').
 //   computedFontWeight - The computed font weight for this node, as a CSS computed value string (e.g. 'normal' or '100').
-func (p *GetBackgroundColorsParams) Do(ctxt context.Context, h cdp.Executor) (backgroundColors []string, computedFontSize string, computedFontWeight string, err error) {
+func (p *GetBackgroundColorsParams) Do(ctxt context.Context) (backgroundColors []string, computedFontSize string, computedFontWeight string, err error) {
 	// execute
 	var res GetBackgroundColorsReturns
-	err = h.Execute(ctxt, CommandGetBackgroundColors, p, &res)
+	err = cdp.Execute(ctxt, CommandGetBackgroundColors, p, &res)
 	if err != nil {
 		return nil, "", "", err
 	}
@@ -256,10 +256,10 @@ type GetComputedStyleForNodeReturns struct {
 //
 // returns:
 //   computedStyle - Computed style for the specified DOM node.
-func (p *GetComputedStyleForNodeParams) Do(ctxt context.Context, h cdp.Executor) (computedStyle []*ComputedProperty, err error) {
+func (p *GetComputedStyleForNodeParams) Do(ctxt context.Context) (computedStyle []*ComputedProperty, err error) {
 	// execute
 	var res GetComputedStyleForNodeReturns
-	err = h.Execute(ctxt, CommandGetComputedStyleForNode, p, &res)
+	err = cdp.Execute(ctxt, CommandGetComputedStyleForNode, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -297,10 +297,10 @@ type GetInlineStylesForNodeReturns struct {
 // returns:
 //   inlineStyle - Inline style for the specified DOM node.
 //   attributesStyle - Attribute-defined element style (e.g. resulting from "width=20 height=100%").
-func (p *GetInlineStylesForNodeParams) Do(ctxt context.Context, h cdp.Executor) (inlineStyle *Style, attributesStyle *Style, err error) {
+func (p *GetInlineStylesForNodeParams) Do(ctxt context.Context) (inlineStyle *Style, attributesStyle *Style, err error) {
 	// execute
 	var res GetInlineStylesForNodeReturns
-	err = h.Execute(ctxt, CommandGetInlineStylesForNode, p, &res)
+	err = cdp.Execute(ctxt, CommandGetInlineStylesForNode, p, &res)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -344,10 +344,10 @@ type GetMatchedStylesForNodeReturns struct {
 //   pseudoElements - Pseudo style matches for this node.
 //   inherited - A chain of inherited styles (from the immediate node parent up to the DOM tree root).
 //   cssKeyframesRules - A list of CSS keyframed animations matching this node.
-func (p *GetMatchedStylesForNodeParams) Do(ctxt context.Context, h cdp.Executor) (inlineStyle *Style, attributesStyle *Style, matchedCSSRules []*RuleMatch, pseudoElements []*PseudoElementMatches, inherited []*InheritedStyleEntry, cssKeyframesRules []*KeyframesRule, err error) {
+func (p *GetMatchedStylesForNodeParams) Do(ctxt context.Context) (inlineStyle *Style, attributesStyle *Style, matchedCSSRules []*RuleMatch, pseudoElements []*PseudoElementMatches, inherited []*InheritedStyleEntry, cssKeyframesRules []*KeyframesRule, err error) {
 	// execute
 	var res GetMatchedStylesForNodeReturns
-	err = h.Execute(ctxt, CommandGetMatchedStylesForNode, p, &res)
+	err = cdp.Execute(ctxt, CommandGetMatchedStylesForNode, p, &res)
 	if err != nil {
 		return nil, nil, nil, nil, nil, nil, err
 	}
@@ -373,10 +373,10 @@ type GetMediaQueriesReturns struct {
 //
 // returns:
 //   medias
-func (p *GetMediaQueriesParams) Do(ctxt context.Context, h cdp.Executor) (medias []*Media, err error) {
+func (p *GetMediaQueriesParams) Do(ctxt context.Context) (medias []*Media, err error) {
 	// execute
 	var res GetMediaQueriesReturns
-	err = h.Execute(ctxt, CommandGetMediaQueries, nil, &res)
+	err = cdp.Execute(ctxt, CommandGetMediaQueries, nil, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -410,10 +410,10 @@ type GetPlatformFontsForNodeReturns struct {
 //
 // returns:
 //   fonts - Usage statistics for every employed platform font.
-func (p *GetPlatformFontsForNodeParams) Do(ctxt context.Context, h cdp.Executor) (fonts []*PlatformFontUsage, err error) {
+func (p *GetPlatformFontsForNodeParams) Do(ctxt context.Context) (fonts []*PlatformFontUsage, err error) {
 	// execute
 	var res GetPlatformFontsForNodeReturns
-	err = h.Execute(ctxt, CommandGetPlatformFontsForNode, p, &res)
+	err = cdp.Execute(ctxt, CommandGetPlatformFontsForNode, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -446,10 +446,10 @@ type GetStyleSheetTextReturns struct {
 //
 // returns:
 //   text - The stylesheet text.
-func (p *GetStyleSheetTextParams) Do(ctxt context.Context, h cdp.Executor) (text string, err error) {
+func (p *GetStyleSheetTextParams) Do(ctxt context.Context) (text string, err error) {
 	// execute
 	var res GetStyleSheetTextReturns
-	err = h.Execute(ctxt, CommandGetStyleSheetText, p, &res)
+	err = cdp.Execute(ctxt, CommandGetStyleSheetText, p, &res)
 	if err != nil {
 		return "", err
 	}
@@ -481,8 +481,8 @@ func SetEffectivePropertyValueForNode(nodeID cdp.NodeID, propertyName string, va
 }
 
 // Do executes CSS.setEffectivePropertyValueForNode against the provided context.
-func (p *SetEffectivePropertyValueForNodeParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetEffectivePropertyValueForNode, p, nil)
+func (p *SetEffectivePropertyValueForNodeParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetEffectivePropertyValueForNode, p, nil)
 }
 
 // SetKeyframeKeyParams modifies the keyframe rule key text.
@@ -515,10 +515,10 @@ type SetKeyframeKeyReturns struct {
 //
 // returns:
 //   keyText - The resulting key text after modification.
-func (p *SetKeyframeKeyParams) Do(ctxt context.Context, h cdp.Executor) (keyText *Value, err error) {
+func (p *SetKeyframeKeyParams) Do(ctxt context.Context) (keyText *Value, err error) {
 	// execute
 	var res SetKeyframeKeyReturns
-	err = h.Execute(ctxt, CommandSetKeyframeKey, p, &res)
+	err = cdp.Execute(ctxt, CommandSetKeyframeKey, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -556,10 +556,10 @@ type SetMediaTextReturns struct {
 //
 // returns:
 //   media - The resulting CSS media rule after modification.
-func (p *SetMediaTextParams) Do(ctxt context.Context, h cdp.Executor) (media *Media, err error) {
+func (p *SetMediaTextParams) Do(ctxt context.Context) (media *Media, err error) {
 	// execute
 	var res SetMediaTextReturns
-	err = h.Execute(ctxt, CommandSetMediaText, p, &res)
+	err = cdp.Execute(ctxt, CommandSetMediaText, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -597,10 +597,10 @@ type SetRuleSelectorReturns struct {
 //
 // returns:
 //   selectorList - The resulting selector list after modification.
-func (p *SetRuleSelectorParams) Do(ctxt context.Context, h cdp.Executor) (selectorList *SelectorList, err error) {
+func (p *SetRuleSelectorParams) Do(ctxt context.Context) (selectorList *SelectorList, err error) {
 	// execute
 	var res SetRuleSelectorReturns
-	err = h.Execute(ctxt, CommandSetRuleSelector, p, &res)
+	err = cdp.Execute(ctxt, CommandSetRuleSelector, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -635,10 +635,10 @@ type SetStyleSheetTextReturns struct {
 //
 // returns:
 //   sourceMapURL - URL of source map associated with script (if any).
-func (p *SetStyleSheetTextParams) Do(ctxt context.Context, h cdp.Executor) (sourceMapURL string, err error) {
+func (p *SetStyleSheetTextParams) Do(ctxt context.Context) (sourceMapURL string, err error) {
 	// execute
 	var res SetStyleSheetTextReturns
-	err = h.Execute(ctxt, CommandSetStyleSheetText, p, &res)
+	err = cdp.Execute(ctxt, CommandSetStyleSheetText, p, &res)
 	if err != nil {
 		return "", err
 	}
@@ -672,10 +672,10 @@ type SetStyleTextsReturns struct {
 //
 // returns:
 //   styles - The resulting styles after modification.
-func (p *SetStyleTextsParams) Do(ctxt context.Context, h cdp.Executor) (styles []*Style, err error) {
+func (p *SetStyleTextsParams) Do(ctxt context.Context) (styles []*Style, err error) {
 	// execute
 	var res SetStyleTextsReturns
-	err = h.Execute(ctxt, CommandSetStyleTexts, p, &res)
+	err = cdp.Execute(ctxt, CommandSetStyleTexts, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -692,8 +692,8 @@ func StartRuleUsageTracking() *StartRuleUsageTrackingParams {
 }
 
 // Do executes CSS.startRuleUsageTracking against the provided context.
-func (p *StartRuleUsageTrackingParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandStartRuleUsageTracking, nil, nil)
+func (p *StartRuleUsageTrackingParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandStartRuleUsageTracking, nil, nil)
 }
 
 // StopRuleUsageTrackingParams stop tracking rule usage and return the list
@@ -717,10 +717,10 @@ type StopRuleUsageTrackingReturns struct {
 //
 // returns:
 //   ruleUsage
-func (p *StopRuleUsageTrackingParams) Do(ctxt context.Context, h cdp.Executor) (ruleUsage []*RuleUsage, err error) {
+func (p *StopRuleUsageTrackingParams) Do(ctxt context.Context) (ruleUsage []*RuleUsage, err error) {
 	// execute
 	var res StopRuleUsageTrackingReturns
-	err = h.Execute(ctxt, CommandStopRuleUsageTracking, nil, &res)
+	err = cdp.Execute(ctxt, CommandStopRuleUsageTracking, nil, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -747,10 +747,10 @@ type TakeCoverageDeltaReturns struct {
 //
 // returns:
 //   coverage
-func (p *TakeCoverageDeltaParams) Do(ctxt context.Context, h cdp.Executor) (coverage []*RuleUsage, err error) {
+func (p *TakeCoverageDeltaParams) Do(ctxt context.Context) (coverage []*RuleUsage, err error) {
 	// execute
 	var res TakeCoverageDeltaReturns
-	err = h.Execute(ctxt, CommandTakeCoverageDelta, nil, &res)
+	err = cdp.Execute(ctxt, CommandTakeCoverageDelta, nil, &res)
 	if err != nil {
 		return nil, err
 	}

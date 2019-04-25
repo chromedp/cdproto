@@ -28,8 +28,8 @@ func ClearBrowserCache() *ClearBrowserCacheParams {
 }
 
 // Do executes Network.clearBrowserCache against the provided context.
-func (p *ClearBrowserCacheParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandClearBrowserCache, nil, nil)
+func (p *ClearBrowserCacheParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandClearBrowserCache, nil, nil)
 }
 
 // ClearBrowserCookiesParams clears browser cookies.
@@ -41,8 +41,8 @@ func ClearBrowserCookies() *ClearBrowserCookiesParams {
 }
 
 // Do executes Network.clearBrowserCookies against the provided context.
-func (p *ClearBrowserCookiesParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandClearBrowserCookies, nil, nil)
+func (p *ClearBrowserCookiesParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandClearBrowserCookies, nil, nil)
 }
 
 // ContinueInterceptedRequestParams response to Network.requestIntercepted
@@ -127,8 +127,8 @@ func (p ContinueInterceptedRequestParams) WithAuthChallengeResponse(authChalleng
 }
 
 // Do executes Network.continueInterceptedRequest against the provided context.
-func (p *ContinueInterceptedRequestParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandContinueInterceptedRequest, p, nil)
+func (p *ContinueInterceptedRequestParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandContinueInterceptedRequest, p, nil)
 }
 
 // DeleteCookiesParams deletes browser cookies with matching name and url or
@@ -171,8 +171,8 @@ func (p DeleteCookiesParams) WithPath(path string) *DeleteCookiesParams {
 }
 
 // Do executes Network.deleteCookies against the provided context.
-func (p *DeleteCookiesParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandDeleteCookies, p, nil)
+func (p *DeleteCookiesParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandDeleteCookies, p, nil)
 }
 
 // DisableParams disables network tracking, prevents network events from
@@ -186,8 +186,8 @@ func Disable() *DisableParams {
 }
 
 // Do executes Network.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandDisable, nil, nil)
+func (p *DisableParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandDisable, nil, nil)
 }
 
 // EmulateNetworkConditionsParams activates emulation of network conditions.
@@ -222,8 +222,8 @@ func (p EmulateNetworkConditionsParams) WithConnectionType(connectionType Connec
 }
 
 // Do executes Network.emulateNetworkConditions against the provided context.
-func (p *EmulateNetworkConditionsParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandEmulateNetworkConditions, p, nil)
+func (p *EmulateNetworkConditionsParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandEmulateNetworkConditions, p, nil)
 }
 
 // EnableParams enables network tracking, network events will now be
@@ -264,8 +264,8 @@ func (p EnableParams) WithMaxPostDataSize(maxPostDataSize int64) *EnableParams {
 }
 
 // Do executes Network.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandEnable, p, nil)
+func (p *EnableParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandEnable, p, nil)
 }
 
 // GetAllCookiesParams returns all browser cookies. Depending on the backend
@@ -287,10 +287,10 @@ type GetAllCookiesReturns struct {
 //
 // returns:
 //   cookies - Array of cookie objects.
-func (p *GetAllCookiesParams) Do(ctxt context.Context, h cdp.Executor) (cookies []*Cookie, err error) {
+func (p *GetAllCookiesParams) Do(ctxt context.Context) (cookies []*Cookie, err error) {
 	// execute
 	var res GetAllCookiesReturns
-	err = h.Execute(ctxt, CommandGetAllCookies, nil, &res)
+	err = cdp.Execute(ctxt, CommandGetAllCookies, nil, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -322,10 +322,10 @@ type GetCertificateReturns struct {
 //
 // returns:
 //   tableNames
-func (p *GetCertificateParams) Do(ctxt context.Context, h cdp.Executor) (tableNames []string, err error) {
+func (p *GetCertificateParams) Do(ctxt context.Context) (tableNames []string, err error) {
 	// execute
 	var res GetCertificateReturns
-	err = h.Execute(ctxt, CommandGetCertificate, p, &res)
+	err = cdp.Execute(ctxt, CommandGetCertificate, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -364,10 +364,10 @@ type GetCookiesReturns struct {
 //
 // returns:
 //   cookies - Array of cookie objects.
-func (p *GetCookiesParams) Do(ctxt context.Context, h cdp.Executor) (cookies []*Cookie, err error) {
+func (p *GetCookiesParams) Do(ctxt context.Context) (cookies []*Cookie, err error) {
 	// execute
 	var res GetCookiesReturns
-	err = h.Execute(ctxt, CommandGetCookies, p, &res)
+	err = cdp.Execute(ctxt, CommandGetCookies, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -400,10 +400,10 @@ type GetResponseBodyReturns struct {
 //
 // returns:
 //   body - Response body.
-func (p *GetResponseBodyParams) Do(ctxt context.Context, h cdp.Executor) (body []byte, err error) {
+func (p *GetResponseBodyParams) Do(ctxt context.Context) (body []byte, err error) {
 	// execute
 	var res GetResponseBodyReturns
-	err = h.Execute(ctxt, CommandGetResponseBody, p, &res)
+	err = cdp.Execute(ctxt, CommandGetResponseBody, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -447,10 +447,10 @@ type GetRequestPostDataReturns struct {
 //
 // returns:
 //   postData - Request body string, omitting files from multipart requests
-func (p *GetRequestPostDataParams) Do(ctxt context.Context, h cdp.Executor) (postData string, err error) {
+func (p *GetRequestPostDataParams) Do(ctxt context.Context) (postData string, err error) {
 	// execute
 	var res GetRequestPostDataReturns
-	err = h.Execute(ctxt, CommandGetRequestPostData, p, &res)
+	err = cdp.Execute(ctxt, CommandGetRequestPostData, p, &res)
 	if err != nil {
 		return "", err
 	}
@@ -485,10 +485,10 @@ type GetResponseBodyForInterceptionReturns struct {
 //
 // returns:
 //   body - Response body.
-func (p *GetResponseBodyForInterceptionParams) Do(ctxt context.Context, h cdp.Executor) (body []byte, err error) {
+func (p *GetResponseBodyForInterceptionParams) Do(ctxt context.Context) (body []byte, err error) {
 	// execute
 	var res GetResponseBodyForInterceptionReturns
-	err = h.Execute(ctxt, CommandGetResponseBodyForInterception, p, &res)
+	err = cdp.Execute(ctxt, CommandGetResponseBodyForInterception, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -538,10 +538,10 @@ type TakeResponseBodyForInterceptionAsStreamReturns struct {
 //
 // returns:
 //   stream
-func (p *TakeResponseBodyForInterceptionAsStreamParams) Do(ctxt context.Context, h cdp.Executor) (stream io.StreamHandle, err error) {
+func (p *TakeResponseBodyForInterceptionAsStreamParams) Do(ctxt context.Context) (stream io.StreamHandle, err error) {
 	// execute
 	var res TakeResponseBodyForInterceptionAsStreamReturns
-	err = h.Execute(ctxt, CommandTakeResponseBodyForInterceptionAsStream, p, &res)
+	err = cdp.Execute(ctxt, CommandTakeResponseBodyForInterceptionAsStream, p, &res)
 	if err != nil {
 		return "", err
 	}
@@ -571,8 +571,8 @@ func ReplayXHR(requestID RequestID) *ReplayXHRParams {
 }
 
 // Do executes Network.replayXHR against the provided context.
-func (p *ReplayXHRParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandReplayXHR, p, nil)
+func (p *ReplayXHRParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandReplayXHR, p, nil)
 }
 
 // SearchInResponseBodyParams searches for given string in response content.
@@ -616,10 +616,10 @@ type SearchInResponseBodyReturns struct {
 //
 // returns:
 //   result - List of search matches.
-func (p *SearchInResponseBodyParams) Do(ctxt context.Context, h cdp.Executor) (result []*debugger.SearchMatch, err error) {
+func (p *SearchInResponseBodyParams) Do(ctxt context.Context) (result []*debugger.SearchMatch, err error) {
 	// execute
 	var res SearchInResponseBodyReturns
-	err = h.Execute(ctxt, CommandSearchInResponseBody, p, &res)
+	err = cdp.Execute(ctxt, CommandSearchInResponseBody, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -643,8 +643,8 @@ func SetBlockedURLS(urls []string) *SetBlockedURLSParams {
 }
 
 // Do executes Network.setBlockedURLs against the provided context.
-func (p *SetBlockedURLSParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetBlockedURLS, p, nil)
+func (p *SetBlockedURLSParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetBlockedURLS, p, nil)
 }
 
 // SetBypassServiceWorkerParams toggles ignoring of service worker for each
@@ -665,8 +665,8 @@ func SetBypassServiceWorker(bypass bool) *SetBypassServiceWorkerParams {
 }
 
 // Do executes Network.setBypassServiceWorker against the provided context.
-func (p *SetBypassServiceWorkerParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetBypassServiceWorker, p, nil)
+func (p *SetBypassServiceWorkerParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetBypassServiceWorker, p, nil)
 }
 
 // SetCacheDisabledParams toggles ignoring cache for each request. If true,
@@ -687,8 +687,8 @@ func SetCacheDisabled(cacheDisabled bool) *SetCacheDisabledParams {
 }
 
 // Do executes Network.setCacheDisabled against the provided context.
-func (p *SetCacheDisabledParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetCacheDisabled, p, nil)
+func (p *SetCacheDisabledParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetCacheDisabled, p, nil)
 }
 
 // SetCookieParams sets a cookie with the given cookie data; may overwrite
@@ -770,10 +770,10 @@ type SetCookieReturns struct {
 //
 // returns:
 //   success - True if successfully set cookie.
-func (p *SetCookieParams) Do(ctxt context.Context, h cdp.Executor) (success bool, err error) {
+func (p *SetCookieParams) Do(ctxt context.Context) (success bool, err error) {
 	// execute
 	var res SetCookieReturns
-	err = h.Execute(ctxt, CommandSetCookie, p, &res)
+	err = cdp.Execute(ctxt, CommandSetCookie, p, &res)
 	if err != nil {
 		return false, err
 	}
@@ -797,8 +797,8 @@ func SetCookies(cookies []*CookieParam) *SetCookiesParams {
 }
 
 // Do executes Network.setCookies against the provided context.
-func (p *SetCookiesParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetCookies, p, nil)
+func (p *SetCookiesParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetCookies, p, nil)
 }
 
 // SetDataSizeLimitsForTestParams for testing.
@@ -820,8 +820,8 @@ func SetDataSizeLimitsForTest(maxTotalSize int64, maxResourceSize int64) *SetDat
 }
 
 // Do executes Network.setDataSizeLimitsForTest against the provided context.
-func (p *SetDataSizeLimitsForTestParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetDataSizeLimitsForTest, p, nil)
+func (p *SetDataSizeLimitsForTestParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetDataSizeLimitsForTest, p, nil)
 }
 
 // SetExtraHTTPHeadersParams specifies whether to always send extra HTTP
@@ -842,8 +842,8 @@ func SetExtraHTTPHeaders(headers Headers) *SetExtraHTTPHeadersParams {
 }
 
 // Do executes Network.setExtraHTTPHeaders against the provided context.
-func (p *SetExtraHTTPHeadersParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetExtraHTTPHeaders, p, nil)
+func (p *SetExtraHTTPHeadersParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetExtraHTTPHeaders, p, nil)
 }
 
 // SetRequestInterceptionParams sets the requests to intercept that match the
@@ -864,8 +864,8 @@ func SetRequestInterception(patterns []*RequestPattern) *SetRequestInterceptionP
 }
 
 // Do executes Network.setRequestInterception against the provided context.
-func (p *SetRequestInterceptionParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetRequestInterception, p, nil)
+func (p *SetRequestInterceptionParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetRequestInterception, p, nil)
 }
 
 // Command names.

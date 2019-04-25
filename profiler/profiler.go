@@ -21,8 +21,8 @@ func Disable() *DisableParams {
 }
 
 // Do executes Profiler.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandDisable, nil, nil)
+func (p *DisableParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandDisable, nil, nil)
 }
 
 // EnableParams [no description].
@@ -34,8 +34,8 @@ func Enable() *EnableParams {
 }
 
 // Do executes Profiler.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandEnable, nil, nil)
+func (p *EnableParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandEnable, nil, nil)
 }
 
 // GetBestEffortCoverageParams collect coverage data for the current isolate.
@@ -57,10 +57,10 @@ type GetBestEffortCoverageReturns struct {
 //
 // returns:
 //   result - Coverage data for the current isolate.
-func (p *GetBestEffortCoverageParams) Do(ctxt context.Context, h cdp.Executor) (result []*ScriptCoverage, err error) {
+func (p *GetBestEffortCoverageParams) Do(ctxt context.Context) (result []*ScriptCoverage, err error) {
 	// execute
 	var res GetBestEffortCoverageReturns
-	err = h.Execute(ctxt, CommandGetBestEffortCoverage, nil, &res)
+	err = cdp.Execute(ctxt, CommandGetBestEffortCoverage, nil, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -86,8 +86,8 @@ func SetSamplingInterval(interval int64) *SetSamplingIntervalParams {
 }
 
 // Do executes Profiler.setSamplingInterval against the provided context.
-func (p *SetSamplingIntervalParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetSamplingInterval, p, nil)
+func (p *SetSamplingIntervalParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetSamplingInterval, p, nil)
 }
 
 // StartParams [no description].
@@ -99,8 +99,8 @@ func Start() *StartParams {
 }
 
 // Do executes Profiler.start against the provided context.
-func (p *StartParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandStart, nil, nil)
+func (p *StartParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandStart, nil, nil)
 }
 
 // StartPreciseCoverageParams enable precise code coverage. Coverage data for
@@ -134,8 +134,8 @@ func (p StartPreciseCoverageParams) WithDetailed(detailed bool) *StartPreciseCov
 }
 
 // Do executes Profiler.startPreciseCoverage against the provided context.
-func (p *StartPreciseCoverageParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandStartPreciseCoverage, p, nil)
+func (p *StartPreciseCoverageParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandStartPreciseCoverage, p, nil)
 }
 
 // StartTypeProfileParams enable type profile.
@@ -147,8 +147,8 @@ func StartTypeProfile() *StartTypeProfileParams {
 }
 
 // Do executes Profiler.startTypeProfile against the provided context.
-func (p *StartTypeProfileParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandStartTypeProfile, nil, nil)
+func (p *StartTypeProfileParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandStartTypeProfile, nil, nil)
 }
 
 // StopParams [no description].
@@ -168,10 +168,10 @@ type StopReturns struct {
 //
 // returns:
 //   profile - Recorded profile.
-func (p *StopParams) Do(ctxt context.Context, h cdp.Executor) (profile *Profile, err error) {
+func (p *StopParams) Do(ctxt context.Context) (profile *Profile, err error) {
 	// execute
 	var res StopReturns
-	err = h.Execute(ctxt, CommandStop, nil, &res)
+	err = cdp.Execute(ctxt, CommandStop, nil, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -191,8 +191,8 @@ func StopPreciseCoverage() *StopPreciseCoverageParams {
 }
 
 // Do executes Profiler.stopPreciseCoverage against the provided context.
-func (p *StopPreciseCoverageParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandStopPreciseCoverage, nil, nil)
+func (p *StopPreciseCoverageParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandStopPreciseCoverage, nil, nil)
 }
 
 // StopTypeProfileParams disable type profile. Disabling releases type
@@ -206,8 +206,8 @@ func StopTypeProfile() *StopTypeProfileParams {
 }
 
 // Do executes Profiler.stopTypeProfile against the provided context.
-func (p *StopTypeProfileParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandStopTypeProfile, nil, nil)
+func (p *StopTypeProfileParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandStopTypeProfile, nil, nil)
 }
 
 // TakePreciseCoverageParams collect coverage data for the current isolate,
@@ -229,10 +229,10 @@ type TakePreciseCoverageReturns struct {
 //
 // returns:
 //   result - Coverage data for the current isolate.
-func (p *TakePreciseCoverageParams) Do(ctxt context.Context, h cdp.Executor) (result []*ScriptCoverage, err error) {
+func (p *TakePreciseCoverageParams) Do(ctxt context.Context) (result []*ScriptCoverage, err error) {
 	// execute
 	var res TakePreciseCoverageReturns
-	err = h.Execute(ctxt, CommandTakePreciseCoverage, nil, &res)
+	err = cdp.Execute(ctxt, CommandTakePreciseCoverage, nil, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -257,10 +257,10 @@ type TakeTypeProfileReturns struct {
 //
 // returns:
 //   result - Type profile for all scripts since startTypeProfile() was turned on.
-func (p *TakeTypeProfileParams) Do(ctxt context.Context, h cdp.Executor) (result []*ScriptTypeProfile, err error) {
+func (p *TakeTypeProfileParams) Do(ctxt context.Context) (result []*ScriptTypeProfile, err error) {
 	// execute
 	var res TakeTypeProfileReturns
-	err = h.Execute(ctxt, CommandTakeTypeProfile, nil, &res)
+	err = cdp.Execute(ctxt, CommandTakeTypeProfile, nil, &res)
 	if err != nil {
 		return nil, err
 	}

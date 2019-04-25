@@ -44,8 +44,8 @@ func (p GrantPermissionsParams) WithBrowserContextID(browserContextID target.Bro
 }
 
 // Do executes Browser.grantPermissions against the provided context.
-func (p *GrantPermissionsParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandGrantPermissions, p, nil)
+func (p *GrantPermissionsParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandGrantPermissions, p, nil)
 }
 
 // ResetPermissionsParams reset all permission management for all origins.
@@ -68,8 +68,8 @@ func (p ResetPermissionsParams) WithBrowserContextID(browserContextID target.Bro
 }
 
 // Do executes Browser.resetPermissions against the provided context.
-func (p *ResetPermissionsParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandResetPermissions, p, nil)
+func (p *ResetPermissionsParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandResetPermissions, p, nil)
 }
 
 // CloseParams close browser gracefully.
@@ -81,8 +81,8 @@ func Close() *CloseParams {
 }
 
 // Do executes Browser.close against the provided context.
-func (p *CloseParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandClose, nil, nil)
+func (p *CloseParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandClose, nil, nil)
 }
 
 // CrashParams crashes browser on the main thread.
@@ -94,8 +94,8 @@ func Crash() *CrashParams {
 }
 
 // Do executes Browser.crash against the provided context.
-func (p *CrashParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandCrash, nil, nil)
+func (p *CrashParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandCrash, nil, nil)
 }
 
 // CrashGpuProcessParams crashes GPU process.
@@ -107,8 +107,8 @@ func CrashGpuProcess() *CrashGpuProcessParams {
 }
 
 // Do executes Browser.crashGpuProcess against the provided context.
-func (p *CrashGpuProcessParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandCrashGpuProcess, nil, nil)
+func (p *CrashGpuProcessParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandCrashGpuProcess, nil, nil)
 }
 
 // GetVersionParams returns version information.
@@ -136,10 +136,10 @@ type GetVersionReturns struct {
 //   revision - Product revision.
 //   userAgent - User-Agent.
 //   jsVersion - V8 version.
-func (p *GetVersionParams) Do(ctxt context.Context, h cdp.Executor) (protocolVersion string, product string, revision string, userAgent string, jsVersion string, err error) {
+func (p *GetVersionParams) Do(ctxt context.Context) (protocolVersion string, product string, revision string, userAgent string, jsVersion string, err error) {
 	// execute
 	var res GetVersionReturns
-	err = h.Execute(ctxt, CommandGetVersion, nil, &res)
+	err = cdp.Execute(ctxt, CommandGetVersion, nil, &res)
 	if err != nil {
 		return "", "", "", "", "", err
 	}
@@ -166,10 +166,10 @@ type GetBrowserCommandLineReturns struct {
 //
 // returns:
 //   arguments - Commandline parameters
-func (p *GetBrowserCommandLineParams) Do(ctxt context.Context, h cdp.Executor) (arguments []string, err error) {
+func (p *GetBrowserCommandLineParams) Do(ctxt context.Context) (arguments []string, err error) {
 	// execute
 	var res GetBrowserCommandLineReturns
-	err = h.Execute(ctxt, CommandGetBrowserCommandLine, nil, &res)
+	err = cdp.Execute(ctxt, CommandGetBrowserCommandLine, nil, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -213,10 +213,10 @@ type GetHistogramsReturns struct {
 //
 // returns:
 //   histograms - Histograms.
-func (p *GetHistogramsParams) Do(ctxt context.Context, h cdp.Executor) (histograms []*Histogram, err error) {
+func (p *GetHistogramsParams) Do(ctxt context.Context) (histograms []*Histogram, err error) {
 	// execute
 	var res GetHistogramsReturns
-	err = h.Execute(ctxt, CommandGetHistograms, p, &res)
+	err = cdp.Execute(ctxt, CommandGetHistograms, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -255,10 +255,10 @@ type GetHistogramReturns struct {
 //
 // returns:
 //   histogram - Histogram.
-func (p *GetHistogramParams) Do(ctxt context.Context, h cdp.Executor) (histogram *Histogram, err error) {
+func (p *GetHistogramParams) Do(ctxt context.Context) (histogram *Histogram, err error) {
 	// execute
 	var res GetHistogramReturns
-	err = h.Execute(ctxt, CommandGetHistogram, p, &res)
+	err = cdp.Execute(ctxt, CommandGetHistogram, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -290,10 +290,10 @@ type GetWindowBoundsReturns struct {
 //
 // returns:
 //   bounds - Bounds information of the window. When window state is 'minimized', the restored window position and size are returned.
-func (p *GetWindowBoundsParams) Do(ctxt context.Context, h cdp.Executor) (bounds *Bounds, err error) {
+func (p *GetWindowBoundsParams) Do(ctxt context.Context) (bounds *Bounds, err error) {
 	// execute
 	var res GetWindowBoundsReturns
-	err = h.Execute(ctxt, CommandGetWindowBounds, p, &res)
+	err = cdp.Execute(ctxt, CommandGetWindowBounds, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -333,10 +333,10 @@ type GetWindowForTargetReturns struct {
 // returns:
 //   windowID - Browser window id.
 //   bounds - Bounds information of the window. When window state is 'minimized', the restored window position and size are returned.
-func (p *GetWindowForTargetParams) Do(ctxt context.Context, h cdp.Executor) (windowID WindowID, bounds *Bounds, err error) {
+func (p *GetWindowForTargetParams) Do(ctxt context.Context) (windowID WindowID, bounds *Bounds, err error) {
 	// execute
 	var res GetWindowForTargetReturns
-	err = h.Execute(ctxt, CommandGetWindowForTarget, p, &res)
+	err = cdp.Execute(ctxt, CommandGetWindowForTarget, p, &res)
 	if err != nil {
 		return 0, nil, err
 	}
@@ -363,8 +363,8 @@ func SetWindowBounds(windowID WindowID, bounds *Bounds) *SetWindowBoundsParams {
 }
 
 // Do executes Browser.setWindowBounds against the provided context.
-func (p *SetWindowBoundsParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetWindowBounds, p, nil)
+func (p *SetWindowBoundsParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetWindowBounds, p, nil)
 }
 
 // SetDockTileParams set dock tile details, platform-specific.
@@ -393,8 +393,8 @@ func (p SetDockTileParams) WithImage(image string) *SetDockTileParams {
 }
 
 // Do executes Browser.setDockTile against the provided context.
-func (p *SetDockTileParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetDockTile, p, nil)
+func (p *SetDockTileParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetDockTile, p, nil)
 }
 
 // Command names.

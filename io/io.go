@@ -31,8 +31,8 @@ func Close(handle StreamHandle) *CloseParams {
 }
 
 // Do executes IO.close against the provided context.
-func (p *CloseParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandClose, p, nil)
+func (p *CloseParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandClose, p, nil)
 }
 
 // ReadParams read a chunk of the stream.
@@ -79,10 +79,10 @@ type ReadReturns struct {
 // returns:
 //   data - Data that were read.
 //   eof - Set if the end-of-file condition occurred while reading.
-func (p *ReadParams) Do(ctxt context.Context, h cdp.Executor) (data string, eof bool, err error) {
+func (p *ReadParams) Do(ctxt context.Context) (data string, eof bool, err error) {
 	// execute
 	var res ReadReturns
-	err = h.Execute(ctxt, CommandRead, p, &res)
+	err = cdp.Execute(ctxt, CommandRead, p, &res)
 	if err != nil {
 		return "", false, err
 	}
@@ -115,10 +115,10 @@ type ResolveBlobReturns struct {
 //
 // returns:
 //   uuid - UUID of the specified Blob.
-func (p *ResolveBlobParams) Do(ctxt context.Context, h cdp.Executor) (uuid string, err error) {
+func (p *ResolveBlobParams) Do(ctxt context.Context) (uuid string, err error) {
 	// execute
 	var res ResolveBlobReturns
-	err = h.Execute(ctxt, CommandResolveBlob, p, &res)
+	err = cdp.Execute(ctxt, CommandResolveBlob, p, &res)
 	if err != nil {
 		return "", err
 	}

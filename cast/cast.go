@@ -42,8 +42,8 @@ func (p EnableParams) WithPresentationURL(presentationURL string) *EnableParams 
 }
 
 // Do executes Cast.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandEnable, p, nil)
+func (p *EnableParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandEnable, p, nil)
 }
 
 // DisableParams stops observing for sinks and issues.
@@ -55,8 +55,8 @@ func Disable() *DisableParams {
 }
 
 // Do executes Cast.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandDisable, nil, nil)
+func (p *DisableParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandDisable, nil, nil)
 }
 
 // SetSinkToUseParams sets a sink to be used when the web page requests the
@@ -78,8 +78,8 @@ func SetSinkToUse(sinkName string) *SetSinkToUseParams {
 }
 
 // Do executes Cast.setSinkToUse against the provided context.
-func (p *SetSinkToUseParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetSinkToUse, p, nil)
+func (p *SetSinkToUseParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetSinkToUse, p, nil)
 }
 
 // StartTabMirroringParams starts mirroring the tab to the sink.
@@ -98,8 +98,8 @@ func StartTabMirroring(sinkName string) *StartTabMirroringParams {
 }
 
 // Do executes Cast.startTabMirroring against the provided context.
-func (p *StartTabMirroringParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandStartTabMirroring, p, nil)
+func (p *StartTabMirroringParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandStartTabMirroring, p, nil)
 }
 
 // StopCastingParams stops the active Cast session on the sink.
@@ -118,8 +118,8 @@ func StopCasting(sinkName string) *StopCastingParams {
 }
 
 // Do executes Cast.stopCasting against the provided context.
-func (p *StopCastingParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandStopCasting, p, nil)
+func (p *StopCastingParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandStopCasting, p, nil)
 }
 
 // Command names.

@@ -27,8 +27,8 @@ func Disable() *DisableParams {
 }
 
 // Do executes Fetch.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandDisable, nil, nil)
+func (p *DisableParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandDisable, nil, nil)
 }
 
 // EnableParams enables issuing of requestPaused events. A request will be
@@ -64,8 +64,8 @@ func (p EnableParams) WithHandleAuthRequests(handleAuthRequests bool) *EnablePar
 }
 
 // Do executes Fetch.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandEnable, p, nil)
+func (p *EnableParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandEnable, p, nil)
 }
 
 // FailRequestParams causes the request to fail with specified reason.
@@ -87,8 +87,8 @@ func FailRequest(requestID RequestID, errorReason network.ErrorReason) *FailRequ
 }
 
 // Do executes Fetch.failRequest against the provided context.
-func (p *FailRequestParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandFailRequest, p, nil)
+func (p *FailRequestParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandFailRequest, p, nil)
 }
 
 // FulfillRequestParams provides response to the request.
@@ -128,8 +128,8 @@ func (p FulfillRequestParams) WithResponsePhrase(responsePhrase string) *Fulfill
 }
 
 // Do executes Fetch.fulfillRequest against the provided context.
-func (p *FulfillRequestParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandFulfillRequest, p, nil)
+func (p *FulfillRequestParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandFulfillRequest, p, nil)
 }
 
 // ContinueRequestParams continues the request, optionally modifying some of
@@ -179,8 +179,8 @@ func (p ContinueRequestParams) WithHeaders(headers []*HeaderEntry) *ContinueRequ
 }
 
 // Do executes Fetch.continueRequest against the provided context.
-func (p *ContinueRequestParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandContinueRequest, p, nil)
+func (p *ContinueRequestParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandContinueRequest, p, nil)
 }
 
 // ContinueWithAuthParams continues a request supplying authChallengeResponse
@@ -204,8 +204,8 @@ func ContinueWithAuth(requestID RequestID, authChallengeResponse *AuthChallengeR
 }
 
 // Do executes Fetch.continueWithAuth against the provided context.
-func (p *ContinueWithAuthParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandContinueWithAuth, p, nil)
+func (p *ContinueWithAuthParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandContinueWithAuth, p, nil)
 }
 
 // GetResponseBodyParams causes the body of the response to be received from
@@ -243,10 +243,10 @@ type GetResponseBodyReturns struct {
 //
 // returns:
 //   body - Response body.
-func (p *GetResponseBodyParams) Do(ctxt context.Context, h cdp.Executor) (body []byte, err error) {
+func (p *GetResponseBodyParams) Do(ctxt context.Context) (body []byte, err error) {
 	// execute
 	var res GetResponseBodyReturns
-	err = h.Execute(ctxt, CommandGetResponseBody, p, &res)
+	err = cdp.Execute(ctxt, CommandGetResponseBody, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -302,10 +302,10 @@ type TakeResponseBodyAsStreamReturns struct {
 //
 // returns:
 //   stream
-func (p *TakeResponseBodyAsStreamParams) Do(ctxt context.Context, h cdp.Executor) (stream io.StreamHandle, err error) {
+func (p *TakeResponseBodyAsStreamParams) Do(ctxt context.Context) (stream io.StreamHandle, err error) {
 	// execute
 	var res TakeResponseBodyAsStreamReturns
-	err = h.Execute(ctxt, CommandTakeResponseBodyAsStream, p, &res)
+	err = cdp.Execute(ctxt, CommandTakeResponseBodyAsStream, p, &res)
 	if err != nil {
 		return "", err
 	}

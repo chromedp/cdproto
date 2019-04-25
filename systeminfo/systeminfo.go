@@ -38,10 +38,10 @@ type GetInfoReturns struct {
 //   modelName - A platform-dependent description of the model of the machine. On Mac OS, this is, for example, 'MacBookPro'. Will be the empty string if not supported.
 //   modelVersion - A platform-dependent description of the version of the machine. On Mac OS, this is, for example, '10.1'. Will be the empty string if not supported.
 //   commandLine - The command line string used to launch the browser. Will be the empty string if not supported.
-func (p *GetInfoParams) Do(ctxt context.Context, h cdp.Executor) (gpu *GPUInfo, modelName string, modelVersion string, commandLine string, err error) {
+func (p *GetInfoParams) Do(ctxt context.Context) (gpu *GPUInfo, modelName string, modelVersion string, commandLine string, err error) {
 	// execute
 	var res GetInfoReturns
-	err = h.Execute(ctxt, CommandGetInfo, nil, &res)
+	err = cdp.Execute(ctxt, CommandGetInfo, nil, &res)
 	if err != nil {
 		return nil, "", "", "", err
 	}
@@ -66,10 +66,10 @@ type GetProcessInfoReturns struct {
 //
 // returns:
 //   processInfo - An array of process info blocks.
-func (p *GetProcessInfoParams) Do(ctxt context.Context, h cdp.Executor) (processInfo []*ProcessInfo, err error) {
+func (p *GetProcessInfoParams) Do(ctxt context.Context) (processInfo []*ProcessInfo, err error) {
 	// execute
 	var res GetProcessInfoReturns
-	err = h.Execute(ctxt, CommandGetProcessInfo, nil, &res)
+	err = cdp.Execute(ctxt, CommandGetProcessInfo, nil, &res)
 	if err != nil {
 		return nil, err
 	}

@@ -60,10 +60,10 @@ type AwaitPromiseReturns struct {
 // returns:
 //   result - Promise result. Will contain rejected value if promise was rejected.
 //   exceptionDetails - Exception details if stack strace is available.
-func (p *AwaitPromiseParams) Do(ctxt context.Context, h cdp.Executor) (result *RemoteObject, exceptionDetails *ExceptionDetails, err error) {
+func (p *AwaitPromiseParams) Do(ctxt context.Context) (result *RemoteObject, exceptionDetails *ExceptionDetails, err error) {
 	// execute
 	var res AwaitPromiseReturns
-	err = h.Execute(ctxt, CommandAwaitPromise, p, &res)
+	err = cdp.Execute(ctxt, CommandAwaitPromise, p, &res)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -172,10 +172,10 @@ type CallFunctionOnReturns struct {
 // returns:
 //   result - Call result.
 //   exceptionDetails - Exception details.
-func (p *CallFunctionOnParams) Do(ctxt context.Context, h cdp.Executor) (result *RemoteObject, exceptionDetails *ExceptionDetails, err error) {
+func (p *CallFunctionOnParams) Do(ctxt context.Context) (result *RemoteObject, exceptionDetails *ExceptionDetails, err error) {
 	// execute
 	var res CallFunctionOnReturns
-	err = h.Execute(ctxt, CommandCallFunctionOn, p, &res)
+	err = cdp.Execute(ctxt, CommandCallFunctionOn, p, &res)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -224,10 +224,10 @@ type CompileScriptReturns struct {
 // returns:
 //   scriptID - Id of the script.
 //   exceptionDetails - Exception details.
-func (p *CompileScriptParams) Do(ctxt context.Context, h cdp.Executor) (scriptID ScriptID, exceptionDetails *ExceptionDetails, err error) {
+func (p *CompileScriptParams) Do(ctxt context.Context) (scriptID ScriptID, exceptionDetails *ExceptionDetails, err error) {
 	// execute
 	var res CompileScriptReturns
-	err = h.Execute(ctxt, CommandCompileScript, p, &res)
+	err = cdp.Execute(ctxt, CommandCompileScript, p, &res)
 	if err != nil {
 		return "", nil, err
 	}
@@ -244,8 +244,8 @@ func Disable() *DisableParams {
 }
 
 // Do executes Runtime.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandDisable, nil, nil)
+func (p *DisableParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandDisable, nil, nil)
 }
 
 // DiscardConsoleEntriesParams discards collected exceptions and console API
@@ -258,8 +258,8 @@ func DiscardConsoleEntries() *DiscardConsoleEntriesParams {
 }
 
 // Do executes Runtime.discardConsoleEntries against the provided context.
-func (p *DiscardConsoleEntriesParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandDiscardConsoleEntries, nil, nil)
+func (p *DiscardConsoleEntriesParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandDiscardConsoleEntries, nil, nil)
 }
 
 // EnableParams enables reporting of execution contexts creation by means of
@@ -275,8 +275,8 @@ func Enable() *EnableParams {
 }
 
 // Do executes Runtime.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandEnable, nil, nil)
+func (p *EnableParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandEnable, nil, nil)
 }
 
 // EvaluateParams evaluates expression on global object.
@@ -384,10 +384,10 @@ type EvaluateReturns struct {
 // returns:
 //   result - Evaluation result.
 //   exceptionDetails - Exception details.
-func (p *EvaluateParams) Do(ctxt context.Context, h cdp.Executor) (result *RemoteObject, exceptionDetails *ExceptionDetails, err error) {
+func (p *EvaluateParams) Do(ctxt context.Context) (result *RemoteObject, exceptionDetails *ExceptionDetails, err error) {
 	// execute
 	var res EvaluateReturns
-	err = h.Execute(ctxt, CommandEvaluate, p, &res)
+	err = cdp.Execute(ctxt, CommandEvaluate, p, &res)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -412,10 +412,10 @@ type GetIsolateIDReturns struct {
 //
 // returns:
 //   id - The isolate id.
-func (p *GetIsolateIDParams) Do(ctxt context.Context, h cdp.Executor) (id string, err error) {
+func (p *GetIsolateIDParams) Do(ctxt context.Context) (id string, err error) {
 	// execute
 	var res GetIsolateIDReturns
-	err = h.Execute(ctxt, CommandGetIsolateID, nil, &res)
+	err = cdp.Execute(ctxt, CommandGetIsolateID, nil, &res)
 	if err != nil {
 		return "", err
 	}
@@ -444,10 +444,10 @@ type GetHeapUsageReturns struct {
 // returns:
 //   usedSize - Used heap size in bytes.
 //   totalSize - Allocated heap size in bytes.
-func (p *GetHeapUsageParams) Do(ctxt context.Context, h cdp.Executor) (usedSize float64, totalSize float64, err error) {
+func (p *GetHeapUsageParams) Do(ctxt context.Context) (usedSize float64, totalSize float64, err error) {
 	// execute
 	var res GetHeapUsageReturns
-	err = h.Execute(ctxt, CommandGetHeapUsage, nil, &res)
+	err = cdp.Execute(ctxt, CommandGetHeapUsage, nil, &res)
 	if err != nil {
 		return 0, 0, err
 	}
@@ -510,10 +510,10 @@ type GetPropertiesReturns struct {
 //   internalProperties - Internal object properties (only of the element itself).
 //   privateProperties - Object private properties.
 //   exceptionDetails - Exception details.
-func (p *GetPropertiesParams) Do(ctxt context.Context, h cdp.Executor) (result []*PropertyDescriptor, internalProperties []*InternalPropertyDescriptor, privateProperties []*PrivatePropertyDescriptor, exceptionDetails *ExceptionDetails, err error) {
+func (p *GetPropertiesParams) Do(ctxt context.Context) (result []*PropertyDescriptor, internalProperties []*InternalPropertyDescriptor, privateProperties []*PrivatePropertyDescriptor, exceptionDetails *ExceptionDetails, err error) {
 	// execute
 	var res GetPropertiesReturns
-	err = h.Execute(ctxt, CommandGetProperties, p, &res)
+	err = cdp.Execute(ctxt, CommandGetProperties, p, &res)
 	if err != nil {
 		return nil, nil, nil, nil, err
 	}
@@ -551,10 +551,10 @@ type GlobalLexicalScopeNamesReturns struct {
 //
 // returns:
 //   names
-func (p *GlobalLexicalScopeNamesParams) Do(ctxt context.Context, h cdp.Executor) (names []string, err error) {
+func (p *GlobalLexicalScopeNamesParams) Do(ctxt context.Context) (names []string, err error) {
 	// execute
 	var res GlobalLexicalScopeNamesReturns
-	err = h.Execute(ctxt, CommandGlobalLexicalScopeNames, p, &res)
+	err = cdp.Execute(ctxt, CommandGlobalLexicalScopeNames, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -594,10 +594,10 @@ type QueryObjectsReturns struct {
 //
 // returns:
 //   objects - Array with objects.
-func (p *QueryObjectsParams) Do(ctxt context.Context, h cdp.Executor) (objects *RemoteObject, err error) {
+func (p *QueryObjectsParams) Do(ctxt context.Context) (objects *RemoteObject, err error) {
 	// execute
 	var res QueryObjectsReturns
-	err = h.Execute(ctxt, CommandQueryObjects, p, &res)
+	err = cdp.Execute(ctxt, CommandQueryObjects, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -621,8 +621,8 @@ func ReleaseObject(objectID RemoteObjectID) *ReleaseObjectParams {
 }
 
 // Do executes Runtime.releaseObject against the provided context.
-func (p *ReleaseObjectParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandReleaseObject, p, nil)
+func (p *ReleaseObjectParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandReleaseObject, p, nil)
 }
 
 // ReleaseObjectGroupParams releases all remote objects that belong to a
@@ -643,8 +643,8 @@ func ReleaseObjectGroup(objectGroup string) *ReleaseObjectGroupParams {
 }
 
 // Do executes Runtime.releaseObjectGroup against the provided context.
-func (p *ReleaseObjectGroupParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandReleaseObjectGroup, p, nil)
+func (p *ReleaseObjectGroupParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandReleaseObjectGroup, p, nil)
 }
 
 // RunIfWaitingForDebuggerParams tells inspected instance to run if it was
@@ -658,8 +658,8 @@ func RunIfWaitingForDebugger() *RunIfWaitingForDebuggerParams {
 }
 
 // Do executes Runtime.runIfWaitingForDebugger against the provided context.
-func (p *RunIfWaitingForDebuggerParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandRunIfWaitingForDebugger, nil, nil)
+func (p *RunIfWaitingForDebuggerParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandRunIfWaitingForDebugger, nil, nil)
 }
 
 // RunScriptParams runs script with given id in a given context.
@@ -744,10 +744,10 @@ type RunScriptReturns struct {
 // returns:
 //   result - Run result.
 //   exceptionDetails - Exception details.
-func (p *RunScriptParams) Do(ctxt context.Context, h cdp.Executor) (result *RemoteObject, exceptionDetails *ExceptionDetails, err error) {
+func (p *RunScriptParams) Do(ctxt context.Context) (result *RemoteObject, exceptionDetails *ExceptionDetails, err error) {
 	// execute
 	var res RunScriptReturns
-	err = h.Execute(ctxt, CommandRunScript, p, &res)
+	err = cdp.Execute(ctxt, CommandRunScript, p, &res)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -771,8 +771,8 @@ func SetCustomObjectFormatterEnabled(enabled bool) *SetCustomObjectFormatterEnab
 }
 
 // Do executes Runtime.setCustomObjectFormatterEnabled against the provided context.
-func (p *SetCustomObjectFormatterEnabledParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetCustomObjectFormatterEnabled, p, nil)
+func (p *SetCustomObjectFormatterEnabledParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetCustomObjectFormatterEnabled, p, nil)
 }
 
 // SetMaxCallStackSizeToCaptureParams [no description].
@@ -791,8 +791,8 @@ func SetMaxCallStackSizeToCapture(size int64) *SetMaxCallStackSizeToCaptureParam
 }
 
 // Do executes Runtime.setMaxCallStackSizeToCapture against the provided context.
-func (p *SetMaxCallStackSizeToCaptureParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetMaxCallStackSizeToCapture, p, nil)
+func (p *SetMaxCallStackSizeToCaptureParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetMaxCallStackSizeToCapture, p, nil)
 }
 
 // TerminateExecutionParams terminate current or next JavaScript execution.
@@ -806,8 +806,8 @@ func TerminateExecution() *TerminateExecutionParams {
 }
 
 // Do executes Runtime.terminateExecution against the provided context.
-func (p *TerminateExecutionParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandTerminateExecution, nil, nil)
+func (p *TerminateExecutionParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandTerminateExecution, nil, nil)
 }
 
 // AddBindingParams if executionContextId is empty, adds binding with the
@@ -845,8 +845,8 @@ func (p AddBindingParams) WithExecutionContextID(executionContextID ExecutionCon
 }
 
 // Do executes Runtime.addBinding against the provided context.
-func (p *AddBindingParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandAddBinding, p, nil)
+func (p *AddBindingParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandAddBinding, p, nil)
 }
 
 // RemoveBindingParams this method does not remove binding function from
@@ -869,8 +869,8 @@ func RemoveBinding(name string) *RemoveBindingParams {
 }
 
 // Do executes Runtime.removeBinding against the provided context.
-func (p *RemoveBindingParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandRemoveBinding, p, nil)
+func (p *RemoveBindingParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandRemoveBinding, p, nil)
 }
 
 // Command names.

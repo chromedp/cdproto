@@ -23,8 +23,8 @@ func Clear() *ClearParams {
 }
 
 // Do executes Log.clear against the provided context.
-func (p *ClearParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandClear, nil, nil)
+func (p *ClearParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandClear, nil, nil)
 }
 
 // DisableParams disables log domain, prevents further log entries from being
@@ -38,8 +38,8 @@ func Disable() *DisableParams {
 }
 
 // Do executes Log.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandDisable, nil, nil)
+func (p *DisableParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandDisable, nil, nil)
 }
 
 // EnableParams enables log domain, sends the entries collected so far to the
@@ -53,8 +53,8 @@ func Enable() *EnableParams {
 }
 
 // Do executes Log.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandEnable, nil, nil)
+func (p *EnableParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandEnable, nil, nil)
 }
 
 // StartViolationsReportParams start violation reporting.
@@ -73,8 +73,8 @@ func StartViolationsReport(config []*ViolationSetting) *StartViolationsReportPar
 }
 
 // Do executes Log.startViolationsReport against the provided context.
-func (p *StartViolationsReportParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandStartViolationsReport, p, nil)
+func (p *StartViolationsReportParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandStartViolationsReport, p, nil)
 }
 
 // StopViolationsReportParams stop violation reporting.
@@ -86,8 +86,8 @@ func StopViolationsReport() *StopViolationsReportParams {
 }
 
 // Do executes Log.stopViolationsReport against the provided context.
-func (p *StopViolationsReportParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandStopViolationsReport, nil, nil)
+func (p *StopViolationsReportParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandStopViolationsReport, nil, nil)
 }
 
 // Command names.

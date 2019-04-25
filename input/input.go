@@ -130,8 +130,8 @@ func (p DispatchKeyEventParams) WithLocation(location int64) *DispatchKeyEventPa
 }
 
 // Do executes Input.dispatchKeyEvent against the provided context.
-func (p *DispatchKeyEventParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandDispatchKeyEvent, p, nil)
+func (p *DispatchKeyEventParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandDispatchKeyEvent, p, nil)
 }
 
 // InsertTextParams this method emulates inserting text that doesn't come
@@ -152,8 +152,8 @@ func InsertText(text string) *InsertTextParams {
 }
 
 // Do executes Input.insertText against the provided context.
-func (p *InsertTextParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandInsertText, p, nil)
+func (p *InsertTextParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandInsertText, p, nil)
 }
 
 // DispatchMouseEventParams dispatches a mouse event to the page.
@@ -237,8 +237,8 @@ func (p DispatchMouseEventParams) WithPointerType(pointerType DispatchMouseEvent
 }
 
 // Do executes Input.dispatchMouseEvent against the provided context.
-func (p *DispatchMouseEventParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandDispatchMouseEvent, p, nil)
+func (p *DispatchMouseEventParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandDispatchMouseEvent, p, nil)
 }
 
 // DispatchTouchEventParams dispatches a touch event to the page.
@@ -275,8 +275,8 @@ func (p DispatchTouchEventParams) WithTimestamp(timestamp *TimeSinceEpoch) *Disp
 }
 
 // Do executes Input.dispatchTouchEvent against the provided context.
-func (p *DispatchTouchEventParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandDispatchTouchEvent, p, nil)
+func (p *DispatchTouchEventParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandDispatchTouchEvent, p, nil)
 }
 
 // EmulateTouchFromMouseEventParams emulates touch event from the mouse event
@@ -342,8 +342,8 @@ func (p EmulateTouchFromMouseEventParams) WithClickCount(clickCount int64) *Emul
 }
 
 // Do executes Input.emulateTouchFromMouseEvent against the provided context.
-func (p *EmulateTouchFromMouseEventParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandEmulateTouchFromMouseEvent, p, nil)
+func (p *EmulateTouchFromMouseEventParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandEmulateTouchFromMouseEvent, p, nil)
 }
 
 // SetIgnoreInputEventsParams ignores input events (useful while auditing
@@ -363,8 +363,8 @@ func SetIgnoreInputEvents(ignore bool) *SetIgnoreInputEventsParams {
 }
 
 // Do executes Input.setIgnoreInputEvents against the provided context.
-func (p *SetIgnoreInputEventsParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetIgnoreInputEvents, p, nil)
+func (p *SetIgnoreInputEventsParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetIgnoreInputEvents, p, nil)
 }
 
 // SynthesizePinchGestureParams synthesizes a pinch gesture over a time
@@ -407,8 +407,8 @@ func (p SynthesizePinchGestureParams) WithGestureSourceType(gestureSourceType Ge
 }
 
 // Do executes Input.synthesizePinchGesture against the provided context.
-func (p *SynthesizePinchGestureParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSynthesizePinchGesture, p, nil)
+func (p *SynthesizePinchGestureParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSynthesizePinchGesture, p, nil)
 }
 
 // SynthesizeScrollGestureParams synthesizes a scroll gesture over a time
@@ -509,8 +509,8 @@ func (p SynthesizeScrollGestureParams) WithInteractionMarkerName(interactionMark
 }
 
 // Do executes Input.synthesizeScrollGesture against the provided context.
-func (p *SynthesizeScrollGestureParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSynthesizeScrollGesture, p, nil)
+func (p *SynthesizeScrollGestureParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSynthesizeScrollGesture, p, nil)
 }
 
 // SynthesizeTapGestureParams synthesizes a tap gesture over a time period by
@@ -558,8 +558,8 @@ func (p SynthesizeTapGestureParams) WithGestureSourceType(gestureSourceType Gest
 }
 
 // Do executes Input.synthesizeTapGesture against the provided context.
-func (p *SynthesizeTapGestureParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSynthesizeTapGesture, p, nil)
+func (p *SynthesizeTapGestureParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSynthesizeTapGesture, p, nil)
 }
 
 // Command names.

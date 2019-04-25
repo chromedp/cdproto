@@ -31,8 +31,8 @@ func ClearDataForOrigin(origin string, storageTypes string) *ClearDataForOriginP
 }
 
 // Do executes Storage.clearDataForOrigin against the provided context.
-func (p *ClearDataForOriginParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandClearDataForOrigin, p, nil)
+func (p *ClearDataForOriginParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandClearDataForOrigin, p, nil)
 }
 
 // GetUsageAndQuotaParams returns usage and quota in bytes.
@@ -63,10 +63,10 @@ type GetUsageAndQuotaReturns struct {
 //   usage - Storage usage (bytes).
 //   quota - Storage quota (bytes).
 //   usageBreakdown - Storage usage per type (bytes).
-func (p *GetUsageAndQuotaParams) Do(ctxt context.Context, h cdp.Executor) (usage float64, quota float64, usageBreakdown []*UsageForType, err error) {
+func (p *GetUsageAndQuotaParams) Do(ctxt context.Context) (usage float64, quota float64, usageBreakdown []*UsageForType, err error) {
 	// execute
 	var res GetUsageAndQuotaReturns
-	err = h.Execute(ctxt, CommandGetUsageAndQuota, p, &res)
+	err = cdp.Execute(ctxt, CommandGetUsageAndQuota, p, &res)
 	if err != nil {
 		return 0, 0, nil, err
 	}
@@ -92,8 +92,8 @@ func TrackCacheStorageForOrigin(origin string) *TrackCacheStorageForOriginParams
 }
 
 // Do executes Storage.trackCacheStorageForOrigin against the provided context.
-func (p *TrackCacheStorageForOriginParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandTrackCacheStorageForOrigin, p, nil)
+func (p *TrackCacheStorageForOriginParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandTrackCacheStorageForOrigin, p, nil)
 }
 
 // TrackIndexedDBForOriginParams registers origin to be notified when an
@@ -114,8 +114,8 @@ func TrackIndexedDBForOrigin(origin string) *TrackIndexedDBForOriginParams {
 }
 
 // Do executes Storage.trackIndexedDBForOrigin against the provided context.
-func (p *TrackIndexedDBForOriginParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandTrackIndexedDBForOrigin, p, nil)
+func (p *TrackIndexedDBForOriginParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandTrackIndexedDBForOrigin, p, nil)
 }
 
 // UntrackCacheStorageForOriginParams unregisters origin from receiving
@@ -136,8 +136,8 @@ func UntrackCacheStorageForOrigin(origin string) *UntrackCacheStorageForOriginPa
 }
 
 // Do executes Storage.untrackCacheStorageForOrigin against the provided context.
-func (p *UntrackCacheStorageForOriginParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandUntrackCacheStorageForOrigin, p, nil)
+func (p *UntrackCacheStorageForOriginParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandUntrackCacheStorageForOrigin, p, nil)
 }
 
 // UntrackIndexedDBForOriginParams unregisters origin from receiving
@@ -158,8 +158,8 @@ func UntrackIndexedDBForOrigin(origin string) *UntrackIndexedDBForOriginParams {
 }
 
 // Do executes Storage.untrackIndexedDBForOrigin against the provided context.
-func (p *UntrackIndexedDBForOriginParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandUntrackIndexedDBForOrigin, p, nil)
+func (p *UntrackIndexedDBForOriginParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandUntrackIndexedDBForOrigin, p, nil)
 }
 
 // Command names.

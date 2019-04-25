@@ -40,10 +40,10 @@ type CompositingReasonsReturns struct {
 //
 // returns:
 //   compositingReasons - A list of strings specifying reasons for the given layer to become composited.
-func (p *CompositingReasonsParams) Do(ctxt context.Context, h cdp.Executor) (compositingReasons []string, err error) {
+func (p *CompositingReasonsParams) Do(ctxt context.Context) (compositingReasons []string, err error) {
 	// execute
 	var res CompositingReasonsReturns
-	err = h.Execute(ctxt, CommandCompositingReasons, p, &res)
+	err = cdp.Execute(ctxt, CommandCompositingReasons, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -60,8 +60,8 @@ func Disable() *DisableParams {
 }
 
 // Do executes LayerTree.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandDisable, nil, nil)
+func (p *DisableParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandDisable, nil, nil)
 }
 
 // EnableParams enables compositing tree inspection.
@@ -73,8 +73,8 @@ func Enable() *EnableParams {
 }
 
 // Do executes LayerTree.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandEnable, nil, nil)
+func (p *EnableParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandEnable, nil, nil)
 }
 
 // LoadSnapshotParams returns the snapshot identifier.
@@ -101,10 +101,10 @@ type LoadSnapshotReturns struct {
 //
 // returns:
 //   snapshotID - The id of the snapshot.
-func (p *LoadSnapshotParams) Do(ctxt context.Context, h cdp.Executor) (snapshotID SnapshotID, err error) {
+func (p *LoadSnapshotParams) Do(ctxt context.Context) (snapshotID SnapshotID, err error) {
 	// execute
 	var res LoadSnapshotReturns
-	err = h.Execute(ctxt, CommandLoadSnapshot, p, &res)
+	err = cdp.Execute(ctxt, CommandLoadSnapshot, p, &res)
 	if err != nil {
 		return "", err
 	}
@@ -136,10 +136,10 @@ type MakeSnapshotReturns struct {
 //
 // returns:
 //   snapshotID - The id of the layer snapshot.
-func (p *MakeSnapshotParams) Do(ctxt context.Context, h cdp.Executor) (snapshotID SnapshotID, err error) {
+func (p *MakeSnapshotParams) Do(ctxt context.Context) (snapshotID SnapshotID, err error) {
 	// execute
 	var res MakeSnapshotReturns
-	err = h.Execute(ctxt, CommandMakeSnapshot, p, &res)
+	err = cdp.Execute(ctxt, CommandMakeSnapshot, p, &res)
 	if err != nil {
 		return "", err
 	}
@@ -193,10 +193,10 @@ type ProfileSnapshotReturns struct {
 //
 // returns:
 //   timings - The array of paint profiles, one per run.
-func (p *ProfileSnapshotParams) Do(ctxt context.Context, h cdp.Executor) (timings []PaintProfile, err error) {
+func (p *ProfileSnapshotParams) Do(ctxt context.Context) (timings []PaintProfile, err error) {
 	// execute
 	var res ProfileSnapshotReturns
-	err = h.Execute(ctxt, CommandProfileSnapshot, p, &res)
+	err = cdp.Execute(ctxt, CommandProfileSnapshot, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -220,8 +220,8 @@ func ReleaseSnapshot(snapshotID SnapshotID) *ReleaseSnapshotParams {
 }
 
 // Do executes LayerTree.releaseSnapshot against the provided context.
-func (p *ReleaseSnapshotParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandReleaseSnapshot, p, nil)
+func (p *ReleaseSnapshotParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandReleaseSnapshot, p, nil)
 }
 
 // ReplaySnapshotParams replays the layer snapshot and returns the resulting
@@ -273,10 +273,10 @@ type ReplaySnapshotReturns struct {
 //
 // returns:
 //   dataURL - A data: URL for resulting image.
-func (p *ReplaySnapshotParams) Do(ctxt context.Context, h cdp.Executor) (dataURL string, err error) {
+func (p *ReplaySnapshotParams) Do(ctxt context.Context) (dataURL string, err error) {
 	// execute
 	var res ReplaySnapshotReturns
-	err = h.Execute(ctxt, CommandReplaySnapshot, p, &res)
+	err = cdp.Execute(ctxt, CommandReplaySnapshot, p, &res)
 	if err != nil {
 		return "", err
 	}
@@ -309,10 +309,10 @@ type SnapshotCommandLogReturns struct {
 //
 // returns:
 //   commandLog - The array of canvas function calls.
-func (p *SnapshotCommandLogParams) Do(ctxt context.Context, h cdp.Executor) (commandLog []easyjson.RawMessage, err error) {
+func (p *SnapshotCommandLogParams) Do(ctxt context.Context) (commandLog []easyjson.RawMessage, err error) {
 	// execute
 	var res SnapshotCommandLogReturns
-	err = h.Execute(ctxt, CommandSnapshotCommandLog, p, &res)
+	err = cdp.Execute(ctxt, CommandSnapshotCommandLog, p, &res)
 	if err != nil {
 		return nil, err
 	}

@@ -34,8 +34,8 @@ func ClearObjectStore(securityOrigin string, databaseName string, objectStoreNam
 }
 
 // Do executes IndexedDB.clearObjectStore against the provided context.
-func (p *ClearObjectStoreParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandClearObjectStore, p, nil)
+func (p *ClearObjectStoreParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandClearObjectStore, p, nil)
 }
 
 // DeleteDatabaseParams deletes a database.
@@ -57,8 +57,8 @@ func DeleteDatabase(securityOrigin string, databaseName string) *DeleteDatabaseP
 }
 
 // Do executes IndexedDB.deleteDatabase against the provided context.
-func (p *DeleteDatabaseParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandDeleteDatabase, p, nil)
+func (p *DeleteDatabaseParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandDeleteDatabase, p, nil)
 }
 
 // DeleteObjectStoreEntriesParams delete a range of entries from an object
@@ -87,8 +87,8 @@ func DeleteObjectStoreEntries(securityOrigin string, databaseName string, object
 }
 
 // Do executes IndexedDB.deleteObjectStoreEntries against the provided context.
-func (p *DeleteObjectStoreEntriesParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandDeleteObjectStoreEntries, p, nil)
+func (p *DeleteObjectStoreEntriesParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandDeleteObjectStoreEntries, p, nil)
 }
 
 // DisableParams disables events from backend.
@@ -100,8 +100,8 @@ func Disable() *DisableParams {
 }
 
 // Do executes IndexedDB.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandDisable, nil, nil)
+func (p *DisableParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandDisable, nil, nil)
 }
 
 // EnableParams enables events from backend.
@@ -113,8 +113,8 @@ func Enable() *EnableParams {
 }
 
 // Do executes IndexedDB.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandEnable, nil, nil)
+func (p *EnableParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandEnable, nil, nil)
 }
 
 // RequestDataParams requests data from object store or index.
@@ -165,10 +165,10 @@ type RequestDataReturns struct {
 // returns:
 //   objectStoreDataEntries - Array of object store data entries.
 //   hasMore - If true, there are more entries to fetch in the given range.
-func (p *RequestDataParams) Do(ctxt context.Context, h cdp.Executor) (objectStoreDataEntries []*DataEntry, hasMore bool, err error) {
+func (p *RequestDataParams) Do(ctxt context.Context) (objectStoreDataEntries []*DataEntry, hasMore bool, err error) {
 	// execute
 	var res RequestDataReturns
-	err = h.Execute(ctxt, CommandRequestData, p, &res)
+	err = cdp.Execute(ctxt, CommandRequestData, p, &res)
 	if err != nil {
 		return nil, false, err
 	}
@@ -208,10 +208,10 @@ type GetMetadataReturns struct {
 // returns:
 //   entriesCount - the entries count
 //   keyGeneratorValue - the current value of key generator, to become the next inserted key into the object store. Valid if objectStore.autoIncrement is true.
-func (p *GetMetadataParams) Do(ctxt context.Context, h cdp.Executor) (entriesCount float64, keyGeneratorValue float64, err error) {
+func (p *GetMetadataParams) Do(ctxt context.Context) (entriesCount float64, keyGeneratorValue float64, err error) {
 	// execute
 	var res GetMetadataReturns
-	err = h.Execute(ctxt, CommandGetMetadata, p, &res)
+	err = cdp.Execute(ctxt, CommandGetMetadata, p, &res)
 	if err != nil {
 		return 0, 0, err
 	}
@@ -246,10 +246,10 @@ type RequestDatabaseReturns struct {
 //
 // returns:
 //   databaseWithObjectStores - Database with an array of object stores.
-func (p *RequestDatabaseParams) Do(ctxt context.Context, h cdp.Executor) (databaseWithObjectStores *DatabaseWithObjectStores, err error) {
+func (p *RequestDatabaseParams) Do(ctxt context.Context) (databaseWithObjectStores *DatabaseWithObjectStores, err error) {
 	// execute
 	var res RequestDatabaseReturns
-	err = h.Execute(ctxt, CommandRequestDatabase, p, &res)
+	err = cdp.Execute(ctxt, CommandRequestDatabase, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -282,10 +282,10 @@ type RequestDatabaseNamesReturns struct {
 //
 // returns:
 //   databaseNames - Database names for origin.
-func (p *RequestDatabaseNamesParams) Do(ctxt context.Context, h cdp.Executor) (databaseNames []string, err error) {
+func (p *RequestDatabaseNamesParams) Do(ctxt context.Context) (databaseNames []string, err error) {
 	// execute
 	var res RequestDatabaseNamesReturns
-	err = h.Execute(ctxt, CommandRequestDatabaseNames, p, &res)
+	err = cdp.Execute(ctxt, CommandRequestDatabaseNames, p, &res)
 	if err != nil {
 		return nil, err
 	}

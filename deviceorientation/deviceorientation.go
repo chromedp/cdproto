@@ -22,8 +22,8 @@ func ClearDeviceOrientationOverride() *ClearDeviceOrientationOverrideParams {
 }
 
 // Do executes DeviceOrientation.clearDeviceOrientationOverride against the provided context.
-func (p *ClearDeviceOrientationOverrideParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandClearDeviceOrientationOverride, nil, nil)
+func (p *ClearDeviceOrientationOverrideParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandClearDeviceOrientationOverride, nil, nil)
 }
 
 // SetDeviceOrientationOverrideParams overrides the Device Orientation.
@@ -48,8 +48,8 @@ func SetDeviceOrientationOverride(alpha float64, beta float64, gamma float64) *S
 }
 
 // Do executes DeviceOrientation.setDeviceOrientationOverride against the provided context.
-func (p *SetDeviceOrientationOverrideParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetDeviceOrientationOverride, p, nil)
+func (p *SetDeviceOrientationOverrideParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetDeviceOrientationOverride, p, nil)
 }
 
 // Command names.

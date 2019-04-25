@@ -65,10 +65,10 @@ type GetEncodedResponseReturns struct {
 //   body - The encoded body as a base64 string. Omitted if sizeOnly is true.
 //   originalSize - Size before re-encoding.
 //   encodedSize - Size after re-encoding.
-func (p *GetEncodedResponseParams) Do(ctxt context.Context, h cdp.Executor) (body []byte, originalSize int64, encodedSize int64, err error) {
+func (p *GetEncodedResponseParams) Do(ctxt context.Context) (body []byte, originalSize int64, encodedSize int64, err error) {
 	// execute
 	var res GetEncodedResponseReturns
-	err = h.Execute(ctxt, CommandGetEncodedResponse, p, &res)
+	err = cdp.Execute(ctxt, CommandGetEncodedResponse, p, &res)
 	if err != nil {
 		return nil, 0, 0, err
 	}

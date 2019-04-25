@@ -30,8 +30,8 @@ func StartObserving(service ServiceName) *StartObservingParams {
 }
 
 // Do executes BackgroundService.startObserving against the provided context.
-func (p *StartObservingParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandStartObserving, p, nil)
+func (p *StartObservingParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandStartObserving, p, nil)
 }
 
 // StopObservingParams disables event updates for the service.
@@ -50,8 +50,8 @@ func StopObserving(service ServiceName) *StopObservingParams {
 }
 
 // Do executes BackgroundService.stopObserving against the provided context.
-func (p *StopObservingParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandStopObserving, p, nil)
+func (p *StopObservingParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandStopObserving, p, nil)
 }
 
 // SetRecordingParams set the recording state for the service.
@@ -73,8 +73,8 @@ func SetRecording(shouldRecord bool, service ServiceName) *SetRecordingParams {
 }
 
 // Do executes BackgroundService.setRecording against the provided context.
-func (p *SetRecordingParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetRecording, p, nil)
+func (p *SetRecordingParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetRecording, p, nil)
 }
 
 // ClearEventsParams clears all stored data for the service.
@@ -93,8 +93,8 @@ func ClearEvents(service ServiceName) *ClearEventsParams {
 }
 
 // Do executes BackgroundService.clearEvents against the provided context.
-func (p *ClearEventsParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandClearEvents, p, nil)
+func (p *ClearEventsParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandClearEvents, p, nil)
 }
 
 // Command names.

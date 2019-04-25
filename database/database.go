@@ -24,8 +24,8 @@ func Disable() *DisableParams {
 }
 
 // Do executes Database.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandDisable, nil, nil)
+func (p *DisableParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandDisable, nil, nil)
 }
 
 // EnableParams enables database tracking, database events will now be
@@ -39,8 +39,8 @@ func Enable() *EnableParams {
 }
 
 // Do executes Database.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandEnable, nil, nil)
+func (p *EnableParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandEnable, nil, nil)
 }
 
 // ExecuteSQLParams [no description].
@@ -74,10 +74,10 @@ type ExecuteSQLReturns struct {
 //   columnNames
 //   values
 //   sqlError
-func (p *ExecuteSQLParams) Do(ctxt context.Context, h cdp.Executor) (columnNames []string, values []easyjson.RawMessage, sqlError *Error, err error) {
+func (p *ExecuteSQLParams) Do(ctxt context.Context) (columnNames []string, values []easyjson.RawMessage, sqlError *Error, err error) {
 	// execute
 	var res ExecuteSQLReturns
-	err = h.Execute(ctxt, CommandExecuteSQL, p, &res)
+	err = cdp.Execute(ctxt, CommandExecuteSQL, p, &res)
 	if err != nil {
 		return nil, nil, nil, err
 	}
@@ -109,10 +109,10 @@ type GetDatabaseTableNamesReturns struct {
 //
 // returns:
 //   tableNames
-func (p *GetDatabaseTableNamesParams) Do(ctxt context.Context, h cdp.Executor) (tableNames []string, err error) {
+func (p *GetDatabaseTableNamesParams) Do(ctxt context.Context) (tableNames []string, err error) {
 	// execute
 	var res GetDatabaseTableNamesReturns
-	err = h.Execute(ctxt, CommandGetDatabaseTableNames, p, &res)
+	err = cdp.Execute(ctxt, CommandGetDatabaseTableNames, p, &res)
 	if err != nil {
 		return nil, err
 	}

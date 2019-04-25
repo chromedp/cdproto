@@ -30,8 +30,8 @@ func Bind(port int64) *BindParams {
 }
 
 // Do executes Tethering.bind against the provided context.
-func (p *BindParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandBind, p, nil)
+func (p *BindParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandBind, p, nil)
 }
 
 // UnbindParams request browser port unbinding.
@@ -50,8 +50,8 @@ func Unbind(port int64) *UnbindParams {
 }
 
 // Do executes Tethering.unbind against the provided context.
-func (p *UnbindParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandUnbind, p, nil)
+func (p *UnbindParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandUnbind, p, nil)
 }
 
 // Command names.

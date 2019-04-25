@@ -26,8 +26,8 @@ func Enable() *EnableParams {
 }
 
 // Do executes WebAudio.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandEnable, nil, nil)
+func (p *EnableParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandEnable, nil, nil)
 }
 
 // DisableParams disables the WebAudio domain.
@@ -39,8 +39,8 @@ func Disable() *DisableParams {
 }
 
 // Do executes WebAudio.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandDisable, nil, nil)
+func (p *DisableParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandDisable, nil, nil)
 }
 
 // GetRealtimeDataParams fetch the realtime data from the registered
@@ -68,10 +68,10 @@ type GetRealtimeDataReturns struct {
 //
 // returns:
 //   realtimeData
-func (p *GetRealtimeDataParams) Do(ctxt context.Context, h cdp.Executor) (realtimeData *ContextRealtimeData, err error) {
+func (p *GetRealtimeDataParams) Do(ctxt context.Context) (realtimeData *ContextRealtimeData, err error) {
 	// execute
 	var res GetRealtimeDataReturns
-	err = h.Execute(ctxt, CommandGetRealtimeData, p, &res)
+	err = cdp.Execute(ctxt, CommandGetRealtimeData, p, &res)
 	if err != nil {
 		return nil, err
 	}

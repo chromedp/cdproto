@@ -22,8 +22,8 @@ func Disable() *DisableParams {
 }
 
 // Do executes Animation.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandDisable, nil, nil)
+func (p *DisableParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandDisable, nil, nil)
 }
 
 // EnableParams enables animation domain notifications.
@@ -35,8 +35,8 @@ func Enable() *EnableParams {
 }
 
 // Do executes Animation.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandEnable, nil, nil)
+func (p *EnableParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandEnable, nil, nil)
 }
 
 // GetCurrentTimeParams returns the current time of the an animation.
@@ -63,10 +63,10 @@ type GetCurrentTimeReturns struct {
 //
 // returns:
 //   currentTime - Current time of the page.
-func (p *GetCurrentTimeParams) Do(ctxt context.Context, h cdp.Executor) (currentTime float64, err error) {
+func (p *GetCurrentTimeParams) Do(ctxt context.Context) (currentTime float64, err error) {
 	// execute
 	var res GetCurrentTimeReturns
-	err = h.Execute(ctxt, CommandGetCurrentTime, p, &res)
+	err = cdp.Execute(ctxt, CommandGetCurrentTime, p, &res)
 	if err != nil {
 		return 0, err
 	}
@@ -91,10 +91,10 @@ type GetPlaybackRateReturns struct {
 //
 // returns:
 //   playbackRate - Playback rate for animations on page.
-func (p *GetPlaybackRateParams) Do(ctxt context.Context, h cdp.Executor) (playbackRate float64, err error) {
+func (p *GetPlaybackRateParams) Do(ctxt context.Context) (playbackRate float64, err error) {
 	// execute
 	var res GetPlaybackRateReturns
-	err = h.Execute(ctxt, CommandGetPlaybackRate, nil, &res)
+	err = cdp.Execute(ctxt, CommandGetPlaybackRate, nil, &res)
 	if err != nil {
 		return 0, err
 	}
@@ -120,8 +120,8 @@ func ReleaseAnimations(animations []string) *ReleaseAnimationsParams {
 }
 
 // Do executes Animation.releaseAnimations against the provided context.
-func (p *ReleaseAnimationsParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandReleaseAnimations, p, nil)
+func (p *ReleaseAnimationsParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandReleaseAnimations, p, nil)
 }
 
 // ResolveAnimationParams gets the remote object of the Animation.
@@ -148,10 +148,10 @@ type ResolveAnimationReturns struct {
 //
 // returns:
 //   remoteObject - Corresponding remote object.
-func (p *ResolveAnimationParams) Do(ctxt context.Context, h cdp.Executor) (remoteObject *runtime.RemoteObject, err error) {
+func (p *ResolveAnimationParams) Do(ctxt context.Context) (remoteObject *runtime.RemoteObject, err error) {
 	// execute
 	var res ResolveAnimationReturns
-	err = h.Execute(ctxt, CommandResolveAnimation, p, &res)
+	err = cdp.Execute(ctxt, CommandResolveAnimation, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -180,8 +180,8 @@ func SeekAnimations(animations []string, currentTime float64) *SeekAnimationsPar
 }
 
 // Do executes Animation.seekAnimations against the provided context.
-func (p *SeekAnimationsParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSeekAnimations, p, nil)
+func (p *SeekAnimationsParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSeekAnimations, p, nil)
 }
 
 // SetPausedParams sets the paused state of a set of animations.
@@ -203,8 +203,8 @@ func SetPaused(animations []string, paused bool) *SetPausedParams {
 }
 
 // Do executes Animation.setPaused against the provided context.
-func (p *SetPausedParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetPaused, p, nil)
+func (p *SetPausedParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetPaused, p, nil)
 }
 
 // SetPlaybackRateParams sets the playback rate of the document timeline.
@@ -223,8 +223,8 @@ func SetPlaybackRate(playbackRate float64) *SetPlaybackRateParams {
 }
 
 // Do executes Animation.setPlaybackRate against the provided context.
-func (p *SetPlaybackRateParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetPlaybackRate, p, nil)
+func (p *SetPlaybackRateParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetPlaybackRate, p, nil)
 }
 
 // SetTimingParams sets the timing of an animation node.
@@ -249,8 +249,8 @@ func SetTiming(animationID string, duration float64, delay float64) *SetTimingPa
 }
 
 // Do executes Animation.setTiming against the provided context.
-func (p *SetTimingParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetTiming, p, nil)
+func (p *SetTimingParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetTiming, p, nil)
 }
 
 // Command names.

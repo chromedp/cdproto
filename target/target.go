@@ -30,8 +30,8 @@ func ActivateTarget(targetID ID) *ActivateTargetParams {
 }
 
 // Do executes Target.activateTarget against the provided context.
-func (p *ActivateTargetParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandActivateTarget, p, nil)
+func (p *ActivateTargetParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandActivateTarget, p, nil)
 }
 
 // AttachToTargetParams attaches to the target with given id.
@@ -66,10 +66,10 @@ type AttachToTargetReturns struct {
 //
 // returns:
 //   sessionID - Id assigned to the session.
-func (p *AttachToTargetParams) Do(ctxt context.Context, h cdp.Executor) (sessionID SessionID, err error) {
+func (p *AttachToTargetParams) Do(ctxt context.Context) (sessionID SessionID, err error) {
 	// execute
 	var res AttachToTargetReturns
-	err = h.Execute(ctxt, CommandAttachToTarget, p, &res)
+	err = cdp.Execute(ctxt, CommandAttachToTarget, p, &res)
 	if err != nil {
 		return "", err
 	}
@@ -96,10 +96,10 @@ type AttachToBrowserTargetReturns struct {
 //
 // returns:
 //   sessionID - Id assigned to the session.
-func (p *AttachToBrowserTargetParams) Do(ctxt context.Context, h cdp.Executor) (sessionID SessionID, err error) {
+func (p *AttachToBrowserTargetParams) Do(ctxt context.Context) (sessionID SessionID, err error) {
 	// execute
 	var res AttachToBrowserTargetReturns
-	err = h.Execute(ctxt, CommandAttachToBrowserTarget, nil, &res)
+	err = cdp.Execute(ctxt, CommandAttachToBrowserTarget, nil, &res)
 	if err != nil {
 		return "", err
 	}
@@ -133,10 +133,10 @@ type CloseTargetReturns struct {
 //
 // returns:
 //   success
-func (p *CloseTargetParams) Do(ctxt context.Context, h cdp.Executor) (success bool, err error) {
+func (p *CloseTargetParams) Do(ctxt context.Context) (success bool, err error) {
 	// execute
 	var res CloseTargetReturns
-	err = h.Execute(ctxt, CommandCloseTarget, p, &res)
+	err = cdp.Execute(ctxt, CommandCloseTarget, p, &res)
 	if err != nil {
 		return false, err
 	}
@@ -177,8 +177,8 @@ func (p ExposeDevToolsProtocolParams) WithBindingName(bindingName string) *Expos
 }
 
 // Do executes Target.exposeDevToolsProtocol against the provided context.
-func (p *ExposeDevToolsProtocolParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandExposeDevToolsProtocol, p, nil)
+func (p *ExposeDevToolsProtocolParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandExposeDevToolsProtocol, p, nil)
 }
 
 // CreateBrowserContextParams creates a new empty BrowserContext. Similar to
@@ -200,10 +200,10 @@ type CreateBrowserContextReturns struct {
 //
 // returns:
 //   browserContextID - The id of the context created.
-func (p *CreateBrowserContextParams) Do(ctxt context.Context, h cdp.Executor) (browserContextID BrowserContextID, err error) {
+func (p *CreateBrowserContextParams) Do(ctxt context.Context) (browserContextID BrowserContextID, err error) {
 	// execute
 	var res CreateBrowserContextReturns
-	err = h.Execute(ctxt, CommandCreateBrowserContext, nil, &res)
+	err = cdp.Execute(ctxt, CommandCreateBrowserContext, nil, &res)
 	if err != nil {
 		return "", err
 	}
@@ -230,10 +230,10 @@ type GetBrowserContextsReturns struct {
 //
 // returns:
 //   browserContextIds - An array of browser context ids.
-func (p *GetBrowserContextsParams) Do(ctxt context.Context, h cdp.Executor) (browserContextIds []BrowserContextID, err error) {
+func (p *GetBrowserContextsParams) Do(ctxt context.Context) (browserContextIds []BrowserContextID, err error) {
 	// execute
 	var res GetBrowserContextsReturns
-	err = h.Execute(ctxt, CommandGetBrowserContexts, nil, &res)
+	err = cdp.Execute(ctxt, CommandGetBrowserContexts, nil, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -295,10 +295,10 @@ type CreateTargetReturns struct {
 //
 // returns:
 //   targetID - The id of the page opened.
-func (p *CreateTargetParams) Do(ctxt context.Context, h cdp.Executor) (targetID ID, err error) {
+func (p *CreateTargetParams) Do(ctxt context.Context) (targetID ID, err error) {
 	// execute
 	var res CreateTargetReturns
-	err = h.Execute(ctxt, CommandCreateTarget, p, &res)
+	err = cdp.Execute(ctxt, CommandCreateTarget, p, &res)
 	if err != nil {
 		return "", err
 	}
@@ -325,8 +325,8 @@ func (p DetachFromTargetParams) WithSessionID(sessionID SessionID) *DetachFromTa
 }
 
 // Do executes Target.detachFromTarget against the provided context.
-func (p *DetachFromTargetParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandDetachFromTarget, p, nil)
+func (p *DetachFromTargetParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandDetachFromTarget, p, nil)
 }
 
 // DisposeBrowserContextParams deletes a BrowserContext. All the belonging
@@ -347,8 +347,8 @@ func DisposeBrowserContext(browserContextID BrowserContextID) *DisposeBrowserCon
 }
 
 // Do executes Target.disposeBrowserContext against the provided context.
-func (p *DisposeBrowserContextParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandDisposeBrowserContext, p, nil)
+func (p *DisposeBrowserContextParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandDisposeBrowserContext, p, nil)
 }
 
 // GetTargetInfoParams returns information about a target.
@@ -378,10 +378,10 @@ type GetTargetInfoReturns struct {
 //
 // returns:
 //   targetInfo
-func (p *GetTargetInfoParams) Do(ctxt context.Context, h cdp.Executor) (targetInfo *Info, err error) {
+func (p *GetTargetInfoParams) Do(ctxt context.Context) (targetInfo *Info, err error) {
 	// execute
 	var res GetTargetInfoReturns
-	err = h.Execute(ctxt, CommandGetTargetInfo, p, &res)
+	err = cdp.Execute(ctxt, CommandGetTargetInfo, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -406,10 +406,10 @@ type GetTargetsReturns struct {
 //
 // returns:
 //   targetInfos - The list of targets.
-func (p *GetTargetsParams) Do(ctxt context.Context, h cdp.Executor) (targetInfos []*Info, err error) {
+func (p *GetTargetsParams) Do(ctxt context.Context) (targetInfos []*Info, err error) {
 	// execute
 	var res GetTargetsReturns
-	err = h.Execute(ctxt, CommandGetTargets, nil, &res)
+	err = cdp.Execute(ctxt, CommandGetTargets, nil, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -441,8 +441,8 @@ func (p SendMessageToTargetParams) WithSessionID(sessionID SessionID) *SendMessa
 }
 
 // Do executes Target.sendMessageToTarget against the provided context.
-func (p *SendMessageToTargetParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSendMessageToTarget, p, nil)
+func (p *SendMessageToTargetParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSendMessageToTarget, p, nil)
 }
 
 // SetAutoAttachParams controls whether to automatically attach to new
@@ -478,8 +478,8 @@ func (p SetAutoAttachParams) WithFlatten(flatten bool) *SetAutoAttachParams {
 }
 
 // Do executes Target.setAutoAttach against the provided context.
-func (p *SetAutoAttachParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetAutoAttach, p, nil)
+func (p *SetAutoAttachParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetAutoAttach, p, nil)
 }
 
 // SetDiscoverTargetsParams controls whether to discover available targets
@@ -500,8 +500,8 @@ func SetDiscoverTargets(discover bool) *SetDiscoverTargetsParams {
 }
 
 // Do executes Target.setDiscoverTargets against the provided context.
-func (p *SetDiscoverTargetsParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetDiscoverTargets, p, nil)
+func (p *SetDiscoverTargetsParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetDiscoverTargets, p, nil)
 }
 
 // SetRemoteLocationsParams enables target discovery for the specified
@@ -522,8 +522,8 @@ func SetRemoteLocations(locations []*RemoteLocation) *SetRemoteLocationsParams {
 }
 
 // Do executes Target.setRemoteLocations against the provided context.
-func (p *SetRemoteLocationsParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetRemoteLocations, p, nil)
+func (p *SetRemoteLocationsParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetRemoteLocations, p, nil)
 }
 
 // Command names.

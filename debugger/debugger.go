@@ -41,8 +41,8 @@ func (p ContinueToLocationParams) WithTargetCallFrames(targetCallFrames Continue
 }
 
 // Do executes Debugger.continueToLocation against the provided context.
-func (p *ContinueToLocationParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandContinueToLocation, p, nil)
+func (p *ContinueToLocationParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandContinueToLocation, p, nil)
 }
 
 // DisableParams disables debugger for given page.
@@ -54,8 +54,8 @@ func Disable() *DisableParams {
 }
 
 // Do executes Debugger.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandDisable, nil, nil)
+func (p *DisableParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandDisable, nil, nil)
 }
 
 // EnableParams enables debugger for the given page. Clients should not
@@ -90,10 +90,10 @@ type EnableReturns struct {
 //
 // returns:
 //   debuggerID - Unique identifier of the debugger.
-func (p *EnableParams) Do(ctxt context.Context, h cdp.Executor) (debuggerID runtime.UniqueDebuggerID, err error) {
+func (p *EnableParams) Do(ctxt context.Context) (debuggerID runtime.UniqueDebuggerID, err error) {
 	// execute
 	var res EnableReturns
-	err = h.Execute(ctxt, CommandEnable, p, &res)
+	err = cdp.Execute(ctxt, CommandEnable, p, &res)
 	if err != nil {
 		return "", err
 	}
@@ -184,10 +184,10 @@ type EvaluateOnCallFrameReturns struct {
 // returns:
 //   result - Object wrapper for the evaluation result.
 //   exceptionDetails - Exception details.
-func (p *EvaluateOnCallFrameParams) Do(ctxt context.Context, h cdp.Executor) (result *runtime.RemoteObject, exceptionDetails *runtime.ExceptionDetails, err error) {
+func (p *EvaluateOnCallFrameParams) Do(ctxt context.Context) (result *runtime.RemoteObject, exceptionDetails *runtime.ExceptionDetails, err error) {
 	// execute
 	var res EvaluateOnCallFrameReturns
-	err = h.Execute(ctxt, CommandEvaluateOnCallFrame, p, &res)
+	err = cdp.Execute(ctxt, CommandEvaluateOnCallFrame, p, &res)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -237,10 +237,10 @@ type GetPossibleBreakpointsReturns struct {
 //
 // returns:
 //   locations - List of the possible breakpoint locations.
-func (p *GetPossibleBreakpointsParams) Do(ctxt context.Context, h cdp.Executor) (locations []*BreakLocation, err error) {
+func (p *GetPossibleBreakpointsParams) Do(ctxt context.Context) (locations []*BreakLocation, err error) {
 	// execute
 	var res GetPossibleBreakpointsReturns
-	err = h.Execute(ctxt, CommandGetPossibleBreakpoints, p, &res)
+	err = cdp.Execute(ctxt, CommandGetPossibleBreakpoints, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -272,10 +272,10 @@ type GetScriptSourceReturns struct {
 //
 // returns:
 //   scriptSource - Script source.
-func (p *GetScriptSourceParams) Do(ctxt context.Context, h cdp.Executor) (scriptSource string, err error) {
+func (p *GetScriptSourceParams) Do(ctxt context.Context) (scriptSource string, err error) {
 	// execute
 	var res GetScriptSourceReturns
-	err = h.Execute(ctxt, CommandGetScriptSource, p, &res)
+	err = cdp.Execute(ctxt, CommandGetScriptSource, p, &res)
 	if err != nil {
 		return "", err
 	}
@@ -307,10 +307,10 @@ type GetStackTraceReturns struct {
 //
 // returns:
 //   stackTrace
-func (p *GetStackTraceParams) Do(ctxt context.Context, h cdp.Executor) (stackTrace *runtime.StackTrace, err error) {
+func (p *GetStackTraceParams) Do(ctxt context.Context) (stackTrace *runtime.StackTrace, err error) {
 	// execute
 	var res GetStackTraceReturns
-	err = h.Execute(ctxt, CommandGetStackTrace, p, &res)
+	err = cdp.Execute(ctxt, CommandGetStackTrace, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -327,8 +327,8 @@ func Pause() *PauseParams {
 }
 
 // Do executes Debugger.pause against the provided context.
-func (p *PauseParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandPause, nil, nil)
+func (p *PauseParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandPause, nil, nil)
 }
 
 // PauseOnAsyncCallParams [no description].
@@ -347,8 +347,8 @@ func PauseOnAsyncCall(parentStackTraceID *runtime.StackTraceID) *PauseOnAsyncCal
 }
 
 // Do executes Debugger.pauseOnAsyncCall against the provided context.
-func (p *PauseOnAsyncCallParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandPauseOnAsyncCall, p, nil)
+func (p *PauseOnAsyncCallParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandPauseOnAsyncCall, p, nil)
 }
 
 // RemoveBreakpointParams removes JavaScript breakpoint.
@@ -367,8 +367,8 @@ func RemoveBreakpoint(breakpointID BreakpointID) *RemoveBreakpointParams {
 }
 
 // Do executes Debugger.removeBreakpoint against the provided context.
-func (p *RemoveBreakpointParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandRemoveBreakpoint, p, nil)
+func (p *RemoveBreakpointParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandRemoveBreakpoint, p, nil)
 }
 
 // RestartFrameParams restarts particular call frame from the beginning.
@@ -399,10 +399,10 @@ type RestartFrameReturns struct {
 //   callFrames - New stack trace.
 //   asyncStackTrace - Async stack trace, if any.
 //   asyncStackTraceID - Async stack trace, if any.
-func (p *RestartFrameParams) Do(ctxt context.Context, h cdp.Executor) (callFrames []*CallFrame, asyncStackTrace *runtime.StackTrace, asyncStackTraceID *runtime.StackTraceID, err error) {
+func (p *RestartFrameParams) Do(ctxt context.Context) (callFrames []*CallFrame, asyncStackTrace *runtime.StackTrace, asyncStackTraceID *runtime.StackTraceID, err error) {
 	// execute
 	var res RestartFrameReturns
-	err = h.Execute(ctxt, CommandRestartFrame, p, &res)
+	err = cdp.Execute(ctxt, CommandRestartFrame, p, &res)
 	if err != nil {
 		return nil, nil, nil, err
 	}
@@ -419,8 +419,8 @@ func Resume() *ResumeParams {
 }
 
 // Do executes Debugger.resume against the provided context.
-func (p *ResumeParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandResume, nil, nil)
+func (p *ResumeParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandResume, nil, nil)
 }
 
 // SearchInContentParams searches for given string in script content.
@@ -464,10 +464,10 @@ type SearchInContentReturns struct {
 //
 // returns:
 //   result - List of search matches.
-func (p *SearchInContentParams) Do(ctxt context.Context, h cdp.Executor) (result []*SearchMatch, err error) {
+func (p *SearchInContentParams) Do(ctxt context.Context) (result []*SearchMatch, err error) {
 	// execute
 	var res SearchInContentReturns
-	err = h.Execute(ctxt, CommandSearchInContent, p, &res)
+	err = cdp.Execute(ctxt, CommandSearchInContent, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -492,8 +492,8 @@ func SetAsyncCallStackDepth(maxDepth int64) *SetAsyncCallStackDepthParams {
 }
 
 // Do executes Debugger.setAsyncCallStackDepth against the provided context.
-func (p *SetAsyncCallStackDepthParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetAsyncCallStackDepth, p, nil)
+func (p *SetAsyncCallStackDepthParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetAsyncCallStackDepth, p, nil)
 }
 
 // SetBlackboxPatternsParams replace previous blackbox patterns with passed
@@ -518,8 +518,8 @@ func SetBlackboxPatterns(patterns []string) *SetBlackboxPatternsParams {
 }
 
 // Do executes Debugger.setBlackboxPatterns against the provided context.
-func (p *SetBlackboxPatternsParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetBlackboxPatterns, p, nil)
+func (p *SetBlackboxPatternsParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetBlackboxPatterns, p, nil)
 }
 
 // SetBlackboxedRangesParams makes backend skip steps in the script in
@@ -549,8 +549,8 @@ func SetBlackboxedRanges(scriptID runtime.ScriptID, positions []*ScriptPosition)
 }
 
 // Do executes Debugger.setBlackboxedRanges against the provided context.
-func (p *SetBlackboxedRangesParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetBlackboxedRanges, p, nil)
+func (p *SetBlackboxedRangesParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetBlackboxedRanges, p, nil)
 }
 
 // SetBreakpointParams sets JavaScript breakpoint at a given location.
@@ -588,10 +588,10 @@ type SetBreakpointReturns struct {
 // returns:
 //   breakpointID - Id of the created breakpoint for further reference.
 //   actualLocation - Location this breakpoint resolved into.
-func (p *SetBreakpointParams) Do(ctxt context.Context, h cdp.Executor) (breakpointID BreakpointID, actualLocation *Location, err error) {
+func (p *SetBreakpointParams) Do(ctxt context.Context) (breakpointID BreakpointID, actualLocation *Location, err error) {
 	// execute
 	var res SetBreakpointReturns
-	err = h.Execute(ctxt, CommandSetBreakpoint, p, &res)
+	err = cdp.Execute(ctxt, CommandSetBreakpoint, p, &res)
 	if err != nil {
 		return "", nil, err
 	}
@@ -672,10 +672,10 @@ type SetBreakpointByURLReturns struct {
 // returns:
 //   breakpointID - Id of the created breakpoint for further reference.
 //   locations - List of the locations this breakpoint resolved into upon addition.
-func (p *SetBreakpointByURLParams) Do(ctxt context.Context, h cdp.Executor) (breakpointID BreakpointID, locations []*Location, err error) {
+func (p *SetBreakpointByURLParams) Do(ctxt context.Context) (breakpointID BreakpointID, locations []*Location, err error) {
 	// execute
 	var res SetBreakpointByURLReturns
-	err = h.Execute(ctxt, CommandSetBreakpointByURL, p, &res)
+	err = cdp.Execute(ctxt, CommandSetBreakpointByURL, p, &res)
 	if err != nil {
 		return "", nil, err
 	}
@@ -719,10 +719,10 @@ type SetBreakpointOnFunctionCallReturns struct {
 //
 // returns:
 //   breakpointID - Id of the created breakpoint for further reference.
-func (p *SetBreakpointOnFunctionCallParams) Do(ctxt context.Context, h cdp.Executor) (breakpointID BreakpointID, err error) {
+func (p *SetBreakpointOnFunctionCallParams) Do(ctxt context.Context) (breakpointID BreakpointID, err error) {
 	// execute
 	var res SetBreakpointOnFunctionCallReturns
-	err = h.Execute(ctxt, CommandSetBreakpointOnFunctionCall, p, &res)
+	err = cdp.Execute(ctxt, CommandSetBreakpointOnFunctionCall, p, &res)
 	if err != nil {
 		return "", err
 	}
@@ -747,8 +747,8 @@ func SetBreakpointsActive(active bool) *SetBreakpointsActiveParams {
 }
 
 // Do executes Debugger.setBreakpointsActive against the provided context.
-func (p *SetBreakpointsActiveParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetBreakpointsActive, p, nil)
+func (p *SetBreakpointsActiveParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetBreakpointsActive, p, nil)
 }
 
 // SetPauseOnExceptionsParams defines pause on exceptions state. Can be set
@@ -771,8 +771,8 @@ func SetPauseOnExceptions(state ExceptionsState) *SetPauseOnExceptionsParams {
 }
 
 // Do executes Debugger.setPauseOnExceptions against the provided context.
-func (p *SetPauseOnExceptionsParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetPauseOnExceptions, p, nil)
+func (p *SetPauseOnExceptionsParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetPauseOnExceptions, p, nil)
 }
 
 // SetReturnValueParams changes return value in top frame. Available only at
@@ -793,8 +793,8 @@ func SetReturnValue(newValue *runtime.CallArgument) *SetReturnValueParams {
 }
 
 // Do executes Debugger.setReturnValue against the provided context.
-func (p *SetReturnValueParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetReturnValue, p, nil)
+func (p *SetReturnValueParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetReturnValue, p, nil)
 }
 
 // SetScriptSourceParams edits JavaScript source live.
@@ -840,10 +840,10 @@ type SetScriptSourceReturns struct {
 //   asyncStackTrace - Async stack trace, if any.
 //   asyncStackTraceID - Async stack trace, if any.
 //   exceptionDetails - Exception details if any.
-func (p *SetScriptSourceParams) Do(ctxt context.Context, h cdp.Executor) (callFrames []*CallFrame, stackChanged bool, asyncStackTrace *runtime.StackTrace, asyncStackTraceID *runtime.StackTraceID, exceptionDetails *runtime.ExceptionDetails, err error) {
+func (p *SetScriptSourceParams) Do(ctxt context.Context) (callFrames []*CallFrame, stackChanged bool, asyncStackTrace *runtime.StackTrace, asyncStackTraceID *runtime.StackTraceID, exceptionDetails *runtime.ExceptionDetails, err error) {
 	// execute
 	var res SetScriptSourceReturns
-	err = h.Execute(ctxt, CommandSetScriptSource, p, &res)
+	err = cdp.Execute(ctxt, CommandSetScriptSource, p, &res)
 	if err != nil {
 		return nil, false, nil, nil, nil, err
 	}
@@ -869,8 +869,8 @@ func SetSkipAllPauses(skip bool) *SetSkipAllPausesParams {
 }
 
 // Do executes Debugger.setSkipAllPauses against the provided context.
-func (p *SetSkipAllPausesParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetSkipAllPauses, p, nil)
+func (p *SetSkipAllPausesParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetSkipAllPauses, p, nil)
 }
 
 // SetVariableValueParams changes value of variable in a callframe.
@@ -900,8 +900,8 @@ func SetVariableValue(scopeNumber int64, variableName string, newValue *runtime.
 }
 
 // Do executes Debugger.setVariableValue against the provided context.
-func (p *SetVariableValueParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetVariableValue, p, nil)
+func (p *SetVariableValueParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetVariableValue, p, nil)
 }
 
 // StepIntoParams steps into the function call.
@@ -924,8 +924,8 @@ func (p StepIntoParams) WithBreakOnAsyncCall(breakOnAsyncCall bool) *StepIntoPar
 }
 
 // Do executes Debugger.stepInto against the provided context.
-func (p *StepIntoParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandStepInto, p, nil)
+func (p *StepIntoParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandStepInto, p, nil)
 }
 
 // StepOutParams steps out of the function call.
@@ -937,8 +937,8 @@ func StepOut() *StepOutParams {
 }
 
 // Do executes Debugger.stepOut against the provided context.
-func (p *StepOutParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandStepOut, nil, nil)
+func (p *StepOutParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandStepOut, nil, nil)
 }
 
 // StepOverParams steps over the statement.
@@ -950,8 +950,8 @@ func StepOver() *StepOverParams {
 }
 
 // Do executes Debugger.stepOver against the provided context.
-func (p *StepOverParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandStepOver, nil, nil)
+func (p *StepOverParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandStepOver, nil, nil)
 }
 
 // Command names.

@@ -4,7 +4,6 @@ package cdp
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"strconv"
@@ -21,7 +20,34 @@ import (
 // Executor is the common interface for executing a command.
 type Executor interface {
 	// Execute executes the command.
-	Execute(context.Context, string, json.Marshaler, json.Unmarshaler) error
+	Execute(context.Context, string, easyjson.Marshaler, easyjson.Unmarshaler) error
+}
+
+// contextKey is the context key type.
+type contextKey int
+
+// context keys.
+const (
+	executorKey contextKey = iota
+)
+
+// WithExecutor sets the message executor for the context.
+func WithExecutor(parent context.Context, executor Executor) context.Context {
+	return context.WithValue(parent, executorKey, executor)
+}
+
+// ExecutorFromContext returns the message executor for the context.
+func ExecutorFromContext(ctx context.Context) Executor {
+	return ctx.Value(executorKey).(Executor)
+}
+
+// Execute uses the context's message executor to send a command or event
+// method marshaling the provided parameters, and unmarshaling to res.
+func Execute(ctx context.Context, method string, params easyjson.Marshaler, res easyjson.Unmarshaler) error {
+	if executor := ctx.Value(executorKey); executor != nil {
+		return executor.(Executor).Execute(ctx, method, params, res)
+	}
+	return errors.New("invalid context")
 }
 
 // NodeID unique DOM node identifier.

@@ -28,8 +28,8 @@ func DeleteCache(cacheID CacheID) *DeleteCacheParams {
 }
 
 // Do executes CacheStorage.deleteCache against the provided context.
-func (p *DeleteCacheParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandDeleteCache, p, nil)
+func (p *DeleteCacheParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandDeleteCache, p, nil)
 }
 
 // DeleteEntryParams deletes a cache entry.
@@ -51,8 +51,8 @@ func DeleteEntry(cacheID CacheID, request string) *DeleteEntryParams {
 }
 
 // Do executes CacheStorage.deleteEntry against the provided context.
-func (p *DeleteEntryParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandDeleteEntry, p, nil)
+func (p *DeleteEntryParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandDeleteEntry, p, nil)
 }
 
 // RequestCacheNamesParams requests cache names.
@@ -79,10 +79,10 @@ type RequestCacheNamesReturns struct {
 //
 // returns:
 //   caches - Caches for the security origin.
-func (p *RequestCacheNamesParams) Do(ctxt context.Context, h cdp.Executor) (caches []*Cache, err error) {
+func (p *RequestCacheNamesParams) Do(ctxt context.Context) (caches []*Cache, err error) {
 	// execute
 	var res RequestCacheNamesReturns
-	err = h.Execute(ctxt, CommandRequestCacheNames, p, &res)
+	err = cdp.Execute(ctxt, CommandRequestCacheNames, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -120,10 +120,10 @@ type RequestCachedResponseReturns struct {
 //
 // returns:
 //   response - Response read from the cache.
-func (p *RequestCachedResponseParams) Do(ctxt context.Context, h cdp.Executor) (response *CachedResponse, err error) {
+func (p *RequestCachedResponseParams) Do(ctxt context.Context) (response *CachedResponse, err error) {
 	// execute
 	var res RequestCachedResponseReturns
-	err = h.Execute(ctxt, CommandRequestCachedResponse, p, &res)
+	err = cdp.Execute(ctxt, CommandRequestCachedResponse, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -171,10 +171,10 @@ type RequestEntriesReturns struct {
 // returns:
 //   cacheDataEntries - Array of object store data entries.
 //   returnCount - Count of returned entries from this storage. If pathFilter is empty, it is the count of all entries from this storage.
-func (p *RequestEntriesParams) Do(ctxt context.Context, h cdp.Executor) (cacheDataEntries []*DataEntry, returnCount float64, err error) {
+func (p *RequestEntriesParams) Do(ctxt context.Context) (cacheDataEntries []*DataEntry, returnCount float64, err error) {
 	// execute
 	var res RequestEntriesReturns
-	err = h.Execute(ctxt, CommandRequestEntries, p, &res)
+	err = cdp.Execute(ctxt, CommandRequestEntries, p, &res)
 	if err != nil {
 		return nil, 0, err
 	}

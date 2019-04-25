@@ -30,8 +30,8 @@ func Clear(storageID *StorageID) *ClearParams {
 }
 
 // Do executes DOMStorage.clear against the provided context.
-func (p *ClearParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandClear, p, nil)
+func (p *ClearParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandClear, p, nil)
 }
 
 // DisableParams disables storage tracking, prevents storage events from
@@ -45,8 +45,8 @@ func Disable() *DisableParams {
 }
 
 // Do executes DOMStorage.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandDisable, nil, nil)
+func (p *DisableParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandDisable, nil, nil)
 }
 
 // EnableParams enables storage tracking, storage events will now be
@@ -60,8 +60,8 @@ func Enable() *EnableParams {
 }
 
 // Do executes DOMStorage.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandEnable, nil, nil)
+func (p *EnableParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandEnable, nil, nil)
 }
 
 // GetDOMStorageItemsParams [no description].
@@ -88,10 +88,10 @@ type GetDOMStorageItemsReturns struct {
 //
 // returns:
 //   entries
-func (p *GetDOMStorageItemsParams) Do(ctxt context.Context, h cdp.Executor) (entries []Item, err error) {
+func (p *GetDOMStorageItemsParams) Do(ctxt context.Context) (entries []Item, err error) {
 	// execute
 	var res GetDOMStorageItemsReturns
-	err = h.Execute(ctxt, CommandGetDOMStorageItems, p, &res)
+	err = cdp.Execute(ctxt, CommandGetDOMStorageItems, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -118,8 +118,8 @@ func RemoveDOMStorageItem(storageID *StorageID, key string) *RemoveDOMStorageIte
 }
 
 // Do executes DOMStorage.removeDOMStorageItem against the provided context.
-func (p *RemoveDOMStorageItemParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandRemoveDOMStorageItem, p, nil)
+func (p *RemoveDOMStorageItemParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandRemoveDOMStorageItem, p, nil)
 }
 
 // SetDOMStorageItemParams [no description].
@@ -144,8 +144,8 @@ func SetDOMStorageItem(storageID *StorageID, key string, value string) *SetDOMSt
 }
 
 // Do executes DOMStorage.setDOMStorageItem against the provided context.
-func (p *SetDOMStorageItemParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandSetDOMStorageItem, p, nil)
+func (p *SetDOMStorageItemParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandSetDOMStorageItem, p, nil)
 }
 
 // Command names.

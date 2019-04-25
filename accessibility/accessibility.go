@@ -22,8 +22,8 @@ func Disable() *DisableParams {
 }
 
 // Do executes Accessibility.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandDisable, nil, nil)
+func (p *DisableParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandDisable, nil, nil)
 }
 
 // EnableParams enables the accessibility domain which causes AXNodeIds to
@@ -39,8 +39,8 @@ func Enable() *EnableParams {
 }
 
 // Do executes Accessibility.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context, h cdp.Executor) (err error) {
-	return h.Execute(ctxt, CommandEnable, nil, nil)
+func (p *EnableParams) Do(ctxt context.Context) (err error) {
+	return cdp.Execute(ctxt, CommandEnable, nil, nil)
 }
 
 // GetPartialAXTreeParams fetches the accessibility node and partial
@@ -97,10 +97,10 @@ type GetPartialAXTreeReturns struct {
 //
 // returns:
 //   nodes - The Accessibility.AXNode for this DOM node, if it exists, plus its ancestors, siblings and children, if requested.
-func (p *GetPartialAXTreeParams) Do(ctxt context.Context, h cdp.Executor) (nodes []*Node, err error) {
+func (p *GetPartialAXTreeParams) Do(ctxt context.Context) (nodes []*Node, err error) {
 	// execute
 	var res GetPartialAXTreeReturns
-	err = h.Execute(ctxt, CommandGetPartialAXTree, p, &res)
+	err = cdp.Execute(ctxt, CommandGetPartialAXTree, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -125,10 +125,10 @@ type GetFullAXTreeReturns struct {
 //
 // returns:
 //   nodes
-func (p *GetFullAXTreeParams) Do(ctxt context.Context, h cdp.Executor) (nodes []*Node, err error) {
+func (p *GetFullAXTreeParams) Do(ctxt context.Context) (nodes []*Node, err error) {
 	// execute
 	var res GetFullAXTreeReturns
-	err = h.Execute(ctxt, CommandGetFullAXTree, nil, &res)
+	err = cdp.Execute(ctxt, CommandGetFullAXTree, nil, &res)
 	if err != nil {
 		return nil, err
 	}
