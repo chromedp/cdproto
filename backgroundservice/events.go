@@ -4,6 +4,8 @@ package backgroundservice
 
 // EventRecordingStateChanged called when the recording state for the service
 // has been updated.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/BackgroundService#event-recordingStateChanged
 type EventRecordingStateChanged struct {
 	IsRecording bool        `json:"isRecording"`
 	Service     ServiceName `json:"service"`
@@ -12,6 +14,8 @@ type EventRecordingStateChanged struct {
 // EventBackgroundServiceEventReceived called with all existing
 // backgroundServiceEvents when enabled, and all new events afterwards if
 // enabled and recording.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/BackgroundService#event-backgroundServiceEventReceived
 type EventBackgroundServiceEventReceived struct {
 	BackgroundServiceEvent *Event `json:"backgroundServiceEvent"`
 }

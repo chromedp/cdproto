@@ -26,6 +26,8 @@ type GrantPermissionsParams struct {
 // GrantPermissions grant specific permissions to the given origin and reject
 // all others.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#method-grantPermissions
+//
 // parameters:
 //   origin
 //   permissions
@@ -44,8 +46,8 @@ func (p GrantPermissionsParams) WithBrowserContextID(browserContextID target.Bro
 }
 
 // Do executes Browser.grantPermissions against the provided context.
-func (p *GrantPermissionsParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandGrantPermissions, p, nil)
+func (p *GrantPermissionsParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandGrantPermissions, p, nil)
 }
 
 // ResetPermissionsParams reset all permission management for all origins.
@@ -54,6 +56,8 @@ type ResetPermissionsParams struct {
 }
 
 // ResetPermissions reset all permission management for all origins.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#method-resetPermissions
 //
 // parameters:
 func ResetPermissions() *ResetPermissionsParams {
@@ -68,8 +72,8 @@ func (p ResetPermissionsParams) WithBrowserContextID(browserContextID target.Bro
 }
 
 // Do executes Browser.resetPermissions against the provided context.
-func (p *ResetPermissionsParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandResetPermissions, p, nil)
+func (p *ResetPermissionsParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandResetPermissions, p, nil)
 }
 
 // CloseParams close browser gracefully.
@@ -81,8 +85,8 @@ func Close() *CloseParams {
 }
 
 // Do executes Browser.close against the provided context.
-func (p *CloseParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandClose, nil, nil)
+func (p *CloseParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandClose, nil, nil)
 }
 
 // CrashParams crashes browser on the main thread.
@@ -94,8 +98,8 @@ func Crash() *CrashParams {
 }
 
 // Do executes Browser.crash against the provided context.
-func (p *CrashParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandCrash, nil, nil)
+func (p *CrashParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandCrash, nil, nil)
 }
 
 // CrashGpuProcessParams crashes GPU process.
@@ -107,8 +111,8 @@ func CrashGpuProcess() *CrashGpuProcessParams {
 }
 
 // Do executes Browser.crashGpuProcess against the provided context.
-func (p *CrashGpuProcessParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandCrashGpuProcess, nil, nil)
+func (p *CrashGpuProcessParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandCrashGpuProcess, nil, nil)
 }
 
 // GetVersionParams returns version information.
@@ -136,10 +140,10 @@ type GetVersionReturns struct {
 //   revision - Product revision.
 //   userAgent - User-Agent.
 //   jsVersion - V8 version.
-func (p *GetVersionParams) Do(ctxt context.Context) (protocolVersion string, product string, revision string, userAgent string, jsVersion string, err error) {
+func (p *GetVersionParams) Do(ctx context.Context) (protocolVersion string, product string, revision string, userAgent string, jsVersion string, err error) {
 	// execute
 	var res GetVersionReturns
-	err = cdp.Execute(ctxt, CommandGetVersion, nil, &res)
+	err = cdp.Execute(ctx, CommandGetVersion, nil, &res)
 	if err != nil {
 		return "", "", "", "", "", err
 	}
@@ -166,10 +170,10 @@ type GetBrowserCommandLineReturns struct {
 //
 // returns:
 //   arguments - Commandline parameters
-func (p *GetBrowserCommandLineParams) Do(ctxt context.Context) (arguments []string, err error) {
+func (p *GetBrowserCommandLineParams) Do(ctx context.Context) (arguments []string, err error) {
 	// execute
 	var res GetBrowserCommandLineReturns
-	err = cdp.Execute(ctxt, CommandGetBrowserCommandLine, nil, &res)
+	err = cdp.Execute(ctx, CommandGetBrowserCommandLine, nil, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -184,6 +188,8 @@ type GetHistogramsParams struct {
 }
 
 // GetHistograms get Chrome histograms.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#method-getHistograms
 //
 // parameters:
 func GetHistograms() *GetHistogramsParams {
@@ -213,10 +219,10 @@ type GetHistogramsReturns struct {
 //
 // returns:
 //   histograms - Histograms.
-func (p *GetHistogramsParams) Do(ctxt context.Context) (histograms []*Histogram, err error) {
+func (p *GetHistogramsParams) Do(ctx context.Context) (histograms []*Histogram, err error) {
 	// execute
 	var res GetHistogramsReturns
-	err = cdp.Execute(ctxt, CommandGetHistograms, p, &res)
+	err = cdp.Execute(ctx, CommandGetHistograms, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -231,6 +237,8 @@ type GetHistogramParams struct {
 }
 
 // GetHistogram get a Chrome histogram by name.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#method-getHistogram
 //
 // parameters:
 //   name - Requested histogram name.
@@ -255,10 +263,10 @@ type GetHistogramReturns struct {
 //
 // returns:
 //   histogram - Histogram.
-func (p *GetHistogramParams) Do(ctxt context.Context) (histogram *Histogram, err error) {
+func (p *GetHistogramParams) Do(ctx context.Context) (histogram *Histogram, err error) {
 	// execute
 	var res GetHistogramReturns
-	err = cdp.Execute(ctxt, CommandGetHistogram, p, &res)
+	err = cdp.Execute(ctx, CommandGetHistogram, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -272,6 +280,8 @@ type GetWindowBoundsParams struct {
 }
 
 // GetWindowBounds get position and size of the browser window.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#method-getWindowBounds
 //
 // parameters:
 //   windowID - Browser window id.
@@ -290,10 +300,10 @@ type GetWindowBoundsReturns struct {
 //
 // returns:
 //   bounds - Bounds information of the window. When window state is 'minimized', the restored window position and size are returned.
-func (p *GetWindowBoundsParams) Do(ctxt context.Context) (bounds *Bounds, err error) {
+func (p *GetWindowBoundsParams) Do(ctx context.Context) (bounds *Bounds, err error) {
 	// execute
 	var res GetWindowBoundsReturns
-	err = cdp.Execute(ctxt, CommandGetWindowBounds, p, &res)
+	err = cdp.Execute(ctx, CommandGetWindowBounds, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -309,6 +319,8 @@ type GetWindowForTargetParams struct {
 
 // GetWindowForTarget get the browser window that contains the devtools
 // target.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#method-getWindowForTarget
 //
 // parameters:
 func GetWindowForTarget() *GetWindowForTargetParams {
@@ -333,10 +345,10 @@ type GetWindowForTargetReturns struct {
 // returns:
 //   windowID - Browser window id.
 //   bounds - Bounds information of the window. When window state is 'minimized', the restored window position and size are returned.
-func (p *GetWindowForTargetParams) Do(ctxt context.Context) (windowID WindowID, bounds *Bounds, err error) {
+func (p *GetWindowForTargetParams) Do(ctx context.Context) (windowID WindowID, bounds *Bounds, err error) {
 	// execute
 	var res GetWindowForTargetReturns
-	err = cdp.Execute(ctxt, CommandGetWindowForTarget, p, &res)
+	err = cdp.Execute(ctx, CommandGetWindowForTarget, p, &res)
 	if err != nil {
 		return 0, nil, err
 	}
@@ -352,6 +364,8 @@ type SetWindowBoundsParams struct {
 
 // SetWindowBounds set position and/or size of the browser window.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#method-setWindowBounds
+//
 // parameters:
 //   windowID - Browser window id.
 //   bounds - New window bounds. The 'minimized', 'maximized' and 'fullscreen' states cannot be combined with 'left', 'top', 'width' or 'height'. Leaves unspecified fields unchanged.
@@ -363,8 +377,8 @@ func SetWindowBounds(windowID WindowID, bounds *Bounds) *SetWindowBoundsParams {
 }
 
 // Do executes Browser.setWindowBounds against the provided context.
-func (p *SetWindowBoundsParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetWindowBounds, p, nil)
+func (p *SetWindowBoundsParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetWindowBounds, p, nil)
 }
 
 // SetDockTileParams set dock tile details, platform-specific.
@@ -374,6 +388,8 @@ type SetDockTileParams struct {
 }
 
 // SetDockTile set dock tile details, platform-specific.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#method-setDockTile
 //
 // parameters:
 func SetDockTile() *SetDockTileParams {
@@ -393,8 +409,8 @@ func (p SetDockTileParams) WithImage(image string) *SetDockTileParams {
 }
 
 // Do executes Browser.setDockTile against the provided context.
-func (p *SetDockTileParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetDockTile, p, nil)
+func (p *SetDockTileParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetDockTile, p, nil)
 }
 
 // Command names.

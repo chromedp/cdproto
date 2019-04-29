@@ -30,6 +30,8 @@ type EnableParams struct {
 // messages. When an issue is added or removed, an |issueUpdated| event is
 // fired.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Cast#method-enable
+//
 // parameters:
 func Enable() *EnableParams {
 	return &EnableParams{}
@@ -42,8 +44,8 @@ func (p EnableParams) WithPresentationURL(presentationURL string) *EnableParams 
 }
 
 // Do executes Cast.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandEnable, p, nil)
+func (p *EnableParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandEnable, p, nil)
 }
 
 // DisableParams stops observing for sinks and issues.
@@ -55,8 +57,8 @@ func Disable() *DisableParams {
 }
 
 // Do executes Cast.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandDisable, nil, nil)
+func (p *DisableParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandDisable, nil, nil)
 }
 
 // SetSinkToUseParams sets a sink to be used when the web page requests the
@@ -69,6 +71,8 @@ type SetSinkToUseParams struct {
 // SetSinkToUse sets a sink to be used when the web page requests the browser
 // to choose a sink via Presentation API, Remote Playback API, or Cast SDK.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Cast#method-setSinkToUse
+//
 // parameters:
 //   sinkName
 func SetSinkToUse(sinkName string) *SetSinkToUseParams {
@@ -78,8 +82,8 @@ func SetSinkToUse(sinkName string) *SetSinkToUseParams {
 }
 
 // Do executes Cast.setSinkToUse against the provided context.
-func (p *SetSinkToUseParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetSinkToUse, p, nil)
+func (p *SetSinkToUseParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetSinkToUse, p, nil)
 }
 
 // StartTabMirroringParams starts mirroring the tab to the sink.
@@ -88,6 +92,8 @@ type StartTabMirroringParams struct {
 }
 
 // StartTabMirroring starts mirroring the tab to the sink.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Cast#method-startTabMirroring
 //
 // parameters:
 //   sinkName
@@ -98,8 +104,8 @@ func StartTabMirroring(sinkName string) *StartTabMirroringParams {
 }
 
 // Do executes Cast.startTabMirroring against the provided context.
-func (p *StartTabMirroringParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandStartTabMirroring, p, nil)
+func (p *StartTabMirroringParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandStartTabMirroring, p, nil)
 }
 
 // StopCastingParams stops the active Cast session on the sink.
@@ -108,6 +114,8 @@ type StopCastingParams struct {
 }
 
 // StopCasting stops the active Cast session on the sink.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Cast#method-stopCasting
 //
 // parameters:
 //   sinkName
@@ -118,8 +126,8 @@ func StopCasting(sinkName string) *StopCastingParams {
 }
 
 // Do executes Cast.stopCasting against the provided context.
-func (p *StopCastingParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandStopCasting, p, nil)
+func (p *StopCastingParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandStopCasting, p, nil)
 }
 
 // Command names.

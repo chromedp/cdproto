@@ -11,6 +11,8 @@ import (
 )
 
 // WindowID [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#type-WindowID
 type WindowID int64
 
 // Int64 returns the WindowID as int64 value.
@@ -19,6 +21,8 @@ func (t WindowID) Int64() int64 {
 }
 
 // WindowState the state of the browser window.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#type-WindowState
 type WindowState string
 
 // String returns the WindowState as string value.
@@ -67,6 +71,8 @@ func (t *WindowState) UnmarshalJSON(buf []byte) error {
 }
 
 // Bounds browser window bounds information.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#type-Bounds
 type Bounds struct {
 	Left        int64       `json:"left,omitempty"`        // The offset from the left edge of the screen to the window in pixels.
 	Top         int64       `json:"top,omitempty"`         // The offset from the top edge of the screen to the window in pixels.
@@ -76,6 +82,8 @@ type Bounds struct {
 }
 
 // PermissionType [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#type-PermissionType
 type PermissionType string
 
 // String returns the PermissionType as string value.
@@ -163,6 +171,8 @@ func (t *PermissionType) UnmarshalJSON(buf []byte) error {
 }
 
 // Bucket chrome histogram bucket.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#type-Bucket
 type Bucket struct {
 	Low   int64 `json:"low"`   // Minimum value (inclusive).
 	High  int64 `json:"high"`  // Maximum value (exclusive).
@@ -170,6 +180,8 @@ type Bucket struct {
 }
 
 // Histogram chrome histogram.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#type-Histogram
 type Histogram struct {
 	Name    string    `json:"name"`    // Name.
 	Sum     int64     `json:"sum"`     // Sum of sample values.

@@ -8,6 +8,8 @@ import (
 
 // EventBindingCalled notification is issued every time when binding is
 // called.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#event-bindingCalled
 type EventBindingCalled struct {
 	Name               string             `json:"name"`
 	Payload            string             `json:"payload"`
@@ -15,6 +17,8 @@ type EventBindingCalled struct {
 }
 
 // EventConsoleAPICalled issued when console API was called.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#event-consoleAPICalled
 type EventConsoleAPICalled struct {
 	Type               APIType            `json:"type"`                 // Type of the call.
 	Args               []*RemoteObject    `json:"args"`                 // Call arguments.
@@ -25,33 +29,45 @@ type EventConsoleAPICalled struct {
 }
 
 // EventExceptionRevoked issued when unhandled exception was revoked.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#event-exceptionRevoked
 type EventExceptionRevoked struct {
 	Reason      string `json:"reason"`      // Reason describing why exception was revoked.
 	ExceptionID int64  `json:"exceptionId"` // The id of revoked exception, as reported in exceptionThrown.
 }
 
 // EventExceptionThrown issued when exception was thrown and unhandled.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#event-exceptionThrown
 type EventExceptionThrown struct {
 	Timestamp        *Timestamp        `json:"timestamp"` // Timestamp of the exception.
 	ExceptionDetails *ExceptionDetails `json:"exceptionDetails"`
 }
 
 // EventExecutionContextCreated issued when new execution context is created.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#event-executionContextCreated
 type EventExecutionContextCreated struct {
 	Context *ExecutionContextDescription `json:"context"` // A newly created execution context.
 }
 
 // EventExecutionContextDestroyed issued when execution context is destroyed.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#event-executionContextDestroyed
 type EventExecutionContextDestroyed struct {
 	ExecutionContextID ExecutionContextID `json:"executionContextId"` // Id of the destroyed context
 }
 
 // EventExecutionContextsCleared issued when all executionContexts were
 // cleared in browser.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#event-executionContextsCleared
 type EventExecutionContextsCleared struct{}
 
 // EventInspectRequested issued when object should be inspected (for example,
 // as a result of inspect() command line API call).
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#event-inspectRequested
 type EventInspectRequested struct {
 	Object *RemoteObject       `json:"object"`
 	Hints  easyjson.RawMessage `json:"hints"`

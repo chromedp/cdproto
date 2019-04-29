@@ -11,6 +11,8 @@ import (
 )
 
 // Metric run-time execution metric.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Performance#type-Metric
 type Metric struct {
 	Name  string  `json:"name"`  // Metric name.
 	Value float64 `json:"value"` // Metric value.

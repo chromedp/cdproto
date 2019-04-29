@@ -29,6 +29,8 @@ type GetEncodedResponseParams struct {
 // GetEncodedResponse returns the response body and size if it were
 // re-encoded with the specified settings. Only applies to images.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#method-getEncodedResponse
+//
 // parameters:
 //   requestID - Identifier of the network request to get content for.
 //   encoding - The encoding to use.
@@ -65,10 +67,10 @@ type GetEncodedResponseReturns struct {
 //   body - The encoded body as a base64 string. Omitted if sizeOnly is true.
 //   originalSize - Size before re-encoding.
 //   encodedSize - Size after re-encoding.
-func (p *GetEncodedResponseParams) Do(ctxt context.Context) (body []byte, originalSize int64, encodedSize int64, err error) {
+func (p *GetEncodedResponseParams) Do(ctx context.Context) (body []byte, originalSize int64, encodedSize int64, err error) {
 	// execute
 	var res GetEncodedResponseReturns
-	err = cdp.Execute(ctxt, CommandGetEncodedResponse, p, &res)
+	err = cdp.Execute(ctx, CommandGetEncodedResponse, p, &res)
 	if err != nil {
 		return nil, 0, 0, err
 	}

@@ -12,6 +12,8 @@ import (
 )
 
 // BreakpointID breakpoint identifier.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#type-BreakpointId
 type BreakpointID string
 
 // String returns the BreakpointID as string value.
@@ -20,6 +22,8 @@ func (t BreakpointID) String() string {
 }
 
 // CallFrameID call frame identifier.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#type-CallFrameId
 type CallFrameID string
 
 // String returns the CallFrameID as string value.
@@ -28,6 +32,8 @@ func (t CallFrameID) String() string {
 }
 
 // Location location in the source code.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#type-Location
 type Location struct {
 	ScriptID     runtime.ScriptID `json:"scriptId"`               // Script identifier as reported in the Debugger.scriptParsed.
 	LineNumber   int64            `json:"lineNumber"`             // Line number in the script (0-based).
@@ -35,12 +41,16 @@ type Location struct {
 }
 
 // ScriptPosition location in the source code.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#type-ScriptPosition
 type ScriptPosition struct {
 	LineNumber   int64 `json:"lineNumber"`
 	ColumnNumber int64 `json:"columnNumber"`
 }
 
 // CallFrame JavaScript call frame. Array of call frames form the call stack.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#type-CallFrame
 type CallFrame struct {
 	CallFrameID      CallFrameID           `json:"callFrameId"`                // Call frame identifier. This identifier is only valid while the virtual machine is paused.
 	FunctionName     string                `json:"functionName"`               // Name of the JavaScript function called on this call frame.
@@ -53,6 +63,8 @@ type CallFrame struct {
 }
 
 // Scope scope description.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#type-Scope
 type Scope struct {
 	Type          ScopeType             `json:"type"`   // Scope type.
 	Object        *runtime.RemoteObject `json:"object"` // Object representing the scope. For global and with scopes it represents the actual object; for the rest of the scopes, it is artificial transient object enumerating scope variables as its properties.
@@ -62,12 +74,16 @@ type Scope struct {
 }
 
 // SearchMatch search match for resource.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#type-SearchMatch
 type SearchMatch struct {
 	LineNumber  float64 `json:"lineNumber"`  // Line number in resource content.
 	LineContent string  `json:"lineContent"` // Line with match content.
 }
 
 // BreakLocation [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#type-BreakLocation
 type BreakLocation struct {
 	ScriptID     runtime.ScriptID  `json:"scriptId"`               // Script identifier as reported in the Debugger.scriptParsed.
 	LineNumber   int64             `json:"lineNumber"`             // Line number in the script (0-based).

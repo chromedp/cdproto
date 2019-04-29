@@ -4,6 +4,8 @@ package headlessexperimental
 
 // EventNeedsBeginFramesChanged issued when the target starts or stops
 // needing BeginFrames.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/HeadlessExperimental#event-needsBeginFramesChanged
 type EventNeedsBeginFramesChanged struct {
 	NeedsBeginFrames bool `json:"needsBeginFrames"` // True if BeginFrames are needed, false otherwise.
 }

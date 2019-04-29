@@ -14,6 +14,8 @@ import (
 )
 
 // TouchPoint [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Input#type-TouchPoint
 type TouchPoint struct {
 	X             float64 `json:"x"`                       // X coordinate of the event relative to the main frame's viewport in CSS pixels.
 	Y             float64 `json:"y"`                       // Y coordinate of the event relative to the main frame's viewport in CSS pixels. 0 refers to the top of the viewport and Y increases as it proceeds towards the bottom of the viewport.
@@ -25,6 +27,8 @@ type TouchPoint struct {
 }
 
 // GestureType [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Input#type-GestureSourceType
 type GestureType string
 
 // String returns the GestureType as string value.
@@ -70,6 +74,8 @@ func (t *GestureType) UnmarshalJSON(buf []byte) error {
 }
 
 // TimeSinceEpoch UTC time in seconds, counted from January 1, 1970.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Input#type-TimeSinceEpoch
 type TimeSinceEpoch time.Time
 
 // Time returns the TimeSinceEpoch as time.Time value.

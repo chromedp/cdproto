@@ -13,6 +13,8 @@ import (
 // request can be determined by presence of responseErrorReason and
 // responseStatusCode -- the request is at the response stage if either of these
 // fields is present and in the request stage otherwise.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Fetch#event-requestPaused
 type EventRequestPaused struct {
 	RequestID           RequestID            `json:"requestId"`                     // Each request the page makes will have a unique id.
 	Request             *network.Request     `json:"request"`                       // The details of the request.
@@ -27,6 +29,8 @@ type EventRequestPaused struct {
 // EventAuthRequired issued when the domain is enabled with
 // handleAuthRequests set to true. The request is paused until client responds
 // with continueWithAuth.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Fetch#event-authRequired
 type EventAuthRequired struct {
 	RequestID     RequestID            `json:"requestId"`     // Each request the page makes will have a unique id.
 	Request       *network.Request     `json:"request"`       // The details of the request.

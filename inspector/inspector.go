@@ -21,8 +21,8 @@ func Disable() *DisableParams {
 }
 
 // Do executes Inspector.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandDisable, nil, nil)
+func (p *DisableParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandDisable, nil, nil)
 }
 
 // EnableParams enables inspector domain notifications.
@@ -34,8 +34,8 @@ func Enable() *EnableParams {
 }
 
 // Do executes Inspector.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandEnable, nil, nil)
+func (p *EnableParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandEnable, nil, nil)
 }
 
 // Command names.

@@ -7,6 +7,8 @@ import (
 )
 
 // GPUDevice describes a single graphics processor (GPU).
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/SystemInfo#type-GPUDevice
 type GPUDevice struct {
 	VendorID     float64 `json:"vendorId"`     // PCI ID of the GPU vendor, if available; 0 otherwise.
 	DeviceID     float64 `json:"deviceId"`     // PCI ID of the GPU device, if available; 0 otherwise.
@@ -15,6 +17,8 @@ type GPUDevice struct {
 }
 
 // GPUInfo provides information about the GPU(s) on the system.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/SystemInfo#type-GPUInfo
 type GPUInfo struct {
 	Devices              []*GPUDevice        `json:"devices"` // The graphics devices on the system. Element 0 is the primary GPU.
 	AuxAttributes        easyjson.RawMessage `json:"auxAttributes,omitempty"`
@@ -23,6 +27,8 @@ type GPUInfo struct {
 }
 
 // ProcessInfo represents process info.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/SystemInfo#type-ProcessInfo
 type ProcessInfo struct {
 	Type    string  `json:"type"`    // Specifies process type.
 	ID      int64   `json:"id"`      // Specifies process id.

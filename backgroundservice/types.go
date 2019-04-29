@@ -15,6 +15,8 @@ import (
 // ServiceName the Background Service that will be associated with the
 // commands/events. Every Background Service operates independently, but they
 // share the same API.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/BackgroundService#type-ServiceName
 type ServiceName string
 
 // String returns the ServiceName as string value.
@@ -58,12 +60,16 @@ func (t *ServiceName) UnmarshalJSON(buf []byte) error {
 
 // EventMetadata a key-value pair for additional event information to pass
 // along.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/BackgroundService#type-EventMetadata
 type EventMetadata struct {
 	Key   string `json:"key"`
 	Value string `json:"value"`
 }
 
 // Event [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/BackgroundService#type-BackgroundServiceEvent
 type Event struct {
 	Timestamp                   *cdp.TimeSinceEpoch          `json:"timestamp"`                   // Timestamp of the event (in seconds).
 	Origin                      string                       `json:"origin"`                      // The origin this event belongs to.

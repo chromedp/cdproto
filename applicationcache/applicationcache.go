@@ -21,8 +21,8 @@ func Enable() *EnableParams {
 }
 
 // Do executes ApplicationCache.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandEnable, nil, nil)
+func (p *EnableParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandEnable, nil, nil)
 }
 
 // GetApplicationCacheForFrameParams returns relevant application cache data
@@ -33,6 +33,8 @@ type GetApplicationCacheForFrameParams struct {
 
 // GetApplicationCacheForFrame returns relevant application cache data for
 // the document in given frame.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/ApplicationCache#method-getApplicationCacheForFrame
 //
 // parameters:
 //   frameID - Identifier of the frame containing document whose application cache is retrieved.
@@ -51,10 +53,10 @@ type GetApplicationCacheForFrameReturns struct {
 //
 // returns:
 //   applicationCache - Relevant application cache data for the document in given frame.
-func (p *GetApplicationCacheForFrameParams) Do(ctxt context.Context) (applicationCache *ApplicationCache, err error) {
+func (p *GetApplicationCacheForFrameParams) Do(ctx context.Context) (applicationCache *ApplicationCache, err error) {
 	// execute
 	var res GetApplicationCacheForFrameReturns
-	err = cdp.Execute(ctxt, CommandGetApplicationCacheForFrame, p, &res)
+	err = cdp.Execute(ctx, CommandGetApplicationCacheForFrame, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -83,10 +85,10 @@ type GetFramesWithManifestsReturns struct {
 //
 // returns:
 //   frameIds - Array of frame identifiers with manifest urls for each frame containing a document associated with some application cache.
-func (p *GetFramesWithManifestsParams) Do(ctxt context.Context) (frameIds []*FrameWithManifest, err error) {
+func (p *GetFramesWithManifestsParams) Do(ctx context.Context) (frameIds []*FrameWithManifest, err error) {
 	// execute
 	var res GetFramesWithManifestsReturns
-	err = cdp.Execute(ctxt, CommandGetFramesWithManifests, nil, &res)
+	err = cdp.Execute(ctx, CommandGetFramesWithManifests, nil, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -101,6 +103,8 @@ type GetManifestForFrameParams struct {
 }
 
 // GetManifestForFrame returns manifest URL for document in the given frame.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/ApplicationCache#method-getManifestForFrame
 //
 // parameters:
 //   frameID - Identifier of the frame containing document whose manifest is retrieved.
@@ -119,10 +123,10 @@ type GetManifestForFrameReturns struct {
 //
 // returns:
 //   manifestURL - Manifest URL for document in the given frame.
-func (p *GetManifestForFrameParams) Do(ctxt context.Context) (manifestURL string, err error) {
+func (p *GetManifestForFrameParams) Do(ctx context.Context) (manifestURL string, err error) {
 	// execute
 	var res GetManifestForFrameReturns
-	err = cdp.Execute(ctxt, CommandGetManifestForFrame, p, &res)
+	err = cdp.Execute(ctx, CommandGetManifestForFrame, p, &res)
 	if err != nil {
 		return "", err
 	}

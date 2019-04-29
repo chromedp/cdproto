@@ -7,6 +7,8 @@ import (
 )
 
 // EventConsoleProfileFinished [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Profiler#event-consoleProfileFinished
 type EventConsoleProfileFinished struct {
 	ID       string             `json:"id"`
 	Location *debugger.Location `json:"location"` // Location of console.profileEnd().
@@ -16,6 +18,8 @@ type EventConsoleProfileFinished struct {
 
 // EventConsoleProfileStarted sent when new profile recording is started
 // using console.profile() call.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Profiler#event-consoleProfileStarted
 type EventConsoleProfileStarted struct {
 	ID       string             `json:"id"`
 	Location *debugger.Location `json:"location"`        // Location of console.profile().

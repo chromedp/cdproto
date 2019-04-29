@@ -12,6 +12,8 @@ import (
 )
 
 // RegistrationID [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/ServiceWorker#type-RegistrationID
 type RegistrationID string
 
 // String returns the RegistrationID as string value.
@@ -20,6 +22,8 @@ func (t RegistrationID) String() string {
 }
 
 // Registration serviceWorker registration.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/ServiceWorker#type-ServiceWorkerRegistration
 type Registration struct {
 	RegistrationID RegistrationID `json:"registrationId"`
 	ScopeURL       string         `json:"scopeURL"`
@@ -27,6 +31,8 @@ type Registration struct {
 }
 
 // VersionRunningStatus [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/ServiceWorker#type-ServiceWorkerVersionRunningStatus
 type VersionRunningStatus string
 
 // String returns the VersionRunningStatus as string value.
@@ -75,6 +81,8 @@ func (t *VersionRunningStatus) UnmarshalJSON(buf []byte) error {
 }
 
 // VersionStatus [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/ServiceWorker#type-ServiceWorkerVersionStatus
 type VersionStatus string
 
 // String returns the VersionStatus as string value.
@@ -129,6 +137,8 @@ func (t *VersionStatus) UnmarshalJSON(buf []byte) error {
 }
 
 // Version serviceWorker version.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/ServiceWorker#type-ServiceWorkerVersion
 type Version struct {
 	VersionID          string               `json:"versionId"`
 	RegistrationID     RegistrationID       `json:"registrationId"`
@@ -142,6 +152,8 @@ type Version struct {
 }
 
 // ErrorMessage serviceWorker error message.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/ServiceWorker#type-ServiceWorkerErrorMessage
 type ErrorMessage struct {
 	ErrorMessage   string         `json:"errorMessage"`
 	RegistrationID RegistrationID `json:"registrationId"`

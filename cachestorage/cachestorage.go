@@ -19,6 +19,8 @@ type DeleteCacheParams struct {
 
 // DeleteCache deletes a cache.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CacheStorage#method-deleteCache
+//
 // parameters:
 //   cacheID - Id of cache for deletion.
 func DeleteCache(cacheID CacheID) *DeleteCacheParams {
@@ -28,8 +30,8 @@ func DeleteCache(cacheID CacheID) *DeleteCacheParams {
 }
 
 // Do executes CacheStorage.deleteCache against the provided context.
-func (p *DeleteCacheParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandDeleteCache, p, nil)
+func (p *DeleteCacheParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandDeleteCache, p, nil)
 }
 
 // DeleteEntryParams deletes a cache entry.
@@ -39,6 +41,8 @@ type DeleteEntryParams struct {
 }
 
 // DeleteEntry deletes a cache entry.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CacheStorage#method-deleteEntry
 //
 // parameters:
 //   cacheID - Id of cache where the entry will be deleted.
@@ -51,8 +55,8 @@ func DeleteEntry(cacheID CacheID, request string) *DeleteEntryParams {
 }
 
 // Do executes CacheStorage.deleteEntry against the provided context.
-func (p *DeleteEntryParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandDeleteEntry, p, nil)
+func (p *DeleteEntryParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandDeleteEntry, p, nil)
 }
 
 // RequestCacheNamesParams requests cache names.
@@ -61,6 +65,8 @@ type RequestCacheNamesParams struct {
 }
 
 // RequestCacheNames requests cache names.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CacheStorage#method-requestCacheNames
 //
 // parameters:
 //   securityOrigin - Security origin.
@@ -79,10 +85,10 @@ type RequestCacheNamesReturns struct {
 //
 // returns:
 //   caches - Caches for the security origin.
-func (p *RequestCacheNamesParams) Do(ctxt context.Context) (caches []*Cache, err error) {
+func (p *RequestCacheNamesParams) Do(ctx context.Context) (caches []*Cache, err error) {
 	// execute
 	var res RequestCacheNamesReturns
-	err = cdp.Execute(ctxt, CommandRequestCacheNames, p, &res)
+	err = cdp.Execute(ctx, CommandRequestCacheNames, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -98,6 +104,8 @@ type RequestCachedResponseParams struct {
 }
 
 // RequestCachedResponse fetches cache entry.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CacheStorage#method-requestCachedResponse
 //
 // parameters:
 //   cacheID - Id of cache that contains the entry.
@@ -120,10 +128,10 @@ type RequestCachedResponseReturns struct {
 //
 // returns:
 //   response - Response read from the cache.
-func (p *RequestCachedResponseParams) Do(ctxt context.Context) (response *CachedResponse, err error) {
+func (p *RequestCachedResponseParams) Do(ctx context.Context) (response *CachedResponse, err error) {
 	// execute
 	var res RequestCachedResponseReturns
-	err = cdp.Execute(ctxt, CommandRequestCachedResponse, p, &res)
+	err = cdp.Execute(ctx, CommandRequestCachedResponse, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -140,6 +148,8 @@ type RequestEntriesParams struct {
 }
 
 // RequestEntries requests data from cache.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CacheStorage#method-requestEntries
 //
 // parameters:
 //   cacheID - ID of cache to get entries from.
@@ -171,10 +181,10 @@ type RequestEntriesReturns struct {
 // returns:
 //   cacheDataEntries - Array of object store data entries.
 //   returnCount - Count of returned entries from this storage. If pathFilter is empty, it is the count of all entries from this storage.
-func (p *RequestEntriesParams) Do(ctxt context.Context) (cacheDataEntries []*DataEntry, returnCount float64, err error) {
+func (p *RequestEntriesParams) Do(ctx context.Context) (cacheDataEntries []*DataEntry, returnCount float64, err error) {
 	// execute
 	var res RequestEntriesReturns
-	err = cdp.Execute(ctxt, CommandRequestEntries, p, &res)
+	err = cdp.Execute(ctx, CommandRequestEntries, p, &res)
 	if err != nil {
 		return nil, 0, err
 	}

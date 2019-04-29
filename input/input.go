@@ -32,6 +32,8 @@ type DispatchKeyEventParams struct {
 
 // DispatchKeyEvent dispatches a key event to the page.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Input#method-dispatchKeyEvent
+//
 // parameters:
 //   type - Type of the key event.
 func DispatchKeyEvent(typeVal KeyType) *DispatchKeyEventParams {
@@ -130,8 +132,8 @@ func (p DispatchKeyEventParams) WithLocation(location int64) *DispatchKeyEventPa
 }
 
 // Do executes Input.dispatchKeyEvent against the provided context.
-func (p *DispatchKeyEventParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandDispatchKeyEvent, p, nil)
+func (p *DispatchKeyEventParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandDispatchKeyEvent, p, nil)
 }
 
 // InsertTextParams this method emulates inserting text that doesn't come
@@ -143,6 +145,8 @@ type InsertTextParams struct {
 // InsertText this method emulates inserting text that doesn't come from a
 // key press, for example an emoji keyboard or an IME.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Input#method-insertText
+//
 // parameters:
 //   text - The text to insert.
 func InsertText(text string) *InsertTextParams {
@@ -152,8 +156,8 @@ func InsertText(text string) *InsertTextParams {
 }
 
 // Do executes Input.insertText against the provided context.
-func (p *InsertTextParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandInsertText, p, nil)
+func (p *InsertTextParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandInsertText, p, nil)
 }
 
 // DispatchMouseEventParams dispatches a mouse event to the page.
@@ -172,6 +176,8 @@ type DispatchMouseEventParams struct {
 }
 
 // DispatchMouseEvent dispatches a mouse event to the page.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Input#method-dispatchMouseEvent
 //
 // parameters:
 //   type - Type of the mouse event.
@@ -237,8 +243,8 @@ func (p DispatchMouseEventParams) WithPointerType(pointerType DispatchMouseEvent
 }
 
 // Do executes Input.dispatchMouseEvent against the provided context.
-func (p *DispatchMouseEventParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandDispatchMouseEvent, p, nil)
+func (p *DispatchMouseEventParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandDispatchMouseEvent, p, nil)
 }
 
 // DispatchTouchEventParams dispatches a touch event to the page.
@@ -250,6 +256,8 @@ type DispatchTouchEventParams struct {
 }
 
 // DispatchTouchEvent dispatches a touch event to the page.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Input#method-dispatchTouchEvent
 //
 // parameters:
 //   type - Type of the touch event. TouchEnd and TouchCancel must not contain any touch points, while TouchStart and TouchMove must contains at least one.
@@ -275,8 +283,8 @@ func (p DispatchTouchEventParams) WithTimestamp(timestamp *TimeSinceEpoch) *Disp
 }
 
 // Do executes Input.dispatchTouchEvent against the provided context.
-func (p *DispatchTouchEventParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandDispatchTouchEvent, p, nil)
+func (p *DispatchTouchEventParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandDispatchTouchEvent, p, nil)
 }
 
 // EmulateTouchFromMouseEventParams emulates touch event from the mouse event
@@ -295,6 +303,8 @@ type EmulateTouchFromMouseEventParams struct {
 
 // EmulateTouchFromMouseEvent emulates touch event from the mouse event
 // parameters.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Input#method-emulateTouchFromMouseEvent
 //
 // parameters:
 //   type - Type of the mouse event.
@@ -342,8 +352,8 @@ func (p EmulateTouchFromMouseEventParams) WithClickCount(clickCount int64) *Emul
 }
 
 // Do executes Input.emulateTouchFromMouseEvent against the provided context.
-func (p *EmulateTouchFromMouseEventParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandEmulateTouchFromMouseEvent, p, nil)
+func (p *EmulateTouchFromMouseEventParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandEmulateTouchFromMouseEvent, p, nil)
 }
 
 // SetIgnoreInputEventsParams ignores input events (useful while auditing
@@ -354,6 +364,8 @@ type SetIgnoreInputEventsParams struct {
 
 // SetIgnoreInputEvents ignores input events (useful while auditing page).
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Input#method-setIgnoreInputEvents
+//
 // parameters:
 //   ignore - Ignores input events processing when set to true.
 func SetIgnoreInputEvents(ignore bool) *SetIgnoreInputEventsParams {
@@ -363,8 +375,8 @@ func SetIgnoreInputEvents(ignore bool) *SetIgnoreInputEventsParams {
 }
 
 // Do executes Input.setIgnoreInputEvents against the provided context.
-func (p *SetIgnoreInputEventsParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetIgnoreInputEvents, p, nil)
+func (p *SetIgnoreInputEventsParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetIgnoreInputEvents, p, nil)
 }
 
 // SynthesizePinchGestureParams synthesizes a pinch gesture over a time
@@ -379,6 +391,8 @@ type SynthesizePinchGestureParams struct {
 
 // SynthesizePinchGesture synthesizes a pinch gesture over a time period by
 // issuing appropriate touch events.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Input#method-synthesizePinchGesture
 //
 // parameters:
 //   x - X coordinate of the start of the gesture in CSS pixels.
@@ -407,8 +421,8 @@ func (p SynthesizePinchGestureParams) WithGestureSourceType(gestureSourceType Ge
 }
 
 // Do executes Input.synthesizePinchGesture against the provided context.
-func (p *SynthesizePinchGestureParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSynthesizePinchGesture, p, nil)
+func (p *SynthesizePinchGestureParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSynthesizePinchGesture, p, nil)
 }
 
 // SynthesizeScrollGestureParams synthesizes a scroll gesture over a time
@@ -430,6 +444,8 @@ type SynthesizeScrollGestureParams struct {
 
 // SynthesizeScrollGesture synthesizes a scroll gesture over a time period by
 // issuing appropriate touch events.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Input#method-synthesizeScrollGesture
 //
 // parameters:
 //   x - X coordinate of the start of the gesture in CSS pixels.
@@ -509,8 +525,8 @@ func (p SynthesizeScrollGestureParams) WithInteractionMarkerName(interactionMark
 }
 
 // Do executes Input.synthesizeScrollGesture against the provided context.
-func (p *SynthesizeScrollGestureParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSynthesizeScrollGesture, p, nil)
+func (p *SynthesizeScrollGestureParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSynthesizeScrollGesture, p, nil)
 }
 
 // SynthesizeTapGestureParams synthesizes a tap gesture over a time period by
@@ -525,6 +541,8 @@ type SynthesizeTapGestureParams struct {
 
 // SynthesizeTapGesture synthesizes a tap gesture over a time period by
 // issuing appropriate touch events.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Input#method-synthesizeTapGesture
 //
 // parameters:
 //   x - X coordinate of the start of the gesture in CSS pixels.
@@ -558,8 +576,8 @@ func (p SynthesizeTapGestureParams) WithGestureSourceType(gestureSourceType Gest
 }
 
 // Do executes Input.synthesizeTapGesture against the provided context.
-func (p *SynthesizeTapGestureParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSynthesizeTapGesture, p, nil)
+func (p *SynthesizeTapGestureParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSynthesizeTapGesture, p, nil)
 }
 
 // Command names.

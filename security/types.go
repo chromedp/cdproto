@@ -11,6 +11,8 @@ import (
 )
 
 // CertificateID an internal certificate ID value.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Security#type-CertificateId
 type CertificateID int64
 
 // Int64 returns the CertificateID as int64 value.
@@ -20,6 +22,8 @@ func (t CertificateID) Int64() int64 {
 
 // MixedContentType a description of mixed content (HTTP resources on HTTPS
 // pages), as defined by https://www.w3.org/TR/mixed-content/#categories.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Security#type-MixedContentType
 type MixedContentType string
 
 // String returns the MixedContentType as string value.
@@ -65,6 +69,8 @@ func (t *MixedContentType) UnmarshalJSON(buf []byte) error {
 }
 
 // State the security level of a page or resource.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Security#type-SecurityState
 type State string
 
 // String returns the State as string value.
@@ -117,6 +123,8 @@ func (t *State) UnmarshalJSON(buf []byte) error {
 
 // StateExplanation an explanation of an factor contributing to the security
 // state.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Security#type-SecurityStateExplanation
 type StateExplanation struct {
 	SecurityState    State            `json:"securityState"`             // Security state representing the severity of the factor being explained.
 	Title            string           `json:"title"`                     // Title describing the type of factor.
@@ -130,6 +138,8 @@ type StateExplanation struct {
 // CertificateErrorAction the action to take when a certificate error occurs.
 // continue will continue processing the request and cancel will cancel the
 // request.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Security#type-CertificateErrorAction
 type CertificateErrorAction string
 
 // String returns the CertificateErrorAction as string value.

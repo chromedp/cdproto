@@ -20,6 +20,8 @@ type ClearDataForOriginParams struct {
 
 // ClearDataForOrigin clears storage for origin.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#method-clearDataForOrigin
+//
 // parameters:
 //   origin - Security origin.
 //   storageTypes - Comma separated list of StorageType to clear.
@@ -31,8 +33,8 @@ func ClearDataForOrigin(origin string, storageTypes string) *ClearDataForOriginP
 }
 
 // Do executes Storage.clearDataForOrigin against the provided context.
-func (p *ClearDataForOriginParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandClearDataForOrigin, p, nil)
+func (p *ClearDataForOriginParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandClearDataForOrigin, p, nil)
 }
 
 // GetUsageAndQuotaParams returns usage and quota in bytes.
@@ -41,6 +43,8 @@ type GetUsageAndQuotaParams struct {
 }
 
 // GetUsageAndQuota returns usage and quota in bytes.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#method-getUsageAndQuota
 //
 // parameters:
 //   origin - Security origin.
@@ -63,10 +67,10 @@ type GetUsageAndQuotaReturns struct {
 //   usage - Storage usage (bytes).
 //   quota - Storage quota (bytes).
 //   usageBreakdown - Storage usage per type (bytes).
-func (p *GetUsageAndQuotaParams) Do(ctxt context.Context) (usage float64, quota float64, usageBreakdown []*UsageForType, err error) {
+func (p *GetUsageAndQuotaParams) Do(ctx context.Context) (usage float64, quota float64, usageBreakdown []*UsageForType, err error) {
 	// execute
 	var res GetUsageAndQuotaReturns
-	err = cdp.Execute(ctxt, CommandGetUsageAndQuota, p, &res)
+	err = cdp.Execute(ctx, CommandGetUsageAndQuota, p, &res)
 	if err != nil {
 		return 0, 0, nil, err
 	}
@@ -83,6 +87,8 @@ type TrackCacheStorageForOriginParams struct {
 // TrackCacheStorageForOrigin registers origin to be notified when an update
 // occurs to its cache storage list.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#method-trackCacheStorageForOrigin
+//
 // parameters:
 //   origin - Security origin.
 func TrackCacheStorageForOrigin(origin string) *TrackCacheStorageForOriginParams {
@@ -92,8 +98,8 @@ func TrackCacheStorageForOrigin(origin string) *TrackCacheStorageForOriginParams
 }
 
 // Do executes Storage.trackCacheStorageForOrigin against the provided context.
-func (p *TrackCacheStorageForOriginParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandTrackCacheStorageForOrigin, p, nil)
+func (p *TrackCacheStorageForOriginParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandTrackCacheStorageForOrigin, p, nil)
 }
 
 // TrackIndexedDBForOriginParams registers origin to be notified when an
@@ -105,6 +111,8 @@ type TrackIndexedDBForOriginParams struct {
 // TrackIndexedDBForOrigin registers origin to be notified when an update
 // occurs to its IndexedDB.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#method-trackIndexedDBForOrigin
+//
 // parameters:
 //   origin - Security origin.
 func TrackIndexedDBForOrigin(origin string) *TrackIndexedDBForOriginParams {
@@ -114,8 +122,8 @@ func TrackIndexedDBForOrigin(origin string) *TrackIndexedDBForOriginParams {
 }
 
 // Do executes Storage.trackIndexedDBForOrigin against the provided context.
-func (p *TrackIndexedDBForOriginParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandTrackIndexedDBForOrigin, p, nil)
+func (p *TrackIndexedDBForOriginParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandTrackIndexedDBForOrigin, p, nil)
 }
 
 // UntrackCacheStorageForOriginParams unregisters origin from receiving
@@ -127,6 +135,8 @@ type UntrackCacheStorageForOriginParams struct {
 // UntrackCacheStorageForOrigin unregisters origin from receiving
 // notifications for cache storage.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#method-untrackCacheStorageForOrigin
+//
 // parameters:
 //   origin - Security origin.
 func UntrackCacheStorageForOrigin(origin string) *UntrackCacheStorageForOriginParams {
@@ -136,8 +146,8 @@ func UntrackCacheStorageForOrigin(origin string) *UntrackCacheStorageForOriginPa
 }
 
 // Do executes Storage.untrackCacheStorageForOrigin against the provided context.
-func (p *UntrackCacheStorageForOriginParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandUntrackCacheStorageForOrigin, p, nil)
+func (p *UntrackCacheStorageForOriginParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandUntrackCacheStorageForOrigin, p, nil)
 }
 
 // UntrackIndexedDBForOriginParams unregisters origin from receiving
@@ -149,6 +159,8 @@ type UntrackIndexedDBForOriginParams struct {
 // UntrackIndexedDBForOrigin unregisters origin from receiving notifications
 // for IndexedDB.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#method-untrackIndexedDBForOrigin
+//
 // parameters:
 //   origin - Security origin.
 func UntrackIndexedDBForOrigin(origin string) *UntrackIndexedDBForOriginParams {
@@ -158,8 +170,8 @@ func UntrackIndexedDBForOrigin(origin string) *UntrackIndexedDBForOriginParams {
 }
 
 // Do executes Storage.untrackIndexedDBForOrigin against the provided context.
-func (p *UntrackIndexedDBForOriginParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandUntrackIndexedDBForOrigin, p, nil)
+func (p *UntrackIndexedDBForOriginParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandUntrackIndexedDBForOrigin, p, nil)
 }
 
 // Command names.

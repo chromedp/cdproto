@@ -24,8 +24,8 @@ func Disable() *DisableParams {
 }
 
 // Do executes DOMSnapshot.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandDisable, nil, nil)
+func (p *DisableParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandDisable, nil, nil)
 }
 
 // EnableParams enables DOM snapshot agent for the given page.
@@ -37,8 +37,8 @@ func Enable() *EnableParams {
 }
 
 // Do executes DOMSnapshot.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandEnable, nil, nil)
+func (p *EnableParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandEnable, nil, nil)
 }
 
 // CaptureSnapshotParams returns a document snapshot, including the full DOM
@@ -55,6 +55,8 @@ type CaptureSnapshotParams struct {
 // documents) in a flattened array, as well as layout and white-listed computed
 // style information for the nodes. Shadow DOM in the returned DOM tree is
 // flattened.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOMSnapshot#method-captureSnapshot
 //
 // parameters:
 //   computedStyles - Whitelist of computed styles to return.
@@ -75,10 +77,10 @@ type CaptureSnapshotReturns struct {
 // returns:
 //   documents - The nodes in the DOM tree. The DOMNode at index 0 corresponds to the root document.
 //   strings - Shared string table that all string properties refer to with indexes.
-func (p *CaptureSnapshotParams) Do(ctxt context.Context) (documents []*DocumentSnapshot, strings []string, err error) {
+func (p *CaptureSnapshotParams) Do(ctx context.Context) (documents []*DocumentSnapshot, strings []string, err error) {
 	// execute
 	var res CaptureSnapshotReturns
-	err = cdp.Execute(ctxt, CommandCaptureSnapshot, p, &res)
+	err = cdp.Execute(ctx, CommandCaptureSnapshot, p, &res)
 	if err != nil {
 		return nil, nil, err
 	}

@@ -21,8 +21,8 @@ func End() *EndParams {
 }
 
 // Do executes Tracing.end against the provided context.
-func (p *EndParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandEnd, nil, nil)
+func (p *EndParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandEnd, nil, nil)
 }
 
 // GetCategoriesParams gets supported tracing categories.
@@ -42,10 +42,10 @@ type GetCategoriesReturns struct {
 //
 // returns:
 //   categories - A list of supported tracing categories.
-func (p *GetCategoriesParams) Do(ctxt context.Context) (categories []string, err error) {
+func (p *GetCategoriesParams) Do(ctx context.Context) (categories []string, err error) {
 	// execute
 	var res GetCategoriesReturns
-	err = cdp.Execute(ctxt, CommandGetCategories, nil, &res)
+	err = cdp.Execute(ctx, CommandGetCategories, nil, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -60,6 +60,8 @@ type RecordClockSyncMarkerParams struct {
 
 // RecordClockSyncMarker record a clock sync marker in the trace.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Tracing#method-recordClockSyncMarker
+//
 // parameters:
 //   syncID - The ID of this clock sync marker
 func RecordClockSyncMarker(syncID string) *RecordClockSyncMarkerParams {
@@ -69,8 +71,8 @@ func RecordClockSyncMarker(syncID string) *RecordClockSyncMarkerParams {
 }
 
 // Do executes Tracing.recordClockSyncMarker against the provided context.
-func (p *RecordClockSyncMarkerParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandRecordClockSyncMarker, p, nil)
+func (p *RecordClockSyncMarkerParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandRecordClockSyncMarker, p, nil)
 }
 
 // RequestMemoryDumpParams request a global memory dump.
@@ -92,10 +94,10 @@ type RequestMemoryDumpReturns struct {
 // returns:
 //   dumpGUID - GUID of the resulting global memory dump.
 //   success - True iff the global memory dump succeeded.
-func (p *RequestMemoryDumpParams) Do(ctxt context.Context) (dumpGUID string, success bool, err error) {
+func (p *RequestMemoryDumpParams) Do(ctx context.Context) (dumpGUID string, success bool, err error) {
 	// execute
 	var res RequestMemoryDumpReturns
-	err = cdp.Execute(ctxt, CommandRequestMemoryDump, nil, &res)
+	err = cdp.Execute(ctx, CommandRequestMemoryDump, nil, &res)
 	if err != nil {
 		return "", false, err
 	}
@@ -113,6 +115,8 @@ type StartParams struct {
 }
 
 // Start start trace events collection.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Tracing#method-start
 //
 // parameters:
 func Start() *StartParams {
@@ -154,8 +158,8 @@ func (p StartParams) WithTraceConfig(traceConfig *TraceConfig) *StartParams {
 }
 
 // Do executes Tracing.start against the provided context.
-func (p *StartParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandStart, p, nil)
+func (p *StartParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandStart, p, nil)
 }
 
 // Command names.

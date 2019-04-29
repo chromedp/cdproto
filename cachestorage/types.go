@@ -11,6 +11,8 @@ import (
 )
 
 // CacheID unique identifier of the Cache object.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CacheStorage#type-CacheId
 type CacheID string
 
 // String returns the CacheID as string value.
@@ -19,6 +21,8 @@ func (t CacheID) String() string {
 }
 
 // CachedResponseType type of HTTP response cached.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CacheStorage#type-CachedResponseType
 type CachedResponseType string
 
 // String returns the CachedResponseType as string value.
@@ -73,6 +77,8 @@ func (t *CachedResponseType) UnmarshalJSON(buf []byte) error {
 }
 
 // DataEntry data entry.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CacheStorage#type-DataEntry
 type DataEntry struct {
 	RequestURL         string             `json:"requestURL"`         // Request URL.
 	RequestMethod      string             `json:"requestMethod"`      // Request method.
@@ -85,6 +91,8 @@ type DataEntry struct {
 }
 
 // Cache cache identifier.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CacheStorage#type-Cache
 type Cache struct {
 	CacheID        CacheID `json:"cacheId"`        // An opaque unique id of the cache.
 	SecurityOrigin string  `json:"securityOrigin"` // Security origin of the cache.
@@ -92,12 +100,16 @@ type Cache struct {
 }
 
 // Header [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CacheStorage#type-Header
 type Header struct {
 	Name  string `json:"name"`
 	Value string `json:"value"`
 }
 
 // CachedResponse cached response.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CacheStorage#type-CachedResponse
 type CachedResponse struct {
 	Body string `json:"body"` // Entry content, base64-encoded.
 }

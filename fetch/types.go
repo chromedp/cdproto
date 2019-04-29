@@ -12,6 +12,8 @@ import (
 )
 
 // RequestID unique request identifier.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Fetch#type-RequestId
 type RequestID string
 
 // String returns the RequestID as string value.
@@ -22,6 +24,8 @@ func (t RequestID) String() string {
 // RequestStage stages of the request to handle. Request will intercept
 // before the request is sent. Response will intercept after the response is
 // received (but before response body is received.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Fetch#type-RequestStage
 type RequestStage string
 
 // String returns the RequestStage as string value.
@@ -64,6 +68,8 @@ func (t *RequestStage) UnmarshalJSON(buf []byte) error {
 }
 
 // RequestPattern [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Fetch#type-RequestPattern
 type RequestPattern struct {
 	URLPattern   string               `json:"urlPattern,omitempty"`   // Wildcards ('*' -> zero or more, '?' -> exactly one) are allowed. Escape character is backslash. Omitting is equivalent to "*".
 	ResourceType network.ResourceType `json:"resourceType,omitempty"` // If set, only requests for matching resource types will be intercepted.
@@ -71,12 +77,16 @@ type RequestPattern struct {
 }
 
 // HeaderEntry response HTTP header entry.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Fetch#type-HeaderEntry
 type HeaderEntry struct {
 	Name  string `json:"name"`
 	Value string `json:"value"`
 }
 
 // AuthChallenge authorization challenge for HTTP status code 401 or 407.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Fetch#type-AuthChallenge
 type AuthChallenge struct {
 	Source AuthChallengeSource `json:"source,omitempty"` // Source of the authentication challenge.
 	Origin string              `json:"origin"`           // Origin of the challenger.
@@ -85,6 +95,8 @@ type AuthChallenge struct {
 }
 
 // AuthChallengeResponse response to an AuthChallenge.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Fetch#type-AuthChallengeResponse
 type AuthChallengeResponse struct {
 	Response AuthChallengeResponseResponse `json:"response"`           // The decision on what to do in response to the authorization challenge.  Default means deferring to the default behavior of the net stack, which will likely either the Cancel authentication or display a popup dialog box.
 	Username string                        `json:"username,omitempty"` // The username to provide, possibly empty. Should only be set if response is ProvideCredentials.

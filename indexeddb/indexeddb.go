@@ -21,6 +21,8 @@ type ClearObjectStoreParams struct {
 
 // ClearObjectStore clears all entries from an object store.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/IndexedDB#method-clearObjectStore
+//
 // parameters:
 //   securityOrigin - Security origin.
 //   databaseName - Database name.
@@ -34,8 +36,8 @@ func ClearObjectStore(securityOrigin string, databaseName string, objectStoreNam
 }
 
 // Do executes IndexedDB.clearObjectStore against the provided context.
-func (p *ClearObjectStoreParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandClearObjectStore, p, nil)
+func (p *ClearObjectStoreParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandClearObjectStore, p, nil)
 }
 
 // DeleteDatabaseParams deletes a database.
@@ -45,6 +47,8 @@ type DeleteDatabaseParams struct {
 }
 
 // DeleteDatabase deletes a database.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/IndexedDB#method-deleteDatabase
 //
 // parameters:
 //   securityOrigin - Security origin.
@@ -57,8 +61,8 @@ func DeleteDatabase(securityOrigin string, databaseName string) *DeleteDatabaseP
 }
 
 // Do executes IndexedDB.deleteDatabase against the provided context.
-func (p *DeleteDatabaseParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandDeleteDatabase, p, nil)
+func (p *DeleteDatabaseParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandDeleteDatabase, p, nil)
 }
 
 // DeleteObjectStoreEntriesParams delete a range of entries from an object
@@ -71,6 +75,8 @@ type DeleteObjectStoreEntriesParams struct {
 }
 
 // DeleteObjectStoreEntries delete a range of entries from an object store.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/IndexedDB#method-deleteObjectStoreEntries
 //
 // parameters:
 //   securityOrigin
@@ -87,8 +93,8 @@ func DeleteObjectStoreEntries(securityOrigin string, databaseName string, object
 }
 
 // Do executes IndexedDB.deleteObjectStoreEntries against the provided context.
-func (p *DeleteObjectStoreEntriesParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandDeleteObjectStoreEntries, p, nil)
+func (p *DeleteObjectStoreEntriesParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandDeleteObjectStoreEntries, p, nil)
 }
 
 // DisableParams disables events from backend.
@@ -100,8 +106,8 @@ func Disable() *DisableParams {
 }
 
 // Do executes IndexedDB.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandDisable, nil, nil)
+func (p *DisableParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandDisable, nil, nil)
 }
 
 // EnableParams enables events from backend.
@@ -113,8 +119,8 @@ func Enable() *EnableParams {
 }
 
 // Do executes IndexedDB.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandEnable, nil, nil)
+func (p *EnableParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandEnable, nil, nil)
 }
 
 // RequestDataParams requests data from object store or index.
@@ -129,6 +135,8 @@ type RequestDataParams struct {
 }
 
 // RequestData requests data from object store or index.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/IndexedDB#method-requestData
 //
 // parameters:
 //   securityOrigin - Security origin.
@@ -165,10 +173,10 @@ type RequestDataReturns struct {
 // returns:
 //   objectStoreDataEntries - Array of object store data entries.
 //   hasMore - If true, there are more entries to fetch in the given range.
-func (p *RequestDataParams) Do(ctxt context.Context) (objectStoreDataEntries []*DataEntry, hasMore bool, err error) {
+func (p *RequestDataParams) Do(ctx context.Context) (objectStoreDataEntries []*DataEntry, hasMore bool, err error) {
 	// execute
 	var res RequestDataReturns
-	err = cdp.Execute(ctxt, CommandRequestData, p, &res)
+	err = cdp.Execute(ctx, CommandRequestData, p, &res)
 	if err != nil {
 		return nil, false, err
 	}
@@ -184,6 +192,8 @@ type GetMetadataParams struct {
 }
 
 // GetMetadata gets metadata of an object store.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/IndexedDB#method-getMetadata
 //
 // parameters:
 //   securityOrigin - Security origin.
@@ -208,10 +218,10 @@ type GetMetadataReturns struct {
 // returns:
 //   entriesCount - the entries count
 //   keyGeneratorValue - the current value of key generator, to become the next inserted key into the object store. Valid if objectStore.autoIncrement is true.
-func (p *GetMetadataParams) Do(ctxt context.Context) (entriesCount float64, keyGeneratorValue float64, err error) {
+func (p *GetMetadataParams) Do(ctx context.Context) (entriesCount float64, keyGeneratorValue float64, err error) {
 	// execute
 	var res GetMetadataReturns
-	err = cdp.Execute(ctxt, CommandGetMetadata, p, &res)
+	err = cdp.Execute(ctx, CommandGetMetadata, p, &res)
 	if err != nil {
 		return 0, 0, err
 	}
@@ -226,6 +236,8 @@ type RequestDatabaseParams struct {
 }
 
 // RequestDatabase requests database with given name in given frame.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/IndexedDB#method-requestDatabase
 //
 // parameters:
 //   securityOrigin - Security origin.
@@ -246,10 +258,10 @@ type RequestDatabaseReturns struct {
 //
 // returns:
 //   databaseWithObjectStores - Database with an array of object stores.
-func (p *RequestDatabaseParams) Do(ctxt context.Context) (databaseWithObjectStores *DatabaseWithObjectStores, err error) {
+func (p *RequestDatabaseParams) Do(ctx context.Context) (databaseWithObjectStores *DatabaseWithObjectStores, err error) {
 	// execute
 	var res RequestDatabaseReturns
-	err = cdp.Execute(ctxt, CommandRequestDatabase, p, &res)
+	err = cdp.Execute(ctx, CommandRequestDatabase, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -264,6 +276,8 @@ type RequestDatabaseNamesParams struct {
 }
 
 // RequestDatabaseNames requests database names for given security origin.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/IndexedDB#method-requestDatabaseNames
 //
 // parameters:
 //   securityOrigin - Security origin.
@@ -282,10 +296,10 @@ type RequestDatabaseNamesReturns struct {
 //
 // returns:
 //   databaseNames - Database names for origin.
-func (p *RequestDatabaseNamesParams) Do(ctxt context.Context) (databaseNames []string, err error) {
+func (p *RequestDatabaseNamesParams) Do(ctx context.Context) (databaseNames []string, err error) {
 	// execute
 	var res RequestDatabaseNamesReturns
-	err = cdp.Execute(ctxt, CommandRequestDatabaseNames, p, &res)
+	err = cdp.Execute(ctx, CommandRequestDatabaseNames, p, &res)
 	if err != nil {
 		return nil, err
 	}

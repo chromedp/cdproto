@@ -33,10 +33,10 @@ type GetDOMCountersReturns struct {
 //   documents
 //   nodes
 //   jsEventListeners
-func (p *GetDOMCountersParams) Do(ctxt context.Context) (documents int64, nodes int64, jsEventListeners int64, err error) {
+func (p *GetDOMCountersParams) Do(ctx context.Context) (documents int64, nodes int64, jsEventListeners int64, err error) {
 	// execute
 	var res GetDOMCountersReturns
-	err = cdp.Execute(ctxt, CommandGetDOMCounters, nil, &res)
+	err = cdp.Execute(ctx, CommandGetDOMCounters, nil, &res)
 	if err != nil {
 		return 0, 0, 0, err
 	}
@@ -53,8 +53,8 @@ func PrepareForLeakDetection() *PrepareForLeakDetectionParams {
 }
 
 // Do executes Memory.prepareForLeakDetection against the provided context.
-func (p *PrepareForLeakDetectionParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandPrepareForLeakDetection, nil, nil)
+func (p *PrepareForLeakDetectionParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandPrepareForLeakDetection, nil, nil)
 }
 
 // ForciblyPurgeJavaScriptMemoryParams simulate OomIntervention by purging V8
@@ -68,8 +68,8 @@ func ForciblyPurgeJavaScriptMemory() *ForciblyPurgeJavaScriptMemoryParams {
 }
 
 // Do executes Memory.forciblyPurgeJavaScriptMemory against the provided context.
-func (p *ForciblyPurgeJavaScriptMemoryParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandForciblyPurgeJavaScriptMemory, nil, nil)
+func (p *ForciblyPurgeJavaScriptMemoryParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandForciblyPurgeJavaScriptMemory, nil, nil)
 }
 
 // SetPressureNotificationsSuppressedParams enable/disable suppressing memory
@@ -81,6 +81,8 @@ type SetPressureNotificationsSuppressedParams struct {
 // SetPressureNotificationsSuppressed enable/disable suppressing memory
 // pressure notifications in all processes.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Memory#method-setPressureNotificationsSuppressed
+//
 // parameters:
 //   suppressed - If true, memory pressure notifications will be suppressed.
 func SetPressureNotificationsSuppressed(suppressed bool) *SetPressureNotificationsSuppressedParams {
@@ -90,8 +92,8 @@ func SetPressureNotificationsSuppressed(suppressed bool) *SetPressureNotificatio
 }
 
 // Do executes Memory.setPressureNotificationsSuppressed against the provided context.
-func (p *SetPressureNotificationsSuppressedParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetPressureNotificationsSuppressed, p, nil)
+func (p *SetPressureNotificationsSuppressedParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetPressureNotificationsSuppressed, p, nil)
 }
 
 // SimulatePressureNotificationParams simulate a memory pressure notification
@@ -103,6 +105,8 @@ type SimulatePressureNotificationParams struct {
 // SimulatePressureNotification simulate a memory pressure notification in
 // all processes.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Memory#method-simulatePressureNotification
+//
 // parameters:
 //   level - Memory pressure level of the notification.
 func SimulatePressureNotification(level PressureLevel) *SimulatePressureNotificationParams {
@@ -112,8 +116,8 @@ func SimulatePressureNotification(level PressureLevel) *SimulatePressureNotifica
 }
 
 // Do executes Memory.simulatePressureNotification against the provided context.
-func (p *SimulatePressureNotificationParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSimulatePressureNotification, p, nil)
+func (p *SimulatePressureNotificationParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSimulatePressureNotification, p, nil)
 }
 
 // StartSamplingParams start collecting native memory profile.
@@ -123,6 +127,8 @@ type StartSamplingParams struct {
 }
 
 // StartSampling start collecting native memory profile.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Memory#method-startSampling
 //
 // parameters:
 func StartSampling() *StartSamplingParams {
@@ -142,8 +148,8 @@ func (p StartSamplingParams) WithSuppressRandomness(suppressRandomness bool) *St
 }
 
 // Do executes Memory.startSampling against the provided context.
-func (p *StartSamplingParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandStartSampling, p, nil)
+func (p *StartSamplingParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandStartSampling, p, nil)
 }
 
 // StopSamplingParams stop collecting native memory profile.
@@ -155,8 +161,8 @@ func StopSampling() *StopSamplingParams {
 }
 
 // Do executes Memory.stopSampling against the provided context.
-func (p *StopSamplingParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandStopSampling, nil, nil)
+func (p *StopSamplingParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandStopSampling, nil, nil)
 }
 
 // GetAllTimeSamplingProfileParams retrieve native memory allocations profile
@@ -178,10 +184,10 @@ type GetAllTimeSamplingProfileReturns struct {
 //
 // returns:
 //   profile
-func (p *GetAllTimeSamplingProfileParams) Do(ctxt context.Context) (profile *SamplingProfile, err error) {
+func (p *GetAllTimeSamplingProfileParams) Do(ctx context.Context) (profile *SamplingProfile, err error) {
 	// execute
 	var res GetAllTimeSamplingProfileReturns
-	err = cdp.Execute(ctxt, CommandGetAllTimeSamplingProfile, nil, &res)
+	err = cdp.Execute(ctx, CommandGetAllTimeSamplingProfile, nil, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -208,10 +214,10 @@ type GetBrowserSamplingProfileReturns struct {
 //
 // returns:
 //   profile
-func (p *GetBrowserSamplingProfileParams) Do(ctxt context.Context) (profile *SamplingProfile, err error) {
+func (p *GetBrowserSamplingProfileParams) Do(ctx context.Context) (profile *SamplingProfile, err error) {
 	// execute
 	var res GetBrowserSamplingProfileReturns
-	err = cdp.Execute(ctxt, CommandGetBrowserSamplingProfile, nil, &res)
+	err = cdp.Execute(ctx, CommandGetBrowserSamplingProfile, nil, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -238,10 +244,10 @@ type GetSamplingProfileReturns struct {
 //
 // returns:
 //   profile
-func (p *GetSamplingProfileParams) Do(ctxt context.Context) (profile *SamplingProfile, err error) {
+func (p *GetSamplingProfileParams) Do(ctx context.Context) (profile *SamplingProfile, err error) {
 	// execute
 	var res GetSamplingProfileReturns
-	err = cdp.Execute(ctxt, CommandGetSamplingProfile, nil, &res)
+	err = cdp.Execute(ctx, CommandGetSamplingProfile, nil, &res)
 	if err != nil {
 		return nil, err
 	}

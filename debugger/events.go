@@ -9,6 +9,8 @@ import (
 
 // EventBreakpointResolved fired when breakpoint is resolved to an actual
 // script and location.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#event-breakpointResolved
 type EventBreakpointResolved struct {
 	BreakpointID BreakpointID `json:"breakpointId"` // Breakpoint unique identifier.
 	Location     *Location    `json:"location"`     // Actual breakpoint location.
@@ -16,6 +18,8 @@ type EventBreakpointResolved struct {
 
 // EventPaused fired when the virtual machine stopped on breakpoint or
 // exception or any other stop criteria.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#event-paused
 type EventPaused struct {
 	CallFrames            []*CallFrame          `json:"callFrames"` // Call stack the virtual machine stopped on.
 	Reason                PausedReason          `json:"reason"`     // Pause reason.
@@ -27,10 +31,14 @@ type EventPaused struct {
 }
 
 // EventResumed fired when the virtual machine resumed execution.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#event-resumed
 type EventResumed struct{}
 
 // EventScriptFailedToParse fired when virtual machine fails to parse the
 // script.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#event-scriptFailedToParse
 type EventScriptFailedToParse struct {
 	ScriptID                runtime.ScriptID           `json:"scriptId"`           // Identifier of the script parsed.
 	URL                     string                     `json:"url"`                // URL or name of the script parsed (if any).
@@ -50,6 +58,8 @@ type EventScriptFailedToParse struct {
 
 // EventScriptParsed fired when virtual machine parses script. This event is
 // also fired for all known and uncollected scripts upon enabling debugger.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#event-scriptParsed
 type EventScriptParsed struct {
 	ScriptID                runtime.ScriptID           `json:"scriptId"`           // Identifier of the script parsed.
 	URL                     string                     `json:"url"`                // URL or name of the script parsed (if any).

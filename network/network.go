@@ -28,8 +28,8 @@ func ClearBrowserCache() *ClearBrowserCacheParams {
 }
 
 // Do executes Network.clearBrowserCache against the provided context.
-func (p *ClearBrowserCacheParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandClearBrowserCache, nil, nil)
+func (p *ClearBrowserCacheParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandClearBrowserCache, nil, nil)
 }
 
 // ClearBrowserCookiesParams clears browser cookies.
@@ -41,8 +41,8 @@ func ClearBrowserCookies() *ClearBrowserCookiesParams {
 }
 
 // Do executes Network.clearBrowserCookies against the provided context.
-func (p *ClearBrowserCookiesParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandClearBrowserCookies, nil, nil)
+func (p *ClearBrowserCookiesParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandClearBrowserCookies, nil, nil)
 }
 
 // ContinueInterceptedRequestParams response to Network.requestIntercepted
@@ -66,6 +66,8 @@ type ContinueInterceptedRequestParams struct {
 // or completes it with the provided response bytes. If a network fetch occurs
 // as a result which encounters a redirect an additional
 // Network.requestIntercepted event will be sent with the same InterceptionId.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-continueInterceptedRequest
 //
 // parameters:
 //   interceptionID
@@ -127,8 +129,8 @@ func (p ContinueInterceptedRequestParams) WithAuthChallengeResponse(authChalleng
 }
 
 // Do executes Network.continueInterceptedRequest against the provided context.
-func (p *ContinueInterceptedRequestParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandContinueInterceptedRequest, p, nil)
+func (p *ContinueInterceptedRequestParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandContinueInterceptedRequest, p, nil)
 }
 
 // DeleteCookiesParams deletes browser cookies with matching name and url or
@@ -142,6 +144,8 @@ type DeleteCookiesParams struct {
 
 // DeleteCookies deletes browser cookies with matching name and url or
 // domain/path pair.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-deleteCookies
 //
 // parameters:
 //   name - Name of the cookies to remove.
@@ -171,8 +175,8 @@ func (p DeleteCookiesParams) WithPath(path string) *DeleteCookiesParams {
 }
 
 // Do executes Network.deleteCookies against the provided context.
-func (p *DeleteCookiesParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandDeleteCookies, p, nil)
+func (p *DeleteCookiesParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandDeleteCookies, p, nil)
 }
 
 // DisableParams disables network tracking, prevents network events from
@@ -186,8 +190,8 @@ func Disable() *DisableParams {
 }
 
 // Do executes Network.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandDisable, nil, nil)
+func (p *DisableParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandDisable, nil, nil)
 }
 
 // EmulateNetworkConditionsParams activates emulation of network conditions.
@@ -200,6 +204,8 @@ type EmulateNetworkConditionsParams struct {
 }
 
 // EmulateNetworkConditions activates emulation of network conditions.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-emulateNetworkConditions
 //
 // parameters:
 //   offline - True to emulate internet disconnection.
@@ -222,8 +228,8 @@ func (p EmulateNetworkConditionsParams) WithConnectionType(connectionType Connec
 }
 
 // Do executes Network.emulateNetworkConditions against the provided context.
-func (p *EmulateNetworkConditionsParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandEmulateNetworkConditions, p, nil)
+func (p *EmulateNetworkConditionsParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandEmulateNetworkConditions, p, nil)
 }
 
 // EnableParams enables network tracking, network events will now be
@@ -236,6 +242,8 @@ type EnableParams struct {
 
 // Enable enables network tracking, network events will now be delivered to
 // the client.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-enable
 //
 // parameters:
 func Enable() *EnableParams {
@@ -264,8 +272,8 @@ func (p EnableParams) WithMaxPostDataSize(maxPostDataSize int64) *EnableParams {
 }
 
 // Do executes Network.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandEnable, p, nil)
+func (p *EnableParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandEnable, p, nil)
 }
 
 // GetAllCookiesParams returns all browser cookies. Depending on the backend
@@ -287,10 +295,10 @@ type GetAllCookiesReturns struct {
 //
 // returns:
 //   cookies - Array of cookie objects.
-func (p *GetAllCookiesParams) Do(ctxt context.Context) (cookies []*Cookie, err error) {
+func (p *GetAllCookiesParams) Do(ctx context.Context) (cookies []*Cookie, err error) {
 	// execute
 	var res GetAllCookiesReturns
-	err = cdp.Execute(ctxt, CommandGetAllCookies, nil, &res)
+	err = cdp.Execute(ctx, CommandGetAllCookies, nil, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -304,6 +312,8 @@ type GetCertificateParams struct {
 }
 
 // GetCertificate returns the DER-encoded certificate.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-getCertificate
 //
 // parameters:
 //   origin - Origin to get certificate for.
@@ -322,10 +332,10 @@ type GetCertificateReturns struct {
 //
 // returns:
 //   tableNames
-func (p *GetCertificateParams) Do(ctxt context.Context) (tableNames []string, err error) {
+func (p *GetCertificateParams) Do(ctx context.Context) (tableNames []string, err error) {
 	// execute
 	var res GetCertificateReturns
-	err = cdp.Execute(ctxt, CommandGetCertificate, p, &res)
+	err = cdp.Execute(ctx, CommandGetCertificate, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -343,6 +353,8 @@ type GetCookiesParams struct {
 // GetCookies returns all browser cookies for the current URL. Depending on
 // the backend support, will return detailed cookie information in the cookies
 // field.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-getCookies
 //
 // parameters:
 func GetCookies() *GetCookiesParams {
@@ -364,10 +376,10 @@ type GetCookiesReturns struct {
 //
 // returns:
 //   cookies - Array of cookie objects.
-func (p *GetCookiesParams) Do(ctxt context.Context) (cookies []*Cookie, err error) {
+func (p *GetCookiesParams) Do(ctx context.Context) (cookies []*Cookie, err error) {
 	// execute
 	var res GetCookiesReturns
-	err = cdp.Execute(ctxt, CommandGetCookies, p, &res)
+	err = cdp.Execute(ctx, CommandGetCookies, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -381,6 +393,8 @@ type GetResponseBodyParams struct {
 }
 
 // GetResponseBody returns content served for the given request.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-getResponseBody
 //
 // parameters:
 //   requestID - Identifier of the network request to get content for.
@@ -400,10 +414,10 @@ type GetResponseBodyReturns struct {
 //
 // returns:
 //   body - Response body.
-func (p *GetResponseBodyParams) Do(ctxt context.Context) (body []byte, err error) {
+func (p *GetResponseBodyParams) Do(ctx context.Context) (body []byte, err error) {
 	// execute
 	var res GetResponseBodyReturns
-	err = cdp.Execute(ctxt, CommandGetResponseBody, p, &res)
+	err = cdp.Execute(ctx, CommandGetResponseBody, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -430,6 +444,8 @@ type GetRequestPostDataParams struct {
 // GetRequestPostData returns post data sent with the request. Returns an
 // error when no data was sent with the request.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-getRequestPostData
+//
 // parameters:
 //   requestID - Identifier of the network request to get content for.
 func GetRequestPostData(requestID RequestID) *GetRequestPostDataParams {
@@ -447,10 +463,10 @@ type GetRequestPostDataReturns struct {
 //
 // returns:
 //   postData - Request body string, omitting files from multipart requests
-func (p *GetRequestPostDataParams) Do(ctxt context.Context) (postData string, err error) {
+func (p *GetRequestPostDataParams) Do(ctx context.Context) (postData string, err error) {
 	// execute
 	var res GetRequestPostDataReturns
-	err = cdp.Execute(ctxt, CommandGetRequestPostData, p, &res)
+	err = cdp.Execute(ctx, CommandGetRequestPostData, p, &res)
 	if err != nil {
 		return "", err
 	}
@@ -466,6 +482,8 @@ type GetResponseBodyForInterceptionParams struct {
 
 // GetResponseBodyForInterception returns content served for the given
 // currently intercepted request.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-getResponseBodyForInterception
 //
 // parameters:
 //   interceptionID - Identifier for the intercepted request to get body for.
@@ -485,10 +503,10 @@ type GetResponseBodyForInterceptionReturns struct {
 //
 // returns:
 //   body - Response body.
-func (p *GetResponseBodyForInterceptionParams) Do(ctxt context.Context) (body []byte, err error) {
+func (p *GetResponseBodyForInterceptionParams) Do(ctx context.Context) (body []byte, err error) {
 	// execute
 	var res GetResponseBodyForInterceptionReturns
-	err = cdp.Execute(ctxt, CommandGetResponseBodyForInterception, p, &res)
+	err = cdp.Execute(ctx, CommandGetResponseBodyForInterception, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -521,6 +539,8 @@ type TakeResponseBodyForInterceptionAsStreamParams struct {
 // provide the response body. The stream only supports sequential read, IO.read
 // will fail if the position is specified.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-takeResponseBodyForInterceptionAsStream
+//
 // parameters:
 //   interceptionID
 func TakeResponseBodyForInterceptionAsStream(interceptionID InterceptionID) *TakeResponseBodyForInterceptionAsStreamParams {
@@ -538,10 +558,10 @@ type TakeResponseBodyForInterceptionAsStreamReturns struct {
 //
 // returns:
 //   stream
-func (p *TakeResponseBodyForInterceptionAsStreamParams) Do(ctxt context.Context) (stream io.StreamHandle, err error) {
+func (p *TakeResponseBodyForInterceptionAsStreamParams) Do(ctx context.Context) (stream io.StreamHandle, err error) {
 	// execute
 	var res TakeResponseBodyForInterceptionAsStreamReturns
-	err = cdp.Execute(ctxt, CommandTakeResponseBodyForInterceptionAsStream, p, &res)
+	err = cdp.Execute(ctx, CommandTakeResponseBodyForInterceptionAsStream, p, &res)
 	if err != nil {
 		return "", err
 	}
@@ -562,6 +582,8 @@ type ReplayXHRParams struct {
 // async, request body, extra headers, withCredentials attribute, user,
 // password.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-replayXHR
+//
 // parameters:
 //   requestID - Identifier of XHR to replay.
 func ReplayXHR(requestID RequestID) *ReplayXHRParams {
@@ -571,8 +593,8 @@ func ReplayXHR(requestID RequestID) *ReplayXHRParams {
 }
 
 // Do executes Network.replayXHR against the provided context.
-func (p *ReplayXHRParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandReplayXHR, p, nil)
+func (p *ReplayXHRParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandReplayXHR, p, nil)
 }
 
 // SearchInResponseBodyParams searches for given string in response content.
@@ -584,6 +606,8 @@ type SearchInResponseBodyParams struct {
 }
 
 // SearchInResponseBody searches for given string in response content.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-searchInResponseBody
 //
 // parameters:
 //   requestID - Identifier of the network response to search.
@@ -616,10 +640,10 @@ type SearchInResponseBodyReturns struct {
 //
 // returns:
 //   result - List of search matches.
-func (p *SearchInResponseBodyParams) Do(ctxt context.Context) (result []*debugger.SearchMatch, err error) {
+func (p *SearchInResponseBodyParams) Do(ctx context.Context) (result []*debugger.SearchMatch, err error) {
 	// execute
 	var res SearchInResponseBodyReturns
-	err = cdp.Execute(ctxt, CommandSearchInResponseBody, p, &res)
+	err = cdp.Execute(ctx, CommandSearchInResponseBody, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -634,6 +658,8 @@ type SetBlockedURLSParams struct {
 
 // SetBlockedURLS blocks URLs from loading.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-setBlockedURLs
+//
 // parameters:
 //   urls - URL patterns to block. Wildcards ('*') are allowed.
 func SetBlockedURLS(urls []string) *SetBlockedURLSParams {
@@ -643,8 +669,8 @@ func SetBlockedURLS(urls []string) *SetBlockedURLSParams {
 }
 
 // Do executes Network.setBlockedURLs against the provided context.
-func (p *SetBlockedURLSParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetBlockedURLS, p, nil)
+func (p *SetBlockedURLSParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetBlockedURLS, p, nil)
 }
 
 // SetBypassServiceWorkerParams toggles ignoring of service worker for each
@@ -656,6 +682,8 @@ type SetBypassServiceWorkerParams struct {
 // SetBypassServiceWorker toggles ignoring of service worker for each
 // request.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-setBypassServiceWorker
+//
 // parameters:
 //   bypass - Bypass service worker and load from network.
 func SetBypassServiceWorker(bypass bool) *SetBypassServiceWorkerParams {
@@ -665,8 +693,8 @@ func SetBypassServiceWorker(bypass bool) *SetBypassServiceWorkerParams {
 }
 
 // Do executes Network.setBypassServiceWorker against the provided context.
-func (p *SetBypassServiceWorkerParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetBypassServiceWorker, p, nil)
+func (p *SetBypassServiceWorkerParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetBypassServiceWorker, p, nil)
 }
 
 // SetCacheDisabledParams toggles ignoring cache for each request. If true,
@@ -678,6 +706,8 @@ type SetCacheDisabledParams struct {
 // SetCacheDisabled toggles ignoring cache for each request. If true, cache
 // will not be used.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-setCacheDisabled
+//
 // parameters:
 //   cacheDisabled - Cache disabled state.
 func SetCacheDisabled(cacheDisabled bool) *SetCacheDisabledParams {
@@ -687,8 +717,8 @@ func SetCacheDisabled(cacheDisabled bool) *SetCacheDisabledParams {
 }
 
 // Do executes Network.setCacheDisabled against the provided context.
-func (p *SetCacheDisabledParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetCacheDisabled, p, nil)
+func (p *SetCacheDisabledParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetCacheDisabled, p, nil)
 }
 
 // SetCookieParams sets a cookie with the given cookie data; may overwrite
@@ -707,6 +737,8 @@ type SetCookieParams struct {
 
 // SetCookie sets a cookie with the given cookie data; may overwrite
 // equivalent cookies if they exist.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-setCookie
 //
 // parameters:
 //   name - Cookie name.
@@ -770,10 +802,10 @@ type SetCookieReturns struct {
 //
 // returns:
 //   success - True if successfully set cookie.
-func (p *SetCookieParams) Do(ctxt context.Context) (success bool, err error) {
+func (p *SetCookieParams) Do(ctx context.Context) (success bool, err error) {
 	// execute
 	var res SetCookieReturns
-	err = cdp.Execute(ctxt, CommandSetCookie, p, &res)
+	err = cdp.Execute(ctx, CommandSetCookie, p, &res)
 	if err != nil {
 		return false, err
 	}
@@ -788,6 +820,8 @@ type SetCookiesParams struct {
 
 // SetCookies sets given cookies.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-setCookies
+//
 // parameters:
 //   cookies - Cookies to be set.
 func SetCookies(cookies []*CookieParam) *SetCookiesParams {
@@ -797,8 +831,8 @@ func SetCookies(cookies []*CookieParam) *SetCookiesParams {
 }
 
 // Do executes Network.setCookies against the provided context.
-func (p *SetCookiesParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetCookies, p, nil)
+func (p *SetCookiesParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetCookies, p, nil)
 }
 
 // SetDataSizeLimitsForTestParams for testing.
@@ -808,6 +842,8 @@ type SetDataSizeLimitsForTestParams struct {
 }
 
 // SetDataSizeLimitsForTest for testing.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-setDataSizeLimitsForTest
 //
 // parameters:
 //   maxTotalSize - Maximum total buffer size.
@@ -820,8 +856,8 @@ func SetDataSizeLimitsForTest(maxTotalSize int64, maxResourceSize int64) *SetDat
 }
 
 // Do executes Network.setDataSizeLimitsForTest against the provided context.
-func (p *SetDataSizeLimitsForTestParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetDataSizeLimitsForTest, p, nil)
+func (p *SetDataSizeLimitsForTestParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetDataSizeLimitsForTest, p, nil)
 }
 
 // SetExtraHTTPHeadersParams specifies whether to always send extra HTTP
@@ -833,6 +869,8 @@ type SetExtraHTTPHeadersParams struct {
 // SetExtraHTTPHeaders specifies whether to always send extra HTTP headers
 // with the requests from this page.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-setExtraHTTPHeaders
+//
 // parameters:
 //   headers - Map with extra HTTP headers.
 func SetExtraHTTPHeaders(headers Headers) *SetExtraHTTPHeadersParams {
@@ -842,8 +880,8 @@ func SetExtraHTTPHeaders(headers Headers) *SetExtraHTTPHeadersParams {
 }
 
 // Do executes Network.setExtraHTTPHeaders against the provided context.
-func (p *SetExtraHTTPHeadersParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetExtraHTTPHeaders, p, nil)
+func (p *SetExtraHTTPHeadersParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetExtraHTTPHeaders, p, nil)
 }
 
 // SetRequestInterceptionParams sets the requests to intercept that match the
@@ -855,6 +893,8 @@ type SetRequestInterceptionParams struct {
 // SetRequestInterception sets the requests to intercept that match the
 // provided patterns and optionally resource types.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-setRequestInterception
+//
 // parameters:
 //   patterns - Requests matching any of these patterns will be forwarded and wait for the corresponding continueInterceptedRequest call.
 func SetRequestInterception(patterns []*RequestPattern) *SetRequestInterceptionParams {
@@ -864,8 +904,8 @@ func SetRequestInterception(patterns []*RequestPattern) *SetRequestInterceptionP
 }
 
 // Do executes Network.setRequestInterception against the provided context.
-func (p *SetRequestInterceptionParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetRequestInterception, p, nil)
+func (p *SetRequestInterceptionParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetRequestInterception, p, nil)
 }
 
 // Command names.

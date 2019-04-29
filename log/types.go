@@ -13,6 +13,8 @@ import (
 )
 
 // Entry log entry.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Log#type-LogEntry
 type Entry struct {
 	Source           Source                  `json:"source"`                     // Log entry source.
 	Level            Level                   `json:"level"`                      // Log entry severity.
@@ -27,6 +29,8 @@ type Entry struct {
 }
 
 // ViolationSetting violation configuration setting.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Log#type-ViolationSetting
 type ViolationSetting struct {
 	Name      Violation `json:"name"`      // Violation type.
 	Threshold float64   `json:"threshold"` // Time threshold to trigger upon.

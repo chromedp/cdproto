@@ -8,11 +8,15 @@ import (
 )
 
 // EventDomContentEventFired [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-domContentEventFired
 type EventDomContentEventFired struct {
 	Timestamp *cdp.MonotonicTime `json:"timestamp"`
 }
 
 // EventFrameAttached fired when frame has been attached to its parent.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-frameAttached
 type EventFrameAttached struct {
 	FrameID       cdp.FrameID         `json:"frameId"`         // Id of the frame that has been attached.
 	ParentFrameID cdp.FrameID         `json:"parentFrameId"`   // Parent frame identifier.
@@ -20,21 +24,29 @@ type EventFrameAttached struct {
 }
 
 // EventFrameDetached fired when frame has been detached from its parent.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-frameDetached
 type EventFrameDetached struct {
 	FrameID cdp.FrameID `json:"frameId"` // Id of the frame that has been detached.
 }
 
 // EventFrameNavigated fired once navigation of the frame has completed.
 // Frame is now associated with the new loader.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-frameNavigated
 type EventFrameNavigated struct {
 	Frame *cdp.Frame `json:"frame"` // Frame object.
 }
 
 // EventFrameResized [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-frameResized
 type EventFrameResized struct{}
 
 // EventFrameRequestedNavigation fired when a renderer-initiated navigation
 // is requested. Navigation may still be cancelled after the event is issued.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-frameRequestedNavigation
 type EventFrameRequestedNavigation struct {
 	FrameID cdp.FrameID            `json:"frameId"` // Id of the frame that is being navigated.
 	Reason  ClientNavigationReason `json:"reason"`  // The reason for the navigation.
@@ -42,29 +54,41 @@ type EventFrameRequestedNavigation struct {
 }
 
 // EventFrameStartedLoading fired when frame has started loading.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-frameStartedLoading
 type EventFrameStartedLoading struct {
 	FrameID cdp.FrameID `json:"frameId"` // Id of the frame that has started loading.
 }
 
 // EventFrameStoppedLoading fired when frame has stopped loading.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-frameStoppedLoading
 type EventFrameStoppedLoading struct {
 	FrameID cdp.FrameID `json:"frameId"` // Id of the frame that has stopped loading.
 }
 
 // EventDownloadWillBegin fired when page is about to start a download.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-downloadWillBegin
 type EventDownloadWillBegin struct {
 	FrameID cdp.FrameID `json:"frameId"` // Id of the frame that caused download to begin.
 	URL     string      `json:"url"`     // URL of the resource being downloaded.
 }
 
 // EventInterstitialHidden fired when interstitial page was hidden.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-interstitialHidden
 type EventInterstitialHidden struct{}
 
 // EventInterstitialShown fired when interstitial page was shown.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-interstitialShown
 type EventInterstitialShown struct{}
 
 // EventJavascriptDialogClosed fired when a JavaScript initiated dialog
 // (alert, confirm, prompt, or onbeforeunload) has been closed.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-javascriptDialogClosed
 type EventJavascriptDialogClosed struct {
 	Result    bool   `json:"result"`    // Whether dialog was confirmed.
 	UserInput string `json:"userInput"` // User input in case of prompt.
@@ -72,6 +96,8 @@ type EventJavascriptDialogClosed struct {
 
 // EventJavascriptDialogOpening fired when a JavaScript initiated dialog
 // (alert, confirm, prompt, or onbeforeunload) is about to open.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-javascriptDialogOpening
 type EventJavascriptDialogOpening struct {
 	URL               string     `json:"url"`                     // Frame url.
 	Message           string     `json:"message"`                 // Message that will be displayed by the dialog.
@@ -82,6 +108,8 @@ type EventJavascriptDialogOpening struct {
 
 // EventLifecycleEvent fired for top level page lifecycle events such as
 // navigation, load, paint, etc.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-lifecycleEvent
 type EventLifecycleEvent struct {
 	FrameID   cdp.FrameID        `json:"frameId"`  // Id of the frame.
 	LoaderID  cdp.LoaderID       `json:"loaderId"` // Loader identifier. Empty string if the request is fetched from worker.
@@ -90,12 +118,16 @@ type EventLifecycleEvent struct {
 }
 
 // EventLoadEventFired [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-loadEventFired
 type EventLoadEventFired struct {
 	Timestamp *cdp.MonotonicTime `json:"timestamp"`
 }
 
 // EventNavigatedWithinDocument fired when same-document navigation happens,
 // e.g. due to history API usage or anchor navigation.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-navigatedWithinDocument
 type EventNavigatedWithinDocument struct {
 	FrameID cdp.FrameID `json:"frameId"` // Id of the frame.
 	URL     string      `json:"url"`     // Frame's new url.
@@ -103,6 +135,8 @@ type EventNavigatedWithinDocument struct {
 
 // EventScreencastFrame compressed image data requested by the
 // startScreencast.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-screencastFrame
 type EventScreencastFrame struct {
 	Data      string                   `json:"data"`      // Base64-encoded compressed image.
 	Metadata  *ScreencastFrameMetadata `json:"metadata"`  // Screencast frame metadata.
@@ -111,12 +145,16 @@ type EventScreencastFrame struct {
 
 // EventScreencastVisibilityChanged fired when the page with currently
 // enabled screencast was shown or hidden .
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-screencastVisibilityChanged
 type EventScreencastVisibilityChanged struct {
 	Visible bool `json:"visible"` // True if the page is visible.
 }
 
 // EventWindowOpen fired when a new window is going to be opened, via
 // window.open(), link click, form submission, etc.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-windowOpen
 type EventWindowOpen struct {
 	URL            string   `json:"url"`            // The URL for the new window.
 	WindowName     string   `json:"windowName"`     // Window name.
@@ -126,6 +164,8 @@ type EventWindowOpen struct {
 
 // EventCompilationCacheProduced issued for every compilation cache
 // generated. Is only available if Page.setGenerateCompilationCache is enabled.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-compilationCacheProduced
 type EventCompilationCacheProduced struct {
 	URL  string `json:"url"`
 	Data string `json:"data"` // Base64-encoded data

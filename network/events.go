@@ -7,6 +7,8 @@ import (
 )
 
 // EventDataReceived fired when data chunk was received over the network.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-dataReceived
 type EventDataReceived struct {
 	RequestID         RequestID          `json:"requestId"`         // Request identifier.
 	Timestamp         *cdp.MonotonicTime `json:"timestamp"`         // Timestamp.
@@ -16,6 +18,8 @@ type EventDataReceived struct {
 
 // EventEventSourceMessageReceived fired when EventSource message is
 // received.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-eventSourceMessageReceived
 type EventEventSourceMessageReceived struct {
 	RequestID RequestID          `json:"requestId"` // Request identifier.
 	Timestamp *cdp.MonotonicTime `json:"timestamp"` // Timestamp.
@@ -25,6 +29,8 @@ type EventEventSourceMessageReceived struct {
 }
 
 // EventLoadingFailed fired when HTTP request has failed to load.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-loadingFailed
 type EventLoadingFailed struct {
 	RequestID     RequestID          `json:"requestId"`               // Request identifier.
 	Timestamp     *cdp.MonotonicTime `json:"timestamp"`               // Timestamp.
@@ -35,6 +41,8 @@ type EventLoadingFailed struct {
 }
 
 // EventLoadingFinished fired when HTTP request has finished loading.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-loadingFinished
 type EventLoadingFinished struct {
 	RequestID                RequestID          `json:"requestId"`                          // Request identifier.
 	Timestamp                *cdp.MonotonicTime `json:"timestamp"`                          // Timestamp.
@@ -44,6 +52,8 @@ type EventLoadingFinished struct {
 
 // EventRequestIntercepted details of an intercepted HTTP request, which must
 // be either allowed, blocked, modified or mocked.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-requestIntercepted
 type EventRequestIntercepted struct {
 	InterceptionID      InterceptionID `json:"interceptionId"` // Each request the page makes will have a unique id, however if any redirects are encountered while processing that fetch, they will be reported with the same id as the original fetch. Likewise if HTTP authentication is needed then the same fetch id will be used.
 	Request             *Request       `json:"request"`
@@ -60,11 +70,15 @@ type EventRequestIntercepted struct {
 }
 
 // EventRequestServedFromCache fired if request ended up loading from cache.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-requestServedFromCache
 type EventRequestServedFromCache struct {
 	RequestID RequestID `json:"requestId"` // Request identifier.
 }
 
 // EventRequestWillBeSent fired when page is about to send HTTP request.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-requestWillBeSent
 type EventRequestWillBeSent struct {
 	RequestID        RequestID           `json:"requestId"`                  // Request identifier.
 	LoaderID         cdp.LoaderID        `json:"loaderId"`                   // Loader identifier. Empty string if the request is fetched from worker.
@@ -81,6 +95,8 @@ type EventRequestWillBeSent struct {
 
 // EventResourceChangedPriority fired when resource loading priority is
 // changed.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-resourceChangedPriority
 type EventResourceChangedPriority struct {
 	RequestID   RequestID          `json:"requestId"`   // Request identifier.
 	NewPriority ResourcePriority   `json:"newPriority"` // New priority
@@ -89,12 +105,16 @@ type EventResourceChangedPriority struct {
 
 // EventSignedExchangeReceived fired when a signed exchange was received over
 // the network.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-signedExchangeReceived
 type EventSignedExchangeReceived struct {
 	RequestID RequestID           `json:"requestId"` // Request identifier.
 	Info      *SignedExchangeInfo `json:"info"`      // Information about the signed exchange response.
 }
 
 // EventResponseReceived fired when HTTP response is available.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-responseReceived
 type EventResponseReceived struct {
 	RequestID RequestID          `json:"requestId"`         // Request identifier.
 	LoaderID  cdp.LoaderID       `json:"loaderId"`          // Loader identifier. Empty string if the request is fetched from worker.
@@ -105,12 +125,16 @@ type EventResponseReceived struct {
 }
 
 // EventWebSocketClosed fired when WebSocket is closed.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-webSocketClosed
 type EventWebSocketClosed struct {
 	RequestID RequestID          `json:"requestId"` // Request identifier.
 	Timestamp *cdp.MonotonicTime `json:"timestamp"` // Timestamp.
 }
 
 // EventWebSocketCreated fired upon WebSocket creation.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-webSocketCreated
 type EventWebSocketCreated struct {
 	RequestID RequestID  `json:"requestId"`           // Request identifier.
 	URL       string     `json:"url"`                 // WebSocket request URL.
@@ -118,6 +142,8 @@ type EventWebSocketCreated struct {
 }
 
 // EventWebSocketFrameError fired when WebSocket message error occurs.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-webSocketFrameError
 type EventWebSocketFrameError struct {
 	RequestID    RequestID          `json:"requestId"`    // Request identifier.
 	Timestamp    *cdp.MonotonicTime `json:"timestamp"`    // Timestamp.
@@ -125,6 +151,8 @@ type EventWebSocketFrameError struct {
 }
 
 // EventWebSocketFrameReceived fired when WebSocket message is received.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-webSocketFrameReceived
 type EventWebSocketFrameReceived struct {
 	RequestID RequestID          `json:"requestId"` // Request identifier.
 	Timestamp *cdp.MonotonicTime `json:"timestamp"` // Timestamp.
@@ -132,6 +160,8 @@ type EventWebSocketFrameReceived struct {
 }
 
 // EventWebSocketFrameSent fired when WebSocket message is sent.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-webSocketFrameSent
 type EventWebSocketFrameSent struct {
 	RequestID RequestID          `json:"requestId"` // Request identifier.
 	Timestamp *cdp.MonotonicTime `json:"timestamp"` // Timestamp.
@@ -140,6 +170,8 @@ type EventWebSocketFrameSent struct {
 
 // EventWebSocketHandshakeResponseReceived fired when WebSocket handshake
 // response becomes available.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-webSocketHandshakeResponseReceived
 type EventWebSocketHandshakeResponseReceived struct {
 	RequestID RequestID          `json:"requestId"` // Request identifier.
 	Timestamp *cdp.MonotonicTime `json:"timestamp"` // Timestamp.
@@ -148,6 +180,8 @@ type EventWebSocketHandshakeResponseReceived struct {
 
 // EventWebSocketWillSendHandshakeRequest fired when WebSocket is about to
 // initiate handshake.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-webSocketWillSendHandshakeRequest
 type EventWebSocketWillSendHandshakeRequest struct {
 	RequestID RequestID           `json:"requestId"` // Request identifier.
 	Timestamp *cdp.MonotonicTime  `json:"timestamp"` // Timestamp.

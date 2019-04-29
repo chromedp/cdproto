@@ -27,8 +27,8 @@ func Disable() *DisableParams {
 }
 
 // Do executes Overlay.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandDisable, nil, nil)
+func (p *DisableParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandDisable, nil, nil)
 }
 
 // EnableParams enables domain notifications.
@@ -40,8 +40,8 @@ func Enable() *EnableParams {
 }
 
 // Do executes Overlay.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandEnable, nil, nil)
+func (p *EnableParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandEnable, nil, nil)
 }
 
 // GetHighlightObjectForTestParams for testing.
@@ -50,6 +50,8 @@ type GetHighlightObjectForTestParams struct {
 }
 
 // GetHighlightObjectForTest for testing.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Overlay#method-getHighlightObjectForTest
 //
 // parameters:
 //   nodeID - Id of the node to get highlight object for.
@@ -68,10 +70,10 @@ type GetHighlightObjectForTestReturns struct {
 //
 // returns:
 //   highlight - Highlight data for the node.
-func (p *GetHighlightObjectForTestParams) Do(ctxt context.Context) (highlight easyjson.RawMessage, err error) {
+func (p *GetHighlightObjectForTestParams) Do(ctx context.Context) (highlight easyjson.RawMessage, err error) {
 	// execute
 	var res GetHighlightObjectForTestReturns
-	err = cdp.Execute(ctxt, CommandGetHighlightObjectForTest, p, &res)
+	err = cdp.Execute(ctx, CommandGetHighlightObjectForTest, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -88,8 +90,8 @@ func HideHighlight() *HideHighlightParams {
 }
 
 // Do executes Overlay.hideHighlight against the provided context.
-func (p *HideHighlightParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandHideHighlight, nil, nil)
+func (p *HideHighlightParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandHideHighlight, nil, nil)
 }
 
 // HighlightFrameParams highlights owner element of the frame with given id.
@@ -100,6 +102,8 @@ type HighlightFrameParams struct {
 }
 
 // HighlightFrame highlights owner element of the frame with given id.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Overlay#method-highlightFrame
 //
 // parameters:
 //   frameID - Identifier of the frame to highlight.
@@ -124,8 +128,8 @@ func (p HighlightFrameParams) WithContentOutlineColor(contentOutlineColor *cdp.R
 }
 
 // Do executes Overlay.highlightFrame against the provided context.
-func (p *HighlightFrameParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandHighlightFrame, p, nil)
+func (p *HighlightFrameParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandHighlightFrame, p, nil)
 }
 
 // HighlightNodeParams highlights DOM node with given id or with the given
@@ -140,6 +144,8 @@ type HighlightNodeParams struct {
 
 // HighlightNode highlights DOM node with given id or with the given
 // JavaScript object wrapper. Either nodeId or objectId must be specified.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Overlay#method-highlightNode
 //
 // parameters:
 //   highlightConfig - A descriptor for the highlight appearance.
@@ -174,8 +180,8 @@ func (p HighlightNodeParams) WithSelector(selector string) *HighlightNodeParams 
 }
 
 // Do executes Overlay.highlightNode against the provided context.
-func (p *HighlightNodeParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandHighlightNode, p, nil)
+func (p *HighlightNodeParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandHighlightNode, p, nil)
 }
 
 // HighlightQuadParams highlights given quad. Coordinates are absolute with
@@ -188,6 +194,8 @@ type HighlightQuadParams struct {
 
 // HighlightQuad highlights given quad. Coordinates are absolute with respect
 // to the main frame viewport.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Overlay#method-highlightQuad
 //
 // parameters:
 //   quad - Quad to highlight
@@ -210,8 +218,8 @@ func (p HighlightQuadParams) WithOutlineColor(outlineColor *cdp.RGBA) *Highlight
 }
 
 // Do executes Overlay.highlightQuad against the provided context.
-func (p *HighlightQuadParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandHighlightQuad, p, nil)
+func (p *HighlightQuadParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandHighlightQuad, p, nil)
 }
 
 // HighlightRectParams highlights given rectangle. Coordinates are absolute
@@ -227,6 +235,8 @@ type HighlightRectParams struct {
 
 // HighlightRect highlights given rectangle. Coordinates are absolute with
 // respect to the main frame viewport.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Overlay#method-highlightRect
 //
 // parameters:
 //   x - X coordinate
@@ -255,8 +265,8 @@ func (p HighlightRectParams) WithOutlineColor(outlineColor *cdp.RGBA) *Highlight
 }
 
 // Do executes Overlay.highlightRect against the provided context.
-func (p *HighlightRectParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandHighlightRect, p, nil)
+func (p *HighlightRectParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandHighlightRect, p, nil)
 }
 
 // SetInspectModeParams enters the 'inspect' mode. In this mode, elements
@@ -270,6 +280,8 @@ type SetInspectModeParams struct {
 // SetInspectMode enters the 'inspect' mode. In this mode, elements that user
 // is hovering over are highlighted. Backend then generates
 // 'inspectNodeRequested' event upon element selection.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Overlay#method-setInspectMode
 //
 // parameters:
 //   mode - Set an inspection mode.
@@ -287,8 +299,8 @@ func (p SetInspectModeParams) WithHighlightConfig(highlightConfig *HighlightConf
 }
 
 // Do executes Overlay.setInspectMode against the provided context.
-func (p *SetInspectModeParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetInspectMode, p, nil)
+func (p *SetInspectModeParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetInspectMode, p, nil)
 }
 
 // SetShowAdHighlightsParams highlights owner element of all frames detected
@@ -300,6 +312,8 @@ type SetShowAdHighlightsParams struct {
 // SetShowAdHighlights highlights owner element of all frames detected to be
 // ads.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Overlay#method-setShowAdHighlights
+//
 // parameters:
 //   show - True for showing ad highlights
 func SetShowAdHighlights(show bool) *SetShowAdHighlightsParams {
@@ -309,8 +323,8 @@ func SetShowAdHighlights(show bool) *SetShowAdHighlightsParams {
 }
 
 // Do executes Overlay.setShowAdHighlights against the provided context.
-func (p *SetShowAdHighlightsParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetShowAdHighlights, p, nil)
+func (p *SetShowAdHighlightsParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetShowAdHighlights, p, nil)
 }
 
 // SetPausedInDebuggerMessageParams [no description].
@@ -319,6 +333,8 @@ type SetPausedInDebuggerMessageParams struct {
 }
 
 // SetPausedInDebuggerMessage [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Overlay#method-setPausedInDebuggerMessage
 //
 // parameters:
 func SetPausedInDebuggerMessage() *SetPausedInDebuggerMessageParams {
@@ -333,8 +349,8 @@ func (p SetPausedInDebuggerMessageParams) WithMessage(message string) *SetPaused
 }
 
 // Do executes Overlay.setPausedInDebuggerMessage against the provided context.
-func (p *SetPausedInDebuggerMessageParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetPausedInDebuggerMessage, p, nil)
+func (p *SetPausedInDebuggerMessageParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetPausedInDebuggerMessage, p, nil)
 }
 
 // SetShowDebugBordersParams requests that backend shows debug borders on
@@ -345,6 +361,8 @@ type SetShowDebugBordersParams struct {
 
 // SetShowDebugBorders requests that backend shows debug borders on layers.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Overlay#method-setShowDebugBorders
+//
 // parameters:
 //   show - True for showing debug borders
 func SetShowDebugBorders(show bool) *SetShowDebugBordersParams {
@@ -354,8 +372,8 @@ func SetShowDebugBorders(show bool) *SetShowDebugBordersParams {
 }
 
 // Do executes Overlay.setShowDebugBorders against the provided context.
-func (p *SetShowDebugBordersParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetShowDebugBorders, p, nil)
+func (p *SetShowDebugBordersParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetShowDebugBorders, p, nil)
 }
 
 // SetShowFPSCounterParams requests that backend shows the FPS counter.
@@ -364,6 +382,8 @@ type SetShowFPSCounterParams struct {
 }
 
 // SetShowFPSCounter requests that backend shows the FPS counter.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Overlay#method-setShowFPSCounter
 //
 // parameters:
 //   show - True for showing the FPS counter
@@ -374,8 +394,8 @@ func SetShowFPSCounter(show bool) *SetShowFPSCounterParams {
 }
 
 // Do executes Overlay.setShowFPSCounter against the provided context.
-func (p *SetShowFPSCounterParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetShowFPSCounter, p, nil)
+func (p *SetShowFPSCounterParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetShowFPSCounter, p, nil)
 }
 
 // SetShowPaintRectsParams requests that backend shows paint rectangles.
@@ -384,6 +404,8 @@ type SetShowPaintRectsParams struct {
 }
 
 // SetShowPaintRects requests that backend shows paint rectangles.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Overlay#method-setShowPaintRects
 //
 // parameters:
 //   result - True for showing paint rectangles
@@ -394,8 +416,8 @@ func SetShowPaintRects(result bool) *SetShowPaintRectsParams {
 }
 
 // Do executes Overlay.setShowPaintRects against the provided context.
-func (p *SetShowPaintRectsParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetShowPaintRects, p, nil)
+func (p *SetShowPaintRectsParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetShowPaintRects, p, nil)
 }
 
 // SetShowScrollBottleneckRectsParams requests that backend shows scroll
@@ -407,6 +429,8 @@ type SetShowScrollBottleneckRectsParams struct {
 // SetShowScrollBottleneckRects requests that backend shows scroll bottleneck
 // rects.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Overlay#method-setShowScrollBottleneckRects
+//
 // parameters:
 //   show - True for showing scroll bottleneck rects
 func SetShowScrollBottleneckRects(show bool) *SetShowScrollBottleneckRectsParams {
@@ -416,8 +440,8 @@ func SetShowScrollBottleneckRects(show bool) *SetShowScrollBottleneckRectsParams
 }
 
 // Do executes Overlay.setShowScrollBottleneckRects against the provided context.
-func (p *SetShowScrollBottleneckRectsParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetShowScrollBottleneckRects, p, nil)
+func (p *SetShowScrollBottleneckRectsParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetShowScrollBottleneckRects, p, nil)
 }
 
 // SetShowHitTestBordersParams requests that backend shows hit-test borders
@@ -429,6 +453,8 @@ type SetShowHitTestBordersParams struct {
 // SetShowHitTestBorders requests that backend shows hit-test borders on
 // layers.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Overlay#method-setShowHitTestBorders
+//
 // parameters:
 //   show - True for showing hit-test borders
 func SetShowHitTestBorders(show bool) *SetShowHitTestBordersParams {
@@ -438,8 +464,8 @@ func SetShowHitTestBorders(show bool) *SetShowHitTestBordersParams {
 }
 
 // Do executes Overlay.setShowHitTestBorders against the provided context.
-func (p *SetShowHitTestBordersParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetShowHitTestBorders, p, nil)
+func (p *SetShowHitTestBordersParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetShowHitTestBorders, p, nil)
 }
 
 // SetShowViewportSizeOnResizeParams paints viewport size upon main frame
@@ -450,6 +476,8 @@ type SetShowViewportSizeOnResizeParams struct {
 
 // SetShowViewportSizeOnResize paints viewport size upon main frame resize.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Overlay#method-setShowViewportSizeOnResize
+//
 // parameters:
 //   show - Whether to paint size or not.
 func SetShowViewportSizeOnResize(show bool) *SetShowViewportSizeOnResizeParams {
@@ -459,8 +487,8 @@ func SetShowViewportSizeOnResize(show bool) *SetShowViewportSizeOnResizeParams {
 }
 
 // Do executes Overlay.setShowViewportSizeOnResize against the provided context.
-func (p *SetShowViewportSizeOnResizeParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetShowViewportSizeOnResize, p, nil)
+func (p *SetShowViewportSizeOnResizeParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetShowViewportSizeOnResize, p, nil)
 }
 
 // Command names.

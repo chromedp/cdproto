@@ -26,6 +26,8 @@ type ContinueToLocationParams struct {
 
 // ContinueToLocation continues execution until specific location is reached.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-continueToLocation
+//
 // parameters:
 //   location - Location to continue to.
 func ContinueToLocation(location *Location) *ContinueToLocationParams {
@@ -41,8 +43,8 @@ func (p ContinueToLocationParams) WithTargetCallFrames(targetCallFrames Continue
 }
 
 // Do executes Debugger.continueToLocation against the provided context.
-func (p *ContinueToLocationParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandContinueToLocation, p, nil)
+func (p *ContinueToLocationParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandContinueToLocation, p, nil)
 }
 
 // DisableParams disables debugger for given page.
@@ -54,8 +56,8 @@ func Disable() *DisableParams {
 }
 
 // Do executes Debugger.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandDisable, nil, nil)
+func (p *DisableParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandDisable, nil, nil)
 }
 
 // EnableParams enables debugger for the given page. Clients should not
@@ -67,6 +69,8 @@ type EnableParams struct {
 
 // Enable enables debugger for the given page. Clients should not assume that
 // the debugging has been enabled until the result for this command is received.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-enable
 //
 // parameters:
 func Enable() *EnableParams {
@@ -90,10 +94,10 @@ type EnableReturns struct {
 //
 // returns:
 //   debuggerID - Unique identifier of the debugger.
-func (p *EnableParams) Do(ctxt context.Context) (debuggerID runtime.UniqueDebuggerID, err error) {
+func (p *EnableParams) Do(ctx context.Context) (debuggerID runtime.UniqueDebuggerID, err error) {
 	// execute
 	var res EnableReturns
-	err = cdp.Execute(ctxt, CommandEnable, p, &res)
+	err = cdp.Execute(ctx, CommandEnable, p, &res)
 	if err != nil {
 		return "", err
 	}
@@ -115,6 +119,8 @@ type EvaluateOnCallFrameParams struct {
 }
 
 // EvaluateOnCallFrame evaluates expression on a given call frame.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-evaluateOnCallFrame
 //
 // parameters:
 //   callFrameID - Call frame identifier to evaluate on.
@@ -184,10 +190,10 @@ type EvaluateOnCallFrameReturns struct {
 // returns:
 //   result - Object wrapper for the evaluation result.
 //   exceptionDetails - Exception details.
-func (p *EvaluateOnCallFrameParams) Do(ctxt context.Context) (result *runtime.RemoteObject, exceptionDetails *runtime.ExceptionDetails, err error) {
+func (p *EvaluateOnCallFrameParams) Do(ctx context.Context) (result *runtime.RemoteObject, exceptionDetails *runtime.ExceptionDetails, err error) {
 	// execute
 	var res EvaluateOnCallFrameReturns
-	err = cdp.Execute(ctxt, CommandEvaluateOnCallFrame, p, &res)
+	err = cdp.Execute(ctx, CommandEvaluateOnCallFrame, p, &res)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -205,6 +211,8 @@ type GetPossibleBreakpointsParams struct {
 
 // GetPossibleBreakpoints returns possible locations for breakpoint. scriptId
 // in start and end range locations should be the same.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-getPossibleBreakpoints
 //
 // parameters:
 //   start - Start of range to search possible breakpoint locations in.
@@ -237,10 +245,10 @@ type GetPossibleBreakpointsReturns struct {
 //
 // returns:
 //   locations - List of the possible breakpoint locations.
-func (p *GetPossibleBreakpointsParams) Do(ctxt context.Context) (locations []*BreakLocation, err error) {
+func (p *GetPossibleBreakpointsParams) Do(ctx context.Context) (locations []*BreakLocation, err error) {
 	// execute
 	var res GetPossibleBreakpointsReturns
-	err = cdp.Execute(ctxt, CommandGetPossibleBreakpoints, p, &res)
+	err = cdp.Execute(ctx, CommandGetPossibleBreakpoints, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -254,6 +262,8 @@ type GetScriptSourceParams struct {
 }
 
 // GetScriptSource returns source for the script with given id.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-getScriptSource
 //
 // parameters:
 //   scriptID - Id of the script to get source for.
@@ -272,10 +282,10 @@ type GetScriptSourceReturns struct {
 //
 // returns:
 //   scriptSource - Script source.
-func (p *GetScriptSourceParams) Do(ctxt context.Context) (scriptSource string, err error) {
+func (p *GetScriptSourceParams) Do(ctx context.Context) (scriptSource string, err error) {
 	// execute
 	var res GetScriptSourceReturns
-	err = cdp.Execute(ctxt, CommandGetScriptSource, p, &res)
+	err = cdp.Execute(ctx, CommandGetScriptSource, p, &res)
 	if err != nil {
 		return "", err
 	}
@@ -289,6 +299,8 @@ type GetStackTraceParams struct {
 }
 
 // GetStackTrace returns stack trace with given stackTraceId.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-getStackTrace
 //
 // parameters:
 //   stackTraceID
@@ -307,10 +319,10 @@ type GetStackTraceReturns struct {
 //
 // returns:
 //   stackTrace
-func (p *GetStackTraceParams) Do(ctxt context.Context) (stackTrace *runtime.StackTrace, err error) {
+func (p *GetStackTraceParams) Do(ctx context.Context) (stackTrace *runtime.StackTrace, err error) {
 	// execute
 	var res GetStackTraceReturns
-	err = cdp.Execute(ctxt, CommandGetStackTrace, p, &res)
+	err = cdp.Execute(ctx, CommandGetStackTrace, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -327,8 +339,8 @@ func Pause() *PauseParams {
 }
 
 // Do executes Debugger.pause against the provided context.
-func (p *PauseParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandPause, nil, nil)
+func (p *PauseParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandPause, nil, nil)
 }
 
 // PauseOnAsyncCallParams [no description].
@@ -337,6 +349,8 @@ type PauseOnAsyncCallParams struct {
 }
 
 // PauseOnAsyncCall [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-pauseOnAsyncCall
 //
 // parameters:
 //   parentStackTraceID - Debugger will pause when async call with given stack trace is started.
@@ -347,8 +361,8 @@ func PauseOnAsyncCall(parentStackTraceID *runtime.StackTraceID) *PauseOnAsyncCal
 }
 
 // Do executes Debugger.pauseOnAsyncCall against the provided context.
-func (p *PauseOnAsyncCallParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandPauseOnAsyncCall, p, nil)
+func (p *PauseOnAsyncCallParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandPauseOnAsyncCall, p, nil)
 }
 
 // RemoveBreakpointParams removes JavaScript breakpoint.
@@ -357,6 +371,8 @@ type RemoveBreakpointParams struct {
 }
 
 // RemoveBreakpoint removes JavaScript breakpoint.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-removeBreakpoint
 //
 // parameters:
 //   breakpointID
@@ -367,8 +383,8 @@ func RemoveBreakpoint(breakpointID BreakpointID) *RemoveBreakpointParams {
 }
 
 // Do executes Debugger.removeBreakpoint against the provided context.
-func (p *RemoveBreakpointParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandRemoveBreakpoint, p, nil)
+func (p *RemoveBreakpointParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandRemoveBreakpoint, p, nil)
 }
 
 // RestartFrameParams restarts particular call frame from the beginning.
@@ -377,6 +393,8 @@ type RestartFrameParams struct {
 }
 
 // RestartFrame restarts particular call frame from the beginning.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-restartFrame
 //
 // parameters:
 //   callFrameID - Call frame identifier to evaluate on.
@@ -399,10 +417,10 @@ type RestartFrameReturns struct {
 //   callFrames - New stack trace.
 //   asyncStackTrace - Async stack trace, if any.
 //   asyncStackTraceID - Async stack trace, if any.
-func (p *RestartFrameParams) Do(ctxt context.Context) (callFrames []*CallFrame, asyncStackTrace *runtime.StackTrace, asyncStackTraceID *runtime.StackTraceID, err error) {
+func (p *RestartFrameParams) Do(ctx context.Context) (callFrames []*CallFrame, asyncStackTrace *runtime.StackTrace, asyncStackTraceID *runtime.StackTraceID, err error) {
 	// execute
 	var res RestartFrameReturns
-	err = cdp.Execute(ctxt, CommandRestartFrame, p, &res)
+	err = cdp.Execute(ctx, CommandRestartFrame, p, &res)
 	if err != nil {
 		return nil, nil, nil, err
 	}
@@ -419,8 +437,8 @@ func Resume() *ResumeParams {
 }
 
 // Do executes Debugger.resume against the provided context.
-func (p *ResumeParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandResume, nil, nil)
+func (p *ResumeParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandResume, nil, nil)
 }
 
 // SearchInContentParams searches for given string in script content.
@@ -432,6 +450,8 @@ type SearchInContentParams struct {
 }
 
 // SearchInContent searches for given string in script content.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-searchInContent
 //
 // parameters:
 //   scriptID - Id of the script to search in.
@@ -464,10 +484,10 @@ type SearchInContentReturns struct {
 //
 // returns:
 //   result - List of search matches.
-func (p *SearchInContentParams) Do(ctxt context.Context) (result []*SearchMatch, err error) {
+func (p *SearchInContentParams) Do(ctx context.Context) (result []*SearchMatch, err error) {
 	// execute
 	var res SearchInContentReturns
-	err = cdp.Execute(ctxt, CommandSearchInContent, p, &res)
+	err = cdp.Execute(ctx, CommandSearchInContent, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -483,6 +503,8 @@ type SetAsyncCallStackDepthParams struct {
 
 // SetAsyncCallStackDepth enables or disables async call stacks tracking.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-setAsyncCallStackDepth
+//
 // parameters:
 //   maxDepth - Maximum depth of async call stacks. Setting to 0 will effectively disable collecting async call stacks (default).
 func SetAsyncCallStackDepth(maxDepth int64) *SetAsyncCallStackDepthParams {
@@ -492,8 +514,8 @@ func SetAsyncCallStackDepth(maxDepth int64) *SetAsyncCallStackDepthParams {
 }
 
 // Do executes Debugger.setAsyncCallStackDepth against the provided context.
-func (p *SetAsyncCallStackDepthParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetAsyncCallStackDepth, p, nil)
+func (p *SetAsyncCallStackDepthParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetAsyncCallStackDepth, p, nil)
 }
 
 // SetBlackboxPatternsParams replace previous blackbox patterns with passed
@@ -509,6 +531,8 @@ type SetBlackboxPatternsParams struct {
 // the patterns. VM will try to leave blackboxed script by performing 'step in'
 // several times, finally resorting to 'step out' if unsuccessful.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-setBlackboxPatterns
+//
 // parameters:
 //   patterns - Array of regexps that will be used to check script url for blackbox state.
 func SetBlackboxPatterns(patterns []string) *SetBlackboxPatternsParams {
@@ -518,8 +542,8 @@ func SetBlackboxPatterns(patterns []string) *SetBlackboxPatternsParams {
 }
 
 // Do executes Debugger.setBlackboxPatterns against the provided context.
-func (p *SetBlackboxPatternsParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetBlackboxPatterns, p, nil)
+func (p *SetBlackboxPatternsParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetBlackboxPatterns, p, nil)
 }
 
 // SetBlackboxedRangesParams makes backend skip steps in the script in
@@ -538,6 +562,8 @@ type SetBlackboxedRangesParams struct {
 // contains positions where blackbox state is changed. First interval isn't
 // blackboxed. Array should be sorted.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-setBlackboxedRanges
+//
 // parameters:
 //   scriptID - Id of the script.
 //   positions
@@ -549,8 +575,8 @@ func SetBlackboxedRanges(scriptID runtime.ScriptID, positions []*ScriptPosition)
 }
 
 // Do executes Debugger.setBlackboxedRanges against the provided context.
-func (p *SetBlackboxedRangesParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetBlackboxedRanges, p, nil)
+func (p *SetBlackboxedRangesParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetBlackboxedRanges, p, nil)
 }
 
 // SetBreakpointParams sets JavaScript breakpoint at a given location.
@@ -560,6 +586,8 @@ type SetBreakpointParams struct {
 }
 
 // SetBreakpoint sets JavaScript breakpoint at a given location.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-setBreakpoint
 //
 // parameters:
 //   location - Location to set breakpoint in.
@@ -588,10 +616,10 @@ type SetBreakpointReturns struct {
 // returns:
 //   breakpointID - Id of the created breakpoint for further reference.
 //   actualLocation - Location this breakpoint resolved into.
-func (p *SetBreakpointParams) Do(ctxt context.Context) (breakpointID BreakpointID, actualLocation *Location, err error) {
+func (p *SetBreakpointParams) Do(ctx context.Context) (breakpointID BreakpointID, actualLocation *Location, err error) {
 	// execute
 	var res SetBreakpointReturns
-	err = cdp.Execute(ctxt, CommandSetBreakpoint, p, &res)
+	err = cdp.Execute(ctx, CommandSetBreakpoint, p, &res)
 	if err != nil {
 		return "", nil, err
 	}
@@ -619,6 +647,8 @@ type SetBreakpointByURLParams struct {
 // scripts will have breakpoints resolved and returned in locations property.
 // Further matching script parsing will result in subsequent breakpointResolved
 // events issued. This logical breakpoint will survive page reloads.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-setBreakpointByUrl
 //
 // parameters:
 //   lineNumber - Line number to set breakpoint at.
@@ -672,10 +702,10 @@ type SetBreakpointByURLReturns struct {
 // returns:
 //   breakpointID - Id of the created breakpoint for further reference.
 //   locations - List of the locations this breakpoint resolved into upon addition.
-func (p *SetBreakpointByURLParams) Do(ctxt context.Context) (breakpointID BreakpointID, locations []*Location, err error) {
+func (p *SetBreakpointByURLParams) Do(ctx context.Context) (breakpointID BreakpointID, locations []*Location, err error) {
 	// execute
 	var res SetBreakpointByURLReturns
-	err = cdp.Execute(ctxt, CommandSetBreakpointByURL, p, &res)
+	err = cdp.Execute(ctx, CommandSetBreakpointByURL, p, &res)
 	if err != nil {
 		return "", nil, err
 	}
@@ -694,6 +724,8 @@ type SetBreakpointOnFunctionCallParams struct {
 // SetBreakpointOnFunctionCall sets JavaScript breakpoint before each call to
 // the given function. If another function was created from the same source as a
 // given one, calling it will also trigger the breakpoint.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-setBreakpointOnFunctionCall
 //
 // parameters:
 //   objectID - Function object id.
@@ -719,10 +751,10 @@ type SetBreakpointOnFunctionCallReturns struct {
 //
 // returns:
 //   breakpointID - Id of the created breakpoint for further reference.
-func (p *SetBreakpointOnFunctionCallParams) Do(ctxt context.Context) (breakpointID BreakpointID, err error) {
+func (p *SetBreakpointOnFunctionCallParams) Do(ctx context.Context) (breakpointID BreakpointID, err error) {
 	// execute
 	var res SetBreakpointOnFunctionCallReturns
-	err = cdp.Execute(ctxt, CommandSetBreakpointOnFunctionCall, p, &res)
+	err = cdp.Execute(ctx, CommandSetBreakpointOnFunctionCall, p, &res)
 	if err != nil {
 		return "", err
 	}
@@ -738,6 +770,8 @@ type SetBreakpointsActiveParams struct {
 
 // SetBreakpointsActive activates / deactivates all breakpoints on the page.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-setBreakpointsActive
+//
 // parameters:
 //   active - New value for breakpoints active state.
 func SetBreakpointsActive(active bool) *SetBreakpointsActiveParams {
@@ -747,8 +781,8 @@ func SetBreakpointsActive(active bool) *SetBreakpointsActiveParams {
 }
 
 // Do executes Debugger.setBreakpointsActive against the provided context.
-func (p *SetBreakpointsActiveParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetBreakpointsActive, p, nil)
+func (p *SetBreakpointsActiveParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetBreakpointsActive, p, nil)
 }
 
 // SetPauseOnExceptionsParams defines pause on exceptions state. Can be set
@@ -762,6 +796,8 @@ type SetPauseOnExceptionsParams struct {
 // on all exceptions, uncaught exceptions or no exceptions. Initial pause on
 // exceptions state is none.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-setPauseOnExceptions
+//
 // parameters:
 //   state - Pause on exceptions mode.
 func SetPauseOnExceptions(state ExceptionsState) *SetPauseOnExceptionsParams {
@@ -771,8 +807,8 @@ func SetPauseOnExceptions(state ExceptionsState) *SetPauseOnExceptionsParams {
 }
 
 // Do executes Debugger.setPauseOnExceptions against the provided context.
-func (p *SetPauseOnExceptionsParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetPauseOnExceptions, p, nil)
+func (p *SetPauseOnExceptionsParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetPauseOnExceptions, p, nil)
 }
 
 // SetReturnValueParams changes return value in top frame. Available only at
@@ -784,6 +820,8 @@ type SetReturnValueParams struct {
 // SetReturnValue changes return value in top frame. Available only at return
 // break position.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-setReturnValue
+//
 // parameters:
 //   newValue - New return value.
 func SetReturnValue(newValue *runtime.CallArgument) *SetReturnValueParams {
@@ -793,8 +831,8 @@ func SetReturnValue(newValue *runtime.CallArgument) *SetReturnValueParams {
 }
 
 // Do executes Debugger.setReturnValue against the provided context.
-func (p *SetReturnValueParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetReturnValue, p, nil)
+func (p *SetReturnValueParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetReturnValue, p, nil)
 }
 
 // SetScriptSourceParams edits JavaScript source live.
@@ -805,6 +843,8 @@ type SetScriptSourceParams struct {
 }
 
 // SetScriptSource edits JavaScript source live.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-setScriptSource
 //
 // parameters:
 //   scriptID - Id of the script to edit.
@@ -840,10 +880,10 @@ type SetScriptSourceReturns struct {
 //   asyncStackTrace - Async stack trace, if any.
 //   asyncStackTraceID - Async stack trace, if any.
 //   exceptionDetails - Exception details if any.
-func (p *SetScriptSourceParams) Do(ctxt context.Context) (callFrames []*CallFrame, stackChanged bool, asyncStackTrace *runtime.StackTrace, asyncStackTraceID *runtime.StackTraceID, exceptionDetails *runtime.ExceptionDetails, err error) {
+func (p *SetScriptSourceParams) Do(ctx context.Context) (callFrames []*CallFrame, stackChanged bool, asyncStackTrace *runtime.StackTrace, asyncStackTraceID *runtime.StackTraceID, exceptionDetails *runtime.ExceptionDetails, err error) {
 	// execute
 	var res SetScriptSourceReturns
-	err = cdp.Execute(ctxt, CommandSetScriptSource, p, &res)
+	err = cdp.Execute(ctx, CommandSetScriptSource, p, &res)
 	if err != nil {
 		return nil, false, nil, nil, nil, err
 	}
@@ -860,6 +900,8 @@ type SetSkipAllPausesParams struct {
 // SetSkipAllPauses makes page not interrupt on any pauses (breakpoint,
 // exception, dom exception etc).
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-setSkipAllPauses
+//
 // parameters:
 //   skip - New value for skip pauses state.
 func SetSkipAllPauses(skip bool) *SetSkipAllPausesParams {
@@ -869,8 +911,8 @@ func SetSkipAllPauses(skip bool) *SetSkipAllPausesParams {
 }
 
 // Do executes Debugger.setSkipAllPauses against the provided context.
-func (p *SetSkipAllPausesParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetSkipAllPauses, p, nil)
+func (p *SetSkipAllPausesParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetSkipAllPauses, p, nil)
 }
 
 // SetVariableValueParams changes value of variable in a callframe.
@@ -884,6 +926,8 @@ type SetVariableValueParams struct {
 
 // SetVariableValue changes value of variable in a callframe. Object-based
 // scopes are not supported and must be mutated manually.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-setVariableValue
 //
 // parameters:
 //   scopeNumber - 0-based number of scope as was listed in scope chain. Only 'local', 'closure' and 'catch' scope types are allowed. Other scopes could be manipulated manually.
@@ -900,8 +944,8 @@ func SetVariableValue(scopeNumber int64, variableName string, newValue *runtime.
 }
 
 // Do executes Debugger.setVariableValue against the provided context.
-func (p *SetVariableValueParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetVariableValue, p, nil)
+func (p *SetVariableValueParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetVariableValue, p, nil)
 }
 
 // StepIntoParams steps into the function call.
@@ -910,6 +954,8 @@ type StepIntoParams struct {
 }
 
 // StepInto steps into the function call.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-stepInto
 //
 // parameters:
 func StepInto() *StepIntoParams {
@@ -924,8 +970,8 @@ func (p StepIntoParams) WithBreakOnAsyncCall(breakOnAsyncCall bool) *StepIntoPar
 }
 
 // Do executes Debugger.stepInto against the provided context.
-func (p *StepIntoParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandStepInto, p, nil)
+func (p *StepIntoParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandStepInto, p, nil)
 }
 
 // StepOutParams steps out of the function call.
@@ -937,8 +983,8 @@ func StepOut() *StepOutParams {
 }
 
 // Do executes Debugger.stepOut against the provided context.
-func (p *StepOutParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandStepOut, nil, nil)
+func (p *StepOutParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandStepOut, nil, nil)
 }
 
 // StepOverParams steps over the statement.
@@ -950,8 +996,8 @@ func StepOver() *StepOverParams {
 }
 
 // Do executes Debugger.stepOver against the provided context.
-func (p *StepOverParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandStepOver, nil, nil)
+func (p *StepOverParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandStepOver, nil, nil)
 }
 
 // Command names.

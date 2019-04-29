@@ -32,6 +32,8 @@ type CollectClassNamesFromSubtreeParams struct {
 // CollectClassNamesFromSubtree collects class names for the node with given
 // id and all of it's child nodes.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-collectClassNamesFromSubtree
+//
 // parameters:
 //   nodeID - Id of the node to collect class names.
 func CollectClassNamesFromSubtree(nodeID cdp.NodeID) *CollectClassNamesFromSubtreeParams {
@@ -49,10 +51,10 @@ type CollectClassNamesFromSubtreeReturns struct {
 //
 // returns:
 //   classNames - Class name list.
-func (p *CollectClassNamesFromSubtreeParams) Do(ctxt context.Context) (classNames []string, err error) {
+func (p *CollectClassNamesFromSubtreeParams) Do(ctx context.Context) (classNames []string, err error) {
 	// execute
 	var res CollectClassNamesFromSubtreeReturns
-	err = cdp.Execute(ctxt, CommandCollectClassNamesFromSubtree, p, &res)
+	err = cdp.Execute(ctx, CommandCollectClassNamesFromSubtree, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -70,6 +72,8 @@ type CopyToParams struct {
 
 // CopyTo creates a deep copy of the specified node and places it into the
 // target container before the given anchor.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-copyTo
 //
 // parameters:
 //   nodeID - Id of the node to copy.
@@ -97,10 +101,10 @@ type CopyToReturns struct {
 //
 // returns:
 //   nodeID - Id of the node clone.
-func (p *CopyToParams) Do(ctxt context.Context) (nodeID cdp.NodeID, err error) {
+func (p *CopyToParams) Do(ctx context.Context) (nodeID cdp.NodeID, err error) {
 	// execute
 	var res CopyToReturns
-	err = cdp.Execute(ctxt, CommandCopyTo, p, &res)
+	err = cdp.Execute(ctx, CommandCopyTo, p, &res)
 	if err != nil {
 		return 0, err
 	}
@@ -120,6 +124,8 @@ type DescribeNodeParams struct {
 
 // DescribeNode describes node given its id, does not require domain to be
 // enabled. Does not start tracking any objects, can be used for automation.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-describeNode
 //
 // parameters:
 func DescribeNode() *DescribeNodeParams {
@@ -168,10 +174,10 @@ type DescribeNodeReturns struct {
 //
 // returns:
 //   node - Node description.
-func (p *DescribeNodeParams) Do(ctxt context.Context) (node *cdp.Node, err error) {
+func (p *DescribeNodeParams) Do(ctx context.Context) (node *cdp.Node, err error) {
 	// execute
 	var res DescribeNodeReturns
-	err = cdp.Execute(ctxt, CommandDescribeNode, p, &res)
+	err = cdp.Execute(ctx, CommandDescribeNode, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -188,8 +194,8 @@ func Disable() *DisableParams {
 }
 
 // Do executes DOM.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandDisable, nil, nil)
+func (p *DisableParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandDisable, nil, nil)
 }
 
 // DiscardSearchResultsParams discards search results from the session with
@@ -201,6 +207,8 @@ type DiscardSearchResultsParams struct {
 // DiscardSearchResults discards search results from the session with the
 // given id. getSearchResults should no longer be called for that search.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-discardSearchResults
+//
 // parameters:
 //   searchID - Unique search session identifier.
 func DiscardSearchResults(searchID string) *DiscardSearchResultsParams {
@@ -210,8 +218,8 @@ func DiscardSearchResults(searchID string) *DiscardSearchResultsParams {
 }
 
 // Do executes DOM.discardSearchResults against the provided context.
-func (p *DiscardSearchResultsParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandDiscardSearchResults, p, nil)
+func (p *DiscardSearchResultsParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandDiscardSearchResults, p, nil)
 }
 
 // EnableParams enables DOM agent for the given page.
@@ -223,8 +231,8 @@ func Enable() *EnableParams {
 }
 
 // Do executes DOM.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandEnable, nil, nil)
+func (p *EnableParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandEnable, nil, nil)
 }
 
 // FocusParams focuses the given element.
@@ -235,6 +243,8 @@ type FocusParams struct {
 }
 
 // Focus focuses the given element.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-focus
 //
 // parameters:
 func Focus() *FocusParams {
@@ -260,8 +270,8 @@ func (p FocusParams) WithObjectID(objectID runtime.RemoteObjectID) *FocusParams 
 }
 
 // Do executes DOM.focus against the provided context.
-func (p *FocusParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandFocus, p, nil)
+func (p *FocusParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandFocus, p, nil)
 }
 
 // GetAttributesParams returns attributes for the specified node.
@@ -270,6 +280,8 @@ type GetAttributesParams struct {
 }
 
 // GetAttributes returns attributes for the specified node.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-getAttributes
 //
 // parameters:
 //   nodeID - Id of the node to retrieve attibutes for.
@@ -288,10 +300,10 @@ type GetAttributesReturns struct {
 //
 // returns:
 //   attributes - An interleaved array of node attribute names and values.
-func (p *GetAttributesParams) Do(ctxt context.Context) (attributes []string, err error) {
+func (p *GetAttributesParams) Do(ctx context.Context) (attributes []string, err error) {
 	// execute
 	var res GetAttributesReturns
-	err = cdp.Execute(ctxt, CommandGetAttributes, p, &res)
+	err = cdp.Execute(ctx, CommandGetAttributes, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -307,6 +319,8 @@ type GetBoxModelParams struct {
 }
 
 // GetBoxModel returns boxes for the given node.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-getBoxModel
 //
 // parameters:
 func GetBoxModel() *GetBoxModelParams {
@@ -340,10 +354,10 @@ type GetBoxModelReturns struct {
 //
 // returns:
 //   model - Box model for the node.
-func (p *GetBoxModelParams) Do(ctxt context.Context) (model *BoxModel, err error) {
+func (p *GetBoxModelParams) Do(ctx context.Context) (model *BoxModel, err error) {
 	// execute
 	var res GetBoxModelReturns
-	err = cdp.Execute(ctxt, CommandGetBoxModel, p, &res)
+	err = cdp.Execute(ctx, CommandGetBoxModel, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -361,6 +375,8 @@ type GetContentQuadsParams struct {
 
 // GetContentQuads returns quads that describe node position on the page.
 // This method might return multiple quads for inline nodes.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-getContentQuads
 //
 // parameters:
 func GetContentQuads() *GetContentQuadsParams {
@@ -394,10 +410,10 @@ type GetContentQuadsReturns struct {
 //
 // returns:
 //   quads - Quads that describe node layout relative to viewport.
-func (p *GetContentQuadsParams) Do(ctxt context.Context) (quads []Quad, err error) {
+func (p *GetContentQuadsParams) Do(ctx context.Context) (quads []Quad, err error) {
 	// execute
 	var res GetContentQuadsReturns
-	err = cdp.Execute(ctxt, CommandGetContentQuads, p, &res)
+	err = cdp.Execute(ctx, CommandGetContentQuads, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -414,6 +430,8 @@ type GetDocumentParams struct {
 
 // GetDocument returns the root DOM node (and optionally the subtree) to the
 // caller.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-getDocument
 //
 // parameters:
 func GetDocument() *GetDocumentParams {
@@ -444,10 +462,10 @@ type GetDocumentReturns struct {
 //
 // returns:
 //   root - Resulting node.
-func (p *GetDocumentParams) Do(ctxt context.Context) (root *cdp.Node, err error) {
+func (p *GetDocumentParams) Do(ctx context.Context) (root *cdp.Node, err error) {
 	// execute
 	var res GetDocumentReturns
-	err = cdp.Execute(ctxt, CommandGetDocument, p, &res)
+	err = cdp.Execute(ctx, CommandGetDocument, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -464,6 +482,8 @@ type GetFlattenedDocumentParams struct {
 
 // GetFlattenedDocument returns the root DOM node (and optionally the
 // subtree) to the caller.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-getFlattenedDocument
 //
 // parameters:
 func GetFlattenedDocument() *GetFlattenedDocumentParams {
@@ -494,10 +514,10 @@ type GetFlattenedDocumentReturns struct {
 //
 // returns:
 //   nodes - Resulting node.
-func (p *GetFlattenedDocumentParams) Do(ctxt context.Context) (nodes []*cdp.Node, err error) {
+func (p *GetFlattenedDocumentParams) Do(ctx context.Context) (nodes []*cdp.Node, err error) {
 	// execute
 	var res GetFlattenedDocumentReturns
-	err = cdp.Execute(ctxt, CommandGetFlattenedDocument, p, &res)
+	err = cdp.Execute(ctx, CommandGetFlattenedDocument, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -515,6 +535,8 @@ type GetNodeForLocationParams struct {
 
 // GetNodeForLocation returns node id at given location. Depending on whether
 // DOM domain is enabled, nodeId is either returned or not.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-getNodeForLocation
 //
 // parameters:
 //   x - X coordinate.
@@ -544,10 +566,10 @@ type GetNodeForLocationReturns struct {
 // returns:
 //   backendNodeID - Resulting node.
 //   nodeID - Id of the node at given coordinates, only when enabled and requested document.
-func (p *GetNodeForLocationParams) Do(ctxt context.Context) (backendNodeID cdp.BackendNodeID, nodeID cdp.NodeID, err error) {
+func (p *GetNodeForLocationParams) Do(ctx context.Context) (backendNodeID cdp.BackendNodeID, nodeID cdp.NodeID, err error) {
 	// execute
 	var res GetNodeForLocationReturns
-	err = cdp.Execute(ctxt, CommandGetNodeForLocation, p, &res)
+	err = cdp.Execute(ctx, CommandGetNodeForLocation, p, &res)
 	if err != nil {
 		return 0, 0, err
 	}
@@ -563,6 +585,8 @@ type GetOuterHTMLParams struct {
 }
 
 // GetOuterHTML returns node's HTML markup.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-getOuterHTML
 //
 // parameters:
 func GetOuterHTML() *GetOuterHTMLParams {
@@ -596,10 +620,10 @@ type GetOuterHTMLReturns struct {
 //
 // returns:
 //   outerHTML - Outer HTML markup.
-func (p *GetOuterHTMLParams) Do(ctxt context.Context) (outerHTML string, err error) {
+func (p *GetOuterHTMLParams) Do(ctx context.Context) (outerHTML string, err error) {
 	// execute
 	var res GetOuterHTMLReturns
-	err = cdp.Execute(ctxt, CommandGetOuterHTML, p, &res)
+	err = cdp.Execute(ctx, CommandGetOuterHTML, p, &res)
 	if err != nil {
 		return "", err
 	}
@@ -615,6 +639,8 @@ type GetRelayoutBoundaryParams struct {
 
 // GetRelayoutBoundary returns the id of the nearest ancestor that is a
 // relayout boundary.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-getRelayoutBoundary
 //
 // parameters:
 //   nodeID - Id of the node.
@@ -633,10 +659,10 @@ type GetRelayoutBoundaryReturns struct {
 //
 // returns:
 //   nodeID - Relayout boundary node id for the given node.
-func (p *GetRelayoutBoundaryParams) Do(ctxt context.Context) (nodeID cdp.NodeID, err error) {
+func (p *GetRelayoutBoundaryParams) Do(ctx context.Context) (nodeID cdp.NodeID, err error) {
 	// execute
 	var res GetRelayoutBoundaryReturns
-	err = cdp.Execute(ctxt, CommandGetRelayoutBoundary, p, &res)
+	err = cdp.Execute(ctx, CommandGetRelayoutBoundary, p, &res)
 	if err != nil {
 		return 0, err
 	}
@@ -654,6 +680,8 @@ type GetSearchResultsParams struct {
 
 // GetSearchResults returns search results from given fromIndex to given
 // toIndex from the search with the given identifier.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-getSearchResults
 //
 // parameters:
 //   searchID - Unique search session identifier.
@@ -676,10 +704,10 @@ type GetSearchResultsReturns struct {
 //
 // returns:
 //   nodeIds - Ids of the search result nodes.
-func (p *GetSearchResultsParams) Do(ctxt context.Context) (nodeIds []cdp.NodeID, err error) {
+func (p *GetSearchResultsParams) Do(ctx context.Context) (nodeIds []cdp.NodeID, err error) {
 	// execute
 	var res GetSearchResultsReturns
-	err = cdp.Execute(ctxt, CommandGetSearchResults, p, &res)
+	err = cdp.Execute(ctx, CommandGetSearchResults, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -696,8 +724,8 @@ func MarkUndoableState() *MarkUndoableStateParams {
 }
 
 // Do executes DOM.markUndoableState against the provided context.
-func (p *MarkUndoableStateParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandMarkUndoableState, nil, nil)
+func (p *MarkUndoableStateParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandMarkUndoableState, nil, nil)
 }
 
 // MoveToParams moves node into the new container, places it before the given
@@ -710,6 +738,8 @@ type MoveToParams struct {
 
 // MoveTo moves node into the new container, places it before the given
 // anchor.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-moveTo
 //
 // parameters:
 //   nodeID - Id of the node to move.
@@ -737,10 +767,10 @@ type MoveToReturns struct {
 //
 // returns:
 //   nodeID - New id of the moved node.
-func (p *MoveToParams) Do(ctxt context.Context) (nodeID cdp.NodeID, err error) {
+func (p *MoveToParams) Do(ctx context.Context) (nodeID cdp.NodeID, err error) {
 	// execute
 	var res MoveToReturns
-	err = cdp.Execute(ctxt, CommandMoveTo, p, &res)
+	err = cdp.Execute(ctx, CommandMoveTo, p, &res)
 	if err != nil {
 		return 0, err
 	}
@@ -759,6 +789,8 @@ type PerformSearchParams struct {
 // PerformSearch searches for a given string in the DOM tree. Use
 // getSearchResults to access search results or cancelSearch to end this search
 // session.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-performSearch
 //
 // parameters:
 //   query - Plain text or query selector or XPath search query.
@@ -785,10 +817,10 @@ type PerformSearchReturns struct {
 // returns:
 //   searchID - Unique search session identifier.
 //   resultCount - Number of search results.
-func (p *PerformSearchParams) Do(ctxt context.Context) (searchID string, resultCount int64, err error) {
+func (p *PerformSearchParams) Do(ctx context.Context) (searchID string, resultCount int64, err error) {
 	// execute
 	var res PerformSearchReturns
-	err = cdp.Execute(ctxt, CommandPerformSearch, p, &res)
+	err = cdp.Execute(ctx, CommandPerformSearch, p, &res)
 	if err != nil {
 		return "", 0, err
 	}
@@ -804,6 +836,8 @@ type PushNodeByPathToFrontendParams struct {
 
 // PushNodeByPathToFrontend requests that the node is sent to the caller
 // given its path. // FIXME, use XPath.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-pushNodeByPathToFrontend
 //
 // parameters:
 //   path - Path to node in the proprietary format.
@@ -822,10 +856,10 @@ type PushNodeByPathToFrontendReturns struct {
 //
 // returns:
 //   nodeID - Id of the node for given path.
-func (p *PushNodeByPathToFrontendParams) Do(ctxt context.Context) (nodeID cdp.NodeID, err error) {
+func (p *PushNodeByPathToFrontendParams) Do(ctx context.Context) (nodeID cdp.NodeID, err error) {
 	// execute
 	var res PushNodeByPathToFrontendReturns
-	err = cdp.Execute(ctxt, CommandPushNodeByPathToFrontend, p, &res)
+	err = cdp.Execute(ctx, CommandPushNodeByPathToFrontend, p, &res)
 	if err != nil {
 		return 0, err
 	}
@@ -841,6 +875,8 @@ type PushNodesByBackendIdsToFrontendParams struct {
 
 // PushNodesByBackendIdsToFrontend requests that a batch of nodes is sent to
 // the caller given their backend node ids.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-pushNodesByBackendIdsToFrontend
 //
 // parameters:
 //   backendNodeIds - The array of backend node ids.
@@ -859,10 +895,10 @@ type PushNodesByBackendIdsToFrontendReturns struct {
 //
 // returns:
 //   nodeIds - The array of ids of pushed nodes that correspond to the backend ids specified in backendNodeIds.
-func (p *PushNodesByBackendIdsToFrontendParams) Do(ctxt context.Context) (nodeIds []cdp.NodeID, err error) {
+func (p *PushNodesByBackendIdsToFrontendParams) Do(ctx context.Context) (nodeIds []cdp.NodeID, err error) {
 	// execute
 	var res PushNodesByBackendIdsToFrontendReturns
-	err = cdp.Execute(ctxt, CommandPushNodesByBackendIdsToFrontend, p, &res)
+	err = cdp.Execute(ctx, CommandPushNodesByBackendIdsToFrontend, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -877,6 +913,8 @@ type QuerySelectorParams struct {
 }
 
 // QuerySelector executes querySelector on a given node.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-querySelector
 //
 // parameters:
 //   nodeID - Id of the node to query upon.
@@ -897,10 +935,10 @@ type QuerySelectorReturns struct {
 //
 // returns:
 //   nodeID - Query selector result.
-func (p *QuerySelectorParams) Do(ctxt context.Context) (nodeID cdp.NodeID, err error) {
+func (p *QuerySelectorParams) Do(ctx context.Context) (nodeID cdp.NodeID, err error) {
 	// execute
 	var res QuerySelectorReturns
-	err = cdp.Execute(ctxt, CommandQuerySelector, p, &res)
+	err = cdp.Execute(ctx, CommandQuerySelector, p, &res)
 	if err != nil {
 		return 0, err
 	}
@@ -915,6 +953,8 @@ type QuerySelectorAllParams struct {
 }
 
 // QuerySelectorAll executes querySelectorAll on a given node.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-querySelectorAll
 //
 // parameters:
 //   nodeID - Id of the node to query upon.
@@ -935,10 +975,10 @@ type QuerySelectorAllReturns struct {
 //
 // returns:
 //   nodeIds - Query selector result.
-func (p *QuerySelectorAllParams) Do(ctxt context.Context) (nodeIds []cdp.NodeID, err error) {
+func (p *QuerySelectorAllParams) Do(ctx context.Context) (nodeIds []cdp.NodeID, err error) {
 	// execute
 	var res QuerySelectorAllReturns
-	err = cdp.Execute(ctxt, CommandQuerySelectorAll, p, &res)
+	err = cdp.Execute(ctx, CommandQuerySelectorAll, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -955,8 +995,8 @@ func Redo() *RedoParams {
 }
 
 // Do executes DOM.redo against the provided context.
-func (p *RedoParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandRedo, nil, nil)
+func (p *RedoParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandRedo, nil, nil)
 }
 
 // RemoveAttributeParams removes attribute with given name from an element
@@ -969,6 +1009,8 @@ type RemoveAttributeParams struct {
 // RemoveAttribute removes attribute with given name from an element with
 // given id.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-removeAttribute
+//
 // parameters:
 //   nodeID - Id of the element to remove attribute from.
 //   name - Name of the attribute to remove.
@@ -980,8 +1022,8 @@ func RemoveAttribute(nodeID cdp.NodeID, name string) *RemoveAttributeParams {
 }
 
 // Do executes DOM.removeAttribute against the provided context.
-func (p *RemoveAttributeParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandRemoveAttribute, p, nil)
+func (p *RemoveAttributeParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandRemoveAttribute, p, nil)
 }
 
 // RemoveNodeParams removes node with given id.
@@ -990,6 +1032,8 @@ type RemoveNodeParams struct {
 }
 
 // RemoveNode removes node with given id.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-removeNode
 //
 // parameters:
 //   nodeID - Id of the node to remove.
@@ -1000,8 +1044,8 @@ func RemoveNode(nodeID cdp.NodeID) *RemoveNodeParams {
 }
 
 // Do executes DOM.removeNode against the provided context.
-func (p *RemoveNodeParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandRemoveNode, p, nil)
+func (p *RemoveNodeParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandRemoveNode, p, nil)
 }
 
 // RequestChildNodesParams requests that children of the node with given id
@@ -1018,6 +1062,8 @@ type RequestChildNodesParams struct {
 // returned to the caller in form of setChildNodes events where not only
 // immediate children are retrieved, but all children down to the specified
 // depth.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-requestChildNodes
 //
 // parameters:
 //   nodeID - Id of the node to get children for.
@@ -1043,8 +1089,8 @@ func (p RequestChildNodesParams) WithPierce(pierce bool) *RequestChildNodesParam
 }
 
 // Do executes DOM.requestChildNodes against the provided context.
-func (p *RequestChildNodesParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandRequestChildNodes, p, nil)
+func (p *RequestChildNodesParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandRequestChildNodes, p, nil)
 }
 
 // RequestNodeParams requests that the node is sent to the caller given the
@@ -1059,6 +1105,8 @@ type RequestNodeParams struct {
 // JavaScript node object reference. All nodes that form the path from the node
 // to the root are also sent to the client as a series of setChildNodes
 // notifications.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-requestNode
 //
 // parameters:
 //   objectID - JavaScript object id to convert into node.
@@ -1077,10 +1125,10 @@ type RequestNodeReturns struct {
 //
 // returns:
 //   nodeID - Node id for given object.
-func (p *RequestNodeParams) Do(ctxt context.Context) (nodeID cdp.NodeID, err error) {
+func (p *RequestNodeParams) Do(ctx context.Context) (nodeID cdp.NodeID, err error) {
 	// execute
 	var res RequestNodeReturns
-	err = cdp.Execute(ctxt, CommandRequestNode, p, &res)
+	err = cdp.Execute(ctx, CommandRequestNode, p, &res)
 	if err != nil {
 		return 0, err
 	}
@@ -1099,6 +1147,8 @@ type ResolveNodeParams struct {
 
 // ResolveNode resolves the JavaScript node object for a given NodeId or
 // BackendNodeId.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-resolveNode
 //
 // parameters:
 func ResolveNode() *ResolveNodeParams {
@@ -1139,10 +1189,10 @@ type ResolveNodeReturns struct {
 //
 // returns:
 //   object - JavaScript object wrapper for given node.
-func (p *ResolveNodeParams) Do(ctxt context.Context) (object *runtime.RemoteObject, err error) {
+func (p *ResolveNodeParams) Do(ctx context.Context) (object *runtime.RemoteObject, err error) {
 	// execute
 	var res ResolveNodeReturns
-	err = cdp.Execute(ctxt, CommandResolveNode, p, &res)
+	err = cdp.Execute(ctx, CommandResolveNode, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -1159,6 +1209,8 @@ type SetAttributeValueParams struct {
 
 // SetAttributeValue sets attribute for an element with given id.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-setAttributeValue
+//
 // parameters:
 //   nodeID - Id of the element to set attribute for.
 //   name - Attribute name.
@@ -1172,8 +1224,8 @@ func SetAttributeValue(nodeID cdp.NodeID, name string, value string) *SetAttribu
 }
 
 // Do executes DOM.setAttributeValue against the provided context.
-func (p *SetAttributeValueParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetAttributeValue, p, nil)
+func (p *SetAttributeValueParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetAttributeValue, p, nil)
 }
 
 // SetAttributesAsTextParams sets attributes on element with given id. This
@@ -1188,6 +1240,8 @@ type SetAttributesAsTextParams struct {
 // SetAttributesAsText sets attributes on element with given id. This method
 // is useful when user edits some existing attribute value and types in several
 // attribute name/value pairs.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-setAttributesAsText
 //
 // parameters:
 //   nodeID - Id of the element to set attributes for.
@@ -1207,8 +1261,8 @@ func (p SetAttributesAsTextParams) WithName(name string) *SetAttributesAsTextPar
 }
 
 // Do executes DOM.setAttributesAsText against the provided context.
-func (p *SetAttributesAsTextParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetAttributesAsText, p, nil)
+func (p *SetAttributesAsTextParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetAttributesAsText, p, nil)
 }
 
 // SetFileInputFilesParams sets files for the given file input element.
@@ -1220,6 +1274,8 @@ type SetFileInputFilesParams struct {
 }
 
 // SetFileInputFiles sets files for the given file input element.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-setFileInputFiles
 //
 // parameters:
 //   files - Array of file paths to set.
@@ -1248,8 +1304,8 @@ func (p SetFileInputFilesParams) WithObjectID(objectID runtime.RemoteObjectID) *
 }
 
 // Do executes DOM.setFileInputFiles against the provided context.
-func (p *SetFileInputFilesParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetFileInputFiles, p, nil)
+func (p *SetFileInputFilesParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetFileInputFiles, p, nil)
 }
 
 // GetFileInfoParams returns file information for the given File wrapper.
@@ -1258,6 +1314,8 @@ type GetFileInfoParams struct {
 }
 
 // GetFileInfo returns file information for the given File wrapper.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-getFileInfo
 //
 // parameters:
 //   objectID - JavaScript object id of the node wrapper.
@@ -1276,10 +1334,10 @@ type GetFileInfoReturns struct {
 //
 // returns:
 //   path
-func (p *GetFileInfoParams) Do(ctxt context.Context) (path string, err error) {
+func (p *GetFileInfoParams) Do(ctx context.Context) (path string, err error) {
 	// execute
 	var res GetFileInfoReturns
-	err = cdp.Execute(ctxt, CommandGetFileInfo, p, &res)
+	err = cdp.Execute(ctx, CommandGetFileInfo, p, &res)
 	if err != nil {
 		return "", err
 	}
@@ -1296,6 +1354,8 @@ type SetInspectedNodeParams struct {
 // SetInspectedNode enables console to refer to the node with given id via $x
 // (see Command Line API for more details $x functions).
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-setInspectedNode
+//
 // parameters:
 //   nodeID - DOM node id to be accessible by means of $x command line API.
 func SetInspectedNode(nodeID cdp.NodeID) *SetInspectedNodeParams {
@@ -1305,8 +1365,8 @@ func SetInspectedNode(nodeID cdp.NodeID) *SetInspectedNodeParams {
 }
 
 // Do executes DOM.setInspectedNode against the provided context.
-func (p *SetInspectedNodeParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetInspectedNode, p, nil)
+func (p *SetInspectedNodeParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetInspectedNode, p, nil)
 }
 
 // SetNodeNameParams sets node name for a node with given id.
@@ -1316,6 +1376,8 @@ type SetNodeNameParams struct {
 }
 
 // SetNodeName sets node name for a node with given id.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-setNodeName
 //
 // parameters:
 //   nodeID - Id of the node to set name for.
@@ -1336,10 +1398,10 @@ type SetNodeNameReturns struct {
 //
 // returns:
 //   nodeID - New node's id.
-func (p *SetNodeNameParams) Do(ctxt context.Context) (nodeID cdp.NodeID, err error) {
+func (p *SetNodeNameParams) Do(ctx context.Context) (nodeID cdp.NodeID, err error) {
 	// execute
 	var res SetNodeNameReturns
-	err = cdp.Execute(ctxt, CommandSetNodeName, p, &res)
+	err = cdp.Execute(ctx, CommandSetNodeName, p, &res)
 	if err != nil {
 		return 0, err
 	}
@@ -1355,6 +1417,8 @@ type SetNodeValueParams struct {
 
 // SetNodeValue sets node value for a node with given id.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-setNodeValue
+//
 // parameters:
 //   nodeID - Id of the node to set value for.
 //   value - New node's value.
@@ -1366,8 +1430,8 @@ func SetNodeValue(nodeID cdp.NodeID, value string) *SetNodeValueParams {
 }
 
 // Do executes DOM.setNodeValue against the provided context.
-func (p *SetNodeValueParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetNodeValue, p, nil)
+func (p *SetNodeValueParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetNodeValue, p, nil)
 }
 
 // SetOuterHTMLParams sets node HTML markup, returns new node id.
@@ -1377,6 +1441,8 @@ type SetOuterHTMLParams struct {
 }
 
 // SetOuterHTML sets node HTML markup, returns new node id.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-setOuterHTML
 //
 // parameters:
 //   nodeID - Id of the node to set markup for.
@@ -1389,8 +1455,8 @@ func SetOuterHTML(nodeID cdp.NodeID, outerHTML string) *SetOuterHTMLParams {
 }
 
 // Do executes DOM.setOuterHTML against the provided context.
-func (p *SetOuterHTMLParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetOuterHTML, p, nil)
+func (p *SetOuterHTMLParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetOuterHTML, p, nil)
 }
 
 // UndoParams undoes the last performed action.
@@ -1402,8 +1468,8 @@ func Undo() *UndoParams {
 }
 
 // Do executes DOM.undo against the provided context.
-func (p *UndoParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandUndo, nil, nil)
+func (p *UndoParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandUndo, nil, nil)
 }
 
 // GetFrameOwnerParams returns iframe node that owns iframe with the given
@@ -1413,6 +1479,8 @@ type GetFrameOwnerParams struct {
 }
 
 // GetFrameOwner returns iframe node that owns iframe with the given domain.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-getFrameOwner
 //
 // parameters:
 //   frameID
@@ -1433,10 +1501,10 @@ type GetFrameOwnerReturns struct {
 // returns:
 //   backendNodeID - Resulting node.
 //   nodeID - Id of the node at given coordinates, only when enabled and requested document.
-func (p *GetFrameOwnerParams) Do(ctxt context.Context) (backendNodeID cdp.BackendNodeID, nodeID cdp.NodeID, err error) {
+func (p *GetFrameOwnerParams) Do(ctx context.Context) (backendNodeID cdp.BackendNodeID, nodeID cdp.NodeID, err error) {
 	// execute
 	var res GetFrameOwnerReturns
-	err = cdp.Execute(ctxt, CommandGetFrameOwner, p, &res)
+	err = cdp.Execute(ctx, CommandGetFrameOwner, p, &res)
 	if err != nil {
 		return 0, 0, err
 	}

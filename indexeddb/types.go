@@ -12,6 +12,8 @@ import (
 )
 
 // DatabaseWithObjectStores database with an array of object stores.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/IndexedDB#type-DatabaseWithObjectStores
 type DatabaseWithObjectStores struct {
 	Name         string         `json:"name"`         // Database name.
 	Version      float64        `json:"version"`      // Database version (type is not 'integer', as the standard requires the version number to be 'unsigned long long')
@@ -19,6 +21,8 @@ type DatabaseWithObjectStores struct {
 }
 
 // ObjectStore object store.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/IndexedDB#type-ObjectStore
 type ObjectStore struct {
 	Name          string              `json:"name"`          // Object store name.
 	KeyPath       *KeyPath            `json:"keyPath"`       // Object store key path.
@@ -27,6 +31,8 @@ type ObjectStore struct {
 }
 
 // ObjectStoreIndex object store index.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/IndexedDB#type-ObjectStoreIndex
 type ObjectStoreIndex struct {
 	Name       string   `json:"name"`       // Index name.
 	KeyPath    *KeyPath `json:"keyPath"`    // Index key path.
@@ -35,6 +41,8 @@ type ObjectStoreIndex struct {
 }
 
 // Key Key.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/IndexedDB#type-Key
 type Key struct {
 	Type   KeyType `json:"type"`             // Key type.
 	Number float64 `json:"number,omitempty"` // Number value.
@@ -44,6 +52,8 @@ type Key struct {
 }
 
 // KeyRange key range.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/IndexedDB#type-KeyRange
 type KeyRange struct {
 	Lower     *Key `json:"lower,omitempty"` // Lower bound.
 	Upper     *Key `json:"upper,omitempty"` // Upper bound.
@@ -52,6 +62,8 @@ type KeyRange struct {
 }
 
 // DataEntry data entry.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/IndexedDB#type-DataEntry
 type DataEntry struct {
 	Key        *runtime.RemoteObject `json:"key"`        // Key object.
 	PrimaryKey *runtime.RemoteObject `json:"primaryKey"` // Primary key object.
@@ -59,6 +71,8 @@ type DataEntry struct {
 }
 
 // KeyPath key path.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/IndexedDB#type-KeyPath
 type KeyPath struct {
 	Type   KeyPathType `json:"type"`             // Key path type.
 	String string      `json:"string,omitempty"` // String value.

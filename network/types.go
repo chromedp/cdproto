@@ -14,6 +14,8 @@ import (
 )
 
 // ResourceType resource type as it was perceived by the rendering engine.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-ResourceType
 type ResourceType string
 
 // String returns the ResourceType as string value.
@@ -98,6 +100,8 @@ func (t *ResourceType) UnmarshalJSON(buf []byte) error {
 }
 
 // RequestID unique request identifier.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-RequestId
 type RequestID string
 
 // String returns the RequestID as string value.
@@ -106,6 +110,8 @@ func (t RequestID) String() string {
 }
 
 // InterceptionID unique intercepted request identifier.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-InterceptionId
 type InterceptionID string
 
 // String returns the InterceptionID as string value.
@@ -114,6 +120,8 @@ func (t InterceptionID) String() string {
 }
 
 // ErrorReason network level fetch failure reason.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-ErrorReason
 type ErrorReason string
 
 // String returns the ErrorReason as string value.
@@ -192,10 +200,14 @@ func (t *ErrorReason) UnmarshalJSON(buf []byte) error {
 }
 
 // Headers request / response headers as keys / values of JSON object.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-Headers
 type Headers map[string]interface{}
 
 // ConnectionType the underlying connection technology that the browser is
 // supposedly using.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-ConnectionType
 type ConnectionType string
 
 // String returns the ConnectionType as string value.
@@ -260,6 +272,8 @@ func (t *ConnectionType) UnmarshalJSON(buf []byte) error {
 
 // CookieSameSite represents the cookie's 'SameSite' status:
 // https://tools.ietf.org/html/draft-west-first-party-cookies.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-CookieSameSite
 type CookieSameSite string
 
 // String returns the CookieSameSite as string value.
@@ -308,6 +322,8 @@ func (t *CookieSameSite) UnmarshalJSON(buf []byte) error {
 }
 
 // ResourceTiming timing information for the request.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-ResourceTiming
 type ResourceTiming struct {
 	RequestTime       float64 `json:"requestTime"`       // Timing's requestTime is a baseline in seconds, while the other numbers are ticks in milliseconds relatively to this requestTime.
 	ProxyStart        float64 `json:"proxyStart"`        // Started resolving proxy.
@@ -328,6 +344,8 @@ type ResourceTiming struct {
 }
 
 // ResourcePriority loading priority of a resource request.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-ResourcePriority
 type ResourcePriority string
 
 // String returns the ResourcePriority as string value.
@@ -379,6 +397,8 @@ func (t *ResourcePriority) UnmarshalJSON(buf []byte) error {
 }
 
 // Request HTTP request data.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-Request
 type Request struct {
 	URL              string                    `json:"url"`                        // Request URL (without fragment).
 	URLFragment      string                    `json:"urlFragment,omitempty"`      // Fragment of the requested URL starting with hash, if present.
@@ -394,6 +414,8 @@ type Request struct {
 
 // SignedCertificateTimestamp details of a signed certificate timestamp
 // (SCT).
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-SignedCertificateTimestamp
 type SignedCertificateTimestamp struct {
 	Status             string              `json:"status"`             // Validation status.
 	Origin             string              `json:"origin"`             // Origin.
@@ -406,6 +428,8 @@ type SignedCertificateTimestamp struct {
 }
 
 // SecurityDetails security details about a request.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-SecurityDetails
 type SecurityDetails struct {
 	Protocol                          string                            `json:"protocol"`                          // Protocol name (e.g. "TLS 1.2" or "QUIC").
 	KeyExchange                       string                            `json:"keyExchange"`                       // Key Exchange used by the connection, or the empty string if not applicable.
@@ -424,6 +448,8 @@ type SecurityDetails struct {
 
 // CertificateTransparencyCompliance whether the request complied with
 // Certificate Transparency policy.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-CertificateTransparencyCompliance
 type CertificateTransparencyCompliance string
 
 // String returns the CertificateTransparencyCompliance as string value.
@@ -469,6 +495,8 @@ func (t *CertificateTransparencyCompliance) UnmarshalJSON(buf []byte) error {
 }
 
 // BlockedReason the reason why request was blocked.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-BlockedReason
 type BlockedReason string
 
 // String returns the BlockedReason as string value.
@@ -529,6 +557,8 @@ func (t *BlockedReason) UnmarshalJSON(buf []byte) error {
 }
 
 // Response HTTP response data.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-Response
 type Response struct {
 	URL                string           `json:"url"`                          // Response URL. This URL can be different from CachedResource.url in case of redirect.
 	Status             int64            `json:"status"`                       // HTTP response status code.
@@ -552,11 +582,15 @@ type Response struct {
 }
 
 // WebSocketRequest webSocket request data.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-WebSocketRequest
 type WebSocketRequest struct {
 	Headers Headers `json:"headers"` // HTTP request headers.
 }
 
 // WebSocketResponse webSocket response data.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-WebSocketResponse
 type WebSocketResponse struct {
 	Status             int64   `json:"status"`                       // HTTP response status code.
 	StatusText         string  `json:"statusText"`                   // HTTP response status text.
@@ -568,6 +602,8 @@ type WebSocketResponse struct {
 
 // WebSocketFrame webSocket message data. This represents an entire WebSocket
 // message, not just a fragmented frame as the name suggests.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-WebSocketFrame
 type WebSocketFrame struct {
 	Opcode      float64 `json:"opcode"`      // WebSocket message opcode.
 	Mask        bool    `json:"mask"`        // WebSocket message mask.
@@ -575,6 +611,8 @@ type WebSocketFrame struct {
 }
 
 // CachedResource information about the cached resource.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-CachedResource
 type CachedResource struct {
 	URL      string       `json:"url"`                // Resource URL. This is the url of the original network request.
 	Type     ResourceType `json:"type"`               // Type of this resource.
@@ -583,6 +621,8 @@ type CachedResource struct {
 }
 
 // Initiator information about the request initiator.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-Initiator
 type Initiator struct {
 	Type       InitiatorType       `json:"type"`                 // Type of this initiator.
 	Stack      *runtime.StackTrace `json:"stack,omitempty"`      // Initiator JavaScript stack trace, set for Script only.
@@ -591,6 +631,8 @@ type Initiator struct {
 }
 
 // Cookie cookie object.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-Cookie
 type Cookie struct {
 	Name     string         `json:"name"`               // Cookie name.
 	Value    string         `json:"value"`              // Cookie value.
@@ -605,6 +647,8 @@ type Cookie struct {
 }
 
 // CookieParam cookie parameter object.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-CookieParam
 type CookieParam struct {
 	Name     string              `json:"name"`               // Cookie name.
 	Value    string              `json:"value"`              // Cookie value.
@@ -618,6 +662,8 @@ type CookieParam struct {
 }
 
 // AuthChallenge authorization challenge for HTTP status code 401 or 407.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-AuthChallenge
 type AuthChallenge struct {
 	Source AuthChallengeSource `json:"source,omitempty"` // Source of the authentication challenge.
 	Origin string              `json:"origin"`           // Origin of the challenger.
@@ -626,6 +672,8 @@ type AuthChallenge struct {
 }
 
 // AuthChallengeResponse response to an AuthChallenge.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-AuthChallengeResponse
 type AuthChallengeResponse struct {
 	Response AuthChallengeResponseResponse `json:"response"`           // The decision on what to do in response to the authorization challenge.  Default means deferring to the default behavior of the net stack, which will likely either the Cancel authentication or display a popup dialog box.
 	Username string                        `json:"username,omitempty"` // The username to provide, possibly empty. Should only be set if response is ProvideCredentials.
@@ -635,6 +683,8 @@ type AuthChallengeResponse struct {
 // InterceptionStage stages of the interception to begin intercepting.
 // Request will intercept before the request is sent. Response will intercept
 // after the response is received.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-InterceptionStage
 type InterceptionStage string
 
 // String returns the InterceptionStage as string value.
@@ -677,6 +727,8 @@ func (t *InterceptionStage) UnmarshalJSON(buf []byte) error {
 }
 
 // RequestPattern request pattern for interception.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-RequestPattern
 type RequestPattern struct {
 	URLPattern        string            `json:"urlPattern,omitempty"`        // Wildcards ('*' -> zero or more, '?' -> exactly one) are allowed. Escape character is backslash. Omitting is equivalent to "*".
 	ResourceType      ResourceType      `json:"resourceType,omitempty"`      // If set, only requests for matching resource types will be intercepted.
@@ -685,6 +737,8 @@ type RequestPattern struct {
 
 // SignedExchangeSignature information about a signed exchange signature.
 // https://wicg.github.io/webpackage/draft-yasskin-httpbis-origin-signed-exchanges-impl.html#rfc.section.3.1.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-SignedExchangeSignature
 type SignedExchangeSignature struct {
 	Label        string   `json:"label"`                  // Signed exchange signature label.
 	Signature    string   `json:"signature"`              // The hex string of signed exchange signature.
@@ -699,6 +753,8 @@ type SignedExchangeSignature struct {
 
 // SignedExchangeHeader information about a signed exchange header.
 // https://wicg.github.io/webpackage/draft-yasskin-httpbis-origin-signed-exchanges-impl.html#cbor-representation.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-SignedExchangeHeader
 type SignedExchangeHeader struct {
 	RequestURL      string                     `json:"requestUrl"`      // Signed exchange request URL.
 	ResponseCode    int64                      `json:"responseCode"`    // Signed exchange response code.
@@ -707,6 +763,8 @@ type SignedExchangeHeader struct {
 }
 
 // SignedExchangeErrorField field type for a signed exchange related error.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-SignedExchangeErrorField
 type SignedExchangeErrorField string
 
 // String returns the SignedExchangeErrorField as string value.
@@ -761,6 +819,8 @@ func (t *SignedExchangeErrorField) UnmarshalJSON(buf []byte) error {
 }
 
 // SignedExchangeError information about a signed exchange response.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-SignedExchangeError
 type SignedExchangeError struct {
 	Message        string                   `json:"message"`                  // Error message.
 	SignatureIndex int64                    `json:"signatureIndex,omitempty"` // The index of the signature which caused the error.
@@ -768,6 +828,8 @@ type SignedExchangeError struct {
 }
 
 // SignedExchangeInfo information about a signed exchange response.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-SignedExchangeInfo
 type SignedExchangeInfo struct {
 	OuterResponse   *Response              `json:"outerResponse"`             // The outer response of signed HTTP exchange which was received from network.
 	Header          *SignedExchangeHeader  `json:"header,omitempty"`          // Information about the signed exchange header.

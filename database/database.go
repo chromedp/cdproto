@@ -24,8 +24,8 @@ func Disable() *DisableParams {
 }
 
 // Do executes Database.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandDisable, nil, nil)
+func (p *DisableParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandDisable, nil, nil)
 }
 
 // EnableParams enables database tracking, database events will now be
@@ -39,8 +39,8 @@ func Enable() *EnableParams {
 }
 
 // Do executes Database.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandEnable, nil, nil)
+func (p *EnableParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandEnable, nil, nil)
 }
 
 // ExecuteSQLParams [no description].
@@ -50,6 +50,8 @@ type ExecuteSQLParams struct {
 }
 
 // ExecuteSQL [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Database#method-executeSQL
 //
 // parameters:
 //   databaseID
@@ -74,10 +76,10 @@ type ExecuteSQLReturns struct {
 //   columnNames
 //   values
 //   sqlError
-func (p *ExecuteSQLParams) Do(ctxt context.Context) (columnNames []string, values []easyjson.RawMessage, sqlError *Error, err error) {
+func (p *ExecuteSQLParams) Do(ctx context.Context) (columnNames []string, values []easyjson.RawMessage, sqlError *Error, err error) {
 	// execute
 	var res ExecuteSQLReturns
-	err = cdp.Execute(ctxt, CommandExecuteSQL, p, &res)
+	err = cdp.Execute(ctx, CommandExecuteSQL, p, &res)
 	if err != nil {
 		return nil, nil, nil, err
 	}
@@ -91,6 +93,8 @@ type GetDatabaseTableNamesParams struct {
 }
 
 // GetDatabaseTableNames [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Database#method-getDatabaseTableNames
 //
 // parameters:
 //   databaseID
@@ -109,10 +113,10 @@ type GetDatabaseTableNamesReturns struct {
 //
 // returns:
 //   tableNames
-func (p *GetDatabaseTableNamesParams) Do(ctxt context.Context) (tableNames []string, err error) {
+func (p *GetDatabaseTableNamesParams) Do(ctx context.Context) (tableNames []string, err error) {
 	// execute
 	var res GetDatabaseTableNamesReturns
-	err = cdp.Execute(ctxt, CommandGetDatabaseTableNames, p, &res)
+	err = cdp.Execute(ctx, CommandGetDatabaseTableNames, p, &res)
 	if err != nil {
 		return nil, err
 	}

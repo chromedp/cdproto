@@ -23,6 +23,8 @@ type CompositingReasonsParams struct {
 // CompositingReasons provides the reasons why the given layer was
 // composited.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/LayerTree#method-compositingReasons
+//
 // parameters:
 //   layerID - The id of the layer for which we want to get the reasons it was composited.
 func CompositingReasons(layerID LayerID) *CompositingReasonsParams {
@@ -40,10 +42,10 @@ type CompositingReasonsReturns struct {
 //
 // returns:
 //   compositingReasons - A list of strings specifying reasons for the given layer to become composited.
-func (p *CompositingReasonsParams) Do(ctxt context.Context) (compositingReasons []string, err error) {
+func (p *CompositingReasonsParams) Do(ctx context.Context) (compositingReasons []string, err error) {
 	// execute
 	var res CompositingReasonsReturns
-	err = cdp.Execute(ctxt, CommandCompositingReasons, p, &res)
+	err = cdp.Execute(ctx, CommandCompositingReasons, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -60,8 +62,8 @@ func Disable() *DisableParams {
 }
 
 // Do executes LayerTree.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandDisable, nil, nil)
+func (p *DisableParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandDisable, nil, nil)
 }
 
 // EnableParams enables compositing tree inspection.
@@ -73,8 +75,8 @@ func Enable() *EnableParams {
 }
 
 // Do executes LayerTree.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandEnable, nil, nil)
+func (p *EnableParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandEnable, nil, nil)
 }
 
 // LoadSnapshotParams returns the snapshot identifier.
@@ -83,6 +85,8 @@ type LoadSnapshotParams struct {
 }
 
 // LoadSnapshot returns the snapshot identifier.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/LayerTree#method-loadSnapshot
 //
 // parameters:
 //   tiles - An array of tiles composing the snapshot.
@@ -101,10 +105,10 @@ type LoadSnapshotReturns struct {
 //
 // returns:
 //   snapshotID - The id of the snapshot.
-func (p *LoadSnapshotParams) Do(ctxt context.Context) (snapshotID SnapshotID, err error) {
+func (p *LoadSnapshotParams) Do(ctx context.Context) (snapshotID SnapshotID, err error) {
 	// execute
 	var res LoadSnapshotReturns
-	err = cdp.Execute(ctxt, CommandLoadSnapshot, p, &res)
+	err = cdp.Execute(ctx, CommandLoadSnapshot, p, &res)
 	if err != nil {
 		return "", err
 	}
@@ -118,6 +122,8 @@ type MakeSnapshotParams struct {
 }
 
 // MakeSnapshot returns the layer snapshot identifier.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/LayerTree#method-makeSnapshot
 //
 // parameters:
 //   layerID - The id of the layer.
@@ -136,10 +142,10 @@ type MakeSnapshotReturns struct {
 //
 // returns:
 //   snapshotID - The id of the layer snapshot.
-func (p *MakeSnapshotParams) Do(ctxt context.Context) (snapshotID SnapshotID, err error) {
+func (p *MakeSnapshotParams) Do(ctx context.Context) (snapshotID SnapshotID, err error) {
 	// execute
 	var res MakeSnapshotReturns
-	err = cdp.Execute(ctxt, CommandMakeSnapshot, p, &res)
+	err = cdp.Execute(ctx, CommandMakeSnapshot, p, &res)
 	if err != nil {
 		return "", err
 	}
@@ -156,6 +162,8 @@ type ProfileSnapshotParams struct {
 }
 
 // ProfileSnapshot [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/LayerTree#method-profileSnapshot
 //
 // parameters:
 //   snapshotID - The id of the layer snapshot.
@@ -193,10 +201,10 @@ type ProfileSnapshotReturns struct {
 //
 // returns:
 //   timings - The array of paint profiles, one per run.
-func (p *ProfileSnapshotParams) Do(ctxt context.Context) (timings []PaintProfile, err error) {
+func (p *ProfileSnapshotParams) Do(ctx context.Context) (timings []PaintProfile, err error) {
 	// execute
 	var res ProfileSnapshotReturns
-	err = cdp.Execute(ctxt, CommandProfileSnapshot, p, &res)
+	err = cdp.Execute(ctx, CommandProfileSnapshot, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -211,6 +219,8 @@ type ReleaseSnapshotParams struct {
 
 // ReleaseSnapshot releases layer snapshot captured by the back-end.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/LayerTree#method-releaseSnapshot
+//
 // parameters:
 //   snapshotID - The id of the layer snapshot.
 func ReleaseSnapshot(snapshotID SnapshotID) *ReleaseSnapshotParams {
@@ -220,8 +230,8 @@ func ReleaseSnapshot(snapshotID SnapshotID) *ReleaseSnapshotParams {
 }
 
 // Do executes LayerTree.releaseSnapshot against the provided context.
-func (p *ReleaseSnapshotParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandReleaseSnapshot, p, nil)
+func (p *ReleaseSnapshotParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandReleaseSnapshot, p, nil)
 }
 
 // ReplaySnapshotParams replays the layer snapshot and returns the resulting
@@ -235,6 +245,8 @@ type ReplaySnapshotParams struct {
 
 // ReplaySnapshot replays the layer snapshot and returns the resulting
 // bitmap.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/LayerTree#method-replaySnapshot
 //
 // parameters:
 //   snapshotID - The id of the layer snapshot.
@@ -273,10 +285,10 @@ type ReplaySnapshotReturns struct {
 //
 // returns:
 //   dataURL - A data: URL for resulting image.
-func (p *ReplaySnapshotParams) Do(ctxt context.Context) (dataURL string, err error) {
+func (p *ReplaySnapshotParams) Do(ctx context.Context) (dataURL string, err error) {
 	// execute
 	var res ReplaySnapshotReturns
-	err = cdp.Execute(ctxt, CommandReplaySnapshot, p, &res)
+	err = cdp.Execute(ctx, CommandReplaySnapshot, p, &res)
 	if err != nil {
 		return "", err
 	}
@@ -291,6 +303,8 @@ type SnapshotCommandLogParams struct {
 }
 
 // SnapshotCommandLog replays the layer snapshot and returns canvas log.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/LayerTree#method-snapshotCommandLog
 //
 // parameters:
 //   snapshotID - The id of the layer snapshot.
@@ -309,10 +323,10 @@ type SnapshotCommandLogReturns struct {
 //
 // returns:
 //   commandLog - The array of canvas function calls.
-func (p *SnapshotCommandLogParams) Do(ctxt context.Context) (commandLog []easyjson.RawMessage, err error) {
+func (p *SnapshotCommandLogParams) Do(ctx context.Context) (commandLog []easyjson.RawMessage, err error) {
 	// execute
 	var res SnapshotCommandLogReturns
-	err = cdp.Execute(ctxt, CommandSnapshotCommandLog, p, &res)
+	err = cdp.Execute(ctx, CommandSnapshotCommandLog, p, &res)
 	if err != nil {
 		return nil, err
 	}

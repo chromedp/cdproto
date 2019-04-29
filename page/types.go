@@ -13,6 +13,8 @@ import (
 )
 
 // FrameResource information about the Resource on the page.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-FrameResource
 type FrameResource struct {
 	URL          string               `json:"url"`                    // Resource URL.
 	Type         network.ResourceType `json:"type"`                   // Type of this resource.
@@ -25,6 +27,8 @@ type FrameResource struct {
 
 // FrameResourceTree information about the Frame hierarchy along with their
 // cached resources.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-FrameResourceTree
 type FrameResourceTree struct {
 	Frame       *cdp.Frame           `json:"frame"`                 // Frame information for this tree item.
 	ChildFrames []*FrameResourceTree `json:"childFrames,omitempty"` // Child frames.
@@ -32,12 +36,16 @@ type FrameResourceTree struct {
 }
 
 // FrameTree information about the Frame hierarchy.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-FrameTree
 type FrameTree struct {
 	Frame       *cdp.Frame   `json:"frame"`                 // Frame information for this tree item.
 	ChildFrames []*FrameTree `json:"childFrames,omitempty"` // Child frames.
 }
 
 // ScriptIdentifier unique script identifier.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-ScriptIdentifier
 type ScriptIdentifier string
 
 // String returns the ScriptIdentifier as string value.
@@ -46,6 +54,8 @@ func (t ScriptIdentifier) String() string {
 }
 
 // TransitionType transition type.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-TransitionType
 type TransitionType string
 
 // String returns the TransitionType as string value.
@@ -121,6 +131,8 @@ func (t *TransitionType) UnmarshalJSON(buf []byte) error {
 }
 
 // NavigationEntry navigation history entry.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-NavigationEntry
 type NavigationEntry struct {
 	ID             int64          `json:"id"`             // Unique id of the navigation history entry.
 	URL            string         `json:"url"`            // URL of the navigation history entry.
@@ -130,6 +142,8 @@ type NavigationEntry struct {
 }
 
 // ScreencastFrameMetadata screencast frame metadata.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-ScreencastFrameMetadata
 type ScreencastFrameMetadata struct {
 	OffsetTop       float64             `json:"offsetTop"`           // Top offset in DIP.
 	PageScaleFactor float64             `json:"pageScaleFactor"`     // Page scale factor.
@@ -141,6 +155,8 @@ type ScreencastFrameMetadata struct {
 }
 
 // DialogType javascript dialog type.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-DialogType
 type DialogType string
 
 // String returns the DialogType as string value.
@@ -189,6 +205,8 @@ func (t *DialogType) UnmarshalJSON(buf []byte) error {
 }
 
 // AppManifestError error while paring app manifest.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-AppManifestError
 type AppManifestError struct {
 	Message  string `json:"message"`  // Error message.
 	Critical int64  `json:"critical"` // If criticial, this is a non-recoverable parse error.
@@ -197,6 +215,8 @@ type AppManifestError struct {
 }
 
 // LayoutViewport layout viewport position and dimensions.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-LayoutViewport
 type LayoutViewport struct {
 	PageX        int64 `json:"pageX"`        // Horizontal offset relative to the document (CSS pixels).
 	PageY        int64 `json:"pageY"`        // Vertical offset relative to the document (CSS pixels).
@@ -205,6 +225,8 @@ type LayoutViewport struct {
 }
 
 // VisualViewport visual viewport position, dimensions, and scale.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-VisualViewport
 type VisualViewport struct {
 	OffsetX      float64 `json:"offsetX"`        // Horizontal offset relative to the layout viewport (CSS pixels).
 	OffsetY      float64 `json:"offsetY"`        // Vertical offset relative to the layout viewport (CSS pixels).
@@ -217,6 +239,8 @@ type VisualViewport struct {
 }
 
 // Viewport viewport for capturing screenshot.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-Viewport
 type Viewport struct {
 	X      float64 `json:"x"`      // X offset in device independent pixels (dip).
 	Y      float64 `json:"y"`      // Y offset in device independent pixels (dip).
@@ -226,6 +250,8 @@ type Viewport struct {
 }
 
 // FontFamilies generic font families collection.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-FontFamilies
 type FontFamilies struct {
 	Standard   string `json:"standard,omitempty"`   // The standard font-family.
 	Fixed      string `json:"fixed,omitempty"`      // The fixed font-family.
@@ -237,12 +263,16 @@ type FontFamilies struct {
 }
 
 // FontSizes default font sizes.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-FontSizes
 type FontSizes struct {
 	Standard int64 `json:"standard,omitempty"` // Default standard font size.
 	Fixed    int64 `json:"fixed,omitempty"`    // Default fixed font size.
 }
 
 // ClientNavigationReason [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-ClientNavigationReason
 type ClientNavigationReason string
 
 // String returns the ClientNavigationReason as string value.

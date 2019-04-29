@@ -21,8 +21,8 @@ func Disable() *DisableParams {
 }
 
 // Do executes Performance.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandDisable, nil, nil)
+func (p *DisableParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandDisable, nil, nil)
 }
 
 // EnableParams enable collecting and reporting metrics.
@@ -34,8 +34,8 @@ func Enable() *EnableParams {
 }
 
 // Do executes Performance.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandEnable, nil, nil)
+func (p *EnableParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandEnable, nil, nil)
 }
 
 // SetTimeDomainParams sets time domain to use for collecting and reporting
@@ -51,6 +51,8 @@ type SetTimeDomainParams struct {
 // collection. Calling this method while metrics collection is enabled returns
 // an error.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Performance#method-setTimeDomain
+//
 // parameters:
 //   timeDomain - Time domain
 func SetTimeDomain(timeDomain SetTimeDomainTimeDomain) *SetTimeDomainParams {
@@ -60,8 +62,8 @@ func SetTimeDomain(timeDomain SetTimeDomainTimeDomain) *SetTimeDomainParams {
 }
 
 // Do executes Performance.setTimeDomain against the provided context.
-func (p *SetTimeDomainParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandSetTimeDomain, p, nil)
+func (p *SetTimeDomainParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetTimeDomain, p, nil)
 }
 
 // GetMetricsParams retrieve current values of run-time metrics.
@@ -81,10 +83,10 @@ type GetMetricsReturns struct {
 //
 // returns:
 //   metrics - Current values for run-time metrics.
-func (p *GetMetricsParams) Do(ctxt context.Context) (metrics []*Metric, err error) {
+func (p *GetMetricsParams) Do(ctx context.Context) (metrics []*Metric, err error) {
 	// execute
 	var res GetMetricsReturns
-	err = cdp.Execute(ctxt, CommandGetMetrics, nil, &res)
+	err = cdp.Execute(ctx, CommandGetMetrics, nil, &res)
 	if err != nil {
 		return nil, err
 	}

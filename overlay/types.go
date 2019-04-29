@@ -12,6 +12,8 @@ import (
 )
 
 // HighlightConfig configuration data for the highlighting of page elements.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Overlay#type-HighlightConfig
 type HighlightConfig struct {
 	ShowInfo           bool      `json:"showInfo,omitempty"`           // Whether the node info tooltip should be shown (default: false).
 	ShowStyles         bool      `json:"showStyles,omitempty"`         // Whether the node styles in the tooltip (default: false).
@@ -28,6 +30,8 @@ type HighlightConfig struct {
 }
 
 // InspectMode [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Overlay#type-InspectMode
 type InspectMode string
 
 // String returns the InspectMode as string value.

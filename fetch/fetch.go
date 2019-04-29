@@ -27,8 +27,8 @@ func Disable() *DisableParams {
 }
 
 // Do executes Fetch.disable against the provided context.
-func (p *DisableParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandDisable, nil, nil)
+func (p *DisableParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandDisable, nil, nil)
 }
 
 // EnableParams enables issuing of requestPaused events. A request will be
@@ -42,6 +42,8 @@ type EnableParams struct {
 // Enable enables issuing of requestPaused events. A request will be paused
 // until client calls one of failRequest, fulfillRequest or
 // continueRequest/continueWithAuth.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Fetch#method-enable
 //
 // parameters:
 func Enable() *EnableParams {
@@ -64,8 +66,8 @@ func (p EnableParams) WithHandleAuthRequests(handleAuthRequests bool) *EnablePar
 }
 
 // Do executes Fetch.enable against the provided context.
-func (p *EnableParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandEnable, p, nil)
+func (p *EnableParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandEnable, p, nil)
 }
 
 // FailRequestParams causes the request to fail with specified reason.
@@ -75,6 +77,8 @@ type FailRequestParams struct {
 }
 
 // FailRequest causes the request to fail with specified reason.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Fetch#method-failRequest
 //
 // parameters:
 //   requestID - An id the client received in requestPaused event.
@@ -87,8 +91,8 @@ func FailRequest(requestID RequestID, errorReason network.ErrorReason) *FailRequ
 }
 
 // Do executes Fetch.failRequest against the provided context.
-func (p *FailRequestParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandFailRequest, p, nil)
+func (p *FailRequestParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandFailRequest, p, nil)
 }
 
 // FulfillRequestParams provides response to the request.
@@ -101,6 +105,8 @@ type FulfillRequestParams struct {
 }
 
 // FulfillRequest provides response to the request.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Fetch#method-fulfillRequest
 //
 // parameters:
 //   requestID - An id the client received in requestPaused event.
@@ -128,8 +134,8 @@ func (p FulfillRequestParams) WithResponsePhrase(responsePhrase string) *Fulfill
 }
 
 // Do executes Fetch.fulfillRequest against the provided context.
-func (p *FulfillRequestParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandFulfillRequest, p, nil)
+func (p *FulfillRequestParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandFulfillRequest, p, nil)
 }
 
 // ContinueRequestParams continues the request, optionally modifying some of
@@ -144,6 +150,8 @@ type ContinueRequestParams struct {
 
 // ContinueRequest continues the request, optionally modifying some of its
 // parameters.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Fetch#method-continueRequest
 //
 // parameters:
 //   requestID - An id the client received in requestPaused event.
@@ -179,8 +187,8 @@ func (p ContinueRequestParams) WithHeaders(headers []*HeaderEntry) *ContinueRequ
 }
 
 // Do executes Fetch.continueRequest against the provided context.
-func (p *ContinueRequestParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandContinueRequest, p, nil)
+func (p *ContinueRequestParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandContinueRequest, p, nil)
 }
 
 // ContinueWithAuthParams continues a request supplying authChallengeResponse
@@ -193,6 +201,8 @@ type ContinueWithAuthParams struct {
 // ContinueWithAuth continues a request supplying authChallengeResponse
 // following authRequired event.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Fetch#method-continueWithAuth
+//
 // parameters:
 //   requestID - An id the client received in authRequired event.
 //   authChallengeResponse - Response to  with an authChallenge.
@@ -204,8 +214,8 @@ func ContinueWithAuth(requestID RequestID, authChallengeResponse *AuthChallengeR
 }
 
 // Do executes Fetch.continueWithAuth against the provided context.
-func (p *ContinueWithAuthParams) Do(ctxt context.Context) (err error) {
-	return cdp.Execute(ctxt, CommandContinueWithAuth, p, nil)
+func (p *ContinueWithAuthParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandContinueWithAuth, p, nil)
 }
 
 // GetResponseBodyParams causes the body of the response to be received from
@@ -225,6 +235,8 @@ type GetResponseBodyParams struct {
 // the request or disabling fetch domain before body is received results in an
 // undefined behavior.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Fetch#method-getResponseBody
+//
 // parameters:
 //   requestID - Identifier for the intercepted request to get body for.
 func GetResponseBody(requestID RequestID) *GetResponseBodyParams {
@@ -243,10 +255,10 @@ type GetResponseBodyReturns struct {
 //
 // returns:
 //   body - Response body.
-func (p *GetResponseBodyParams) Do(ctxt context.Context) (body []byte, err error) {
+func (p *GetResponseBodyParams) Do(ctx context.Context) (body []byte, err error) {
 	// execute
 	var res GetResponseBodyReturns
-	err = cdp.Execute(ctxt, CommandGetResponseBody, p, &res)
+	err = cdp.Execute(ctx, CommandGetResponseBody, p, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -285,6 +297,8 @@ type TakeResponseBodyAsStreamParams struct {
 // the request or disabling fetch domain before body is received results in an
 // undefined behavior.
 //
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Fetch#method-takeResponseBodyAsStream
+//
 // parameters:
 //   requestID
 func TakeResponseBodyAsStream(requestID RequestID) *TakeResponseBodyAsStreamParams {
@@ -302,10 +316,10 @@ type TakeResponseBodyAsStreamReturns struct {
 //
 // returns:
 //   stream
-func (p *TakeResponseBodyAsStreamParams) Do(ctxt context.Context) (stream io.StreamHandle, err error) {
+func (p *TakeResponseBodyAsStreamParams) Do(ctx context.Context) (stream io.StreamHandle, err error) {
 	// execute
 	var res TakeResponseBodyAsStreamReturns
-	err = cdp.Execute(ctxt, CommandTakeResponseBodyAsStream, p, &res)
+	err = cdp.Execute(ctx, CommandTakeResponseBodyAsStream, p, &res)
 	if err != nil {
 		return "", err
 	}
