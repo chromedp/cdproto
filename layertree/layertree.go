@@ -57,6 +57,8 @@ func (p *CompositingReasonsParams) Do(ctx context.Context) (compositingReasons [
 type DisableParams struct{}
 
 // Disable disables compositing tree inspection.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/LayerTree#method-disable
 func Disable() *DisableParams {
 	return &DisableParams{}
 }
@@ -70,6 +72,8 @@ func (p *DisableParams) Do(ctx context.Context) (err error) {
 type EnableParams struct{}
 
 // Enable enables compositing tree inspection.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/LayerTree#method-enable
 func Enable() *EnableParams {
 	return &EnableParams{}
 }

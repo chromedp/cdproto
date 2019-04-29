@@ -16,6 +16,8 @@ import (
 type EnableParams struct{}
 
 // Enable enables application cache domain notifications.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/ApplicationCache#method-enable
 func Enable() *EnableParams {
 	return &EnableParams{}
 }
@@ -72,6 +74,8 @@ type GetFramesWithManifestsParams struct{}
 // GetFramesWithManifests returns array of frame identifiers with manifest
 // urls for each frame containing a document associated with some application
 // cache.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/ApplicationCache#method-getFramesWithManifests
 func GetFramesWithManifests() *GetFramesWithManifestsParams {
 	return &GetFramesWithManifestsParams{}
 }

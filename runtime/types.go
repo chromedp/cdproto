@@ -270,6 +270,8 @@ type StackTraceID struct {
 }
 
 // Type object type.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#type-type
 type Type string
 
 // String returns the Type as string value.
@@ -333,6 +335,8 @@ func (t *Type) UnmarshalJSON(buf []byte) error {
 }
 
 // Subtype object subtype hint. Specified for object type values only.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#type-subtype
 type Subtype string
 
 // String returns the Subtype as string value.
@@ -420,6 +424,8 @@ func (t *Subtype) UnmarshalJSON(buf []byte) error {
 }
 
 // APIType type of the call.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#type-type
 type APIType string
 
 // String returns the APIType as string value.

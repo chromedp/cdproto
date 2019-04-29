@@ -16,6 +16,8 @@ import (
 type GetDOMCountersParams struct{}
 
 // GetDOMCounters [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Memory#method-getDOMCounters
 func GetDOMCounters() *GetDOMCountersParams {
 	return &GetDOMCountersParams{}
 }
@@ -48,6 +50,8 @@ func (p *GetDOMCountersParams) Do(ctx context.Context) (documents int64, nodes i
 type PrepareForLeakDetectionParams struct{}
 
 // PrepareForLeakDetection [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Memory#method-prepareForLeakDetection
 func PrepareForLeakDetection() *PrepareForLeakDetectionParams {
 	return &PrepareForLeakDetectionParams{}
 }
@@ -63,6 +67,8 @@ type ForciblyPurgeJavaScriptMemoryParams struct{}
 
 // ForciblyPurgeJavaScriptMemory simulate OomIntervention by purging V8
 // memory.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Memory#method-forciblyPurgeJavaScriptMemory
 func ForciblyPurgeJavaScriptMemory() *ForciblyPurgeJavaScriptMemoryParams {
 	return &ForciblyPurgeJavaScriptMemoryParams{}
 }
@@ -156,6 +162,8 @@ func (p *StartSamplingParams) Do(ctx context.Context) (err error) {
 type StopSamplingParams struct{}
 
 // StopSampling stop collecting native memory profile.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Memory#method-stopSampling
 func StopSampling() *StopSamplingParams {
 	return &StopSamplingParams{}
 }
@@ -171,6 +179,8 @@ type GetAllTimeSamplingProfileParams struct{}
 
 // GetAllTimeSamplingProfile retrieve native memory allocations profile
 // collected since renderer process startup.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Memory#method-getAllTimeSamplingProfile
 func GetAllTimeSamplingProfile() *GetAllTimeSamplingProfileParams {
 	return &GetAllTimeSamplingProfileParams{}
 }
@@ -201,6 +211,8 @@ type GetBrowserSamplingProfileParams struct{}
 
 // GetBrowserSamplingProfile retrieve native memory allocations profile
 // collected since browser process startup.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Memory#method-getBrowserSamplingProfile
 func GetBrowserSamplingProfile() *GetBrowserSamplingProfileParams {
 	return &GetBrowserSamplingProfileParams{}
 }
@@ -231,6 +243,8 @@ type GetSamplingProfileParams struct{}
 
 // GetSamplingProfile retrieve native memory allocations profile collected
 // since last startSampling call.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Memory#method-getSamplingProfile
 func GetSamplingProfile() *GetSamplingProfileParams {
 	return &GetSamplingProfileParams{}
 }

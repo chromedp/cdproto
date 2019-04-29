@@ -17,6 +17,8 @@ import (
 type DisableParams struct{}
 
 // Disable disables the accessibility domain.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Accessibility#method-disable
 func Disable() *DisableParams {
 	return &DisableParams{}
 }
@@ -34,6 +36,8 @@ type EnableParams struct{}
 // Enable enables the accessibility domain which causes AXNodeIds to remain
 // consistent between method calls. This turns on accessibility for the page,
 // which can impact performance until accessibility is disabled.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Accessibility#method-enable
 func Enable() *EnableParams {
 	return &EnableParams{}
 }
@@ -114,6 +118,8 @@ func (p *GetPartialAXTreeParams) Do(ctx context.Context) (nodes []*Node, err err
 type GetFullAXTreeParams struct{}
 
 // GetFullAXTree fetches the entire accessibility tree.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Accessibility#method-getFullAXTree
 func GetFullAXTree() *GetFullAXTreeParams {
 	return &GetFullAXTreeParams{}
 }

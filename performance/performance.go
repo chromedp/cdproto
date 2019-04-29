@@ -16,6 +16,8 @@ import (
 type DisableParams struct{}
 
 // Disable disable collecting and reporting metrics.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Performance#method-disable
 func Disable() *DisableParams {
 	return &DisableParams{}
 }
@@ -29,6 +31,8 @@ func (p *DisableParams) Do(ctx context.Context) (err error) {
 type EnableParams struct{}
 
 // Enable enable collecting and reporting metrics.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Performance#method-enable
 func Enable() *EnableParams {
 	return &EnableParams{}
 }
@@ -70,6 +74,8 @@ func (p *SetTimeDomainParams) Do(ctx context.Context) (err error) {
 type GetMetricsParams struct{}
 
 // GetMetrics retrieve current values of run-time metrics.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Performance#method-getMetrics
 func GetMetrics() *GetMetricsParams {
 	return &GetMetricsParams{}
 }

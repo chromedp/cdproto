@@ -18,6 +18,8 @@ import (
 type ClearParams struct{}
 
 // Clear clears the log.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Log#method-clear
 func Clear() *ClearParams {
 	return &ClearParams{}
 }
@@ -33,6 +35,8 @@ type DisableParams struct{}
 
 // Disable disables log domain, prevents further log entries from being
 // reported to the client.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Log#method-disable
 func Disable() *DisableParams {
 	return &DisableParams{}
 }
@@ -48,6 +52,8 @@ type EnableParams struct{}
 
 // Enable enables log domain, sends the entries collected so far to the
 // client by means of the entryAdded notification.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Log#method-enable
 func Enable() *EnableParams {
 	return &EnableParams{}
 }
@@ -83,6 +89,8 @@ func (p *StartViolationsReportParams) Do(ctx context.Context) (err error) {
 type StopViolationsReportParams struct{}
 
 // StopViolationsReport stop violation reporting.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Log#method-stopViolationsReport
 func StopViolationsReport() *StopViolationsReportParams {
 	return &StopViolationsReportParams{}
 }

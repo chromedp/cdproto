@@ -51,6 +51,8 @@ func (p *ContinueToLocationParams) Do(ctx context.Context) (err error) {
 type DisableParams struct{}
 
 // Disable disables debugger for given page.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-disable
 func Disable() *DisableParams {
 	return &DisableParams{}
 }
@@ -334,6 +336,8 @@ func (p *GetStackTraceParams) Do(ctx context.Context) (stackTrace *runtime.Stack
 type PauseParams struct{}
 
 // Pause stops on the next JavaScript statement.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-pause
 func Pause() *PauseParams {
 	return &PauseParams{}
 }
@@ -432,6 +436,8 @@ func (p *RestartFrameParams) Do(ctx context.Context) (callFrames []*CallFrame, a
 type ResumeParams struct{}
 
 // Resume resumes JavaScript execution.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-resume
 func Resume() *ResumeParams {
 	return &ResumeParams{}
 }
@@ -978,6 +984,8 @@ func (p *StepIntoParams) Do(ctx context.Context) (err error) {
 type StepOutParams struct{}
 
 // StepOut steps out of the function call.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-stepOut
 func StepOut() *StepOutParams {
 	return &StepOutParams{}
 }
@@ -991,6 +999,8 @@ func (p *StepOutParams) Do(ctx context.Context) (err error) {
 type StepOverParams struct{}
 
 // StepOver steps over the statement.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-stepOver
 func StepOver() *StepOverParams {
 	return &StepOverParams{}
 }

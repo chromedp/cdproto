@@ -19,6 +19,8 @@ import (
 type CanEmulateParams struct{}
 
 // CanEmulate tells whether emulation is supported.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#method-canEmulate
 func CanEmulate() *CanEmulateParams {
 	return &CanEmulateParams{}
 }
@@ -47,6 +49,8 @@ func (p *CanEmulateParams) Do(ctx context.Context) (result bool, err error) {
 type ClearDeviceMetricsOverrideParams struct{}
 
 // ClearDeviceMetricsOverride clears the overridden device metrics.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#method-clearDeviceMetricsOverride
 func ClearDeviceMetricsOverride() *ClearDeviceMetricsOverrideParams {
 	return &ClearDeviceMetricsOverrideParams{}
 }
@@ -62,6 +66,8 @@ type ClearGeolocationOverrideParams struct{}
 
 // ClearGeolocationOverride clears the overridden Geolocation Position and
 // Error.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#method-clearGeolocationOverride
 func ClearGeolocationOverride() *ClearGeolocationOverrideParams {
 	return &ClearGeolocationOverrideParams{}
 }
@@ -77,6 +83,8 @@ type ResetPageScaleFactorParams struct{}
 
 // ResetPageScaleFactor requests that page scale factor is reset to initial
 // values.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#method-resetPageScaleFactor
 func ResetPageScaleFactor() *ResetPageScaleFactorParams {
 	return &ResetPageScaleFactorParams{}
 }

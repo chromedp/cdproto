@@ -21,6 +21,8 @@ type EnableParams struct{}
 
 // Enable enables the WebAudio domain and starts sending context lifetime
 // events.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/WebAudio#method-enable
 func Enable() *EnableParams {
 	return &EnableParams{}
 }
@@ -34,6 +36,8 @@ func (p *EnableParams) Do(ctx context.Context) (err error) {
 type DisableParams struct{}
 
 // Disable disables the WebAudio domain.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/WebAudio#method-disable
 func Disable() *DisableParams {
 	return &DisableParams{}
 }

@@ -22,6 +22,8 @@ import (
 type DisableParams struct{}
 
 // Disable disables domain notifications.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Overlay#method-disable
 func Disable() *DisableParams {
 	return &DisableParams{}
 }
@@ -35,6 +37,8 @@ func (p *DisableParams) Do(ctx context.Context) (err error) {
 type EnableParams struct{}
 
 // Enable enables domain notifications.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Overlay#method-enable
 func Enable() *EnableParams {
 	return &EnableParams{}
 }
@@ -85,6 +89,8 @@ func (p *GetHighlightObjectForTestParams) Do(ctx context.Context) (highlight eas
 type HideHighlightParams struct{}
 
 // HideHighlight hides any highlight.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Overlay#method-hideHighlight
 func HideHighlight() *HideHighlightParams {
 	return &HideHighlightParams{}
 }

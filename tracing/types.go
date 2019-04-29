@@ -121,6 +121,8 @@ func (t *StreamCompression) UnmarshalJSON(buf []byte) error {
 }
 
 // RecordMode controls how the trace buffer stores data.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Tracing#type-recordMode
 type RecordMode string
 
 // String returns the RecordMode as string value.
@@ -170,6 +172,8 @@ func (t *RecordMode) UnmarshalJSON(buf []byte) error {
 
 // TransferMode whether to report trace events as series of dataCollected
 // events or to save trace to a stream (defaults to ReportEvents).
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Tracing#type-transferMode
 type TransferMode string
 
 // String returns the TransferMode as string value.

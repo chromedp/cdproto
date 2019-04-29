@@ -17,6 +17,8 @@ import (
 type ClearDeviceOrientationOverrideParams struct{}
 
 // ClearDeviceOrientationOverride clears the overridden Device Orientation.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DeviceOrientation#method-clearDeviceOrientationOverride
 func ClearDeviceOrientationOverride() *ClearDeviceOrientationOverrideParams {
 	return &ClearDeviceOrientationOverrideParams{}
 }

@@ -839,6 +839,8 @@ type SignedExchangeInfo struct {
 
 // ReferrerPolicy the referrer policy of the request, as defined in
 // https://www.w3.org/TR/referrer-policy/.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-referrerPolicy
 type ReferrerPolicy string
 
 // String returns the ReferrerPolicy as string value.
@@ -899,6 +901,8 @@ func (t *ReferrerPolicy) UnmarshalJSON(buf []byte) error {
 }
 
 // InitiatorType type of this initiator.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-type
 type InitiatorType string
 
 // String returns the InitiatorType as string value.
@@ -950,6 +954,8 @@ func (t *InitiatorType) UnmarshalJSON(buf []byte) error {
 }
 
 // AuthChallengeSource source of the authentication challenge.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-source
 type AuthChallengeSource string
 
 // String returns the AuthChallengeSource as string value.
@@ -995,6 +1001,8 @@ func (t *AuthChallengeSource) UnmarshalJSON(buf []byte) error {
 // the authorization challenge. Default means deferring to the default behavior
 // of the net stack, which will likely either the Cancel authentication or
 // display a popup dialog box.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-response
 type AuthChallengeResponseResponse string
 
 // String returns the AuthChallengeResponseResponse as string value.

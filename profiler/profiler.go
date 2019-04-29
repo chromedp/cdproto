@@ -16,6 +16,8 @@ import (
 type DisableParams struct{}
 
 // Disable [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Profiler#method-disable
 func Disable() *DisableParams {
 	return &DisableParams{}
 }
@@ -29,6 +31,8 @@ func (p *DisableParams) Do(ctx context.Context) (err error) {
 type EnableParams struct{}
 
 // Enable [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Profiler#method-enable
 func Enable() *EnableParams {
 	return &EnableParams{}
 }
@@ -44,6 +48,8 @@ type GetBestEffortCoverageParams struct{}
 
 // GetBestEffortCoverage collect coverage data for the current isolate. The
 // coverage data may be incomplete due to garbage collection.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Profiler#method-getBestEffortCoverage
 func GetBestEffortCoverage() *GetBestEffortCoverageParams {
 	return &GetBestEffortCoverageParams{}
 }
@@ -96,6 +102,8 @@ func (p *SetSamplingIntervalParams) Do(ctx context.Context) (err error) {
 type StartParams struct{}
 
 // Start [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Profiler#method-start
 func Start() *StartParams {
 	return &StartParams{}
 }
@@ -146,6 +154,8 @@ func (p *StartPreciseCoverageParams) Do(ctx context.Context) (err error) {
 type StartTypeProfileParams struct{}
 
 // StartTypeProfile enable type profile.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Profiler#method-startTypeProfile
 func StartTypeProfile() *StartTypeProfileParams {
 	return &StartTypeProfileParams{}
 }
@@ -159,6 +169,8 @@ func (p *StartTypeProfileParams) Do(ctx context.Context) (err error) {
 type StopParams struct{}
 
 // Stop [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Profiler#method-stop
 func Stop() *StopParams {
 	return &StopParams{}
 }
@@ -190,6 +202,8 @@ type StopPreciseCoverageParams struct{}
 
 // StopPreciseCoverage disable precise code coverage. Disabling releases
 // unnecessary execution count records and allows executing optimized code.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Profiler#method-stopPreciseCoverage
 func StopPreciseCoverage() *StopPreciseCoverageParams {
 	return &StopPreciseCoverageParams{}
 }
@@ -205,6 +219,8 @@ type StopTypeProfileParams struct{}
 
 // StopTypeProfile disable type profile. Disabling releases type profile data
 // collected so far.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Profiler#method-stopTypeProfile
 func StopTypeProfile() *StopTypeProfileParams {
 	return &StopTypeProfileParams{}
 }
@@ -220,6 +236,8 @@ type TakePreciseCoverageParams struct{}
 
 // TakePreciseCoverage collect coverage data for the current isolate, and
 // resets execution counters. Precise code coverage needs to have started.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Profiler#method-takePreciseCoverage
 func TakePreciseCoverage() *TakePreciseCoverageParams {
 	return &TakePreciseCoverageParams{}
 }
@@ -248,6 +266,8 @@ func (p *TakePreciseCoverageParams) Do(ctx context.Context) (result []*ScriptCov
 type TakeTypeProfileParams struct{}
 
 // TakeTypeProfile collect type profile.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Profiler#method-takeTypeProfile
 func TakeTypeProfile() *TakeTypeProfileParams {
 	return &TakeTypeProfileParams{}
 }

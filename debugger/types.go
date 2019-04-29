@@ -92,6 +92,8 @@ type BreakLocation struct {
 }
 
 // ScopeType scope type.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#type-type
 type ScopeType string
 
 // String returns the ScopeType as string value.
@@ -155,6 +157,8 @@ func (t *ScopeType) UnmarshalJSON(buf []byte) error {
 }
 
 // BreakLocationType [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#type-type
 type BreakLocationType string
 
 // String returns the BreakLocationType as string value.
@@ -200,6 +204,8 @@ func (t *BreakLocationType) UnmarshalJSON(buf []byte) error {
 }
 
 // PausedReason pause reason.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#type-reason
 type PausedReason string
 
 // String returns the PausedReason as string value.
@@ -266,6 +272,8 @@ func (t *PausedReason) UnmarshalJSON(buf []byte) error {
 }
 
 // ContinueToLocationTargetCallFrames [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#type-targetCallFrames
 type ContinueToLocationTargetCallFrames string
 
 // String returns the ContinueToLocationTargetCallFrames as string value.
@@ -308,6 +316,8 @@ func (t *ContinueToLocationTargetCallFrames) UnmarshalJSON(buf []byte) error {
 }
 
 // ExceptionsState pause on exceptions mode.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#type-state
 type ExceptionsState string
 
 // String returns the ExceptionsState as string value.

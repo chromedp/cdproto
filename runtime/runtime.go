@@ -245,6 +245,8 @@ func (p *CompileScriptParams) Do(ctx context.Context) (scriptID ScriptID, except
 type DisableParams struct{}
 
 // Disable disables reporting of execution contexts creation.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#method-disable
 func Disable() *DisableParams {
 	return &DisableParams{}
 }
@@ -259,6 +261,8 @@ func (p *DisableParams) Do(ctx context.Context) (err error) {
 type DiscardConsoleEntriesParams struct{}
 
 // DiscardConsoleEntries discards collected exceptions and console API calls.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#method-discardConsoleEntries
 func DiscardConsoleEntries() *DiscardConsoleEntriesParams {
 	return &DiscardConsoleEntriesParams{}
 }
@@ -276,6 +280,8 @@ type EnableParams struct{}
 // Enable enables reporting of execution contexts creation by means of
 // executionContextCreated event. When the reporting gets enabled the event will
 // be sent immediately for each existing execution context.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#method-enable
 func Enable() *EnableParams {
 	return &EnableParams{}
 }
@@ -407,6 +413,8 @@ func (p *EvaluateParams) Do(ctx context.Context) (result *RemoteObject, exceptio
 type GetIsolateIDParams struct{}
 
 // GetIsolateID returns the isolate id.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#method-getIsolateId
 func GetIsolateID() *GetIsolateIDParams {
 	return &GetIsolateIDParams{}
 }
@@ -437,6 +445,8 @@ type GetHeapUsageParams struct{}
 
 // GetHeapUsage returns the JavaScript heap usage. It is the total usage of
 // the corresponding isolate not scoped to a particular Runtime.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#method-getHeapUsage
 func GetHeapUsage() *GetHeapUsageParams {
 	return &GetHeapUsageParams{}
 }
@@ -671,6 +681,8 @@ type RunIfWaitingForDebuggerParams struct{}
 
 // RunIfWaitingForDebugger tells inspected instance to run if it was waiting
 // for debugger to attach.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#method-runIfWaitingForDebugger
 func RunIfWaitingForDebugger() *RunIfWaitingForDebuggerParams {
 	return &RunIfWaitingForDebuggerParams{}
 }
@@ -825,6 +837,8 @@ type TerminateExecutionParams struct{}
 
 // TerminateExecution terminate current or next JavaScript execution. Will
 // cancel the termination when the outer-most script execution ends.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#method-terminateExecution
 func TerminateExecution() *TerminateExecutionParams {
 	return &TerminateExecutionParams{}
 }

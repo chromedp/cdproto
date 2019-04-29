@@ -106,6 +106,8 @@ func (p *BeginFrameParams) Do(ctx context.Context) (hasDamage bool, screenshotDa
 type DisableParams struct{}
 
 // Disable disables headless events for the target.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/HeadlessExperimental#method-disable
 func Disable() *DisableParams {
 	return &DisableParams{}
 }
@@ -119,6 +121,8 @@ func (p *DisableParams) Do(ctx context.Context) (err error) {
 type EnableParams struct{}
 
 // Enable enables headless events for the target.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/HeadlessExperimental#method-enable
 func Enable() *EnableParams {
 	return &EnableParams{}
 }

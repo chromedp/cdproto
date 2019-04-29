@@ -16,6 +16,8 @@ import (
 type EndParams struct{}
 
 // End stop trace events collection.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Tracing#method-end
 func End() *EndParams {
 	return &EndParams{}
 }
@@ -29,6 +31,8 @@ func (p *EndParams) Do(ctx context.Context) (err error) {
 type GetCategoriesParams struct{}
 
 // GetCategories gets supported tracing categories.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Tracing#method-getCategories
 func GetCategories() *GetCategoriesParams {
 	return &GetCategoriesParams{}
 }
@@ -79,6 +83,8 @@ func (p *RecordClockSyncMarkerParams) Do(ctx context.Context) (err error) {
 type RequestMemoryDumpParams struct{}
 
 // RequestMemoryDump request a global memory dump.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Tracing#method-requestMemoryDump
 func RequestMemoryDump() *RequestMemoryDumpParams {
 	return &RequestMemoryDumpParams{}
 }

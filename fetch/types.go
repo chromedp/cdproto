@@ -104,6 +104,8 @@ type AuthChallengeResponse struct {
 }
 
 // AuthChallengeSource source of the authentication challenge.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Fetch#type-source
 type AuthChallengeSource string
 
 // String returns the AuthChallengeSource as string value.
@@ -149,6 +151,8 @@ func (t *AuthChallengeSource) UnmarshalJSON(buf []byte) error {
 // the authorization challenge. Default means deferring to the default behavior
 // of the net stack, which will likely either the Cancel authentication or
 // display a popup dialog box.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Fetch#type-response
 type AuthChallengeResponseResponse string
 
 // String returns the AuthChallengeResponseResponse as string value.

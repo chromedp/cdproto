@@ -88,6 +88,8 @@ type Layer struct {
 type PaintProfile []float64
 
 // ScrollRectType reason for rectangle to force scrolling on the main thread.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/LayerTree#type-type
 type ScrollRectType string
 
 // String returns the ScrollRectType as string value.

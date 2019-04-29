@@ -19,6 +19,8 @@ import (
 type DisableParams struct{}
 
 // Disable disables DOM snapshot agent for the given page.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOMSnapshot#method-disable
 func Disable() *DisableParams {
 	return &DisableParams{}
 }
@@ -32,6 +34,8 @@ func (p *DisableParams) Do(ctx context.Context) (err error) {
 type EnableParams struct{}
 
 // Enable enables DOM snapshot agent for the given page.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOMSnapshot#method-enable
 func Enable() *EnableParams {
 	return &EnableParams{}
 }

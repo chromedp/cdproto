@@ -22,6 +22,8 @@ import (
 type DisableParams struct{}
 
 // Disable disables the fetch domain.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Fetch#method-disable
 func Disable() *DisableParams {
 	return &DisableParams{}
 }

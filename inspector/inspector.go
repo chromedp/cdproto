@@ -16,6 +16,8 @@ import (
 type DisableParams struct{}
 
 // Disable disables inspector domain notifications.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Inspector#method-disable
 func Disable() *DisableParams {
 	return &DisableParams{}
 }
@@ -29,6 +31,8 @@ func (p *DisableParams) Do(ctx context.Context) (err error) {
 type EnableParams struct{}
 
 // Enable enables inspector domain notifications.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Inspector#method-enable
 func Enable() *EnableParams {
 	return &EnableParams{}
 }

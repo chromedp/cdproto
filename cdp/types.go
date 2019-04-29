@@ -439,6 +439,8 @@ type RGBA struct {
 }
 
 // NodeType node type.
+//
+// See: https://developer.mozilla.org/en/docs/Web/API/Node/nodeType
 type NodeType int64
 
 // Int64 returns the NodeType as int64 value.

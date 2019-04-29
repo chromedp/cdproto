@@ -87,6 +87,8 @@ type AttachToBrowserTargetParams struct{}
 
 // AttachToBrowserTarget attaches to the browser target, only uses flat
 // sessionId mode.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Target#method-attachToBrowserTarget
 func AttachToBrowserTarget() *AttachToBrowserTargetParams {
 	return &AttachToBrowserTargetParams{}
 }
@@ -195,6 +197,8 @@ type CreateBrowserContextParams struct{}
 
 // CreateBrowserContext creates a new empty BrowserContext. Similar to an
 // incognito profile but you can have more than one.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Target#method-createBrowserContext
 func CreateBrowserContext() *CreateBrowserContextParams {
 	return &CreateBrowserContextParams{}
 }
@@ -225,6 +229,8 @@ type GetBrowserContextsParams struct{}
 
 // GetBrowserContexts returns all browser contexts created with
 // Target.createBrowserContext method.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Target#method-getBrowserContexts
 func GetBrowserContexts() *GetBrowserContextsParams {
 	return &GetBrowserContextsParams{}
 }
@@ -409,6 +415,8 @@ func (p *GetTargetInfoParams) Do(ctx context.Context) (targetInfo *Info, err err
 type GetTargetsParams struct{}
 
 // GetTargets retrieves a list of available targets.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Target#method-getTargets
 func GetTargets() *GetTargetsParams {
 	return &GetTargetsParams{}
 }

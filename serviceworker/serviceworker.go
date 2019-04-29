@@ -44,6 +44,8 @@ func (p *DeliverPushMessageParams) Do(ctx context.Context) (err error) {
 type DisableParams struct{}
 
 // Disable [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/ServiceWorker#method-disable
 func Disable() *DisableParams {
 	return &DisableParams{}
 }
@@ -88,6 +90,8 @@ func (p *DispatchSyncEventParams) Do(ctx context.Context) (err error) {
 type EnableParams struct{}
 
 // Enable [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/ServiceWorker#method-enable
 func Enable() *EnableParams {
 	return &EnableParams{}
 }
@@ -189,6 +193,8 @@ func (p *StartWorkerParams) Do(ctx context.Context) (err error) {
 type StopAllWorkersParams struct{}
 
 // StopAllWorkers [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/ServiceWorker#method-stopAllWorkers
 func StopAllWorkers() *StopAllWorkersParams {
 	return &StopAllWorkersParams{}
 }

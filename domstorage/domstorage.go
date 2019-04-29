@@ -42,6 +42,8 @@ type DisableParams struct{}
 
 // Disable disables storage tracking, prevents storage events from being sent
 // to the client.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOMStorage#method-disable
 func Disable() *DisableParams {
 	return &DisableParams{}
 }
@@ -57,6 +59,8 @@ type EnableParams struct{}
 
 // Enable enables storage tracking, storage events will now be delivered to
 // the client.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOMStorage#method-enable
 func Enable() *EnableParams {
 	return &EnableParams{}
 }

@@ -71,6 +71,8 @@ func (p *AddScriptToEvaluateOnNewDocumentParams) Do(ctx context.Context) (identi
 type BringToFrontParams struct{}
 
 // BringToFront brings page to front (activates tab).
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-bringToFront
 func BringToFront() *BringToFrontParams {
 	return &BringToFrontParams{}
 }
@@ -248,6 +250,8 @@ func (p *CreateIsolatedWorldParams) Do(ctx context.Context) (executionContextID 
 type DisableParams struct{}
 
 // Disable disables page domain notifications.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-disable
 func Disable() *DisableParams {
 	return &DisableParams{}
 }
@@ -261,6 +265,8 @@ func (p *DisableParams) Do(ctx context.Context) (err error) {
 type EnableParams struct{}
 
 // Enable enables page domain notifications.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-enable
 func Enable() *EnableParams {
 	return &EnableParams{}
 }
@@ -274,6 +280,8 @@ func (p *EnableParams) Do(ctx context.Context) (err error) {
 type GetAppManifestParams struct{}
 
 // GetAppManifest [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-getAppManifest
 func GetAppManifest() *GetAppManifestParams {
 	return &GetAppManifestParams{}
 }
@@ -306,6 +314,8 @@ func (p *GetAppManifestParams) Do(ctx context.Context) (url string, errors []*Ap
 type GetInstallabilityErrorsParams struct{}
 
 // GetInstallabilityErrors [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-getInstallabilityErrors
 func GetInstallabilityErrors() *GetInstallabilityErrorsParams {
 	return &GetInstallabilityErrorsParams{}
 }
@@ -334,6 +344,8 @@ func (p *GetInstallabilityErrorsParams) Do(ctx context.Context) (errors []string
 type GetFrameTreeParams struct{}
 
 // GetFrameTree returns present frame tree structure.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-getFrameTree
 func GetFrameTree() *GetFrameTreeParams {
 	return &GetFrameTreeParams{}
 }
@@ -364,6 +376,8 @@ type GetLayoutMetricsParams struct{}
 
 // GetLayoutMetrics returns metrics relating to the layouting of the page,
 // such as viewport bounds/scale.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-getLayoutMetrics
 func GetLayoutMetrics() *GetLayoutMetricsParams {
 	return &GetLayoutMetricsParams{}
 }
@@ -397,6 +411,8 @@ func (p *GetLayoutMetricsParams) Do(ctx context.Context) (layoutViewport *Layout
 type GetNavigationHistoryParams struct{}
 
 // GetNavigationHistory returns navigation history for the current page.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-getNavigationHistory
 func GetNavigationHistory() *GetNavigationHistoryParams {
 	return &GetNavigationHistoryParams{}
 }
@@ -428,6 +444,8 @@ func (p *GetNavigationHistoryParams) Do(ctx context.Context) (currentIndex int64
 type ResetNavigationHistoryParams struct{}
 
 // ResetNavigationHistory resets navigation history for the current page.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-resetNavigationHistory
 func ResetNavigationHistory() *ResetNavigationHistoryParams {
 	return &ResetNavigationHistoryParams{}
 }
@@ -492,6 +510,8 @@ func (p *GetResourceContentParams) Do(ctx context.Context) (content []byte, err 
 type GetResourceTreeParams struct{}
 
 // GetResourceTree returns present frame / resource tree structure.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-getResourceTree
 func GetResourceTree() *GetResourceTreeParams {
 	return &GetResourceTreeParams{}
 }
@@ -1155,6 +1175,8 @@ type StopLoadingParams struct{}
 
 // StopLoading force the page stop all navigations and pending resource
 // fetches.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-stopLoading
 func StopLoading() *StopLoadingParams {
 	return &StopLoadingParams{}
 }
@@ -1168,6 +1190,8 @@ func (p *StopLoadingParams) Do(ctx context.Context) (err error) {
 type CrashParams struct{}
 
 // Crash crashes renderer on the IO thread, generates minidumps.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-crash
 func Crash() *CrashParams {
 	return &CrashParams{}
 }
@@ -1181,6 +1205,8 @@ func (p *CrashParams) Do(ctx context.Context) (err error) {
 type CloseParams struct{}
 
 // Close tries to close page, running its beforeunload hooks, if any.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-close
 func Close() *CloseParams {
 	return &CloseParams{}
 }
@@ -1220,6 +1246,8 @@ func (p *SetWebLifecycleStateParams) Do(ctx context.Context) (err error) {
 type StopScreencastParams struct{}
 
 // StopScreencast stops sending each frame in the screencastFrame.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-stopScreencast
 func StopScreencast() *StopScreencastParams {
 	return &StopScreencastParams{}
 }
@@ -1284,6 +1312,8 @@ func (p *AddCompilationCacheParams) Do(ctx context.Context) (err error) {
 type ClearCompilationCacheParams struct{}
 
 // ClearCompilationCache clears seeded compilation cache.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-clearCompilationCache
 func ClearCompilationCache() *ClearCompilationCacheParams {
 	return &ClearCompilationCacheParams{}
 }
@@ -1328,6 +1358,8 @@ type WaitForDebuggerParams struct{}
 
 // WaitForDebugger pauses page execution. Can be resumed using generic
 // Runtime.runIfWaitingForDebugger.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-waitForDebugger
 func WaitForDebugger() *WaitForDebuggerParams {
 	return &WaitForDebuggerParams{}
 }

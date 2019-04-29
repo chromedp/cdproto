@@ -52,6 +52,8 @@ func (p *EnableParams) Do(ctx context.Context) (err error) {
 type DisableParams struct{}
 
 // Disable stops observing for sinks and issues.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Cast#method-disable
 func Disable() *DisableParams {
 	return &DisableParams{}
 }

@@ -146,6 +146,8 @@ func (p *CreateStyleSheetParams) Do(ctx context.Context) (styleSheetID StyleShee
 type DisableParams struct{}
 
 // Disable disables the CSS agent for the given page.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#method-disable
 func Disable() *DisableParams {
 	return &DisableParams{}
 }
@@ -163,6 +165,8 @@ type EnableParams struct{}
 // Enable enables the CSS agent for the given page. Clients should not assume
 // that the CSS agent has been enabled until the result of this command is
 // received.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#method-enable
 func Enable() *EnableParams {
 	return &EnableParams{}
 }
@@ -376,6 +380,8 @@ func (p *GetMatchedStylesForNodeParams) Do(ctx context.Context) (inlineStyle *St
 type GetMediaQueriesParams struct{}
 
 // GetMediaQueries returns all media queries parsed by the rendering engine.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#method-getMediaQueries
 func GetMediaQueries() *GetMediaQueriesParams {
 	return &GetMediaQueriesParams{}
 }
@@ -719,6 +725,8 @@ func (p *SetStyleTextsParams) Do(ctx context.Context) (styles []*Style, err erro
 type StartRuleUsageTrackingParams struct{}
 
 // StartRuleUsageTracking enables the selector recording.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#method-startRuleUsageTracking
 func StartRuleUsageTracking() *StartRuleUsageTrackingParams {
 	return &StartRuleUsageTrackingParams{}
 }
@@ -736,6 +744,8 @@ type StopRuleUsageTrackingParams struct{}
 // StopRuleUsageTracking stop tracking rule usage and return the list of
 // rules that were used since last call to takeCoverageDelta (or since start of
 // coverage instrumentation).
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#method-stopRuleUsageTracking
 func StopRuleUsageTracking() *StopRuleUsageTrackingParams {
 	return &StopRuleUsageTrackingParams{}
 }
@@ -766,6 +776,8 @@ type TakeCoverageDeltaParams struct{}
 
 // TakeCoverageDelta obtain list of rules that became used since last call to
 // this method (or since start of coverage instrumentation).
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#method-takeCoverageDelta
 func TakeCoverageDelta() *TakeCoverageDeltaParams {
 	return &TakeCoverageDeltaParams{}
 }

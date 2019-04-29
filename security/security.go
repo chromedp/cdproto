@@ -18,6 +18,8 @@ import (
 type DisableParams struct{}
 
 // Disable disables tracking security state changes.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Security#method-disable
 func Disable() *DisableParams {
 	return &DisableParams{}
 }
@@ -31,6 +33,8 @@ func (p *DisableParams) Do(ctx context.Context) (err error) {
 type EnableParams struct{}
 
 // Enable enables tracking security state changes.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Security#method-enable
 func Enable() *EnableParams {
 	return &EnableParams{}
 }

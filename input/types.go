@@ -179,6 +179,8 @@ func (t *Modifier) UnmarshalJSON(buf []byte) error {
 const ModifierCommand Modifier = ModifierMeta
 
 // KeyType type of the key event.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Input#type-type
 type KeyType string
 
 // String returns the KeyType as string value.
@@ -227,6 +229,8 @@ func (t *KeyType) UnmarshalJSON(buf []byte) error {
 }
 
 // MouseType type of the mouse event.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Input#type-type
 type MouseType string
 
 // String returns the MouseType as string value.
@@ -275,6 +279,8 @@ func (t *MouseType) UnmarshalJSON(buf []byte) error {
 }
 
 // ButtonType mouse button (default: "none").
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Input#type-button
 type ButtonType string
 
 // String returns the ButtonType as string value.
@@ -329,6 +335,8 @@ func (t *ButtonType) UnmarshalJSON(buf []byte) error {
 }
 
 // DispatchMouseEventPointerType pointer type (default: "mouse").
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Input#type-pointerType
 type DispatchMouseEventPointerType string
 
 // String returns the DispatchMouseEventPointerType as string value.
@@ -373,6 +381,8 @@ func (t *DispatchMouseEventPointerType) UnmarshalJSON(buf []byte) error {
 // TouchType type of the touch event. TouchEnd and TouchCancel must not
 // contain any touch points, while TouchStart and TouchMove must contains at
 // least one.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Input#type-type
 type TouchType string
 
 // String returns the TouchType as string value.

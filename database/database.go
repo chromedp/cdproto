@@ -19,6 +19,8 @@ type DisableParams struct{}
 
 // Disable disables database tracking, prevents database events from being
 // sent to the client.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Database#method-disable
 func Disable() *DisableParams {
 	return &DisableParams{}
 }
@@ -34,6 +36,8 @@ type EnableParams struct{}
 
 // Enable enables database tracking, database events will now be delivered to
 // the client.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Database#method-enable
 func Enable() *EnableParams {
 	return &EnableParams{}
 }

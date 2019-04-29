@@ -41,6 +41,8 @@ func (p *AddInspectedHeapObjectParams) Do(ctx context.Context) (err error) {
 type CollectGarbageParams struct{}
 
 // CollectGarbage [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/HeapProfiler#method-collectGarbage
 func CollectGarbage() *CollectGarbageParams {
 	return &CollectGarbageParams{}
 }
@@ -54,6 +56,8 @@ func (p *CollectGarbageParams) Do(ctx context.Context) (err error) {
 type DisableParams struct{}
 
 // Disable [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/HeapProfiler#method-disable
 func Disable() *DisableParams {
 	return &DisableParams{}
 }
@@ -67,6 +71,8 @@ func (p *DisableParams) Do(ctx context.Context) (err error) {
 type EnableParams struct{}
 
 // Enable [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/HeapProfiler#method-enable
 func Enable() *EnableParams {
 	return &EnableParams{}
 }
@@ -162,6 +168,8 @@ func (p *GetObjectByHeapObjectIDParams) Do(ctx context.Context) (result *runtime
 type GetSamplingProfileParams struct{}
 
 // GetSamplingProfile [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/HeapProfiler#method-getSamplingProfile
 func GetSamplingProfile() *GetSamplingProfileParams {
 	return &GetSamplingProfileParams{}
 }
@@ -241,6 +249,8 @@ func (p *StartTrackingHeapObjectsParams) Do(ctx context.Context) (err error) {
 type StopSamplingParams struct{}
 
 // StopSampling [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/HeapProfiler#method-stopSampling
 func StopSampling() *StopSamplingParams {
 	return &StopSamplingParams{}
 }

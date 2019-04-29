@@ -19,6 +19,8 @@ type Metric struct {
 }
 
 // SetTimeDomainTimeDomain time domain.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Performance#type-timeDomain
 type SetTimeDomainTimeDomain string
 
 // String returns the SetTimeDomainTimeDomain as string value.

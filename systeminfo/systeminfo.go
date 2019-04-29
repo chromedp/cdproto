@@ -19,6 +19,8 @@ import (
 type GetInfoParams struct{}
 
 // GetInfo returns information about the system.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/SystemInfo#method-getInfo
 func GetInfo() *GetInfoParams {
 	return &GetInfoParams{}
 }
@@ -53,6 +55,8 @@ func (p *GetInfoParams) Do(ctx context.Context) (gpu *GPUInfo, modelName string,
 type GetProcessInfoParams struct{}
 
 // GetProcessInfo returns information about all running processes.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/SystemInfo#method-getProcessInfo
 func GetProcessInfo() *GetProcessInfoParams {
 	return &GetProcessInfoParams{}
 }

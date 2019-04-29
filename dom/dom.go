@@ -189,6 +189,8 @@ func (p *DescribeNodeParams) Do(ctx context.Context) (node *cdp.Node, err error)
 type DisableParams struct{}
 
 // Disable disables DOM agent for the given page.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-disable
 func Disable() *DisableParams {
 	return &DisableParams{}
 }
@@ -226,6 +228,8 @@ func (p *DiscardSearchResultsParams) Do(ctx context.Context) (err error) {
 type EnableParams struct{}
 
 // Enable enables DOM agent for the given page.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-enable
 func Enable() *EnableParams {
 	return &EnableParams{}
 }
@@ -719,6 +723,8 @@ func (p *GetSearchResultsParams) Do(ctx context.Context) (nodeIds []cdp.NodeID, 
 type MarkUndoableStateParams struct{}
 
 // MarkUndoableState marks last undoable state.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-markUndoableState
 func MarkUndoableState() *MarkUndoableStateParams {
 	return &MarkUndoableStateParams{}
 }
@@ -990,6 +996,8 @@ func (p *QuerySelectorAllParams) Do(ctx context.Context) (nodeIds []cdp.NodeID, 
 type RedoParams struct{}
 
 // Redo re-does the last undone action.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-redo
 func Redo() *RedoParams {
 	return &RedoParams{}
 }
@@ -1463,6 +1471,8 @@ func (p *SetOuterHTMLParams) Do(ctx context.Context) (err error) {
 type UndoParams struct{}
 
 // Undo undoes the last performed action.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-undo
 func Undo() *UndoParams {
 	return &UndoParams{}
 }

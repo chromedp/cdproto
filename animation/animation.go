@@ -17,6 +17,8 @@ import (
 type DisableParams struct{}
 
 // Disable disables animation domain notifications.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Animation#method-disable
 func Disable() *DisableParams {
 	return &DisableParams{}
 }
@@ -30,6 +32,8 @@ func (p *DisableParams) Do(ctx context.Context) (err error) {
 type EnableParams struct{}
 
 // Enable enables animation domain notifications.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Animation#method-enable
 func Enable() *EnableParams {
 	return &EnableParams{}
 }
@@ -80,6 +84,8 @@ func (p *GetCurrentTimeParams) Do(ctx context.Context) (currentTime float64, err
 type GetPlaybackRateParams struct{}
 
 // GetPlaybackRate gets the playback rate of the document timeline.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Animation#method-getPlaybackRate
 func GetPlaybackRate() *GetPlaybackRateParams {
 	return &GetPlaybackRateParams{}
 }

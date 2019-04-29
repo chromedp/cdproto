@@ -296,6 +296,8 @@ type StyleDeclarationEdit struct {
 // specified by a "media" attribute in a linked stylesheet's LINK tag,
 // "inlineSheet" if specified by a "media" attribute in an inline stylesheet's
 // STYLE tag.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#type-source
 type MediaSource string
 
 // String returns the MediaSource as string value.

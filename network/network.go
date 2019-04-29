@@ -23,6 +23,8 @@ import (
 type ClearBrowserCacheParams struct{}
 
 // ClearBrowserCache clears browser cache.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-clearBrowserCache
 func ClearBrowserCache() *ClearBrowserCacheParams {
 	return &ClearBrowserCacheParams{}
 }
@@ -36,6 +38,8 @@ func (p *ClearBrowserCacheParams) Do(ctx context.Context) (err error) {
 type ClearBrowserCookiesParams struct{}
 
 // ClearBrowserCookies clears browser cookies.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-clearBrowserCookies
 func ClearBrowserCookies() *ClearBrowserCookiesParams {
 	return &ClearBrowserCookiesParams{}
 }
@@ -185,6 +189,8 @@ type DisableParams struct{}
 
 // Disable disables network tracking, prevents network events from being sent
 // to the client.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-disable
 func Disable() *DisableParams {
 	return &DisableParams{}
 }
@@ -282,6 +288,8 @@ type GetAllCookiesParams struct{}
 
 // GetAllCookies returns all browser cookies. Depending on the backend
 // support, will return detailed cookie information in the cookies field.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-getAllCookies
 func GetAllCookies() *GetAllCookiesParams {
 	return &GetAllCookiesParams{}
 }

@@ -19,6 +19,8 @@ type ScreenshotParams struct {
 }
 
 // ScreenshotParamsFormat image compression format (defaults to png).
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/HeadlessExperimental#type-format
 type ScreenshotParamsFormat string
 
 // String returns the ScreenshotParamsFormat as string value.

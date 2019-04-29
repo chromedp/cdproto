@@ -330,6 +330,8 @@ func (t *ClientNavigationReason) UnmarshalJSON(buf []byte) error {
 }
 
 // CaptureScreenshotFormat image compression format (defaults to png).
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-format
 type CaptureScreenshotFormat string
 
 // String returns the CaptureScreenshotFormat as string value.
@@ -372,6 +374,8 @@ func (t *CaptureScreenshotFormat) UnmarshalJSON(buf []byte) error {
 }
 
 // CaptureSnapshotFormat format (defaults to mhtml).
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-format
 type CaptureSnapshotFormat string
 
 // String returns the CaptureSnapshotFormat as string value.
@@ -412,6 +416,8 @@ func (t *CaptureSnapshotFormat) UnmarshalJSON(buf []byte) error {
 
 // SetDownloadBehaviorBehavior whether to allow all or deny all download
 // requests, or use default Chrome behavior if available (otherwise deny).
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-behavior
 type SetDownloadBehaviorBehavior string
 
 // String returns the SetDownloadBehaviorBehavior as string value.
@@ -457,6 +463,8 @@ func (t *SetDownloadBehaviorBehavior) UnmarshalJSON(buf []byte) error {
 }
 
 // ScreencastFormat image compression format.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-format
 type ScreencastFormat string
 
 // String returns the ScreencastFormat as string value.
@@ -499,6 +507,8 @@ func (t *ScreencastFormat) UnmarshalJSON(buf []byte) error {
 }
 
 // SetWebLifecycleStateState target lifecycle state.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-state
 type SetWebLifecycleStateState string
 
 // String returns the SetWebLifecycleStateState as string value.

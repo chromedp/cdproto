@@ -37,6 +37,8 @@ type ViolationSetting struct {
 }
 
 // Source log entry source.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Log#type-source
 type Source string
 
 // String returns the Source as string value.
@@ -112,6 +114,8 @@ func (t *Source) UnmarshalJSON(buf []byte) error {
 }
 
 // Level log entry severity.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Log#type-level
 type Level string
 
 // String returns the Level as string value.
@@ -160,6 +164,8 @@ func (t *Level) UnmarshalJSON(buf []byte) error {
 }
 
 // Violation violation type.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Log#type-name
 type Violation string
 
 // String returns the Violation as string value.

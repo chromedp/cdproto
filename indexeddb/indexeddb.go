@@ -101,6 +101,8 @@ func (p *DeleteObjectStoreEntriesParams) Do(ctx context.Context) (err error) {
 type DisableParams struct{}
 
 // Disable disables events from backend.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/IndexedDB#method-disable
 func Disable() *DisableParams {
 	return &DisableParams{}
 }
@@ -114,6 +116,8 @@ func (p *DisableParams) Do(ctx context.Context) (err error) {
 type EnableParams struct{}
 
 // Enable enables events from backend.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/IndexedDB#method-enable
 func Enable() *EnableParams {
 	return &EnableParams{}
 }

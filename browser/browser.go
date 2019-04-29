@@ -80,6 +80,8 @@ func (p *ResetPermissionsParams) Do(ctx context.Context) (err error) {
 type CloseParams struct{}
 
 // Close close browser gracefully.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#method-close
 func Close() *CloseParams {
 	return &CloseParams{}
 }
@@ -93,6 +95,8 @@ func (p *CloseParams) Do(ctx context.Context) (err error) {
 type CrashParams struct{}
 
 // Crash crashes browser on the main thread.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#method-crash
 func Crash() *CrashParams {
 	return &CrashParams{}
 }
@@ -106,6 +110,8 @@ func (p *CrashParams) Do(ctx context.Context) (err error) {
 type CrashGpuProcessParams struct{}
 
 // CrashGpuProcess crashes GPU process.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#method-crashGpuProcess
 func CrashGpuProcess() *CrashGpuProcessParams {
 	return &CrashGpuProcessParams{}
 }
@@ -119,6 +125,8 @@ func (p *CrashGpuProcessParams) Do(ctx context.Context) (err error) {
 type GetVersionParams struct{}
 
 // GetVersion returns version information.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#method-getVersion
 func GetVersion() *GetVersionParams {
 	return &GetVersionParams{}
 }
@@ -157,6 +165,8 @@ type GetBrowserCommandLineParams struct{}
 
 // GetBrowserCommandLine returns the command line switches for the browser
 // process if, and only if --enable-automation is on the commandline.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#method-getBrowserCommandLine
 func GetBrowserCommandLine() *GetBrowserCommandLineParams {
 	return &GetBrowserCommandLineParams{}
 }
