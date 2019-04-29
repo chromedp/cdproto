@@ -47,7 +47,32 @@ func Execute(ctx context.Context, method string, params easyjson.Marshaler, res 
 	if executor := ctx.Value(executorKey); executor != nil {
 		return executor.(Executor).Execute(ctx, method, params, res)
 	}
-	return errors.New("invalid context")
+	return ErrInvalidContext
+}
+
+// Error is a error.
+type Error string
+
+// Error values.
+const (
+	// ErrInvalidContext is the invalid context error.
+	ErrInvalidContext Error = "invalid context"
+
+	// ErrMsgMissingParamsOrResult is the msg missing params or result error.
+	ErrMsgMissingParamsOrResult Error = "msg missing params or result"
+)
+
+// Error satisfies the error interface.
+func (err Error) Error() string {
+	return string(err)
+}
+
+// ErrUnknownCommandOrEvent is an unknown command or event error.
+type ErrUnknownCommandOrEvent string
+
+// Error satisfies the error interface.
+func (err ErrUnknownCommandOrEvent) Error() string {
+	return fmt.Sprintf("unknown command or event %q", string(err))
 }
 
 // NodeID unique DOM node identifier.
