@@ -484,6 +484,7 @@ const (
 	EventPageFrameRequestedNavigation                      = "Page.frameRequestedNavigation"
 	EventPageFrameStartedLoading                           = "Page.frameStartedLoading"
 	EventPageFrameStoppedLoading                           = "Page.frameStoppedLoading"
+	EventPageDownloadWillBegin                             = "Page.downloadWillBegin"
 	EventPageInterstitialHidden                            = "Page.interstitialHidden"
 	EventPageInterstitialShown                             = "Page.interstitialShown"
 	EventPageJavascriptDialogClosed                        = "Page.javascriptDialogClosed"
@@ -1877,6 +1878,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case EventPageFrameStoppedLoading:
 		v = new(page.EventFrameStoppedLoading)
+
+	case EventPageDownloadWillBegin:
+		v = new(page.EventDownloadWillBegin)
 
 	case EventPageInterstitialHidden:
 		v = new(page.EventInterstitialHidden)

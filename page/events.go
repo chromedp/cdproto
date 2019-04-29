@@ -51,6 +51,12 @@ type EventFrameStoppedLoading struct {
 	FrameID cdp.FrameID `json:"frameId"` // Id of the frame that has stopped loading.
 }
 
+// EventDownloadWillBegin fired when page is about to start a download.
+type EventDownloadWillBegin struct {
+	FrameID cdp.FrameID `json:"frameId"` // Id of the frame that caused download to begin.
+	URL     string      `json:"url"`     // URL of the resource being downloaded.
+}
+
 // EventInterstitialHidden fired when interstitial page was hidden.
 type EventInterstitialHidden struct{}
 
