@@ -106,6 +106,7 @@ const (
 	PermissionTypeMidiSysex                PermissionType = "midiSysex"
 	PermissionTypeNotifications            PermissionType = "notifications"
 	PermissionTypePaymentHandler           PermissionType = "paymentHandler"
+	PermissionTypePeriodicBackgroundSync   PermissionType = "periodicBackgroundSync"
 	PermissionTypeProtectedMediaIdentifier PermissionType = "protectedMediaIdentifier"
 	PermissionTypeSensors                  PermissionType = "sensors"
 	PermissionTypeVideoCapture             PermissionType = "videoCapture"
@@ -151,6 +152,8 @@ func (t *PermissionType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PermissionTypeNotifications
 	case PermissionTypePaymentHandler:
 		*t = PermissionTypePaymentHandler
+	case PermissionTypePeriodicBackgroundSync:
+		*t = PermissionTypePeriodicBackgroundSync
 	case PermissionTypeProtectedMediaIdentifier:
 		*t = PermissionTypeProtectedMediaIdentifier
 	case PermissionTypeSensors:
