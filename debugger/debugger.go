@@ -633,6 +633,43 @@ func (p *SetBreakpointParams) Do(ctx context.Context) (breakpointID BreakpointID
 	return res.BreakpointID, res.ActualLocation, nil
 }
 
+// SetInstrumentationBreakpointParams sets instrumentation breakpoint.
+type SetInstrumentationBreakpointParams struct {
+	Instrumentation SetInstrumentationBreakpointInstrumentation `json:"instrumentation"` // Instrumentation name.
+}
+
+// SetInstrumentationBreakpoint sets instrumentation breakpoint.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-setInstrumentationBreakpoint
+//
+// parameters:
+//   instrumentation - Instrumentation name.
+func SetInstrumentationBreakpoint(instrumentation SetInstrumentationBreakpointInstrumentation) *SetInstrumentationBreakpointParams {
+	return &SetInstrumentationBreakpointParams{
+		Instrumentation: instrumentation,
+	}
+}
+
+// SetInstrumentationBreakpointReturns return values.
+type SetInstrumentationBreakpointReturns struct {
+	BreakpointID BreakpointID `json:"breakpointId,omitempty"` // Id of the created breakpoint for further reference.
+}
+
+// Do executes Debugger.setInstrumentationBreakpoint against the provided context.
+//
+// returns:
+//   breakpointID - Id of the created breakpoint for further reference.
+func (p *SetInstrumentationBreakpointParams) Do(ctx context.Context) (breakpointID BreakpointID, err error) {
+	// execute
+	var res SetInstrumentationBreakpointReturns
+	err = cdp.Execute(ctx, CommandSetInstrumentationBreakpoint, p, &res)
+	if err != nil {
+		return "", err
+	}
+
+	return res.BreakpointID, nil
+}
+
 // SetBreakpointByURLParams sets JavaScript breakpoint at given location
 // specified either by URL or URL regex. Once this command is issued, all
 // existing parsed scripts will have breakpoints resolved and returned in
@@ -1012,32 +1049,33 @@ func (p *StepOverParams) Do(ctx context.Context) (err error) {
 
 // Command names.
 const (
-	CommandContinueToLocation          = "Debugger.continueToLocation"
-	CommandDisable                     = "Debugger.disable"
-	CommandEnable                      = "Debugger.enable"
-	CommandEvaluateOnCallFrame         = "Debugger.evaluateOnCallFrame"
-	CommandGetPossibleBreakpoints      = "Debugger.getPossibleBreakpoints"
-	CommandGetScriptSource             = "Debugger.getScriptSource"
-	CommandGetStackTrace               = "Debugger.getStackTrace"
-	CommandPause                       = "Debugger.pause"
-	CommandPauseOnAsyncCall            = "Debugger.pauseOnAsyncCall"
-	CommandRemoveBreakpoint            = "Debugger.removeBreakpoint"
-	CommandRestartFrame                = "Debugger.restartFrame"
-	CommandResume                      = "Debugger.resume"
-	CommandSearchInContent             = "Debugger.searchInContent"
-	CommandSetAsyncCallStackDepth      = "Debugger.setAsyncCallStackDepth"
-	CommandSetBlackboxPatterns         = "Debugger.setBlackboxPatterns"
-	CommandSetBlackboxedRanges         = "Debugger.setBlackboxedRanges"
-	CommandSetBreakpoint               = "Debugger.setBreakpoint"
-	CommandSetBreakpointByURL          = "Debugger.setBreakpointByUrl"
-	CommandSetBreakpointOnFunctionCall = "Debugger.setBreakpointOnFunctionCall"
-	CommandSetBreakpointsActive        = "Debugger.setBreakpointsActive"
-	CommandSetPauseOnExceptions        = "Debugger.setPauseOnExceptions"
-	CommandSetReturnValue              = "Debugger.setReturnValue"
-	CommandSetScriptSource             = "Debugger.setScriptSource"
-	CommandSetSkipAllPauses            = "Debugger.setSkipAllPauses"
-	CommandSetVariableValue            = "Debugger.setVariableValue"
-	CommandStepInto                    = "Debugger.stepInto"
-	CommandStepOut                     = "Debugger.stepOut"
-	CommandStepOver                    = "Debugger.stepOver"
+	CommandContinueToLocation           = "Debugger.continueToLocation"
+	CommandDisable                      = "Debugger.disable"
+	CommandEnable                       = "Debugger.enable"
+	CommandEvaluateOnCallFrame          = "Debugger.evaluateOnCallFrame"
+	CommandGetPossibleBreakpoints       = "Debugger.getPossibleBreakpoints"
+	CommandGetScriptSource              = "Debugger.getScriptSource"
+	CommandGetStackTrace                = "Debugger.getStackTrace"
+	CommandPause                        = "Debugger.pause"
+	CommandPauseOnAsyncCall             = "Debugger.pauseOnAsyncCall"
+	CommandRemoveBreakpoint             = "Debugger.removeBreakpoint"
+	CommandRestartFrame                 = "Debugger.restartFrame"
+	CommandResume                       = "Debugger.resume"
+	CommandSearchInContent              = "Debugger.searchInContent"
+	CommandSetAsyncCallStackDepth       = "Debugger.setAsyncCallStackDepth"
+	CommandSetBlackboxPatterns          = "Debugger.setBlackboxPatterns"
+	CommandSetBlackboxedRanges          = "Debugger.setBlackboxedRanges"
+	CommandSetBreakpoint                = "Debugger.setBreakpoint"
+	CommandSetInstrumentationBreakpoint = "Debugger.setInstrumentationBreakpoint"
+	CommandSetBreakpointByURL           = "Debugger.setBreakpointByUrl"
+	CommandSetBreakpointOnFunctionCall  = "Debugger.setBreakpointOnFunctionCall"
+	CommandSetBreakpointsActive         = "Debugger.setBreakpointsActive"
+	CommandSetPauseOnExceptions         = "Debugger.setPauseOnExceptions"
+	CommandSetReturnValue               = "Debugger.setReturnValue"
+	CommandSetScriptSource              = "Debugger.setScriptSource"
+	CommandSetSkipAllPauses             = "Debugger.setSkipAllPauses"
+	CommandSetVariableValue             = "Debugger.setVariableValue"
+	CommandStepInto                     = "Debugger.stepInto"
+	CommandStepOut                      = "Debugger.stepOut"
+	CommandStepOver                     = "Debugger.stepOver"
 )

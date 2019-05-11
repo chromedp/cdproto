@@ -50,7 +50,8 @@ func (p *EnableParams) Do(ctx context.Context) (err error) {
 
 // GetHighlightObjectForTestParams for testing.
 type GetHighlightObjectForTestParams struct {
-	NodeID cdp.NodeID `json:"nodeId"` // Id of the node to get highlight object for.
+	NodeID          cdp.NodeID `json:"nodeId"`                    // Id of the node to get highlight object for.
+	IncludeDistance bool       `json:"includeDistance,omitempty"` // Whether to include distance info.
 }
 
 // GetHighlightObjectForTest for testing.
@@ -63,6 +64,12 @@ func GetHighlightObjectForTest(nodeID cdp.NodeID) *GetHighlightObjectForTestPara
 	return &GetHighlightObjectForTestParams{
 		NodeID: nodeID,
 	}
+}
+
+// WithIncludeDistance whether to include distance info.
+func (p GetHighlightObjectForTestParams) WithIncludeDistance(includeDistance bool) *GetHighlightObjectForTestParams {
+	p.IncludeDistance = includeDistance
+	return &p
 }
 
 // GetHighlightObjectForTestReturns return values.

@@ -215,16 +215,17 @@ func (t PausedReason) String() string {
 
 // PausedReason values.
 const (
-	PausedReasonXHR              PausedReason = "XHR"
+	PausedReasonAmbiguous        PausedReason = "ambiguous"
+	PausedReasonAssert           PausedReason = "assert"
+	PausedReasonDebugCommand     PausedReason = "debugCommand"
 	PausedReasonDOM              PausedReason = "DOM"
 	PausedReasonEventListener    PausedReason = "EventListener"
 	PausedReasonException        PausedReason = "exception"
-	PausedReasonAssert           PausedReason = "assert"
-	PausedReasonDebugCommand     PausedReason = "debugCommand"
-	PausedReasonPromiseRejection PausedReason = "promiseRejection"
+	PausedReasonInstrumentation  PausedReason = "instrumentation"
 	PausedReasonOOM              PausedReason = "OOM"
 	PausedReasonOther            PausedReason = "other"
-	PausedReasonAmbiguous        PausedReason = "ambiguous"
+	PausedReasonPromiseRejection PausedReason = "promiseRejection"
+	PausedReasonXHR              PausedReason = "XHR"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -240,26 +241,28 @@ func (t PausedReason) MarshalJSON() ([]byte, error) {
 // UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
 func (t *PausedReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 	switch PausedReason(in.String()) {
-	case PausedReasonXHR:
-		*t = PausedReasonXHR
+	case PausedReasonAmbiguous:
+		*t = PausedReasonAmbiguous
+	case PausedReasonAssert:
+		*t = PausedReasonAssert
+	case PausedReasonDebugCommand:
+		*t = PausedReasonDebugCommand
 	case PausedReasonDOM:
 		*t = PausedReasonDOM
 	case PausedReasonEventListener:
 		*t = PausedReasonEventListener
 	case PausedReasonException:
 		*t = PausedReasonException
-	case PausedReasonAssert:
-		*t = PausedReasonAssert
-	case PausedReasonDebugCommand:
-		*t = PausedReasonDebugCommand
-	case PausedReasonPromiseRejection:
-		*t = PausedReasonPromiseRejection
+	case PausedReasonInstrumentation:
+		*t = PausedReasonInstrumentation
 	case PausedReasonOOM:
 		*t = PausedReasonOOM
 	case PausedReasonOther:
 		*t = PausedReasonOther
-	case PausedReasonAmbiguous:
-		*t = PausedReasonAmbiguous
+	case PausedReasonPromiseRejection:
+		*t = PausedReasonPromiseRejection
+	case PausedReasonXHR:
+		*t = PausedReasonXHR
 
 	default:
 		in.AddError(errors.New("unknown PausedReason value"))
@@ -312,6 +315,50 @@ func (t *ContinueToLocationTargetCallFrames) UnmarshalEasyJSON(in *jlexer.Lexer)
 
 // UnmarshalJSON satisfies json.Unmarshaler.
 func (t *ContinueToLocationTargetCallFrames) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
+// SetInstrumentationBreakpointInstrumentation instrumentation name.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#type-instrumentation
+type SetInstrumentationBreakpointInstrumentation string
+
+// String returns the SetInstrumentationBreakpointInstrumentation as string value.
+func (t SetInstrumentationBreakpointInstrumentation) String() string {
+	return string(t)
+}
+
+// SetInstrumentationBreakpointInstrumentation values.
+const (
+	SetInstrumentationBreakpointInstrumentationBeforeScriptExecution              SetInstrumentationBreakpointInstrumentation = "beforeScriptExecution"
+	SetInstrumentationBreakpointInstrumentationBeforeScriptWithSourceMapExecution SetInstrumentationBreakpointInstrumentation = "beforeScriptWithSourceMapExecution"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t SetInstrumentationBreakpointInstrumentation) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t SetInstrumentationBreakpointInstrumentation) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *SetInstrumentationBreakpointInstrumentation) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	switch SetInstrumentationBreakpointInstrumentation(in.String()) {
+	case SetInstrumentationBreakpointInstrumentationBeforeScriptExecution:
+		*t = SetInstrumentationBreakpointInstrumentationBeforeScriptExecution
+	case SetInstrumentationBreakpointInstrumentationBeforeScriptWithSourceMapExecution:
+		*t = SetInstrumentationBreakpointInstrumentationBeforeScriptWithSourceMapExecution
+
+	default:
+		in.AddError(errors.New("unknown SetInstrumentationBreakpointInstrumentation value"))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *SetInstrumentationBreakpointInstrumentation) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 

@@ -252,6 +252,7 @@ const (
 	CommandDebuggerSetBlackboxPatterns                     = debugger.CommandSetBlackboxPatterns
 	CommandDebuggerSetBlackboxedRanges                     = debugger.CommandSetBlackboxedRanges
 	CommandDebuggerSetBreakpoint                           = debugger.CommandSetBreakpoint
+	CommandDebuggerSetInstrumentationBreakpoint            = debugger.CommandSetInstrumentationBreakpoint
 	CommandDebuggerSetBreakpointByURL                      = debugger.CommandSetBreakpointByURL
 	CommandDebuggerSetBreakpointOnFunctionCall             = debugger.CommandSetBreakpointOnFunctionCall
 	CommandDebuggerSetBreakpointsActive                    = debugger.CommandSetBreakpointsActive
@@ -1182,6 +1183,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandDebuggerSetBreakpoint:
 		v = new(debugger.SetBreakpointReturns)
+
+	case CommandDebuggerSetInstrumentationBreakpoint:
+		v = new(debugger.SetInstrumentationBreakpointReturns)
 
 	case CommandDebuggerSetBreakpointByURL:
 		v = new(debugger.SetBreakpointByURLReturns)
