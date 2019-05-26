@@ -574,6 +574,7 @@ type Response struct {
 	RemotePort         int64            `json:"remotePort,omitempty"`         // Remote port.
 	FromDiskCache      bool             `json:"fromDiskCache,omitempty"`      // Specifies that the request was served from the disk cache.
 	FromServiceWorker  bool             `json:"fromServiceWorker,omitempty"`  // Specifies that the request was served from the ServiceWorker.
+	FromPrefetchCache  bool             `json:"fromPrefetchCache,omitempty"`  // Specifies that the request was served from the prefetch cache.
 	EncodedDataLength  float64          `json:"encodedDataLength"`            // Total number of bytes received for this request so far.
 	Timing             *ResourceTiming  `json:"timing,omitempty"`             // Timing information for the given request.
 	Protocol           string           `json:"protocol,omitempty"`           // Protocol used to fetch this request.

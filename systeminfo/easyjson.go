@@ -668,6 +668,10 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoSysteminfo6(in *jlexer.Lexer,
 			out.VendorString = string(in.String())
 		case "deviceString":
 			out.DeviceString = string(in.String())
+		case "driverVendor":
+			out.DriverVendor = string(in.String())
+		case "driverVersion":
+			out.DriverVersion = string(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -721,6 +725,26 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoSysteminfo6(out *jwriter.Writ
 			out.RawString(prefix)
 		}
 		out.String(string(in.DeviceString))
+	}
+	{
+		const prefix string = ",\"driverVendor\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(in.DriverVendor))
+	}
+	{
+		const prefix string = ",\"driverVersion\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(in.DriverVersion))
 	}
 	out.RawByte('}')
 }

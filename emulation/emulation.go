@@ -557,6 +557,30 @@ func (p *SetVirtualTimePolicyParams) Do(ctx context.Context) (virtualTimeTicksBa
 	return res.VirtualTimeTicksBase, nil
 }
 
+// SetTimezoneOverrideParams overrides default host system timezone with the
+// specified one.
+type SetTimezoneOverrideParams struct {
+	TimezoneID string `json:"timezoneId"` // The timezone identifier. If empty, disables the override and restores default host system timezone.
+}
+
+// SetTimezoneOverride overrides default host system timezone with the
+// specified one.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#method-setTimezoneOverride
+//
+// parameters:
+//   timezoneID - The timezone identifier. If empty, disables the override and restores default host system timezone.
+func SetTimezoneOverride(timezoneID string) *SetTimezoneOverrideParams {
+	return &SetTimezoneOverrideParams{
+		TimezoneID: timezoneID,
+	}
+}
+
+// Do executes Emulation.setTimezoneOverride against the provided context.
+func (p *SetTimezoneOverrideParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetTimezoneOverride, p, nil)
+}
+
 // SetUserAgentOverrideParams allows overriding user agent with the given
 // string.
 type SetUserAgentOverrideParams struct {
@@ -613,5 +637,6 @@ const (
 	CommandSetScriptExecutionDisabled        = "Emulation.setScriptExecutionDisabled"
 	CommandSetTouchEmulationEnabled          = "Emulation.setTouchEmulationEnabled"
 	CommandSetVirtualTimePolicy              = "Emulation.setVirtualTimePolicy"
+	CommandSetTimezoneOverride               = "Emulation.setTimezoneOverride"
 	CommandSetUserAgentOverride              = "Emulation.setUserAgentOverride"
 )

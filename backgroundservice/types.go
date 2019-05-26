@@ -28,6 +28,8 @@ func (t ServiceName) String() string {
 const (
 	ServiceNameBackgroundFetch ServiceName = "backgroundFetch"
 	ServiceNameBackgroundSync  ServiceName = "backgroundSync"
+	ServiceNamePushMessaging   ServiceName = "pushMessaging"
+	ServiceNameNotifications   ServiceName = "notifications"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -47,6 +49,10 @@ func (t *ServiceName) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = ServiceNameBackgroundFetch
 	case ServiceNameBackgroundSync:
 		*t = ServiceNameBackgroundSync
+	case ServiceNamePushMessaging:
+		*t = ServiceNamePushMessaging
+	case ServiceNameNotifications:
+		*t = ServiceNameNotifications
 
 	default:
 		in.AddError(errors.New("unknown ServiceName value"))

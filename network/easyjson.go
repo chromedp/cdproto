@@ -2981,6 +2981,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork22(in *jlexer.Lexer, o
 			out.FromDiskCache = bool(in.Bool())
 		case "fromServiceWorker":
 			out.FromServiceWorker = bool(in.Bool())
+		case "fromPrefetchCache":
+			out.FromPrefetchCache = bool(in.Bool())
 		case "encodedDataLength":
 			out.EncodedDataLength = float64(in.Float64())
 		case "timing":
@@ -3202,6 +3204,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoNetwork22(out *jwriter.Writer
 			out.RawString(prefix)
 		}
 		out.Bool(bool(in.FromServiceWorker))
+	}
+	if in.FromPrefetchCache {
+		const prefix string = ",\"fromPrefetchCache\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Bool(bool(in.FromPrefetchCache))
 	}
 	{
 		const prefix string = ",\"encodedDataLength\":"
