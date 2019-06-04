@@ -2007,6 +2007,10 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoTarget23(in *jlexer.Lexer, ou
 			out.BrowserContextID = BrowserContextID(in.String())
 		case "enableBeginFrameControl":
 			out.EnableBeginFrameControl = bool(in.Bool())
+		case "newWindow":
+			out.NewWindow = bool(in.Bool())
+		case "background":
+			out.Background = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -2070,6 +2074,26 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoTarget23(out *jwriter.Writer,
 			out.RawString(prefix)
 		}
 		out.Bool(bool(in.EnableBeginFrameControl))
+	}
+	if in.NewWindow {
+		const prefix string = ",\"newWindow\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Bool(bool(in.NewWindow))
+	}
+	if in.Background {
+		const prefix string = ",\"background\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Bool(bool(in.Background))
 	}
 	out.RawByte('}')
 }

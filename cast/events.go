@@ -7,7 +7,7 @@ package cast
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Cast#event-sinksUpdated
 type EventSinksUpdated struct {
-	SinkNames []string `json:"sinkNames"`
+	Sinks []*Sink `json:"sinks"`
 }
 
 // EventIssueUpdated this is fired whenever the outstanding issue/error

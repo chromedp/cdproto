@@ -138,8 +138,8 @@ type DocumentSnapshot struct {
 	Nodes           *NodeTreeSnapshot   `json:"nodes"`                   // A table with dom nodes.
 	Layout          *LayoutTreeSnapshot `json:"layout"`                  // The nodes in the layout tree.
 	TextBoxes       *TextBoxSnapshot    `json:"textBoxes"`               // The post-layout inline text nodes.
-	ScrollOffsetX   float64             `json:"scrollOffsetX,omitempty"` // Scroll offsets.
-	ScrollOffsetY   float64             `json:"scrollOffsetY,omitempty"`
+	ScrollOffsetX   float64             `json:"scrollOffsetX,omitempty"` // Horizontal scroll offset.
+	ScrollOffsetY   float64             `json:"scrollOffsetY,omitempty"` // Vertical scroll offset.
 }
 
 // NodeTreeSnapshot table containing nodes.
@@ -163,24 +163,25 @@ type NodeTreeSnapshot struct {
 	OriginURL            *RareStringData     `json:"originURL,omitempty"`            // The url of the script (if any) that generates this node.
 }
 
-// LayoutTreeSnapshot details of an element in the DOM tree with a
+// LayoutTreeSnapshot table of details of an element in the DOM tree with a
 // LayoutObject.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/DOMSnapshot#type-LayoutTreeSnapshot
 type LayoutTreeSnapshot struct {
-	NodeIndex        []int64          `json:"nodeIndex"`        // The index of the related DOM node in the domNodes array returned by getSnapshot.
-	Styles           []ArrayOfStrings `json:"styles"`           // Index into the computedStyles array returned by captureSnapshot.
+	NodeIndex        []int64          `json:"nodeIndex"`        // Index of the corresponding node in the NodeTreeSnapshot array returned by captureSnapshot.
+	Styles           []ArrayOfStrings `json:"styles"`           // Array of indexes specifying computed style strings, filtered according to the computedStyles parameter passed to captureSnapshot.
 	Bounds           []Rectangle      `json:"bounds"`           // The absolute position bounding box.
 	Text             []StringIndex    `json:"text"`             // Contents of the LayoutText, if any.
 	StackingContexts *RareBooleanData `json:"stackingContexts"` // Stacking context information.
 }
 
-// TextBoxSnapshot details of post layout rendered text positions. The exact
-// layout should not be regarded as stable and may change between versions.
+// TextBoxSnapshot table of details of the post layout rendered text
+// positions. The exact layout should not be regarded as stable and may change
+// between versions.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/DOMSnapshot#type-TextBoxSnapshot
 type TextBoxSnapshot struct {
-	LayoutIndex []int64     `json:"layoutIndex"` // Intex of th elayout tree node that owns this box collection.
+	LayoutIndex []int64     `json:"layoutIndex"` // Index of the layout tree node that owns this box collection.
 	Bounds      []Rectangle `json:"bounds"`      // The absolute position bounding box.
 	Start       []int64     `json:"start"`       // The starting index in characters, for this post layout textbox substring. Characters that would be represented as a surrogate pair in UTF-16 have length 2.
 	Length      []int64     `json:"length"`      // The number of characters in this post layout textbox substring. Characters that would be represented as a surrogate pair in UTF-16 have length 2.

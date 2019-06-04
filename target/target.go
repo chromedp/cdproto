@@ -262,6 +262,8 @@ type CreateTargetParams struct {
 	Height                  int64            `json:"height,omitempty"`                  // Frame height in DIP (headless chrome only).
 	BrowserContextID        BrowserContextID `json:"browserContextId,omitempty"`        // The browser context to create the page in.
 	EnableBeginFrameControl bool             `json:"enableBeginFrameControl,omitempty"` // Whether BeginFrames for this target will be controlled via DevTools (headless chrome only, not supported on MacOS yet, false by default).
+	NewWindow               bool             `json:"newWindow,omitempty"`               // Whether to create a new Window or Tab (chrome-only, false by default).
+	Background              bool             `json:"background,omitempty"`              // Whether to create the target in background or foreground (chrome-only, false by default).
 }
 
 // CreateTarget creates a new page.
@@ -299,6 +301,20 @@ func (p CreateTargetParams) WithBrowserContextID(browserContextID BrowserContext
 // false by default).
 func (p CreateTargetParams) WithEnableBeginFrameControl(enableBeginFrameControl bool) *CreateTargetParams {
 	p.EnableBeginFrameControl = enableBeginFrameControl
+	return &p
+}
+
+// WithNewWindow whether to create a new Window or Tab (chrome-only, false by
+// default).
+func (p CreateTargetParams) WithNewWindow(newWindow bool) *CreateTargetParams {
+	p.NewWindow = newWindow
+	return &p
+}
+
+// WithBackground whether to create the target in background or foreground
+// (chrome-only, false by default).
+func (p CreateTargetParams) WithBackground(background bool) *CreateTargetParams {
+	p.Background = background
 	return &p
 }
 
