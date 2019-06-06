@@ -47,8 +47,69 @@ func (p *DisableParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandDisable, nil, nil)
 }
 
+// AddVirtualAuthenticatorParams creates and adds a virtual authenticator.
+type AddVirtualAuthenticatorParams struct {
+	Options *VirtualAuthenticatorOptions `json:"options"`
+}
+
+// AddVirtualAuthenticator creates and adds a virtual authenticator.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/WebAuthn#method-addVirtualAuthenticator
+//
+// parameters:
+//   options
+func AddVirtualAuthenticator(options *VirtualAuthenticatorOptions) *AddVirtualAuthenticatorParams {
+	return &AddVirtualAuthenticatorParams{
+		Options: options,
+	}
+}
+
+// AddVirtualAuthenticatorReturns return values.
+type AddVirtualAuthenticatorReturns struct {
+	AuthenticatorID AuthenticatorID `json:"authenticatorId,omitempty"`
+}
+
+// Do executes WebAuthn.addVirtualAuthenticator against the provided context.
+//
+// returns:
+//   authenticatorID
+func (p *AddVirtualAuthenticatorParams) Do(ctx context.Context) (authenticatorID AuthenticatorID, err error) {
+	// execute
+	var res AddVirtualAuthenticatorReturns
+	err = cdp.Execute(ctx, CommandAddVirtualAuthenticator, p, &res)
+	if err != nil {
+		return "", err
+	}
+
+	return res.AuthenticatorID, nil
+}
+
+// RemoveVirtualAuthenticatorParams removes the given authenticator.
+type RemoveVirtualAuthenticatorParams struct {
+	AuthenticatorID AuthenticatorID `json:"authenticatorId"`
+}
+
+// RemoveVirtualAuthenticator removes the given authenticator.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/WebAuthn#method-removeVirtualAuthenticator
+//
+// parameters:
+//   authenticatorID
+func RemoveVirtualAuthenticator(authenticatorID AuthenticatorID) *RemoveVirtualAuthenticatorParams {
+	return &RemoveVirtualAuthenticatorParams{
+		AuthenticatorID: authenticatorID,
+	}
+}
+
+// Do executes WebAuthn.removeVirtualAuthenticator against the provided context.
+func (p *RemoveVirtualAuthenticatorParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandRemoveVirtualAuthenticator, p, nil)
+}
+
 // Command names.
 const (
-	CommandEnable  = "WebAuthn.enable"
-	CommandDisable = "WebAuthn.disable"
+	CommandEnable                     = "WebAuthn.enable"
+	CommandDisable                    = "WebAuthn.disable"
+	CommandAddVirtualAuthenticator    = "WebAuthn.addVirtualAuthenticator"
+	CommandRemoveVirtualAuthenticator = "WebAuthn.removeVirtualAuthenticator"
 )

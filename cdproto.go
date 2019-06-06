@@ -620,6 +620,8 @@ const (
 	EventWebAudioContextChanged                            = "WebAudio.contextChanged"
 	CommandWebAuthnEnable                                  = webauthn.CommandEnable
 	CommandWebAuthnDisable                                 = webauthn.CommandDisable
+	CommandWebAuthnAddVirtualAuthenticator                 = webauthn.CommandAddVirtualAuthenticator
+	CommandWebAuthnRemoveVirtualAuthenticator              = webauthn.CommandRemoveVirtualAuthenticator
 )
 
 // Error error type.
@@ -2287,6 +2289,12 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		return emptyVal, nil
 
 	case CommandWebAuthnDisable:
+		return emptyVal, nil
+
+	case CommandWebAuthnAddVirtualAuthenticator:
+		v = new(webauthn.AddVirtualAuthenticatorReturns)
+
+	case CommandWebAuthnRemoveVirtualAuthenticator:
 		return emptyVal, nil
 
 	default:
