@@ -111,13 +111,14 @@ func (t *ContextState) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 
-// ContextRealtimeData fields in AudioContext that change in real-time. These
-// are not updated on OfflineAudioContext.
+// ContextRealtimeData fields in AudioContext that change in real-time.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/WebAudio#type-ContextRealtimeData
 type ContextRealtimeData struct {
-	CurrentTime    float64 `json:"currentTime,omitempty"`    // The current context time in second in BaseAudioContext.
-	RenderCapacity float64 `json:"renderCapacity,omitempty"` // The time spent on rendering graph divided by render quantum duration, and multiplied by 100. 100 means the audio renderer reached the full capacity and glitch may occur.
+	CurrentTime              float64 `json:"currentTime"`              // The current context time in second in BaseAudioContext.
+	RenderCapacity           float64 `json:"renderCapacity"`           // The time spent on rendering graph divided by render quantum duration, and multiplied by 100. 100 means the audio renderer reached the full capacity and glitch may occur.
+	CallbackIntervalMean     float64 `json:"callbackIntervalMean"`     // A running mean of callback interval.
+	CallbackIntervalVariance float64 `json:"callbackIntervalVariance"` // A running variance of callback interval.
 }
 
 // BaseAudioContext protocol object for BaseAudioContext.

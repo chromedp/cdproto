@@ -433,6 +433,30 @@ func (p *SetShowPaintRectsParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandSetShowPaintRects, p, nil)
 }
 
+// SetShowLayoutShiftRegionsParams requests that backend shows layout shift
+// regions.
+type SetShowLayoutShiftRegionsParams struct {
+	Result bool `json:"result"` // True for showing layout shift regions
+}
+
+// SetShowLayoutShiftRegions requests that backend shows layout shift
+// regions.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Overlay#method-setShowLayoutShiftRegions
+//
+// parameters:
+//   result - True for showing layout shift regions
+func SetShowLayoutShiftRegions(result bool) *SetShowLayoutShiftRegionsParams {
+	return &SetShowLayoutShiftRegionsParams{
+		Result: result,
+	}
+}
+
+// Do executes Overlay.setShowLayoutShiftRegions against the provided context.
+func (p *SetShowLayoutShiftRegionsParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetShowLayoutShiftRegions, p, nil)
+}
+
 // SetShowScrollBottleneckRectsParams requests that backend shows scroll
 // bottleneck rects.
 type SetShowScrollBottleneckRectsParams struct {
@@ -520,6 +544,7 @@ const (
 	CommandSetShowDebugBorders          = "Overlay.setShowDebugBorders"
 	CommandSetShowFPSCounter            = "Overlay.setShowFPSCounter"
 	CommandSetShowPaintRects            = "Overlay.setShowPaintRects"
+	CommandSetShowLayoutShiftRegions    = "Overlay.setShowLayoutShiftRegions"
 	CommandSetShowScrollBottleneckRects = "Overlay.setShowScrollBottleneckRects"
 	CommandSetShowHitTestBorders        = "Overlay.setShowHitTestBorders"
 	CommandSetShowViewportSizeOnResize  = "Overlay.setShowViewportSizeOnResize"

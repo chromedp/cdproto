@@ -545,6 +545,10 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoWebaudio7(in *jlexer.Lexer, o
 			out.CurrentTime = float64(in.Float64())
 		case "renderCapacity":
 			out.RenderCapacity = float64(in.Float64())
+		case "callbackIntervalMean":
+			out.CallbackIntervalMean = float64(in.Float64())
+		case "callbackIntervalVariance":
+			out.CallbackIntervalVariance = float64(in.Float64())
 		default:
 			in.SkipRecursive()
 		}
@@ -559,7 +563,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoWebaudio7(out *jwriter.Writer
 	out.RawByte('{')
 	first := true
 	_ = first
-	if in.CurrentTime != 0 {
+	{
 		const prefix string = ",\"currentTime\":"
 		if first {
 			first = false
@@ -569,7 +573,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoWebaudio7(out *jwriter.Writer
 		}
 		out.Float64(float64(in.CurrentTime))
 	}
-	if in.RenderCapacity != 0 {
+	{
 		const prefix string = ",\"renderCapacity\":"
 		if first {
 			first = false
@@ -578,6 +582,26 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoWebaudio7(out *jwriter.Writer
 			out.RawString(prefix)
 		}
 		out.Float64(float64(in.RenderCapacity))
+	}
+	{
+		const prefix string = ",\"callbackIntervalMean\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Float64(float64(in.CallbackIntervalMean))
+	}
+	{
+		const prefix string = ",\"callbackIntervalVariance\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Float64(float64(in.CallbackIntervalVariance))
 	}
 	out.RawByte('}')
 }

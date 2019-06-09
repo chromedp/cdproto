@@ -431,6 +431,7 @@ const (
 	CommandOverlaySetShowDebugBorders                      = overlay.CommandSetShowDebugBorders
 	CommandOverlaySetShowFPSCounter                        = overlay.CommandSetShowFPSCounter
 	CommandOverlaySetShowPaintRects                        = overlay.CommandSetShowPaintRects
+	CommandOverlaySetShowLayoutShiftRegions                = overlay.CommandSetShowLayoutShiftRegions
 	CommandOverlaySetShowScrollBottleneckRects             = overlay.CommandSetShowScrollBottleneckRects
 	CommandOverlaySetShowHitTestBorders                    = overlay.CommandSetShowHitTestBorders
 	CommandOverlaySetShowViewportSizeOnResize              = overlay.CommandSetShowViewportSizeOnResize
@@ -1722,6 +1723,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		return emptyVal, nil
 
 	case CommandOverlaySetShowPaintRects:
+		return emptyVal, nil
+
+	case CommandOverlaySetShowLayoutShiftRegions:
 		return emptyVal, nil
 
 	case CommandOverlaySetShowScrollBottleneckRects:

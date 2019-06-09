@@ -168,11 +168,14 @@ type NodeTreeSnapshot struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/DOMSnapshot#type-LayoutTreeSnapshot
 type LayoutTreeSnapshot struct {
-	NodeIndex        []int64          `json:"nodeIndex"`        // Index of the corresponding node in the NodeTreeSnapshot array returned by captureSnapshot.
-	Styles           []ArrayOfStrings `json:"styles"`           // Array of indexes specifying computed style strings, filtered according to the computedStyles parameter passed to captureSnapshot.
-	Bounds           []Rectangle      `json:"bounds"`           // The absolute position bounding box.
-	Text             []StringIndex    `json:"text"`             // Contents of the LayoutText, if any.
-	StackingContexts *RareBooleanData `json:"stackingContexts"` // Stacking context information.
+	NodeIndex        []int64          `json:"nodeIndex"`             // Index of the corresponding node in the NodeTreeSnapshot array returned by captureSnapshot.
+	Styles           []ArrayOfStrings `json:"styles"`                // Array of indexes specifying computed style strings, filtered according to the computedStyles parameter passed to captureSnapshot.
+	Bounds           []Rectangle      `json:"bounds"`                // The absolute position bounding box.
+	Text             []StringIndex    `json:"text"`                  // Contents of the LayoutText, if any.
+	StackingContexts *RareBooleanData `json:"stackingContexts"`      // Stacking context information.
+	OffsetRects      []Rectangle      `json:"offsetRects,omitempty"` // The offset rect of nodes. Only available when includeDOMRects is set to true
+	ScrollRects      []Rectangle      `json:"scrollRects,omitempty"` // The scroll rect of nodes. Only available when includeDOMRects is set to true
+	ClientRects      []Rectangle      `json:"clientRects,omitempty"` // The client rect of nodes. Only available when includeDOMRects is set to true
 }
 
 // TextBoxSnapshot table of details of the post layout rendered text
