@@ -663,10 +663,11 @@ type Frame struct {
 	ParentID       FrameID          `json:"parentId,omitempty"`       // Parent frame identifier.
 	LoaderID       LoaderID         `json:"loaderId"`                 // Identifier of the loader associated with this frame.
 	Name           string           `json:"name,omitempty"`           // Frame's name as specified in the tag.
-	URL            string           `json:"url"`                      // Frame document's URL.
+	URL            string           `json:"url"`                      // Frame document's URL without fragment.
+	URLFragment    string           `json:"urlFragment,omitempty"`    // Frame document's URL fragment including the '#'.
 	SecurityOrigin string           `json:"securityOrigin"`           // Frame document's security origin.
 	MimeType       string           `json:"mimeType"`                 // Frame document's mimeType as determined by the browser.
-	UnreachableURL string           `json:"unreachableUrl,omitempty"` // If the frame failed to load, this contains the URL that could not be loaded.
+	UnreachableURL string           `json:"unreachableUrl,omitempty"` // If the frame failed to load, this contains the URL that could not be loaded. Note that unlike url above, this URL may contain a fragment.
 	State          FrameState       `json:"-"`                        // Frame state.
 	Root           *Node            `json:"-"`                        // Frame document root.
 	Nodes          map[NodeID]*Node `json:"-"`                        // Frame nodes.

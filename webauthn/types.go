@@ -126,3 +126,13 @@ type VirtualAuthenticatorOptions struct {
 	HasResidentKey      bool                   `json:"hasResidentKey"`
 	HasUserVerification bool                   `json:"hasUserVerification"`
 }
+
+// Credential [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/WebAuthn#type-Credential
+type Credential struct {
+	CredentialID string `json:"credentialId"`
+	RpIDHash     string `json:"rpIdHash"`   // SHA-256 hash of the Relying Party ID the credential is scoped to. Must be 32 bytes long. See https://w3c.github.io/webauthn/#rpidhash
+	PrivateKey   string `json:"privateKey"` // The private key in PKCS#8 format.
+	SignCount    int64  `json:"signCount"`  // Signature counter. This is incremented by one for each successful assertion. See https://w3c.github.io/webauthn/#signature-counter
+}

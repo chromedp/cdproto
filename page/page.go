@@ -16,6 +16,7 @@ import (
 	"github.com/chromedp/cdproto/cdp"
 	"github.com/chromedp/cdproto/debugger"
 	"github.com/chromedp/cdproto/dom"
+	"github.com/chromedp/cdproto/io"
 	"github.com/chromedp/cdproto/runtime"
 )
 
@@ -656,21 +657,22 @@ func (p *NavigateToHistoryEntryParams) Do(ctx context.Context) (err error) {
 
 // PrintToPDFParams print page as PDF.
 type PrintToPDFParams struct {
-	Landscape               bool    `json:"landscape,omitempty"`               // Paper orientation. Defaults to false.
-	DisplayHeaderFooter     bool    `json:"displayHeaderFooter,omitempty"`     // Display header and footer. Defaults to false.
-	PrintBackground         bool    `json:"printBackground,omitempty"`         // Print background graphics. Defaults to false.
-	Scale                   float64 `json:"scale,omitempty"`                   // Scale of the webpage rendering. Defaults to 1.
-	PaperWidth              float64 `json:"paperWidth,omitempty"`              // Paper width in inches. Defaults to 8.5 inches.
-	PaperHeight             float64 `json:"paperHeight,omitempty"`             // Paper height in inches. Defaults to 11 inches.
-	MarginTop               float64 `json:"marginTop,omitempty"`               // Top margin in inches. Defaults to 1cm (~0.4 inches).
-	MarginBottom            float64 `json:"marginBottom,omitempty"`            // Bottom margin in inches. Defaults to 1cm (~0.4 inches).
-	MarginLeft              float64 `json:"marginLeft,omitempty"`              // Left margin in inches. Defaults to 1cm (~0.4 inches).
-	MarginRight             float64 `json:"marginRight,omitempty"`             // Right margin in inches. Defaults to 1cm (~0.4 inches).
-	PageRanges              string  `json:"pageRanges,omitempty"`              // Paper ranges to print, e.g., '1-5, 8, 11-13'. Defaults to the empty string, which means print all pages.
-	IgnoreInvalidPageRanges bool    `json:"ignoreInvalidPageRanges,omitempty"` // Whether to silently ignore invalid but successfully parsed page ranges, such as '3-2'. Defaults to false.
-	HeaderTemplate          string  `json:"headerTemplate,omitempty"`          // HTML template for the print header. Should be valid HTML markup with following classes used to inject printing values into them: - date: formatted print date - title: document title - url: document location - pageNumber: current page number - totalPages: total pages in the document  For example, <span class=title></span> would generate span containing the title.
-	FooterTemplate          string  `json:"footerTemplate,omitempty"`          // HTML template for the print footer. Should use the same format as the headerTemplate.
-	PreferCSSPageSize       bool    `json:"preferCSSPageSize,omitempty"`       // Whether or not to prefer page size as defined by css. Defaults to false, in which case the content will be scaled to fit the paper size.
+	Landscape               bool                   `json:"landscape,omitempty"`               // Paper orientation. Defaults to false.
+	DisplayHeaderFooter     bool                   `json:"displayHeaderFooter,omitempty"`     // Display header and footer. Defaults to false.
+	PrintBackground         bool                   `json:"printBackground,omitempty"`         // Print background graphics. Defaults to false.
+	Scale                   float64                `json:"scale,omitempty"`                   // Scale of the webpage rendering. Defaults to 1.
+	PaperWidth              float64                `json:"paperWidth,omitempty"`              // Paper width in inches. Defaults to 8.5 inches.
+	PaperHeight             float64                `json:"paperHeight,omitempty"`             // Paper height in inches. Defaults to 11 inches.
+	MarginTop               float64                `json:"marginTop,omitempty"`               // Top margin in inches. Defaults to 1cm (~0.4 inches).
+	MarginBottom            float64                `json:"marginBottom,omitempty"`            // Bottom margin in inches. Defaults to 1cm (~0.4 inches).
+	MarginLeft              float64                `json:"marginLeft,omitempty"`              // Left margin in inches. Defaults to 1cm (~0.4 inches).
+	MarginRight             float64                `json:"marginRight,omitempty"`             // Right margin in inches. Defaults to 1cm (~0.4 inches).
+	PageRanges              string                 `json:"pageRanges,omitempty"`              // Paper ranges to print, e.g., '1-5, 8, 11-13'. Defaults to the empty string, which means print all pages.
+	IgnoreInvalidPageRanges bool                   `json:"ignoreInvalidPageRanges,omitempty"` // Whether to silently ignore invalid but successfully parsed page ranges, such as '3-2'. Defaults to false.
+	HeaderTemplate          string                 `json:"headerTemplate,omitempty"`          // HTML template for the print header. Should be valid HTML markup with following classes used to inject printing values into them: - date: formatted print date - title: document title - url: document location - pageNumber: current page number - totalPages: total pages in the document  For example, <span class=title></span> would generate span containing the title.
+	FooterTemplate          string                 `json:"footerTemplate,omitempty"`          // HTML template for the print footer. Should use the same format as the headerTemplate.
+	PreferCSSPageSize       bool                   `json:"preferCSSPageSize,omitempty"`       // Whether or not to prefer page size as defined by css. Defaults to false, in which case the content will be scaled to fit the paper size.
+	TransferMode            PrintToPDFTransferMode `json:"transferMode,omitempty"`            // return as stream
 }
 
 // PrintToPDF print page as PDF.
@@ -782,30 +784,38 @@ func (p PrintToPDFParams) WithPreferCSSPageSize(preferCSSPageSize bool) *PrintTo
 	return &p
 }
 
+// WithTransferMode return as stream.
+func (p PrintToPDFParams) WithTransferMode(transferMode PrintToPDFTransferMode) *PrintToPDFParams {
+	p.TransferMode = transferMode
+	return &p
+}
+
 // PrintToPDFReturns return values.
 type PrintToPDFReturns struct {
-	Data string `json:"data,omitempty"` // Base64-encoded pdf data.
+	Data   string          `json:"data,omitempty"`   // Base64-encoded pdf data. Empty if |returnAsStream| is specified.
+	Stream io.StreamHandle `json:"stream,omitempty"` // A handle of the stream that holds resulting PDF data.
 }
 
 // Do executes Page.printToPDF against the provided context.
 //
 // returns:
-//   data - Base64-encoded pdf data.
-func (p *PrintToPDFParams) Do(ctx context.Context) (data []byte, err error) {
+//   data - Base64-encoded pdf data. Empty if |returnAsStream| is specified.
+//   stream - A handle of the stream that holds resulting PDF data.
+func (p *PrintToPDFParams) Do(ctx context.Context) (data []byte, stream io.StreamHandle, err error) {
 	// execute
 	var res PrintToPDFReturns
 	err = cdp.Execute(ctx, CommandPrintToPDF, p, &res)
 	if err != nil {
-		return nil, err
+		return nil, "", err
 	}
 
 	// decode
 	var dec []byte
 	dec, err = base64.StdEncoding.DecodeString(res.Data)
 	if err != nil {
-		return nil, err
+		return nil, "", err
 	}
-	return dec, nil
+	return dec, res.Stream, nil
 }
 
 // ReloadParams reloads given page optionally ignoring the cache.

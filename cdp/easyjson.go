@@ -770,6 +770,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoCdp2(in *jlexer.Lexer, out *F
 			out.Name = string(in.String())
 		case "url":
 			out.URL = string(in.String())
+		case "urlFragment":
+			out.URLFragment = string(in.String())
 		case "securityOrigin":
 			out.SecurityOrigin = string(in.String())
 		case "mimeType":
@@ -839,6 +841,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoCdp2(out *jwriter.Writer, in 
 			out.RawString(prefix)
 		}
 		out.String(string(in.URL))
+	}
+	if in.URLFragment != "" {
+		const prefix string = ",\"urlFragment\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(in.URLFragment))
 	}
 	{
 		const prefix string = ",\"securityOrigin\":"

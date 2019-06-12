@@ -414,6 +414,50 @@ func (t *CaptureSnapshotFormat) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 
+// PrintToPDFTransferMode return as stream.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-transferMode
+type PrintToPDFTransferMode string
+
+// String returns the PrintToPDFTransferMode as string value.
+func (t PrintToPDFTransferMode) String() string {
+	return string(t)
+}
+
+// PrintToPDFTransferMode values.
+const (
+	PrintToPDFTransferModeReturnAsBase64 PrintToPDFTransferMode = "ReturnAsBase64"
+	PrintToPDFTransferModeReturnAsStream PrintToPDFTransferMode = "ReturnAsStream"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t PrintToPDFTransferMode) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t PrintToPDFTransferMode) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *PrintToPDFTransferMode) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	switch PrintToPDFTransferMode(in.String()) {
+	case PrintToPDFTransferModeReturnAsBase64:
+		*t = PrintToPDFTransferModeReturnAsBase64
+	case PrintToPDFTransferModeReturnAsStream:
+		*t = PrintToPDFTransferModeReturnAsStream
+
+	default:
+		in.AddError(errors.New("unknown PrintToPDFTransferMode value"))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *PrintToPDFTransferMode) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
 // SetDownloadBehaviorBehavior whether to allow all or deny all download
 // requests, or use default Chrome behavior if available (otherwise deny).
 //

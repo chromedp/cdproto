@@ -7,6 +7,7 @@ import (
 	cdp "github.com/chromedp/cdproto/cdp"
 	debugger "github.com/chromedp/cdproto/debugger"
 	dom "github.com/chromedp/cdproto/dom"
+	io "github.com/chromedp/cdproto/io"
 	runtime "github.com/chromedp/cdproto/runtime"
 	easyjson "github.com/mailru/easyjson"
 	jlexer "github.com/mailru/easyjson/jlexer"
@@ -1966,6 +1967,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoPage22(in *jlexer.Lexer, out 
 		switch key {
 		case "data":
 			out.Data = string(in.String())
+		case "stream":
+			out.Stream = io.StreamHandle(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -1989,6 +1992,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoPage22(out *jwriter.Writer, i
 			out.RawString(prefix)
 		}
 		out.String(string(in.Data))
+	}
+	if in.Stream != "" {
+		const prefix string = ",\"stream\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(in.Stream))
 	}
 	out.RawByte('}')
 }
@@ -2065,6 +2078,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoPage23(in *jlexer.Lexer, out 
 			out.FooterTemplate = string(in.String())
 		case "preferCSSPageSize":
 			out.PreferCSSPageSize = bool(in.Bool())
+		case "transferMode":
+			(out.TransferMode).UnmarshalEasyJSON(in)
 		default:
 			in.SkipRecursive()
 		}
@@ -2228,6 +2243,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoPage23(out *jwriter.Writer, i
 			out.RawString(prefix)
 		}
 		out.Bool(bool(in.PreferCSSPageSize))
+	}
+	if in.TransferMode != "" {
+		const prefix string = ",\"transferMode\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		(in.TransferMode).MarshalEasyJSON(out)
 	}
 	out.RawByte('}')
 }

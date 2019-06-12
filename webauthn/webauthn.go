@@ -106,10 +106,100 @@ func (p *RemoveVirtualAuthenticatorParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandRemoveVirtualAuthenticator, p, nil)
 }
 
+// AddCredentialParams adds the credential to the specified authenticator.
+type AddCredentialParams struct {
+	AuthenticatorID AuthenticatorID `json:"authenticatorId"`
+	Credential      *Credential     `json:"credential"`
+}
+
+// AddCredential adds the credential to the specified authenticator.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/WebAuthn#method-addCredential
+//
+// parameters:
+//   authenticatorID
+//   credential
+func AddCredential(authenticatorID AuthenticatorID, credential *Credential) *AddCredentialParams {
+	return &AddCredentialParams{
+		AuthenticatorID: authenticatorID,
+		Credential:      credential,
+	}
+}
+
+// Do executes WebAuthn.addCredential against the provided context.
+func (p *AddCredentialParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandAddCredential, p, nil)
+}
+
+// GetCredentialsParams returns all the credentials stored in the given
+// virtual authenticator.
+type GetCredentialsParams struct {
+	AuthenticatorID AuthenticatorID `json:"authenticatorId"`
+}
+
+// GetCredentials returns all the credentials stored in the given virtual
+// authenticator.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/WebAuthn#method-getCredentials
+//
+// parameters:
+//   authenticatorID
+func GetCredentials(authenticatorID AuthenticatorID) *GetCredentialsParams {
+	return &GetCredentialsParams{
+		AuthenticatorID: authenticatorID,
+	}
+}
+
+// GetCredentialsReturns return values.
+type GetCredentialsReturns struct {
+	Credentials []*Credential `json:"credentials,omitempty"`
+}
+
+// Do executes WebAuthn.getCredentials against the provided context.
+//
+// returns:
+//   credentials
+func (p *GetCredentialsParams) Do(ctx context.Context) (credentials []*Credential, err error) {
+	// execute
+	var res GetCredentialsReturns
+	err = cdp.Execute(ctx, CommandGetCredentials, p, &res)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.Credentials, nil
+}
+
+// ClearCredentialsParams clears all the credentials from the specified
+// device.
+type ClearCredentialsParams struct {
+	AuthenticatorID AuthenticatorID `json:"authenticatorId"`
+}
+
+// ClearCredentials clears all the credentials from the specified device.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/WebAuthn#method-clearCredentials
+//
+// parameters:
+//   authenticatorID
+func ClearCredentials(authenticatorID AuthenticatorID) *ClearCredentialsParams {
+	return &ClearCredentialsParams{
+		AuthenticatorID: authenticatorID,
+	}
+}
+
+// Do executes WebAuthn.clearCredentials against the provided context.
+func (p *ClearCredentialsParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandClearCredentials, p, nil)
+}
+
 // Command names.
 const (
 	CommandEnable                     = "WebAuthn.enable"
 	CommandDisable                    = "WebAuthn.disable"
 	CommandAddVirtualAuthenticator    = "WebAuthn.addVirtualAuthenticator"
 	CommandRemoveVirtualAuthenticator = "WebAuthn.removeVirtualAuthenticator"
+	CommandAddCredential              = "WebAuthn.addCredential"
+	CommandGetCredentials             = "WebAuthn.getCredentials"
+	CommandClearCredentials           = "WebAuthn.clearCredentials"
 )

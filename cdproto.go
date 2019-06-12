@@ -623,6 +623,9 @@ const (
 	CommandWebAuthnDisable                                 = webauthn.CommandDisable
 	CommandWebAuthnAddVirtualAuthenticator                 = webauthn.CommandAddVirtualAuthenticator
 	CommandWebAuthnRemoveVirtualAuthenticator              = webauthn.CommandRemoveVirtualAuthenticator
+	CommandWebAuthnAddCredential                           = webauthn.CommandAddCredential
+	CommandWebAuthnGetCredentials                          = webauthn.CommandGetCredentials
+	CommandWebAuthnClearCredentials                        = webauthn.CommandClearCredentials
 )
 
 // Error error type.
@@ -2299,6 +2302,15 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		v = new(webauthn.AddVirtualAuthenticatorReturns)
 
 	case CommandWebAuthnRemoveVirtualAuthenticator:
+		return emptyVal, nil
+
+	case CommandWebAuthnAddCredential:
+		return emptyVal, nil
+
+	case CommandWebAuthnGetCredentials:
+		v = new(webauthn.GetCredentialsReturns)
+
+	case CommandWebAuthnClearCredentials:
 		return emptyVal, nil
 
 	default:
