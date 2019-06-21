@@ -6,8 +6,7 @@ package security
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Security#event-securityStateChanged
 type EventSecurityStateChanged struct {
-	SecurityState         State               `json:"securityState"`         // Security state.
-	SchemeIsCryptographic bool                `json:"schemeIsCryptographic"` // True if the page was loaded over cryptographic transport such as HTTPS.
-	Explanations          []*StateExplanation `json:"explanations"`          // List of explanations for the security state. If the overall security state is insecure or warning, at least one corresponding explanation should be included.
-	Summary               string              `json:"summary,omitempty"`     // Overrides user-visible description of the state.
+	SecurityState State               `json:"securityState"`     // Security state.
+	Explanations  []*StateExplanation `json:"explanations"`      // List of explanations for the security state. If the overall security state is insecure or warning, at least one corresponding explanation should be included.
+	Summary       string              `json:"summary,omitempty"` // Overrides user-visible description of the state.
 }

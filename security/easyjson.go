@@ -314,8 +314,6 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoSecurity2(in *jlexer.Lexer, o
 		switch key {
 		case "securityState":
 			(out.SecurityState).UnmarshalEasyJSON(in)
-		case "schemeIsCryptographic":
-			out.SchemeIsCryptographic = bool(in.Bool())
 		case "explanations":
 			if in.IsNull() {
 				in.Skip()
@@ -372,16 +370,6 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoSecurity2(out *jwriter.Writer
 			out.RawString(prefix)
 		}
 		(in.SecurityState).MarshalEasyJSON(out)
-	}
-	{
-		const prefix string = ",\"schemeIsCryptographic\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
-		out.Bool(bool(in.SchemeIsCryptographic))
 	}
 	{
 		const prefix string = ",\"explanations\":"

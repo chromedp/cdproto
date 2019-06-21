@@ -193,6 +193,33 @@ func (p *ClearCredentialsParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandClearCredentials, p, nil)
 }
 
+// SetUserVerifiedParams sets whether User Verification succeeds or fails for
+// an authenticator. The default is true.
+type SetUserVerifiedParams struct {
+	AuthenticatorID AuthenticatorID `json:"authenticatorId"`
+	IsUserVerified  bool            `json:"isUserVerified"`
+}
+
+// SetUserVerified sets whether User Verification succeeds or fails for an
+// authenticator. The default is true.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/WebAuthn#method-setUserVerified
+//
+// parameters:
+//   authenticatorID
+//   isUserVerified
+func SetUserVerified(authenticatorID AuthenticatorID, isUserVerified bool) *SetUserVerifiedParams {
+	return &SetUserVerifiedParams{
+		AuthenticatorID: authenticatorID,
+		IsUserVerified:  isUserVerified,
+	}
+}
+
+// Do executes WebAuthn.setUserVerified against the provided context.
+func (p *SetUserVerifiedParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetUserVerified, p, nil)
+}
+
 // Command names.
 const (
 	CommandEnable                     = "WebAuthn.enable"
@@ -202,4 +229,5 @@ const (
 	CommandAddCredential              = "WebAuthn.addCredential"
 	CommandGetCredentials             = "WebAuthn.getCredentials"
 	CommandClearCredentials           = "WebAuthn.clearCredentials"
+	CommandSetUserVerified            = "WebAuthn.setUserVerified"
 )

@@ -111,6 +111,8 @@ const (
 	PermissionTypeSensors                  PermissionType = "sensors"
 	PermissionTypeVideoCapture             PermissionType = "videoCapture"
 	PermissionTypeIdleDetection            PermissionType = "idleDetection"
+	PermissionTypeWakeLockScreen           PermissionType = "wakeLockScreen"
+	PermissionTypeWakeLockSystem           PermissionType = "wakeLockSystem"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -162,6 +164,10 @@ func (t *PermissionType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PermissionTypeVideoCapture
 	case PermissionTypeIdleDetection:
 		*t = PermissionTypeIdleDetection
+	case PermissionTypeWakeLockScreen:
+		*t = PermissionTypeWakeLockScreen
+	case PermissionTypeWakeLockSystem:
+		*t = PermissionTypeWakeLockSystem
 
 	default:
 		in.AddError(errors.New("unknown PermissionType value"))

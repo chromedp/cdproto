@@ -121,10 +121,11 @@ func (t *AuthenticatorTransport) UnmarshalJSON(buf []byte) error {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/WebAuthn#type-VirtualAuthenticatorOptions
 type VirtualAuthenticatorOptions struct {
-	Protocol            AuthenticatorProtocol  `json:"protocol"`
-	Transport           AuthenticatorTransport `json:"transport"`
-	HasResidentKey      bool                   `json:"hasResidentKey"`
-	HasUserVerification bool                   `json:"hasUserVerification"`
+	Protocol                    AuthenticatorProtocol  `json:"protocol"`
+	Transport                   AuthenticatorTransport `json:"transport"`
+	HasResidentKey              bool                   `json:"hasResidentKey"`
+	HasUserVerification         bool                   `json:"hasUserVerification"`
+	AutomaticPresenceSimulation bool                   `json:"automaticPresenceSimulation,omitempty"` // If set to true, tests of user presence will succeed immediately. Otherwise, they will not be resolved. Defaults to true.
 }
 
 // Credential [no description].
