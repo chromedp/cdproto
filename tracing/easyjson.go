@@ -849,6 +849,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoTracing8(in *jlexer.Lexer, ou
 			continue
 		}
 		switch key {
+		case "dataLossOccurred":
+			out.DataLossOccurred = bool(in.Bool())
 		case "stream":
 			out.Stream = io.StreamHandle(in.String())
 		case "traceFormat":
@@ -869,6 +871,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoTracing8(out *jwriter.Writer,
 	out.RawByte('{')
 	first := true
 	_ = first
+	{
+		const prefix string = ",\"dataLossOccurred\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Bool(bool(in.DataLossOccurred))
+	}
 	if in.Stream != "" {
 		const prefix string = ",\"stream\":"
 		if first {
