@@ -378,7 +378,6 @@ const (
 	CommandMemoryGetSamplingProfile                        = memory.CommandGetSamplingProfile
 	CommandNetworkClearBrowserCache                        = network.CommandClearBrowserCache
 	CommandNetworkClearBrowserCookies                      = network.CommandClearBrowserCookies
-	CommandNetworkContinueInterceptedRequest               = network.CommandContinueInterceptedRequest
 	CommandNetworkDeleteCookies                            = network.CommandDeleteCookies
 	CommandNetworkDisable                                  = network.CommandDisable
 	CommandNetworkEmulateNetworkConditions                 = network.CommandEmulateNetworkConditions
@@ -399,12 +398,10 @@ const (
 	CommandNetworkSetCookies                               = network.CommandSetCookies
 	CommandNetworkSetDataSizeLimitsForTest                 = network.CommandSetDataSizeLimitsForTest
 	CommandNetworkSetExtraHTTPHeaders                      = network.CommandSetExtraHTTPHeaders
-	CommandNetworkSetRequestInterception                   = network.CommandSetRequestInterception
 	EventNetworkDataReceived                               = "Network.dataReceived"
 	EventNetworkEventSourceMessageReceived                 = "Network.eventSourceMessageReceived"
 	EventNetworkLoadingFailed                              = "Network.loadingFailed"
 	EventNetworkLoadingFinished                            = "Network.loadingFinished"
-	EventNetworkRequestIntercepted                         = "Network.requestIntercepted"
 	EventNetworkRequestServedFromCache                     = "Network.requestServedFromCache"
 	EventNetworkRequestWillBeSent                          = "Network.requestWillBeSent"
 	EventNetworkResourceChangedPriority                    = "Network.resourceChangedPriority"
@@ -480,7 +477,10 @@ const (
 	CommandPageClearCompilationCache                       = page.CommandClearCompilationCache
 	CommandPageGenerateTestReport                          = page.CommandGenerateTestReport
 	CommandPageWaitForDebugger                             = page.CommandWaitForDebugger
+	CommandPageSetInterceptFileChooserDialog               = page.CommandSetInterceptFileChooserDialog
+	CommandPageHandleFileChooser                           = page.CommandHandleFileChooser
 	EventPageDomContentEventFired                          = "Page.domContentEventFired"
+	EventPageFileChooserOpened                             = "Page.fileChooserOpened"
 	EventPageFrameAttached                                 = "Page.frameAttached"
 	EventPageFrameDetached                                 = "Page.frameDetached"
 	EventPageFrameNavigated                                = "Page.frameNavigated"
@@ -1570,9 +1570,6 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandNetworkClearBrowserCookies:
 		return emptyVal, nil
 
-	case CommandNetworkContinueInterceptedRequest:
-		return emptyVal, nil
-
 	case CommandNetworkDeleteCookies:
 		return emptyVal, nil
 
@@ -1633,9 +1630,6 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandNetworkSetExtraHTTPHeaders:
 		return emptyVal, nil
 
-	case CommandNetworkSetRequestInterception:
-		return emptyVal, nil
-
 	case EventNetworkDataReceived:
 		v = new(network.EventDataReceived)
 
@@ -1647,9 +1641,6 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case EventNetworkLoadingFinished:
 		v = new(network.EventLoadingFinished)
-
-	case EventNetworkRequestIntercepted:
-		v = new(network.EventRequestIntercepted)
 
 	case EventNetworkRequestServedFromCache:
 		v = new(network.EventRequestServedFromCache)
@@ -1876,8 +1867,17 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandPageWaitForDebugger:
 		return emptyVal, nil
 
+	case CommandPageSetInterceptFileChooserDialog:
+		return emptyVal, nil
+
+	case CommandPageHandleFileChooser:
+		return emptyVal, nil
+
 	case EventPageDomContentEventFired:
 		v = new(page.EventDomContentEventFired)
+
+	case EventPageFileChooserOpened:
+		v = new(page.EventFileChooserOpened)
 
 	case EventPageFrameAttached:
 		v = new(page.EventFrameAttached)

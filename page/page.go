@@ -1379,6 +1379,67 @@ func (p *WaitForDebuggerParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandWaitForDebugger, nil, nil)
 }
 
+// SetInterceptFileChooserDialogParams intercept file chooser requests and
+// transfer control to protocol clients. When file chooser interception is
+// enabled, native file chooser dialog is not shown. Instead, a protocol event
+// Page.fileChooserOpened is emitted. File chooser can be handled with
+// page.handleFileChooser command.
+type SetInterceptFileChooserDialogParams struct {
+	Enabled bool `json:"enabled"`
+}
+
+// SetInterceptFileChooserDialog intercept file chooser requests and transfer
+// control to protocol clients. When file chooser interception is enabled,
+// native file chooser dialog is not shown. Instead, a protocol event
+// Page.fileChooserOpened is emitted. File chooser can be handled with
+// page.handleFileChooser command.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-setInterceptFileChooserDialog
+//
+// parameters:
+//   enabled
+func SetInterceptFileChooserDialog(enabled bool) *SetInterceptFileChooserDialogParams {
+	return &SetInterceptFileChooserDialogParams{
+		Enabled: enabled,
+	}
+}
+
+// Do executes Page.setInterceptFileChooserDialog against the provided context.
+func (p *SetInterceptFileChooserDialogParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetInterceptFileChooserDialog, p, nil)
+}
+
+// HandleFileChooserParams accepts or cancels an intercepted file chooser
+// dialog.
+type HandleFileChooserParams struct {
+	Action HandleFileChooserAction `json:"action"`
+	Files  []string                `json:"files,omitempty"` // Array of absolute file paths to set, only respected with accept action.
+}
+
+// HandleFileChooser accepts or cancels an intercepted file chooser dialog.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-handleFileChooser
+//
+// parameters:
+//   action
+func HandleFileChooser(action HandleFileChooserAction) *HandleFileChooserParams {
+	return &HandleFileChooserParams{
+		Action: action,
+	}
+}
+
+// WithFiles array of absolute file paths to set, only respected with accept
+// action.
+func (p HandleFileChooserParams) WithFiles(files []string) *HandleFileChooserParams {
+	p.Files = files
+	return &p
+}
+
+// Do executes Page.handleFileChooser against the provided context.
+func (p *HandleFileChooserParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandHandleFileChooser, p, nil)
+}
+
 // Command names.
 const (
 	CommandAddScriptToEvaluateOnNewDocument    = "Page.addScriptToEvaluateOnNewDocument"
@@ -1422,4 +1483,6 @@ const (
 	CommandClearCompilationCache               = "Page.clearCompilationCache"
 	CommandGenerateTestReport                  = "Page.generateTestReport"
 	CommandWaitForDebugger                     = "Page.waitForDebugger"
+	CommandSetInterceptFileChooserDialog       = "Page.setInterceptFileChooserDialog"
+	CommandHandleFileChooser                   = "Page.handleFileChooser"
 )

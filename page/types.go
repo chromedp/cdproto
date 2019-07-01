@@ -329,6 +329,50 @@ func (t *ClientNavigationReason) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 
+// FileChooserOpenedMode [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-mode
+type FileChooserOpenedMode string
+
+// String returns the FileChooserOpenedMode as string value.
+func (t FileChooserOpenedMode) String() string {
+	return string(t)
+}
+
+// FileChooserOpenedMode values.
+const (
+	FileChooserOpenedModeSelectSingle   FileChooserOpenedMode = "selectSingle"
+	FileChooserOpenedModeSelectMultiple FileChooserOpenedMode = "selectMultiple"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t FileChooserOpenedMode) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t FileChooserOpenedMode) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *FileChooserOpenedMode) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	switch FileChooserOpenedMode(in.String()) {
+	case FileChooserOpenedModeSelectSingle:
+		*t = FileChooserOpenedModeSelectSingle
+	case FileChooserOpenedModeSelectMultiple:
+		*t = FileChooserOpenedModeSelectMultiple
+
+	default:
+		in.AddError(errors.New("unknown FileChooserOpenedMode value"))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *FileChooserOpenedMode) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
 // CaptureScreenshotFormat image compression format (defaults to png).
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-format
@@ -591,5 +635,52 @@ func (t *SetWebLifecycleStateState) UnmarshalEasyJSON(in *jlexer.Lexer) {
 
 // UnmarshalJSON satisfies json.Unmarshaler.
 func (t *SetWebLifecycleStateState) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
+// HandleFileChooserAction [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-action
+type HandleFileChooserAction string
+
+// String returns the HandleFileChooserAction as string value.
+func (t HandleFileChooserAction) String() string {
+	return string(t)
+}
+
+// HandleFileChooserAction values.
+const (
+	HandleFileChooserActionAccept   HandleFileChooserAction = "accept"
+	HandleFileChooserActionCancel   HandleFileChooserAction = "cancel"
+	HandleFileChooserActionFallback HandleFileChooserAction = "fallback"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t HandleFileChooserAction) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t HandleFileChooserAction) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *HandleFileChooserAction) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	switch HandleFileChooserAction(in.String()) {
+	case HandleFileChooserActionAccept:
+		*t = HandleFileChooserActionAccept
+	case HandleFileChooserActionCancel:
+		*t = HandleFileChooserActionCancel
+	case HandleFileChooserActionFallback:
+		*t = HandleFileChooserActionFallback
+
+	default:
+		in.AddError(errors.New("unknown HandleFileChooserAction value"))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *HandleFileChooserAction) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }

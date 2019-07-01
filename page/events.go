@@ -14,6 +14,14 @@ type EventDomContentEventFired struct {
 	Timestamp *cdp.MonotonicTime `json:"timestamp"`
 }
 
+// EventFileChooserOpened emitted only when page.interceptFileChooser is
+// enabled.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-fileChooserOpened
+type EventFileChooserOpened struct {
+	Mode FileChooserOpenedMode `json:"mode"`
+}
+
 // EventFrameAttached fired when frame has been attached to its parent.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-frameAttached

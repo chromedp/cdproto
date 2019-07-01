@@ -49,94 +49,6 @@ func (p *ClearBrowserCookiesParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandClearBrowserCookies, nil, nil)
 }
 
-// ContinueInterceptedRequestParams response to Network.requestIntercepted
-// which either modifies the request to continue with any modifications, or
-// blocks it, or completes it with the provided response bytes. If a network
-// fetch occurs as a result which encounters a redirect an additional
-// Network.requestIntercepted event will be sent with the same InterceptionId.
-type ContinueInterceptedRequestParams struct {
-	InterceptionID        InterceptionID         `json:"interceptionId"`
-	ErrorReason           ErrorReason            `json:"errorReason,omitempty"`           // If set this causes the request to fail with the given reason. Passing Aborted for requests marked with isNavigationRequest also cancels the navigation. Must not be set in response to an authChallenge.
-	RawResponse           string                 `json:"rawResponse,omitempty"`           // If set the requests completes using with the provided base64 encoded raw response, including HTTP status line and headers etc... Must not be set in response to an authChallenge.
-	URL                   string                 `json:"url,omitempty"`                   // If set the request url will be modified in a way that's not observable by page. Must not be set in response to an authChallenge.
-	Method                string                 `json:"method,omitempty"`                // If set this allows the request method to be overridden. Must not be set in response to an authChallenge.
-	PostData              string                 `json:"postData,omitempty"`              // If set this allows postData to be set. Must not be set in response to an authChallenge.
-	Headers               Headers                `json:"headers,omitempty"`               // If set this allows the request headers to be changed. Must not be set in response to an authChallenge.
-	AuthChallengeResponse *AuthChallengeResponse `json:"authChallengeResponse,omitempty"` // Response to a requestIntercepted with an authChallenge. Must not be set otherwise.
-}
-
-// ContinueInterceptedRequest response to Network.requestIntercepted which
-// either modifies the request to continue with any modifications, or blocks it,
-// or completes it with the provided response bytes. If a network fetch occurs
-// as a result which encounters a redirect an additional
-// Network.requestIntercepted event will be sent with the same InterceptionId.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-continueInterceptedRequest
-//
-// parameters:
-//   interceptionID
-func ContinueInterceptedRequest(interceptionID InterceptionID) *ContinueInterceptedRequestParams {
-	return &ContinueInterceptedRequestParams{
-		InterceptionID: interceptionID,
-	}
-}
-
-// WithErrorReason if set this causes the request to fail with the given
-// reason. Passing Aborted for requests marked with isNavigationRequest also
-// cancels the navigation. Must not be set in response to an authChallenge.
-func (p ContinueInterceptedRequestParams) WithErrorReason(errorReason ErrorReason) *ContinueInterceptedRequestParams {
-	p.ErrorReason = errorReason
-	return &p
-}
-
-// WithRawResponse if set the requests completes using with the provided
-// base64 encoded raw response, including HTTP status line and headers etc...
-// Must not be set in response to an authChallenge.
-func (p ContinueInterceptedRequestParams) WithRawResponse(rawResponse string) *ContinueInterceptedRequestParams {
-	p.RawResponse = rawResponse
-	return &p
-}
-
-// WithURL if set the request url will be modified in a way that's not
-// observable by page. Must not be set in response to an authChallenge.
-func (p ContinueInterceptedRequestParams) WithURL(url string) *ContinueInterceptedRequestParams {
-	p.URL = url
-	return &p
-}
-
-// WithMethod if set this allows the request method to be overridden. Must
-// not be set in response to an authChallenge.
-func (p ContinueInterceptedRequestParams) WithMethod(method string) *ContinueInterceptedRequestParams {
-	p.Method = method
-	return &p
-}
-
-// WithPostData if set this allows postData to be set. Must not be set in
-// response to an authChallenge.
-func (p ContinueInterceptedRequestParams) WithPostData(postData string) *ContinueInterceptedRequestParams {
-	p.PostData = postData
-	return &p
-}
-
-// WithHeaders if set this allows the request headers to be changed. Must not
-// be set in response to an authChallenge.
-func (p ContinueInterceptedRequestParams) WithHeaders(headers Headers) *ContinueInterceptedRequestParams {
-	p.Headers = headers
-	return &p
-}
-
-// WithAuthChallengeResponse response to a requestIntercepted with an
-// authChallenge. Must not be set otherwise.
-func (p ContinueInterceptedRequestParams) WithAuthChallengeResponse(authChallengeResponse *AuthChallengeResponse) *ContinueInterceptedRequestParams {
-	p.AuthChallengeResponse = authChallengeResponse
-	return &p
-}
-
-// Do executes Network.continueInterceptedRequest against the provided context.
-func (p *ContinueInterceptedRequestParams) Do(ctx context.Context) (err error) {
-	return cdp.Execute(ctx, CommandContinueInterceptedRequest, p, nil)
-}
-
 // DeleteCookiesParams deletes browser cookies with matching name and url or
 // domain/path pair.
 type DeleteCookiesParams struct {
@@ -892,35 +804,10 @@ func (p *SetExtraHTTPHeadersParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandSetExtraHTTPHeaders, p, nil)
 }
 
-// SetRequestInterceptionParams sets the requests to intercept that match the
-// provided patterns and optionally resource types.
-type SetRequestInterceptionParams struct {
-	Patterns []*RequestPattern `json:"patterns"` // Requests matching any of these patterns will be forwarded and wait for the corresponding continueInterceptedRequest call.
-}
-
-// SetRequestInterception sets the requests to intercept that match the
-// provided patterns and optionally resource types.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-setRequestInterception
-//
-// parameters:
-//   patterns - Requests matching any of these patterns will be forwarded and wait for the corresponding continueInterceptedRequest call.
-func SetRequestInterception(patterns []*RequestPattern) *SetRequestInterceptionParams {
-	return &SetRequestInterceptionParams{
-		Patterns: patterns,
-	}
-}
-
-// Do executes Network.setRequestInterception against the provided context.
-func (p *SetRequestInterceptionParams) Do(ctx context.Context) (err error) {
-	return cdp.Execute(ctx, CommandSetRequestInterception, p, nil)
-}
-
 // Command names.
 const (
 	CommandClearBrowserCache                       = "Network.clearBrowserCache"
 	CommandClearBrowserCookies                     = "Network.clearBrowserCookies"
-	CommandContinueInterceptedRequest              = "Network.continueInterceptedRequest"
 	CommandDeleteCookies                           = "Network.deleteCookies"
 	CommandDisable                                 = "Network.disable"
 	CommandEmulateNetworkConditions                = "Network.emulateNetworkConditions"
@@ -941,5 +828,4 @@ const (
 	CommandSetCookies                              = "Network.setCookies"
 	CommandSetDataSizeLimitsForTest                = "Network.setDataSizeLimitsForTest"
 	CommandSetExtraHTTPHeaders                     = "Network.setExtraHTTPHeaders"
-	CommandSetRequestInterception                  = "Network.setRequestInterception"
 )
