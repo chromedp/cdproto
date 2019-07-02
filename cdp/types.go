@@ -397,6 +397,64 @@ func (n *Node) FullXPath() string {
 	return n.xpath(false, false)
 }
 
+// Dump returns printable string representation of the node and its children.
+func (n *Node) Dump(prefix, indent string) string {
+	if n == nil {
+		return prefix + "<nil>"
+	}
+
+	n.RLock()
+	defer n.RUnlock()
+
+	s := n.LocalName
+	if s == "" {
+		s = n.NodeName
+	}
+
+	for i := 0; i < len(n.Attributes); i += 2 {
+		if strings.ToLower(n.Attributes[i]) == "id" {
+			s += "#" + n.Attributes[i+1]
+			break
+		}
+	}
+
+	if n.NodeType != NodeTypeElement && n.NodeType != NodeTypeText {
+		s += fmt.Sprintf(" <%s>", n.NodeType)
+	}
+
+	if n.NodeType == NodeTypeText {
+		v := n.NodeValue
+		if len(v) > 15 {
+			v = v[:15] + "..."
+		}
+		s += fmt.Sprintf(" %q", v)
+	}
+
+	if n.NodeType == NodeTypeElement && len(n.Attributes) > 0 {
+		attrs := ""
+		for i := 0; i < len(n.Attributes); i += 2 {
+			if strings.ToLower(n.Attributes[i]) == "id" {
+				continue
+			}
+			if attrs != "" {
+				attrs += " "
+			}
+			attrs += fmt.Sprintf("%s=%q", n.Attributes[i], n.Attributes[i+1])
+		}
+		if attrs != "" {
+			s += " [" + attrs + "]"
+		}
+	}
+
+	s += fmt.Sprintf(" (%d)", n.NodeID)
+
+	for i := 0; i < len(n.Children); i++ {
+		s += "\n" + n.Children[i].Dump(prefix+indent, indent)
+	}
+
+	return prefix + s
+}
+
 // NodeState is the state of a DOM node.
 type NodeState uint8
 
