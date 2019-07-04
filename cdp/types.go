@@ -397,8 +397,8 @@ func (n *Node) FullXPath() string {
 	return n.xpath(false, false)
 }
 
-// Dump returns printable string representation of the node and its children.
-func (n *Node) Dump(prefix, indent string) string {
+// Dump builds a printable string representation of the node and its children.
+func (n *Node) Dump(prefix, indent string, nodeIDs bool) string {
 	if n == nil {
 		return prefix + "<nil>"
 	}
@@ -446,10 +446,12 @@ func (n *Node) Dump(prefix, indent string) string {
 		}
 	}
 
-	s += fmt.Sprintf(" (%d)", n.NodeID)
+	if nodeIDs {
+		s += fmt.Sprintf(" (%d)", n.NodeID)
+	}
 
 	for i := 0; i < len(n.Children); i++ {
-		s += "\n" + n.Children[i].Dump(prefix+indent, indent)
+		s += "\n" + n.Children[i].Dump(prefix+indent, indent, nodeIDs)
 	}
 
 	return prefix + s

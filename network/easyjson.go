@@ -1051,6 +1051,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork7(in *jlexer.Lexer, ou
 				}
 				in.Delim(']')
 			}
+		case "headerIntegrity":
+			out.HeaderIntegrity = string(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -1141,6 +1143,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoNetwork7(out *jwriter.Writer,
 			}
 			out.RawByte(']')
 		}
+	}
+	{
+		const prefix string = ",\"headerIntegrity\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(in.HeaderIntegrity))
 	}
 	out.RawByte('}')
 }
