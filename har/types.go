@@ -22,7 +22,7 @@ type CacheData struct {
 	Comment    string `json:"comment,omitempty"` // A comment provided by the user or the application.
 }
 
-// Content describes details about response content (embedded in <response>
+// Content describes details about response content (embedded in [Response]
 // object).
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/HAR#type-Content
@@ -35,7 +35,7 @@ type Content struct {
 	Comment     string `json:"comment,omitempty"`     // A comment provided by the user or the application.
 }
 
-// Cookie contains list of all cookies (used in <request> and <response>
+// Cookie contains list of all cookies (used in [Request] and [Response]
 // objects).
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/HAR#type-Cookie
@@ -111,7 +111,7 @@ type NameValuePair struct {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/HAR#type-Page
 type Page struct {
 	StartedDateTime string       `json:"startedDateTime"`   // Date and time stamp for the beginning of the page load (ISO 8601 - YYYY-MM-DDThh:mm:ss.sTZD, e.g. 2009-07-24T19:20:30.45+01:00).
-	ID              string       `json:"id"`                // Unique identifier of a page within the <log>. Entries use it to refer the parent page.
+	ID              string       `json:"id"`                // Unique identifier of a page within the [Log]. Entries use it to refer the parent page.
 	Title           string       `json:"title"`             // Page title.
 	PageTimings     *PageTimings `json:"pageTimings"`       // Detailed timing info about page load.
 	Comment         string       `json:"comment,omitempty"` // A comment provided by the user or the application.
@@ -128,7 +128,7 @@ type PageTimings struct {
 	Comment       string  `json:"comment,omitempty"`       // A comment provided by the user or the application.
 }
 
-// Param list of posted parameters, if any (embedded in <postData> object).
+// Param list of posted parameters, if any (embedded in [PostData] object).
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/HAR#type-Param
 type Param struct {
@@ -139,7 +139,7 @@ type Param struct {
 	Comment     string `json:"comment,omitempty"`     // A comment provided by the user or the application.
 }
 
-// PostData describes posted data, if any (embedded in <request> object).
+// PostData describes posted data, if any (embedded in [Request] object).
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/HAR#type-PostData
 type PostData struct {
