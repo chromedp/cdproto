@@ -333,9 +333,7 @@ func (n *Node) xpath(stopAtDocument, stopAtID bool) string {
 	n.RLock()
 	defer n.RUnlock()
 
-	p := ""
-	pos := ""
-	id := n.AttributeValue("id")
+	p, pos, id := "", "", n.AttributeValue("id")
 	switch {
 	case n.Parent == nil:
 		return n.LocalName
@@ -370,7 +368,11 @@ func (n *Node) xpath(stopAtDocument, stopAtID bool) string {
 		p = n.Parent.xpath(stopAtDocument, stopAtID)
 	}
 
-	return p + "/" + n.LocalName + pos
+	localName := n.LocalName
+	if n.IsSVG {
+		localName = `*[local-name()='` + localName + `']`
+	}
+	return p + "/" + localName + pos
 }
 
 // PartialXPathByID returns the partial XPath for the node, stopping at the
