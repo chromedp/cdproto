@@ -1703,6 +1703,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoOverlay17(in *jlexer.Lexer, o
 			(out.NodeID).UnmarshalEasyJSON(in)
 		case "includeDistance":
 			out.IncludeDistance = bool(in.Bool())
+		case "includeStyle":
+			out.IncludeStyle = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -1736,6 +1738,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoOverlay17(out *jwriter.Writer
 			out.RawString(prefix)
 		}
 		out.Bool(bool(in.IncludeDistance))
+	}
+	if in.IncludeStyle {
+		const prefix string = ",\"includeStyle\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Bool(bool(in.IncludeStyle))
 	}
 	out.RawByte('}')
 }
