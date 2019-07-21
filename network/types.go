@@ -647,6 +647,172 @@ type Cookie struct {
 	SameSite CookieSameSite `json:"sameSite,omitempty"` // Cookie SameSite type.
 }
 
+// SetCookieBlockedReason types of reasons why a cookie may not be stored
+// from a response.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-SetCookieBlockedReason
+type SetCookieBlockedReason string
+
+// String returns the SetCookieBlockedReason as string value.
+func (t SetCookieBlockedReason) String() string {
+	return string(t)
+}
+
+// SetCookieBlockedReason values.
+const (
+	SetCookieBlockedReasonSecureOnly                      SetCookieBlockedReason = "SecureOnly"
+	SetCookieBlockedReasonSameSiteStrict                  SetCookieBlockedReason = "SameSiteStrict"
+	SetCookieBlockedReasonSameSiteLax                     SetCookieBlockedReason = "SameSiteLax"
+	SetCookieBlockedReasonSameSiteExtended                SetCookieBlockedReason = "SameSiteExtended"
+	SetCookieBlockedReasonSameSiteUnspecifiedTreatedAsLax SetCookieBlockedReason = "SameSiteUnspecifiedTreatedAsLax"
+	SetCookieBlockedReasonSameSiteNoneInsecure            SetCookieBlockedReason = "SameSiteNoneInsecure"
+	SetCookieBlockedReasonUserPreferences                 SetCookieBlockedReason = "UserPreferences"
+	SetCookieBlockedReasonSyntaxError                     SetCookieBlockedReason = "SyntaxError"
+	SetCookieBlockedReasonSchemeNotSupported              SetCookieBlockedReason = "SchemeNotSupported"
+	SetCookieBlockedReasonOverwriteSecure                 SetCookieBlockedReason = "OverwriteSecure"
+	SetCookieBlockedReasonInvalidDomain                   SetCookieBlockedReason = "InvalidDomain"
+	SetCookieBlockedReasonInvalidPrefix                   SetCookieBlockedReason = "InvalidPrefix"
+	SetCookieBlockedReasonUnknownError                    SetCookieBlockedReason = "UnknownError"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t SetCookieBlockedReason) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t SetCookieBlockedReason) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *SetCookieBlockedReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	switch SetCookieBlockedReason(in.String()) {
+	case SetCookieBlockedReasonSecureOnly:
+		*t = SetCookieBlockedReasonSecureOnly
+	case SetCookieBlockedReasonSameSiteStrict:
+		*t = SetCookieBlockedReasonSameSiteStrict
+	case SetCookieBlockedReasonSameSiteLax:
+		*t = SetCookieBlockedReasonSameSiteLax
+	case SetCookieBlockedReasonSameSiteExtended:
+		*t = SetCookieBlockedReasonSameSiteExtended
+	case SetCookieBlockedReasonSameSiteUnspecifiedTreatedAsLax:
+		*t = SetCookieBlockedReasonSameSiteUnspecifiedTreatedAsLax
+	case SetCookieBlockedReasonSameSiteNoneInsecure:
+		*t = SetCookieBlockedReasonSameSiteNoneInsecure
+	case SetCookieBlockedReasonUserPreferences:
+		*t = SetCookieBlockedReasonUserPreferences
+	case SetCookieBlockedReasonSyntaxError:
+		*t = SetCookieBlockedReasonSyntaxError
+	case SetCookieBlockedReasonSchemeNotSupported:
+		*t = SetCookieBlockedReasonSchemeNotSupported
+	case SetCookieBlockedReasonOverwriteSecure:
+		*t = SetCookieBlockedReasonOverwriteSecure
+	case SetCookieBlockedReasonInvalidDomain:
+		*t = SetCookieBlockedReasonInvalidDomain
+	case SetCookieBlockedReasonInvalidPrefix:
+		*t = SetCookieBlockedReasonInvalidPrefix
+	case SetCookieBlockedReasonUnknownError:
+		*t = SetCookieBlockedReasonUnknownError
+
+	default:
+		in.AddError(errors.New("unknown SetCookieBlockedReason value"))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *SetCookieBlockedReason) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
+// CookieBlockedReason types of reasons why a cookie may not be sent with a
+// request.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-CookieBlockedReason
+type CookieBlockedReason string
+
+// String returns the CookieBlockedReason as string value.
+func (t CookieBlockedReason) String() string {
+	return string(t)
+}
+
+// CookieBlockedReason values.
+const (
+	CookieBlockedReasonSecureOnly                      CookieBlockedReason = "SecureOnly"
+	CookieBlockedReasonNotOnPath                       CookieBlockedReason = "NotOnPath"
+	CookieBlockedReasonDomainMismatch                  CookieBlockedReason = "DomainMismatch"
+	CookieBlockedReasonSameSiteStrict                  CookieBlockedReason = "SameSiteStrict"
+	CookieBlockedReasonSameSiteLax                     CookieBlockedReason = "SameSiteLax"
+	CookieBlockedReasonSameSiteExtended                CookieBlockedReason = "SameSiteExtended"
+	CookieBlockedReasonSameSiteUnspecifiedTreatedAsLax CookieBlockedReason = "SameSiteUnspecifiedTreatedAsLax"
+	CookieBlockedReasonSameSiteNoneInsecure            CookieBlockedReason = "SameSiteNoneInsecure"
+	CookieBlockedReasonUserPreferences                 CookieBlockedReason = "UserPreferences"
+	CookieBlockedReasonUnknownError                    CookieBlockedReason = "UnknownError"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t CookieBlockedReason) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t CookieBlockedReason) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *CookieBlockedReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	switch CookieBlockedReason(in.String()) {
+	case CookieBlockedReasonSecureOnly:
+		*t = CookieBlockedReasonSecureOnly
+	case CookieBlockedReasonNotOnPath:
+		*t = CookieBlockedReasonNotOnPath
+	case CookieBlockedReasonDomainMismatch:
+		*t = CookieBlockedReasonDomainMismatch
+	case CookieBlockedReasonSameSiteStrict:
+		*t = CookieBlockedReasonSameSiteStrict
+	case CookieBlockedReasonSameSiteLax:
+		*t = CookieBlockedReasonSameSiteLax
+	case CookieBlockedReasonSameSiteExtended:
+		*t = CookieBlockedReasonSameSiteExtended
+	case CookieBlockedReasonSameSiteUnspecifiedTreatedAsLax:
+		*t = CookieBlockedReasonSameSiteUnspecifiedTreatedAsLax
+	case CookieBlockedReasonSameSiteNoneInsecure:
+		*t = CookieBlockedReasonSameSiteNoneInsecure
+	case CookieBlockedReasonUserPreferences:
+		*t = CookieBlockedReasonUserPreferences
+	case CookieBlockedReasonUnknownError:
+		*t = CookieBlockedReasonUnknownError
+
+	default:
+		in.AddError(errors.New("unknown CookieBlockedReason value"))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *CookieBlockedReason) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
+// BlockedSetCookieWithReason a cookie which was not stored from a response
+// with the corresponding reason.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-BlockedSetCookieWithReason
+type BlockedSetCookieWithReason struct {
+	BlockedReason SetCookieBlockedReason `json:"blockedReason"`    // The reason this cookie was blocked.
+	CookieLine    string                 `json:"cookieLine"`       // The string representing this individual cookie as it would appear in the header. This is not the entire "cookie" or "set-cookie" header which could have multiple cookies.
+	Cookie        *Cookie                `json:"cookie,omitempty"` // The cookie object which represents the cookie which was not stored. It is optional because sometimes complete cookie information is not available, such as in the case of parsing errors.
+}
+
+// BlockedCookieWithReason a cookie with was not sent with a request with the
+// corresponding reason.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-BlockedCookieWithReason
+type BlockedCookieWithReason struct {
+	BlockedReason CookieBlockedReason `json:"blockedReason"` // The reason the cookie was blocked.
+	Cookie        *Cookie             `json:"cookie"`        // The cookie object representing the cookie which was not sent.
+}
+
 // CookieParam cookie parameter object.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-CookieParam

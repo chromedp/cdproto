@@ -92,82 +92,42 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoServiceworker(out *jwriter.Wr
 	_ = first
 	{
 		const prefix string = ",\"versionId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.VersionID))
 	}
 	{
 		const prefix string = ",\"registrationId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.String(string(in.RegistrationID))
 	}
 	{
 		const prefix string = ",\"scriptURL\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.String(string(in.ScriptURL))
 	}
 	{
 		const prefix string = ",\"runningStatus\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		(in.RunningStatus).MarshalEasyJSON(out)
 	}
 	{
 		const prefix string = ",\"status\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		(in.Status).MarshalEasyJSON(out)
 	}
 	if in.ScriptLastModified != 0 {
 		const prefix string = ",\"scriptLastModified\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Float64(float64(in.ScriptLastModified))
 	}
 	if in.ScriptResponseTime != 0 {
 		const prefix string = ",\"scriptResponseTime\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Float64(float64(in.ScriptResponseTime))
 	}
 	if len(in.ControlledClients) != 0 {
 		const prefix string = ",\"controlledClients\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		{
 			out.RawByte('[')
 			for v2, v3 := range in.ControlledClients {
@@ -181,12 +141,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoServiceworker(out *jwriter.Wr
 	}
 	if in.TargetID != "" {
 		const prefix string = ",\"targetId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.String(string(in.TargetID))
 	}
 	out.RawByte('}')
@@ -252,12 +207,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoServiceworker1(out *jwriter.W
 	_ = first
 	{
 		const prefix string = ",\"scopeURL\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.ScopeURL))
 	}
 	out.RawByte('}')
@@ -323,12 +273,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoServiceworker2(out *jwriter.W
 	_ = first
 	{
 		const prefix string = ",\"scopeURL\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.ScopeURL))
 	}
 	out.RawByte('}')
@@ -394,12 +339,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoServiceworker3(out *jwriter.W
 	_ = first
 	{
 		const prefix string = ",\"versionId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.VersionID))
 	}
 	out.RawByte('}')
@@ -524,12 +464,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoServiceworker5(out *jwriter.W
 	_ = first
 	{
 		const prefix string = ",\"scopeURL\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.ScopeURL))
 	}
 	out.RawByte('}')
@@ -595,12 +530,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoServiceworker6(out *jwriter.W
 	_ = first
 	{
 		const prefix string = ",\"scopeURL\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.ScopeURL))
 	}
 	out.RawByte('}')
@@ -666,12 +596,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoServiceworker7(out *jwriter.W
 	_ = first
 	{
 		const prefix string = ",\"forceUpdateOnPageLoad\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.Bool(bool(in.ForceUpdateOnPageLoad))
 	}
 	out.RawByte('}')
@@ -741,32 +666,17 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoServiceworker8(out *jwriter.W
 	_ = first
 	{
 		const prefix string = ",\"registrationId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.RegistrationID))
 	}
 	{
 		const prefix string = ",\"scopeURL\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.String(string(in.ScopeURL))
 	}
 	{
 		const prefix string = ",\"isDeleted\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Bool(bool(in.IsDeleted))
 	}
 	out.RawByte('}')
@@ -832,12 +742,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoServiceworker9(out *jwriter.W
 	_ = first
 	{
 		const prefix string = ",\"versionId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.VersionID))
 	}
 	out.RawByte('}')
@@ -932,12 +837,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoServiceworker10(out *jwriter.
 	_ = first
 	{
 		const prefix string = ",\"versions\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		if in.Versions == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
 			out.RawString("null")
 		} else {
@@ -1047,12 +947,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoServiceworker11(out *jwriter.
 	_ = first
 	{
 		const prefix string = ",\"registrations\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		if in.Registrations == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
 			out.RawString("null")
 		} else {
@@ -1141,12 +1036,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoServiceworker12(out *jwriter.
 	_ = first
 	{
 		const prefix string = ",\"errorMessage\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		if in.ErrorMessage == nil {
 			out.RawString("null")
 		} else {
@@ -1226,62 +1116,32 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoServiceworker13(out *jwriter.
 	_ = first
 	{
 		const prefix string = ",\"errorMessage\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.ErrorMessage))
 	}
 	{
 		const prefix string = ",\"registrationId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.String(string(in.RegistrationID))
 	}
 	{
 		const prefix string = ",\"versionId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.String(string(in.VersionID))
 	}
 	{
 		const prefix string = ",\"sourceURL\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.String(string(in.SourceURL))
 	}
 	{
 		const prefix string = ",\"lineNumber\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Int64(int64(in.LineNumber))
 	}
 	{
 		const prefix string = ",\"columnNumber\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Int64(int64(in.ColumnNumber))
 	}
 	out.RawByte('}')
@@ -1412,42 +1272,22 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoServiceworker15(out *jwriter.
 	_ = first
 	{
 		const prefix string = ",\"origin\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.Origin))
 	}
 	{
 		const prefix string = ",\"registrationId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.String(string(in.RegistrationID))
 	}
 	{
 		const prefix string = ",\"tag\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.String(string(in.Tag))
 	}
 	{
 		const prefix string = ",\"lastChance\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Bool(bool(in.LastChance))
 	}
 	out.RawByte('}')
@@ -1576,32 +1416,17 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoServiceworker17(out *jwriter.
 	_ = first
 	{
 		const prefix string = ",\"origin\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.Origin))
 	}
 	{
 		const prefix string = ",\"registrationId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.String(string(in.RegistrationID))
 	}
 	{
 		const prefix string = ",\"data\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.String(string(in.Data))
 	}
 	out.RawByte('}')

@@ -55,12 +55,8 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoHeapprofiler(out *jwriter.Wri
 	_ = first
 	if in.ReportProgress {
 		const prefix string = ",\"reportProgress\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		first = false
+		out.RawString(prefix[1:])
 		out.Bool(bool(in.ReportProgress))
 	}
 	out.RawByte('}')
@@ -126,12 +122,8 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoHeapprofiler1(out *jwriter.Wr
 	_ = first
 	if in.ReportProgress {
 		const prefix string = ",\"reportProgress\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		first = false
+		out.RawString(prefix[1:])
 		out.Bool(bool(in.ReportProgress))
 	}
 	out.RawByte('}')
@@ -205,12 +197,8 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoHeapprofiler2(out *jwriter.Wr
 	_ = first
 	if in.Profile != nil {
 		const prefix string = ",\"profile\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		first = false
+		out.RawString(prefix[1:])
 		(*in.Profile).MarshalEasyJSON(out)
 	}
 	out.RawByte('}')
@@ -335,12 +323,8 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoHeapprofiler4(out *jwriter.Wr
 	_ = first
 	if in.TrackAllocations {
 		const prefix string = ",\"trackAllocations\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		first = false
+		out.RawString(prefix[1:])
 		out.Bool(bool(in.TrackAllocations))
 	}
 	out.RawByte('}')
@@ -406,12 +390,8 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoHeapprofiler5(out *jwriter.Wr
 	_ = first
 	if in.SamplingInterval != 0 {
 		const prefix string = ",\"samplingInterval\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		first = false
+		out.RawString(prefix[1:])
 		out.Float64(float64(in.SamplingInterval))
 	}
 	out.RawByte('}')
@@ -481,32 +461,17 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoHeapprofiler6(out *jwriter.Wr
 	_ = first
 	{
 		const prefix string = ",\"size\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.Float64(float64(in.Size))
 	}
 	{
 		const prefix string = ",\"nodeId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Int64(int64(in.NodeID))
 	}
 	{
 		const prefix string = ",\"ordinal\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Float64(float64(in.Ordinal))
 	}
 	out.RawByte('}')
@@ -615,12 +580,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoHeapprofiler7(out *jwriter.Wr
 	_ = first
 	{
 		const prefix string = ",\"callFrame\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		if in.CallFrame == nil {
 			out.RawString("null")
 		} else {
@@ -629,32 +589,17 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoHeapprofiler7(out *jwriter.Wr
 	}
 	{
 		const prefix string = ",\"selfSize\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Float64(float64(in.SelfSize))
 	}
 	{
 		const prefix string = ",\"id\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Int64(int64(in.ID))
 	}
 	{
 		const prefix string = ",\"children\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		if in.Children == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
 			out.RawString("null")
 		} else {
@@ -774,12 +719,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoHeapprofiler8(out *jwriter.Wr
 	_ = first
 	{
 		const prefix string = ",\"head\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		if in.Head == nil {
 			out.RawString("null")
 		} else {
@@ -788,12 +728,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoHeapprofiler8(out *jwriter.Wr
 	}
 	{
 		const prefix string = ",\"samples\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		if in.Samples == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
 			out.RawString("null")
 		} else {
@@ -882,12 +817,8 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoHeapprofiler9(out *jwriter.Wr
 	_ = first
 	if in.Profile != nil {
 		const prefix string = ",\"profile\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		first = false
+		out.RawString(prefix[1:])
 		(*in.Profile).MarshalEasyJSON(out)
 	}
 	out.RawByte('}')
@@ -1020,12 +951,8 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoHeapprofiler11(out *jwriter.W
 	_ = first
 	if in.Result != nil {
 		const prefix string = ",\"result\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		first = false
+		out.RawString(prefix[1:])
 		(*in.Result).MarshalEasyJSON(out)
 	}
 	out.RawByte('}')
@@ -1093,22 +1020,12 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoHeapprofiler12(out *jwriter.W
 	_ = first
 	{
 		const prefix string = ",\"objectId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.ObjectID))
 	}
 	if in.ObjectGroup != "" {
 		const prefix string = ",\"objectGroup\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.String(string(in.ObjectGroup))
 	}
 	out.RawByte('}')
@@ -1174,12 +1091,8 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoHeapprofiler13(out *jwriter.W
 	_ = first
 	if in.HeapSnapshotObjectID != "" {
 		const prefix string = ",\"heapSnapshotObjectId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		first = false
+		out.RawString(prefix[1:])
 		out.String(string(in.HeapSnapshotObjectID))
 	}
 	out.RawByte('}')
@@ -1245,12 +1158,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoHeapprofiler14(out *jwriter.W
 	_ = first
 	{
 		const prefix string = ",\"objectId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.ObjectID))
 	}
 	out.RawByte('}')
@@ -1379,32 +1287,17 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoHeapprofiler16(out *jwriter.W
 	_ = first
 	{
 		const prefix string = ",\"done\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.Int64(int64(in.Done))
 	}
 	{
 		const prefix string = ",\"total\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Int64(int64(in.Total))
 	}
 	if in.Finished {
 		const prefix string = ",\"finished\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Bool(bool(in.Finished))
 	}
 	out.RawByte('}')
@@ -1472,22 +1365,12 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoHeapprofiler17(out *jwriter.W
 	_ = first
 	{
 		const prefix string = ",\"lastSeenObjectId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.Int64(int64(in.LastSeenObjectID))
 	}
 	{
 		const prefix string = ",\"timestamp\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Float64(float64(in.Timestamp))
 	}
 	out.RawByte('}')
@@ -1574,12 +1457,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoHeapprofiler18(out *jwriter.W
 	_ = first
 	{
 		const prefix string = ",\"statsUpdate\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		if in.StatsUpdate == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
 			out.RawString("null")
 		} else {
@@ -1656,12 +1534,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoHeapprofiler19(out *jwriter.W
 	_ = first
 	{
 		const prefix string = ",\"chunk\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.Chunk))
 	}
 	out.RawByte('}')
@@ -1904,12 +1777,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoHeapprofiler23(out *jwriter.W
 	_ = first
 	{
 		const prefix string = ",\"heapObjectId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.HeapObjectID))
 	}
 	out.RawByte('}')

@@ -129,12 +129,8 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdproto1(out *jwriter.Writer, in Mes
 	_ = first
 	if in.ID != 0 {
 		const prefix string = ",\"id\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		first = false
+		out.RawString(prefix[1:])
 		out.Int64(int64(in.ID))
 	}
 	if in.Method != "" {
@@ -242,22 +238,12 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdproto2(out *jwriter.Writer, in Err
 	_ = first
 	{
 		const prefix string = ",\"code\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.Int64(int64(in.Code))
 	}
 	{
 		const prefix string = ",\"message\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.String(string(in.Message))
 	}
 	out.RawByte('}')

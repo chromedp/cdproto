@@ -62,52 +62,27 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoWebauthn(out *jwriter.Writer,
 	_ = first
 	{
 		const prefix string = ",\"protocol\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		(in.Protocol).MarshalEasyJSON(out)
 	}
 	{
 		const prefix string = ",\"transport\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		(in.Transport).MarshalEasyJSON(out)
 	}
 	{
 		const prefix string = ",\"hasResidentKey\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Bool(bool(in.HasResidentKey))
 	}
 	{
 		const prefix string = ",\"hasUserVerification\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Bool(bool(in.HasUserVerification))
 	}
 	if in.AutomaticPresenceSimulation {
 		const prefix string = ",\"automaticPresenceSimulation\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Bool(bool(in.AutomaticPresenceSimulation))
 	}
 	out.RawByte('}')
@@ -175,22 +150,12 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoWebauthn1(out *jwriter.Writer
 	_ = first
 	{
 		const prefix string = ",\"authenticatorId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.AuthenticatorID))
 	}
 	{
 		const prefix string = ",\"isUserVerified\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Bool(bool(in.IsUserVerified))
 	}
 	out.RawByte('}')
@@ -256,12 +221,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoWebauthn2(out *jwriter.Writer
 	_ = first
 	{
 		const prefix string = ",\"authenticatorId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.AuthenticatorID))
 	}
 	out.RawByte('}')
@@ -356,12 +316,8 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoWebauthn3(out *jwriter.Writer
 	_ = first
 	if len(in.Credentials) != 0 {
 		const prefix string = ",\"credentials\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		first = false
+		out.RawString(prefix[1:])
 		{
 			out.RawByte('[')
 			for v2, v3 := range in.Credentials {
@@ -440,12 +396,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoWebauthn4(out *jwriter.Writer
 	_ = first
 	{
 		const prefix string = ",\"authenticatorId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.AuthenticatorID))
 	}
 	out.RawByte('}')
@@ -635,42 +586,22 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoWebauthn7(out *jwriter.Writer
 	_ = first
 	{
 		const prefix string = ",\"credentialId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.CredentialID))
 	}
 	{
 		const prefix string = ",\"rpIdHash\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.String(string(in.RpIDHash))
 	}
 	{
 		const prefix string = ",\"privateKey\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.String(string(in.PrivateKey))
 	}
 	{
 		const prefix string = ",\"signCount\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Int64(int64(in.SignCount))
 	}
 	out.RawByte('}')
@@ -736,12 +667,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoWebauthn8(out *jwriter.Writer
 	_ = first
 	{
 		const prefix string = ",\"authenticatorId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.AuthenticatorID))
 	}
 	out.RawByte('}')
@@ -807,12 +733,8 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoWebauthn9(out *jwriter.Writer
 	_ = first
 	if in.AuthenticatorID != "" {
 		const prefix string = ",\"authenticatorId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		first = false
+		out.RawString(prefix[1:])
 		out.String(string(in.AuthenticatorID))
 	}
 	out.RawByte('}')
@@ -886,12 +808,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoWebauthn10(out *jwriter.Write
 	_ = first
 	{
 		const prefix string = ",\"options\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		if in.Options == nil {
 			out.RawString("null")
 		} else {
@@ -971,22 +888,12 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoWebauthn11(out *jwriter.Write
 	_ = first
 	{
 		const prefix string = ",\"authenticatorId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.AuthenticatorID))
 	}
 	{
 		const prefix string = ",\"credential\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		if in.Credential == nil {
 			out.RawString("null")
 		} else {

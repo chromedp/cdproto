@@ -56,12 +56,8 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoHeadlessexperimental(out *jwr
 	_ = first
 	if in.Format != "" {
 		const prefix string = ",\"format\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		first = false
+		out.RawString(prefix[1:])
 		(in.Format).MarshalEasyJSON(out)
 	}
 	if in.Quality != 0 {
@@ -137,12 +133,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoHeadlessexperimental1(out *jw
 	_ = first
 	{
 		const prefix string = ",\"needsBeginFrames\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.Bool(bool(in.NeedsBeginFrames))
 	}
 	out.RawByte('}')
@@ -328,12 +319,8 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoHeadlessexperimental4(out *jw
 	_ = first
 	if in.HasDamage {
 		const prefix string = ",\"hasDamage\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		first = false
+		out.RawString(prefix[1:])
 		out.Bool(bool(in.HasDamage))
 	}
 	if in.ScreenshotData != "" {
@@ -423,12 +410,8 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoHeadlessexperimental5(out *jw
 	_ = first
 	if in.FrameTimeTicks != 0 {
 		const prefix string = ",\"frameTimeTicks\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		first = false
+		out.RawString(prefix[1:])
 		out.Float64(float64(in.FrameTimeTicks))
 	}
 	if in.Interval != 0 {

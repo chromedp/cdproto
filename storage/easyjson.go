@@ -56,22 +56,12 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage(out *jwriter.Writer, 
 	_ = first
 	{
 		const prefix string = ",\"storageType\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		(in.StorageType).MarshalEasyJSON(out)
 	}
 	{
 		const prefix string = ",\"usage\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Float64(float64(in.Usage))
 	}
 	out.RawByte('}')
@@ -137,12 +127,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage1(out *jwriter.Writer,
 	_ = first
 	{
 		const prefix string = ",\"origin\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.Origin))
 	}
 	out.RawByte('}')
@@ -208,12 +193,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage2(out *jwriter.Writer,
 	_ = first
 	{
 		const prefix string = ",\"origin\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.Origin))
 	}
 	out.RawByte('}')
@@ -279,12 +259,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage3(out *jwriter.Writer,
 	_ = first
 	{
 		const prefix string = ",\"origin\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.Origin))
 	}
 	out.RawByte('}')
@@ -350,12 +325,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage4(out *jwriter.Writer,
 	_ = first
 	{
 		const prefix string = ",\"origin\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.Origin))
 	}
 	out.RawByte('}')
@@ -454,12 +424,8 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage5(out *jwriter.Writer,
 	_ = first
 	if in.Usage != 0 {
 		const prefix string = ",\"usage\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		first = false
+		out.RawString(prefix[1:])
 		out.Float64(float64(in.Usage))
 	}
 	if in.Quota != 0 {
@@ -558,12 +524,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage6(out *jwriter.Writer,
 	_ = first
 	{
 		const prefix string = ",\"origin\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.Origin))
 	}
 	out.RawByte('}')
@@ -629,12 +590,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage7(out *jwriter.Writer,
 	_ = first
 	{
 		const prefix string = ",\"origin\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.Origin))
 	}
 	out.RawByte('}')
@@ -704,32 +660,17 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage8(out *jwriter.Writer,
 	_ = first
 	{
 		const prefix string = ",\"origin\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.Origin))
 	}
 	{
 		const prefix string = ",\"databaseName\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.String(string(in.DatabaseName))
 	}
 	{
 		const prefix string = ",\"objectStoreName\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.String(string(in.ObjectStoreName))
 	}
 	out.RawByte('}')
@@ -795,12 +736,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage9(out *jwriter.Writer,
 	_ = first
 	{
 		const prefix string = ",\"origin\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.Origin))
 	}
 	out.RawByte('}')
@@ -868,22 +804,12 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage10(out *jwriter.Writer
 	_ = first
 	{
 		const prefix string = ",\"origin\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.Origin))
 	}
 	{
 		const prefix string = ",\"cacheName\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.String(string(in.CacheName))
 	}
 	out.RawByte('}')
@@ -951,22 +877,12 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage11(out *jwriter.Writer
 	_ = first
 	{
 		const prefix string = ",\"origin\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.Origin))
 	}
 	{
 		const prefix string = ",\"storageTypes\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.String(string(in.StorageTypes))
 	}
 	out.RawByte('}')

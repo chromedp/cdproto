@@ -62,12 +62,8 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoWebaudio(out *jwriter.Writer,
 	_ = first
 	if in.RealtimeData != nil {
 		const prefix string = ",\"realtimeData\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		first = false
+		out.RawString(prefix[1:])
 		(*in.RealtimeData).MarshalEasyJSON(out)
 	}
 	out.RawByte('}')
@@ -133,12 +129,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoWebaudio1(out *jwriter.Writer
 	_ = first
 	{
 		const prefix string = ",\"contextId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.ContextID))
 	}
 	out.RawByte('}')
@@ -204,12 +195,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoWebaudio2(out *jwriter.Writer
 	_ = first
 	{
 		const prefix string = ",\"contextId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.ContextID))
 	}
 	out.RawByte('}')
@@ -283,12 +269,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoWebaudio3(out *jwriter.Writer
 	_ = first
 	{
 		const prefix string = ",\"context\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		if in.Context == nil {
 			out.RawString("null")
 		} else {
@@ -366,12 +347,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoWebaudio4(out *jwriter.Writer
 	_ = first
 	{
 		const prefix string = ",\"context\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		if in.Context == nil {
 			out.RawString("null")
 		} else {
@@ -565,42 +541,22 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoWebaudio7(out *jwriter.Writer
 	_ = first
 	{
 		const prefix string = ",\"currentTime\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.Float64(float64(in.CurrentTime))
 	}
 	{
 		const prefix string = ",\"renderCapacity\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Float64(float64(in.RenderCapacity))
 	}
 	{
 		const prefix string = ",\"callbackIntervalMean\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Float64(float64(in.CallbackIntervalMean))
 	}
 	{
 		const prefix string = ",\"callbackIntervalVariance\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Float64(float64(in.CallbackIntervalVariance))
 	}
 	out.RawByte('}')
@@ -686,72 +642,37 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoWebaudio8(out *jwriter.Writer
 	_ = first
 	{
 		const prefix string = ",\"contextId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.ContextID))
 	}
 	{
 		const prefix string = ",\"contextType\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		(in.ContextType).MarshalEasyJSON(out)
 	}
 	{
 		const prefix string = ",\"contextState\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		(in.ContextState).MarshalEasyJSON(out)
 	}
 	if in.RealtimeData != nil {
 		const prefix string = ",\"realtimeData\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		(*in.RealtimeData).MarshalEasyJSON(out)
 	}
 	{
 		const prefix string = ",\"callbackBufferSize\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Float64(float64(in.CallbackBufferSize))
 	}
 	{
 		const prefix string = ",\"maxOutputChannelCount\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Float64(float64(in.MaxOutputChannelCount))
 	}
 	{
 		const prefix string = ",\"sampleRate\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Float64(float64(in.SampleRate))
 	}
 	out.RawByte('}')

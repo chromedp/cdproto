@@ -59,12 +59,8 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoAudits(out *jwriter.Writer, i
 	_ = first
 	if in.Body != "" {
 		const prefix string = ",\"body\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		first = false
+		out.RawString(prefix[1:])
 		out.String(string(in.Body))
 	}
 	if in.OriginalSize != 0 {
@@ -156,42 +152,22 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoAudits1(out *jwriter.Writer, 
 	_ = first
 	{
 		const prefix string = ",\"requestId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.RequestID))
 	}
 	{
 		const prefix string = ",\"encoding\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		(in.Encoding).MarshalEasyJSON(out)
 	}
 	if in.Quality != 0 {
 		const prefix string = ",\"quality\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Float64(float64(in.Quality))
 	}
 	if in.SizeOnly {
 		const prefix string = ",\"sizeOnly\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Bool(bool(in.SizeOnly))
 	}
 	out.RawByte('}')

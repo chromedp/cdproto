@@ -56,12 +56,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoBackgroundservice(out *jwrite
 	_ = first
 	{
 		const prefix string = ",\"service\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		(in.Service).MarshalEasyJSON(out)
 	}
 	out.RawByte('}')
@@ -127,12 +122,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoBackgroundservice1(out *jwrit
 	_ = first
 	{
 		const prefix string = ",\"service\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		(in.Service).MarshalEasyJSON(out)
 	}
 	out.RawByte('}')
@@ -200,22 +190,12 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoBackgroundservice2(out *jwrit
 	_ = first
 	{
 		const prefix string = ",\"shouldRecord\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.Bool(bool(in.ShouldRecord))
 	}
 	{
 		const prefix string = ",\"service\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		(in.Service).MarshalEasyJSON(out)
 	}
 	out.RawByte('}')
@@ -283,22 +263,12 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoBackgroundservice3(out *jwrit
 	_ = first
 	{
 		const prefix string = ",\"isRecording\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.Bool(bool(in.IsRecording))
 	}
 	{
 		const prefix string = ",\"service\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		(in.Service).MarshalEasyJSON(out)
 	}
 	out.RawByte('}')
@@ -366,22 +336,12 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoBackgroundservice4(out *jwrit
 	_ = first
 	{
 		const prefix string = ",\"key\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		out.String(string(in.Key))
 	}
 	{
 		const prefix string = ",\"value\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.String(string(in.Value))
 	}
 	out.RawByte('}')
@@ -455,12 +415,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoBackgroundservice5(out *jwrit
 	_ = first
 	{
 		const prefix string = ",\"backgroundServiceEvent\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		if in.BackgroundServiceEvent == nil {
 			out.RawString("null")
 		} else {
@@ -579,12 +534,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoBackgroundservice6(out *jwrit
 	_ = first
 	{
 		const prefix string = ",\"timestamp\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		if in.Timestamp == nil {
 			out.RawString("null")
 		} else {
@@ -593,62 +543,32 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoBackgroundservice6(out *jwrit
 	}
 	{
 		const prefix string = ",\"origin\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.String(string(in.Origin))
 	}
 	{
 		const prefix string = ",\"serviceWorkerRegistrationId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.String(string(in.ServiceWorkerRegistrationID))
 	}
 	{
 		const prefix string = ",\"service\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		(in.Service).MarshalEasyJSON(out)
 	}
 	{
 		const prefix string = ",\"eventName\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.String(string(in.EventName))
 	}
 	{
 		const prefix string = ",\"instanceId\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.String(string(in.InstanceID))
 	}
 	{
 		const prefix string = ",\"eventMetadata\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		if in.EventMetadata == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
 			out.RawString("null")
 		} else {
@@ -729,12 +649,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoBackgroundservice7(out *jwrit
 	_ = first
 	{
 		const prefix string = ",\"service\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix[1:])
 		(in.Service).MarshalEasyJSON(out)
 	}
 	out.RawByte('}')

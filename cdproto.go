@@ -414,6 +414,8 @@ const (
 	EventNetworkWebSocketFrameSent                         = "Network.webSocketFrameSent"
 	EventNetworkWebSocketHandshakeResponseReceived         = "Network.webSocketHandshakeResponseReceived"
 	EventNetworkWebSocketWillSendHandshakeRequest          = "Network.webSocketWillSendHandshakeRequest"
+	EventNetworkRequestWillBeSentExtraInfo                 = "Network.requestWillBeSentExtraInfo"
+	EventNetworkResponseReceivedExtraInfo                  = "Network.responseReceivedExtraInfo"
 	CommandOverlayDisable                                  = overlay.CommandDisable
 	CommandOverlayEnable                                   = overlay.CommandEnable
 	CommandOverlayGetHighlightObjectForTest                = overlay.CommandGetHighlightObjectForTest
@@ -1677,6 +1679,12 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case EventNetworkWebSocketWillSendHandshakeRequest:
 		v = new(network.EventWebSocketWillSendHandshakeRequest)
+
+	case EventNetworkRequestWillBeSentExtraInfo:
+		v = new(network.EventRequestWillBeSentExtraInfo)
+
+	case EventNetworkResponseReceivedExtraInfo:
+		v = new(network.EventResponseReceivedExtraInfo)
 
 	case CommandOverlayDisable:
 		return emptyVal, nil
