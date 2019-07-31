@@ -393,7 +393,7 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoSysteminfo4(in *jlexer.Lexer,
 		}
 		switch key {
 		case "imageType":
-			out.ImageType = string(in.String())
+			(out.ImageType).UnmarshalEasyJSON(in)
 		case "maxDimensions":
 			if in.IsNull() {
 				in.Skip()
@@ -454,7 +454,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoSysteminfo4(out *jwriter.Writ
 	{
 		const prefix string = ",\"imageType\":"
 		out.RawString(prefix[1:])
-		out.String(string(in.ImageType))
+		(in.ImageType).MarshalEasyJSON(out)
 	}
 	{
 		const prefix string = ",\"maxDimensions\":"

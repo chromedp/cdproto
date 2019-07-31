@@ -1318,6 +1318,69 @@ func (p *SetFileInputFilesParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandSetFileInputFiles, p, nil)
 }
 
+// SetNodeStackTracesEnabledParams sets if stack traces should be captured
+// for Nodes. See Node.getNodeStackTraces. Default is disabled.
+type SetNodeStackTracesEnabledParams struct {
+	Enable bool `json:"enable"` // Enable or disable.
+}
+
+// SetNodeStackTracesEnabled sets if stack traces should be captured for
+// Nodes. See Node.getNodeStackTraces. Default is disabled.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-setNodeStackTracesEnabled
+//
+// parameters:
+//   enable - Enable or disable.
+func SetNodeStackTracesEnabled(enable bool) *SetNodeStackTracesEnabledParams {
+	return &SetNodeStackTracesEnabledParams{
+		Enable: enable,
+	}
+}
+
+// Do executes DOM.setNodeStackTracesEnabled against the provided context.
+func (p *SetNodeStackTracesEnabledParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetNodeStackTracesEnabled, p, nil)
+}
+
+// GetNodeStackTracesParams gets stack traces associated with a Node. As of
+// now, only provides stack trace for Node creation.
+type GetNodeStackTracesParams struct {
+	NodeID cdp.NodeID `json:"nodeId"` // Id of the node to get stack traces for.
+}
+
+// GetNodeStackTraces gets stack traces associated with a Node. As of now,
+// only provides stack trace for Node creation.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-getNodeStackTraces
+//
+// parameters:
+//   nodeID - Id of the node to get stack traces for.
+func GetNodeStackTraces(nodeID cdp.NodeID) *GetNodeStackTracesParams {
+	return &GetNodeStackTracesParams{
+		NodeID: nodeID,
+	}
+}
+
+// GetNodeStackTracesReturns return values.
+type GetNodeStackTracesReturns struct {
+	Creation *runtime.StackTrace `json:"creation,omitempty"` // Creation stack trace, if available.
+}
+
+// Do executes DOM.getNodeStackTraces against the provided context.
+//
+// returns:
+//   creation - Creation stack trace, if available.
+func (p *GetNodeStackTracesParams) Do(ctx context.Context) (creation *runtime.StackTrace, err error) {
+	// execute
+	var res GetNodeStackTracesReturns
+	err = cdp.Execute(ctx, CommandGetNodeStackTraces, p, &res)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.Creation, nil
+}
+
 // GetFileInfoParams returns file information for the given File wrapper.
 type GetFileInfoParams struct {
 	ObjectID runtime.RemoteObjectID `json:"objectId"` // JavaScript object id of the node wrapper.
@@ -1558,6 +1621,8 @@ const (
 	CommandSetAttributeValue               = "DOM.setAttributeValue"
 	CommandSetAttributesAsText             = "DOM.setAttributesAsText"
 	CommandSetFileInputFiles               = "DOM.setFileInputFiles"
+	CommandSetNodeStackTracesEnabled       = "DOM.setNodeStackTracesEnabled"
+	CommandGetNodeStackTraces              = "DOM.getNodeStackTraces"
 	CommandGetFileInfo                     = "DOM.getFileInfo"
 	CommandSetInspectedNode                = "DOM.setInspectedNode"
 	CommandSetNodeName                     = "DOM.setNodeName"

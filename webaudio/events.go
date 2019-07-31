@@ -9,11 +9,11 @@ type EventContextCreated struct {
 	Context *BaseAudioContext `json:"context"`
 }
 
-// EventContextDestroyed notifies that existing BaseAudioContext has been
-// destroyed.
+// EventContextWillBeDestroyed notifies that an existing BaseAudioContext
+// will be destroyed.
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/WebAudio#event-contextDestroyed
-type EventContextDestroyed struct {
+// See: https://chromedevtools.github.io/devtools-protocol/tot/WebAudio#event-contextWillBeDestroyed
+type EventContextWillBeDestroyed struct {
 	ContextID ContextID `json:"contextId"`
 }
 

@@ -158,7 +158,7 @@ func (v *GetRealtimeDataParams) UnmarshalJSON(data []byte) error {
 func (v *GetRealtimeDataParams) UnmarshalEasyJSON(l *jlexer.Lexer) {
 	easyjsonC5a4559bDecodeGithubComChromedpCdprotoWebaudio1(l, v)
 }
-func easyjsonC5a4559bDecodeGithubComChromedpCdprotoWebaudio2(in *jlexer.Lexer, out *EventContextDestroyed) {
+func easyjsonC5a4559bDecodeGithubComChromedpCdprotoWebaudio2(in *jlexer.Lexer, out *EventContextWillBeDestroyed) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -189,7 +189,7 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoWebaudio2(in *jlexer.Lexer, o
 		in.Consumed()
 	}
 }
-func easyjsonC5a4559bEncodeGithubComChromedpCdprotoWebaudio2(out *jwriter.Writer, in EventContextDestroyed) {
+func easyjsonC5a4559bEncodeGithubComChromedpCdprotoWebaudio2(out *jwriter.Writer, in EventContextWillBeDestroyed) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -202,26 +202,26 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoWebaudio2(out *jwriter.Writer
 }
 
 // MarshalJSON supports json.Marshaler interface
-func (v EventContextDestroyed) MarshalJSON() ([]byte, error) {
+func (v EventContextWillBeDestroyed) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
 	easyjsonC5a4559bEncodeGithubComChromedpCdprotoWebaudio2(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
-func (v EventContextDestroyed) MarshalEasyJSON(w *jwriter.Writer) {
+func (v EventContextWillBeDestroyed) MarshalEasyJSON(w *jwriter.Writer) {
 	easyjsonC5a4559bEncodeGithubComChromedpCdprotoWebaudio2(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
-func (v *EventContextDestroyed) UnmarshalJSON(data []byte) error {
+func (v *EventContextWillBeDestroyed) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
 	easyjsonC5a4559bDecodeGithubComChromedpCdprotoWebaudio2(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *EventContextDestroyed) UnmarshalEasyJSON(l *jlexer.Lexer) {
+func (v *EventContextWillBeDestroyed) UnmarshalEasyJSON(l *jlexer.Lexer) {
 	easyjsonC5a4559bDecodeGithubComChromedpCdprotoWebaudio2(l, v)
 }
 func easyjsonC5a4559bDecodeGithubComChromedpCdprotoWebaudio3(in *jlexer.Lexer, out *EventContextCreated) {

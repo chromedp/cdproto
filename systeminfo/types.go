@@ -98,12 +98,59 @@ func (t *SubsamplingFormat) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 
+// ImageType image format of a given image.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/SystemInfo#type-ImageType
+type ImageType string
+
+// String returns the ImageType as string value.
+func (t ImageType) String() string {
+	return string(t)
+}
+
+// ImageType values.
+const (
+	ImageTypeJpeg    ImageType = "jpeg"
+	ImageTypeWebp    ImageType = "webp"
+	ImageTypeUnknown ImageType = "unknown"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t ImageType) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t ImageType) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *ImageType) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	switch ImageType(in.String()) {
+	case ImageTypeJpeg:
+		*t = ImageTypeJpeg
+	case ImageTypeWebp:
+		*t = ImageTypeWebp
+	case ImageTypeUnknown:
+		*t = ImageTypeUnknown
+
+	default:
+		in.AddError(errors.New("unknown ImageType value"))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *ImageType) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
 // ImageDecodeAcceleratorCapability describes a supported image decoding
 // profile with its associated minimum and maximum resolutions and subsampling.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/SystemInfo#type-ImageDecodeAcceleratorCapability
 type ImageDecodeAcceleratorCapability struct {
-	ImageType     string              `json:"imageType"`     // Image coded, e.g. Jpeg.
+	ImageType     ImageType           `json:"imageType"`     // Image coded, e.g. Jpeg.
 	MaxDimensions *Size               `json:"maxDimensions"` // Maximum supported dimensions of the image in pixels.
 	MinDimensions *Size               `json:"minDimensions"` // Minimum supported dimensions of the image in pixels.
 	Subsamplings  []SubsamplingFormat `json:"subsamplings"`  // Optional array of supported subsampling formats, e.g. 4:2:0, if known.

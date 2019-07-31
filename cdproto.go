@@ -188,6 +188,8 @@ const (
 	CommandDOMSetAttributeValue                            = dom.CommandSetAttributeValue
 	CommandDOMSetAttributesAsText                          = dom.CommandSetAttributesAsText
 	CommandDOMSetFileInputFiles                            = dom.CommandSetFileInputFiles
+	CommandDOMSetNodeStackTracesEnabled                    = dom.CommandSetNodeStackTracesEnabled
+	CommandDOMGetNodeStackTraces                           = dom.CommandGetNodeStackTraces
 	CommandDOMGetFileInfo                                  = dom.CommandGetFileInfo
 	CommandDOMSetInspectedNode                             = dom.CommandSetInspectedNode
 	CommandDOMSetNodeName                                  = dom.CommandSetNodeName
@@ -619,7 +621,7 @@ const (
 	CommandWebAudioDisable                                 = webaudio.CommandDisable
 	CommandWebAudioGetRealtimeData                         = webaudio.CommandGetRealtimeData
 	EventWebAudioContextCreated                            = "WebAudio.contextCreated"
-	EventWebAudioContextDestroyed                          = "WebAudio.contextDestroyed"
+	EventWebAudioContextWillBeDestroyed                    = "WebAudio.contextWillBeDestroyed"
 	EventWebAudioContextChanged                            = "WebAudio.contextChanged"
 	CommandWebAuthnEnable                                  = webauthn.CommandEnable
 	CommandWebAuthnDisable                                 = webauthn.CommandDisable
@@ -1001,6 +1003,12 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandDOMSetFileInputFiles:
 		return emptyVal, nil
+
+	case CommandDOMSetNodeStackTracesEnabled:
+		return emptyVal, nil
+
+	case CommandDOMGetNodeStackTraces:
+		v = new(dom.GetNodeStackTracesReturns)
 
 	case CommandDOMGetFileInfo:
 		v = new(dom.GetFileInfoReturns)
@@ -2295,8 +2303,8 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case EventWebAudioContextCreated:
 		v = new(webaudio.EventContextCreated)
 
-	case EventWebAudioContextDestroyed:
-		v = new(webaudio.EventContextDestroyed)
+	case EventWebAudioContextWillBeDestroyed:
+		v = new(webaudio.EventContextWillBeDestroyed)
 
 	case EventWebAudioContextChanged:
 		v = new(webaudio.EventContextChanged)
