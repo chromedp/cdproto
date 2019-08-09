@@ -39,6 +39,7 @@ import (
 	"github.com/chromedp/cdproto/io"
 	"github.com/chromedp/cdproto/layertree"
 	"github.com/chromedp/cdproto/log"
+	"github.com/chromedp/cdproto/media"
 	"github.com/chromedp/cdproto/memory"
 	"github.com/chromedp/cdproto/network"
 	"github.com/chromedp/cdproto/overlay"
@@ -104,6 +105,7 @@ const (
 	CommandBackgroundServiceClearEvents                    = backgroundservice.CommandClearEvents
 	EventBackgroundServiceRecordingStateChanged            = "BackgroundService.recordingStateChanged"
 	EventBackgroundServiceBackgroundServiceEventReceived   = "BackgroundService.backgroundServiceEventReceived"
+	CommandBrowserSetPermission                            = browser.CommandSetPermission
 	CommandBrowserGrantPermissions                         = browser.CommandGrantPermissions
 	CommandBrowserResetPermissions                         = browser.CommandResetPermissions
 	CommandBrowserClose                                    = browser.CommandClose
@@ -368,6 +370,11 @@ const (
 	CommandLogStartViolationsReport                        = log.CommandStartViolationsReport
 	CommandLogStopViolationsReport                         = log.CommandStopViolationsReport
 	EventLogEntryAdded                                     = "Log.entryAdded"
+	CommandMediaEnable                                     = media.CommandEnable
+	CommandMediaDisable                                    = media.CommandDisable
+	EventMediaPlayerPropertiesChanged                      = "Media.playerPropertiesChanged"
+	EventMediaPlayerEventsAdded                            = "Media.playerEventsAdded"
+	EventMediaPlayersCreated                               = "Media.playersCreated"
 	CommandMemoryGetDOMCounters                            = memory.CommandGetDOMCounters
 	CommandMemoryPrepareForLeakDetection                   = memory.CommandPrepareForLeakDetection
 	CommandMemoryForciblyPurgeJavaScriptMemory             = memory.CommandForciblyPurgeJavaScriptMemory
@@ -623,11 +630,22 @@ const (
 	EventWebAudioContextCreated                            = "WebAudio.contextCreated"
 	EventWebAudioContextWillBeDestroyed                    = "WebAudio.contextWillBeDestroyed"
 	EventWebAudioContextChanged                            = "WebAudio.contextChanged"
+	EventWebAudioAudioListenerCreated                      = "WebAudio.audioListenerCreated"
+	EventWebAudioAudioListenerWillBeDestroyed              = "WebAudio.audioListenerWillBeDestroyed"
+	EventWebAudioAudioNodeCreated                          = "WebAudio.audioNodeCreated"
+	EventWebAudioAudioNodeWillBeDestroyed                  = "WebAudio.audioNodeWillBeDestroyed"
+	EventWebAudioAudioParamCreated                         = "WebAudio.audioParamCreated"
+	EventWebAudioAudioParamWillBeDestroyed                 = "WebAudio.audioParamWillBeDestroyed"
+	EventWebAudioNodesConnected                            = "WebAudio.nodesConnected"
+	EventWebAudioNodesDisconnected                         = "WebAudio.nodesDisconnected"
+	EventWebAudioNodeParamConnected                        = "WebAudio.nodeParamConnected"
+	EventWebAudioNodeParamDisconnected                     = "WebAudio.nodeParamDisconnected"
 	CommandWebAuthnEnable                                  = webauthn.CommandEnable
 	CommandWebAuthnDisable                                 = webauthn.CommandDisable
 	CommandWebAuthnAddVirtualAuthenticator                 = webauthn.CommandAddVirtualAuthenticator
 	CommandWebAuthnRemoveVirtualAuthenticator              = webauthn.CommandRemoveVirtualAuthenticator
 	CommandWebAuthnAddCredential                           = webauthn.CommandAddCredential
+	CommandWebAuthnGetCredential                           = webauthn.CommandGetCredential
 	CommandWebAuthnGetCredentials                          = webauthn.CommandGetCredentials
 	CommandWebAuthnClearCredentials                        = webauthn.CommandClearCredentials
 	CommandWebAuthnSetUserVerified                         = webauthn.CommandSetUserVerified
@@ -751,6 +769,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case EventBackgroundServiceBackgroundServiceEventReceived:
 		v = new(backgroundservice.EventBackgroundServiceEventReceived)
+
+	case CommandBrowserSetPermission:
+		return emptyVal, nil
 
 	case CommandBrowserGrantPermissions:
 		return emptyVal, nil
@@ -1544,6 +1565,21 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case EventLogEntryAdded:
 		v = new(log.EventEntryAdded)
 
+	case CommandMediaEnable:
+		return emptyVal, nil
+
+	case CommandMediaDisable:
+		return emptyVal, nil
+
+	case EventMediaPlayerPropertiesChanged:
+		v = new(media.EventPlayerPropertiesChanged)
+
+	case EventMediaPlayerEventsAdded:
+		v = new(media.EventPlayerEventsAdded)
+
+	case EventMediaPlayersCreated:
+		v = new(media.EventPlayersCreated)
+
 	case CommandMemoryGetDOMCounters:
 		v = new(memory.GetDOMCountersReturns)
 
@@ -2309,6 +2345,36 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case EventWebAudioContextChanged:
 		v = new(webaudio.EventContextChanged)
 
+	case EventWebAudioAudioListenerCreated:
+		v = new(webaudio.EventAudioListenerCreated)
+
+	case EventWebAudioAudioListenerWillBeDestroyed:
+		v = new(webaudio.EventAudioListenerWillBeDestroyed)
+
+	case EventWebAudioAudioNodeCreated:
+		v = new(webaudio.EventAudioNodeCreated)
+
+	case EventWebAudioAudioNodeWillBeDestroyed:
+		v = new(webaudio.EventAudioNodeWillBeDestroyed)
+
+	case EventWebAudioAudioParamCreated:
+		v = new(webaudio.EventAudioParamCreated)
+
+	case EventWebAudioAudioParamWillBeDestroyed:
+		v = new(webaudio.EventAudioParamWillBeDestroyed)
+
+	case EventWebAudioNodesConnected:
+		v = new(webaudio.EventNodesConnected)
+
+	case EventWebAudioNodesDisconnected:
+		v = new(webaudio.EventNodesDisconnected)
+
+	case EventWebAudioNodeParamConnected:
+		v = new(webaudio.EventNodeParamConnected)
+
+	case EventWebAudioNodeParamDisconnected:
+		v = new(webaudio.EventNodeParamDisconnected)
+
 	case CommandWebAuthnEnable:
 		return emptyVal, nil
 
@@ -2323,6 +2389,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandWebAuthnAddCredential:
 		return emptyVal, nil
+
+	case CommandWebAuthnGetCredential:
+		v = new(webauthn.GetCredentialReturns)
 
 	case CommandWebAuthnGetCredentials:
 		v = new(webauthn.GetCredentialsReturns)

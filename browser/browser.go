@@ -15,6 +15,42 @@ import (
 	"github.com/chromedp/cdproto/target"
 )
 
+// SetPermissionParams set permission settings for given origin.
+type SetPermissionParams struct {
+	Origin           string                `json:"origin"`                     // Origin the permission applies to.
+	Permission       *PermissionDescriptor `json:"permission"`                 // Descriptor of permission to override.
+	Setting          PermissionSetting     `json:"setting"`                    // Setting of the permission.
+	BrowserContextID target.ID             `json:"browserContextId,omitempty"` // Context to override. When omitted, default browser context is used.
+}
+
+// SetPermission set permission settings for given origin.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#method-setPermission
+//
+// parameters:
+//   origin - Origin the permission applies to.
+//   permission - Descriptor of permission to override.
+//   setting - Setting of the permission.
+func SetPermission(origin string, permission *PermissionDescriptor, setting PermissionSetting) *SetPermissionParams {
+	return &SetPermissionParams{
+		Origin:     origin,
+		Permission: permission,
+		Setting:    setting,
+	}
+}
+
+// WithBrowserContextID context to override. When omitted, default browser
+// context is used.
+func (p SetPermissionParams) WithBrowserContextID(browserContextID target.ID) *SetPermissionParams {
+	p.BrowserContextID = browserContextID
+	return &p
+}
+
+// Do executes Browser.setPermission against the provided context.
+func (p *SetPermissionParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetPermission, p, nil)
+}
+
 // GrantPermissionsParams grant specific permissions to the given origin and
 // reject all others.
 type GrantPermissionsParams struct {
@@ -425,6 +461,7 @@ func (p *SetDockTileParams) Do(ctx context.Context) (err error) {
 
 // Command names.
 const (
+	CommandSetPermission         = "Browser.setPermission"
 	CommandGrantPermissions      = "Browser.grantPermissions"
 	CommandResetPermissions      = "Browser.resetPermissions"
 	CommandClose                 = "Browser.close"

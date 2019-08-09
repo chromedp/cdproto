@@ -132,8 +132,10 @@ type VirtualAuthenticatorOptions struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/WebAuthn#type-Credential
 type Credential struct {
-	CredentialID string `json:"credentialId"`
-	RpIDHash     string `json:"rpIdHash"`   // SHA-256 hash of the Relying Party ID the credential is scoped to. Must be 32 bytes long. See https://w3c.github.io/webauthn/#rpidhash
-	PrivateKey   string `json:"privateKey"` // The private key in PKCS#8 format.
-	SignCount    int64  `json:"signCount"`  // Signature counter. This is incremented by one for each successful assertion. See https://w3c.github.io/webauthn/#signature-counter
+	CredentialID         string `json:"credentialId"`
+	IsResidentCredential bool   `json:"isResidentCredential"`
+	RpID                 string `json:"rpId,omitempty"`       // Relying Party ID the credential is scoped to. Must be set when adding a credential.
+	PrivateKey           string `json:"privateKey"`           // The ECDSA P-256 private key in PKCS#8 format.
+	UserHandle           string `json:"userHandle,omitempty"` // An opaque byte sequence with a maximum size of 64 bytes mapping the credential to a specific user.
+	SignCount            int64  `json:"signCount"`            // Signature counter. This is incremented by one for each successful assertion. See https://w3c.github.io/webauthn/#signature-counter
 }

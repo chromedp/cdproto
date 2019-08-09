@@ -131,6 +131,48 @@ func (p *AddCredentialParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandAddCredential, p, nil)
 }
 
+// GetCredentialParams returns a single credential stored in the given
+// virtual authenticator that matches the credential ID.
+type GetCredentialParams struct {
+	AuthenticatorID AuthenticatorID `json:"authenticatorId"`
+	CredentialID    string          `json:"credentialId"`
+}
+
+// GetCredential returns a single credential stored in the given virtual
+// authenticator that matches the credential ID.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/WebAuthn#method-getCredential
+//
+// parameters:
+//   authenticatorID
+//   credentialID
+func GetCredential(authenticatorID AuthenticatorID, credentialID string) *GetCredentialParams {
+	return &GetCredentialParams{
+		AuthenticatorID: authenticatorID,
+		CredentialID:    credentialID,
+	}
+}
+
+// GetCredentialReturns return values.
+type GetCredentialReturns struct {
+	Credential *Credential `json:"credential,omitempty"`
+}
+
+// Do executes WebAuthn.getCredential against the provided context.
+//
+// returns:
+//   credential
+func (p *GetCredentialParams) Do(ctx context.Context) (credential *Credential, err error) {
+	// execute
+	var res GetCredentialReturns
+	err = cdp.Execute(ctx, CommandGetCredential, p, &res)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.Credential, nil
+}
+
 // GetCredentialsParams returns all the credentials stored in the given
 // virtual authenticator.
 type GetCredentialsParams struct {
@@ -227,6 +269,7 @@ const (
 	CommandAddVirtualAuthenticator    = "WebAuthn.addVirtualAuthenticator"
 	CommandRemoveVirtualAuthenticator = "WebAuthn.removeVirtualAuthenticator"
 	CommandAddCredential              = "WebAuthn.addCredential"
+	CommandGetCredential              = "WebAuthn.getCredential"
 	CommandGetCredentials             = "WebAuthn.getCredentials"
 	CommandClearCredentials           = "WebAuthn.clearCredentials"
 	CommandSetUserVerified            = "WebAuthn.setUserVerified"

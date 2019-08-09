@@ -5,18 +5,20 @@ package webaudio
 import (
 	"errors"
 
+	"github.com/chromedp/cdproto/cdp"
 	"github.com/mailru/easyjson"
 	"github.com/mailru/easyjson/jlexer"
 	"github.com/mailru/easyjson/jwriter"
 )
 
-// ContextID context's UUID in string.
+// GraphObjectID an unique ID for a graph object (AudioContext, AudioNode,
+// AudioParam) in Web Audio API.
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/WebAudio#type-ContextId
-type ContextID string
+// See: https://chromedevtools.github.io/devtools-protocol/tot/WebAudio#type-GraphObjectId
+type GraphObjectID string
 
-// String returns the ContextID as string value.
-func (t ContextID) String() string {
+// String returns the GraphObjectID as string value.
+func (t GraphObjectID) String() string {
 	return string(t)
 }
 
@@ -111,6 +113,162 @@ func (t *ContextState) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 
+// NodeType enum of AudioNode types.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/WebAudio#type-NodeType
+type NodeType string
+
+// String returns the NodeType as string value.
+func (t NodeType) String() string {
+	return string(t)
+}
+
+// ChannelCountMode enum of AudioNode::ChannelCountMode from the spec.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/WebAudio#type-ChannelCountMode
+type ChannelCountMode string
+
+// String returns the ChannelCountMode as string value.
+func (t ChannelCountMode) String() string {
+	return string(t)
+}
+
+// ChannelCountMode values.
+const (
+	ChannelCountModeClampedMax ChannelCountMode = "clamped-max"
+	ChannelCountModeExplicit   ChannelCountMode = "explicit"
+	ChannelCountModeMax        ChannelCountMode = "max"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t ChannelCountMode) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t ChannelCountMode) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *ChannelCountMode) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	switch ChannelCountMode(in.String()) {
+	case ChannelCountModeClampedMax:
+		*t = ChannelCountModeClampedMax
+	case ChannelCountModeExplicit:
+		*t = ChannelCountModeExplicit
+	case ChannelCountModeMax:
+		*t = ChannelCountModeMax
+
+	default:
+		in.AddError(errors.New("unknown ChannelCountMode value"))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *ChannelCountMode) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
+// ChannelInterpretation enum of AudioNode::ChannelInterpretation from the
+// spec.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/WebAudio#type-ChannelInterpretation
+type ChannelInterpretation string
+
+// String returns the ChannelInterpretation as string value.
+func (t ChannelInterpretation) String() string {
+	return string(t)
+}
+
+// ChannelInterpretation values.
+const (
+	ChannelInterpretationDiscrete ChannelInterpretation = "discrete"
+	ChannelInterpretationSpeakers ChannelInterpretation = "speakers"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t ChannelInterpretation) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t ChannelInterpretation) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *ChannelInterpretation) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	switch ChannelInterpretation(in.String()) {
+	case ChannelInterpretationDiscrete:
+		*t = ChannelInterpretationDiscrete
+	case ChannelInterpretationSpeakers:
+		*t = ChannelInterpretationSpeakers
+
+	default:
+		in.AddError(errors.New("unknown ChannelInterpretation value"))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *ChannelInterpretation) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
+// ParamType enum of AudioParam types.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/WebAudio#type-ParamType
+type ParamType string
+
+// String returns the ParamType as string value.
+func (t ParamType) String() string {
+	return string(t)
+}
+
+// AutomationRate enum of AudioParam::AutomationRate from the spec.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/WebAudio#type-AutomationRate
+type AutomationRate string
+
+// String returns the AutomationRate as string value.
+func (t AutomationRate) String() string {
+	return string(t)
+}
+
+// AutomationRate values.
+const (
+	AutomationRateARate AutomationRate = "a-rate"
+	AutomationRateKRate AutomationRate = "k-rate"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t AutomationRate) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t AutomationRate) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *AutomationRate) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	switch AutomationRate(in.String()) {
+	case AutomationRateARate:
+		*t = AutomationRateARate
+	case AutomationRateKRate:
+		*t = AutomationRateKRate
+
+	default:
+		in.AddError(errors.New("unknown AutomationRate value"))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *AutomationRate) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
 // ContextRealtimeData fields in AudioContext that change in real-time.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/WebAudio#type-ContextRealtimeData
@@ -125,11 +283,47 @@ type ContextRealtimeData struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/WebAudio#type-BaseAudioContext
 type BaseAudioContext struct {
-	ContextID             ContextID            `json:"contextId"`
+	ContextID             GraphObjectID        `json:"contextId"`
 	ContextType           ContextType          `json:"contextType"`
 	ContextState          ContextState         `json:"contextState"`
 	RealtimeData          *ContextRealtimeData `json:"realtimeData,omitempty"`
 	CallbackBufferSize    float64              `json:"callbackBufferSize"`    // Platform-dependent callback buffer size.
 	MaxOutputChannelCount float64              `json:"maxOutputChannelCount"` // Number of output channels supported by audio hardware in use.
 	SampleRate            float64              `json:"sampleRate"`            // Context sample rate.
+}
+
+// AudioListener protocol object for AudioListner.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/WebAudio#type-AudioListener
+type AudioListener struct {
+	ListenerID GraphObjectID `json:"listenerId"`
+	ContextID  GraphObjectID `json:"contextId"`
+}
+
+// AudioNode protocol object for AudioNode.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/WebAudio#type-AudioNode
+type AudioNode struct {
+	NodeID                GraphObjectID         `json:"nodeId"`
+	ContextID             GraphObjectID         `json:"contextId"`
+	NodeType              cdp.NodeType          `json:"nodeType"`
+	NumberOfInputs        float64               `json:"numberOfInputs"`
+	NumberOfOutputs       float64               `json:"numberOfOutputs"`
+	ChannelCount          float64               `json:"channelCount"`
+	ChannelCountMode      ChannelCountMode      `json:"channelCountMode"`
+	ChannelInterpretation ChannelInterpretation `json:"channelInterpretation"`
+}
+
+// AudioParam protocol object for AudioParam.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/WebAudio#type-AudioParam
+type AudioParam struct {
+	ParamID      GraphObjectID  `json:"paramId"`
+	NodeID       GraphObjectID  `json:"nodeId"`
+	ContextID    GraphObjectID  `json:"contextId"`
+	ParamType    ParamType      `json:"paramType"`
+	Rate         AutomationRate `json:"rate"`
+	DefaultValue float64        `json:"defaultValue"`
+	MinValue     float64        `json:"minValue"`
+	MaxValue     float64        `json:"maxValue"`
 }

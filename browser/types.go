@@ -179,6 +179,65 @@ func (t *PermissionType) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 
+// PermissionSetting [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#type-PermissionSetting
+type PermissionSetting string
+
+// String returns the PermissionSetting as string value.
+func (t PermissionSetting) String() string {
+	return string(t)
+}
+
+// PermissionSetting values.
+const (
+	PermissionSettingGranted PermissionSetting = "granted"
+	PermissionSettingDenied  PermissionSetting = "denied"
+	PermissionSettingPrompt  PermissionSetting = "prompt"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t PermissionSetting) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t PermissionSetting) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *PermissionSetting) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	switch PermissionSetting(in.String()) {
+	case PermissionSettingGranted:
+		*t = PermissionSettingGranted
+	case PermissionSettingDenied:
+		*t = PermissionSettingDenied
+	case PermissionSettingPrompt:
+		*t = PermissionSettingPrompt
+
+	default:
+		in.AddError(errors.New("unknown PermissionSetting value"))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *PermissionSetting) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
+// PermissionDescriptor definition of PermissionDescriptor defined in the
+// Permissions API:
+// https://w3c.github.io/permissions/#dictdef-permissiondescriptor.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#type-PermissionDescriptor
+type PermissionDescriptor struct {
+	Name            string `json:"name"`                      // Name of permission. See https://cs.chromium.org/chromium/src/third_party/blink/renderer/modules/permissions/permission_descriptor.idl for valid permission names.
+	Sysex           bool   `json:"sysex,omitempty"`           // For "midi" permission, may also specify sysex control.
+	UserVisibleOnly bool   `json:"userVisibleOnly,omitempty"` // For "push" permission, may specify userVisibleOnly. Note that userVisibleOnly = true is the only currently supported type.
+	Type            string `json:"type,omitempty"`            // For "wake-lock" permission, must specify type as either "screen" or "system".
+}
+
 // Bucket chrome histogram bucket.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#type-Bucket

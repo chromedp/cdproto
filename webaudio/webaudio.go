@@ -50,7 +50,7 @@ func (p *DisableParams) Do(ctx context.Context) (err error) {
 // GetRealtimeDataParams fetch the realtime data from the registered
 // contexts.
 type GetRealtimeDataParams struct {
-	ContextID ContextID `json:"contextId"`
+	ContextID GraphObjectID `json:"contextId"`
 }
 
 // GetRealtimeData fetch the realtime data from the registered contexts.
@@ -59,7 +59,7 @@ type GetRealtimeDataParams struct {
 //
 // parameters:
 //   contextID
-func GetRealtimeData(contextID ContextID) *GetRealtimeDataParams {
+func GetRealtimeData(contextID GraphObjectID) *GetRealtimeDataParams {
 	return &GetRealtimeDataParams{
 		ContextID: contextID,
 	}
