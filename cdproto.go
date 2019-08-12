@@ -566,6 +566,7 @@ const (
 	CommandServiceWorkerDeliverPushMessage                 = serviceworker.CommandDeliverPushMessage
 	CommandServiceWorkerDisable                            = serviceworker.CommandDisable
 	CommandServiceWorkerDispatchSyncEvent                  = serviceworker.CommandDispatchSyncEvent
+	CommandServiceWorkerDispatchPeriodicSyncEvent          = serviceworker.CommandDispatchPeriodicSyncEvent
 	CommandServiceWorkerEnable                             = serviceworker.CommandEnable
 	CommandServiceWorkerInspectWorker                      = serviceworker.CommandInspectWorker
 	CommandServiceWorkerSetForceUpdateOnPageLoad           = serviceworker.CommandSetForceUpdateOnPageLoad
@@ -2151,6 +2152,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		return emptyVal, nil
 
 	case CommandServiceWorkerDispatchSyncEvent:
+		return emptyVal, nil
+
+	case CommandServiceWorkerDispatchPeriodicSyncEvent:
 		return emptyVal, nil
 
 	case CommandServiceWorkerEnable:

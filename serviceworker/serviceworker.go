@@ -86,6 +86,34 @@ func (p *DispatchSyncEventParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandDispatchSyncEvent, p, nil)
 }
 
+// DispatchPeriodicSyncEventParams [no description].
+type DispatchPeriodicSyncEventParams struct {
+	Origin         string         `json:"origin"`
+	RegistrationID RegistrationID `json:"registrationId"`
+	Tag            string         `json:"tag"`
+}
+
+// DispatchPeriodicSyncEvent [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/ServiceWorker#method-dispatchPeriodicSyncEvent
+//
+// parameters:
+//   origin
+//   registrationID
+//   tag
+func DispatchPeriodicSyncEvent(origin string, registrationID RegistrationID, tag string) *DispatchPeriodicSyncEventParams {
+	return &DispatchPeriodicSyncEventParams{
+		Origin:         origin,
+		RegistrationID: registrationID,
+		Tag:            tag,
+	}
+}
+
+// Do executes ServiceWorker.dispatchPeriodicSyncEvent against the provided context.
+func (p *DispatchPeriodicSyncEventParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandDispatchPeriodicSyncEvent, p, nil)
+}
+
 // EnableParams [no description].
 type EnableParams struct{}
 
@@ -272,16 +300,17 @@ func (p *UpdateRegistrationParams) Do(ctx context.Context) (err error) {
 
 // Command names.
 const (
-	CommandDeliverPushMessage       = "ServiceWorker.deliverPushMessage"
-	CommandDisable                  = "ServiceWorker.disable"
-	CommandDispatchSyncEvent        = "ServiceWorker.dispatchSyncEvent"
-	CommandEnable                   = "ServiceWorker.enable"
-	CommandInspectWorker            = "ServiceWorker.inspectWorker"
-	CommandSetForceUpdateOnPageLoad = "ServiceWorker.setForceUpdateOnPageLoad"
-	CommandSkipWaiting              = "ServiceWorker.skipWaiting"
-	CommandStartWorker              = "ServiceWorker.startWorker"
-	CommandStopAllWorkers           = "ServiceWorker.stopAllWorkers"
-	CommandStopWorker               = "ServiceWorker.stopWorker"
-	CommandUnregister               = "ServiceWorker.unregister"
-	CommandUpdateRegistration       = "ServiceWorker.updateRegistration"
+	CommandDeliverPushMessage        = "ServiceWorker.deliverPushMessage"
+	CommandDisable                   = "ServiceWorker.disable"
+	CommandDispatchSyncEvent         = "ServiceWorker.dispatchSyncEvent"
+	CommandDispatchPeriodicSyncEvent = "ServiceWorker.dispatchPeriodicSyncEvent"
+	CommandEnable                    = "ServiceWorker.enable"
+	CommandInspectWorker             = "ServiceWorker.inspectWorker"
+	CommandSetForceUpdateOnPageLoad  = "ServiceWorker.setForceUpdateOnPageLoad"
+	CommandSkipWaiting               = "ServiceWorker.skipWaiting"
+	CommandStartWorker               = "ServiceWorker.startWorker"
+	CommandStopAllWorkers            = "ServiceWorker.stopAllWorkers"
+	CommandStopWorker                = "ServiceWorker.stopWorker"
+	CommandUnregister                = "ServiceWorker.unregister"
+	CommandUpdateRegistration        = "ServiceWorker.updateRegistration"
 )
