@@ -51,8 +51,9 @@ func (p *EnableParams) Do(ctx context.Context) (err error) {
 // style information for the nodes. Shadow DOM in the returned DOM tree is
 // flattened.
 type CaptureSnapshotParams struct {
-	ComputedStyles  []string `json:"computedStyles"`            // Whitelist of computed styles to return.
-	IncludeDOMRects bool     `json:"includeDOMRects,omitempty"` // Whether to include DOM rectangles (offsetRects, clientRects, scrollRects) into the snapshot
+	ComputedStyles    []string `json:"computedStyles"`              // Whitelist of computed styles to return.
+	IncludePaintOrder bool     `json:"includePaintOrder,omitempty"` // Whether to include layout object paint orders into the snapshot.
+	IncludeDOMRects   bool     `json:"includeDOMRects,omitempty"`   // Whether to include DOM rectangles (offsetRects, clientRects, scrollRects) into the snapshot
 }
 
 // CaptureSnapshot returns a document snapshot, including the full DOM tree
@@ -69,6 +70,13 @@ func CaptureSnapshot(computedStyles []string) *CaptureSnapshotParams {
 	return &CaptureSnapshotParams{
 		ComputedStyles: computedStyles,
 	}
+}
+
+// WithIncludePaintOrder whether to include layout object paint orders into
+// the snapshot.
+func (p CaptureSnapshotParams) WithIncludePaintOrder(includePaintOrder bool) *CaptureSnapshotParams {
+	p.IncludePaintOrder = includePaintOrder
+	return &p
 }
 
 // WithIncludeDOMRects whether to include DOM rectangles (offsetRects,
