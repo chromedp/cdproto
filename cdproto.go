@@ -648,6 +648,7 @@ const (
 	CommandWebAuthnAddCredential                           = webauthn.CommandAddCredential
 	CommandWebAuthnGetCredential                           = webauthn.CommandGetCredential
 	CommandWebAuthnGetCredentials                          = webauthn.CommandGetCredentials
+	CommandWebAuthnRemoveCredential                        = webauthn.CommandRemoveCredential
 	CommandWebAuthnClearCredentials                        = webauthn.CommandClearCredentials
 	CommandWebAuthnSetUserVerified                         = webauthn.CommandSetUserVerified
 )
@@ -2399,6 +2400,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandWebAuthnGetCredentials:
 		v = new(webauthn.GetCredentialsReturns)
+
+	case CommandWebAuthnRemoveCredential:
+		return emptyVal, nil
 
 	case CommandWebAuthnClearCredentials:
 		return emptyVal, nil

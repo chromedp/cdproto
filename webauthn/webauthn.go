@@ -212,6 +212,31 @@ func (p *GetCredentialsParams) Do(ctx context.Context) (credentials []*Credentia
 	return res.Credentials, nil
 }
 
+// RemoveCredentialParams removes a credential from the authenticator.
+type RemoveCredentialParams struct {
+	AuthenticatorID AuthenticatorID `json:"authenticatorId"`
+	CredentialID    string          `json:"credentialId"`
+}
+
+// RemoveCredential removes a credential from the authenticator.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/WebAuthn#method-removeCredential
+//
+// parameters:
+//   authenticatorID
+//   credentialID
+func RemoveCredential(authenticatorID AuthenticatorID, credentialID string) *RemoveCredentialParams {
+	return &RemoveCredentialParams{
+		AuthenticatorID: authenticatorID,
+		CredentialID:    credentialID,
+	}
+}
+
+// Do executes WebAuthn.removeCredential against the provided context.
+func (p *RemoveCredentialParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandRemoveCredential, p, nil)
+}
+
 // ClearCredentialsParams clears all the credentials from the specified
 // device.
 type ClearCredentialsParams struct {
@@ -271,6 +296,7 @@ const (
 	CommandAddCredential              = "WebAuthn.addCredential"
 	CommandGetCredential              = "WebAuthn.getCredential"
 	CommandGetCredentials             = "WebAuthn.getCredentials"
+	CommandRemoveCredential           = "WebAuthn.removeCredential"
 	CommandClearCredentials           = "WebAuthn.clearCredentials"
 	CommandSetUserVerified            = "WebAuthn.setUserVerified"
 )
