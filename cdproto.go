@@ -309,7 +309,6 @@ const (
 	CommandHeadlessExperimentalBeginFrame                  = headlessexperimental.CommandBeginFrame
 	CommandHeadlessExperimentalDisable                     = headlessexperimental.CommandDisable
 	CommandHeadlessExperimentalEnable                      = headlessexperimental.CommandEnable
-	EventHeadlessExperimentalNeedsBeginFramesChanged       = "HeadlessExperimental.needsBeginFramesChanged"
 	CommandHeapProfilerAddInspectedHeapObject              = heapprofiler.CommandAddInspectedHeapObject
 	CommandHeapProfilerCollectGarbage                      = heapprofiler.CommandCollectGarbage
 	CommandHeapProfilerDisable                             = heapprofiler.CommandDisable
@@ -1383,9 +1382,6 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandHeadlessExperimentalEnable:
 		return emptyVal, nil
-
-	case EventHeadlessExperimentalNeedsBeginFramesChanged:
-		v = new(headlessexperimental.EventNeedsBeginFramesChanged)
 
 	case CommandHeapProfilerAddInspectedHeapObject:
 		return emptyVal, nil

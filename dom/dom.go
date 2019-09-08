@@ -537,6 +537,7 @@ type GetNodeForLocationParams struct {
 	X                         int64 `json:"x"`                                   // X coordinate.
 	Y                         int64 `json:"y"`                                   // Y coordinate.
 	IncludeUserAgentShadowDOM bool  `json:"includeUserAgentShadowDOM,omitempty"` // False to skip to the nearest non-UA shadow root ancestor (default: false).
+	IgnorePointerEventsNone   bool  `json:"ignorePointerEventsNone,omitempty"`   // Whether to ignore pointer-events: none on elements and hit test them.
 }
 
 // GetNodeForLocation returns node id at given location. Depending on whether
@@ -561,9 +562,17 @@ func (p GetNodeForLocationParams) WithIncludeUserAgentShadowDOM(includeUserAgent
 	return &p
 }
 
+// WithIgnorePointerEventsNone whether to ignore pointer-events: none on
+// elements and hit test them.
+func (p GetNodeForLocationParams) WithIgnorePointerEventsNone(ignorePointerEventsNone bool) *GetNodeForLocationParams {
+	p.IgnorePointerEventsNone = ignorePointerEventsNone
+	return &p
+}
+
 // GetNodeForLocationReturns return values.
 type GetNodeForLocationReturns struct {
 	BackendNodeID cdp.BackendNodeID `json:"backendNodeId,omitempty"` // Resulting node.
+	FrameID       cdp.FrameID       `json:"frameId,omitempty"`       // Frame this node belongs to.
 	NodeID        cdp.NodeID        `json:"nodeId,omitempty"`        // Id of the node at given coordinates, only when enabled and requested document.
 }
 
@@ -571,16 +580,17 @@ type GetNodeForLocationReturns struct {
 //
 // returns:
 //   backendNodeID - Resulting node.
+//   frameID - Frame this node belongs to.
 //   nodeID - Id of the node at given coordinates, only when enabled and requested document.
-func (p *GetNodeForLocationParams) Do(ctx context.Context) (backendNodeID cdp.BackendNodeID, nodeID cdp.NodeID, err error) {
+func (p *GetNodeForLocationParams) Do(ctx context.Context) (backendNodeID cdp.BackendNodeID, frameID cdp.FrameID, nodeID cdp.NodeID, err error) {
 	// execute
 	var res GetNodeForLocationReturns
 	err = cdp.Execute(ctx, CommandGetNodeForLocation, p, &res)
 	if err != nil {
-		return 0, 0, err
+		return 0, "", 0, err
 	}
 
-	return res.BackendNodeID, res.NodeID, nil
+	return res.BackendNodeID, res.FrameID, res.NodeID, nil
 }
 
 // GetOuterHTMLParams returns node's HTML markup.

@@ -3253,6 +3253,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoDom41(in *jlexer.Lexer, out *
 		switch key {
 		case "backendNodeId":
 			(out.BackendNodeID).UnmarshalEasyJSON(in)
+		case "frameId":
+			(out.FrameID).UnmarshalEasyJSON(in)
 		case "nodeId":
 			(out.NodeID).UnmarshalEasyJSON(in)
 		default:
@@ -3274,6 +3276,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoDom41(out *jwriter.Writer, in
 		first = false
 		out.RawString(prefix[1:])
 		out.Int64(int64(in.BackendNodeID))
+	}
+	if in.FrameID != "" {
+		const prefix string = ",\"frameId\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(in.FrameID))
 	}
 	if in.NodeID != 0 {
 		const prefix string = ",\"nodeId\":"
@@ -3336,6 +3348,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoDom42(in *jlexer.Lexer, out *
 			out.Y = int64(in.Int64())
 		case "includeUserAgentShadowDOM":
 			out.IncludeUserAgentShadowDOM = bool(in.Bool())
+		case "ignorePointerEventsNone":
+			out.IgnorePointerEventsNone = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -3364,6 +3378,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoDom42(out *jwriter.Writer, in
 		const prefix string = ",\"includeUserAgentShadowDOM\":"
 		out.RawString(prefix)
 		out.Bool(bool(in.IncludeUserAgentShadowDOM))
+	}
+	if in.IgnorePointerEventsNone {
+		const prefix string = ",\"ignorePointerEventsNone\":"
+		out.RawString(prefix)
+		out.Bool(bool(in.IgnorePointerEventsNone))
 	}
 	out.RawByte('}')
 }
