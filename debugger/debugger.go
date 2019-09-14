@@ -347,28 +347,6 @@ func (p *PauseParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandPause, nil, nil)
 }
 
-// PauseOnAsyncCallParams [no description].
-type PauseOnAsyncCallParams struct {
-	ParentStackTraceID *runtime.StackTraceID `json:"parentStackTraceId"` // Debugger will pause when async call with given stack trace is started.
-}
-
-// PauseOnAsyncCall [no description].
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-pauseOnAsyncCall
-//
-// parameters:
-//   parentStackTraceID - Debugger will pause when async call with given stack trace is started.
-func PauseOnAsyncCall(parentStackTraceID *runtime.StackTraceID) *PauseOnAsyncCallParams {
-	return &PauseOnAsyncCallParams{
-		ParentStackTraceID: parentStackTraceID,
-	}
-}
-
-// Do executes Debugger.pauseOnAsyncCall against the provided context.
-func (p *PauseOnAsyncCallParams) Do(ctx context.Context) (err error) {
-	return cdp.Execute(ctx, CommandPauseOnAsyncCall, p, nil)
-}
-
 // RemoveBreakpointParams removes JavaScript breakpoint.
 type RemoveBreakpointParams struct {
 	BreakpointID BreakpointID `json:"breakpointId"`
@@ -993,7 +971,7 @@ func (p *SetVariableValueParams) Do(ctx context.Context) (err error) {
 
 // StepIntoParams steps into the function call.
 type StepIntoParams struct {
-	BreakOnAsyncCall bool `json:"breakOnAsyncCall,omitempty"` // Debugger will issue additional Debugger.paused notification if any async task is scheduled before next pause.
+	BreakOnAsyncCall bool `json:"breakOnAsyncCall,omitempty"` // Debugger will pause on the execution of the first async task which was scheduled before next pause.
 }
 
 // StepInto steps into the function call.
@@ -1005,8 +983,8 @@ func StepInto() *StepIntoParams {
 	return &StepIntoParams{}
 }
 
-// WithBreakOnAsyncCall debugger will issue additional Debugger.paused
-// notification if any async task is scheduled before next pause.
+// WithBreakOnAsyncCall debugger will pause on the execution of the first
+// async task which was scheduled before next pause.
 func (p StepIntoParams) WithBreakOnAsyncCall(breakOnAsyncCall bool) *StepIntoParams {
 	p.BreakOnAsyncCall = breakOnAsyncCall
 	return &p
@@ -1057,7 +1035,6 @@ const (
 	CommandGetScriptSource              = "Debugger.getScriptSource"
 	CommandGetStackTrace                = "Debugger.getStackTrace"
 	CommandPause                        = "Debugger.pause"
-	CommandPauseOnAsyncCall             = "Debugger.pauseOnAsyncCall"
 	CommandRemoveBreakpoint             = "Debugger.removeBreakpoint"
 	CommandRestartFrame                 = "Debugger.restartFrame"
 	CommandResume                       = "Debugger.resume"

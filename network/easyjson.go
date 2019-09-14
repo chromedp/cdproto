@@ -7115,8 +7115,29 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork66(in *jlexer.Lexer, o
 			continue
 		}
 		switch key {
-		case "blockedReason":
-			(out.BlockedReason).UnmarshalEasyJSON(in)
+		case "blockedReasons":
+			if in.IsNull() {
+				in.Skip()
+				out.BlockedReasons = nil
+			} else {
+				in.Delim('[')
+				if out.BlockedReasons == nil {
+					if !in.IsDelim(']') {
+						out.BlockedReasons = make([]SetCookieBlockedReason, 0, 4)
+					} else {
+						out.BlockedReasons = []SetCookieBlockedReason{}
+					}
+				} else {
+					out.BlockedReasons = (out.BlockedReasons)[:0]
+				}
+				for !in.IsDelim(']') {
+					var v63 SetCookieBlockedReason
+					(v63).UnmarshalEasyJSON(in)
+					out.BlockedReasons = append(out.BlockedReasons, v63)
+					in.WantComma()
+				}
+				in.Delim(']')
+			}
 		case "cookieLine":
 			out.CookieLine = string(in.String())
 		case "cookie":
@@ -7144,9 +7165,20 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoNetwork66(out *jwriter.Writer
 	first := true
 	_ = first
 	{
-		const prefix string = ",\"blockedReason\":"
+		const prefix string = ",\"blockedReasons\":"
 		out.RawString(prefix[1:])
-		(in.BlockedReason).MarshalEasyJSON(out)
+		if in.BlockedReasons == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+			out.RawString("null")
+		} else {
+			out.RawByte('[')
+			for v64, v65 := range in.BlockedReasons {
+				if v64 > 0 {
+					out.RawByte(',')
+				}
+				(v65).MarshalEasyJSON(out)
+			}
+			out.RawByte(']')
+		}
 	}
 	{
 		const prefix string = ",\"cookieLine\":"
@@ -7203,8 +7235,29 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork67(in *jlexer.Lexer, o
 			continue
 		}
 		switch key {
-		case "blockedReason":
-			(out.BlockedReason).UnmarshalEasyJSON(in)
+		case "blockedReasons":
+			if in.IsNull() {
+				in.Skip()
+				out.BlockedReasons = nil
+			} else {
+				in.Delim('[')
+				if out.BlockedReasons == nil {
+					if !in.IsDelim(']') {
+						out.BlockedReasons = make([]CookieBlockedReason, 0, 4)
+					} else {
+						out.BlockedReasons = []CookieBlockedReason{}
+					}
+				} else {
+					out.BlockedReasons = (out.BlockedReasons)[:0]
+				}
+				for !in.IsDelim(']') {
+					var v66 CookieBlockedReason
+					(v66).UnmarshalEasyJSON(in)
+					out.BlockedReasons = append(out.BlockedReasons, v66)
+					in.WantComma()
+				}
+				in.Delim(']')
+			}
 		case "cookie":
 			if in.IsNull() {
 				in.Skip()
@@ -7230,9 +7283,20 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoNetwork67(out *jwriter.Writer
 	first := true
 	_ = first
 	{
-		const prefix string = ",\"blockedReason\":"
+		const prefix string = ",\"blockedReasons\":"
 		out.RawString(prefix[1:])
-		(in.BlockedReason).MarshalEasyJSON(out)
+		if in.BlockedReasons == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+			out.RawString("null")
+		} else {
+			out.RawByte('[')
+			for v67, v68 := range in.BlockedReasons {
+				if v67 > 0 {
+					out.RawByte(',')
+				}
+				(v68).MarshalEasyJSON(out)
+			}
+			out.RawByte(']')
+		}
 	}
 	{
 		const prefix string = ",\"cookie\":"

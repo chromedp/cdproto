@@ -248,7 +248,6 @@ const (
 	CommandDebuggerGetScriptSource                         = debugger.CommandGetScriptSource
 	CommandDebuggerGetStackTrace                           = debugger.CommandGetStackTrace
 	CommandDebuggerPause                                   = debugger.CommandPause
-	CommandDebuggerPauseOnAsyncCall                        = debugger.CommandPauseOnAsyncCall
 	CommandDebuggerRemoveBreakpoint                        = debugger.CommandRemoveBreakpoint
 	CommandDebuggerRestartFrame                            = debugger.CommandRestartFrame
 	CommandDebuggerResume                                  = debugger.CommandResume
@@ -1198,9 +1197,6 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		v = new(debugger.GetStackTraceReturns)
 
 	case CommandDebuggerPause:
-		return emptyVal, nil
-
-	case CommandDebuggerPauseOnAsyncCall:
 		return emptyVal, nil
 
 	case CommandDebuggerRemoveBreakpoint:

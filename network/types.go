@@ -799,9 +799,9 @@ func (t *CookieBlockedReason) UnmarshalJSON(buf []byte) error {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-BlockedSetCookieWithReason
 type BlockedSetCookieWithReason struct {
-	BlockedReason SetCookieBlockedReason `json:"blockedReason"`    // The reason this cookie was blocked.
-	CookieLine    string                 `json:"cookieLine"`       // The string representing this individual cookie as it would appear in the header. This is not the entire "cookie" or "set-cookie" header which could have multiple cookies.
-	Cookie        *Cookie                `json:"cookie,omitempty"` // The cookie object which represents the cookie which was not stored. It is optional because sometimes complete cookie information is not available, such as in the case of parsing errors.
+	BlockedReasons []SetCookieBlockedReason `json:"blockedReasons"`   // The reason(s) this cookie was blocked.
+	CookieLine     string                   `json:"cookieLine"`       // The string representing this individual cookie as it would appear in the header. This is not the entire "cookie" or "set-cookie" header which could have multiple cookies.
+	Cookie         *Cookie                  `json:"cookie,omitempty"` // The cookie object which represents the cookie which was not stored. It is optional because sometimes complete cookie information is not available, such as in the case of parsing errors.
 }
 
 // BlockedCookieWithReason a cookie with was not sent with a request with the
@@ -809,8 +809,8 @@ type BlockedSetCookieWithReason struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-BlockedCookieWithReason
 type BlockedCookieWithReason struct {
-	BlockedReason CookieBlockedReason `json:"blockedReason"` // The reason the cookie was blocked.
-	Cookie        *Cookie             `json:"cookie"`        // The cookie object representing the cookie which was not sent.
+	BlockedReasons []CookieBlockedReason `json:"blockedReasons"` // The reason(s) the cookie was blocked.
+	Cookie         *Cookie               `json:"cookie"`         // The cookie object representing the cookie which was not sent.
 }
 
 // CookieParam cookie parameter object.
