@@ -99,11 +99,12 @@ func (p *FailRequestParams) Do(ctx context.Context) (err error) {
 
 // FulfillRequestParams provides response to the request.
 type FulfillRequestParams struct {
-	RequestID       RequestID      `json:"requestId"`                // An id the client received in requestPaused event.
-	ResponseCode    int64          `json:"responseCode"`             // An HTTP response code.
-	ResponseHeaders []*HeaderEntry `json:"responseHeaders"`          // Response headers.
-	Body            string         `json:"body,omitempty"`           // A response body.
-	ResponsePhrase  string         `json:"responsePhrase,omitempty"` // A textual representation of responseCode. If absent, a standard phrase mathcing responseCode is used.
+	RequestID             RequestID      `json:"requestId"`                       // An id the client received in requestPaused event.
+	ResponseCode          int64          `json:"responseCode"`                    // An HTTP response code.
+	ResponseHeaders       []*HeaderEntry `json:"responseHeaders,omitempty"`       // Response headers.
+	BinaryResponseHeaders string         `json:"binaryResponseHeaders,omitempty"` // Alternative way of specifying response headers as a \0-separated series of name: value pairs. Prefer the above method unless you need to represent some non-UTF8 values that can't be transmitted over the protocol as text.
+	Body                  string         `json:"body,omitempty"`                  // A response body.
+	ResponsePhrase        string         `json:"responsePhrase,omitempty"`        // A textual representation of responseCode. If absent, a standard phrase matching responseCode is used.
 }
 
 // FulfillRequest provides response to the request.
@@ -113,13 +114,26 @@ type FulfillRequestParams struct {
 // parameters:
 //   requestID - An id the client received in requestPaused event.
 //   responseCode - An HTTP response code.
-//   responseHeaders - Response headers.
-func FulfillRequest(requestID RequestID, responseCode int64, responseHeaders []*HeaderEntry) *FulfillRequestParams {
+func FulfillRequest(requestID RequestID, responseCode int64) *FulfillRequestParams {
 	return &FulfillRequestParams{
-		RequestID:       requestID,
-		ResponseCode:    responseCode,
-		ResponseHeaders: responseHeaders,
+		RequestID:    requestID,
+		ResponseCode: responseCode,
 	}
+}
+
+// WithResponseHeaders response headers.
+func (p FulfillRequestParams) WithResponseHeaders(responseHeaders []*HeaderEntry) *FulfillRequestParams {
+	p.ResponseHeaders = responseHeaders
+	return &p
+}
+
+// WithBinaryResponseHeaders alternative way of specifying response headers
+// as a \0-separated series of name: value pairs. Prefer the above method unless
+// you need to represent some non-UTF8 values that can't be transmitted over the
+// protocol as text.
+func (p FulfillRequestParams) WithBinaryResponseHeaders(binaryResponseHeaders string) *FulfillRequestParams {
+	p.BinaryResponseHeaders = binaryResponseHeaders
+	return &p
 }
 
 // WithBody a response body.
@@ -129,7 +143,7 @@ func (p FulfillRequestParams) WithBody(body string) *FulfillRequestParams {
 }
 
 // WithResponsePhrase a textual representation of responseCode. If absent, a
-// standard phrase mathcing responseCode is used.
+// standard phrase matching responseCode is used.
 func (p FulfillRequestParams) WithResponsePhrase(responsePhrase string) *FulfillRequestParams {
 	p.ResponsePhrase = responsePhrase
 	return &p

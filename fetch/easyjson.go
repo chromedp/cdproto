@@ -515,6 +515,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoFetch6(in *jlexer.Lexer, out 
 				}
 				in.Delim(']')
 			}
+		case "binaryResponseHeaders":
+			out.BinaryResponseHeaders = string(in.String())
 		case "body":
 			out.Body = string(in.String())
 		case "responsePhrase":
@@ -543,12 +545,10 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoFetch6(out *jwriter.Writer, i
 		out.RawString(prefix)
 		out.Int64(int64(in.ResponseCode))
 	}
-	{
+	if len(in.ResponseHeaders) != 0 {
 		const prefix string = ",\"responseHeaders\":"
 		out.RawString(prefix)
-		if in.ResponseHeaders == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v2, v3 := range in.ResponseHeaders {
 				if v2 > 0 {
@@ -562,6 +562,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoFetch6(out *jwriter.Writer, i
 			}
 			out.RawByte(']')
 		}
+	}
+	if in.BinaryResponseHeaders != "" {
+		const prefix string = ",\"binaryResponseHeaders\":"
+		out.RawString(prefix)
+		out.String(string(in.BinaryResponseHeaders))
 	}
 	if in.Body != "" {
 		const prefix string = ",\"body\":"
