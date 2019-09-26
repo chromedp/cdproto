@@ -12,6 +12,7 @@ package debugger
 
 import (
 	"context"
+	"encoding/base64"
 
 	"github.com/chromedp/cdproto/cdp"
 	"github.com/chromedp/cdproto/runtime"
@@ -67,6 +68,7 @@ func (p *DisableParams) Do(ctx context.Context) (err error) {
 // is received.
 type EnableParams struct {
 	MaxScriptsCacheSize float64 `json:"maxScriptsCacheSize,omitempty"` // The maximum size in bytes of collected scripts (not referenced by other heap objects) the debugger can hold. Puts no limit if parameter is omitted.
+	SupportsWasmDwarf   bool    `json:"supportsWasmDwarf,omitempty"`   // Whether to report Wasm modules as raw binaries instead of disassembled functions.
 }
 
 // Enable enables debugger for the given page. Clients should not assume that
@@ -84,6 +86,13 @@ func Enable() *EnableParams {
 // if parameter is omitted.
 func (p EnableParams) WithMaxScriptsCacheSize(maxScriptsCacheSize float64) *EnableParams {
 	p.MaxScriptsCacheSize = maxScriptsCacheSize
+	return &p
+}
+
+// WithSupportsWasmDwarf whether to report Wasm modules as raw binaries
+// instead of disassembled functions.
+func (p EnableParams) WithSupportsWasmDwarf(supportsWasmDwarf bool) *EnableParams {
+	p.SupportsWasmDwarf = supportsWasmDwarf
 	return &p
 }
 
@@ -293,6 +302,50 @@ func (p *GetScriptSourceParams) Do(ctx context.Context) (scriptSource string, er
 	}
 
 	return res.ScriptSource, nil
+}
+
+// GetWasmBytecodeParams returns bytecode for the WebAssembly script with
+// given id.
+type GetWasmBytecodeParams struct {
+	ScriptID runtime.ScriptID `json:"scriptId"` // Id of the Wasm script to get source for.
+}
+
+// GetWasmBytecode returns bytecode for the WebAssembly script with given id.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-getWasmBytecode
+//
+// parameters:
+//   scriptID - Id of the Wasm script to get source for.
+func GetWasmBytecode(scriptID runtime.ScriptID) *GetWasmBytecodeParams {
+	return &GetWasmBytecodeParams{
+		ScriptID: scriptID,
+	}
+}
+
+// GetWasmBytecodeReturns return values.
+type GetWasmBytecodeReturns struct {
+	Bytecode string `json:"bytecode,omitempty"` // Script source.
+}
+
+// Do executes Debugger.getWasmBytecode against the provided context.
+//
+// returns:
+//   bytecode - Script source.
+func (p *GetWasmBytecodeParams) Do(ctx context.Context) (bytecode []byte, err error) {
+	// execute
+	var res GetWasmBytecodeReturns
+	err = cdp.Execute(ctx, CommandGetWasmBytecode, p, &res)
+	if err != nil {
+		return nil, err
+	}
+
+	// decode
+	var dec []byte
+	dec, err = base64.StdEncoding.DecodeString(res.Bytecode)
+	if err != nil {
+		return nil, err
+	}
+	return dec, nil
 }
 
 // GetStackTraceParams returns stack trace with given stackTraceId.
@@ -1033,6 +1086,7 @@ const (
 	CommandEvaluateOnCallFrame          = "Debugger.evaluateOnCallFrame"
 	CommandGetPossibleBreakpoints       = "Debugger.getPossibleBreakpoints"
 	CommandGetScriptSource              = "Debugger.getScriptSource"
+	CommandGetWasmBytecode              = "Debugger.getWasmBytecode"
 	CommandGetStackTrace                = "Debugger.getStackTrace"
 	CommandPause                        = "Debugger.pause"
 	CommandRemoveBreakpoint             = "Debugger.removeBreakpoint"
