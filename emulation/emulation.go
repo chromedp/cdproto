@@ -344,21 +344,33 @@ func (p *SetEmitTouchEventsForMouseParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandSetEmitTouchEventsForMouse, p, nil)
 }
 
-// SetEmulatedMediaParams emulates the given media for CSS media queries.
+// SetEmulatedMediaParams emulates the given media type or media feature for
+// CSS media queries.
 type SetEmulatedMediaParams struct {
-	Media string `json:"media"` // Media type to emulate. Empty string disables the override.
+	Media    string          `json:"media,omitempty"`    // Media type to emulate. Empty string disables the override.
+	Features []*MediaFeature `json:"features,omitempty"` // Media features to emulate.
 }
 
-// SetEmulatedMedia emulates the given media for CSS media queries.
+// SetEmulatedMedia emulates the given media type or media feature for CSS
+// media queries.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#method-setEmulatedMedia
 //
 // parameters:
-//   media - Media type to emulate. Empty string disables the override.
-func SetEmulatedMedia(media string) *SetEmulatedMediaParams {
-	return &SetEmulatedMediaParams{
-		Media: media,
-	}
+func SetEmulatedMedia() *SetEmulatedMediaParams {
+	return &SetEmulatedMediaParams{}
+}
+
+// WithMedia media type to emulate. Empty string disables the override.
+func (p SetEmulatedMediaParams) WithMedia(media string) *SetEmulatedMediaParams {
+	p.Media = media
+	return &p
+}
+
+// WithFeatures media features to emulate.
+func (p SetEmulatedMediaParams) WithFeatures(features []*MediaFeature) *SetEmulatedMediaParams {
+	p.Features = features
+	return &p
 }
 
 // Do executes Emulation.setEmulatedMedia against the provided context.

@@ -302,8 +302,9 @@ type EvaluateParams struct {
 	GeneratePreview       bool               `json:"generatePreview,omitempty"`       // Whether preview should be generated for the result.
 	UserGesture           bool               `json:"userGesture,omitempty"`           // Whether execution should be treated as initiated by user in the UI.
 	AwaitPromise          bool               `json:"awaitPromise,omitempty"`          // Whether execution should await for resulting value and return once awaited promise is resolved.
-	ThrowOnSideEffect     bool               `json:"throwOnSideEffect,omitempty"`     // Whether to throw an exception if side effect cannot be ruled out during evaluation.
+	ThrowOnSideEffect     bool               `json:"throwOnSideEffect,omitempty"`     // Whether to throw an exception if side effect cannot be ruled out during evaluation. This implies disableBreaks below.
 	Timeout               TimeDelta          `json:"timeout,omitempty"`               // Terminate execution after timing out (number of milliseconds).
+	DisableBreaks         bool               `json:"disableBreaks,omitempty"`         // Disable breakpoints during execution.
 }
 
 // Evaluate evaluates expression on global object.
@@ -375,7 +376,7 @@ func (p EvaluateParams) WithAwaitPromise(awaitPromise bool) *EvaluateParams {
 }
 
 // WithThrowOnSideEffect whether to throw an exception if side effect cannot
-// be ruled out during evaluation.
+// be ruled out during evaluation. This implies disableBreaks below.
 func (p EvaluateParams) WithThrowOnSideEffect(throwOnSideEffect bool) *EvaluateParams {
 	p.ThrowOnSideEffect = throwOnSideEffect
 	return &p
@@ -384,6 +385,12 @@ func (p EvaluateParams) WithThrowOnSideEffect(throwOnSideEffect bool) *EvaluateP
 // WithTimeout terminate execution after timing out (number of milliseconds).
 func (p EvaluateParams) WithTimeout(timeout TimeDelta) *EvaluateParams {
 	p.Timeout = timeout
+	return &p
+}
+
+// WithDisableBreaks disable breakpoints during execution.
+func (p EvaluateParams) WithDisableBreaks(disableBreaks bool) *EvaluateParams {
+	p.DisableBreaks = disableBreaks
 	return &p
 }
 

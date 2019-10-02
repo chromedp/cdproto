@@ -1193,6 +1193,10 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoSysteminfo10(in *jlexer.Lexer
 			out.VendorID = float64(in.Float64())
 		case "deviceId":
 			out.DeviceID = float64(in.Float64())
+		case "subSysId":
+			out.SubSysID = float64(in.Float64())
+		case "revision":
+			out.Revision = float64(in.Float64())
 		case "vendorString":
 			out.VendorString = string(in.String())
 		case "deviceString":
@@ -1224,6 +1228,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoSysteminfo10(out *jwriter.Wri
 		const prefix string = ",\"deviceId\":"
 		out.RawString(prefix)
 		out.Float64(float64(in.DeviceID))
+	}
+	if in.SubSysID != 0 {
+		const prefix string = ",\"subSysId\":"
+		out.RawString(prefix)
+		out.Float64(float64(in.SubSysID))
+	}
+	if in.Revision != 0 {
+		const prefix string = ",\"revision\":"
+		out.RawString(prefix)
+		out.Float64(float64(in.Revision))
 	}
 	{
 		const prefix string = ",\"vendorString\":"

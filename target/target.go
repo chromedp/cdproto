@@ -39,7 +39,7 @@ func (p *ActivateTargetParams) Do(ctx context.Context) (err error) {
 // AttachToTargetParams attaches to the target with given id.
 type AttachToTargetParams struct {
 	TargetID ID   `json:"targetId"`
-	Flatten  bool `json:"flatten,omitempty"` // Enables "flat" access to the session via specifying sessionId attribute in the commands.
+	Flatten  bool `json:"flatten,omitempty"` // Enables "flat" access to the session via specifying sessionId attribute in the commands. We plan to make this the default, deprecate non-flattened mode, and eventually retire it. See crbug.com/991325.
 }
 
 // AttachToTarget attaches to the target with given id.
@@ -55,7 +55,8 @@ func AttachToTarget(targetID ID) *AttachToTargetParams {
 }
 
 // WithFlatten enables "flat" access to the session via specifying sessionId
-// attribute in the commands.
+// attribute in the commands. We plan to make this the default, deprecate
+// non-flattened mode, and eventually retire it. See crbug.com/991325.
 func (p AttachToTargetParams) WithFlatten(flatten bool) *AttachToTargetParams {
 	p.Flatten = flatten
 	return &p
@@ -457,36 +458,6 @@ func (p *GetTargetsParams) Do(ctx context.Context) (targetInfos []*Info, err err
 	return res.TargetInfos, nil
 }
 
-// SendMessageToTargetParams sends protocol message over session with given
-// id.
-type SendMessageToTargetParams struct {
-	Message   string    `json:"message"`
-	SessionID SessionID `json:"sessionId,omitempty"` // Identifier of the session.
-}
-
-// SendMessageToTarget sends protocol message over session with given id.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Target#method-sendMessageToTarget
-//
-// parameters:
-//   message
-func SendMessageToTarget(message string) *SendMessageToTargetParams {
-	return &SendMessageToTargetParams{
-		Message: message,
-	}
-}
-
-// WithSessionID identifier of the session.
-func (p SendMessageToTargetParams) WithSessionID(sessionID SessionID) *SendMessageToTargetParams {
-	p.SessionID = sessionID
-	return &p
-}
-
-// Do executes Target.sendMessageToTarget against the provided context.
-func (p *SendMessageToTargetParams) Do(ctx context.Context) (err error) {
-	return cdp.Execute(ctx, CommandSendMessageToTarget, p, nil)
-}
-
 // SetAutoAttachParams controls whether to automatically attach to new
 // targets which are considered to be related to this one. When turned on,
 // attaches to all existing related targets as well. When turned off,
@@ -494,7 +465,8 @@ func (p *SendMessageToTargetParams) Do(ctx context.Context) (err error) {
 type SetAutoAttachParams struct {
 	AutoAttach             bool `json:"autoAttach"`             // Whether to auto-attach to related targets.
 	WaitForDebuggerOnStart bool `json:"waitForDebuggerOnStart"` // Whether to pause new targets when attaching to them. Use Runtime.runIfWaitingForDebugger to run paused targets.
-	Flatten                bool `json:"flatten,omitempty"`      // Enables "flat" access to the session via specifying sessionId attribute in the commands.
+	Flatten                bool `json:"flatten,omitempty"`      // Enables "flat" access to the session via specifying sessionId attribute in the commands. We plan to make this the default, deprecate non-flattened mode, and eventually retire it. See crbug.com/991325.
+	WindowOpen             bool `json:"windowOpen,omitempty"`   // Auto-attach to the targets created via window.open from current target.
 }
 
 // SetAutoAttach controls whether to automatically attach to new targets
@@ -515,9 +487,17 @@ func SetAutoAttach(autoAttach bool, waitForDebuggerOnStart bool) *SetAutoAttachP
 }
 
 // WithFlatten enables "flat" access to the session via specifying sessionId
-// attribute in the commands.
+// attribute in the commands. We plan to make this the default, deprecate
+// non-flattened mode, and eventually retire it. See crbug.com/991325.
 func (p SetAutoAttachParams) WithFlatten(flatten bool) *SetAutoAttachParams {
 	p.Flatten = flatten
+	return &p
+}
+
+// WithWindowOpen auto-attach to the targets created via window.open from
+// current target.
+func (p SetAutoAttachParams) WithWindowOpen(windowOpen bool) *SetAutoAttachParams {
+	p.WindowOpen = windowOpen
 	return &p
 }
 
@@ -588,7 +568,6 @@ const (
 	CommandDisposeBrowserContext  = "Target.disposeBrowserContext"
 	CommandGetTargetInfo          = "Target.getTargetInfo"
 	CommandGetTargets             = "Target.getTargets"
-	CommandSendMessageToTarget    = "Target.sendMessageToTarget"
 	CommandSetAutoAttach          = "Target.setAutoAttach"
 	CommandSetDiscoverTargets     = "Target.setDiscoverTargets"
 	CommandSetRemoteLocations     = "Target.setRemoteLocations"

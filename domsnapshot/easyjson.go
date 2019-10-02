@@ -2107,6 +2107,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoDomsnapshot10(in *jlexer.Lexe
 		switch key {
 		case "documentURL":
 			out.DocumentURL = StringIndex(in.Int64())
+		case "title":
+			out.Title = StringIndex(in.Int64())
 		case "baseURL":
 			out.BaseURL = StringIndex(in.Int64())
 		case "contentLanguage":
@@ -2153,6 +2155,10 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoDomsnapshot10(in *jlexer.Lexe
 			out.ScrollOffsetX = float64(in.Float64())
 		case "scrollOffsetY":
 			out.ScrollOffsetY = float64(in.Float64())
+		case "contentWidth":
+			out.ContentWidth = float64(in.Float64())
+		case "contentHeight":
+			out.ContentHeight = float64(in.Float64())
 		default:
 			in.SkipRecursive()
 		}
@@ -2171,6 +2177,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoDomsnapshot10(out *jwriter.Wr
 		const prefix string = ",\"documentURL\":"
 		out.RawString(prefix[1:])
 		out.Int64(int64(in.DocumentURL))
+	}
+	{
+		const prefix string = ",\"title\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.Title))
 	}
 	{
 		const prefix string = ",\"baseURL\":"
@@ -2238,6 +2249,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoDomsnapshot10(out *jwriter.Wr
 		const prefix string = ",\"scrollOffsetY\":"
 		out.RawString(prefix)
 		out.Float64(float64(in.ScrollOffsetY))
+	}
+	if in.ContentWidth != 0 {
+		const prefix string = ",\"contentWidth\":"
+		out.RawString(prefix)
+		out.Float64(float64(in.ContentWidth))
+	}
+	if in.ContentHeight != 0 {
+		const prefix string = ",\"contentHeight\":"
+		out.RawString(prefix)
+		out.Float64(float64(in.ContentHeight))
 	}
 	out.RawByte('}')
 }

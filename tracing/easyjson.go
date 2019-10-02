@@ -488,6 +488,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoTracing3(in *jlexer.Lexer, ou
 			continue
 		}
 		switch key {
+		case "deterministic":
+			out.Deterministic = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -502,6 +504,12 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoTracing3(out *jwriter.Writer,
 	out.RawByte('{')
 	first := true
 	_ = first
+	if in.Deterministic {
+		const prefix string = ",\"deterministic\":"
+		first = false
+		out.RawString(prefix[1:])
+		out.Bool(bool(in.Deterministic))
+	}
 	out.RawByte('}')
 }
 

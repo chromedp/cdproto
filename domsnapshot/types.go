@@ -129,6 +129,7 @@ type Rectangle []float64
 // See: https://chromedevtools.github.io/devtools-protocol/tot/DOMSnapshot#type-DocumentSnapshot
 type DocumentSnapshot struct {
 	DocumentURL     StringIndex         `json:"documentURL"`             // Document URL that Document or FrameOwner node points to.
+	Title           StringIndex         `json:"title"`                   // Document title.
 	BaseURL         StringIndex         `json:"baseURL"`                 // Base URL that Document or FrameOwner node uses for URL completion.
 	ContentLanguage StringIndex         `json:"contentLanguage"`         // Contains the document's content language.
 	EncodingName    StringIndex         `json:"encodingName"`            // Contains the document's character set encoding.
@@ -140,6 +141,8 @@ type DocumentSnapshot struct {
 	TextBoxes       *TextBoxSnapshot    `json:"textBoxes"`               // The post-layout inline text nodes.
 	ScrollOffsetX   float64             `json:"scrollOffsetX,omitempty"` // Horizontal scroll offset.
 	ScrollOffsetY   float64             `json:"scrollOffsetY,omitempty"` // Vertical scroll offset.
+	ContentWidth    float64             `json:"contentWidth,omitempty"`  // Document content width.
+	ContentHeight   float64             `json:"contentHeight,omitempty"` // Document content height.
 }
 
 // NodeTreeSnapshot table containing nodes.

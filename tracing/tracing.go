@@ -80,13 +80,24 @@ func (p *RecordClockSyncMarkerParams) Do(ctx context.Context) (err error) {
 }
 
 // RequestMemoryDumpParams request a global memory dump.
-type RequestMemoryDumpParams struct{}
+type RequestMemoryDumpParams struct {
+	Deterministic bool `json:"deterministic,omitempty"` // Enables more deterministic results by forcing garbage collection
+}
 
 // RequestMemoryDump request a global memory dump.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Tracing#method-requestMemoryDump
+//
+// parameters:
 func RequestMemoryDump() *RequestMemoryDumpParams {
 	return &RequestMemoryDumpParams{}
+}
+
+// WithDeterministic enables more deterministic results by forcing garbage
+// collection.
+func (p RequestMemoryDumpParams) WithDeterministic(deterministic bool) *RequestMemoryDumpParams {
+	p.Deterministic = deterministic
+	return &p
 }
 
 // RequestMemoryDumpReturns return values.
@@ -103,7 +114,7 @@ type RequestMemoryDumpReturns struct {
 func (p *RequestMemoryDumpParams) Do(ctx context.Context) (dumpGUID string, success bool, err error) {
 	// execute
 	var res RequestMemoryDumpReturns
-	err = cdp.Execute(ctx, CommandRequestMemoryDump, nil, &res)
+	err = cdp.Execute(ctx, CommandRequestMemoryDump, p, &res)
 	if err != nil {
 		return "", false, err
 	}

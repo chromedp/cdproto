@@ -18,6 +18,14 @@ type ScreenOrientation struct {
 	Angle int64           `json:"angle"` // Orientation angle.
 }
 
+// MediaFeature [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#type-MediaFeature
+type MediaFeature struct {
+	Name  string `json:"name"`
+	Value string `json:"value"`
+}
+
 // VirtualTimePolicy advance: If the scheduler runs out of immediate work,
 // the virtual time base may fast forward to allow the next delayed task (if
 // any) to run; pause: The virtual time base may not advance;

@@ -602,7 +602,6 @@ const (
 	CommandTargetDisposeBrowserContext                     = target.CommandDisposeBrowserContext
 	CommandTargetGetTargetInfo                             = target.CommandGetTargetInfo
 	CommandTargetGetTargets                                = target.CommandGetTargets
-	CommandTargetSendMessageToTarget                       = target.CommandSendMessageToTarget
 	CommandTargetSetAutoAttach                             = target.CommandSetAutoAttach
 	CommandTargetSetDiscoverTargets                        = target.CommandSetDiscoverTargets
 	CommandTargetSetRemoteLocations                        = target.CommandSetRemoteLocations
@@ -2261,9 +2260,6 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandTargetGetTargets:
 		v = new(target.GetTargetsReturns)
-
-	case CommandTargetSendMessageToTarget:
-		return emptyVal, nil
 
 	case CommandTargetSetAutoAttach:
 		return emptyVal, nil
