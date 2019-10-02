@@ -458,6 +458,39 @@ func (p *GetTargetsParams) Do(ctx context.Context) (targetInfos []*Info, err err
 	return res.TargetInfos, nil
 }
 
+// SendMessageToTargetParams sends protocol message over session with given
+// id. Consider using flat mode instead; see commands attachToTarget,
+// setAutoAttach, and crbug.com/991325.
+type SendMessageToTargetParams struct {
+	Message   string    `json:"message"`
+	SessionID SessionID `json:"sessionId,omitempty"` // Identifier of the session.
+}
+
+// SendMessageToTarget sends protocol message over session with given id.
+// Consider using flat mode instead; see commands attachToTarget, setAutoAttach,
+// and crbug.com/991325.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Target#method-sendMessageToTarget
+//
+// parameters:
+//   message
+func SendMessageToTarget(message string) *SendMessageToTargetParams {
+	return &SendMessageToTargetParams{
+		Message: message,
+	}
+}
+
+// WithSessionID identifier of the session.
+func (p SendMessageToTargetParams) WithSessionID(sessionID SessionID) *SendMessageToTargetParams {
+	p.SessionID = sessionID
+	return &p
+}
+
+// Do executes Target.sendMessageToTarget against the provided context.
+func (p *SendMessageToTargetParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSendMessageToTarget, p, nil)
+}
+
 // SetAutoAttachParams controls whether to automatically attach to new
 // targets which are considered to be related to this one. When turned on,
 // attaches to all existing related targets as well. When turned off,
@@ -568,6 +601,7 @@ const (
 	CommandDisposeBrowserContext  = "Target.disposeBrowserContext"
 	CommandGetTargetInfo          = "Target.getTargetInfo"
 	CommandGetTargets             = "Target.getTargets"
+	CommandSendMessageToTarget    = "Target.sendMessageToTarget"
 	CommandSetAutoAttach          = "Target.setAutoAttach"
 	CommandSetDiscoverTargets     = "Target.setDiscoverTargets"
 	CommandSetRemoteLocations     = "Target.setRemoteLocations"
