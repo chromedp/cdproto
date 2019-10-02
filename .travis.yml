@@ -3,17 +3,22 @@ language: go
 go:
   - 1.12.x
   - 1.13.x
+env:
+  - GO111MODULE=off
 services:
   - docker
 addons:
   apt:
     chrome: stable
 before_install:
-  - go get -d github.com/chromedp/chromedp
+  - mkdir -p $GOPATH/src/github.com/chromedp
+  - git clone https://github.com/chromedp/chromedp.git $GOPATH/src/github.com/chromedp/chromedp
+  - cd $GOPATH/src/github.com/chromedp/chromedp
+  - go get -d -t
 script:
-  - go build ./...
+  - cd $GOPATH/src/github.com/chromedp/cdproto
+  - go install ./...
   - cd $GOPATH/src/github.com/chromedp/chromedp
   - go test -v
-  - export GO111MODULE=off
   - go test -c
   - docker run --rm --volume=$PWD:/chromedp --entrypoint=/chromedp/chromedp.test --workdir=/chromedp --env=PATH=/headless-shell chromedp/headless-shell:latest -test.v
