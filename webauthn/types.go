@@ -123,9 +123,10 @@ func (t *AuthenticatorTransport) UnmarshalJSON(buf []byte) error {
 type VirtualAuthenticatorOptions struct {
 	Protocol                    AuthenticatorProtocol  `json:"protocol"`
 	Transport                   AuthenticatorTransport `json:"transport"`
-	HasResidentKey              bool                   `json:"hasResidentKey"`
-	HasUserVerification         bool                   `json:"hasUserVerification"`
+	HasResidentKey              bool                   `json:"hasResidentKey,omitempty"`              // Defaults to false.
+	HasUserVerification         bool                   `json:"hasUserVerification,omitempty"`         // Defaults to false.
 	AutomaticPresenceSimulation bool                   `json:"automaticPresenceSimulation,omitempty"` // If set to true, tests of user presence will succeed immediately. Otherwise, they will not be resolved. Defaults to true.
+	IsUserVerified              bool                   `json:"isUserVerified,omitempty"`              // Sets whether User Verification succeeds or fails for an authenticator. Defaults to false.
 }
 
 // Credential [no description].

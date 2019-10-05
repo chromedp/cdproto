@@ -46,6 +46,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoWebauthn(in *jlexer.Lexer, ou
 			out.HasUserVerification = bool(in.Bool())
 		case "automaticPresenceSimulation":
 			out.AutomaticPresenceSimulation = bool(in.Bool())
+		case "isUserVerified":
+			out.IsUserVerified = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -70,12 +72,12 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoWebauthn(out *jwriter.Writer,
 		out.RawString(prefix)
 		(in.Transport).MarshalEasyJSON(out)
 	}
-	{
+	if in.HasResidentKey {
 		const prefix string = ",\"hasResidentKey\":"
 		out.RawString(prefix)
 		out.Bool(bool(in.HasResidentKey))
 	}
-	{
+	if in.HasUserVerification {
 		const prefix string = ",\"hasUserVerification\":"
 		out.RawString(prefix)
 		out.Bool(bool(in.HasUserVerification))
@@ -84,6 +86,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoWebauthn(out *jwriter.Writer,
 		const prefix string = ",\"automaticPresenceSimulation\":"
 		out.RawString(prefix)
 		out.Bool(bool(in.AutomaticPresenceSimulation))
+	}
+	if in.IsUserVerified {
+		const prefix string = ",\"isUserVerified\":"
+		out.RawString(prefix)
+		out.Bool(bool(in.IsUserVerified))
 	}
 	out.RawByte('}')
 }
