@@ -666,11 +666,12 @@ func (e *Error) Error() string {
 // Message chrome DevTools Protocol message sent/read over websocket
 // connection.
 type Message struct {
-	ID     int64               `json:"id,omitempty"`     // Unique message identifier.
-	Method MethodType          `json:"method,omitempty"` // Event or command type.
-	Params easyjson.RawMessage `json:"params,omitempty"` // Event or command parameters.
-	Result easyjson.RawMessage `json:"result,omitempty"` // Command return values.
-	Error  *Error              `json:"error,omitempty"`  // Error message.
+	ID        int64               `json:"id,omitempty"`        // Unique message identifier.
+	SessionID target.SessionID    `json:"sessionId,omitempty"` // Session that the message belongs to when using flat access.
+	Method    MethodType          `json:"method,omitempty"`    // Event or command type.
+	Params    easyjson.RawMessage `json:"params,omitempty"`    // Event or command parameters.
+	Result    easyjson.RawMessage `json:"result,omitempty"`    // Command return values.
+	Error     *Error              `json:"error,omitempty"`     // Error message.
 }
 
 type empty struct{}

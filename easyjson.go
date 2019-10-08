@@ -4,6 +4,7 @@ package cdproto
 
 import (
 	json "encoding/json"
+	target "github.com/chromedp/cdproto/target"
 	easyjson "github.com/mailru/easyjson"
 	jlexer "github.com/mailru/easyjson/jlexer"
 	jwriter "github.com/mailru/easyjson/jwriter"
@@ -97,6 +98,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdproto1(in *jlexer.Lexer, out *Mess
 		switch key {
 		case "id":
 			out.ID = int64(in.Int64())
+		case "sessionId":
+			out.SessionID = target.SessionID(in.String())
 		case "method":
 			out.Method = MethodType(in.String())
 		case "params":
@@ -132,6 +135,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdproto1(out *jwriter.Writer, in Mes
 		first = false
 		out.RawString(prefix[1:])
 		out.Int64(int64(in.ID))
+	}
+	if in.SessionID != "" {
+		const prefix string = ",\"sessionId\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(in.SessionID))
 	}
 	if in.Method != "" {
 		const prefix string = ",\"method\":"
