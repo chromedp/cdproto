@@ -4335,8 +4335,6 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoDebugger48(in *jlexer.Lexer, 
 		switch key {
 		case "maxScriptsCacheSize":
 			out.MaxScriptsCacheSize = float64(in.Float64())
-		case "supportsWasmDwarf":
-			out.SupportsWasmDwarf = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -4356,16 +4354,6 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoDebugger48(out *jwriter.Write
 		first = false
 		out.RawString(prefix[1:])
 		out.Float64(float64(in.MaxScriptsCacheSize))
-	}
-	if in.SupportsWasmDwarf {
-		const prefix string = ",\"supportsWasmDwarf\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
-		out.Bool(bool(in.SupportsWasmDwarf))
 	}
 	out.RawByte('}')
 }

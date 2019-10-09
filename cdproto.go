@@ -561,6 +561,7 @@ const (
 	CommandSecurityDisable                                 = security.CommandDisable
 	CommandSecurityEnable                                  = security.CommandEnable
 	CommandSecuritySetIgnoreCertificateErrors              = security.CommandSetIgnoreCertificateErrors
+	EventSecurityVisibleSecurityStateChanged               = "Security.visibleSecurityStateChanged"
 	EventSecuritySecurityStateChanged                      = "Security.securityStateChanged"
 	CommandServiceWorkerDeliverPushMessage                 = serviceworker.CommandDeliverPushMessage
 	CommandServiceWorkerDisable                            = serviceworker.CommandDisable
@@ -602,7 +603,6 @@ const (
 	CommandTargetDisposeBrowserContext                     = target.CommandDisposeBrowserContext
 	CommandTargetGetTargetInfo                             = target.CommandGetTargetInfo
 	CommandTargetGetTargets                                = target.CommandGetTargets
-	CommandTargetSendMessageToTarget                       = target.CommandSendMessageToTarget
 	CommandTargetSetAutoAttach                             = target.CommandSetAutoAttach
 	CommandTargetSetDiscoverTargets                        = target.CommandSetDiscoverTargets
 	CommandTargetSetRemoteLocations                        = target.CommandSetRemoteLocations
@@ -2140,6 +2140,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandSecuritySetIgnoreCertificateErrors:
 		return emptyVal, nil
 
+	case EventSecurityVisibleSecurityStateChanged:
+		v = new(security.EventVisibleSecurityStateChanged)
+
 	case EventSecuritySecurityStateChanged:
 		v = new(security.EventSecurityStateChanged)
 
@@ -2262,9 +2265,6 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandTargetGetTargets:
 		v = new(target.GetTargetsReturns)
-
-	case CommandTargetSendMessageToTarget:
-		return emptyVal, nil
 
 	case CommandTargetSetAutoAttach:
 		return emptyVal, nil

@@ -68,7 +68,6 @@ func (p *DisableParams) Do(ctx context.Context) (err error) {
 // is received.
 type EnableParams struct {
 	MaxScriptsCacheSize float64 `json:"maxScriptsCacheSize,omitempty"` // The maximum size in bytes of collected scripts (not referenced by other heap objects) the debugger can hold. Puts no limit if parameter is omitted.
-	SupportsWasmDwarf   bool    `json:"supportsWasmDwarf,omitempty"`   // Whether to report Wasm modules as raw binaries instead of disassembled functions.
 }
 
 // Enable enables debugger for the given page. Clients should not assume that
@@ -86,13 +85,6 @@ func Enable() *EnableParams {
 // if parameter is omitted.
 func (p EnableParams) WithMaxScriptsCacheSize(maxScriptsCacheSize float64) *EnableParams {
 	p.MaxScriptsCacheSize = maxScriptsCacheSize
-	return &p
-}
-
-// WithSupportsWasmDwarf whether to report Wasm modules as raw binaries
-// instead of disassembled functions.
-func (p EnableParams) WithSupportsWasmDwarf(supportsWasmDwarf bool) *EnableParams {
-	p.SupportsWasmDwarf = supportsWasmDwarf
 	return &p
 }
 
