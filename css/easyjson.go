@@ -311,6 +311,10 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoCss3(in *jlexer.Lexer, out *S
 			out.StartColumn = float64(in.Float64())
 		case "length":
 			out.Length = float64(in.Float64())
+		case "endLine":
+			out.EndLine = float64(in.Float64())
+		case "endColumn":
+			out.EndColumn = float64(in.Float64())
 		default:
 			in.SkipRecursive()
 		}
@@ -389,6 +393,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoCss3(out *jwriter.Writer, in 
 		const prefix string = ",\"length\":"
 		out.RawString(prefix)
 		out.Float64(float64(in.Length))
+	}
+	{
+		const prefix string = ",\"endLine\":"
+		out.RawString(prefix)
+		out.Float64(float64(in.EndLine))
+	}
+	{
+		const prefix string = ",\"endColumn\":"
+		out.RawString(prefix)
+		out.Float64(float64(in.EndColumn))
 	}
 	out.RawByte('}')
 }
