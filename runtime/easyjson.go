@@ -3621,6 +3621,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoRuntime38(in *jlexer.Lexer, o
 			out.Timeout = TimeDelta(in.Float64())
 		case "disableBreaks":
 			out.DisableBreaks = bool(in.Bool())
+		case "replMode":
+			out.ReplMode = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -3694,6 +3696,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoRuntime38(out *jwriter.Writer
 		const prefix string = ",\"disableBreaks\":"
 		out.RawString(prefix)
 		out.Bool(bool(in.DisableBreaks))
+	}
+	if in.ReplMode {
+		const prefix string = ",\"replMode\":"
+		out.RawString(prefix)
+		out.Bool(bool(in.ReplMode))
 	}
 	out.RawByte('}')
 }
