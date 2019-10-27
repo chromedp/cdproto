@@ -81,11 +81,12 @@ func (t State) String() string {
 
 // State values.
 const (
-	StateUnknown  State = "unknown"
-	StateNeutral  State = "neutral"
-	StateInsecure State = "insecure"
-	StateSecure   State = "secure"
-	StateInfo     State = "info"
+	StateUnknown        State = "unknown"
+	StateNeutral        State = "neutral"
+	StateInsecure       State = "insecure"
+	StateSecure         State = "secure"
+	StateInfo           State = "info"
+	StateInsecureBroken State = "insecure-broken"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -111,6 +112,8 @@ func (t *State) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = StateSecure
 	case StateInfo:
 		*t = StateInfo
+	case StateInsecureBroken:
+		*t = StateInsecureBroken
 
 	default:
 		in.AddError(errors.New("unknown State value"))

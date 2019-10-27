@@ -142,8 +142,8 @@ func (p *RequestCachedResponseParams) Do(ctx context.Context) (response *CachedR
 // RequestEntriesParams requests data from cache.
 type RequestEntriesParams struct {
 	CacheID    CacheID `json:"cacheId"`              // ID of cache to get entries from.
-	SkipCount  int64   `json:"skipCount"`            // Number of records to skip.
-	PageSize   int64   `json:"pageSize"`             // Number of records to fetch.
+	SkipCount  int64   `json:"skipCount,omitempty"`  // Number of records to skip.
+	PageSize   int64   `json:"pageSize,omitempty"`   // Number of records to fetch.
 	PathFilter string  `json:"pathFilter,omitempty"` // If present, only return the entries containing this substring in the path
 }
 
@@ -153,14 +153,22 @@ type RequestEntriesParams struct {
 //
 // parameters:
 //   cacheID - ID of cache to get entries from.
-//   skipCount - Number of records to skip.
-//   pageSize - Number of records to fetch.
-func RequestEntries(cacheID CacheID, skipCount int64, pageSize int64) *RequestEntriesParams {
+func RequestEntries(cacheID CacheID) *RequestEntriesParams {
 	return &RequestEntriesParams{
-		CacheID:   cacheID,
-		SkipCount: skipCount,
-		PageSize:  pageSize,
+		CacheID: cacheID,
 	}
+}
+
+// WithSkipCount number of records to skip.
+func (p RequestEntriesParams) WithSkipCount(skipCount int64) *RequestEntriesParams {
+	p.SkipCount = skipCount
+	return &p
+}
+
+// WithPageSize number of records to fetch.
+func (p RequestEntriesParams) WithPageSize(pageSize int64) *RequestEntriesParams {
+	p.PageSize = pageSize
+	return &p
 }
 
 // WithPathFilter if present, only return the entries containing this

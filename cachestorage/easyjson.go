@@ -184,12 +184,12 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoCachestorage1(out *jwriter.Wr
 		out.RawString(prefix[1:])
 		out.String(string(in.CacheID))
 	}
-	{
+	if in.SkipCount != 0 {
 		const prefix string = ",\"skipCount\":"
 		out.RawString(prefix)
 		out.Int64(int64(in.SkipCount))
 	}
-	{
+	if in.PageSize != 0 {
 		const prefix string = ",\"pageSize\":"
 		out.RawString(prefix)
 		out.Int64(int64(in.PageSize))
