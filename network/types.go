@@ -283,10 +283,9 @@ func (t CookieSameSite) String() string {
 
 // CookieSameSite values.
 const (
-	CookieSameSiteStrict   CookieSameSite = "Strict"
-	CookieSameSiteLax      CookieSameSite = "Lax"
-	CookieSameSiteExtended CookieSameSite = "Extended"
-	CookieSameSiteNone     CookieSameSite = "None"
+	CookieSameSiteStrict CookieSameSite = "Strict"
+	CookieSameSiteLax    CookieSameSite = "Lax"
+	CookieSameSiteNone   CookieSameSite = "None"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -306,8 +305,6 @@ func (t *CookieSameSite) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = CookieSameSiteStrict
 	case CookieSameSiteLax:
 		*t = CookieSameSiteLax
-	case CookieSameSiteExtended:
-		*t = CookieSameSiteExtended
 	case CookieSameSiteNone:
 		*t = CookieSameSiteNone
 
