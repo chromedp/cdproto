@@ -660,7 +660,6 @@ const (
 	SetCookieBlockedReasonSecureOnly                      SetCookieBlockedReason = "SecureOnly"
 	SetCookieBlockedReasonSameSiteStrict                  SetCookieBlockedReason = "SameSiteStrict"
 	SetCookieBlockedReasonSameSiteLax                     SetCookieBlockedReason = "SameSiteLax"
-	SetCookieBlockedReasonSameSiteExtended                SetCookieBlockedReason = "SameSiteExtended"
 	SetCookieBlockedReasonSameSiteUnspecifiedTreatedAsLax SetCookieBlockedReason = "SameSiteUnspecifiedTreatedAsLax"
 	SetCookieBlockedReasonSameSiteNoneInsecure            SetCookieBlockedReason = "SameSiteNoneInsecure"
 	SetCookieBlockedReasonUserPreferences                 SetCookieBlockedReason = "UserPreferences"
@@ -691,8 +690,6 @@ func (t *SetCookieBlockedReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = SetCookieBlockedReasonSameSiteStrict
 	case SetCookieBlockedReasonSameSiteLax:
 		*t = SetCookieBlockedReasonSameSiteLax
-	case SetCookieBlockedReasonSameSiteExtended:
-		*t = SetCookieBlockedReasonSameSiteExtended
 	case SetCookieBlockedReasonSameSiteUnspecifiedTreatedAsLax:
 		*t = SetCookieBlockedReasonSameSiteUnspecifiedTreatedAsLax
 	case SetCookieBlockedReasonSameSiteNoneInsecure:
@@ -740,7 +737,6 @@ const (
 	CookieBlockedReasonDomainMismatch                  CookieBlockedReason = "DomainMismatch"
 	CookieBlockedReasonSameSiteStrict                  CookieBlockedReason = "SameSiteStrict"
 	CookieBlockedReasonSameSiteLax                     CookieBlockedReason = "SameSiteLax"
-	CookieBlockedReasonSameSiteExtended                CookieBlockedReason = "SameSiteExtended"
 	CookieBlockedReasonSameSiteUnspecifiedTreatedAsLax CookieBlockedReason = "SameSiteUnspecifiedTreatedAsLax"
 	CookieBlockedReasonSameSiteNoneInsecure            CookieBlockedReason = "SameSiteNoneInsecure"
 	CookieBlockedReasonUserPreferences                 CookieBlockedReason = "UserPreferences"
@@ -770,8 +766,6 @@ func (t *CookieBlockedReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = CookieBlockedReasonSameSiteStrict
 	case CookieBlockedReasonSameSiteLax:
 		*t = CookieBlockedReasonSameSiteLax
-	case CookieBlockedReasonSameSiteExtended:
-		*t = CookieBlockedReasonSameSiteExtended
 	case CookieBlockedReasonSameSiteUnspecifiedTreatedAsLax:
 		*t = CookieBlockedReasonSameSiteUnspecifiedTreatedAsLax
 	case CookieBlockedReasonSameSiteNoneInsecure:

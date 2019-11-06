@@ -527,6 +527,9 @@ const (
 	CommandProfilerStopTypeProfile                         = profiler.CommandStopTypeProfile
 	CommandProfilerTakePreciseCoverage                     = profiler.CommandTakePreciseCoverage
 	CommandProfilerTakeTypeProfile                         = profiler.CommandTakeTypeProfile
+	CommandProfilerEnableRuntimeCallStats                  = profiler.CommandEnableRuntimeCallStats
+	CommandProfilerDisableRuntimeCallStats                 = profiler.CommandDisableRuntimeCallStats
+	CommandProfilerGetRuntimeCallStats                     = profiler.CommandGetRuntimeCallStats
 	EventProfilerConsoleProfileFinished                    = "Profiler.consoleProfileFinished"
 	EventProfilerConsoleProfileStarted                     = "Profiler.consoleProfileStarted"
 	CommandRuntimeAwaitPromise                             = runtime.CommandAwaitPromise
@@ -2037,6 +2040,15 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandProfilerTakeTypeProfile:
 		v = new(profiler.TakeTypeProfileReturns)
+
+	case CommandProfilerEnableRuntimeCallStats:
+		return emptyVal, nil
+
+	case CommandProfilerDisableRuntimeCallStats:
+		return emptyVal, nil
+
+	case CommandProfilerGetRuntimeCallStats:
+		v = new(profiler.GetRuntimeCallStatsReturns)
 
 	case EventProfilerConsoleProfileFinished:
 		v = new(profiler.EventConsoleProfileFinished)
