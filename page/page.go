@@ -289,9 +289,10 @@ func GetAppManifest() *GetAppManifestParams {
 
 // GetAppManifestReturns return values.
 type GetAppManifestReturns struct {
-	URL    string              `json:"url,omitempty"` // Manifest location.
-	Errors []*AppManifestError `json:"errors,omitempty"`
-	Data   string              `json:"data,omitempty"` // Manifest content.
+	URL    string                       `json:"url,omitempty"` // Manifest location.
+	Errors []*AppManifestError          `json:"errors,omitempty"`
+	Data   string                       `json:"data,omitempty"`   // Manifest content.
+	Parsed *AppManifestParsedProperties `json:"parsed,omitempty"` // Parsed manifest properties
 }
 
 // Do executes Page.getAppManifest against the provided context.
@@ -300,15 +301,16 @@ type GetAppManifestReturns struct {
 //   url - Manifest location.
 //   errors
 //   data - Manifest content.
-func (p *GetAppManifestParams) Do(ctx context.Context) (url string, errors []*AppManifestError, data string, err error) {
+//   parsed - Parsed manifest properties
+func (p *GetAppManifestParams) Do(ctx context.Context) (url string, errors []*AppManifestError, data string, parsed *AppManifestParsedProperties, err error) {
 	// execute
 	var res GetAppManifestReturns
 	err = cdp.Execute(ctx, CommandGetAppManifest, nil, &res)
 	if err != nil {
-		return "", nil, "", err
+		return "", nil, "", nil, err
 	}
 
-	return res.URL, res.Errors, res.Data, nil
+	return res.URL, res.Errors, res.Data, res.Parsed, nil
 }
 
 // GetInstallabilityErrorsParams [no description].
@@ -339,6 +341,42 @@ func (p *GetInstallabilityErrorsParams) Do(ctx context.Context) (errors []string
 	}
 
 	return res.Errors, nil
+}
+
+// GetManifestIconsParams [no description].
+type GetManifestIconsParams struct{}
+
+// GetManifestIcons [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-getManifestIcons
+func GetManifestIcons() *GetManifestIconsParams {
+	return &GetManifestIconsParams{}
+}
+
+// GetManifestIconsReturns return values.
+type GetManifestIconsReturns struct {
+	PrimaryIcon string `json:"primaryIcon,omitempty"`
+}
+
+// Do executes Page.getManifestIcons against the provided context.
+//
+// returns:
+//   primaryIcon
+func (p *GetManifestIconsParams) Do(ctx context.Context) (primaryIcon []byte, err error) {
+	// execute
+	var res GetManifestIconsReturns
+	err = cdp.Execute(ctx, CommandGetManifestIcons, nil, &res)
+	if err != nil {
+		return nil, err
+	}
+
+	// decode
+	var dec []byte
+	dec, err = base64.StdEncoding.DecodeString(res.PrimaryIcon)
+	if err != nil {
+		return nil, err
+	}
+	return dec, nil
 }
 
 // GetFrameTreeParams returns present frame tree structure.
@@ -1382,8 +1420,7 @@ func (p *WaitForDebuggerParams) Do(ctx context.Context) (err error) {
 // SetInterceptFileChooserDialogParams intercept file chooser requests and
 // transfer control to protocol clients. When file chooser interception is
 // enabled, native file chooser dialog is not shown. Instead, a protocol event
-// Page.fileChooserOpened is emitted. File chooser can be handled with
-// page.handleFileChooser command.
+// Page.fileChooserOpened is emitted.
 type SetInterceptFileChooserDialogParams struct {
 	Enabled bool `json:"enabled"`
 }
@@ -1391,8 +1428,7 @@ type SetInterceptFileChooserDialogParams struct {
 // SetInterceptFileChooserDialog intercept file chooser requests and transfer
 // control to protocol clients. When file chooser interception is enabled,
 // native file chooser dialog is not shown. Instead, a protocol event
-// Page.fileChooserOpened is emitted. File chooser can be handled with
-// page.handleFileChooser command.
+// Page.fileChooserOpened is emitted.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-setInterceptFileChooserDialog
 //
@@ -1409,37 +1445,6 @@ func (p *SetInterceptFileChooserDialogParams) Do(ctx context.Context) (err error
 	return cdp.Execute(ctx, CommandSetInterceptFileChooserDialog, p, nil)
 }
 
-// HandleFileChooserParams accepts or cancels an intercepted file chooser
-// dialog.
-type HandleFileChooserParams struct {
-	Action HandleFileChooserAction `json:"action"`
-	Files  []string                `json:"files,omitempty"` // Array of absolute file paths to set, only respected with accept action.
-}
-
-// HandleFileChooser accepts or cancels an intercepted file chooser dialog.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-handleFileChooser
-//
-// parameters:
-//   action
-func HandleFileChooser(action HandleFileChooserAction) *HandleFileChooserParams {
-	return &HandleFileChooserParams{
-		Action: action,
-	}
-}
-
-// WithFiles array of absolute file paths to set, only respected with accept
-// action.
-func (p HandleFileChooserParams) WithFiles(files []string) *HandleFileChooserParams {
-	p.Files = files
-	return &p
-}
-
-// Do executes Page.handleFileChooser against the provided context.
-func (p *HandleFileChooserParams) Do(ctx context.Context) (err error) {
-	return cdp.Execute(ctx, CommandHandleFileChooser, p, nil)
-}
-
 // Command names.
 const (
 	CommandAddScriptToEvaluateOnNewDocument    = "Page.addScriptToEvaluateOnNewDocument"
@@ -1451,6 +1456,7 @@ const (
 	CommandEnable                              = "Page.enable"
 	CommandGetAppManifest                      = "Page.getAppManifest"
 	CommandGetInstallabilityErrors             = "Page.getInstallabilityErrors"
+	CommandGetManifestIcons                    = "Page.getManifestIcons"
 	CommandGetFrameTree                        = "Page.getFrameTree"
 	CommandGetLayoutMetrics                    = "Page.getLayoutMetrics"
 	CommandGetNavigationHistory                = "Page.getNavigationHistory"
@@ -1484,5 +1490,4 @@ const (
 	CommandGenerateTestReport                  = "Page.generateTestReport"
 	CommandWaitForDebugger                     = "Page.waitForDebugger"
 	CommandSetInterceptFileChooserDialog       = "Page.setInterceptFileChooserDialog"
-	CommandHandleFileChooser                   = "Page.handleFileChooser"
 )

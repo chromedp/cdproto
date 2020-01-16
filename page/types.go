@@ -214,6 +214,13 @@ type AppManifestError struct {
 	Column   int64  `json:"column"`   // Error column.
 }
 
+// AppManifestParsedProperties parsed app manifest properties.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-AppManifestParsedProperties
+type AppManifestParsedProperties struct {
+	Scope string `json:"scope"` // Computed scope value
+}
+
 // LayoutViewport layout viewport position and dimensions.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-LayoutViewport
@@ -329,9 +336,9 @@ func (t *ClientNavigationReason) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 
-// FileChooserOpenedMode [no description].
+// FileChooserOpenedMode input mode.
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-mode
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-fileChooserOpened
 type FileChooserOpenedMode string
 
 // String returns the FileChooserOpenedMode as string value.
@@ -375,7 +382,7 @@ func (t *FileChooserOpenedMode) UnmarshalJSON(buf []byte) error {
 
 // CaptureScreenshotFormat image compression format (defaults to png).
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-format
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-captureScreenshot
 type CaptureScreenshotFormat string
 
 // String returns the CaptureScreenshotFormat as string value.
@@ -419,7 +426,7 @@ func (t *CaptureScreenshotFormat) UnmarshalJSON(buf []byte) error {
 
 // CaptureSnapshotFormat format (defaults to mhtml).
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-format
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-captureSnapshot
 type CaptureSnapshotFormat string
 
 // String returns the CaptureSnapshotFormat as string value.
@@ -460,7 +467,7 @@ func (t *CaptureSnapshotFormat) UnmarshalJSON(buf []byte) error {
 
 // PrintToPDFTransferMode return as stream.
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-transferMode
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-printToPDF
 type PrintToPDFTransferMode string
 
 // String returns the PrintToPDFTransferMode as string value.
@@ -505,7 +512,7 @@ func (t *PrintToPDFTransferMode) UnmarshalJSON(buf []byte) error {
 // SetDownloadBehaviorBehavior whether to allow all or deny all download
 // requests, or use default Chrome behavior if available (otherwise deny).
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-behavior
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-setDownloadBehavior
 type SetDownloadBehaviorBehavior string
 
 // String returns the SetDownloadBehaviorBehavior as string value.
@@ -552,7 +559,7 @@ func (t *SetDownloadBehaviorBehavior) UnmarshalJSON(buf []byte) error {
 
 // ScreencastFormat image compression format.
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-format
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-startScreencast
 type ScreencastFormat string
 
 // String returns the ScreencastFormat as string value.
@@ -596,7 +603,7 @@ func (t *ScreencastFormat) UnmarshalJSON(buf []byte) error {
 
 // SetWebLifecycleStateState target lifecycle state.
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-state
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-setWebLifecycleState
 type SetWebLifecycleStateState string
 
 // String returns the SetWebLifecycleStateState as string value.
@@ -635,52 +642,5 @@ func (t *SetWebLifecycleStateState) UnmarshalEasyJSON(in *jlexer.Lexer) {
 
 // UnmarshalJSON satisfies json.Unmarshaler.
 func (t *SetWebLifecycleStateState) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
-}
-
-// HandleFileChooserAction [no description].
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-action
-type HandleFileChooserAction string
-
-// String returns the HandleFileChooserAction as string value.
-func (t HandleFileChooserAction) String() string {
-	return string(t)
-}
-
-// HandleFileChooserAction values.
-const (
-	HandleFileChooserActionAccept   HandleFileChooserAction = "accept"
-	HandleFileChooserActionCancel   HandleFileChooserAction = "cancel"
-	HandleFileChooserActionFallback HandleFileChooserAction = "fallback"
-)
-
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t HandleFileChooserAction) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
-
-// MarshalJSON satisfies json.Marshaler.
-func (t HandleFileChooserAction) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *HandleFileChooserAction) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	switch HandleFileChooserAction(in.String()) {
-	case HandleFileChooserActionAccept:
-		*t = HandleFileChooserActionAccept
-	case HandleFileChooserActionCancel:
-		*t = HandleFileChooserActionCancel
-	case HandleFileChooserActionFallback:
-		*t = HandleFileChooserActionFallback
-
-	default:
-		in.AddError(errors.New("unknown HandleFileChooserAction value"))
-	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *HandleFileChooserAction) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }

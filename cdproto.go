@@ -246,7 +246,6 @@ const (
 	CommandDebuggerEvaluateOnCallFrame                     = debugger.CommandEvaluateOnCallFrame
 	CommandDebuggerGetPossibleBreakpoints                  = debugger.CommandGetPossibleBreakpoints
 	CommandDebuggerGetScriptSource                         = debugger.CommandGetScriptSource
-	CommandDebuggerGetWasmBytecode                         = debugger.CommandGetWasmBytecode
 	CommandDebuggerGetStackTrace                           = debugger.CommandGetStackTrace
 	CommandDebuggerPause                                   = debugger.CommandPause
 	CommandDebuggerRemoveBreakpoint                        = debugger.CommandRemoveBreakpoint
@@ -455,6 +454,7 @@ const (
 	CommandPageEnable                                      = page.CommandEnable
 	CommandPageGetAppManifest                              = page.CommandGetAppManifest
 	CommandPageGetInstallabilityErrors                     = page.CommandGetInstallabilityErrors
+	CommandPageGetManifestIcons                            = page.CommandGetManifestIcons
 	CommandPageGetFrameTree                                = page.CommandGetFrameTree
 	CommandPageGetLayoutMetrics                            = page.CommandGetLayoutMetrics
 	CommandPageGetNavigationHistory                        = page.CommandGetNavigationHistory
@@ -488,7 +488,6 @@ const (
 	CommandPageGenerateTestReport                          = page.CommandGenerateTestReport
 	CommandPageWaitForDebugger                             = page.CommandWaitForDebugger
 	CommandPageSetInterceptFileChooserDialog               = page.CommandSetInterceptFileChooserDialog
-	CommandPageHandleFileChooser                           = page.CommandHandleFileChooser
 	EventPageDomContentEventFired                          = "Page.domContentEventFired"
 	EventPageFileChooserOpened                             = "Page.fileChooserOpened"
 	EventPageFrameAttached                                 = "Page.frameAttached"
@@ -583,6 +582,9 @@ const (
 	EventServiceWorkerWorkerRegistrationUpdated            = "ServiceWorker.workerRegistrationUpdated"
 	EventServiceWorkerWorkerVersionUpdated                 = "ServiceWorker.workerVersionUpdated"
 	CommandStorageClearDataForOrigin                       = storage.CommandClearDataForOrigin
+	CommandStorageGetCookies                               = storage.CommandGetCookies
+	CommandStorageSetCookies                               = storage.CommandSetCookies
+	CommandStorageClearCookies                             = storage.CommandClearCookies
 	CommandStorageGetUsageAndQuota                         = storage.CommandGetUsageAndQuota
 	CommandStorageTrackCacheStorageForOrigin               = storage.CommandTrackCacheStorageForOrigin
 	CommandStorageTrackIndexedDBForOrigin                  = storage.CommandTrackIndexedDBForOrigin
@@ -1197,9 +1199,6 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandDebuggerGetScriptSource:
 		v = new(debugger.GetScriptSourceReturns)
-
-	case CommandDebuggerGetWasmBytecode:
-		v = new(debugger.GetWasmBytecodeReturns)
 
 	case CommandDebuggerGetStackTrace:
 		v = new(debugger.GetStackTraceReturns)
@@ -1825,6 +1824,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandPageGetInstallabilityErrors:
 		v = new(page.GetInstallabilityErrorsReturns)
 
+	case CommandPageGetManifestIcons:
+		v = new(page.GetManifestIconsReturns)
+
 	case CommandPageGetFrameTree:
 		v = new(page.GetFrameTreeReturns)
 
@@ -1924,9 +1926,6 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandPageSetInterceptFileChooserDialog:
 		return emptyVal, nil
 
-	case CommandPageHandleFileChooser:
-		return emptyVal, nil
-
 	case EventPageDomContentEventFired:
 		v = new(page.EventDomContentEventFired)
 
@@ -2021,7 +2020,7 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		return emptyVal, nil
 
 	case CommandProfilerStartPreciseCoverage:
-		return emptyVal, nil
+		v = new(profiler.StartPreciseCoverageReturns)
 
 	case CommandProfilerStartTypeProfile:
 		return emptyVal, nil
@@ -2207,6 +2206,15 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		v = new(serviceworker.EventWorkerVersionUpdated)
 
 	case CommandStorageClearDataForOrigin:
+		return emptyVal, nil
+
+	case CommandStorageGetCookies:
+		v = new(storage.GetCookiesReturns)
+
+	case CommandStorageSetCookies:
+		return emptyVal, nil
+
+	case CommandStorageClearCookies:
 		return emptyVal, nil
 
 	case CommandStorageGetUsageAndQuota:

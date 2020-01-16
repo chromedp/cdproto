@@ -145,9 +145,24 @@ func (p StartPreciseCoverageParams) WithDetailed(detailed bool) *StartPreciseCov
 	return &p
 }
 
+// StartPreciseCoverageReturns return values.
+type StartPreciseCoverageReturns struct {
+	Timestamp float64 `json:"timestamp,omitempty"` // Monotonically increasing time (in seconds) when the coverage update was taken in the backend.
+}
+
 // Do executes Profiler.startPreciseCoverage against the provided context.
-func (p *StartPreciseCoverageParams) Do(ctx context.Context) (err error) {
-	return cdp.Execute(ctx, CommandStartPreciseCoverage, p, nil)
+//
+// returns:
+//   timestamp - Monotonically increasing time (in seconds) when the coverage update was taken in the backend.
+func (p *StartPreciseCoverageParams) Do(ctx context.Context) (timestamp float64, err error) {
+	// execute
+	var res StartPreciseCoverageReturns
+	err = cdp.Execute(ctx, CommandStartPreciseCoverage, p, &res)
+	if err != nil {
+		return 0, err
+	}
+
+	return res.Timestamp, nil
 }
 
 // StartTypeProfileParams enable type profile.
@@ -244,22 +259,24 @@ func TakePreciseCoverage() *TakePreciseCoverageParams {
 
 // TakePreciseCoverageReturns return values.
 type TakePreciseCoverageReturns struct {
-	Result []*ScriptCoverage `json:"result,omitempty"` // Coverage data for the current isolate.
+	Result    []*ScriptCoverage `json:"result,omitempty"`    // Coverage data for the current isolate.
+	Timestamp float64           `json:"timestamp,omitempty"` // Monotonically increasing time (in seconds) when the coverage update was taken in the backend.
 }
 
 // Do executes Profiler.takePreciseCoverage against the provided context.
 //
 // returns:
 //   result - Coverage data for the current isolate.
-func (p *TakePreciseCoverageParams) Do(ctx context.Context) (result []*ScriptCoverage, err error) {
+//   timestamp - Monotonically increasing time (in seconds) when the coverage update was taken in the backend.
+func (p *TakePreciseCoverageParams) Do(ctx context.Context) (result []*ScriptCoverage, timestamp float64, err error) {
 	// execute
 	var res TakePreciseCoverageReturns
 	err = cdp.Execute(ctx, CommandTakePreciseCoverage, nil, &res)
 	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
 
-	return res.Result, nil
+	return res.Result, res.Timestamp, nil
 }
 
 // TakeTypeProfileParams collect type profile.

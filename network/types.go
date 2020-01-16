@@ -202,7 +202,7 @@ func (t *ErrorReason) UnmarshalJSON(buf []byte) error {
 // Headers request / response headers as keys / values of JSON object.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-Headers
-type Headers map[string]interface{}
+type Headers easyjson.RawMessage
 
 // ConnectionType the underlying connection technology that the browser is
 // supposedly using.
@@ -315,6 +315,54 @@ func (t *CookieSameSite) UnmarshalEasyJSON(in *jlexer.Lexer) {
 
 // UnmarshalJSON satisfies json.Unmarshaler.
 func (t *CookieSameSite) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
+// CookiePriority represents the cookie's 'Priority' status:
+// https://tools.ietf.org/html/draft-west-cookie-priority-00.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-CookiePriority
+type CookiePriority string
+
+// String returns the CookiePriority as string value.
+func (t CookiePriority) String() string {
+	return string(t)
+}
+
+// CookiePriority values.
+const (
+	CookiePriorityLow    CookiePriority = "Low"
+	CookiePriorityMedium CookiePriority = "Medium"
+	CookiePriorityHigh   CookiePriority = "High"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t CookiePriority) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t CookiePriority) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *CookiePriority) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	switch CookiePriority(in.String()) {
+	case CookiePriorityLow:
+		*t = CookiePriorityLow
+	case CookiePriorityMedium:
+		*t = CookiePriorityMedium
+	case CookiePriorityHigh:
+		*t = CookiePriorityHigh
+
+	default:
+		in.AddError(errors.New("unknown CookiePriority value"))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *CookiePriority) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 
@@ -642,6 +690,7 @@ type Cookie struct {
 	Secure   bool           `json:"secure"`             // True if cookie is secure.
 	Session  bool           `json:"session"`            // True in case of session cookie.
 	SameSite CookieSameSite `json:"sameSite,omitempty"` // Cookie SameSite type.
+	Priority CookiePriority `json:"priority"`           // Cookie Priority
 }
 
 // SetCookieBlockedReason types of reasons why a cookie may not be stored
@@ -817,6 +866,7 @@ type CookieParam struct {
 	HTTPOnly bool                `json:"httpOnly,omitempty"` // True if cookie is http-only.
 	SameSite CookieSameSite      `json:"sameSite,omitempty"` // Cookie SameSite type.
 	Expires  *cdp.TimeSinceEpoch `json:"expires,omitempty"`  // Cookie expiration date, session cookie if not set
+	Priority CookiePriority      `json:"priority,omitempty"` // Cookie Priority.
 }
 
 // AuthChallenge authorization challenge for HTTP status code 401 or 407.
@@ -999,7 +1049,7 @@ type SignedExchangeInfo struct {
 // ReferrerPolicy the referrer policy of the request, as defined in
 // https://www.w3.org/TR/referrer-policy/.
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-referrerPolicy
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-Request
 type ReferrerPolicy string
 
 // String returns the ReferrerPolicy as string value.
@@ -1061,7 +1111,7 @@ func (t *ReferrerPolicy) UnmarshalJSON(buf []byte) error {
 
 // InitiatorType type of this initiator.
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-type
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-Initiator
 type InitiatorType string
 
 // String returns the InitiatorType as string value.
@@ -1114,7 +1164,7 @@ func (t *InitiatorType) UnmarshalJSON(buf []byte) error {
 
 // AuthChallengeSource source of the authentication challenge.
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-source
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-AuthChallenge
 type AuthChallengeSource string
 
 // String returns the AuthChallengeSource as string value.
@@ -1161,7 +1211,7 @@ func (t *AuthChallengeSource) UnmarshalJSON(buf []byte) error {
 // of the net stack, which will likely either the Cancel authentication or
 // display a popup dialog box.
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-response
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-AuthChallengeResponse
 type AuthChallengeResponseResponse string
 
 // String returns the AuthChallengeResponseResponse as string value.

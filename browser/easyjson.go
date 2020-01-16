@@ -4,6 +4,7 @@ package browser
 
 import (
 	json "encoding/json"
+	cdp "github.com/chromedp/cdproto/cdp"
 	target "github.com/chromedp/cdproto/target"
 	easyjson "github.com/mailru/easyjson"
 	jlexer "github.com/mailru/easyjson/jlexer"
@@ -137,7 +138,7 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoBrowser1(in *jlexer.Lexer, ou
 		case "setting":
 			(out.Setting).UnmarshalEasyJSON(in)
 		case "browserContextId":
-			out.BrowserContextID = target.ID(in.String())
+			out.BrowserContextID = cdp.BrowserContextID(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -301,7 +302,7 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoBrowser3(in *jlexer.Lexer, ou
 		}
 		switch key {
 		case "browserContextId":
-			out.BrowserContextID = target.BrowserContextID(in.String())
+			out.BrowserContextID = cdp.BrowserContextID(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -375,6 +376,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoBrowser4(in *jlexer.Lexer, ou
 			out.UserVisibleOnly = bool(in.Bool())
 		case "type":
 			out.Type = string(in.String())
+		case "allowWithoutSanitization":
+			out.AllowWithoutSanitization = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -408,6 +411,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoBrowser4(out *jwriter.Writer,
 		const prefix string = ",\"type\":"
 		out.RawString(prefix)
 		out.String(string(in.Type))
+	}
+	if in.AllowWithoutSanitization {
+		const prefix string = ",\"allowWithoutSanitization\":"
+		out.RawString(prefix)
+		out.Bool(bool(in.AllowWithoutSanitization))
 	}
 	out.RawByte('}')
 }
@@ -611,7 +619,7 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoBrowser6(in *jlexer.Lexer, ou
 				in.Delim(']')
 			}
 		case "browserContextId":
-			out.BrowserContextID = target.BrowserContextID(in.String())
+			out.BrowserContextID = cdp.BrowserContextID(in.String())
 		default:
 			in.SkipRecursive()
 		}

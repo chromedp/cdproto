@@ -20,7 +20,7 @@ type SetPermissionParams struct {
 	Origin           string                `json:"origin"`                     // Origin the permission applies to.
 	Permission       *PermissionDescriptor `json:"permission"`                 // Descriptor of permission to override.
 	Setting          PermissionSetting     `json:"setting"`                    // Setting of the permission.
-	BrowserContextID target.ID             `json:"browserContextId,omitempty"` // Context to override. When omitted, default browser context is used.
+	BrowserContextID cdp.BrowserContextID  `json:"browserContextId,omitempty"` // Context to override. When omitted, default browser context is used.
 }
 
 // SetPermission set permission settings for given origin.
@@ -41,7 +41,7 @@ func SetPermission(origin string, permission *PermissionDescriptor, setting Perm
 
 // WithBrowserContextID context to override. When omitted, default browser
 // context is used.
-func (p SetPermissionParams) WithBrowserContextID(browserContextID target.ID) *SetPermissionParams {
+func (p SetPermissionParams) WithBrowserContextID(browserContextID cdp.BrowserContextID) *SetPermissionParams {
 	p.BrowserContextID = browserContextID
 	return &p
 }
@@ -54,9 +54,9 @@ func (p *SetPermissionParams) Do(ctx context.Context) (err error) {
 // GrantPermissionsParams grant specific permissions to the given origin and
 // reject all others.
 type GrantPermissionsParams struct {
-	Origin           string                  `json:"origin"`
-	Permissions      []PermissionType        `json:"permissions"`
-	BrowserContextID target.BrowserContextID `json:"browserContextId,omitempty"` // BrowserContext to override permissions. When omitted, default browser context is used.
+	Origin           string               `json:"origin"`
+	Permissions      []PermissionType     `json:"permissions"`
+	BrowserContextID cdp.BrowserContextID `json:"browserContextId,omitempty"` // BrowserContext to override permissions. When omitted, default browser context is used.
 }
 
 // GrantPermissions grant specific permissions to the given origin and reject
@@ -76,7 +76,7 @@ func GrantPermissions(origin string, permissions []PermissionType) *GrantPermiss
 
 // WithBrowserContextID browserContext to override permissions. When omitted,
 // default browser context is used.
-func (p GrantPermissionsParams) WithBrowserContextID(browserContextID target.BrowserContextID) *GrantPermissionsParams {
+func (p GrantPermissionsParams) WithBrowserContextID(browserContextID cdp.BrowserContextID) *GrantPermissionsParams {
 	p.BrowserContextID = browserContextID
 	return &p
 }
@@ -88,7 +88,7 @@ func (p *GrantPermissionsParams) Do(ctx context.Context) (err error) {
 
 // ResetPermissionsParams reset all permission management for all origins.
 type ResetPermissionsParams struct {
-	BrowserContextID target.BrowserContextID `json:"browserContextId,omitempty"` // BrowserContext to reset permissions. When omitted, default browser context is used.
+	BrowserContextID cdp.BrowserContextID `json:"browserContextId,omitempty"` // BrowserContext to reset permissions. When omitted, default browser context is used.
 }
 
 // ResetPermissions reset all permission management for all origins.
@@ -102,7 +102,7 @@ func ResetPermissions() *ResetPermissionsParams {
 
 // WithBrowserContextID browserContext to reset permissions. When omitted,
 // default browser context is used.
-func (p ResetPermissionsParams) WithBrowserContextID(browserContextID target.BrowserContextID) *ResetPermissionsParams {
+func (p ResetPermissionsParams) WithBrowserContextID(browserContextID cdp.BrowserContextID) *ResetPermissionsParams {
 	p.BrowserContextID = browserContextID
 	return &p
 }

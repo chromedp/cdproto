@@ -79,7 +79,7 @@ func (t *VirtualTimePolicy) UnmarshalJSON(buf []byte) error {
 
 // OrientationType orientation type.
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#type-type
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#type-ScreenOrientation
 type OrientationType string
 
 // String returns the OrientationType as string value.
@@ -130,7 +130,7 @@ func (t *OrientationType) UnmarshalJSON(buf []byte) error {
 // SetEmitTouchEventsForMouseConfiguration touch/gesture events
 // configuration. Default: current platform.
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#type-configuration
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#method-setEmitTouchEventsForMouse
 type SetEmitTouchEventsForMouseConfiguration string
 
 // String returns the SetEmitTouchEventsForMouseConfiguration as string value.

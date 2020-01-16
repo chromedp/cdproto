@@ -93,7 +93,7 @@ type BreakLocation struct {
 
 // ScopeType scope type.
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#type-type
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#type-Scope
 type ScopeType string
 
 // String returns the ScopeType as string value.
@@ -158,7 +158,7 @@ func (t *ScopeType) UnmarshalJSON(buf []byte) error {
 
 // BreakLocationType [no description].
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#type-type
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#type-BreakLocation
 type BreakLocationType string
 
 // String returns the BreakLocationType as string value.
@@ -205,7 +205,7 @@ func (t *BreakLocationType) UnmarshalJSON(buf []byte) error {
 
 // PausedReason pause reason.
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#type-reason
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#event-paused
 type PausedReason string
 
 // String returns the PausedReason as string value.
@@ -276,7 +276,7 @@ func (t *PausedReason) UnmarshalJSON(buf []byte) error {
 
 // ContinueToLocationTargetCallFrames [no description].
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#type-targetCallFrames
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-continueToLocation
 type ContinueToLocationTargetCallFrames string
 
 // String returns the ContinueToLocationTargetCallFrames as string value.
@@ -320,7 +320,7 @@ func (t *ContinueToLocationTargetCallFrames) UnmarshalJSON(buf []byte) error {
 
 // SetInstrumentationBreakpointInstrumentation instrumentation name.
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#type-instrumentation
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-setInstrumentationBreakpoint
 type SetInstrumentationBreakpointInstrumentation string
 
 // String returns the SetInstrumentationBreakpointInstrumentation as string value.
@@ -364,7 +364,7 @@ func (t *SetInstrumentationBreakpointInstrumentation) UnmarshalJSON(buf []byte) 
 
 // ExceptionsState pause on exceptions mode.
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#type-state
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-setPauseOnExceptions
 type ExceptionsState string
 
 // String returns the ExceptionsState as string value.

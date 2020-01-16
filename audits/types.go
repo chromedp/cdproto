@@ -12,7 +12,7 @@ import (
 
 // GetEncodedResponseEncoding the encoding to use.
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-encoding
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#method-getEncodedResponse
 type GetEncodedResponseEncoding string
 
 // String returns the GetEncodedResponseEncoding as string value.

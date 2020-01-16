@@ -206,14 +206,14 @@ func CreateBrowserContext() *CreateBrowserContextParams {
 
 // CreateBrowserContextReturns return values.
 type CreateBrowserContextReturns struct {
-	BrowserContextID BrowserContextID `json:"browserContextId,omitempty"` // The id of the context created.
+	BrowserContextID cdp.BrowserContextID `json:"browserContextId,omitempty"` // The id of the context created.
 }
 
 // Do executes Target.createBrowserContext against the provided context.
 //
 // returns:
 //   browserContextID - The id of the context created.
-func (p *CreateBrowserContextParams) Do(ctx context.Context) (browserContextID BrowserContextID, err error) {
+func (p *CreateBrowserContextParams) Do(ctx context.Context) (browserContextID cdp.BrowserContextID, err error) {
 	// execute
 	var res CreateBrowserContextReturns
 	err = cdp.Execute(ctx, CommandCreateBrowserContext, nil, &res)
@@ -238,14 +238,14 @@ func GetBrowserContexts() *GetBrowserContextsParams {
 
 // GetBrowserContextsReturns return values.
 type GetBrowserContextsReturns struct {
-	BrowserContextIds []BrowserContextID `json:"browserContextIds,omitempty"` // An array of browser context ids.
+	BrowserContextIds []cdp.BrowserContextID `json:"browserContextIds,omitempty"` // An array of browser context ids.
 }
 
 // Do executes Target.getBrowserContexts against the provided context.
 //
 // returns:
 //   browserContextIds - An array of browser context ids.
-func (p *GetBrowserContextsParams) Do(ctx context.Context) (browserContextIds []BrowserContextID, err error) {
+func (p *GetBrowserContextsParams) Do(ctx context.Context) (browserContextIds []cdp.BrowserContextID, err error) {
 	// execute
 	var res GetBrowserContextsReturns
 	err = cdp.Execute(ctx, CommandGetBrowserContexts, nil, &res)
@@ -258,13 +258,13 @@ func (p *GetBrowserContextsParams) Do(ctx context.Context) (browserContextIds []
 
 // CreateTargetParams creates a new page.
 type CreateTargetParams struct {
-	URL                     string           `json:"url"`                               // The initial URL the page will be navigated to.
-	Width                   int64            `json:"width,omitempty"`                   // Frame width in DIP (headless chrome only).
-	Height                  int64            `json:"height,omitempty"`                  // Frame height in DIP (headless chrome only).
-	BrowserContextID        BrowserContextID `json:"browserContextId,omitempty"`        // The browser context to create the page in.
-	EnableBeginFrameControl bool             `json:"enableBeginFrameControl,omitempty"` // Whether BeginFrames for this target will be controlled via DevTools (headless chrome only, not supported on MacOS yet, false by default).
-	NewWindow               bool             `json:"newWindow,omitempty"`               // Whether to create a new Window or Tab (chrome-only, false by default).
-	Background              bool             `json:"background,omitempty"`              // Whether to create the target in background or foreground (chrome-only, false by default).
+	URL                     string               `json:"url"`                               // The initial URL the page will be navigated to.
+	Width                   int64                `json:"width,omitempty"`                   // Frame width in DIP (headless chrome only).
+	Height                  int64                `json:"height,omitempty"`                  // Frame height in DIP (headless chrome only).
+	BrowserContextID        cdp.BrowserContextID `json:"browserContextId,omitempty"`        // The browser context to create the page in.
+	EnableBeginFrameControl bool                 `json:"enableBeginFrameControl,omitempty"` // Whether BeginFrames for this target will be controlled via DevTools (headless chrome only, not supported on MacOS yet, false by default).
+	NewWindow               bool                 `json:"newWindow,omitempty"`               // Whether to create a new Window or Tab (chrome-only, false by default).
+	Background              bool                 `json:"background,omitempty"`              // Whether to create the target in background or foreground (chrome-only, false by default).
 }
 
 // CreateTarget creates a new page.
@@ -292,7 +292,7 @@ func (p CreateTargetParams) WithHeight(height int64) *CreateTargetParams {
 }
 
 // WithBrowserContextID the browser context to create the page in.
-func (p CreateTargetParams) WithBrowserContextID(browserContextID BrowserContextID) *CreateTargetParams {
+func (p CreateTargetParams) WithBrowserContextID(browserContextID cdp.BrowserContextID) *CreateTargetParams {
 	p.BrowserContextID = browserContextID
 	return &p
 }
@@ -367,7 +367,7 @@ func (p *DetachFromTargetParams) Do(ctx context.Context) (err error) {
 // DisposeBrowserContextParams deletes a BrowserContext. All the belonging
 // pages will be closed without calling their beforeunload hooks.
 type DisposeBrowserContextParams struct {
-	BrowserContextID BrowserContextID `json:"browserContextId"`
+	BrowserContextID cdp.BrowserContextID `json:"browserContextId"`
 }
 
 // DisposeBrowserContext deletes a BrowserContext. All the belonging pages
@@ -377,7 +377,7 @@ type DisposeBrowserContextParams struct {
 //
 // parameters:
 //   browserContextID
-func DisposeBrowserContext(browserContextID BrowserContextID) *DisposeBrowserContextParams {
+func DisposeBrowserContext(browserContextID cdp.BrowserContextID) *DisposeBrowserContextParams {
 	return &DisposeBrowserContextParams{
 		BrowserContextID: browserContextID,
 	}

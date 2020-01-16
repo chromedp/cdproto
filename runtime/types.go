@@ -127,8 +127,10 @@ type InternalPropertyDescriptor struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#type-PrivatePropertyDescriptor
 type PrivatePropertyDescriptor struct {
-	Name  string        `json:"name"`  // Private property name.
-	Value *RemoteObject `json:"value"` // The value associated with the private property.
+	Name  string        `json:"name"`            // Private property name.
+	Value *RemoteObject `json:"value,omitempty"` // The value associated with the private property.
+	Get   *RemoteObject `json:"get,omitempty"`   // A function which serves as a getter for the private property, or undefined if there is no getter (accessor descriptors only).
+	Set   *RemoteObject `json:"set,omitempty"`   // A function which serves as a setter for the private property, or undefined if there is no setter (accessor descriptors only).
 }
 
 // CallArgument represents function call argument. Either remote object id
@@ -271,7 +273,7 @@ type StackTraceID struct {
 
 // Type object type.
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#type-type
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#type-RemoteObject
 type Type string
 
 // String returns the Type as string value.
@@ -336,7 +338,7 @@ func (t *Type) UnmarshalJSON(buf []byte) error {
 
 // Subtype object subtype hint. Specified for object type values only.
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#type-subtype
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#type-RemoteObject
 type Subtype string
 
 // String returns the Subtype as string value.
@@ -425,7 +427,7 @@ func (t *Subtype) UnmarshalJSON(buf []byte) error {
 
 // APIType type of the call.
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#type-type
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#event-consoleAPICalled
 type APIType string
 
 // String returns the APIType as string value.

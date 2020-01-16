@@ -19,7 +19,9 @@ type EventDomContentEventFired struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-fileChooserOpened
 type EventFileChooserOpened struct {
-	Mode FileChooserOpenedMode `json:"mode"`
+	FrameID       cdp.FrameID           `json:"frameId"`       // Id of the frame containing input node.
+	BackendNodeID cdp.BackendNodeID     `json:"backendNodeId"` // Input node id.
+	Mode          FileChooserOpenedMode `json:"mode"`          // Input mode.
 }
 
 // EventFrameAttached fired when frame has been attached to its parent.
