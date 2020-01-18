@@ -202,7 +202,7 @@ func (t *ErrorReason) UnmarshalJSON(buf []byte) error {
 // Headers request / response headers as keys / values of JSON object.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-Headers
-type Headers easyjson.RawMessage
+type Headers map[string]interface{}
 
 // ConnectionType the underlying connection technology that the browser is
 // supposedly using.
