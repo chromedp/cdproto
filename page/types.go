@@ -296,6 +296,7 @@ const (
 	ClientNavigationReasonMetaTagRefresh        ClientNavigationReason = "metaTagRefresh"
 	ClientNavigationReasonPageBlockInterstitial ClientNavigationReason = "pageBlockInterstitial"
 	ClientNavigationReasonReload                ClientNavigationReason = "reload"
+	ClientNavigationReasonAnchorClick           ClientNavigationReason = "anchorClick"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -325,6 +326,8 @@ func (t *ClientNavigationReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = ClientNavigationReasonPageBlockInterstitial
 	case ClientNavigationReasonReload:
 		*t = ClientNavigationReasonReload
+	case ClientNavigationReasonAnchorClick:
+		*t = ClientNavigationReasonAnchorClick
 
 	default:
 		in.AddError(errors.New("unknown ClientNavigationReason value"))
