@@ -325,14 +325,14 @@ func GetInstallabilityErrors() *GetInstallabilityErrorsParams {
 
 // GetInstallabilityErrorsReturns return values.
 type GetInstallabilityErrorsReturns struct {
-	Errors []string `json:"errors,omitempty"`
+	InstallabilityErrors []*InstallabilityError `json:"installabilityErrors,omitempty"`
 }
 
 // Do executes Page.getInstallabilityErrors against the provided context.
 //
 // returns:
-//   errors
-func (p *GetInstallabilityErrorsParams) Do(ctx context.Context) (errors []string, err error) {
+//   installabilityErrors
+func (p *GetInstallabilityErrorsParams) Do(ctx context.Context) (installabilityErrors []*InstallabilityError, err error) {
 	// execute
 	var res GetInstallabilityErrorsReturns
 	err = cdp.Execute(ctx, CommandGetInstallabilityErrors, nil, &res)
@@ -340,7 +340,7 @@ func (p *GetInstallabilityErrorsParams) Do(ctx context.Context) (errors []string
 		return nil, err
 	}
 
-	return res.Errors, nil
+	return res.InstallabilityErrors, nil
 }
 
 // GetManifestIconsParams [no description].

@@ -531,6 +531,7 @@ const (
 	CommandProfilerGetRuntimeCallStats                     = profiler.CommandGetRuntimeCallStats
 	EventProfilerConsoleProfileFinished                    = "Profiler.consoleProfileFinished"
 	EventProfilerConsoleProfileStarted                     = "Profiler.consoleProfileStarted"
+	EventProfilerPreciseCoverageDeltaUpdate                = "Profiler.preciseCoverageDeltaUpdate"
 	CommandRuntimeAwaitPromise                             = runtime.CommandAwaitPromise
 	CommandRuntimeCallFunctionOn                           = runtime.CommandCallFunctionOn
 	CommandRuntimeCompileScript                            = runtime.CommandCompileScript
@@ -2054,6 +2055,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case EventProfilerConsoleProfileStarted:
 		v = new(profiler.EventConsoleProfileStarted)
+
+	case EventProfilerPreciseCoverageDeltaUpdate:
+		v = new(profiler.EventPreciseCoverageDeltaUpdate)
 
 	case CommandRuntimeAwaitPromise:
 		v = new(runtime.AwaitPromiseReturns)

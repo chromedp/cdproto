@@ -339,6 +339,22 @@ func (t *ClientNavigationReason) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 
+// InstallabilityErrorArgument [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-InstallabilityErrorArgument
+type InstallabilityErrorArgument struct {
+	Name  string `json:"name"`  // Argument name (e.g. name:'minimum-icon-size-in-pixels').
+	Value string `json:"value"` // Argument value (e.g. value:'64').
+}
+
+// InstallabilityError the installability error.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-InstallabilityError
+type InstallabilityError struct {
+	ErrorID        string                         `json:"errorId"`        // The error id (e.g. 'manifest-missing-suitable-icon').
+	ErrorArguments []*InstallabilityErrorArgument `json:"errorArguments"` // The list of error arguments (e.g. {name:'minimum-icon-size-in-pixels', value:'64'}).
+}
+
 // FileChooserOpenedMode input mode.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-fileChooserOpened
