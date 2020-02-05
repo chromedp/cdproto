@@ -99,6 +99,9 @@ const (
 	EventApplicationCacheApplicationCacheStatusUpdated     = "ApplicationCache.applicationCacheStatusUpdated"
 	EventApplicationCacheNetworkStateUpdated               = "ApplicationCache.networkStateUpdated"
 	CommandAuditsGetEncodedResponse                        = audits.CommandGetEncodedResponse
+	CommandAuditsDisable                                   = audits.CommandDisable
+	CommandAuditsEnable                                    = audits.CommandEnable
+	EventAuditsIssueAdded                                  = "Audits.issueAdded"
 	CommandBackgroundServiceStartObserving                 = backgroundservice.CommandStartObserving
 	CommandBackgroundServiceStopObserving                  = backgroundservice.CommandStopObserving
 	CommandBackgroundServiceSetRecording                   = backgroundservice.CommandSetRecording
@@ -759,6 +762,15 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandAuditsGetEncodedResponse:
 		v = new(audits.GetEncodedResponseReturns)
+
+	case CommandAuditsDisable:
+		return emptyVal, nil
+
+	case CommandAuditsEnable:
+		return emptyVal, nil
+
+	case EventAuditsIssueAdded:
+		v = new(audits.EventIssueAdded)
 
 	case CommandBackgroundServiceStartObserving:
 		return emptyVal, nil

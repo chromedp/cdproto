@@ -2270,6 +2270,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoDebugger26(in *jlexer.Lexer, 
 			continue
 		}
 		switch key {
+		case "terminateOnResume":
+			out.TerminateOnResume = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -2284,6 +2286,12 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoDebugger26(out *jwriter.Write
 	out.RawByte('{')
 	first := true
 	_ = first
+	if in.TerminateOnResume {
+		const prefix string = ",\"terminateOnResume\":"
+		first = false
+		out.RawString(prefix[1:])
+		out.Bool(bool(in.TerminateOnResume))
+	}
 	out.RawByte('}')
 }
 

@@ -10,6 +10,13 @@ import (
 	"github.com/mailru/easyjson/jwriter"
 )
 
+// Issue [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-Issue
+type Issue struct {
+	Code string `json:"code"`
+}
+
 // GetEncodedResponseEncoding the encoding to use.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#method-getEncodedResponse

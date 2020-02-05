@@ -420,18 +420,32 @@ func (p *RestartFrameParams) Do(ctx context.Context) (callFrames []*CallFrame, a
 }
 
 // ResumeParams resumes JavaScript execution.
-type ResumeParams struct{}
+type ResumeParams struct {
+	TerminateOnResume bool `json:"terminateOnResume,omitempty"` // Set to true to terminate execution upon resuming execution. In contrast to Runtime.terminateExecution, this will allows to execute further JavaScript (i.e. via evaluation) until execution of the paused code is actually resumed, at which point termination is triggered. If execution is currently not paused, this parameter has no effect.
+}
 
 // Resume resumes JavaScript execution.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-resume
+//
+// parameters:
 func Resume() *ResumeParams {
 	return &ResumeParams{}
 }
 
+// WithTerminateOnResume set to true to terminate execution upon resuming
+// execution. In contrast to Runtime.terminateExecution, this will allows to
+// execute further JavaScript (i.e. via evaluation) until execution of the
+// paused code is actually resumed, at which point termination is triggered. If
+// execution is currently not paused, this parameter has no effect.
+func (p ResumeParams) WithTerminateOnResume(terminateOnResume bool) *ResumeParams {
+	p.TerminateOnResume = terminateOnResume
+	return &p
+}
+
 // Do executes Debugger.resume against the provided context.
 func (p *ResumeParams) Do(ctx context.Context) (err error) {
-	return cdp.Execute(ctx, CommandResume, nil, nil)
+	return cdp.Execute(ctx, CommandResume, p, nil)
 }
 
 // SearchInContentParams searches for given string in script content.
