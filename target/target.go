@@ -194,14 +194,25 @@ func (p *ExposeDevToolsProtocolParams) Do(ctx context.Context) (err error) {
 
 // CreateBrowserContextParams creates a new empty BrowserContext. Similar to
 // an incognito profile but you can have more than one.
-type CreateBrowserContextParams struct{}
+type CreateBrowserContextParams struct {
+	DisposeOnDetach bool `json:"disposeOnDetach,omitempty"` // If specified, disposes this context when debugging session disconnects.
+}
 
 // CreateBrowserContext creates a new empty BrowserContext. Similar to an
 // incognito profile but you can have more than one.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Target#method-createBrowserContext
+//
+// parameters:
 func CreateBrowserContext() *CreateBrowserContextParams {
 	return &CreateBrowserContextParams{}
+}
+
+// WithDisposeOnDetach if specified, disposes this context when debugging
+// session disconnects.
+func (p CreateBrowserContextParams) WithDisposeOnDetach(disposeOnDetach bool) *CreateBrowserContextParams {
+	p.DisposeOnDetach = disposeOnDetach
+	return &p
 }
 
 // CreateBrowserContextReturns return values.
@@ -216,7 +227,7 @@ type CreateBrowserContextReturns struct {
 func (p *CreateBrowserContextParams) Do(ctx context.Context) (browserContextID cdp.BrowserContextID, err error) {
 	// execute
 	var res CreateBrowserContextReturns
-	err = cdp.Execute(ctx, CommandCreateBrowserContext, nil, &res)
+	err = cdp.Execute(ctx, CommandCreateBrowserContext, p, &res)
 	if err != nil {
 		return "", err
 	}

@@ -1928,6 +1928,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoTarget24(in *jlexer.Lexer, ou
 			continue
 		}
 		switch key {
+		case "disposeOnDetach":
+			out.DisposeOnDetach = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -1942,6 +1944,12 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoTarget24(out *jwriter.Writer,
 	out.RawByte('{')
 	first := true
 	_ = first
+	if in.DisposeOnDetach {
+		const prefix string = ",\"disposeOnDetach\":"
+		first = false
+		out.RawString(prefix[1:])
+		out.Bool(bool(in.DisposeOnDetach))
+	}
 	out.RawByte('}')
 }
 
