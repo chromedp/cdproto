@@ -355,6 +355,68 @@ type InstallabilityError struct {
 	ErrorArguments []*InstallabilityErrorArgument `json:"errorArguments"` // The list of error arguments (e.g. {name:'minimum-icon-size-in-pixels', value:'64'}).
 }
 
+// ReferrerPolicy the referring-policy used for the navigation.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-ReferrerPolicy
+type ReferrerPolicy string
+
+// String returns the ReferrerPolicy as string value.
+func (t ReferrerPolicy) String() string {
+	return string(t)
+}
+
+// ReferrerPolicy values.
+const (
+	ReferrerPolicyNoReferrer                  ReferrerPolicy = "noReferrer"
+	ReferrerPolicyNoReferrerWhenDowngrade     ReferrerPolicy = "noReferrerWhenDowngrade"
+	ReferrerPolicyOrigin                      ReferrerPolicy = "origin"
+	ReferrerPolicyOriginWhenCrossOrigin       ReferrerPolicy = "originWhenCrossOrigin"
+	ReferrerPolicySameOrigin                  ReferrerPolicy = "sameOrigin"
+	ReferrerPolicyStrictOrigin                ReferrerPolicy = "strictOrigin"
+	ReferrerPolicyStrictOriginWhenCrossOrigin ReferrerPolicy = "strictOriginWhenCrossOrigin"
+	ReferrerPolicyUnsafeURL                   ReferrerPolicy = "unsafeUrl"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t ReferrerPolicy) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t ReferrerPolicy) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *ReferrerPolicy) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	switch ReferrerPolicy(in.String()) {
+	case ReferrerPolicyNoReferrer:
+		*t = ReferrerPolicyNoReferrer
+	case ReferrerPolicyNoReferrerWhenDowngrade:
+		*t = ReferrerPolicyNoReferrerWhenDowngrade
+	case ReferrerPolicyOrigin:
+		*t = ReferrerPolicyOrigin
+	case ReferrerPolicyOriginWhenCrossOrigin:
+		*t = ReferrerPolicyOriginWhenCrossOrigin
+	case ReferrerPolicySameOrigin:
+		*t = ReferrerPolicySameOrigin
+	case ReferrerPolicyStrictOrigin:
+		*t = ReferrerPolicyStrictOrigin
+	case ReferrerPolicyStrictOriginWhenCrossOrigin:
+		*t = ReferrerPolicyStrictOriginWhenCrossOrigin
+	case ReferrerPolicyUnsafeURL:
+		*t = ReferrerPolicyUnsafeURL
+
+	default:
+		in.AddError(errors.New("unknown ReferrerPolicy value"))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *ReferrerPolicy) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
 // FileChooserOpenedMode input mode.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-fileChooserOpened
@@ -396,6 +458,53 @@ func (t *FileChooserOpenedMode) UnmarshalEasyJSON(in *jlexer.Lexer) {
 
 // UnmarshalJSON satisfies json.Unmarshaler.
 func (t *FileChooserOpenedMode) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
+// DownloadProgressState download status.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-downloadProgress
+type DownloadProgressState string
+
+// String returns the DownloadProgressState as string value.
+func (t DownloadProgressState) String() string {
+	return string(t)
+}
+
+// DownloadProgressState values.
+const (
+	DownloadProgressStateInProgress DownloadProgressState = "inProgress"
+	DownloadProgressStateCompleted  DownloadProgressState = "completed"
+	DownloadProgressStateCanceled   DownloadProgressState = "canceled"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t DownloadProgressState) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t DownloadProgressState) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *DownloadProgressState) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	switch DownloadProgressState(in.String()) {
+	case DownloadProgressStateInProgress:
+		*t = DownloadProgressStateInProgress
+	case DownloadProgressStateCompleted:
+		*t = DownloadProgressStateCompleted
+	case DownloadProgressStateCanceled:
+		*t = DownloadProgressStateCanceled
+
+	default:
+		in.AddError(errors.New("unknown DownloadProgressState value"))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *DownloadProgressState) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 
@@ -525,54 +634,6 @@ func (t *PrintToPDFTransferMode) UnmarshalEasyJSON(in *jlexer.Lexer) {
 
 // UnmarshalJSON satisfies json.Unmarshaler.
 func (t *PrintToPDFTransferMode) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
-}
-
-// SetDownloadBehaviorBehavior whether to allow all or deny all download
-// requests, or use default Chrome behavior if available (otherwise deny).
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-setDownloadBehavior
-type SetDownloadBehaviorBehavior string
-
-// String returns the SetDownloadBehaviorBehavior as string value.
-func (t SetDownloadBehaviorBehavior) String() string {
-	return string(t)
-}
-
-// SetDownloadBehaviorBehavior values.
-const (
-	SetDownloadBehaviorBehaviorDeny    SetDownloadBehaviorBehavior = "deny"
-	SetDownloadBehaviorBehaviorAllow   SetDownloadBehaviorBehavior = "allow"
-	SetDownloadBehaviorBehaviorDefault SetDownloadBehaviorBehavior = "default"
-)
-
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t SetDownloadBehaviorBehavior) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
-
-// MarshalJSON satisfies json.Marshaler.
-func (t SetDownloadBehaviorBehavior) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *SetDownloadBehaviorBehavior) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	switch SetDownloadBehaviorBehavior(in.String()) {
-	case SetDownloadBehaviorBehaviorDeny:
-		*t = SetDownloadBehaviorBehaviorDeny
-	case SetDownloadBehaviorBehaviorAllow:
-		*t = SetDownloadBehaviorBehaviorAllow
-	case SetDownloadBehaviorBehaviorDefault:
-		*t = SetDownloadBehaviorBehaviorDefault
-
-	default:
-		in.AddError(errors.New("unknown SetDownloadBehaviorBehavior value"))
-	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *SetDownloadBehaviorBehavior) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 

@@ -3302,6 +3302,10 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoDebugger38(in *jlexer.Lexer, 
 				}
 				(*out.StackTrace).UnmarshalEasyJSON(in)
 			}
+		case "codeOffset":
+			out.CodeOffset = int64(in.Int64())
+		case "scriptLanguage":
+			(out.ScriptLanguage).UnmarshalEasyJSON(in)
 		default:
 			in.SkipRecursive()
 		}
@@ -3391,6 +3395,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoDebugger38(out *jwriter.Write
 		out.RawString(prefix)
 		(*in.StackTrace).MarshalEasyJSON(out)
 	}
+	if in.CodeOffset != 0 {
+		const prefix string = ",\"codeOffset\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.CodeOffset))
+	}
+	if in.ScriptLanguage != "" {
+		const prefix string = ",\"scriptLanguage\":"
+		out.RawString(prefix)
+		(in.ScriptLanguage).MarshalEasyJSON(out)
+	}
 	out.RawByte('}')
 }
 
@@ -3472,6 +3486,10 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoDebugger39(in *jlexer.Lexer, 
 				}
 				(*out.StackTrace).UnmarshalEasyJSON(in)
 			}
+		case "codeOffset":
+			out.CodeOffset = int64(in.Int64())
+		case "scriptLanguage":
+			(out.ScriptLanguage).UnmarshalEasyJSON(in)
 		default:
 			in.SkipRecursive()
 		}
@@ -3555,6 +3573,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoDebugger39(out *jwriter.Write
 		const prefix string = ",\"stackTrace\":"
 		out.RawString(prefix)
 		(*in.StackTrace).MarshalEasyJSON(out)
+	}
+	if in.CodeOffset != 0 {
+		const prefix string = ",\"codeOffset\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.CodeOffset))
+	}
+	if in.ScriptLanguage != "" {
+		const prefix string = ",\"scriptLanguage\":"
+		out.RawString(prefix)
+		(in.ScriptLanguage).MarshalEasyJSON(out)
 	}
 	out.RawByte('}')
 }

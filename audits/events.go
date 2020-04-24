@@ -6,5 +6,5 @@ package audits
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#event-issueAdded
 type EventIssueAdded struct {
-	Issue *Issue `json:"issue"`
+	Issue *InspectorIssue `json:"issue"`
 }

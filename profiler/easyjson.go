@@ -951,6 +951,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoProfiler12(in *jlexer.Lexer, 
 			out.CallCount = bool(in.Bool())
 		case "detailed":
 			out.Detailed = bool(in.Bool())
+		case "allowTriggeredUpdates":
+			out.AllowTriggeredUpdates = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -980,6 +982,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoProfiler12(out *jwriter.Write
 			out.RawString(prefix)
 		}
 		out.Bool(bool(in.Detailed))
+	}
+	if in.AllowTriggeredUpdates {
+		const prefix string = ",\"allowTriggeredUpdates\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Bool(bool(in.AllowTriggeredUpdates))
 	}
 	out.RawByte('}')
 }

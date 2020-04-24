@@ -477,7 +477,6 @@ type SetAutoAttachParams struct {
 	AutoAttach             bool `json:"autoAttach"`             // Whether to auto-attach to related targets.
 	WaitForDebuggerOnStart bool `json:"waitForDebuggerOnStart"` // Whether to pause new targets when attaching to them. Use Runtime.runIfWaitingForDebugger to run paused targets.
 	Flatten                bool `json:"flatten,omitempty"`      // Enables "flat" access to the session via specifying sessionId attribute in the commands. We plan to make this the default, deprecate non-flattened mode, and eventually retire it. See crbug.com/991325.
-	WindowOpen             bool `json:"windowOpen,omitempty"`   // Auto-attach to the targets created via window.open from current target.
 }
 
 // SetAutoAttach controls whether to automatically attach to new targets
@@ -502,13 +501,6 @@ func SetAutoAttach(autoAttach bool, waitForDebuggerOnStart bool) *SetAutoAttachP
 // non-flattened mode, and eventually retire it. See crbug.com/991325.
 func (p SetAutoAttachParams) WithFlatten(flatten bool) *SetAutoAttachParams {
 	p.Flatten = flatten
-	return &p
-}
-
-// WithWindowOpen auto-attach to the targets created via window.open from
-// current target.
-func (p SetAutoAttachParams) WithWindowOpen(windowOpen bool) *SetAutoAttachParams {
-	p.WindowOpen = windowOpen
 	return &p
 }
 

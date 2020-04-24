@@ -613,6 +613,7 @@ type NavigateParams struct {
 	Referrer       string         `json:"referrer,omitempty"`       // Referrer URL.
 	TransitionType TransitionType `json:"transitionType,omitempty"` // Intended transition type.
 	FrameID        cdp.FrameID    `json:"frameId,omitempty"`        // Frame id to navigate, if not specified navigates the top frame.
+	ReferrerPolicy ReferrerPolicy `json:"referrerPolicy,omitempty"` // Referrer-policy used for the navigation.
 }
 
 // Navigate navigates current page to the given URL.
@@ -643,6 +644,12 @@ func (p NavigateParams) WithTransitionType(transitionType TransitionType) *Navig
 // frame.
 func (p NavigateParams) WithFrameID(frameID cdp.FrameID) *NavigateParams {
 	p.FrameID = frameID
+	return &p
+}
+
+// WithReferrerPolicy referrer-policy used for the navigation.
+func (p NavigateParams) WithReferrerPolicy(referrerPolicy ReferrerPolicy) *NavigateParams {
+	p.ReferrerPolicy = referrerPolicy
 	return &p
 }
 
@@ -1109,36 +1116,6 @@ func (p *SetDocumentContentParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandSetDocumentContent, p, nil)
 }
 
-// SetDownloadBehaviorParams set the behavior when downloading a file.
-type SetDownloadBehaviorParams struct {
-	Behavior     SetDownloadBehaviorBehavior `json:"behavior"`               // Whether to allow all or deny all download requests, or use default Chrome behavior if available (otherwise deny).
-	DownloadPath string                      `json:"downloadPath,omitempty"` // The default path to save downloaded files to. This is required if behavior is set to 'allow'
-}
-
-// SetDownloadBehavior set the behavior when downloading a file.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-setDownloadBehavior
-//
-// parameters:
-//   behavior - Whether to allow all or deny all download requests, or use default Chrome behavior if available (otherwise deny).
-func SetDownloadBehavior(behavior SetDownloadBehaviorBehavior) *SetDownloadBehaviorParams {
-	return &SetDownloadBehaviorParams{
-		Behavior: behavior,
-	}
-}
-
-// WithDownloadPath the default path to save downloaded files to. This is
-// required if behavior is set to 'allow'.
-func (p SetDownloadBehaviorParams) WithDownloadPath(downloadPath string) *SetDownloadBehaviorParams {
-	p.DownloadPath = downloadPath
-	return &p
-}
-
-// Do executes Page.setDownloadBehavior against the provided context.
-func (p *SetDownloadBehaviorParams) Do(ctx context.Context) (err error) {
-	return cdp.Execute(ctx, CommandSetDownloadBehavior, p, nil)
-}
-
 // SetLifecycleEventsEnabledParams controls whether page will emit lifecycle
 // events.
 type SetLifecycleEventsEnabledParams struct {
@@ -1476,7 +1453,6 @@ const (
 	CommandSetFontFamilies                     = "Page.setFontFamilies"
 	CommandSetFontSizes                        = "Page.setFontSizes"
 	CommandSetDocumentContent                  = "Page.setDocumentContent"
-	CommandSetDownloadBehavior                 = "Page.setDownloadBehavior"
 	CommandSetLifecycleEventsEnabled           = "Page.setLifecycleEventsEnabled"
 	CommandStartScreencast                     = "Page.startScreencast"
 	CommandStopLoading                         = "Page.stopLoading"

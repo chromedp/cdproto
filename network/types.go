@@ -551,14 +551,19 @@ func (t BlockedReason) String() string {
 
 // BlockedReason values.
 const (
-	BlockedReasonOther             BlockedReason = "other"
-	BlockedReasonCsp               BlockedReason = "csp"
-	BlockedReasonMixedContent      BlockedReason = "mixed-content"
-	BlockedReasonOrigin            BlockedReason = "origin"
-	BlockedReasonInspector         BlockedReason = "inspector"
-	BlockedReasonSubresourceFilter BlockedReason = "subresource-filter"
-	BlockedReasonContentType       BlockedReason = "content-type"
-	BlockedReasonCollapsedByClient BlockedReason = "collapsed-by-client"
+	BlockedReasonOther                                             BlockedReason = "other"
+	BlockedReasonCsp                                               BlockedReason = "csp"
+	BlockedReasonMixedContent                                      BlockedReason = "mixed-content"
+	BlockedReasonOrigin                                            BlockedReason = "origin"
+	BlockedReasonInspector                                         BlockedReason = "inspector"
+	BlockedReasonSubresourceFilter                                 BlockedReason = "subresource-filter"
+	BlockedReasonContentType                                       BlockedReason = "content-type"
+	BlockedReasonCollapsedByClient                                 BlockedReason = "collapsed-by-client"
+	BlockedReasonCoepFrameResourceNeedsCoepHeader                  BlockedReason = "coep-frame-resource-needs-coep-header"
+	BlockedReasonCoopSandboxedIframeCannotNavigateToCoopPage       BlockedReason = "coop-sandboxed-iframe-cannot-navigate-to-coop-page"
+	BlockedReasonCorpNotSameOrigin                                 BlockedReason = "corp-not-same-origin"
+	BlockedReasonCorpNotSameOriginAfterDefaultedToSameOriginByCoep BlockedReason = "corp-not-same-origin-after-defaulted-to-same-origin-by-coep"
+	BlockedReasonCorpNotSameSite                                   BlockedReason = "corp-not-same-site"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -590,6 +595,16 @@ func (t *BlockedReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = BlockedReasonContentType
 	case BlockedReasonCollapsedByClient:
 		*t = BlockedReasonCollapsedByClient
+	case BlockedReasonCoepFrameResourceNeedsCoepHeader:
+		*t = BlockedReasonCoepFrameResourceNeedsCoepHeader
+	case BlockedReasonCoopSandboxedIframeCannotNavigateToCoopPage:
+		*t = BlockedReasonCoopSandboxedIframeCannotNavigateToCoopPage
+	case BlockedReasonCorpNotSameOrigin:
+		*t = BlockedReasonCorpNotSameOrigin
+	case BlockedReasonCorpNotSameOriginAfterDefaultedToSameOriginByCoep:
+		*t = BlockedReasonCorpNotSameOriginAfterDefaultedToSameOriginByCoep
+	case BlockedReasonCorpNotSameSite:
+		*t = BlockedReasonCorpNotSameSite
 
 	default:
 		in.AddError(errors.New("unknown BlockedReason value"))
