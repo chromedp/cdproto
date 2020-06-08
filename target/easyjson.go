@@ -1923,6 +1923,10 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoTarget24(in *jlexer.Lexer, ou
 		switch key {
 		case "disposeOnDetach":
 			out.DisposeOnDetach = bool(in.Bool())
+		case "proxyServer":
+			out.ProxyServer = string(in.String())
+		case "proxyBypassList":
+			out.ProxyBypassList = string(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -1942,6 +1946,26 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoTarget24(out *jwriter.Writer,
 		first = false
 		out.RawString(prefix[1:])
 		out.Bool(bool(in.DisposeOnDetach))
+	}
+	if in.ProxyServer != "" {
+		const prefix string = ",\"proxyServer\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(in.ProxyServer))
+	}
+	if in.ProxyBypassList != "" {
+		const prefix string = ",\"proxyBypassList\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(in.ProxyBypassList))
 	}
 	out.RawByte('}')
 }

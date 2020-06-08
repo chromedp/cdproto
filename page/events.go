@@ -58,9 +58,10 @@ type EventFrameResized struct{}
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-frameRequestedNavigation
 type EventFrameRequestedNavigation struct {
-	FrameID cdp.FrameID            `json:"frameId"` // Id of the frame that is being navigated.
-	Reason  ClientNavigationReason `json:"reason"`  // The reason for the navigation.
-	URL     string                 `json:"url"`     // The destination URL for the requested navigation.
+	FrameID     cdp.FrameID                 `json:"frameId"`     // Id of the frame that is being navigated.
+	Reason      ClientNavigationReason      `json:"reason"`      // The reason for the navigation.
+	URL         string                      `json:"url"`         // The destination URL for the requested navigation.
+	Disposition ClientNavigationDisposition `json:"disposition"` // The disposition for the navigation.
 }
 
 // EventFrameStartedLoading fired when frame has started loading.
@@ -81,9 +82,10 @@ type EventFrameStoppedLoading struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-downloadWillBegin
 type EventDownloadWillBegin struct {
-	FrameID cdp.FrameID `json:"frameId"` // Id of the frame that caused download to begin.
-	GUID    string      `json:"guid"`    // Global unique identifier of the download.
-	URL     string      `json:"url"`     // URL of the resource being downloaded.
+	FrameID           cdp.FrameID `json:"frameId"`           // Id of the frame that caused download to begin.
+	GUID              string      `json:"guid"`              // Global unique identifier of the download.
+	URL               string      `json:"url"`               // URL of the resource being downloaded.
+	SuggestedFilename string      `json:"suggestedFilename"` // Suggested file name of the resource (the actual name of the file saved on disk may differ).
 }
 
 // EventDownloadProgress fired when download makes progress. Last call has

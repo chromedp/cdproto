@@ -339,6 +339,56 @@ func (t *ClientNavigationReason) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 
+// ClientNavigationDisposition [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-ClientNavigationDisposition
+type ClientNavigationDisposition string
+
+// String returns the ClientNavigationDisposition as string value.
+func (t ClientNavigationDisposition) String() string {
+	return string(t)
+}
+
+// ClientNavigationDisposition values.
+const (
+	ClientNavigationDispositionCurrentTab ClientNavigationDisposition = "currentTab"
+	ClientNavigationDispositionNewTab     ClientNavigationDisposition = "newTab"
+	ClientNavigationDispositionNewWindow  ClientNavigationDisposition = "newWindow"
+	ClientNavigationDispositionDownload   ClientNavigationDisposition = "download"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t ClientNavigationDisposition) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t ClientNavigationDisposition) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *ClientNavigationDisposition) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	switch ClientNavigationDisposition(in.String()) {
+	case ClientNavigationDispositionCurrentTab:
+		*t = ClientNavigationDispositionCurrentTab
+	case ClientNavigationDispositionNewTab:
+		*t = ClientNavigationDispositionNewTab
+	case ClientNavigationDispositionNewWindow:
+		*t = ClientNavigationDispositionNewWindow
+	case ClientNavigationDispositionDownload:
+		*t = ClientNavigationDispositionDownload
+
+	default:
+		in.AddError(errors.New("unknown ClientNavigationDisposition value"))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *ClientNavigationDisposition) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
 // InstallabilityErrorArgument [no description].
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-InstallabilityErrorArgument

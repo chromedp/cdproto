@@ -249,6 +249,7 @@ const (
 	CommandDebuggerDisable                                 = debugger.CommandDisable
 	CommandDebuggerEnable                                  = debugger.CommandEnable
 	CommandDebuggerEvaluateOnCallFrame                     = debugger.CommandEvaluateOnCallFrame
+	CommandDebuggerExecuteWasmEvaluator                    = debugger.CommandExecuteWasmEvaluator
 	CommandDebuggerGetPossibleBreakpoints                  = debugger.CommandGetPossibleBreakpoints
 	CommandDebuggerGetScriptSource                         = debugger.CommandGetScriptSource
 	CommandDebuggerGetStackTrace                           = debugger.CommandGetStackTrace
@@ -379,6 +380,8 @@ const (
 	CommandMediaDisable                                    = media.CommandDisable
 	EventMediaPlayerPropertiesChanged                      = "Media.playerPropertiesChanged"
 	EventMediaPlayerEventsAdded                            = "Media.playerEventsAdded"
+	EventMediaPlayerMessagesLogged                         = "Media.playerMessagesLogged"
+	EventMediaPlayerErrorsRaised                           = "Media.playerErrorsRaised"
 	EventMediaPlayersCreated                               = "Media.playersCreated"
 	CommandMemoryGetDOMCounters                            = memory.CommandGetDOMCounters
 	CommandMemoryPrepareForLeakDetection                   = memory.CommandPrepareForLeakDetection
@@ -448,6 +451,7 @@ const (
 	CommandOverlaySetShowScrollBottleneckRects             = overlay.CommandSetShowScrollBottleneckRects
 	CommandOverlaySetShowHitTestBorders                    = overlay.CommandSetShowHitTestBorders
 	CommandOverlaySetShowViewportSizeOnResize              = overlay.CommandSetShowViewportSizeOnResize
+	CommandOverlaySetShowHinge                             = overlay.CommandSetShowHinge
 	EventOverlayInspectNodeRequested                       = "Overlay.inspectNodeRequested"
 	EventOverlayNodeHighlightRequested                     = "Overlay.nodeHighlightRequested"
 	EventOverlayScreenshotRequested                        = "Overlay.screenshotRequested"
@@ -1216,6 +1220,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandDebuggerEvaluateOnCallFrame:
 		v = new(debugger.EvaluateOnCallFrameReturns)
 
+	case CommandDebuggerExecuteWasmEvaluator:
+		v = new(debugger.ExecuteWasmEvaluatorReturns)
+
 	case CommandDebuggerGetPossibleBreakpoints:
 		v = new(debugger.GetPossibleBreakpointsReturns)
 
@@ -1606,6 +1613,12 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case EventMediaPlayerEventsAdded:
 		v = new(media.EventPlayerEventsAdded)
 
+	case EventMediaPlayerMessagesLogged:
+		v = new(media.EventPlayerMessagesLogged)
+
+	case EventMediaPlayerErrorsRaised:
+		v = new(media.EventPlayerErrorsRaised)
+
 	case EventMediaPlayersCreated:
 		v = new(media.EventPlayersCreated)
 
@@ -1811,6 +1824,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		return emptyVal, nil
 
 	case CommandOverlaySetShowViewportSizeOnResize:
+		return emptyVal, nil
+
+	case CommandOverlaySetShowHinge:
 		return emptyVal, nil
 
 	case EventOverlayInspectNodeRequested:

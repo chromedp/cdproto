@@ -94,15 +94,14 @@ func (t SameSiteCookieWarningReason) String() string {
 
 // SameSiteCookieWarningReason values.
 const (
-	SameSiteCookieWarningReasonWarnSameSiteUnspecifiedCrossSiteContext        SameSiteCookieWarningReason = "WarnSameSiteUnspecifiedCrossSiteContext"
-	SameSiteCookieWarningReasonWarnSameSiteNoneInsecure                       SameSiteCookieWarningReason = "WarnSameSiteNoneInsecure"
-	SameSiteCookieWarningReasonWarnSameSiteUnspecifiedLaxAllowUnsafe          SameSiteCookieWarningReason = "WarnSameSiteUnspecifiedLaxAllowUnsafe"
-	SameSiteCookieWarningReasonWarnSameSiteCrossSchemeSecureURLMethodUnsafe   SameSiteCookieWarningReason = "WarnSameSiteCrossSchemeSecureUrlMethodUnsafe"
-	SameSiteCookieWarningReasonWarnSameSiteCrossSchemeSecureURLLax            SameSiteCookieWarningReason = "WarnSameSiteCrossSchemeSecureUrlLax"
-	SameSiteCookieWarningReasonWarnSameSiteCrossSchemeSecureURLStrict         SameSiteCookieWarningReason = "WarnSameSiteCrossSchemeSecureUrlStrict"
-	SameSiteCookieWarningReasonWarnSameSiteCrossSchemeInsecureURLMethodUnsafe SameSiteCookieWarningReason = "WarnSameSiteCrossSchemeInsecureUrlMethodUnsafe"
-	SameSiteCookieWarningReasonWarnSameSiteCrossSchemeInsecureURLLax          SameSiteCookieWarningReason = "WarnSameSiteCrossSchemeInsecureUrlLax"
-	SameSiteCookieWarningReasonWarnSameSiteCrossSchemeInsecureURLStrict       SameSiteCookieWarningReason = "WarnSameSiteCrossSchemeInsecureUrlStrict"
+	SameSiteCookieWarningReasonWarnSameSiteUnspecifiedCrossSiteContext SameSiteCookieWarningReason = "WarnSameSiteUnspecifiedCrossSiteContext"
+	SameSiteCookieWarningReasonWarnSameSiteNoneInsecure                SameSiteCookieWarningReason = "WarnSameSiteNoneInsecure"
+	SameSiteCookieWarningReasonWarnSameSiteUnspecifiedLaxAllowUnsafe   SameSiteCookieWarningReason = "WarnSameSiteUnspecifiedLaxAllowUnsafe"
+	SameSiteCookieWarningReasonWarnSameSiteStrictLaxDowngradeStrict    SameSiteCookieWarningReason = "WarnSameSiteStrictLaxDowngradeStrict"
+	SameSiteCookieWarningReasonWarnSameSiteStrictCrossDowngradeStrict  SameSiteCookieWarningReason = "WarnSameSiteStrictCrossDowngradeStrict"
+	SameSiteCookieWarningReasonWarnSameSiteStrictCrossDowngradeLax     SameSiteCookieWarningReason = "WarnSameSiteStrictCrossDowngradeLax"
+	SameSiteCookieWarningReasonWarnSameSiteLaxCrossDowngradeStrict     SameSiteCookieWarningReason = "WarnSameSiteLaxCrossDowngradeStrict"
+	SameSiteCookieWarningReasonWarnSameSiteLaxCrossDowngradeLax        SameSiteCookieWarningReason = "WarnSameSiteLaxCrossDowngradeLax"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -124,18 +123,16 @@ func (t *SameSiteCookieWarningReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = SameSiteCookieWarningReasonWarnSameSiteNoneInsecure
 	case SameSiteCookieWarningReasonWarnSameSiteUnspecifiedLaxAllowUnsafe:
 		*t = SameSiteCookieWarningReasonWarnSameSiteUnspecifiedLaxAllowUnsafe
-	case SameSiteCookieWarningReasonWarnSameSiteCrossSchemeSecureURLMethodUnsafe:
-		*t = SameSiteCookieWarningReasonWarnSameSiteCrossSchemeSecureURLMethodUnsafe
-	case SameSiteCookieWarningReasonWarnSameSiteCrossSchemeSecureURLLax:
-		*t = SameSiteCookieWarningReasonWarnSameSiteCrossSchemeSecureURLLax
-	case SameSiteCookieWarningReasonWarnSameSiteCrossSchemeSecureURLStrict:
-		*t = SameSiteCookieWarningReasonWarnSameSiteCrossSchemeSecureURLStrict
-	case SameSiteCookieWarningReasonWarnSameSiteCrossSchemeInsecureURLMethodUnsafe:
-		*t = SameSiteCookieWarningReasonWarnSameSiteCrossSchemeInsecureURLMethodUnsafe
-	case SameSiteCookieWarningReasonWarnSameSiteCrossSchemeInsecureURLLax:
-		*t = SameSiteCookieWarningReasonWarnSameSiteCrossSchemeInsecureURLLax
-	case SameSiteCookieWarningReasonWarnSameSiteCrossSchemeInsecureURLStrict:
-		*t = SameSiteCookieWarningReasonWarnSameSiteCrossSchemeInsecureURLStrict
+	case SameSiteCookieWarningReasonWarnSameSiteStrictLaxDowngradeStrict:
+		*t = SameSiteCookieWarningReasonWarnSameSiteStrictLaxDowngradeStrict
+	case SameSiteCookieWarningReasonWarnSameSiteStrictCrossDowngradeStrict:
+		*t = SameSiteCookieWarningReasonWarnSameSiteStrictCrossDowngradeStrict
+	case SameSiteCookieWarningReasonWarnSameSiteStrictCrossDowngradeLax:
+		*t = SameSiteCookieWarningReasonWarnSameSiteStrictCrossDowngradeLax
+	case SameSiteCookieWarningReasonWarnSameSiteLaxCrossDowngradeStrict:
+		*t = SameSiteCookieWarningReasonWarnSameSiteLaxCrossDowngradeStrict
+	case SameSiteCookieWarningReasonWarnSameSiteLaxCrossDowngradeLax:
+		*t = SameSiteCookieWarningReasonWarnSameSiteLaxCrossDowngradeLax
 
 	default:
 		in.AddError(errors.New("unknown SameSiteCookieWarningReason value"))
@@ -381,6 +378,71 @@ type MixedContentIssueDetails struct {
 	Frame            *AffectedFrame               `json:"frame,omitempty"`        // Optional because not every mixed content issue is necessarily linked to a frame.
 }
 
+// BlockedByResponseReason enum indicating the reason a response has been
+// blocked. These reasons are refinements of the net error BLOCKED_BY_RESPONSE.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-BlockedByResponseReason
+type BlockedByResponseReason string
+
+// String returns the BlockedByResponseReason as string value.
+func (t BlockedByResponseReason) String() string {
+	return string(t)
+}
+
+// BlockedByResponseReason values.
+const (
+	BlockedByResponseReasonCoepFrameResourceNeedsCoepHeader                  BlockedByResponseReason = "CoepFrameResourceNeedsCoepHeader"
+	BlockedByResponseReasonCoopSandboxedIFrameCannotNavigateToCoopPage       BlockedByResponseReason = "CoopSandboxedIFrameCannotNavigateToCoopPage"
+	BlockedByResponseReasonCorpNotSameOrigin                                 BlockedByResponseReason = "CorpNotSameOrigin"
+	BlockedByResponseReasonCorpNotSameOriginAfterDefaultedToSameOriginByCoep BlockedByResponseReason = "CorpNotSameOriginAfterDefaultedToSameOriginByCoep"
+	BlockedByResponseReasonCorpNotSameSite                                   BlockedByResponseReason = "CorpNotSameSite"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t BlockedByResponseReason) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t BlockedByResponseReason) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *BlockedByResponseReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	switch BlockedByResponseReason(in.String()) {
+	case BlockedByResponseReasonCoepFrameResourceNeedsCoepHeader:
+		*t = BlockedByResponseReasonCoepFrameResourceNeedsCoepHeader
+	case BlockedByResponseReasonCoopSandboxedIFrameCannotNavigateToCoopPage:
+		*t = BlockedByResponseReasonCoopSandboxedIFrameCannotNavigateToCoopPage
+	case BlockedByResponseReasonCorpNotSameOrigin:
+		*t = BlockedByResponseReasonCorpNotSameOrigin
+	case BlockedByResponseReasonCorpNotSameOriginAfterDefaultedToSameOriginByCoep:
+		*t = BlockedByResponseReasonCorpNotSameOriginAfterDefaultedToSameOriginByCoep
+	case BlockedByResponseReasonCorpNotSameSite:
+		*t = BlockedByResponseReasonCorpNotSameSite
+
+	default:
+		in.AddError(errors.New("unknown BlockedByResponseReason value"))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *BlockedByResponseReason) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
+// BlockedByResponseIssueDetails details for a request that has been blocked
+// with the BLOCKED_BY_RESPONSE code. Currently only used for COEP/COOP, but may
+// be extended to include some CSP errors in the future.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-BlockedByResponseIssueDetails
+type BlockedByResponseIssueDetails struct {
+	Request *AffectedRequest        `json:"request"`
+	Frame   *AffectedFrame          `json:"frame,omitempty"`
+	Reason  BlockedByResponseReason `json:"reason"`
+}
+
 // InspectorIssueCode a unique identifier for the type of issue. Each type
 // may use one of the optional fields in InspectorIssueDetails to convey more
 // specific information about the kind of issue.
@@ -395,8 +457,9 @@ func (t InspectorIssueCode) String() string {
 
 // InspectorIssueCode values.
 const (
-	InspectorIssueCodeSameSiteCookieIssue InspectorIssueCode = "SameSiteCookieIssue"
-	InspectorIssueCodeMixedContentIssue   InspectorIssueCode = "MixedContentIssue"
+	InspectorIssueCodeSameSiteCookieIssue    InspectorIssueCode = "SameSiteCookieIssue"
+	InspectorIssueCodeMixedContentIssue      InspectorIssueCode = "MixedContentIssue"
+	InspectorIssueCodeBlockedByResponseIssue InspectorIssueCode = "BlockedByResponseIssue"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -416,6 +479,8 @@ func (t *InspectorIssueCode) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = InspectorIssueCodeSameSiteCookieIssue
 	case InspectorIssueCodeMixedContentIssue:
 		*t = InspectorIssueCodeMixedContentIssue
+	case InspectorIssueCodeBlockedByResponseIssue:
+		*t = InspectorIssueCodeBlockedByResponseIssue
 
 	default:
 		in.AddError(errors.New("unknown InspectorIssueCode value"))
@@ -433,8 +498,9 @@ func (t *InspectorIssueCode) UnmarshalJSON(buf []byte) error {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-InspectorIssueDetails
 type InspectorIssueDetails struct {
-	SameSiteCookieIssueDetails *SameSiteCookieIssueDetails `json:"sameSiteCookieIssueDetails,omitempty"`
-	MixedContentIssueDetails   *MixedContentIssueDetails   `json:"mixedContentIssueDetails,omitempty"`
+	SameSiteCookieIssueDetails    *SameSiteCookieIssueDetails    `json:"sameSiteCookieIssueDetails,omitempty"`
+	MixedContentIssueDetails      *MixedContentIssueDetails      `json:"mixedContentIssueDetails,omitempty"`
+	BlockedByResponseIssueDetails *BlockedByResponseIssueDetails `json:"blockedByResponseIssueDetails,omitempty"`
 }
 
 // InspectorIssue an inspector issue reported from the back-end.

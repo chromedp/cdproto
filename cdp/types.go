@@ -507,10 +507,10 @@ const EmptyNodeID = NodeID(0)
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#type-RGBA
 type RGBA struct {
-	R int64   `json:"r"`           // The red component, in the [0-255] range.
-	G int64   `json:"g"`           // The green component, in the [0-255] range.
-	B int64   `json:"b"`           // The blue component, in the [0-255] range.
-	A float64 `json:"a,omitempty"` // The alpha component, in the [0-1] range (default: 1).
+	R int64   `json:"r"` // The red component, in the [0-255] range.
+	G int64   `json:"g"` // The green component, in the [0-255] range.
+	B int64   `json:"b"` // The blue component, in the [0-255] range.
+	A float64 `json:"a"` // The alpha component, in the [0-1] range (default: 1).
 }
 
 // NodeType node type.

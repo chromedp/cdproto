@@ -195,7 +195,9 @@ func (p *ExposeDevToolsProtocolParams) Do(ctx context.Context) (err error) {
 // CreateBrowserContextParams creates a new empty BrowserContext. Similar to
 // an incognito profile but you can have more than one.
 type CreateBrowserContextParams struct {
-	DisposeOnDetach bool `json:"disposeOnDetach,omitempty"` // If specified, disposes this context when debugging session disconnects.
+	DisposeOnDetach bool   `json:"disposeOnDetach,omitempty"` // If specified, disposes this context when debugging session disconnects.
+	ProxyServer     string `json:"proxyServer,omitempty"`     // Proxy server, similar to the one passed to --proxy-server
+	ProxyBypassList string `json:"proxyBypassList,omitempty"` // Proxy bypass list, similar to the one passed to --proxy-bypass-list
 }
 
 // CreateBrowserContext creates a new empty BrowserContext. Similar to an
@@ -212,6 +214,19 @@ func CreateBrowserContext() *CreateBrowserContextParams {
 // session disconnects.
 func (p CreateBrowserContextParams) WithDisposeOnDetach(disposeOnDetach bool) *CreateBrowserContextParams {
 	p.DisposeOnDetach = disposeOnDetach
+	return &p
+}
+
+// WithProxyServer proxy server, similar to the one passed to --proxy-server.
+func (p CreateBrowserContextParams) WithProxyServer(proxyServer string) *CreateBrowserContextParams {
+	p.ProxyServer = proxyServer
+	return &p
+}
+
+// WithProxyBypassList proxy bypass list, similar to the one passed to
+// --proxy-bypass-list.
+func (p CreateBrowserContextParams) WithProxyBypassList(proxyBypassList string) *CreateBrowserContextParams {
+	p.ProxyBypassList = proxyBypassList
 	return &p
 }
 

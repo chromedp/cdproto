@@ -50,9 +50,10 @@ func (p *EnableParams) Do(ctx context.Context) (err error) {
 
 // GetHighlightObjectForTestParams for testing.
 type GetHighlightObjectForTestParams struct {
-	NodeID          cdp.NodeID `json:"nodeId"`                    // Id of the node to get highlight object for.
-	IncludeDistance bool       `json:"includeDistance,omitempty"` // Whether to include distance info.
-	IncludeStyle    bool       `json:"includeStyle,omitempty"`    // Whether to include style info.
+	NodeID          cdp.NodeID  `json:"nodeId"`                    // Id of the node to get highlight object for.
+	IncludeDistance bool        `json:"includeDistance,omitempty"` // Whether to include distance info.
+	IncludeStyle    bool        `json:"includeStyle,omitempty"`    // Whether to include style info.
+	ColorFormat     ColorFormat `json:"colorFormat,omitempty"`     // The color format to get config with (default: hex)
 }
 
 // GetHighlightObjectForTest for testing.
@@ -76,6 +77,12 @@ func (p GetHighlightObjectForTestParams) WithIncludeDistance(includeDistance boo
 // WithIncludeStyle whether to include style info.
 func (p GetHighlightObjectForTestParams) WithIncludeStyle(includeStyle bool) *GetHighlightObjectForTestParams {
 	p.IncludeStyle = includeStyle
+	return &p
+}
+
+// WithColorFormat the color format to get config with (default: hex).
+func (p GetHighlightObjectForTestParams) WithColorFormat(colorFormat ColorFormat) *GetHighlightObjectForTestParams {
+	p.ColorFormat = colorFormat
 	return &p
 }
 
@@ -535,6 +542,31 @@ func (p *SetShowViewportSizeOnResizeParams) Do(ctx context.Context) (err error) 
 	return cdp.Execute(ctx, CommandSetShowViewportSizeOnResize, p, nil)
 }
 
+// SetShowHingeParams add a dual screen device hinge.
+type SetShowHingeParams struct {
+	HingeConfig *HingeConfig `json:"hingeConfig,omitempty"` // hinge data, null means hideHinge
+}
+
+// SetShowHinge add a dual screen device hinge.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Overlay#method-setShowHinge
+//
+// parameters:
+func SetShowHinge() *SetShowHingeParams {
+	return &SetShowHingeParams{}
+}
+
+// WithHingeConfig hinge data, null means hideHinge.
+func (p SetShowHingeParams) WithHingeConfig(hingeConfig *HingeConfig) *SetShowHingeParams {
+	p.HingeConfig = hingeConfig
+	return &p
+}
+
+// Do executes Overlay.setShowHinge against the provided context.
+func (p *SetShowHingeParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetShowHinge, p, nil)
+}
+
 // Command names.
 const (
 	CommandDisable                      = "Overlay.disable"
@@ -555,4 +587,5 @@ const (
 	CommandSetShowScrollBottleneckRects = "Overlay.setShowScrollBottleneckRects"
 	CommandSetShowHitTestBorders        = "Overlay.setShowHitTestBorders"
 	CommandSetShowViewportSizeOnResize  = "Overlay.setShowViewportSizeOnResize"
+	CommandSetShowHinge                 = "Overlay.setShowHinge"
 )

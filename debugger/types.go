@@ -135,6 +135,14 @@ func (t *ScriptLanguage) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 
+// DebugSymbols debug symbols available for a wasm script.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#type-DebugSymbols
+type DebugSymbols struct {
+	Type        DebugSymbolsType `json:"type"`                  // Type of the debug symbols.
+	ExternalURL string           `json:"externalURL,omitempty"` // URL of the external symbol source.
+}
+
 // ScopeType scope type.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#type-Scope
@@ -247,6 +255,56 @@ func (t *BreakLocationType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 
 // UnmarshalJSON satisfies json.Unmarshaler.
 func (t *BreakLocationType) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
+// DebugSymbolsType type of the debug symbols.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#type-DebugSymbols
+type DebugSymbolsType string
+
+// String returns the DebugSymbolsType as string value.
+func (t DebugSymbolsType) String() string {
+	return string(t)
+}
+
+// DebugSymbolsType values.
+const (
+	DebugSymbolsTypeNone          DebugSymbolsType = "None"
+	DebugSymbolsTypeSourceMap     DebugSymbolsType = "SourceMap"
+	DebugSymbolsTypeEmbeddedDWARF DebugSymbolsType = "EmbeddedDWARF"
+	DebugSymbolsTypeExternalDWARF DebugSymbolsType = "ExternalDWARF"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t DebugSymbolsType) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t DebugSymbolsType) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *DebugSymbolsType) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	switch DebugSymbolsType(in.String()) {
+	case DebugSymbolsTypeNone:
+		*t = DebugSymbolsTypeNone
+	case DebugSymbolsTypeSourceMap:
+		*t = DebugSymbolsTypeSourceMap
+	case DebugSymbolsTypeEmbeddedDWARF:
+		*t = DebugSymbolsTypeEmbeddedDWARF
+	case DebugSymbolsTypeExternalDWARF:
+		*t = DebugSymbolsTypeExternalDWARF
+
+	default:
+		in.AddError(errors.New("unknown DebugSymbolsType value"))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *DebugSymbolsType) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 

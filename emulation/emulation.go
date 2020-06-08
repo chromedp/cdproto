@@ -646,9 +646,10 @@ func (p *SetTimezoneOverrideParams) Do(ctx context.Context) (err error) {
 // SetUserAgentOverrideParams allows overriding user agent with the given
 // string.
 type SetUserAgentOverrideParams struct {
-	UserAgent      string `json:"userAgent"`                // User agent to use.
-	AcceptLanguage string `json:"acceptLanguage,omitempty"` // Browser langugage to emulate.
-	Platform       string `json:"platform,omitempty"`       // The platform navigator.platform should return.
+	UserAgent         string             `json:"userAgent"`                   // User agent to use.
+	AcceptLanguage    string             `json:"acceptLanguage,omitempty"`    // Browser langugage to emulate.
+	Platform          string             `json:"platform,omitempty"`          // The platform navigator.platform should return.
+	UserAgentMetadata *UserAgentMetadata `json:"userAgentMetadata,omitempty"` // To be sent in Sec-CH-UA-* headers and returned in navigator.userAgentData
 }
 
 // SetUserAgentOverride allows overriding user agent with the given string.
@@ -672,6 +673,13 @@ func (p SetUserAgentOverrideParams) WithAcceptLanguage(acceptLanguage string) *S
 // WithPlatform the platform navigator.platform should return.
 func (p SetUserAgentOverrideParams) WithPlatform(platform string) *SetUserAgentOverrideParams {
 	p.Platform = platform
+	return &p
+}
+
+// WithUserAgentMetadata to be sent in Sec-CH-UA-* headers and returned in
+// navigator.userAgentData.
+func (p SetUserAgentOverrideParams) WithUserAgentMetadata(userAgentMetadata *UserAgentMetadata) *SetUserAgentOverrideParams {
+	p.UserAgentMetadata = userAgentMetadata
 	return &p
 }
 

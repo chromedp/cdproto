@@ -204,6 +204,57 @@ func (p *EvaluateOnCallFrameParams) Do(ctx context.Context) (result *runtime.Rem
 	return res.Result, res.ExceptionDetails, nil
 }
 
+// ExecuteWasmEvaluatorParams execute a Wasm Evaluator module on a given call
+// frame.
+type ExecuteWasmEvaluatorParams struct {
+	CallFrameID CallFrameID       `json:"callFrameId"`       // WebAssembly call frame identifier to evaluate on.
+	Evaluator   string            `json:"evaluator"`         // Code of the evaluator module.
+	Timeout     runtime.TimeDelta `json:"timeout,omitempty"` // Terminate execution after timing out (number of milliseconds).
+}
+
+// ExecuteWasmEvaluator execute a Wasm Evaluator module on a given call
+// frame.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-executeWasmEvaluator
+//
+// parameters:
+//   callFrameID - WebAssembly call frame identifier to evaluate on.
+//   evaluator - Code of the evaluator module.
+func ExecuteWasmEvaluator(callFrameID CallFrameID, evaluator string) *ExecuteWasmEvaluatorParams {
+	return &ExecuteWasmEvaluatorParams{
+		CallFrameID: callFrameID,
+		Evaluator:   evaluator,
+	}
+}
+
+// WithTimeout terminate execution after timing out (number of milliseconds).
+func (p ExecuteWasmEvaluatorParams) WithTimeout(timeout runtime.TimeDelta) *ExecuteWasmEvaluatorParams {
+	p.Timeout = timeout
+	return &p
+}
+
+// ExecuteWasmEvaluatorReturns return values.
+type ExecuteWasmEvaluatorReturns struct {
+	Result           *runtime.RemoteObject     `json:"result,omitempty"`           // Object wrapper for the evaluation result.
+	ExceptionDetails *runtime.ExceptionDetails `json:"exceptionDetails,omitempty"` // Exception details.
+}
+
+// Do executes Debugger.executeWasmEvaluator against the provided context.
+//
+// returns:
+//   result - Object wrapper for the evaluation result.
+//   exceptionDetails - Exception details.
+func (p *ExecuteWasmEvaluatorParams) Do(ctx context.Context) (result *runtime.RemoteObject, exceptionDetails *runtime.ExceptionDetails, err error) {
+	// execute
+	var res ExecuteWasmEvaluatorReturns
+	err = cdp.Execute(ctx, CommandExecuteWasmEvaluator, p, &res)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return res.Result, res.ExceptionDetails, nil
+}
+
 // GetPossibleBreakpointsParams returns possible locations for breakpoint.
 // scriptId in start and end range locations should be the same.
 type GetPossibleBreakpointsParams struct {
@@ -1054,6 +1105,7 @@ const (
 	CommandDisable                      = "Debugger.disable"
 	CommandEnable                       = "Debugger.enable"
 	CommandEvaluateOnCallFrame          = "Debugger.evaluateOnCallFrame"
+	CommandExecuteWasmEvaluator         = "Debugger.executeWasmEvaluator"
 	CommandGetPossibleBreakpoints       = "Debugger.getPossibleBreakpoints"
 	CommandGetScriptSource              = "Debugger.getScriptSource"
 	CommandGetStackTrace                = "Debugger.getStackTrace"

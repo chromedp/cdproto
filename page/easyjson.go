@@ -5733,6 +5733,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoPage67(in *jlexer.Lexer, out 
 			(out.Reason).UnmarshalEasyJSON(in)
 		case "url":
 			out.URL = string(in.String())
+		case "disposition":
+			(out.Disposition).UnmarshalEasyJSON(in)
 		default:
 			in.SkipRecursive()
 		}
@@ -5761,6 +5763,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoPage67(out *jwriter.Writer, i
 		const prefix string = ",\"url\":"
 		out.RawString(prefix)
 		out.String(string(in.URL))
+	}
+	{
+		const prefix string = ",\"disposition\":"
+		out.RawString(prefix)
+		(in.Disposition).MarshalEasyJSON(out)
 	}
 	out.RawByte('}')
 }
@@ -6125,6 +6132,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoPage72(in *jlexer.Lexer, out 
 			out.GUID = string(in.String())
 		case "url":
 			out.URL = string(in.String())
+		case "suggestedFilename":
+			out.SuggestedFilename = string(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -6153,6 +6162,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoPage72(out *jwriter.Writer, i
 		const prefix string = ",\"url\":"
 		out.RawString(prefix)
 		out.String(string(in.URL))
+	}
+	{
+		const prefix string = ",\"suggestedFilename\":"
+		out.RawString(prefix)
+		out.String(string(in.SuggestedFilename))
 	}
 	out.RawByte('}')
 }
