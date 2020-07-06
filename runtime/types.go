@@ -374,7 +374,7 @@ const (
 	SubtypeF32         Subtype = "f32"
 	SubtypeF64         Subtype = "f64"
 	SubtypeV128        Subtype = "v128"
-	SubtypeAnyref      Subtype = "anyref"
+	SubtypeExternref   Subtype = "externref"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -434,8 +434,8 @@ func (t *Subtype) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = SubtypeF64
 	case SubtypeV128:
 		*t = SubtypeV128
-	case SubtypeAnyref:
-		*t = SubtypeAnyref
+	case SubtypeExternref:
+		*t = SubtypeExternref
 
 	default:
 		in.AddError(errors.New("unknown Subtype value"))

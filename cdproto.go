@@ -145,6 +145,7 @@ const (
 	CommandCSSStartRuleUsageTracking                       = css.CommandStartRuleUsageTracking
 	CommandCSSStopRuleUsageTracking                        = css.CommandStopRuleUsageTracking
 	CommandCSSTakeCoverageDelta                            = css.CommandTakeCoverageDelta
+	CommandCSSSetLocalFontsEnabled                         = css.CommandSetLocalFontsEnabled
 	EventCSSFontsUpdated                                   = "CSS.fontsUpdated"
 	EventCSSMediaQueryResultChanged                        = "CSS.mediaQueryResultChanged"
 	EventCSSStyleSheetAdded                                = "CSS.styleSheetAdded"
@@ -907,6 +908,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandCSSTakeCoverageDelta:
 		v = new(css.TakeCoverageDeltaReturns)
+
+	case CommandCSSSetLocalFontsEnabled:
+		return emptyVal, nil
 
 	case EventCSSFontsUpdated:
 		v = new(css.EventFontsUpdated)
