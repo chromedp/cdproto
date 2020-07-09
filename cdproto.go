@@ -486,6 +486,7 @@ const (
 	CommandPageSetFontFamilies                             = page.CommandSetFontFamilies
 	CommandPageSetFontSizes                                = page.CommandSetFontSizes
 	CommandPageSetDocumentContent                          = page.CommandSetDocumentContent
+	CommandPageSetDownloadBehavior                         = page.CommandSetDownloadBehavior
 	CommandPageSetLifecycleEventsEnabled                   = page.CommandSetLifecycleEventsEnabled
 	CommandPageStartScreencast                             = page.CommandStartScreencast
 	CommandPageStopLoading                                 = page.CommandStopLoading
@@ -1931,6 +1932,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		return emptyVal, nil
 
 	case CommandPageSetDocumentContent:
+		return emptyVal, nil
+
+	case CommandPageSetDownloadBehavior:
 		return emptyVal, nil
 
 	case CommandPageSetLifecycleEventsEnabled:
