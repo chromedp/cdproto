@@ -20,6 +20,7 @@ type GridHighlightConfig struct {
 	ShowGridExtensionLines  bool      `json:"showGridExtensionLines,omitempty"`  // Whether the extension lines from grid cells to the rulers should be shown (default: false).
 	ShowPositiveLineNumbers bool      `json:"showPositiveLineNumbers,omitempty"` // Show Positive line number labels (default: false).
 	ShowNegativeLineNumbers bool      `json:"showNegativeLineNumbers,omitempty"` // Show Negative line number labels (default: false).
+	ShowAreaNames           bool      `json:"showAreaNames,omitempty"`           // Show area name labels (default: false).
 	GridBorderColor         *cdp.RGBA `json:"gridBorderColor,omitempty"`         // The grid container border highlight color (default: transparent).
 	CellBorderColor         *cdp.RGBA `json:"cellBorderColor,omitempty"`         // The cell border color (default: transparent).
 	GridBorderDash          bool      `json:"gridBorderDash,omitempty"`          // Whether the grid border is dashed (default: false).
@@ -28,6 +29,7 @@ type GridHighlightConfig struct {
 	RowHatchColor           *cdp.RGBA `json:"rowHatchColor,omitempty"`           // The row gap hatching fill color (default: transparent).
 	ColumnGapColor          *cdp.RGBA `json:"columnGapColor,omitempty"`          // The column gap highlight fill color (default: transparent).
 	ColumnHatchColor        *cdp.RGBA `json:"columnHatchColor,omitempty"`        // The column gap hatching fill color (default: transparent).
+	AreaBorderColor         *cdp.RGBA `json:"areaBorderColor,omitempty"`         // The named grid areas border color (Default: transparent).
 }
 
 // HighlightConfig configuration data for the highlighting of page elements.

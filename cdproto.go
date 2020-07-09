@@ -667,6 +667,7 @@ const (
 	CommandWebAuthnRemoveCredential                        = webauthn.CommandRemoveCredential
 	CommandWebAuthnClearCredentials                        = webauthn.CommandClearCredentials
 	CommandWebAuthnSetUserVerified                         = webauthn.CommandSetUserVerified
+	CommandWebAuthnSetAutomaticPresenceSimulation          = webauthn.CommandSetAutomaticPresenceSimulation
 )
 
 // Error error type.
@@ -2473,6 +2474,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		return emptyVal, nil
 
 	case CommandWebAuthnSetUserVerified:
+		return emptyVal, nil
+
+	case CommandWebAuthnSetAutomaticPresenceSimulation:
 		return emptyVal, nil
 
 	default:

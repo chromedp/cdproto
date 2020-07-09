@@ -1718,6 +1718,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoOverlay18(in *jlexer.Lexer, o
 			out.ShowPositiveLineNumbers = bool(in.Bool())
 		case "showNegativeLineNumbers":
 			out.ShowNegativeLineNumbers = bool(in.Bool())
+		case "showAreaNames":
+			out.ShowAreaNames = bool(in.Bool())
 		case "gridBorderColor":
 			if in.IsNull() {
 				in.Skip()
@@ -1782,6 +1784,16 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoOverlay18(in *jlexer.Lexer, o
 				}
 				(*out.ColumnHatchColor).UnmarshalEasyJSON(in)
 			}
+		case "areaBorderColor":
+			if in.IsNull() {
+				in.Skip()
+				out.AreaBorderColor = nil
+			} else {
+				if out.AreaBorderColor == nil {
+					out.AreaBorderColor = new(cdp.RGBA)
+				}
+				(*out.AreaBorderColor).UnmarshalEasyJSON(in)
+			}
 		default:
 			in.SkipRecursive()
 		}
@@ -1821,6 +1833,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoOverlay18(out *jwriter.Writer
 			out.RawString(prefix)
 		}
 		out.Bool(bool(in.ShowNegativeLineNumbers))
+	}
+	if in.ShowAreaNames {
+		const prefix string = ",\"showAreaNames\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Bool(bool(in.ShowAreaNames))
 	}
 	if in.GridBorderColor != nil {
 		const prefix string = ",\"gridBorderColor\":"
@@ -1901,6 +1923,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoOverlay18(out *jwriter.Writer
 			out.RawString(prefix)
 		}
 		(*in.ColumnHatchColor).MarshalEasyJSON(out)
+	}
+	if in.AreaBorderColor != nil {
+		const prefix string = ",\"areaBorderColor\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		(*in.AreaBorderColor).MarshalEasyJSON(out)
 	}
 	out.RawByte('}')
 }
