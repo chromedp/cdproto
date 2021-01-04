@@ -159,10 +159,11 @@ func (t ExecutionContextID) Int64() int64 {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#type-ExecutionContextDescription
 type ExecutionContextDescription struct {
-	ID      ExecutionContextID  `json:"id"`     // Unique id of the execution context. It can be used to specify in which execution context script evaluation should be performed.
-	Origin  string              `json:"origin"` // Execution context origin.
-	Name    string              `json:"name"`   // Human readable name describing given context.
-	AuxData easyjson.RawMessage `json:"auxData,omitempty"`
+	ID       ExecutionContextID  `json:"id"`       // Unique id of the execution context. It can be used to specify in which execution context script evaluation should be performed.
+	Origin   string              `json:"origin"`   // Execution context origin.
+	Name     string              `json:"name"`     // Human readable name describing given context.
+	UniqueID string              `json:"uniqueId"` // A system-unique execution context identifier. Unlike the id, this is unique across multiple processes, so can be reliably used to identify specific context while backend performs a cross-process navigation.
+	AuxData  easyjson.RawMessage `json:"auxData,omitempty"`
 }
 
 // ExceptionDetails detailed information about exception (or error) that was
@@ -358,29 +359,30 @@ func (t Subtype) String() string {
 
 // Subtype values.
 const (
-	SubtypeArray       Subtype = "array"
-	SubtypeNull        Subtype = "null"
-	SubtypeNode        Subtype = "node"
-	SubtypeRegexp      Subtype = "regexp"
-	SubtypeDate        Subtype = "date"
-	SubtypeMap         Subtype = "map"
-	SubtypeSet         Subtype = "set"
-	SubtypeWeakmap     Subtype = "weakmap"
-	SubtypeWeakset     Subtype = "weakset"
-	SubtypeIterator    Subtype = "iterator"
-	SubtypeGenerator   Subtype = "generator"
-	SubtypeError       Subtype = "error"
-	SubtypeProxy       Subtype = "proxy"
-	SubtypePromise     Subtype = "promise"
-	SubtypeTypedarray  Subtype = "typedarray"
-	SubtypeArraybuffer Subtype = "arraybuffer"
-	SubtypeDataview    Subtype = "dataview"
-	SubtypeI32         Subtype = "i32"
-	SubtypeI64         Subtype = "i64"
-	SubtypeF32         Subtype = "f32"
-	SubtypeF64         Subtype = "f64"
-	SubtypeV128        Subtype = "v128"
-	SubtypeExternref   Subtype = "externref"
+	SubtypeArray             Subtype = "array"
+	SubtypeNull              Subtype = "null"
+	SubtypeNode              Subtype = "node"
+	SubtypeRegexp            Subtype = "regexp"
+	SubtypeDate              Subtype = "date"
+	SubtypeMap               Subtype = "map"
+	SubtypeSet               Subtype = "set"
+	SubtypeWeakmap           Subtype = "weakmap"
+	SubtypeWeakset           Subtype = "weakset"
+	SubtypeIterator          Subtype = "iterator"
+	SubtypeGenerator         Subtype = "generator"
+	SubtypeError             Subtype = "error"
+	SubtypeProxy             Subtype = "proxy"
+	SubtypePromise           Subtype = "promise"
+	SubtypeTypedarray        Subtype = "typedarray"
+	SubtypeArraybuffer       Subtype = "arraybuffer"
+	SubtypeDataview          Subtype = "dataview"
+	SubtypeWebassemblymemory Subtype = "webassemblymemory"
+	SubtypeI32               Subtype = "i32"
+	SubtypeI64               Subtype = "i64"
+	SubtypeF32               Subtype = "f32"
+	SubtypeF64               Subtype = "f64"
+	SubtypeV128              Subtype = "v128"
+	SubtypeExternref         Subtype = "externref"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -430,6 +432,8 @@ func (t *Subtype) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = SubtypeArraybuffer
 	case SubtypeDataview:
 		*t = SubtypeDataview
+	case SubtypeWebassemblymemory:
+		*t = SubtypeWebassemblymemory
 	case SubtypeI32:
 		*t = SubtypeI32
 	case SubtypeI64:
