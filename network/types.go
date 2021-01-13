@@ -944,17 +944,18 @@ type Initiator struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-Cookie
 type Cookie struct {
-	Name     string         `json:"name"`               // Cookie name.
-	Value    string         `json:"value"`              // Cookie value.
-	Domain   string         `json:"domain"`             // Cookie domain.
-	Path     string         `json:"path"`               // Cookie path.
-	Expires  float64        `json:"expires"`            // Cookie expiration date as the number of seconds since the UNIX epoch.
-	Size     int64          `json:"size"`               // Cookie size.
-	HTTPOnly bool           `json:"httpOnly"`           // True if cookie is http-only.
-	Secure   bool           `json:"secure"`             // True if cookie is secure.
-	Session  bool           `json:"session"`            // True in case of session cookie.
-	SameSite CookieSameSite `json:"sameSite,omitempty"` // Cookie SameSite type.
-	Priority CookiePriority `json:"priority"`           // Cookie Priority
+	Name      string         `json:"name"`               // Cookie name.
+	Value     string         `json:"value"`              // Cookie value.
+	Domain    string         `json:"domain"`             // Cookie domain.
+	Path      string         `json:"path"`               // Cookie path.
+	Expires   float64        `json:"expires"`            // Cookie expiration date as the number of seconds since the UNIX epoch.
+	Size      int64          `json:"size"`               // Cookie size.
+	HTTPOnly  bool           `json:"httpOnly"`           // True if cookie is http-only.
+	Secure    bool           `json:"secure"`             // True if cookie is secure.
+	Session   bool           `json:"session"`            // True in case of session cookie.
+	SameSite  CookieSameSite `json:"sameSite,omitempty"` // Cookie SameSite type.
+	Priority  CookiePriority `json:"priority"`           // Cookie Priority
+	SameParty bool           `json:"sameParty"`          // True if cookie is SameParty.
 }
 
 // SetCookieBlockedReason types of reasons why a cookie may not be stored

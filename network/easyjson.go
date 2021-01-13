@@ -8266,6 +8266,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork77(in *jlexer.Lexer, o
 			(out.SameSite).UnmarshalEasyJSON(in)
 		case "priority":
 			(out.Priority).UnmarshalEasyJSON(in)
+		case "sameParty":
+			out.SameParty = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -8334,6 +8336,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoNetwork77(out *jwriter.Writer
 		const prefix string = ",\"priority\":"
 		out.RawString(prefix)
 		(in.Priority).MarshalEasyJSON(out)
+	}
+	{
+		const prefix string = ",\"sameParty\":"
+		out.RawString(prefix)
+		out.Bool(bool(in.SameParty))
 	}
 	out.RawByte('}')
 }

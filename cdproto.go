@@ -45,6 +45,7 @@ import (
 	"github.com/chromedp/cdproto/overlay"
 	"github.com/chromedp/cdproto/page"
 	"github.com/chromedp/cdproto/performance"
+	"github.com/chromedp/cdproto/performancetimeline"
 	"github.com/chromedp/cdproto/profiler"
 	"github.com/chromedp/cdproto/runtime"
 	"github.com/chromedp/cdproto/security"
@@ -546,6 +547,8 @@ const (
 	CommandPerformanceEnable                               = performance.CommandEnable
 	CommandPerformanceGetMetrics                           = performance.CommandGetMetrics
 	EventPerformanceMetrics                                = "Performance.metrics"
+	CommandPerformanceTimelineEnable                       = performancetimeline.CommandEnable
+	EventPerformanceTimelineTimelineEventAdded             = "PerformanceTimeline.timelineEventAdded"
 	CommandProfilerDisable                                 = profiler.CommandDisable
 	CommandProfilerEnable                                  = profiler.CommandEnable
 	CommandProfilerGetBestEffortCoverage                   = profiler.CommandGetBestEffortCoverage
@@ -2137,6 +2140,12 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case EventPerformanceMetrics:
 		v = new(performance.EventMetrics)
+
+	case CommandPerformanceTimelineEnable:
+		return emptyVal, nil
+
+	case EventPerformanceTimelineTimelineEventAdded:
+		v = new(performancetimeline.EventTimelineEventAdded)
 
 	case CommandProfilerDisable:
 		return emptyVal, nil

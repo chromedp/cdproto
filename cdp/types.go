@@ -175,6 +175,8 @@ const (
 	PseudoTypeBackdrop            PseudoType = "backdrop"
 	PseudoTypeSelection           PseudoType = "selection"
 	PseudoTypeTargetText          PseudoType = "target-text"
+	PseudoTypeSpellingError       PseudoType = "spelling-error"
+	PseudoTypeGrammarError        PseudoType = "grammar-error"
 	PseudoTypeFirstLineInherited  PseudoType = "first-line-inherited"
 	PseudoTypeScrollbar           PseudoType = "scrollbar"
 	PseudoTypeScrollbarThumb      PseudoType = "scrollbar-thumb"
@@ -215,6 +217,10 @@ func (t *PseudoType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PseudoTypeSelection
 	case PseudoTypeTargetText:
 		*t = PseudoTypeTargetText
+	case PseudoTypeSpellingError:
+		*t = PseudoTypeSpellingError
+	case PseudoTypeGrammarError:
+		*t = PseudoTypeGrammarError
 	case PseudoTypeFirstLineInherited:
 		*t = PseudoTypeFirstLineInherited
 	case PseudoTypeScrollbar:
