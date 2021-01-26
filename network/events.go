@@ -181,7 +181,16 @@ type EventWebTransportCreated struct {
 	Initiator   *Initiator         `json:"initiator,omitempty"` // Request initiator.
 }
 
-// EventWebTransportClosed [no description].
+// EventWebTransportConnectionEstablished fired when WebTransport handshake
+// is finished.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-webTransportConnectionEstablished
+type EventWebTransportConnectionEstablished struct {
+	TransportID RequestID          `json:"transportId"` // WebTransport identifier.
+	Timestamp   *cdp.MonotonicTime `json:"timestamp"`   // Timestamp.
+}
+
+// EventWebTransportClosed fired when WebTransport is disposed.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-webTransportClosed
 type EventWebTransportClosed struct {

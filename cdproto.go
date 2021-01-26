@@ -445,6 +445,7 @@ const (
 	EventNetworkWebSocketHandshakeResponseReceived         = "Network.webSocketHandshakeResponseReceived"
 	EventNetworkWebSocketWillSendHandshakeRequest          = "Network.webSocketWillSendHandshakeRequest"
 	EventNetworkWebTransportCreated                        = "Network.webTransportCreated"
+	EventNetworkWebTransportConnectionEstablished          = "Network.webTransportConnectionEstablished"
 	EventNetworkWebTransportClosed                         = "Network.webTransportClosed"
 	EventNetworkRequestWillBeSentExtraInfo                 = "Network.requestWillBeSentExtraInfo"
 	EventNetworkResponseReceivedExtraInfo                  = "Network.responseReceivedExtraInfo"
@@ -1836,6 +1837,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case EventNetworkWebTransportCreated:
 		v = new(network.EventWebTransportCreated)
+
+	case EventNetworkWebTransportConnectionEstablished:
+		v = new(network.EventWebTransportConnectionEstablished)
 
 	case EventNetworkWebTransportClosed:
 		v = new(network.EventWebTransportClosed)
