@@ -986,6 +986,8 @@ const (
 	SetCookieBlockedReasonSchemefulSameSiteStrict                  SetCookieBlockedReason = "SchemefulSameSiteStrict"
 	SetCookieBlockedReasonSchemefulSameSiteLax                     SetCookieBlockedReason = "SchemefulSameSiteLax"
 	SetCookieBlockedReasonSchemefulSameSiteUnspecifiedTreatedAsLax SetCookieBlockedReason = "SchemefulSameSiteUnspecifiedTreatedAsLax"
+	SetCookieBlockedReasonSamePartyFromCrossPartyContext           SetCookieBlockedReason = "SamePartyFromCrossPartyContext"
+	SetCookieBlockedReasonSamePartyConflictsWithOtherAttributes    SetCookieBlockedReason = "SamePartyConflictsWithOtherAttributes"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -1031,6 +1033,10 @@ func (t *SetCookieBlockedReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = SetCookieBlockedReasonSchemefulSameSiteLax
 	case SetCookieBlockedReasonSchemefulSameSiteUnspecifiedTreatedAsLax:
 		*t = SetCookieBlockedReasonSchemefulSameSiteUnspecifiedTreatedAsLax
+	case SetCookieBlockedReasonSamePartyFromCrossPartyContext:
+		*t = SetCookieBlockedReasonSamePartyFromCrossPartyContext
+	case SetCookieBlockedReasonSamePartyConflictsWithOtherAttributes:
+		*t = SetCookieBlockedReasonSamePartyConflictsWithOtherAttributes
 
 	default:
 		in.AddError(errors.New("unknown SetCookieBlockedReason value"))
@@ -1067,6 +1073,7 @@ const (
 	CookieBlockedReasonSchemefulSameSiteStrict                  CookieBlockedReason = "SchemefulSameSiteStrict"
 	CookieBlockedReasonSchemefulSameSiteLax                     CookieBlockedReason = "SchemefulSameSiteLax"
 	CookieBlockedReasonSchemefulSameSiteUnspecifiedTreatedAsLax CookieBlockedReason = "SchemefulSameSiteUnspecifiedTreatedAsLax"
+	CookieBlockedReasonSamePartyFromCrossPartyContext           CookieBlockedReason = "SamePartyFromCrossPartyContext"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -1106,6 +1113,8 @@ func (t *CookieBlockedReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = CookieBlockedReasonSchemefulSameSiteLax
 	case CookieBlockedReasonSchemefulSameSiteUnspecifiedTreatedAsLax:
 		*t = CookieBlockedReasonSchemefulSameSiteUnspecifiedTreatedAsLax
+	case CookieBlockedReasonSamePartyFromCrossPartyContext:
+		*t = CookieBlockedReasonSamePartyFromCrossPartyContext
 
 	default:
 		in.AddError(errors.New("unknown CookieBlockedReason value"))

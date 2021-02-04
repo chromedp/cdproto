@@ -104,6 +104,7 @@ const (
 	CommandAuditsGetEncodedResponse                        = audits.CommandGetEncodedResponse
 	CommandAuditsDisable                                   = audits.CommandDisable
 	CommandAuditsEnable                                    = audits.CommandEnable
+	CommandAuditsCheckContrast                             = audits.CommandCheckContrast
 	EventAuditsIssueAdded                                  = "Audits.issueAdded"
 	CommandBackgroundServiceStartObserving                 = backgroundservice.CommandStartObserving
 	CommandBackgroundServiceStopObserving                  = backgroundservice.CommandStopObserving
@@ -813,6 +814,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		return emptyVal, nil
 
 	case CommandAuditsEnable:
+		return emptyVal, nil
+
+	case CommandAuditsCheckContrast:
 		return emptyVal, nil
 
 	case EventAuditsIssueAdded:
