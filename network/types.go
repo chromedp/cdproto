@@ -1352,6 +1352,7 @@ func (t PrivateNetworkRequestPolicy) String() string {
 const (
 	PrivateNetworkRequestPolicyAllow                          PrivateNetworkRequestPolicy = "Allow"
 	PrivateNetworkRequestPolicyBlockFromInsecureToMorePrivate PrivateNetworkRequestPolicy = "BlockFromInsecureToMorePrivate"
+	PrivateNetworkRequestPolicyWarnFromInsecureToMorePrivate  PrivateNetworkRequestPolicy = "WarnFromInsecureToMorePrivate"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -1371,6 +1372,8 @@ func (t *PrivateNetworkRequestPolicy) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PrivateNetworkRequestPolicyAllow
 	case PrivateNetworkRequestPolicyBlockFromInsecureToMorePrivate:
 		*t = PrivateNetworkRequestPolicyBlockFromInsecureToMorePrivate
+	case PrivateNetworkRequestPolicyWarnFromInsecureToMorePrivate:
+		*t = PrivateNetworkRequestPolicyWarnFromInsecureToMorePrivate
 
 	default:
 		in.AddError(errors.New("unknown PrivateNetworkRequestPolicy value"))

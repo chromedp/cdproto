@@ -671,9 +671,9 @@ func (t *SharedArrayBufferIssueType) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 
-// SharedArrayBufferIssueDetails details for a request that has been blocked
-// with the BLOCKED_BY_RESPONSE code. Currently only used for COEP/COOP, but may
-// be extended to include some CSP errors in the future.
+// SharedArrayBufferIssueDetails details for a issue arising from an SAB
+// being instantiated in, or transferred to a context that is not cross-origin
+// isolated.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-SharedArrayBufferIssueDetails
 type SharedArrayBufferIssueDetails struct {
@@ -753,6 +753,18 @@ type LowTextContrastIssueDetails struct {
 	FontWeight            string            `json:"fontWeight"`
 }
 
+// CorsIssueDetails details for a CORS related issue, e.g. a warning or error
+// related to CORS RFC1918 enforcement.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-CorsIssueDetails
+type CorsIssueDetails struct {
+	CorsErrorStatus        *network.CorsErrorStatus     `json:"corsErrorStatus"`
+	IsWarning              bool                         `json:"isWarning"`
+	Request                *AffectedRequest             `json:"request"`
+	ResourceIPAddressSpace network.IPAddressSpace       `json:"resourceIPAddressSpace,omitempty"`
+	ClientSecurityState    *network.ClientSecurityState `json:"clientSecurityState,omitempty"`
+}
+
 // InspectorIssueCode a unique identifier for the type of issue. Each type
 // may use one of the optional fields in InspectorIssueDetails to convey more
 // specific information about the kind of issue.
@@ -775,6 +787,7 @@ const (
 	InspectorIssueCodeSharedArrayBufferIssue     InspectorIssueCode = "SharedArrayBufferIssue"
 	InspectorIssueCodeTrustedWebActivityIssue    InspectorIssueCode = "TrustedWebActivityIssue"
 	InspectorIssueCodeLowTextContrastIssue       InspectorIssueCode = "LowTextContrastIssue"
+	InspectorIssueCodeCorsIssue                  InspectorIssueCode = "CorsIssue"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -806,6 +819,8 @@ func (t *InspectorIssueCode) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = InspectorIssueCodeTrustedWebActivityIssue
 	case InspectorIssueCodeLowTextContrastIssue:
 		*t = InspectorIssueCodeLowTextContrastIssue
+	case InspectorIssueCodeCorsIssue:
+		*t = InspectorIssueCodeCorsIssue
 
 	default:
 		in.AddError(errors.New("unknown InspectorIssueCode value"))
@@ -831,6 +846,7 @@ type InspectorIssueDetails struct {
 	SharedArrayBufferIssueDetails     *SharedArrayBufferIssueDetails     `json:"sharedArrayBufferIssueDetails,omitempty"`
 	TwaQualityEnforcementDetails      *TrustedWebActivityIssueDetails    `json:"twaQualityEnforcementDetails,omitempty"`
 	LowTextContrastIssueDetails       *LowTextContrastIssueDetails       `json:"lowTextContrastIssueDetails,omitempty"`
+	CorsIssueDetails                  *CorsIssueDetails                  `json:"corsIssueDetails,omitempty"`
 }
 
 // InspectorIssue an inspector issue reported from the back-end.
