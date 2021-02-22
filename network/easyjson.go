@@ -1674,6 +1674,12 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork14(in *jlexer.Lexer, o
 			}
 		case "priority":
 			(out.Priority).UnmarshalEasyJSON(in)
+		case "sameParty":
+			out.SameParty = bool(in.Bool())
+		case "sourceScheme":
+			(out.SourceScheme).UnmarshalEasyJSON(in)
+		case "sourcePort":
+			out.SourcePort = int64(in.Int64())
 		default:
 			in.SkipRecursive()
 		}
@@ -1737,6 +1743,21 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoNetwork14(out *jwriter.Writer
 		const prefix string = ",\"priority\":"
 		out.RawString(prefix)
 		(in.Priority).MarshalEasyJSON(out)
+	}
+	if in.SameParty {
+		const prefix string = ",\"sameParty\":"
+		out.RawString(prefix)
+		out.Bool(bool(in.SameParty))
+	}
+	if in.SourceScheme != "" {
+		const prefix string = ",\"sourceScheme\":"
+		out.RawString(prefix)
+		(in.SourceScheme).MarshalEasyJSON(out)
+	}
+	if in.SourcePort != 0 {
+		const prefix string = ",\"sourcePort\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.SourcePort))
 	}
 	out.RawByte('}')
 }
@@ -8227,6 +8248,12 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork77(in *jlexer.Lexer, o
 			}
 		case "priority":
 			(out.Priority).UnmarshalEasyJSON(in)
+		case "sameParty":
+			out.SameParty = bool(in.Bool())
+		case "sourceScheme":
+			(out.SourceScheme).UnmarshalEasyJSON(in)
+		case "sourcePort":
+			out.SourcePort = int64(in.Int64())
 		default:
 			in.SkipRecursive()
 		}
@@ -8290,6 +8317,21 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoNetwork77(out *jwriter.Writer
 		const prefix string = ",\"priority\":"
 		out.RawString(prefix)
 		(in.Priority).MarshalEasyJSON(out)
+	}
+	if in.SameParty {
+		const prefix string = ",\"sameParty\":"
+		out.RawString(prefix)
+		out.Bool(bool(in.SameParty))
+	}
+	if in.SourceScheme != "" {
+		const prefix string = ",\"sourceScheme\":"
+		out.RawString(prefix)
+		(in.SourceScheme).MarshalEasyJSON(out)
+	}
+	if in.SourcePort != 0 {
+		const prefix string = ",\"sourcePort\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.SourcePort))
 	}
 	out.RawByte('}')
 }
@@ -8360,6 +8402,10 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork78(in *jlexer.Lexer, o
 			(out.Priority).UnmarshalEasyJSON(in)
 		case "sameParty":
 			out.SameParty = bool(in.Bool())
+		case "sourceScheme":
+			(out.SourceScheme).UnmarshalEasyJSON(in)
+		case "sourcePort":
+			out.SourcePort = int64(in.Int64())
 		default:
 			in.SkipRecursive()
 		}
@@ -8433,6 +8479,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoNetwork78(out *jwriter.Writer
 		const prefix string = ",\"sameParty\":"
 		out.RawString(prefix)
 		out.Bool(bool(in.SameParty))
+	}
+	{
+		const prefix string = ",\"sourceScheme\":"
+		out.RawString(prefix)
+		(in.SourceScheme).MarshalEasyJSON(out)
+	}
+	{
+		const prefix string = ",\"sourcePort\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.SourcePort))
 	}
 	out.RawByte('}')
 }

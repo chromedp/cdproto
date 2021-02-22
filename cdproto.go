@@ -506,6 +506,7 @@ const (
 	CommandPageSearchInResource                            = page.CommandSearchInResource
 	CommandPageSetAdBlockingEnabled                        = page.CommandSetAdBlockingEnabled
 	CommandPageSetBypassCSP                                = page.CommandSetBypassCSP
+	CommandPageGetPermissionsPolicyState                   = page.CommandGetPermissionsPolicyState
 	CommandPageSetFontFamilies                             = page.CommandSetFontFamilies
 	CommandPageSetFontSizes                                = page.CommandSetFontSizes
 	CommandPageSetDocumentContent                          = page.CommandSetDocumentContent
@@ -2021,6 +2022,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandPageSetBypassCSP:
 		return emptyVal, nil
+
+	case CommandPageGetPermissionsPolicyState:
+		v = new(page.GetPermissionsPolicyStateReturns)
 
 	case CommandPageSetFontFamilies:
 		return emptyVal, nil
