@@ -4,6 +4,7 @@ package page
 
 import (
 	"github.com/chromedp/cdproto/cdp"
+	"github.com/chromedp/cdproto/network"
 	"github.com/chromedp/cdproto/runtime"
 )
 
@@ -147,6 +148,18 @@ type EventLifecycleEvent struct {
 	LoaderID  cdp.LoaderID       `json:"loaderId"` // Loader identifier. Empty string if the request is fetched from worker.
 	Name      string             `json:"name"`
 	Timestamp *cdp.MonotonicTime `json:"timestamp"`
+}
+
+// EventHistoryNavigationOutcomeReported fired for all history navigations if
+// BackForwardCache feature is enabled. Do not assume any ordering with the
+// Page.frameNavigated event. This event is fired only for main-frame history
+// navigation where the document changes (non-same-document navigations).
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-historyNavigationOutcomeReported
+type EventHistoryNavigationOutcomeReported struct {
+	RequestID                      network.RequestID `json:"requestId"`                      // The request id of the associated navigation.
+	FrameID                        cdp.FrameID       `json:"frameId"`                        // The frame id of the associated frame.
+	IsRestoredFromBackForwardCache bool              `json:"isRestoredFromBackForwardCache"` // Indicates whether the frame is restored from BackForwardCache.
 }
 
 // EventLoadEventFired [no description].

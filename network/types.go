@@ -1571,8 +1571,9 @@ func (t CrossOriginEmbedderPolicyValue) String() string {
 
 // CrossOriginEmbedderPolicyValue values.
 const (
-	CrossOriginEmbedderPolicyValueNone        CrossOriginEmbedderPolicyValue = "None"
-	CrossOriginEmbedderPolicyValueRequireCorp CrossOriginEmbedderPolicyValue = "RequireCorp"
+	CrossOriginEmbedderPolicyValueNone                 CrossOriginEmbedderPolicyValue = "None"
+	CrossOriginEmbedderPolicyValueCorsOrCredentialless CrossOriginEmbedderPolicyValue = "CorsOrCredentialless"
+	CrossOriginEmbedderPolicyValueRequireCorp          CrossOriginEmbedderPolicyValue = "RequireCorp"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -1590,6 +1591,8 @@ func (t *CrossOriginEmbedderPolicyValue) UnmarshalEasyJSON(in *jlexer.Lexer) {
 	switch CrossOriginEmbedderPolicyValue(in.String()) {
 	case CrossOriginEmbedderPolicyValueNone:
 		*t = CrossOriginEmbedderPolicyValueNone
+	case CrossOriginEmbedderPolicyValueCorsOrCredentialless:
+		*t = CrossOriginEmbedderPolicyValueCorsOrCredentialless
 	case CrossOriginEmbedderPolicyValueRequireCorp:
 		*t = CrossOriginEmbedderPolicyValueRequireCorp
 

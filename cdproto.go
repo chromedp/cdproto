@@ -543,6 +543,7 @@ const (
 	EventPageJavascriptDialogClosed                        = "Page.javascriptDialogClosed"
 	EventPageJavascriptDialogOpening                       = "Page.javascriptDialogOpening"
 	EventPageLifecycleEvent                                = "Page.lifecycleEvent"
+	EventPageHistoryNavigationOutcomeReported              = "Page.historyNavigationOutcomeReported"
 	EventPageLoadEventFired                                = "Page.loadEventFired"
 	EventPageNavigatedWithinDocument                       = "Page.navigatedWithinDocument"
 	EventPageScreencastFrame                               = "Page.screencastFrame"
@@ -637,6 +638,7 @@ const (
 	CommandStorageUntrackCacheStorageForOrigin             = storage.CommandUntrackCacheStorageForOrigin
 	CommandStorageUntrackIndexedDBForOrigin                = storage.CommandUntrackIndexedDBForOrigin
 	CommandStorageGetTrustTokens                           = storage.CommandGetTrustTokens
+	CommandStorageClearTrustTokens                         = storage.CommandClearTrustTokens
 	EventStorageCacheStorageContentUpdated                 = "Storage.cacheStorageContentUpdated"
 	EventStorageCacheStorageListUpdated                    = "Storage.cacheStorageListUpdated"
 	EventStorageIndexedDBContentUpdated                    = "Storage.indexedDBContentUpdated"
@@ -2136,6 +2138,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case EventPageLifecycleEvent:
 		v = new(page.EventLifecycleEvent)
 
+	case EventPageHistoryNavigationOutcomeReported:
+		v = new(page.EventHistoryNavigationOutcomeReported)
+
 	case EventPageLoadEventFired:
 		v = new(page.EventLoadEventFired)
 
@@ -2417,6 +2422,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandStorageGetTrustTokens:
 		v = new(storage.GetTrustTokensReturns)
+
+	case CommandStorageClearTrustTokens:
+		v = new(storage.ClearTrustTokensReturns)
 
 	case EventStorageCacheStorageContentUpdated:
 		v = new(storage.EventCacheStorageContentUpdated)

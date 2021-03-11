@@ -431,18 +431,18 @@ func GetLayoutMetrics() *GetLayoutMetricsParams {
 
 // GetLayoutMetricsReturns return values.
 type GetLayoutMetricsReturns struct {
-	LayoutViewport *LayoutViewport `json:"layoutViewport,omitempty"` // Metrics relating to the layout viewport.
-	VisualViewport *VisualViewport `json:"visualViewport,omitempty"` // Metrics relating to the visual viewport.
-	ContentSize    *dom.Rect       `json:"contentSize,omitempty"`    // Size of scrollable area.
+	CSSLayoutViewport *LayoutViewport `json:"cssLayoutViewport,omitempty"` // Metrics relating to the layout viewport in CSS pixels.
+	CSSVisualViewport *VisualViewport `json:"cssVisualViewport,omitempty"` // Metrics relating to the visual viewport in CSS pixels.
+	CSSContentSize    *dom.Rect       `json:"cssContentSize,omitempty"`    // Size of scrollable area in CSS pixels.
 }
 
 // Do executes Page.getLayoutMetrics against the provided context.
 //
 // returns:
-//   layoutViewport - Metrics relating to the layout viewport.
-//   visualViewport - Metrics relating to the visual viewport.
-//   contentSize - Size of scrollable area.
-func (p *GetLayoutMetricsParams) Do(ctx context.Context) (layoutViewport *LayoutViewport, visualViewport *VisualViewport, contentSize *dom.Rect, err error) {
+//   cssLayoutViewport - Metrics relating to the layout viewport in CSS pixels.
+//   cssVisualViewport - Metrics relating to the visual viewport in CSS pixels.
+//   cssContentSize - Size of scrollable area in CSS pixels.
+func (p *GetLayoutMetricsParams) Do(ctx context.Context) (cssLayoutViewport *LayoutViewport, cssVisualViewport *VisualViewport, cssContentSize *dom.Rect, err error) {
 	// execute
 	var res GetLayoutMetricsReturns
 	err = cdp.Execute(ctx, CommandGetLayoutMetrics, nil, &res)
@@ -450,7 +450,7 @@ func (p *GetLayoutMetricsParams) Do(ctx context.Context) (layoutViewport *Layout
 		return nil, nil, nil, err
 	}
 
-	return res.LayoutViewport, res.VisualViewport, res.ContentSize, nil
+	return res.CSSLayoutViewport, res.CSSVisualViewport, res.CSSContentSize, nil
 }
 
 // GetNavigationHistoryParams returns navigation history for the current
