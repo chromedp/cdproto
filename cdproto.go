@@ -543,7 +543,6 @@ const (
 	EventPageJavascriptDialogClosed                        = "Page.javascriptDialogClosed"
 	EventPageJavascriptDialogOpening                       = "Page.javascriptDialogOpening"
 	EventPageLifecycleEvent                                = "Page.lifecycleEvent"
-	EventPageHistoryNavigationOutcomeReported              = "Page.historyNavigationOutcomeReported"
 	EventPageLoadEventFired                                = "Page.loadEventFired"
 	EventPageNavigatedWithinDocument                       = "Page.navigatedWithinDocument"
 	EventPageScreencastFrame                               = "Page.screencastFrame"
@@ -2137,9 +2136,6 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case EventPageLifecycleEvent:
 		v = new(page.EventLifecycleEvent)
-
-	case EventPageHistoryNavigationOutcomeReported:
-		v = new(page.EventHistoryNavigationOutcomeReported)
 
 	case EventPageLoadEventFired:
 		v = new(page.EventLoadEventFired)
