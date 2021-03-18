@@ -623,7 +623,6 @@ const (
 	BlockedReasonInspector                                         BlockedReason = "inspector"
 	BlockedReasonSubresourceFilter                                 BlockedReason = "subresource-filter"
 	BlockedReasonContentType                                       BlockedReason = "content-type"
-	BlockedReasonCollapsedByClient                                 BlockedReason = "collapsed-by-client"
 	BlockedReasonCoepFrameResourceNeedsCoepHeader                  BlockedReason = "coep-frame-resource-needs-coep-header"
 	BlockedReasonCoopSandboxedIframeCannotNavigateToCoopPage       BlockedReason = "coop-sandboxed-iframe-cannot-navigate-to-coop-page"
 	BlockedReasonCorpNotSameOrigin                                 BlockedReason = "corp-not-same-origin"
@@ -658,8 +657,6 @@ func (t *BlockedReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = BlockedReasonSubresourceFilter
 	case BlockedReasonContentType:
 		*t = BlockedReasonContentType
-	case BlockedReasonCollapsedByClient:
-		*t = BlockedReasonCollapsedByClient
 	case BlockedReasonCoepFrameResourceNeedsCoepHeader:
 		*t = BlockedReasonCoepFrameResourceNeedsCoepHeader
 	case BlockedReasonCoopSandboxedIframeCannotNavigateToCoopPage:
