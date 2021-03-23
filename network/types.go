@@ -623,6 +623,7 @@ const (
 	BlockedReasonInspector                                         BlockedReason = "inspector"
 	BlockedReasonSubresourceFilter                                 BlockedReason = "subresource-filter"
 	BlockedReasonContentType                                       BlockedReason = "content-type"
+	BlockedReasonCollapsedByClient                                 BlockedReason = "collapsed-by-client"
 	BlockedReasonCoepFrameResourceNeedsCoepHeader                  BlockedReason = "coep-frame-resource-needs-coep-header"
 	BlockedReasonCoopSandboxedIframeCannotNavigateToCoopPage       BlockedReason = "coop-sandboxed-iframe-cannot-navigate-to-coop-page"
 	BlockedReasonCorpNotSameOrigin                                 BlockedReason = "corp-not-same-origin"
@@ -657,6 +658,8 @@ func (t *BlockedReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = BlockedReasonSubresourceFilter
 	case BlockedReasonContentType:
 		*t = BlockedReasonContentType
+	case BlockedReasonCollapsedByClient:
+		*t = BlockedReasonCollapsedByClient
 	case BlockedReasonCoepFrameResourceNeedsCoepHeader:
 		*t = BlockedReasonCoepFrameResourceNeedsCoepHeader
 	case BlockedReasonCoopSandboxedIframeCannotNavigateToCoopPage:
@@ -1568,9 +1571,8 @@ func (t CrossOriginEmbedderPolicyValue) String() string {
 
 // CrossOriginEmbedderPolicyValue values.
 const (
-	CrossOriginEmbedderPolicyValueNone                 CrossOriginEmbedderPolicyValue = "None"
-	CrossOriginEmbedderPolicyValueCorsOrCredentialless CrossOriginEmbedderPolicyValue = "CorsOrCredentialless"
-	CrossOriginEmbedderPolicyValueRequireCorp          CrossOriginEmbedderPolicyValue = "RequireCorp"
+	CrossOriginEmbedderPolicyValueNone        CrossOriginEmbedderPolicyValue = "None"
+	CrossOriginEmbedderPolicyValueRequireCorp CrossOriginEmbedderPolicyValue = "RequireCorp"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -1588,8 +1590,6 @@ func (t *CrossOriginEmbedderPolicyValue) UnmarshalEasyJSON(in *jlexer.Lexer) {
 	switch CrossOriginEmbedderPolicyValue(in.String()) {
 	case CrossOriginEmbedderPolicyValueNone:
 		*t = CrossOriginEmbedderPolicyValueNone
-	case CrossOriginEmbedderPolicyValueCorsOrCredentialless:
-		*t = CrossOriginEmbedderPolicyValueCorsOrCredentialless
 	case CrossOriginEmbedderPolicyValueRequireCorp:
 		*t = CrossOriginEmbedderPolicyValueRequireCorp
 

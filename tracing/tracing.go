@@ -138,7 +138,6 @@ type StartParams struct {
 	StreamCompression            StreamCompression `json:"streamCompression,omitempty"`            // Compression format to use. This only applies when using ReturnAsStream transfer mode (defaults to none)
 	TraceConfig                  *TraceConfig      `json:"traceConfig,omitempty"`
 	PerfettoConfig               string            `json:"perfettoConfig,omitempty"` // Base64-encoded serialized perfetto.protos.TraceConfig protobuf message When specified, the parameters categories, options, traceConfig are ignored.
-	TracingBackend               Backend           `json:"tracingBackend,omitempty"` // Backend type (defaults to auto)
 }
 
 // Start start trace events collection.
@@ -189,12 +188,6 @@ func (p StartParams) WithTraceConfig(traceConfig *TraceConfig) *StartParams {
 // traceConfig are ignored.
 func (p StartParams) WithPerfettoConfig(perfettoConfig string) *StartParams {
 	p.PerfettoConfig = perfettoConfig
-	return &p
-}
-
-// WithTracingBackend backend type (defaults to auto).
-func (p StartParams) WithTracingBackend(tracingBackend Backend) *StartParams {
-	p.TracingBackend = tracingBackend
 	return &p
 }
 

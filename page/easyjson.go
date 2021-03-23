@@ -3843,35 +3843,35 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoPage46(in *jlexer.Lexer, out 
 			continue
 		}
 		switch key {
-		case "cssLayoutViewport":
+		case "layoutViewport":
 			if in.IsNull() {
 				in.Skip()
-				out.CSSLayoutViewport = nil
+				out.LayoutViewport = nil
 			} else {
-				if out.CSSLayoutViewport == nil {
-					out.CSSLayoutViewport = new(LayoutViewport)
+				if out.LayoutViewport == nil {
+					out.LayoutViewport = new(LayoutViewport)
 				}
-				(*out.CSSLayoutViewport).UnmarshalEasyJSON(in)
+				(*out.LayoutViewport).UnmarshalEasyJSON(in)
 			}
-		case "cssVisualViewport":
+		case "visualViewport":
 			if in.IsNull() {
 				in.Skip()
-				out.CSSVisualViewport = nil
+				out.VisualViewport = nil
 			} else {
-				if out.CSSVisualViewport == nil {
-					out.CSSVisualViewport = new(VisualViewport)
+				if out.VisualViewport == nil {
+					out.VisualViewport = new(VisualViewport)
 				}
-				(*out.CSSVisualViewport).UnmarshalEasyJSON(in)
+				(*out.VisualViewport).UnmarshalEasyJSON(in)
 			}
-		case "cssContentSize":
+		case "contentSize":
 			if in.IsNull() {
 				in.Skip()
-				out.CSSContentSize = nil
+				out.ContentSize = nil
 			} else {
-				if out.CSSContentSize == nil {
-					out.CSSContentSize = new(dom.Rect)
+				if out.ContentSize == nil {
+					out.ContentSize = new(dom.Rect)
 				}
-				(*out.CSSContentSize).UnmarshalEasyJSON(in)
+				(*out.ContentSize).UnmarshalEasyJSON(in)
 			}
 		default:
 			in.SkipRecursive()
@@ -3887,31 +3887,31 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoPage46(out *jwriter.Writer, i
 	out.RawByte('{')
 	first := true
 	_ = first
-	if in.CSSLayoutViewport != nil {
-		const prefix string = ",\"cssLayoutViewport\":"
+	if in.LayoutViewport != nil {
+		const prefix string = ",\"layoutViewport\":"
 		first = false
 		out.RawString(prefix[1:])
-		(*in.CSSLayoutViewport).MarshalEasyJSON(out)
+		(*in.LayoutViewport).MarshalEasyJSON(out)
 	}
-	if in.CSSVisualViewport != nil {
-		const prefix string = ",\"cssVisualViewport\":"
+	if in.VisualViewport != nil {
+		const prefix string = ",\"visualViewport\":"
 		if first {
 			first = false
 			out.RawString(prefix[1:])
 		} else {
 			out.RawString(prefix)
 		}
-		(*in.CSSVisualViewport).MarshalEasyJSON(out)
+		(*in.VisualViewport).MarshalEasyJSON(out)
 	}
-	if in.CSSContentSize != nil {
-		const prefix string = ",\"cssContentSize\":"
+	if in.ContentSize != nil {
+		const prefix string = ",\"contentSize\":"
 		if first {
 			first = false
 			out.RawString(prefix[1:])
 		} else {
 			out.RawString(prefix)
 		}
-		(*in.CSSContentSize).MarshalEasyJSON(out)
+		(*in.ContentSize).MarshalEasyJSON(out)
 	}
 	out.RawByte('}')
 }

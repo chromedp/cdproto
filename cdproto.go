@@ -637,7 +637,6 @@ const (
 	CommandStorageUntrackCacheStorageForOrigin             = storage.CommandUntrackCacheStorageForOrigin
 	CommandStorageUntrackIndexedDBForOrigin                = storage.CommandUntrackIndexedDBForOrigin
 	CommandStorageGetTrustTokens                           = storage.CommandGetTrustTokens
-	CommandStorageClearTrustTokens                         = storage.CommandClearTrustTokens
 	EventStorageCacheStorageContentUpdated                 = "Storage.cacheStorageContentUpdated"
 	EventStorageCacheStorageListUpdated                    = "Storage.cacheStorageListUpdated"
 	EventStorageIndexedDBContentUpdated                    = "Storage.indexedDBContentUpdated"
@@ -2418,9 +2417,6 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandStorageGetTrustTokens:
 		v = new(storage.GetTrustTokensReturns)
-
-	case CommandStorageClearTrustTokens:
-		v = new(storage.ClearTrustTokensReturns)
 
 	case EventStorageCacheStorageContentUpdated:
 		v = new(storage.EventCacheStorageContentUpdated)
