@@ -779,8 +779,10 @@ func (t AttributionReportingIssueType) String() string {
 // AttributionReportingIssueType values.
 const (
 	AttributionReportingIssueTypePermissionPolicyDisabled             AttributionReportingIssueType = "PermissionPolicyDisabled"
+	AttributionReportingIssueTypeInvalidAttributionSourceEventID      AttributionReportingIssueType = "InvalidAttributionSourceEventId"
 	AttributionReportingIssueTypeInvalidAttributionData               AttributionReportingIssueType = "InvalidAttributionData"
 	AttributionReportingIssueTypeAttributionSourceUntrustworthyOrigin AttributionReportingIssueType = "AttributionSourceUntrustworthyOrigin"
+	AttributionReportingIssueTypeAttributionUntrustworthyOrigin       AttributionReportingIssueType = "AttributionUntrustworthyOrigin"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -798,10 +800,14 @@ func (t *AttributionReportingIssueType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 	switch AttributionReportingIssueType(in.String()) {
 	case AttributionReportingIssueTypePermissionPolicyDisabled:
 		*t = AttributionReportingIssueTypePermissionPolicyDisabled
+	case AttributionReportingIssueTypeInvalidAttributionSourceEventID:
+		*t = AttributionReportingIssueTypeInvalidAttributionSourceEventID
 	case AttributionReportingIssueTypeInvalidAttributionData:
 		*t = AttributionReportingIssueTypeInvalidAttributionData
 	case AttributionReportingIssueTypeAttributionSourceUntrustworthyOrigin:
 		*t = AttributionReportingIssueTypeAttributionSourceUntrustworthyOrigin
+	case AttributionReportingIssueTypeAttributionUntrustworthyOrigin:
+		*t = AttributionReportingIssueTypeAttributionUntrustworthyOrigin
 
 	default:
 		in.AddError(errors.New("unknown AttributionReportingIssueType value"))

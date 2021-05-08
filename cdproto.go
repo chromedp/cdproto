@@ -266,7 +266,6 @@ const (
 	CommandDebuggerGetStackTrace                           = debugger.CommandGetStackTrace
 	CommandDebuggerPause                                   = debugger.CommandPause
 	CommandDebuggerRemoveBreakpoint                        = debugger.CommandRemoveBreakpoint
-	CommandDebuggerRestartFrame                            = debugger.CommandRestartFrame
 	CommandDebuggerResume                                  = debugger.CommandResume
 	CommandDebuggerSearchInContent                         = debugger.CommandSearchInContent
 	CommandDebuggerSetAsyncCallStackDepth                  = debugger.CommandSetAsyncCallStackDepth
@@ -1312,9 +1311,6 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandDebuggerRemoveBreakpoint:
 		return emptyVal, nil
-
-	case CommandDebuggerRestartFrame:
-		v = new(debugger.RestartFrameReturns)
 
 	case CommandDebuggerResume:
 		return emptyVal, nil
