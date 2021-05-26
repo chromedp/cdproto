@@ -458,6 +458,10 @@ const (
 	EventNetworkRequestWillBeSentExtraInfo                 = "Network.requestWillBeSentExtraInfo"
 	EventNetworkResponseReceivedExtraInfo                  = "Network.responseReceivedExtraInfo"
 	EventNetworkTrustTokenOperationDone                    = "Network.trustTokenOperationDone"
+	EventNetworkSubresourceWebBundleMetadataReceived       = "Network.subresourceWebBundleMetadataReceived"
+	EventNetworkSubresourceWebBundleMetadataError          = "Network.subresourceWebBundleMetadataError"
+	EventNetworkSubresourceWebBundleInnerResponseParsed    = "Network.subresourceWebBundleInnerResponseParsed"
+	EventNetworkSubresourceWebBundleInnerResponseError     = "Network.subresourceWebBundleInnerResponseError"
 	CommandOverlayDisable                                  = overlay.CommandDisable
 	CommandOverlayEnable                                   = overlay.CommandEnable
 	CommandOverlayGetHighlightObjectForTest                = overlay.CommandGetHighlightObjectForTest
@@ -1887,6 +1891,18 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case EventNetworkTrustTokenOperationDone:
 		v = new(network.EventTrustTokenOperationDone)
+
+	case EventNetworkSubresourceWebBundleMetadataReceived:
+		v = new(network.EventSubresourceWebBundleMetadataReceived)
+
+	case EventNetworkSubresourceWebBundleMetadataError:
+		v = new(network.EventSubresourceWebBundleMetadataError)
+
+	case EventNetworkSubresourceWebBundleInnerResponseParsed:
+		v = new(network.EventSubresourceWebBundleInnerResponseParsed)
+
+	case EventNetworkSubresourceWebBundleInnerResponseError:
+		v = new(network.EventSubresourceWebBundleInnerResponseError)
 
 	case CommandOverlayDisable:
 		return emptyVal, nil
