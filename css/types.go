@@ -142,11 +142,12 @@ type StyleSheetHeader struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#type-CSSRule
 type Rule struct {
-	StyleSheetID StyleSheetID     `json:"styleSheetId,omitempty"` // The css style sheet identifier (absent for user agent stylesheet and user-specified stylesheet rules) this rule came from.
-	SelectorList *SelectorList    `json:"selectorList"`           // Rule selector data.
-	Origin       StyleSheetOrigin `json:"origin"`                 // Parent stylesheet's origin.
-	Style        *Style           `json:"style"`                  // Associated style declaration.
-	Media        []*Media         `json:"media,omitempty"`        // Media list array (for rules involving media queries). The array enumerates media queries starting with the innermost one, going outwards.
+	StyleSheetID     StyleSheetID      `json:"styleSheetId,omitempty"`     // The css style sheet identifier (absent for user agent stylesheet and user-specified stylesheet rules) this rule came from.
+	SelectorList     *SelectorList     `json:"selectorList"`               // Rule selector data.
+	Origin           StyleSheetOrigin  `json:"origin"`                     // Parent stylesheet's origin.
+	Style            *Style            `json:"style"`                      // Associated style declaration.
+	Media            []*Media          `json:"media,omitempty"`            // Media list array (for rules involving media queries). The array enumerates media queries starting with the innermost one, going outwards.
+	ContainerQueries []*ContainerQuery `json:"containerQueries,omitempty"` // Container query list array (for rules involving container queries). The array enumerates container queries starting with the innermost one, going outwards.
 }
 
 // RuleUsage CSS coverage information.
@@ -240,6 +241,15 @@ type MediaQueryExpression struct {
 	Feature        string       `json:"feature"`                  // Media query expression feature.
 	ValueRange     *SourceRange `json:"valueRange,omitempty"`     // The associated range of the value text in the enclosing stylesheet (if available).
 	ComputedLength float64      `json:"computedLength,omitempty"` // Computed length of media query expression (if applicable).
+}
+
+// ContainerQuery CSS container query rule descriptor.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#type-CSSContainerQuery
+type ContainerQuery struct {
+	Text         string       `json:"text"`                   // Container query text.
+	Range        *SourceRange `json:"range,omitempty"`        // The associated rule header range in the enclosing stylesheet (if available).
+	StyleSheetID StyleSheetID `json:"styleSheetId,omitempty"` // Identifier of the stylesheet containing this object (if exists).
 }
 
 // PlatformFontUsage information about amount of glyphs that were rendered

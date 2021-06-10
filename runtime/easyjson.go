@@ -2728,6 +2728,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoRuntime28(in *jlexer.Lexer, o
 			}
 		case "executionContextId":
 			out.ExecutionContextID = ExecutionContextID(in.Int64())
+		case "exceptionMetaData":
+			(out.ExceptionMetaData).UnmarshalEasyJSON(in)
 		default:
 			in.SkipRecursive()
 		}
@@ -2786,6 +2788,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoRuntime28(out *jwriter.Writer
 		const prefix string = ",\"executionContextId\":"
 		out.RawString(prefix)
 		out.Int64(int64(in.ExecutionContextID))
+	}
+	if (in.ExceptionMetaData).IsDefined() {
+		const prefix string = ",\"exceptionMetaData\":"
+		out.RawString(prefix)
+		(in.ExceptionMetaData).MarshalEasyJSON(out)
 	}
 	out.RawByte('}')
 }

@@ -328,6 +328,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoAudits3(in *jlexer.Lexer, out
 				}
 				(*out.Cookie).UnmarshalEasyJSON(in)
 			}
+		case "rawCookieLine":
+			out.RawCookieLine = string(in.String())
 		case "cookieWarningReasons":
 			if in.IsNull() {
 				in.Skip()
@@ -404,18 +406,30 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoAudits3(out *jwriter.Writer, 
 	out.RawByte('{')
 	first := true
 	_ = first
-	{
+	if in.Cookie != nil {
 		const prefix string = ",\"cookie\":"
+		first = false
 		out.RawString(prefix[1:])
-		if in.Cookie == nil {
-			out.RawString("null")
+		(*in.Cookie).MarshalEasyJSON(out)
+	}
+	if in.RawCookieLine != "" {
+		const prefix string = ",\"rawCookieLine\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
 		} else {
-			(*in.Cookie).MarshalEasyJSON(out)
+			out.RawString(prefix)
 		}
+		out.String(string(in.RawCookieLine))
 	}
 	{
 		const prefix string = ",\"cookieWarningReasons\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		if in.CookieWarningReasons == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
 			out.RawString("null")
 		} else {
@@ -1223,6 +1237,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoAudits9(in *jlexer.Lexer, out
 				}
 				(*out.Details).UnmarshalEasyJSON(in)
 			}
+		case "issueId":
+			out.IssueID = string(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -1250,6 +1266,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoAudits9(out *jwriter.Writer, 
 		} else {
 			(*in.Details).MarshalEasyJSON(out)
 		}
+	}
+	if in.IssueID != "" {
+		const prefix string = ",\"issueId\":"
+		out.RawString(prefix)
+		out.String(string(in.IssueID))
 	}
 	out.RawByte('}')
 }

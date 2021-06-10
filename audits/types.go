@@ -55,6 +55,7 @@ const (
 	SameSiteCookieExclusionReasonExcludeSameSiteNoneInsecure            SameSiteCookieExclusionReason = "ExcludeSameSiteNoneInsecure"
 	SameSiteCookieExclusionReasonExcludeSameSiteLax                     SameSiteCookieExclusionReason = "ExcludeSameSiteLax"
 	SameSiteCookieExclusionReasonExcludeSameSiteStrict                  SameSiteCookieExclusionReason = "ExcludeSameSiteStrict"
+	SameSiteCookieExclusionReasonExcludeInvalidSameParty                SameSiteCookieExclusionReason = "ExcludeInvalidSameParty"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -78,6 +79,8 @@ func (t *SameSiteCookieExclusionReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = SameSiteCookieExclusionReasonExcludeSameSiteLax
 	case SameSiteCookieExclusionReasonExcludeSameSiteStrict:
 		*t = SameSiteCookieExclusionReasonExcludeSameSiteStrict
+	case SameSiteCookieExclusionReasonExcludeInvalidSameParty:
+		*t = SameSiteCookieExclusionReasonExcludeInvalidSameParty
 
 	default:
 		in.AddError(errors.New("unknown SameSiteCookieExclusionReason value"))
@@ -201,7 +204,8 @@ func (t *SameSiteCookieOperation) UnmarshalJSON(buf []byte) error {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-SameSiteCookieIssueDetails
 type SameSiteCookieIssueDetails struct {
-	Cookie                 *AffectedCookie                 `json:"cookie"`
+	Cookie                 *AffectedCookie                 `json:"cookie,omitempty"` // If AffectedCookie is not set then rawCookieLine contains the raw Set-Cookie header string. This hints at a problem where the cookie line is syntactically or semantically malformed in a way that no valid cookie could be created.
+	RawCookieLine          string                          `json:"rawCookieLine,omitempty"`
 	CookieWarningReasons   []SameSiteCookieWarningReason   `json:"cookieWarningReasons"`
 	CookieExclusionReasons []SameSiteCookieExclusionReason `json:"cookieExclusionReasons"`
 	Operation              SameSiteCookieOperation         `json:"operation"` // Optionally identifies the site-for-cookies and the cookie url, which may be used by the front-end as additional context.
@@ -955,6 +959,7 @@ type InspectorIssueDetails struct {
 type InspectorIssue struct {
 	Code    InspectorIssueCode     `json:"code"`
 	Details *InspectorIssueDetails `json:"details"`
+	IssueID string                 `json:"issueId,omitempty"` // A unique id for this issue. May be omitted if no other entity (e.g. exception, CDP message, etc.) is referencing this issue.
 }
 
 // GetEncodedResponseEncoding the encoding to use.
