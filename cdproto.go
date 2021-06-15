@@ -149,6 +149,7 @@ const (
 	CommandCSSSetEffectivePropertyValueForNode             = css.CommandSetEffectivePropertyValueForNode
 	CommandCSSSetKeyframeKey                               = css.CommandSetKeyframeKey
 	CommandCSSSetMediaText                                 = css.CommandSetMediaText
+	CommandCSSSetContainerQueryText                        = css.CommandSetContainerQueryText
 	CommandCSSSetRuleSelector                              = css.CommandSetRuleSelector
 	CommandCSSSetStyleSheetText                            = css.CommandSetStyleSheetText
 	CommandCSSSetStyleTexts                                = css.CommandSetStyleTexts
@@ -431,7 +432,6 @@ const (
 	CommandNetworkSetCacheDisabled                         = network.CommandSetCacheDisabled
 	CommandNetworkSetCookie                                = network.CommandSetCookie
 	CommandNetworkSetCookies                               = network.CommandSetCookies
-	CommandNetworkSetDataSizeLimitsForTest                 = network.CommandSetDataSizeLimitsForTest
 	CommandNetworkSetExtraHTTPHeaders                      = network.CommandSetExtraHTTPHeaders
 	CommandNetworkSetAttachDebugStack                      = network.CommandSetAttachDebugStack
 	CommandNetworkGetSecurityIsolationStatus               = network.CommandGetSecurityIsolationStatus
@@ -964,6 +964,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandCSSSetMediaText:
 		v = new(css.SetMediaTextReturns)
+
+	case CommandCSSSetContainerQueryText:
+		v = new(css.SetContainerQueryTextReturns)
 
 	case CommandCSSSetRuleSelector:
 		v = new(css.SetRuleSelectorReturns)
@@ -1809,9 +1812,6 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		return emptyVal, nil
 
 	case CommandNetworkSetCookies:
-		return emptyVal, nil
-
-	case CommandNetworkSetDataSizeLimitsForTest:
 		return emptyVal, nil
 
 	case CommandNetworkSetExtraHTTPHeaders:
