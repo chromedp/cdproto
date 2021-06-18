@@ -852,6 +852,7 @@ const (
 	BackForwardCacheNotRestoredReasonOptInUnloadHeaderNotPresent                         BackForwardCacheNotRestoredReason = "OptInUnloadHeaderNotPresent"
 	BackForwardCacheNotRestoredReasonUnloadHandlerExistsInMainFrame                      BackForwardCacheNotRestoredReason = "UnloadHandlerExistsInMainFrame"
 	BackForwardCacheNotRestoredReasonUnloadHandlerExistsInSubFrame                       BackForwardCacheNotRestoredReason = "UnloadHandlerExistsInSubFrame"
+	BackForwardCacheNotRestoredReasonServiceWorkerUnregistration                         BackForwardCacheNotRestoredReason = "ServiceWorkerUnregistration"
 	BackForwardCacheNotRestoredReasonWebSocket                                           BackForwardCacheNotRestoredReason = "WebSocket"
 	BackForwardCacheNotRestoredReasonWebRTC                                              BackForwardCacheNotRestoredReason = "WebRTC"
 	BackForwardCacheNotRestoredReasonMainResourceHasCacheControlNoStore                  BackForwardCacheNotRestoredReason = "MainResourceHasCacheControlNoStore"
@@ -878,7 +879,6 @@ const (
 	BackForwardCacheNotRestoredReasonRequestedBackgroundWorkPermission                   BackForwardCacheNotRestoredReason = "RequestedBackgroundWorkPermission"
 	BackForwardCacheNotRestoredReasonBroadcastChannel                                    BackForwardCacheNotRestoredReason = "BroadcastChannel"
 	BackForwardCacheNotRestoredReasonIndexedDBConnection                                 BackForwardCacheNotRestoredReason = "IndexedDBConnection"
-	BackForwardCacheNotRestoredReasonWebVR                                               BackForwardCacheNotRestoredReason = "WebVR"
 	BackForwardCacheNotRestoredReasonWebXR                                               BackForwardCacheNotRestoredReason = "WebXR"
 	BackForwardCacheNotRestoredReasonSharedWorker                                        BackForwardCacheNotRestoredReason = "SharedWorker"
 	BackForwardCacheNotRestoredReasonWebLocks                                            BackForwardCacheNotRestoredReason = "WebLocks"
@@ -1012,6 +1012,8 @@ func (t *BackForwardCacheNotRestoredReason) UnmarshalEasyJSON(in *jlexer.Lexer) 
 		*t = BackForwardCacheNotRestoredReasonUnloadHandlerExistsInMainFrame
 	case BackForwardCacheNotRestoredReasonUnloadHandlerExistsInSubFrame:
 		*t = BackForwardCacheNotRestoredReasonUnloadHandlerExistsInSubFrame
+	case BackForwardCacheNotRestoredReasonServiceWorkerUnregistration:
+		*t = BackForwardCacheNotRestoredReasonServiceWorkerUnregistration
 	case BackForwardCacheNotRestoredReasonWebSocket:
 		*t = BackForwardCacheNotRestoredReasonWebSocket
 	case BackForwardCacheNotRestoredReasonWebRTC:
@@ -1064,8 +1066,6 @@ func (t *BackForwardCacheNotRestoredReason) UnmarshalEasyJSON(in *jlexer.Lexer) 
 		*t = BackForwardCacheNotRestoredReasonBroadcastChannel
 	case BackForwardCacheNotRestoredReasonIndexedDBConnection:
 		*t = BackForwardCacheNotRestoredReasonIndexedDBConnection
-	case BackForwardCacheNotRestoredReasonWebVR:
-		*t = BackForwardCacheNotRestoredReasonWebVR
 	case BackForwardCacheNotRestoredReasonWebXR:
 		*t = BackForwardCacheNotRestoredReasonWebXR
 	case BackForwardCacheNotRestoredReasonSharedWorker:
