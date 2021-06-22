@@ -40,6 +40,7 @@ const (
 	PermissionsPolicyFeatureChRtt                       PermissionsPolicyFeature = "ch-rtt"
 	PermissionsPolicyFeatureChUa                        PermissionsPolicyFeature = "ch-ua"
 	PermissionsPolicyFeatureChUaArch                    PermissionsPolicyFeature = "ch-ua-arch"
+	PermissionsPolicyFeatureChUaBitness                 PermissionsPolicyFeature = "ch-ua-bitness"
 	PermissionsPolicyFeatureChUaPlatform                PermissionsPolicyFeature = "ch-ua-platform"
 	PermissionsPolicyFeatureChUaModel                   PermissionsPolicyFeature = "ch-ua-model"
 	PermissionsPolicyFeatureChUaMobile                  PermissionsPolicyFeature = "ch-ua-mobile"
@@ -126,6 +127,8 @@ func (t *PermissionsPolicyFeature) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PermissionsPolicyFeatureChUa
 	case PermissionsPolicyFeatureChUaArch:
 		*t = PermissionsPolicyFeatureChUaArch
+	case PermissionsPolicyFeatureChUaBitness:
+		*t = PermissionsPolicyFeatureChUaBitness
 	case PermissionsPolicyFeatureChUaPlatform:
 		*t = PermissionsPolicyFeatureChUaPlatform
 	case PermissionsPolicyFeatureChUaModel:
@@ -859,12 +862,6 @@ const (
 	BackForwardCacheNotRestoredReasonMainResourceHasCacheControlNoCache                  BackForwardCacheNotRestoredReason = "MainResourceHasCacheControlNoCache"
 	BackForwardCacheNotRestoredReasonSubresourceHasCacheControlNoStore                   BackForwardCacheNotRestoredReason = "SubresourceHasCacheControlNoStore"
 	BackForwardCacheNotRestoredReasonSubresourceHasCacheControlNoCache                   BackForwardCacheNotRestoredReason = "SubresourceHasCacheControlNoCache"
-	BackForwardCacheNotRestoredReasonPageShowEventListener                               BackForwardCacheNotRestoredReason = "PageShowEventListener"
-	BackForwardCacheNotRestoredReasonPageHideEventListener                               BackForwardCacheNotRestoredReason = "PageHideEventListener"
-	BackForwardCacheNotRestoredReasonBeforeUnloadEventListener                           BackForwardCacheNotRestoredReason = "BeforeUnloadEventListener"
-	BackForwardCacheNotRestoredReasonUnloadEventListener                                 BackForwardCacheNotRestoredReason = "UnloadEventListener"
-	BackForwardCacheNotRestoredReasonFreezeEventListener                                 BackForwardCacheNotRestoredReason = "FreezeEventListener"
-	BackForwardCacheNotRestoredReasonResumeEventListener                                 BackForwardCacheNotRestoredReason = "ResumeEventListener"
 	BackForwardCacheNotRestoredReasonContainsPlugins                                     BackForwardCacheNotRestoredReason = "ContainsPlugins"
 	BackForwardCacheNotRestoredReasonDocumentLoaded                                      BackForwardCacheNotRestoredReason = "DocumentLoaded"
 	BackForwardCacheNotRestoredReasonDedicatedWorkerOrWorklet                            BackForwardCacheNotRestoredReason = "DedicatedWorkerOrWorklet"
@@ -1026,18 +1023,6 @@ func (t *BackForwardCacheNotRestoredReason) UnmarshalEasyJSON(in *jlexer.Lexer) 
 		*t = BackForwardCacheNotRestoredReasonSubresourceHasCacheControlNoStore
 	case BackForwardCacheNotRestoredReasonSubresourceHasCacheControlNoCache:
 		*t = BackForwardCacheNotRestoredReasonSubresourceHasCacheControlNoCache
-	case BackForwardCacheNotRestoredReasonPageShowEventListener:
-		*t = BackForwardCacheNotRestoredReasonPageShowEventListener
-	case BackForwardCacheNotRestoredReasonPageHideEventListener:
-		*t = BackForwardCacheNotRestoredReasonPageHideEventListener
-	case BackForwardCacheNotRestoredReasonBeforeUnloadEventListener:
-		*t = BackForwardCacheNotRestoredReasonBeforeUnloadEventListener
-	case BackForwardCacheNotRestoredReasonUnloadEventListener:
-		*t = BackForwardCacheNotRestoredReasonUnloadEventListener
-	case BackForwardCacheNotRestoredReasonFreezeEventListener:
-		*t = BackForwardCacheNotRestoredReasonFreezeEventListener
-	case BackForwardCacheNotRestoredReasonResumeEventListener:
-		*t = BackForwardCacheNotRestoredReasonResumeEventListener
 	case BackForwardCacheNotRestoredReasonContainsPlugins:
 		*t = BackForwardCacheNotRestoredReasonContainsPlugins
 	case BackForwardCacheNotRestoredReasonDocumentLoaded:
@@ -1287,6 +1272,7 @@ func (t CaptureScreenshotFormat) String() string {
 const (
 	CaptureScreenshotFormatJpeg CaptureScreenshotFormat = "jpeg"
 	CaptureScreenshotFormatPng  CaptureScreenshotFormat = "png"
+	CaptureScreenshotFormatWebp CaptureScreenshotFormat = "webp"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -1306,6 +1292,8 @@ func (t *CaptureScreenshotFormat) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = CaptureScreenshotFormatJpeg
 	case CaptureScreenshotFormatPng:
 		*t = CaptureScreenshotFormatPng
+	case CaptureScreenshotFormatWebp:
+		*t = CaptureScreenshotFormatWebp
 
 	default:
 		in.AddError(errors.New("unknown CaptureScreenshotFormat value"))
