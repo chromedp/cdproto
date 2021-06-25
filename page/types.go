@@ -853,7 +853,6 @@ const (
 	BackForwardCacheNotRestoredReasonBrowsingInstanceNotSwapped                          BackForwardCacheNotRestoredReason = "BrowsingInstanceNotSwapped"
 	BackForwardCacheNotRestoredReasonBackForwardCacheDisabledForDelegate                 BackForwardCacheNotRestoredReason = "BackForwardCacheDisabledForDelegate"
 	BackForwardCacheNotRestoredReasonOptInUnloadHeaderNotPresent                         BackForwardCacheNotRestoredReason = "OptInUnloadHeaderNotPresent"
-	BackForwardCacheNotRestoredReasonUnloadHandlerExistsInMainFrame                      BackForwardCacheNotRestoredReason = "UnloadHandlerExistsInMainFrame"
 	BackForwardCacheNotRestoredReasonUnloadHandlerExistsInSubFrame                       BackForwardCacheNotRestoredReason = "UnloadHandlerExistsInSubFrame"
 	BackForwardCacheNotRestoredReasonServiceWorkerUnregistration                         BackForwardCacheNotRestoredReason = "ServiceWorkerUnregistration"
 	BackForwardCacheNotRestoredReasonWebSocket                                           BackForwardCacheNotRestoredReason = "WebSocket"
@@ -1005,8 +1004,6 @@ func (t *BackForwardCacheNotRestoredReason) UnmarshalEasyJSON(in *jlexer.Lexer) 
 		*t = BackForwardCacheNotRestoredReasonBackForwardCacheDisabledForDelegate
 	case BackForwardCacheNotRestoredReasonOptInUnloadHeaderNotPresent:
 		*t = BackForwardCacheNotRestoredReasonOptInUnloadHeaderNotPresent
-	case BackForwardCacheNotRestoredReasonUnloadHandlerExistsInMainFrame:
-		*t = BackForwardCacheNotRestoredReasonUnloadHandlerExistsInMainFrame
 	case BackForwardCacheNotRestoredReasonUnloadHandlerExistsInSubFrame:
 		*t = BackForwardCacheNotRestoredReasonUnloadHandlerExistsInSubFrame
 	case BackForwardCacheNotRestoredReasonServiceWorkerUnregistration:

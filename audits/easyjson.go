@@ -1238,7 +1238,7 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoAudits9(in *jlexer.Lexer, out
 				(*out.Details).UnmarshalEasyJSON(in)
 			}
 		case "issueId":
-			out.IssueID = string(in.String())
+			out.IssueID = IssueID(in.String())
 		default:
 			in.SkipRecursive()
 		}

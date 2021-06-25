@@ -953,13 +953,24 @@ type InspectorIssueDetails struct {
 	NavigatorUserAgentIssueDetails    *NavigatorUserAgentIssueDetails    `json:"navigatorUserAgentIssueDetails,omitempty"`
 }
 
+// IssueID a unique id for a DevTools inspector issue. Allows other entities
+// (e.g. exceptions, CDP message, console messages, etc.) to reference an issue.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-IssueId
+type IssueID string
+
+// String returns the IssueID as string value.
+func (t IssueID) String() string {
+	return string(t)
+}
+
 // InspectorIssue an inspector issue reported from the back-end.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-InspectorIssue
 type InspectorIssue struct {
 	Code    InspectorIssueCode     `json:"code"`
 	Details *InspectorIssueDetails `json:"details"`
-	IssueID string                 `json:"issueId,omitempty"` // A unique id for this issue. May be omitted if no other entity (e.g. exception, CDP message, etc.) is referencing this issue.
+	IssueID IssueID                `json:"issueId,omitempty"` // A unique id for this issue. May be omitted if no other entity (e.g. exception, CDP message, etc.) is referencing this issue.
 }
 
 // GetEncodedResponseEncoding the encoding to use.
