@@ -6548,6 +6548,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoCss67(in *jlexer.Lexer, out *
 			}
 		case "styleSheetId":
 			out.StyleSheetID = StyleSheetID(in.String())
+		case "name":
+			out.Name = string(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -6576,6 +6578,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoCss67(out *jwriter.Writer, in
 		const prefix string = ",\"styleSheetId\":"
 		out.RawString(prefix)
 		out.String(string(in.StyleSheetID))
+	}
+	if in.Name != "" {
+		const prefix string = ",\"name\":"
+		out.RawString(prefix)
+		out.String(string(in.Name))
 	}
 	out.RawByte('}')
 }

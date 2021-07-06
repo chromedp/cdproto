@@ -3353,6 +3353,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork26(in *jlexer.Lexer, o
 				}
 				(*out.TrustTokenParams).UnmarshalEasyJSON(in)
 			}
+		case "isSameSite":
+			out.IsSameSite = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -3461,6 +3463,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoNetwork26(out *jwriter.Writer
 		const prefix string = ",\"trustTokenParams\":"
 		out.RawString(prefix)
 		(*in.TrustTokenParams).MarshalEasyJSON(out)
+	}
+	if in.IsSameSite {
+		const prefix string = ",\"isSameSite\":"
+		out.RawString(prefix)
+		out.Bool(bool(in.IsSameSite))
 	}
 	out.RawByte('}')
 }

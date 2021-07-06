@@ -250,6 +250,7 @@ type ContainerQuery struct {
 	Text         string       `json:"text"`                   // Container query text.
 	Range        *SourceRange `json:"range,omitempty"`        // The associated rule header range in the enclosing stylesheet (if available).
 	StyleSheetID StyleSheetID `json:"styleSheetId,omitempty"` // Identifier of the stylesheet containing this object (if exists).
+	Name         string       `json:"name,omitempty"`         // Optional name for the container.
 }
 
 // PlatformFontUsage information about amount of glyphs that were rendered

@@ -216,6 +216,7 @@ const (
 	CommandDOMSetOuterHTML                                 = dom.CommandSetOuterHTML
 	CommandDOMUndo                                         = dom.CommandUndo
 	CommandDOMGetFrameOwner                                = dom.CommandGetFrameOwner
+	CommandDOMGetContainerForNode                          = dom.CommandGetContainerForNode
 	EventDOMAttributeModified                              = "DOM.attributeModified"
 	EventDOMAttributeRemoved                               = "DOM.attributeRemoved"
 	EventDOMCharacterDataModified                          = "DOM.characterDataModified"
@@ -1165,6 +1166,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandDOMGetFrameOwner:
 		v = new(dom.GetFrameOwnerReturns)
+
+	case CommandDOMGetContainerForNode:
+		v = new(dom.GetContainerForNodeReturns)
 
 	case EventDOMAttributeModified:
 		v = new(dom.EventAttributeModified)

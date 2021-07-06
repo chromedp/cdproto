@@ -4468,6 +4468,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoRuntime47(in *jlexer.Lexer, o
 			out.ExecutionContextID = ExecutionContextID(in.Int64())
 		case "objectGroup":
 			out.ObjectGroup = string(in.String())
+		case "throwOnSideEffect":
+			out.ThrowOnSideEffect = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -4544,6 +4546,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoRuntime47(out *jwriter.Writer
 		const prefix string = ",\"objectGroup\":"
 		out.RawString(prefix)
 		out.String(string(in.ObjectGroup))
+	}
+	if in.ThrowOnSideEffect {
+		const prefix string = ",\"throwOnSideEffect\":"
+		out.RawString(prefix)
+		out.Bool(bool(in.ThrowOnSideEffect))
 	}
 	out.RawByte('}')
 }
