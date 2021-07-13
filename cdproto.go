@@ -482,6 +482,7 @@ const (
 	CommandOverlaySetShowGridOverlays                      = overlay.CommandSetShowGridOverlays
 	CommandOverlaySetShowFlexOverlays                      = overlay.CommandSetShowFlexOverlays
 	CommandOverlaySetShowScrollSnapOverlays                = overlay.CommandSetShowScrollSnapOverlays
+	CommandOverlaySetShowContainerQueryOverlays            = overlay.CommandSetShowContainerQueryOverlays
 	CommandOverlaySetShowPaintRects                        = overlay.CommandSetShowPaintRects
 	CommandOverlaySetShowLayoutShiftRegions                = overlay.CommandSetShowLayoutShiftRegions
 	CommandOverlaySetShowScrollBottleneckRects             = overlay.CommandSetShowScrollBottleneckRects
@@ -1963,6 +1964,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		return emptyVal, nil
 
 	case CommandOverlaySetShowScrollSnapOverlays:
+		return emptyVal, nil
+
+	case CommandOverlaySetShowContainerQueryOverlays:
 		return emptyVal, nil
 
 	case CommandOverlaySetShowPaintRects:

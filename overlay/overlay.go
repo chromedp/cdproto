@@ -622,6 +622,28 @@ func (p *SetShowScrollSnapOverlaysParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandSetShowScrollSnapOverlays, p, nil)
 }
 
+// SetShowContainerQueryOverlaysParams [no description].
+type SetShowContainerQueryOverlaysParams struct {
+	ContainerQueryHighlightConfigs []*ContainerQueryHighlightConfig `json:"containerQueryHighlightConfigs"` // An array of node identifiers and descriptors for the highlight appearance.
+}
+
+// SetShowContainerQueryOverlays [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Overlay#method-setShowContainerQueryOverlays
+//
+// parameters:
+//   containerQueryHighlightConfigs - An array of node identifiers and descriptors for the highlight appearance.
+func SetShowContainerQueryOverlays(containerQueryHighlightConfigs []*ContainerQueryHighlightConfig) *SetShowContainerQueryOverlaysParams {
+	return &SetShowContainerQueryOverlaysParams{
+		ContainerQueryHighlightConfigs: containerQueryHighlightConfigs,
+	}
+}
+
+// Do executes Overlay.setShowContainerQueryOverlays against the provided context.
+func (p *SetShowContainerQueryOverlaysParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetShowContainerQueryOverlays, p, nil)
+}
+
 // SetShowPaintRectsParams requests that backend shows paint rectangles.
 type SetShowPaintRectsParams struct {
 	Result bool `json:"result"` // True for showing paint rectangles
@@ -809,6 +831,7 @@ const (
 	CommandSetShowGridOverlays                  = "Overlay.setShowGridOverlays"
 	CommandSetShowFlexOverlays                  = "Overlay.setShowFlexOverlays"
 	CommandSetShowScrollSnapOverlays            = "Overlay.setShowScrollSnapOverlays"
+	CommandSetShowContainerQueryOverlays        = "Overlay.setShowContainerQueryOverlays"
 	CommandSetShowPaintRects                    = "Overlay.setShowPaintRects"
 	CommandSetShowLayoutShiftRegions            = "Overlay.setShowLayoutShiftRegions"
 	CommandSetShowScrollBottleneckRects         = "Overlay.setShowScrollBottleneckRects"
