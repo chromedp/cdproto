@@ -204,44 +204,6 @@ func (p *HideHighlightParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandHideHighlight, nil, nil)
 }
 
-// HighlightFrameParams highlights owner element of the frame with given id.
-type HighlightFrameParams struct {
-	FrameID             cdp.FrameID `json:"frameId"`                       // Identifier of the frame to highlight.
-	ContentColor        *cdp.RGBA   `json:"contentColor,omitempty"`        // The content box highlight fill color (default: transparent).
-	ContentOutlineColor *cdp.RGBA   `json:"contentOutlineColor,omitempty"` // The content box highlight outline color (default: transparent).
-}
-
-// HighlightFrame highlights owner element of the frame with given id.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Overlay#method-highlightFrame
-//
-// parameters:
-//   frameID - Identifier of the frame to highlight.
-func HighlightFrame(frameID cdp.FrameID) *HighlightFrameParams {
-	return &HighlightFrameParams{
-		FrameID: frameID,
-	}
-}
-
-// WithContentColor the content box highlight fill color (default:
-// transparent).
-func (p HighlightFrameParams) WithContentColor(contentColor *cdp.RGBA) *HighlightFrameParams {
-	p.ContentColor = contentColor
-	return &p
-}
-
-// WithContentOutlineColor the content box highlight outline color (default:
-// transparent).
-func (p HighlightFrameParams) WithContentOutlineColor(contentOutlineColor *cdp.RGBA) *HighlightFrameParams {
-	p.ContentOutlineColor = contentOutlineColor
-	return &p
-}
-
-// Do executes Overlay.highlightFrame against the provided context.
-func (p *HighlightFrameParams) Do(ctx context.Context) (err error) {
-	return cdp.Execute(ctx, CommandHighlightFrame, p, nil)
-}
-
 // HighlightNodeParams highlights DOM node with given id or with the given
 // JavaScript object wrapper. Either nodeId or objectId must be specified.
 type HighlightNodeParams struct {
@@ -818,7 +780,6 @@ const (
 	CommandGetGridHighlightObjectsForTest       = "Overlay.getGridHighlightObjectsForTest"
 	CommandGetSourceOrderHighlightObjectForTest = "Overlay.getSourceOrderHighlightObjectForTest"
 	CommandHideHighlight                        = "Overlay.hideHighlight"
-	CommandHighlightFrame                       = "Overlay.highlightFrame"
 	CommandHighlightNode                        = "Overlay.highlightNode"
 	CommandHighlightQuad                        = "Overlay.highlightQuad"
 	CommandHighlightRect                        = "Overlay.highlightRect"

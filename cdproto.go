@@ -469,7 +469,6 @@ const (
 	CommandOverlayGetGridHighlightObjectsForTest           = overlay.CommandGetGridHighlightObjectsForTest
 	CommandOverlayGetSourceOrderHighlightObjectForTest     = overlay.CommandGetSourceOrderHighlightObjectForTest
 	CommandOverlayHideHighlight                            = overlay.CommandHideHighlight
-	CommandOverlayHighlightFrame                           = overlay.CommandHighlightFrame
 	CommandOverlayHighlightNode                            = overlay.CommandHighlightNode
 	CommandOverlayHighlightQuad                            = overlay.CommandHighlightQuad
 	CommandOverlayHighlightRect                            = overlay.CommandHighlightRect
@@ -1925,9 +1924,6 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		v = new(overlay.GetSourceOrderHighlightObjectForTestReturns)
 
 	case CommandOverlayHideHighlight:
-		return emptyVal, nil
-
-	case CommandOverlayHighlightFrame:
 		return emptyVal, nil
 
 	case CommandOverlayHighlightNode:

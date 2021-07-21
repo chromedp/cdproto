@@ -855,6 +855,9 @@ const (
 	BackForwardCacheNotRestoredReasonOptInUnloadHeaderNotPresent                         BackForwardCacheNotRestoredReason = "OptInUnloadHeaderNotPresent"
 	BackForwardCacheNotRestoredReasonUnloadHandlerExistsInSubFrame                       BackForwardCacheNotRestoredReason = "UnloadHandlerExistsInSubFrame"
 	BackForwardCacheNotRestoredReasonServiceWorkerUnregistration                         BackForwardCacheNotRestoredReason = "ServiceWorkerUnregistration"
+	BackForwardCacheNotRestoredReasonCacheControlNoStore                                 BackForwardCacheNotRestoredReason = "CacheControlNoStore"
+	BackForwardCacheNotRestoredReasonCacheControlNoStoreCookieModified                   BackForwardCacheNotRestoredReason = "CacheControlNoStoreCookieModified"
+	BackForwardCacheNotRestoredReasonCacheControlNoStoreHTTPOnlyCookieModified           BackForwardCacheNotRestoredReason = "CacheControlNoStoreHTTPOnlyCookieModified"
 	BackForwardCacheNotRestoredReasonWebSocket                                           BackForwardCacheNotRestoredReason = "WebSocket"
 	BackForwardCacheNotRestoredReasonWebRTC                                              BackForwardCacheNotRestoredReason = "WebRTC"
 	BackForwardCacheNotRestoredReasonMainResourceHasCacheControlNoStore                  BackForwardCacheNotRestoredReason = "MainResourceHasCacheControlNoStore"
@@ -866,7 +869,6 @@ const (
 	BackForwardCacheNotRestoredReasonDedicatedWorkerOrWorklet                            BackForwardCacheNotRestoredReason = "DedicatedWorkerOrWorklet"
 	BackForwardCacheNotRestoredReasonOutstandingNetworkRequestOthers                     BackForwardCacheNotRestoredReason = "OutstandingNetworkRequestOthers"
 	BackForwardCacheNotRestoredReasonOutstandingIndexedDBTransaction                     BackForwardCacheNotRestoredReason = "OutstandingIndexedDBTransaction"
-	BackForwardCacheNotRestoredReasonRequestedGeolocationPermission                      BackForwardCacheNotRestoredReason = "RequestedGeolocationPermission"
 	BackForwardCacheNotRestoredReasonRequestedNotificationsPermission                    BackForwardCacheNotRestoredReason = "RequestedNotificationsPermission"
 	BackForwardCacheNotRestoredReasonRequestedMIDIPermission                             BackForwardCacheNotRestoredReason = "RequestedMIDIPermission"
 	BackForwardCacheNotRestoredReasonRequestedAudioCapturePermission                     BackForwardCacheNotRestoredReason = "RequestedAudioCapturePermission"
@@ -1008,6 +1010,12 @@ func (t *BackForwardCacheNotRestoredReason) UnmarshalEasyJSON(in *jlexer.Lexer) 
 		*t = BackForwardCacheNotRestoredReasonUnloadHandlerExistsInSubFrame
 	case BackForwardCacheNotRestoredReasonServiceWorkerUnregistration:
 		*t = BackForwardCacheNotRestoredReasonServiceWorkerUnregistration
+	case BackForwardCacheNotRestoredReasonCacheControlNoStore:
+		*t = BackForwardCacheNotRestoredReasonCacheControlNoStore
+	case BackForwardCacheNotRestoredReasonCacheControlNoStoreCookieModified:
+		*t = BackForwardCacheNotRestoredReasonCacheControlNoStoreCookieModified
+	case BackForwardCacheNotRestoredReasonCacheControlNoStoreHTTPOnlyCookieModified:
+		*t = BackForwardCacheNotRestoredReasonCacheControlNoStoreHTTPOnlyCookieModified
 	case BackForwardCacheNotRestoredReasonWebSocket:
 		*t = BackForwardCacheNotRestoredReasonWebSocket
 	case BackForwardCacheNotRestoredReasonWebRTC:
@@ -1030,8 +1038,6 @@ func (t *BackForwardCacheNotRestoredReason) UnmarshalEasyJSON(in *jlexer.Lexer) 
 		*t = BackForwardCacheNotRestoredReasonOutstandingNetworkRequestOthers
 	case BackForwardCacheNotRestoredReasonOutstandingIndexedDBTransaction:
 		*t = BackForwardCacheNotRestoredReasonOutstandingIndexedDBTransaction
-	case BackForwardCacheNotRestoredReasonRequestedGeolocationPermission:
-		*t = BackForwardCacheNotRestoredReasonRequestedGeolocationPermission
 	case BackForwardCacheNotRestoredReasonRequestedNotificationsPermission:
 		*t = BackForwardCacheNotRestoredReasonRequestedNotificationsPermission
 	case BackForwardCacheNotRestoredReasonRequestedMIDIPermission:
