@@ -858,6 +858,7 @@ const (
 	BackForwardCacheNotRestoredReasonCacheControlNoStore                                 BackForwardCacheNotRestoredReason = "CacheControlNoStore"
 	BackForwardCacheNotRestoredReasonCacheControlNoStoreCookieModified                   BackForwardCacheNotRestoredReason = "CacheControlNoStoreCookieModified"
 	BackForwardCacheNotRestoredReasonCacheControlNoStoreHTTPOnlyCookieModified           BackForwardCacheNotRestoredReason = "CacheControlNoStoreHTTPOnlyCookieModified"
+	BackForwardCacheNotRestoredReasonNoResponseHead                                      BackForwardCacheNotRestoredReason = "NoResponseHead"
 	BackForwardCacheNotRestoredReasonWebSocket                                           BackForwardCacheNotRestoredReason = "WebSocket"
 	BackForwardCacheNotRestoredReasonWebRTC                                              BackForwardCacheNotRestoredReason = "WebRTC"
 	BackForwardCacheNotRestoredReasonMainResourceHasCacheControlNoStore                  BackForwardCacheNotRestoredReason = "MainResourceHasCacheControlNoStore"
@@ -1016,6 +1017,8 @@ func (t *BackForwardCacheNotRestoredReason) UnmarshalEasyJSON(in *jlexer.Lexer) 
 		*t = BackForwardCacheNotRestoredReasonCacheControlNoStoreCookieModified
 	case BackForwardCacheNotRestoredReasonCacheControlNoStoreHTTPOnlyCookieModified:
 		*t = BackForwardCacheNotRestoredReasonCacheControlNoStoreHTTPOnlyCookieModified
+	case BackForwardCacheNotRestoredReasonNoResponseHead:
+		*t = BackForwardCacheNotRestoredReasonNoResponseHead
 	case BackForwardCacheNotRestoredReasonWebSocket:
 		*t = BackForwardCacheNotRestoredReasonWebSocket
 	case BackForwardCacheNotRestoredReasonWebRTC:

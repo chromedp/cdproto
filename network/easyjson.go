@@ -6808,6 +6808,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork64(in *jlexer.Lexer, o
 			}
 		case "resourceIPAddressSpace":
 			(out.ResourceIPAddressSpace).UnmarshalEasyJSON(in)
+		case "statusCode":
+			out.StatusCode = int64(in.Int64())
 		case "headersText":
 			out.HeadersText = string(in.String())
 		default:
@@ -6880,6 +6882,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoNetwork64(out *jwriter.Writer
 		const prefix string = ",\"resourceIPAddressSpace\":"
 		out.RawString(prefix)
 		(in.ResourceIPAddressSpace).MarshalEasyJSON(out)
+	}
+	{
+		const prefix string = ",\"statusCode\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.StatusCode))
 	}
 	if in.HeadersText != "" {
 		const prefix string = ",\"headersText\":"

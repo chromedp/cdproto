@@ -2851,6 +2851,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoRuntime29(in *jlexer.Lexer, o
 			}
 		case "hints":
 			(out.Hints).UnmarshalEasyJSON(in)
+		case "executionContextId":
+			out.ExecutionContextID = ExecutionContextID(in.Int64())
 		default:
 			in.SkipRecursive()
 		}
@@ -2878,6 +2880,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoRuntime29(out *jwriter.Writer
 		const prefix string = ",\"hints\":"
 		out.RawString(prefix)
 		(in.Hints).MarshalEasyJSON(out)
+	}
+	if in.ExecutionContextID != 0 {
+		const prefix string = ",\"executionContextId\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.ExecutionContextID))
 	}
 	out.RawByte('}')
 }
