@@ -710,6 +710,8 @@ const (
 	CorsErrorPreflightInvalidAllowCredentials     CorsError = "PreflightInvalidAllowCredentials"
 	CorsErrorPreflightMissingAllowExternal        CorsError = "PreflightMissingAllowExternal"
 	CorsErrorPreflightInvalidAllowExternal        CorsError = "PreflightInvalidAllowExternal"
+	CorsErrorPreflightMissingAllowPrivateNetwork  CorsError = "PreflightMissingAllowPrivateNetwork"
+	CorsErrorPreflightInvalidAllowPrivateNetwork  CorsError = "PreflightInvalidAllowPrivateNetwork"
 	CorsErrorInvalidAllowMethodsPreflightResponse CorsError = "InvalidAllowMethodsPreflightResponse"
 	CorsErrorInvalidAllowHeadersPreflightResponse CorsError = "InvalidAllowHeadersPreflightResponse"
 	CorsErrorMethodDisallowedByPreflightResponse  CorsError = "MethodDisallowedByPreflightResponse"
@@ -772,6 +774,10 @@ func (t *CorsError) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = CorsErrorPreflightMissingAllowExternal
 	case CorsErrorPreflightInvalidAllowExternal:
 		*t = CorsErrorPreflightInvalidAllowExternal
+	case CorsErrorPreflightMissingAllowPrivateNetwork:
+		*t = CorsErrorPreflightMissingAllowPrivateNetwork
+	case CorsErrorPreflightInvalidAllowPrivateNetwork:
+		*t = CorsErrorPreflightInvalidAllowPrivateNetwork
 	case CorsErrorInvalidAllowMethodsPreflightResponse:
 		*t = CorsErrorInvalidAllowMethodsPreflightResponse
 	case CorsErrorInvalidAllowHeadersPreflightResponse:
