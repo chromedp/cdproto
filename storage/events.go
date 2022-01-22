@@ -34,3 +34,13 @@ type EventIndexedDBContentUpdated struct {
 type EventIndexedDBListUpdated struct {
 	Origin string `json:"origin"` // Origin to update.
 }
+
+// EventInterestGroupAccessed one of the interest groups was accessed by the
+// associated page.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#event-interestGroupAccessed
+type EventInterestGroupAccessed struct {
+	Type        InterestGroupAccessType `json:"type"`
+	OwnerOrigin string                  `json:"ownerOrigin"`
+	Name        string                  `json:"name"`
+}
