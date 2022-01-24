@@ -884,16 +884,6 @@ type NavigatorUserAgentIssueDetails struct {
 	Location *SourceCodeLocation `json:"location,omitempty"`
 }
 
-// WasmCrossOriginModuleSharingIssueDetails [no description].
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-WasmCrossOriginModuleSharingIssueDetails
-type WasmCrossOriginModuleSharingIssueDetails struct {
-	WasmModuleURL string `json:"wasmModuleUrl"`
-	SourceOrigin  string `json:"sourceOrigin"`
-	TargetOrigin  string `json:"targetOrigin"`
-	IsWarning     bool   `json:"isWarning"`
-}
-
 // GenericIssueErrorType [no description].
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-GenericIssueErrorType
@@ -1026,22 +1016,21 @@ func (t InspectorIssueCode) String() string {
 
 // InspectorIssueCode values.
 const (
-	InspectorIssueCodeSameSiteCookieIssue               InspectorIssueCode = "SameSiteCookieIssue"
-	InspectorIssueCodeMixedContentIssue                 InspectorIssueCode = "MixedContentIssue"
-	InspectorIssueCodeBlockedByResponseIssue            InspectorIssueCode = "BlockedByResponseIssue"
-	InspectorIssueCodeHeavyAdIssue                      InspectorIssueCode = "HeavyAdIssue"
-	InspectorIssueCodeContentSecurityPolicyIssue        InspectorIssueCode = "ContentSecurityPolicyIssue"
-	InspectorIssueCodeSharedArrayBufferIssue            InspectorIssueCode = "SharedArrayBufferIssue"
-	InspectorIssueCodeTrustedWebActivityIssue           InspectorIssueCode = "TrustedWebActivityIssue"
-	InspectorIssueCodeLowTextContrastIssue              InspectorIssueCode = "LowTextContrastIssue"
-	InspectorIssueCodeCorsIssue                         InspectorIssueCode = "CorsIssue"
-	InspectorIssueCodeAttributionReportingIssue         InspectorIssueCode = "AttributionReportingIssue"
-	InspectorIssueCodeQuirksModeIssue                   InspectorIssueCode = "QuirksModeIssue"
-	InspectorIssueCodeNavigatorUserAgentIssue           InspectorIssueCode = "NavigatorUserAgentIssue"
-	InspectorIssueCodeWasmCrossOriginModuleSharingIssue InspectorIssueCode = "WasmCrossOriginModuleSharingIssue"
-	InspectorIssueCodeGenericIssue                      InspectorIssueCode = "GenericIssue"
-	InspectorIssueCodeDeprecationIssue                  InspectorIssueCode = "DeprecationIssue"
-	InspectorIssueCodeClientHintIssue                   InspectorIssueCode = "ClientHintIssue"
+	InspectorIssueCodeSameSiteCookieIssue        InspectorIssueCode = "SameSiteCookieIssue"
+	InspectorIssueCodeMixedContentIssue          InspectorIssueCode = "MixedContentIssue"
+	InspectorIssueCodeBlockedByResponseIssue     InspectorIssueCode = "BlockedByResponseIssue"
+	InspectorIssueCodeHeavyAdIssue               InspectorIssueCode = "HeavyAdIssue"
+	InspectorIssueCodeContentSecurityPolicyIssue InspectorIssueCode = "ContentSecurityPolicyIssue"
+	InspectorIssueCodeSharedArrayBufferIssue     InspectorIssueCode = "SharedArrayBufferIssue"
+	InspectorIssueCodeTrustedWebActivityIssue    InspectorIssueCode = "TrustedWebActivityIssue"
+	InspectorIssueCodeLowTextContrastIssue       InspectorIssueCode = "LowTextContrastIssue"
+	InspectorIssueCodeCorsIssue                  InspectorIssueCode = "CorsIssue"
+	InspectorIssueCodeAttributionReportingIssue  InspectorIssueCode = "AttributionReportingIssue"
+	InspectorIssueCodeQuirksModeIssue            InspectorIssueCode = "QuirksModeIssue"
+	InspectorIssueCodeNavigatorUserAgentIssue    InspectorIssueCode = "NavigatorUserAgentIssue"
+	InspectorIssueCodeGenericIssue               InspectorIssueCode = "GenericIssue"
+	InspectorIssueCodeDeprecationIssue           InspectorIssueCode = "DeprecationIssue"
+	InspectorIssueCodeClientHintIssue            InspectorIssueCode = "ClientHintIssue"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -1081,8 +1070,6 @@ func (t *InspectorIssueCode) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = InspectorIssueCodeQuirksModeIssue
 	case InspectorIssueCodeNavigatorUserAgentIssue:
 		*t = InspectorIssueCodeNavigatorUserAgentIssue
-	case InspectorIssueCodeWasmCrossOriginModuleSharingIssue:
-		*t = InspectorIssueCodeWasmCrossOriginModuleSharingIssue
 	case InspectorIssueCodeGenericIssue:
 		*t = InspectorIssueCodeGenericIssue
 	case InspectorIssueCodeDeprecationIssue:
@@ -1106,22 +1093,21 @@ func (t *InspectorIssueCode) UnmarshalJSON(buf []byte) error {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-InspectorIssueDetails
 type InspectorIssueDetails struct {
-	SameSiteCookieIssueDetails        *SameSiteCookieIssueDetails               `json:"sameSiteCookieIssueDetails,omitempty"`
-	MixedContentIssueDetails          *MixedContentIssueDetails                 `json:"mixedContentIssueDetails,omitempty"`
-	BlockedByResponseIssueDetails     *BlockedByResponseIssueDetails            `json:"blockedByResponseIssueDetails,omitempty"`
-	HeavyAdIssueDetails               *HeavyAdIssueDetails                      `json:"heavyAdIssueDetails,omitempty"`
-	ContentSecurityPolicyIssueDetails *ContentSecurityPolicyIssueDetails        `json:"contentSecurityPolicyIssueDetails,omitempty"`
-	SharedArrayBufferIssueDetails     *SharedArrayBufferIssueDetails            `json:"sharedArrayBufferIssueDetails,omitempty"`
-	TwaQualityEnforcementDetails      *TrustedWebActivityIssueDetails           `json:"twaQualityEnforcementDetails,omitempty"`
-	LowTextContrastIssueDetails       *LowTextContrastIssueDetails              `json:"lowTextContrastIssueDetails,omitempty"`
-	CorsIssueDetails                  *CorsIssueDetails                         `json:"corsIssueDetails,omitempty"`
-	AttributionReportingIssueDetails  *AttributionReportingIssueDetails         `json:"attributionReportingIssueDetails,omitempty"`
-	QuirksModeIssueDetails            *QuirksModeIssueDetails                   `json:"quirksModeIssueDetails,omitempty"`
-	NavigatorUserAgentIssueDetails    *NavigatorUserAgentIssueDetails           `json:"navigatorUserAgentIssueDetails,omitempty"`
-	WasmCrossOriginModuleSharingIssue *WasmCrossOriginModuleSharingIssueDetails `json:"wasmCrossOriginModuleSharingIssue,omitempty"`
-	GenericIssueDetails               *GenericIssueDetails                      `json:"genericIssueDetails,omitempty"`
-	DeprecationIssueDetails           *DeprecationIssueDetails                  `json:"deprecationIssueDetails,omitempty"`
-	ClientHintIssueDetails            *ClientHintIssueDetails                   `json:"clientHintIssueDetails,omitempty"`
+	SameSiteCookieIssueDetails        *SameSiteCookieIssueDetails        `json:"sameSiteCookieIssueDetails,omitempty"`
+	MixedContentIssueDetails          *MixedContentIssueDetails          `json:"mixedContentIssueDetails,omitempty"`
+	BlockedByResponseIssueDetails     *BlockedByResponseIssueDetails     `json:"blockedByResponseIssueDetails,omitempty"`
+	HeavyAdIssueDetails               *HeavyAdIssueDetails               `json:"heavyAdIssueDetails,omitempty"`
+	ContentSecurityPolicyIssueDetails *ContentSecurityPolicyIssueDetails `json:"contentSecurityPolicyIssueDetails,omitempty"`
+	SharedArrayBufferIssueDetails     *SharedArrayBufferIssueDetails     `json:"sharedArrayBufferIssueDetails,omitempty"`
+	TwaQualityEnforcementDetails      *TrustedWebActivityIssueDetails    `json:"twaQualityEnforcementDetails,omitempty"`
+	LowTextContrastIssueDetails       *LowTextContrastIssueDetails       `json:"lowTextContrastIssueDetails,omitempty"`
+	CorsIssueDetails                  *CorsIssueDetails                  `json:"corsIssueDetails,omitempty"`
+	AttributionReportingIssueDetails  *AttributionReportingIssueDetails  `json:"attributionReportingIssueDetails,omitempty"`
+	QuirksModeIssueDetails            *QuirksModeIssueDetails            `json:"quirksModeIssueDetails,omitempty"`
+	NavigatorUserAgentIssueDetails    *NavigatorUserAgentIssueDetails    `json:"navigatorUserAgentIssueDetails,omitempty"`
+	GenericIssueDetails               *GenericIssueDetails               `json:"genericIssueDetails,omitempty"`
+	DeprecationIssueDetails           *DeprecationIssueDetails           `json:"deprecationIssueDetails,omitempty"`
+	ClientHintIssueDetails            *ClientHintIssueDetails            `json:"clientHintIssueDetails,omitempty"`
 }
 
 // IssueID a unique id for a DevTools inspector issue. Allows other entities
