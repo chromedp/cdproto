@@ -709,7 +709,15 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoStorage9(in *jlexer.Lexer, ou
 		case "name":
 			out.Name = string(in.String())
 		case "expirationTime":
-			out.ExpirationTime = float64(in.Float64())
+			if in.IsNull() {
+				in.Skip()
+				out.ExpirationTime = nil
+			} else {
+				if out.ExpirationTime == nil {
+					out.ExpirationTime = new(cdp.TimeSinceEpoch)
+				}
+				(*out.ExpirationTime).UnmarshalEasyJSON(in)
+			}
 		case "joiningOrigin":
 			out.JoiningOrigin = string(in.String())
 		case "biddingUrl":
@@ -834,7 +842,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage9(out *jwriter.Writer,
 	{
 		const prefix string = ",\"expirationTime\":"
 		out.RawString(prefix)
-		out.Float64(float64(in.ExpirationTime))
+		if in.ExpirationTime == nil {
+			out.RawString("null")
+		} else {
+			(*in.ExpirationTime).MarshalEasyJSON(out)
+		}
 	}
 	{
 		const prefix string = ",\"joiningOrigin\":"
@@ -1743,6 +1755,16 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoStorage19(in *jlexer.Lexer, o
 			continue
 		}
 		switch key {
+		case "accessTime":
+			if in.IsNull() {
+				in.Skip()
+				out.AccessTime = nil
+			} else {
+				if out.AccessTime == nil {
+					out.AccessTime = new(cdp.TimeSinceEpoch)
+				}
+				(*out.AccessTime).UnmarshalEasyJSON(in)
+			}
 		case "type":
 			(out.Type).UnmarshalEasyJSON(in)
 		case "ownerOrigin":
@@ -1764,8 +1786,17 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage19(out *jwriter.Writer
 	first := true
 	_ = first
 	{
-		const prefix string = ",\"type\":"
+		const prefix string = ",\"accessTime\":"
 		out.RawString(prefix[1:])
+		if in.AccessTime == nil {
+			out.RawString("null")
+		} else {
+			(*in.AccessTime).MarshalEasyJSON(out)
+		}
+	}
+	{
+		const prefix string = ",\"type\":"
+		out.RawString(prefix)
 		(in.Type).MarshalEasyJSON(out)
 	}
 	{

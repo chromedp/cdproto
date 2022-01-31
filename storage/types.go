@@ -5,6 +5,7 @@ package storage
 import (
 	"errors"
 
+	"github.com/chromedp/cdproto/cdp"
 	"github.com/mailru/easyjson"
 	"github.com/mailru/easyjson/jlexer"
 	"github.com/mailru/easyjson/jwriter"
@@ -166,16 +167,16 @@ type InterestGroupAd struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-InterestGroupDetails
 type InterestGroupDetails struct {
-	OwnerOrigin               string             `json:"ownerOrigin"`
-	Name                      string             `json:"name"`
-	ExpirationTime            float64            `json:"expirationTime"`
-	JoiningOrigin             string             `json:"joiningOrigin"`
-	BiddingURL                string             `json:"biddingUrl,omitempty"`
-	BiddingWasmHelperURL      string             `json:"biddingWasmHelperUrl,omitempty"`
-	UpdateURL                 string             `json:"updateUrl,omitempty"`
-	TrustedBiddingSignalsURL  string             `json:"trustedBiddingSignalsUrl,omitempty"`
-	TrustedBiddingSignalsKeys []string           `json:"trustedBiddingSignalsKeys"`
-	UserBiddingSignals        string             `json:"userBiddingSignals,omitempty"`
-	Ads                       []*InterestGroupAd `json:"ads"`
-	AdComponents              []*InterestGroupAd `json:"adComponents"`
+	OwnerOrigin               string              `json:"ownerOrigin"`
+	Name                      string              `json:"name"`
+	ExpirationTime            *cdp.TimeSinceEpoch `json:"expirationTime"`
+	JoiningOrigin             string              `json:"joiningOrigin"`
+	BiddingURL                string              `json:"biddingUrl,omitempty"`
+	BiddingWasmHelperURL      string              `json:"biddingWasmHelperUrl,omitempty"`
+	UpdateURL                 string              `json:"updateUrl,omitempty"`
+	TrustedBiddingSignalsURL  string              `json:"trustedBiddingSignalsUrl,omitempty"`
+	TrustedBiddingSignalsKeys []string            `json:"trustedBiddingSignalsKeys"`
+	UserBiddingSignals        string              `json:"userBiddingSignals,omitempty"`
+	Ads                       []*InterestGroupAd  `json:"ads"`
+	AdComponents              []*InterestGroupAd  `json:"adComponents"`
 }

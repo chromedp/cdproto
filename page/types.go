@@ -43,6 +43,7 @@ const (
 	PermissionsPolicyFeatureChUaPlatform                PermissionsPolicyFeature = "ch-ua-platform"
 	PermissionsPolicyFeatureChUaModel                   PermissionsPolicyFeature = "ch-ua-model"
 	PermissionsPolicyFeatureChUaMobile                  PermissionsPolicyFeature = "ch-ua-mobile"
+	PermissionsPolicyFeatureChUaFull                    PermissionsPolicyFeature = "ch-ua-full"
 	PermissionsPolicyFeatureChUaFullVersion             PermissionsPolicyFeature = "ch-ua-full-version"
 	PermissionsPolicyFeatureChUaFullVersionList         PermissionsPolicyFeature = "ch-ua-full-version-list"
 	PermissionsPolicyFeatureChUaPlatformVersion         PermissionsPolicyFeature = "ch-ua-platform-version"
@@ -138,6 +139,8 @@ func (t *PermissionsPolicyFeature) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PermissionsPolicyFeatureChUaModel
 	case PermissionsPolicyFeatureChUaMobile:
 		*t = PermissionsPolicyFeatureChUaMobile
+	case PermissionsPolicyFeatureChUaFull:
+		*t = PermissionsPolicyFeatureChUaFull
 	case PermissionsPolicyFeatureChUaFullVersion:
 		*t = PermissionsPolicyFeatureChUaFullVersion
 	case PermissionsPolicyFeatureChUaFullVersionList:
@@ -835,7 +838,7 @@ func (t BackForwardCacheNotRestoredReason) String() string {
 
 // BackForwardCacheNotRestoredReason values.
 const (
-	BackForwardCacheNotRestoredReasonNotMainFrame                                             BackForwardCacheNotRestoredReason = "NotMainFrame"
+	BackForwardCacheNotRestoredReasonNotPrimaryMainFrame                                      BackForwardCacheNotRestoredReason = "NotPrimaryMainFrame"
 	BackForwardCacheNotRestoredReasonBackForwardCacheDisabled                                 BackForwardCacheNotRestoredReason = "BackForwardCacheDisabled"
 	BackForwardCacheNotRestoredReasonRelatedActiveContentsExist                               BackForwardCacheNotRestoredReason = "RelatedActiveContentsExist"
 	BackForwardCacheNotRestoredReasonHTTPSTatusNotOK                                          BackForwardCacheNotRestoredReason = "HTTPStatusNotOK"
@@ -973,8 +976,8 @@ func (t BackForwardCacheNotRestoredReason) MarshalJSON() ([]byte, error) {
 // UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
 func (t *BackForwardCacheNotRestoredReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 	switch BackForwardCacheNotRestoredReason(in.String()) {
-	case BackForwardCacheNotRestoredReasonNotMainFrame:
-		*t = BackForwardCacheNotRestoredReasonNotMainFrame
+	case BackForwardCacheNotRestoredReasonNotPrimaryMainFrame:
+		*t = BackForwardCacheNotRestoredReasonNotPrimaryMainFrame
 	case BackForwardCacheNotRestoredReasonBackForwardCacheDisabled:
 		*t = BackForwardCacheNotRestoredReasonBackForwardCacheDisabled
 	case BackForwardCacheNotRestoredReasonRelatedActiveContentsExist:

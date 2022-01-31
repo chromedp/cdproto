@@ -992,6 +992,112 @@ func (t *ClientHintIssueReason) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 
+// FederatedAuthRequestIssueDetails [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-FederatedAuthRequestIssueDetails
+type FederatedAuthRequestIssueDetails struct {
+	FederatedAuthRequestIssueReason FederatedAuthRequestIssueReason `json:"federatedAuthRequestIssueReason"`
+}
+
+// FederatedAuthRequestIssueReason represents the failure reason when a
+// federated authentication reason fails. Should be updated alongside
+// RequestIdTokenStatus in
+// third_party/blink/public/mojom/webid/federated_auth_request.mojom to include
+// all cases except for success.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-FederatedAuthRequestIssueReason
+type FederatedAuthRequestIssueReason string
+
+// String returns the FederatedAuthRequestIssueReason as string value.
+func (t FederatedAuthRequestIssueReason) String() string {
+	return string(t)
+}
+
+// FederatedAuthRequestIssueReason values.
+const (
+	FederatedAuthRequestIssueReasonApprovalDeclined                FederatedAuthRequestIssueReason = "ApprovalDeclined"
+	FederatedAuthRequestIssueReasonTooManyRequests                 FederatedAuthRequestIssueReason = "TooManyRequests"
+	FederatedAuthRequestIssueReasonWellKnownHTTPNotFound           FederatedAuthRequestIssueReason = "WellKnownHttpNotFound"
+	FederatedAuthRequestIssueReasonWellKnownNoResponse             FederatedAuthRequestIssueReason = "WellKnownNoResponse"
+	FederatedAuthRequestIssueReasonWellKnownInvalidResponse        FederatedAuthRequestIssueReason = "WellKnownInvalidResponse"
+	FederatedAuthRequestIssueReasonClientIDMetadataHTTPNotFound    FederatedAuthRequestIssueReason = "ClientIdMetadataHttpNotFound"
+	FederatedAuthRequestIssueReasonClientIDMetadataNoResponse      FederatedAuthRequestIssueReason = "ClientIdMetadataNoResponse"
+	FederatedAuthRequestIssueReasonClientIDMetadataInvalidResponse FederatedAuthRequestIssueReason = "ClientIdMetadataInvalidResponse"
+	FederatedAuthRequestIssueReasonErrorFetchingSignin             FederatedAuthRequestIssueReason = "ErrorFetchingSignin"
+	FederatedAuthRequestIssueReasonInvalidSigninResponse           FederatedAuthRequestIssueReason = "InvalidSigninResponse"
+	FederatedAuthRequestIssueReasonAccountsHTTPNotFound            FederatedAuthRequestIssueReason = "AccountsHttpNotFound"
+	FederatedAuthRequestIssueReasonAccountsNoResponse              FederatedAuthRequestIssueReason = "AccountsNoResponse"
+	FederatedAuthRequestIssueReasonAccountsInvalidResponse         FederatedAuthRequestIssueReason = "AccountsInvalidResponse"
+	FederatedAuthRequestIssueReasonIDTokenHTTPNotFound             FederatedAuthRequestIssueReason = "IdTokenHttpNotFound"
+	FederatedAuthRequestIssueReasonIDTokenNoResponse               FederatedAuthRequestIssueReason = "IdTokenNoResponse"
+	FederatedAuthRequestIssueReasonIDTokenInvalidResponse          FederatedAuthRequestIssueReason = "IdTokenInvalidResponse"
+	FederatedAuthRequestIssueReasonIDTokenInvalidRequest           FederatedAuthRequestIssueReason = "IdTokenInvalidRequest"
+	FederatedAuthRequestIssueReasonErrorIDToken                    FederatedAuthRequestIssueReason = "ErrorIdToken"
+	FederatedAuthRequestIssueReasonCanceled                        FederatedAuthRequestIssueReason = "Canceled"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t FederatedAuthRequestIssueReason) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t FederatedAuthRequestIssueReason) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *FederatedAuthRequestIssueReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	switch FederatedAuthRequestIssueReason(in.String()) {
+	case FederatedAuthRequestIssueReasonApprovalDeclined:
+		*t = FederatedAuthRequestIssueReasonApprovalDeclined
+	case FederatedAuthRequestIssueReasonTooManyRequests:
+		*t = FederatedAuthRequestIssueReasonTooManyRequests
+	case FederatedAuthRequestIssueReasonWellKnownHTTPNotFound:
+		*t = FederatedAuthRequestIssueReasonWellKnownHTTPNotFound
+	case FederatedAuthRequestIssueReasonWellKnownNoResponse:
+		*t = FederatedAuthRequestIssueReasonWellKnownNoResponse
+	case FederatedAuthRequestIssueReasonWellKnownInvalidResponse:
+		*t = FederatedAuthRequestIssueReasonWellKnownInvalidResponse
+	case FederatedAuthRequestIssueReasonClientIDMetadataHTTPNotFound:
+		*t = FederatedAuthRequestIssueReasonClientIDMetadataHTTPNotFound
+	case FederatedAuthRequestIssueReasonClientIDMetadataNoResponse:
+		*t = FederatedAuthRequestIssueReasonClientIDMetadataNoResponse
+	case FederatedAuthRequestIssueReasonClientIDMetadataInvalidResponse:
+		*t = FederatedAuthRequestIssueReasonClientIDMetadataInvalidResponse
+	case FederatedAuthRequestIssueReasonErrorFetchingSignin:
+		*t = FederatedAuthRequestIssueReasonErrorFetchingSignin
+	case FederatedAuthRequestIssueReasonInvalidSigninResponse:
+		*t = FederatedAuthRequestIssueReasonInvalidSigninResponse
+	case FederatedAuthRequestIssueReasonAccountsHTTPNotFound:
+		*t = FederatedAuthRequestIssueReasonAccountsHTTPNotFound
+	case FederatedAuthRequestIssueReasonAccountsNoResponse:
+		*t = FederatedAuthRequestIssueReasonAccountsNoResponse
+	case FederatedAuthRequestIssueReasonAccountsInvalidResponse:
+		*t = FederatedAuthRequestIssueReasonAccountsInvalidResponse
+	case FederatedAuthRequestIssueReasonIDTokenHTTPNotFound:
+		*t = FederatedAuthRequestIssueReasonIDTokenHTTPNotFound
+	case FederatedAuthRequestIssueReasonIDTokenNoResponse:
+		*t = FederatedAuthRequestIssueReasonIDTokenNoResponse
+	case FederatedAuthRequestIssueReasonIDTokenInvalidResponse:
+		*t = FederatedAuthRequestIssueReasonIDTokenInvalidResponse
+	case FederatedAuthRequestIssueReasonIDTokenInvalidRequest:
+		*t = FederatedAuthRequestIssueReasonIDTokenInvalidRequest
+	case FederatedAuthRequestIssueReasonErrorIDToken:
+		*t = FederatedAuthRequestIssueReasonErrorIDToken
+	case FederatedAuthRequestIssueReasonCanceled:
+		*t = FederatedAuthRequestIssueReasonCanceled
+
+	default:
+		in.AddError(errors.New("unknown FederatedAuthRequestIssueReason value"))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *FederatedAuthRequestIssueReason) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
 // ClientHintIssueDetails this issue tracks client hints related issues. It's
 // used to deprecate old features, encourage the use of new ones, and provide
 // general guidance.
@@ -1031,6 +1137,7 @@ const (
 	InspectorIssueCodeGenericIssue               InspectorIssueCode = "GenericIssue"
 	InspectorIssueCodeDeprecationIssue           InspectorIssueCode = "DeprecationIssue"
 	InspectorIssueCodeClientHintIssue            InspectorIssueCode = "ClientHintIssue"
+	InspectorIssueCodeFederatedAuthRequestIssue  InspectorIssueCode = "FederatedAuthRequestIssue"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -1076,6 +1183,8 @@ func (t *InspectorIssueCode) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = InspectorIssueCodeDeprecationIssue
 	case InspectorIssueCodeClientHintIssue:
 		*t = InspectorIssueCodeClientHintIssue
+	case InspectorIssueCodeFederatedAuthRequestIssue:
+		*t = InspectorIssueCodeFederatedAuthRequestIssue
 
 	default:
 		in.AddError(errors.New("unknown InspectorIssueCode value"))
@@ -1108,6 +1217,7 @@ type InspectorIssueDetails struct {
 	GenericIssueDetails               *GenericIssueDetails               `json:"genericIssueDetails,omitempty"`
 	DeprecationIssueDetails           *DeprecationIssueDetails           `json:"deprecationIssueDetails,omitempty"`
 	ClientHintIssueDetails            *ClientHintIssueDetails            `json:"clientHintIssueDetails,omitempty"`
+	FederatedAuthRequestIssueDetails  *FederatedAuthRequestIssueDetails  `json:"federatedAuthRequestIssueDetails,omitempty"`
 }
 
 // IssueID a unique id for a DevTools inspector issue. Allows other entities
