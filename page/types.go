@@ -48,9 +48,11 @@ const (
 	PermissionsPolicyFeatureChUaFullVersionList         PermissionsPolicyFeature = "ch-ua-full-version-list"
 	PermissionsPolicyFeatureChUaPlatformVersion         PermissionsPolicyFeature = "ch-ua-platform-version"
 	PermissionsPolicyFeatureChUaReduced                 PermissionsPolicyFeature = "ch-ua-reduced"
+	PermissionsPolicyFeatureChUaWow64                   PermissionsPolicyFeature = "ch-ua-wow64"
 	PermissionsPolicyFeatureChViewportHeight            PermissionsPolicyFeature = "ch-viewport-height"
 	PermissionsPolicyFeatureChViewportWidth             PermissionsPolicyFeature = "ch-viewport-width"
 	PermissionsPolicyFeatureChWidth                     PermissionsPolicyFeature = "ch-width"
+	PermissionsPolicyFeatureChPartitionedCookies        PermissionsPolicyFeature = "ch-partitioned-cookies"
 	PermissionsPolicyFeatureClipboardRead               PermissionsPolicyFeature = "clipboard-read"
 	PermissionsPolicyFeatureClipboardWrite              PermissionsPolicyFeature = "clipboard-write"
 	PermissionsPolicyFeatureCrossOriginIsolated         PermissionsPolicyFeature = "cross-origin-isolated"
@@ -149,12 +151,16 @@ func (t *PermissionsPolicyFeature) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PermissionsPolicyFeatureChUaPlatformVersion
 	case PermissionsPolicyFeatureChUaReduced:
 		*t = PermissionsPolicyFeatureChUaReduced
+	case PermissionsPolicyFeatureChUaWow64:
+		*t = PermissionsPolicyFeatureChUaWow64
 	case PermissionsPolicyFeatureChViewportHeight:
 		*t = PermissionsPolicyFeatureChViewportHeight
 	case PermissionsPolicyFeatureChViewportWidth:
 		*t = PermissionsPolicyFeatureChViewportWidth
 	case PermissionsPolicyFeatureChWidth:
 		*t = PermissionsPolicyFeatureChWidth
+	case PermissionsPolicyFeatureChPartitionedCookies:
+		*t = PermissionsPolicyFeatureChPartitionedCookies
 	case PermissionsPolicyFeatureClipboardRead:
 		*t = PermissionsPolicyFeatureClipboardRead
 	case PermissionsPolicyFeatureClipboardWrite:
