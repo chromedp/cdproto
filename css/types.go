@@ -90,6 +90,14 @@ type InheritedStyleEntry struct {
 	MatchedCSSRules []*RuleMatch `json:"matchedCSSRules"`       // Matches of CSS rules matching the ancestor node in the style inheritance chain.
 }
 
+// InheritedPseudoElementMatches inherited pseudo element matches from
+// pseudos of an ancestor node.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#type-InheritedPseudoElementMatches
+type InheritedPseudoElementMatches struct {
+	PseudoElements []*PseudoElementMatches `json:"pseudoElements"` // Matches of pseudo styles from the pseudos of an ancestor node.
+}
+
 // RuleMatch match data for a CSS rule.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#type-RuleMatch

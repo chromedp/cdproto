@@ -347,12 +347,13 @@ func GetMatchedStylesForNode(nodeID cdp.NodeID) *GetMatchedStylesForNodeParams {
 
 // GetMatchedStylesForNodeReturns return values.
 type GetMatchedStylesForNodeReturns struct {
-	InlineStyle       *Style                  `json:"inlineStyle,omitempty"`       // Inline style for the specified DOM node.
-	AttributesStyle   *Style                  `json:"attributesStyle,omitempty"`   // Attribute-defined element style (e.g. resulting from "width=20 height=100%").
-	MatchedCSSRules   []*RuleMatch            `json:"matchedCSSRules,omitempty"`   // CSS rules matching this node, from all applicable stylesheets.
-	PseudoElements    []*PseudoElementMatches `json:"pseudoElements,omitempty"`    // Pseudo style matches for this node.
-	Inherited         []*InheritedStyleEntry  `json:"inherited,omitempty"`         // A chain of inherited styles (from the immediate node parent up to the DOM tree root).
-	CSSKeyframesRules []*KeyframesRule        `json:"cssKeyframesRules,omitempty"` // A list of CSS keyframed animations matching this node.
+	InlineStyle             *Style                           `json:"inlineStyle,omitempty"`             // Inline style for the specified DOM node.
+	AttributesStyle         *Style                           `json:"attributesStyle,omitempty"`         // Attribute-defined element style (e.g. resulting from "width=20 height=100%").
+	MatchedCSSRules         []*RuleMatch                     `json:"matchedCSSRules,omitempty"`         // CSS rules matching this node, from all applicable stylesheets.
+	PseudoElements          []*PseudoElementMatches          `json:"pseudoElements,omitempty"`          // Pseudo style matches for this node.
+	Inherited               []*InheritedStyleEntry           `json:"inherited,omitempty"`               // A chain of inherited styles (from the immediate node parent up to the DOM tree root).
+	InheritedPseudoElements []*InheritedPseudoElementMatches `json:"inheritedPseudoElements,omitempty"` // A chain of inherited pseudo element styles (from the immediate node parent up to the DOM tree root).
+	CSSKeyframesRules       []*KeyframesRule                 `json:"cssKeyframesRules,omitempty"`       // A list of CSS keyframed animations matching this node.
 }
 
 // Do executes CSS.getMatchedStylesForNode against the provided context.
@@ -363,16 +364,17 @@ type GetMatchedStylesForNodeReturns struct {
 //   matchedCSSRules - CSS rules matching this node, from all applicable stylesheets.
 //   pseudoElements - Pseudo style matches for this node.
 //   inherited - A chain of inherited styles (from the immediate node parent up to the DOM tree root).
+//   inheritedPseudoElements - A chain of inherited pseudo element styles (from the immediate node parent up to the DOM tree root).
 //   cssKeyframesRules - A list of CSS keyframed animations matching this node.
-func (p *GetMatchedStylesForNodeParams) Do(ctx context.Context) (inlineStyle *Style, attributesStyle *Style, matchedCSSRules []*RuleMatch, pseudoElements []*PseudoElementMatches, inherited []*InheritedStyleEntry, cssKeyframesRules []*KeyframesRule, err error) {
+func (p *GetMatchedStylesForNodeParams) Do(ctx context.Context) (inlineStyle *Style, attributesStyle *Style, matchedCSSRules []*RuleMatch, pseudoElements []*PseudoElementMatches, inherited []*InheritedStyleEntry, inheritedPseudoElements []*InheritedPseudoElementMatches, cssKeyframesRules []*KeyframesRule, err error) {
 	// execute
 	var res GetMatchedStylesForNodeReturns
 	err = cdp.Execute(ctx, CommandGetMatchedStylesForNode, p, &res)
 	if err != nil {
-		return nil, nil, nil, nil, nil, nil, err
+		return nil, nil, nil, nil, nil, nil, nil, err
 	}
 
-	return res.InlineStyle, res.AttributesStyle, res.MatchedCSSRules, res.PseudoElements, res.Inherited, res.CSSKeyframesRules, nil
+	return res.InlineStyle, res.AttributesStyle, res.MatchedCSSRules, res.PseudoElements, res.Inherited, res.InheritedPseudoElements, res.CSSKeyframesRules, nil
 }
 
 // GetMediaQueriesParams returns all media queries parsed by the rendering
