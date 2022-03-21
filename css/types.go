@@ -268,6 +268,7 @@ type ContainerQuery struct {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#type-CSSSupports
 type Supports struct {
 	Text         string       `json:"text"`                   // Supports rule text.
+	Active       bool         `json:"active"`                 // Whether the supports condition is satisfied.
 	Range        *SourceRange `json:"range,omitempty"`        // The associated rule header range in the enclosing stylesheet (if available).
 	StyleSheetID StyleSheetID `json:"styleSheetId,omitempty"` // Identifier of the stylesheet containing this object (if exists).
 }

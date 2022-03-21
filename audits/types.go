@@ -951,7 +951,6 @@ type GenericIssueDetails struct {
 type DeprecationIssueDetails struct {
 	AffectedFrame      *AffectedFrame      `json:"affectedFrame,omitempty"`
 	SourceCodeLocation *SourceCodeLocation `json:"sourceCodeLocation"`
-	DeprecationType    string              `json:"deprecationType"`
 }
 
 // ClientHintIssueReason [no description].
