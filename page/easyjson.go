@@ -2174,8 +2174,6 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoPage26(in *jlexer.Lexer, out 
 			out.MarginRight = float64(in.Float64())
 		case "pageRanges":
 			out.PageRanges = string(in.String())
-		case "ignoreInvalidPageRanges":
-			out.IgnoreInvalidPageRanges = bool(in.Bool())
 		case "headerTemplate":
 			out.HeaderTemplate = string(in.String())
 		case "footerTemplate":
@@ -2283,11 +2281,6 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoPage26(out *jwriter.Writer, i
 		const prefix string = ",\"pageRanges\":"
 		out.RawString(prefix)
 		out.String(string(in.PageRanges))
-	}
-	if in.IgnoreInvalidPageRanges {
-		const prefix string = ",\"ignoreInvalidPageRanges\":"
-		out.RawString(prefix)
-		out.Bool(bool(in.IgnoreInvalidPageRanges))
 	}
 	if in.HeaderTemplate != "" {
 		const prefix string = ",\"headerTemplate\":"

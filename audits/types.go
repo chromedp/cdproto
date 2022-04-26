@@ -934,8 +934,37 @@ func (t DeprecationIssueType) String() string {
 
 // DeprecationIssueType values.
 const (
-	DeprecationIssueTypeDeprecationExample DeprecationIssueType = "DeprecationExample"
-	DeprecationIssueTypeUntranslated       DeprecationIssueType = "Untranslated"
+	DeprecationIssueTypeAuthorizationCoveredByWildcard                            DeprecationIssueType = "AuthorizationCoveredByWildcard"
+	DeprecationIssueTypeCookieWithTruncatingChar                                  DeprecationIssueType = "CookieWithTruncatingChar"
+	DeprecationIssueTypeCrossOriginAccessBasedOnDocumentDomain                    DeprecationIssueType = "CrossOriginAccessBasedOnDocumentDomain"
+	DeprecationIssueTypeCrossOriginWindowAlert                                    DeprecationIssueType = "CrossOriginWindowAlert"
+	DeprecationIssueTypeCrossOriginWindowConfirm                                  DeprecationIssueType = "CrossOriginWindowConfirm"
+	DeprecationIssueTypeDeprecationExample                                        DeprecationIssueType = "DeprecationExample"
+	DeprecationIssueTypeDocumentDomainSettingWithoutOriginAgentClusterHeader      DeprecationIssueType = "DocumentDomainSettingWithoutOriginAgentClusterHeader"
+	DeprecationIssueTypeGeolocationInsecureOrigin                                 DeprecationIssueType = "GeolocationInsecureOrigin"
+	DeprecationIssueTypeGeolocationInsecureOriginDeprecatedNotRemoved             DeprecationIssueType = "GeolocationInsecureOriginDeprecatedNotRemoved"
+	DeprecationIssueTypeGetUserMediaInsecureOrigin                                DeprecationIssueType = "GetUserMediaInsecureOrigin"
+	DeprecationIssueTypeLegacyConstraintGoogCPUOveruseDetection                   DeprecationIssueType = "LegacyConstraintGoogCpuOveruseDetection"
+	DeprecationIssueTypeLegacyConstraintGoogIPV6                                  DeprecationIssueType = "LegacyConstraintGoogIPv6"
+	DeprecationIssueTypeLegacyConstraintGoogScreencastMinBitrate                  DeprecationIssueType = "LegacyConstraintGoogScreencastMinBitrate"
+	DeprecationIssueTypeLegacyConstraintGoogSuspendBelowMinBitrate                DeprecationIssueType = "LegacyConstraintGoogSuspendBelowMinBitrate"
+	DeprecationIssueTypeLocalCSSFileExtensionRejected                             DeprecationIssueType = "LocalCSSFileExtensionRejected"
+	DeprecationIssueTypeNotificationInsecureOrigin                                DeprecationIssueType = "NotificationInsecureOrigin"
+	DeprecationIssueTypeObsoleteWebRtcCipherSuite                                 DeprecationIssueType = "ObsoleteWebRtcCipherSuite"
+	DeprecationIssueTypePictureSourceSrc                                          DeprecationIssueType = "PictureSourceSrc"
+	DeprecationIssueTypePrefixedCancelAnimationFrame                              DeprecationIssueType = "PrefixedCancelAnimationFrame"
+	DeprecationIssueTypePrefixedRequestAnimationFrame                             DeprecationIssueType = "PrefixedRequestAnimationFrame"
+	DeprecationIssueTypeRTCConstraintEnableDtlsSrtpFalse                          DeprecationIssueType = "RTCConstraintEnableDtlsSrtpFalse"
+	DeprecationIssueTypeRTCConstraintEnableDtlsSrtpTrue                           DeprecationIssueType = "RTCConstraintEnableDtlsSrtpTrue"
+	DeprecationIssueTypeRTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics  DeprecationIssueType = "RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics"
+	DeprecationIssueTypeRTCPeerConnectionLegacyCreateWithMediaConstraints         DeprecationIssueType = "RTCPeerConnectionLegacyCreateWithMediaConstraints"
+	DeprecationIssueTypeRTPDataChannel                                            DeprecationIssueType = "RTPDataChannel"
+	DeprecationIssueTypeSharedArrayBufferConstructedWithoutIsolation              DeprecationIssueType = "SharedArrayBufferConstructedWithoutIsolation"
+	DeprecationIssueTypeUntranslated                                              DeprecationIssueType = "Untranslated"
+	DeprecationIssueTypeV8sharedArrayBufferConstructedInExtensionWithoutIsolation DeprecationIssueType = "V8SharedArrayBufferConstructedInExtensionWithoutIsolation"
+	DeprecationIssueTypeWebCodecsVideoFrameDefaultTimestamp                       DeprecationIssueType = "WebCodecsVideoFrameDefaultTimestamp"
+	DeprecationIssueTypeXHRJSONEncodingDetection                                  DeprecationIssueType = "XHRJSONEncodingDetection"
+	DeprecationIssueTypeXMLHTTPRequestSynchronousInNonWorkerOutsideBeforeUnload   DeprecationIssueType = "XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -951,10 +980,68 @@ func (t DeprecationIssueType) MarshalJSON() ([]byte, error) {
 // UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
 func (t *DeprecationIssueType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 	switch DeprecationIssueType(in.String()) {
+	case DeprecationIssueTypeAuthorizationCoveredByWildcard:
+		*t = DeprecationIssueTypeAuthorizationCoveredByWildcard
+	case DeprecationIssueTypeCookieWithTruncatingChar:
+		*t = DeprecationIssueTypeCookieWithTruncatingChar
+	case DeprecationIssueTypeCrossOriginAccessBasedOnDocumentDomain:
+		*t = DeprecationIssueTypeCrossOriginAccessBasedOnDocumentDomain
+	case DeprecationIssueTypeCrossOriginWindowAlert:
+		*t = DeprecationIssueTypeCrossOriginWindowAlert
+	case DeprecationIssueTypeCrossOriginWindowConfirm:
+		*t = DeprecationIssueTypeCrossOriginWindowConfirm
 	case DeprecationIssueTypeDeprecationExample:
 		*t = DeprecationIssueTypeDeprecationExample
+	case DeprecationIssueTypeDocumentDomainSettingWithoutOriginAgentClusterHeader:
+		*t = DeprecationIssueTypeDocumentDomainSettingWithoutOriginAgentClusterHeader
+	case DeprecationIssueTypeGeolocationInsecureOrigin:
+		*t = DeprecationIssueTypeGeolocationInsecureOrigin
+	case DeprecationIssueTypeGeolocationInsecureOriginDeprecatedNotRemoved:
+		*t = DeprecationIssueTypeGeolocationInsecureOriginDeprecatedNotRemoved
+	case DeprecationIssueTypeGetUserMediaInsecureOrigin:
+		*t = DeprecationIssueTypeGetUserMediaInsecureOrigin
+	case DeprecationIssueTypeLegacyConstraintGoogCPUOveruseDetection:
+		*t = DeprecationIssueTypeLegacyConstraintGoogCPUOveruseDetection
+	case DeprecationIssueTypeLegacyConstraintGoogIPV6:
+		*t = DeprecationIssueTypeLegacyConstraintGoogIPV6
+	case DeprecationIssueTypeLegacyConstraintGoogScreencastMinBitrate:
+		*t = DeprecationIssueTypeLegacyConstraintGoogScreencastMinBitrate
+	case DeprecationIssueTypeLegacyConstraintGoogSuspendBelowMinBitrate:
+		*t = DeprecationIssueTypeLegacyConstraintGoogSuspendBelowMinBitrate
+	case DeprecationIssueTypeLocalCSSFileExtensionRejected:
+		*t = DeprecationIssueTypeLocalCSSFileExtensionRejected
+	case DeprecationIssueTypeNotificationInsecureOrigin:
+		*t = DeprecationIssueTypeNotificationInsecureOrigin
+	case DeprecationIssueTypeObsoleteWebRtcCipherSuite:
+		*t = DeprecationIssueTypeObsoleteWebRtcCipherSuite
+	case DeprecationIssueTypePictureSourceSrc:
+		*t = DeprecationIssueTypePictureSourceSrc
+	case DeprecationIssueTypePrefixedCancelAnimationFrame:
+		*t = DeprecationIssueTypePrefixedCancelAnimationFrame
+	case DeprecationIssueTypePrefixedRequestAnimationFrame:
+		*t = DeprecationIssueTypePrefixedRequestAnimationFrame
+	case DeprecationIssueTypeRTCConstraintEnableDtlsSrtpFalse:
+		*t = DeprecationIssueTypeRTCConstraintEnableDtlsSrtpFalse
+	case DeprecationIssueTypeRTCConstraintEnableDtlsSrtpTrue:
+		*t = DeprecationIssueTypeRTCConstraintEnableDtlsSrtpTrue
+	case DeprecationIssueTypeRTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics:
+		*t = DeprecationIssueTypeRTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics
+	case DeprecationIssueTypeRTCPeerConnectionLegacyCreateWithMediaConstraints:
+		*t = DeprecationIssueTypeRTCPeerConnectionLegacyCreateWithMediaConstraints
+	case DeprecationIssueTypeRTPDataChannel:
+		*t = DeprecationIssueTypeRTPDataChannel
+	case DeprecationIssueTypeSharedArrayBufferConstructedWithoutIsolation:
+		*t = DeprecationIssueTypeSharedArrayBufferConstructedWithoutIsolation
 	case DeprecationIssueTypeUntranslated:
 		*t = DeprecationIssueTypeUntranslated
+	case DeprecationIssueTypeV8sharedArrayBufferConstructedInExtensionWithoutIsolation:
+		*t = DeprecationIssueTypeV8sharedArrayBufferConstructedInExtensionWithoutIsolation
+	case DeprecationIssueTypeWebCodecsVideoFrameDefaultTimestamp:
+		*t = DeprecationIssueTypeWebCodecsVideoFrameDefaultTimestamp
+	case DeprecationIssueTypeXHRJSONEncodingDetection:
+		*t = DeprecationIssueTypeXHRJSONEncodingDetection
+	case DeprecationIssueTypeXMLHTTPRequestSynchronousInNonWorkerOutsideBeforeUnload:
+		*t = DeprecationIssueTypeXMLHTTPRequestSynchronousInNonWorkerOutsideBeforeUnload
 
 	default:
 		in.AddError(errors.New("unknown DeprecationIssueType value"))
