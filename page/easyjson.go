@@ -5614,6 +5614,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoPage64(in *jlexer.Lexer, out 
 			out.Cursive = string(in.String())
 		case "fantasy":
 			out.Fantasy = string(in.String())
+		case "math":
+			out.Math = string(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -5683,6 +5685,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoPage64(out *jwriter.Writer, i
 			out.RawString(prefix)
 		}
 		out.String(string(in.Fantasy))
+	}
+	if in.Math != "" {
+		const prefix string = ",\"math\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(in.Math))
 	}
 	out.RawByte('}')
 }

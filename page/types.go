@@ -578,6 +578,7 @@ type FontFamilies struct {
 	SansSerif string `json:"sansSerif,omitempty"` // The sansSerif font-family.
 	Cursive   string `json:"cursive,omitempty"`   // The cursive font-family.
 	Fantasy   string `json:"fantasy,omitempty"`   // The fantasy font-family.
+	Math      string `json:"math,omitempty"`      // The math font-family.
 }
 
 // ScriptFontFamilies font families collection for a script.
