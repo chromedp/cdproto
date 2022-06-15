@@ -916,30 +916,24 @@ func (p SetScriptSourceParams) WithDryRun(dryRun bool) *SetScriptSourceParams {
 
 // SetScriptSourceReturns return values.
 type SetScriptSourceReturns struct {
-	CallFrames        []*CallFrame              `json:"callFrames,omitempty"`        // New stack trace in case editing has happened while VM was stopped.
-	StackChanged      bool                      `json:"stackChanged,omitempty"`      // Whether current call stack  was modified after applying the changes.
-	AsyncStackTrace   *runtime.StackTrace       `json:"asyncStackTrace,omitempty"`   // Async stack trace, if any.
-	AsyncStackTraceID *runtime.StackTraceID     `json:"asyncStackTraceId,omitempty"` // Async stack trace, if any.
-	ExceptionDetails  *runtime.ExceptionDetails `json:"exceptionDetails,omitempty"`  // Exception details if any.
+	Status           SetScriptSourceStatus     `json:"status,omitempty"`           // Whether the operation was successful or not. Only Ok denotes a successful live edit while the other enum variants denote why the live edit failed.
+	ExceptionDetails *runtime.ExceptionDetails `json:"exceptionDetails,omitempty"` // Exception details if any. Only present when status is CompileError.
 }
 
 // Do executes Debugger.setScriptSource against the provided context.
 //
 // returns:
-//   callFrames - New stack trace in case editing has happened while VM was stopped.
-//   stackChanged - Whether current call stack  was modified after applying the changes.
-//   asyncStackTrace - Async stack trace, if any.
-//   asyncStackTraceID - Async stack trace, if any.
-//   exceptionDetails - Exception details if any.
-func (p *SetScriptSourceParams) Do(ctx context.Context) (callFrames []*CallFrame, stackChanged bool, asyncStackTrace *runtime.StackTrace, asyncStackTraceID *runtime.StackTraceID, exceptionDetails *runtime.ExceptionDetails, err error) {
+//   status - Whether the operation was successful or not. Only Ok denotes a successful live edit while the other enum variants denote why the live edit failed.
+//   exceptionDetails - Exception details if any. Only present when status is CompileError.
+func (p *SetScriptSourceParams) Do(ctx context.Context) (status SetScriptSourceStatus, exceptionDetails *runtime.ExceptionDetails, err error) {
 	// execute
 	var res SetScriptSourceReturns
 	err = cdp.Execute(ctx, CommandSetScriptSource, p, &res)
 	if err != nil {
-		return nil, false, nil, nil, nil, err
+		return "", nil, err
 	}
 
-	return res.CallFrames, res.StackChanged, res.AsyncStackTrace, res.AsyncStackTraceID, res.ExceptionDetails, nil
+	return res.Status, res.ExceptionDetails, nil
 }
 
 // SetSkipAllPausesParams makes page not interrupt on any pauses (breakpoint,
