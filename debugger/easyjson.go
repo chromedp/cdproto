@@ -584,6 +584,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoDebugger6(in *jlexer.Lexer, o
 			out.ScriptSource = string(in.String())
 		case "dryRun":
 			out.DryRun = bool(in.Bool())
+		case "allowTopFrameEditing":
+			out.AllowTopFrameEditing = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -612,6 +614,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoDebugger6(out *jwriter.Writer
 		const prefix string = ",\"dryRun\":"
 		out.RawString(prefix)
 		out.Bool(bool(in.DryRun))
+	}
+	if in.AllowTopFrameEditing {
+		const prefix string = ",\"allowTopFrameEditing\":"
+		out.RawString(prefix)
+		out.Bool(bool(in.AllowTopFrameEditing))
 	}
 	out.RawByte('}')
 }

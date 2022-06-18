@@ -886,14 +886,25 @@ func (p *SetReturnValueParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandSetReturnValue, p, nil)
 }
 
-// SetScriptSourceParams edits JavaScript source live.
+// SetScriptSourceParams edits JavaScript source live. In general, functions
+// that are currently on the stack can not be edited with a single exception: If
+// the edited function is the top-most stack frame and that is the only
+// activation of that function on the stack. In this case the live edit will be
+// successful and a Debugger.restartFrame for the top-most function is
+// automatically triggered.
 type SetScriptSourceParams struct {
-	ScriptID     runtime.ScriptID `json:"scriptId"`         // Id of the script to edit.
-	ScriptSource string           `json:"scriptSource"`     // New content of the script.
-	DryRun       bool             `json:"dryRun,omitempty"` // If true the change will not actually be applied. Dry run may be used to get result description without actually modifying the code.
+	ScriptID             runtime.ScriptID `json:"scriptId"`                       // Id of the script to edit.
+	ScriptSource         string           `json:"scriptSource"`                   // New content of the script.
+	DryRun               bool             `json:"dryRun,omitempty"`               // If true the change will not actually be applied. Dry run may be used to get result description without actually modifying the code.
+	AllowTopFrameEditing bool             `json:"allowTopFrameEditing,omitempty"` // If true, then scriptSource is allowed to change the function on top of the stack as long as the top-most stack frame is the only activation of that function.
 }
 
-// SetScriptSource edits JavaScript source live.
+// SetScriptSource edits JavaScript source live. In general, functions that
+// are currently on the stack can not be edited with a single exception: If the
+// edited function is the top-most stack frame and that is the only activation
+// of that function on the stack. In this case the live edit will be successful
+// and a Debugger.restartFrame for the top-most function is automatically
+// triggered.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-setScriptSource
 //
@@ -911,6 +922,14 @@ func SetScriptSource(scriptID runtime.ScriptID, scriptSource string) *SetScriptS
 // used to get result description without actually modifying the code.
 func (p SetScriptSourceParams) WithDryRun(dryRun bool) *SetScriptSourceParams {
 	p.DryRun = dryRun
+	return &p
+}
+
+// WithAllowTopFrameEditing if true, then scriptSource is allowed to change
+// the function on top of the stack as long as the top-most stack frame is the
+// only activation of that function.
+func (p SetScriptSourceParams) WithAllowTopFrameEditing(allowTopFrameEditing bool) *SetScriptSourceParams {
+	p.AllowTopFrameEditing = allowTopFrameEditing
 	return &p
 }
 

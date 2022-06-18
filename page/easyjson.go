@@ -7174,10 +7174,10 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoPage83(in *jlexer.Lexer, out 
 		switch key {
 		case "frameId":
 			(out.FrameID).UnmarshalEasyJSON(in)
-		case "backendNodeId":
-			(out.BackendNodeID).UnmarshalEasyJSON(in)
 		case "mode":
 			(out.Mode).UnmarshalEasyJSON(in)
+		case "backendNodeId":
+			(out.BackendNodeID).UnmarshalEasyJSON(in)
 		default:
 			in.SkipRecursive()
 		}
@@ -7198,14 +7198,14 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoPage83(out *jwriter.Writer, i
 		out.String(string(in.FrameID))
 	}
 	{
-		const prefix string = ",\"backendNodeId\":"
-		out.RawString(prefix)
-		out.Int64(int64(in.BackendNodeID))
-	}
-	{
 		const prefix string = ",\"mode\":"
 		out.RawString(prefix)
 		(in.Mode).MarshalEasyJSON(out)
+	}
+	if in.BackendNodeID != 0 {
+		const prefix string = ",\"backendNodeId\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.BackendNodeID))
 	}
 	out.RawByte('}')
 }
