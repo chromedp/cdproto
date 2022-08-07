@@ -808,6 +808,7 @@ const (
 	AttributionReportingIssueTypeInvalidRegisterTriggerHeader AttributionReportingIssueType = "InvalidRegisterTriggerHeader"
 	AttributionReportingIssueTypeInvalidEligibleHeader        AttributionReportingIssueType = "InvalidEligibleHeader"
 	AttributionReportingIssueTypeTooManyConcurrentRequests    AttributionReportingIssueType = "TooManyConcurrentRequests"
+	AttributionReportingIssueTypeSourceAndTriggerHeaders      AttributionReportingIssueType = "SourceAndTriggerHeaders"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -837,6 +838,8 @@ func (t *AttributionReportingIssueType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = AttributionReportingIssueTypeInvalidEligibleHeader
 	case AttributionReportingIssueTypeTooManyConcurrentRequests:
 		*t = AttributionReportingIssueTypeTooManyConcurrentRequests
+	case AttributionReportingIssueTypeSourceAndTriggerHeaders:
+		*t = AttributionReportingIssueTypeSourceAndTriggerHeaders
 
 	default:
 		in.AddError(errors.New("unknown AttributionReportingIssueType value"))
