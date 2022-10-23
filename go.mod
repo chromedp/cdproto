@@ -1,6 +1,6 @@
 module github.com/chromedp/cdproto
 
-go 1.18
+go 1.19
 
 require (
 	github.com/chromedp/sysutil v1.0.0
