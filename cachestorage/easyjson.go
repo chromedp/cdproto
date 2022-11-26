@@ -554,6 +554,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoCachestorage5(in *jlexer.Lexe
 		switch key {
 		case "securityOrigin":
 			out.SecurityOrigin = string(in.String())
+		case "storageKey":
+			out.StorageKey = string(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -568,10 +570,21 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoCachestorage5(out *jwriter.Wr
 	out.RawByte('{')
 	first := true
 	_ = first
-	{
+	if in.SecurityOrigin != "" {
 		const prefix string = ",\"securityOrigin\":"
+		first = false
 		out.RawString(prefix[1:])
 		out.String(string(in.SecurityOrigin))
+	}
+	if in.StorageKey != "" {
+		const prefix string = ",\"storageKey\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(in.StorageKey))
 	}
 	out.RawByte('}')
 }
