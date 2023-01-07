@@ -55,7 +55,7 @@ type EventExecutionContextCreated struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#event-executionContextDestroyed
 type EventExecutionContextDestroyed struct {
-	ExecutionContextID ExecutionContextID `json:"executionContextId"` // Id of the destroyed context
+	ExecutionContextUniqueID string `json:"executionContextUniqueId"` // Unique Id of the destroyed context
 }
 
 // EventExecutionContextsCleared issued when all executionContexts were
