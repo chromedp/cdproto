@@ -1775,55 +1775,6 @@ func (t *PrintToPDFTransferMode) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 
-// SetDownloadBehaviorBehavior whether to allow all or deny all download
-// requests, or use default Chrome behavior if available (otherwise deny).
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-setDownloadBehavior
-type SetDownloadBehaviorBehavior string
-
-// String returns the SetDownloadBehaviorBehavior as string value.
-func (t SetDownloadBehaviorBehavior) String() string {
-	return string(t)
-}
-
-// SetDownloadBehaviorBehavior values.
-const (
-	SetDownloadBehaviorBehaviorDeny    SetDownloadBehaviorBehavior = "deny"
-	SetDownloadBehaviorBehaviorAllow   SetDownloadBehaviorBehavior = "allow"
-	SetDownloadBehaviorBehaviorDefault SetDownloadBehaviorBehavior = "default"
-)
-
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t SetDownloadBehaviorBehavior) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
-
-// MarshalJSON satisfies json.Marshaler.
-func (t SetDownloadBehaviorBehavior) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *SetDownloadBehaviorBehavior) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch SetDownloadBehaviorBehavior(v) {
-	case SetDownloadBehaviorBehaviorDeny:
-		*t = SetDownloadBehaviorBehaviorDeny
-	case SetDownloadBehaviorBehaviorAllow:
-		*t = SetDownloadBehaviorBehaviorAllow
-	case SetDownloadBehaviorBehaviorDefault:
-		*t = SetDownloadBehaviorBehaviorDefault
-
-	default:
-		in.AddError(fmt.Errorf("unknown SetDownloadBehaviorBehavior value: %v", v))
-	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *SetDownloadBehaviorBehavior) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
-}
-
 // ScreencastFormat image compression format.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-startScreencast
