@@ -921,6 +921,8 @@ func (t GenericIssueErrorType) String() string {
 const (
 	GenericIssueErrorTypeCrossOriginPortalPostMessageError GenericIssueErrorType = "CrossOriginPortalPostMessageError"
 	GenericIssueErrorTypeFormLabelForNameError             GenericIssueErrorType = "FormLabelForNameError"
+	GenericIssueErrorTypeFormDuplicateIDForInputError      GenericIssueErrorType = "FormDuplicateIdForInputError"
+	GenericIssueErrorTypeFormInputWithNoLabelError         GenericIssueErrorType = "FormInputWithNoLabelError"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -941,6 +943,10 @@ func (t *GenericIssueErrorType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = GenericIssueErrorTypeCrossOriginPortalPostMessageError
 	case GenericIssueErrorTypeFormLabelForNameError:
 		*t = GenericIssueErrorTypeFormLabelForNameError
+	case GenericIssueErrorTypeFormDuplicateIDForInputError:
+		*t = GenericIssueErrorTypeFormDuplicateIDForInputError
+	case GenericIssueErrorTypeFormInputWithNoLabelError:
+		*t = GenericIssueErrorTypeFormInputWithNoLabelError
 
 	default:
 		in.AddError(fmt.Errorf("unknown GenericIssueErrorType value: %v", v))
@@ -1000,6 +1006,7 @@ const (
 	DeprecationIssueTypeNoSysexWebMIDIWithoutPermission                           DeprecationIssueType = "NoSysexWebMIDIWithoutPermission"
 	DeprecationIssueTypeNotificationInsecureOrigin                                DeprecationIssueType = "NotificationInsecureOrigin"
 	DeprecationIssueTypeNotificationPermissionRequestedIframe                     DeprecationIssueType = "NotificationPermissionRequestedIframe"
+	DeprecationIssueTypeObsoleteCreateImageBitmapImageOrientationNone             DeprecationIssueType = "ObsoleteCreateImageBitmapImageOrientationNone"
 	DeprecationIssueTypeObsoleteWebRtcCipherSuite                                 DeprecationIssueType = "ObsoleteWebRtcCipherSuite"
 	DeprecationIssueTypeOpenWebDatabaseInsecureContext                            DeprecationIssueType = "OpenWebDatabaseInsecureContext"
 	DeprecationIssueTypeOverflowVisibleOnReplacedElement                          DeprecationIssueType = "OverflowVisibleOnReplacedElement"
@@ -1097,6 +1104,8 @@ func (t *DeprecationIssueType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = DeprecationIssueTypeNotificationInsecureOrigin
 	case DeprecationIssueTypeNotificationPermissionRequestedIframe:
 		*t = DeprecationIssueTypeNotificationPermissionRequestedIframe
+	case DeprecationIssueTypeObsoleteCreateImageBitmapImageOrientationNone:
+		*t = DeprecationIssueTypeObsoleteCreateImageBitmapImageOrientationNone
 	case DeprecationIssueTypeObsoleteWebRtcCipherSuite:
 		*t = DeprecationIssueTypeObsoleteWebRtcCipherSuite
 	case DeprecationIssueTypeOpenWebDatabaseInsecureContext:
