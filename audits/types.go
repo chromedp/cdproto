@@ -919,10 +919,12 @@ func (t GenericIssueErrorType) String() string {
 
 // GenericIssueErrorType values.
 const (
-	GenericIssueErrorTypeCrossOriginPortalPostMessageError GenericIssueErrorType = "CrossOriginPortalPostMessageError"
-	GenericIssueErrorTypeFormLabelForNameError             GenericIssueErrorType = "FormLabelForNameError"
-	GenericIssueErrorTypeFormDuplicateIDForInputError      GenericIssueErrorType = "FormDuplicateIdForInputError"
-	GenericIssueErrorTypeFormInputWithNoLabelError         GenericIssueErrorType = "FormInputWithNoLabelError"
+	GenericIssueErrorTypeCrossOriginPortalPostMessageError         GenericIssueErrorType = "CrossOriginPortalPostMessageError"
+	GenericIssueErrorTypeFormLabelForNameError                     GenericIssueErrorType = "FormLabelForNameError"
+	GenericIssueErrorTypeFormDuplicateIDForInputError              GenericIssueErrorType = "FormDuplicateIdForInputError"
+	GenericIssueErrorTypeFormInputWithNoLabelError                 GenericIssueErrorType = "FormInputWithNoLabelError"
+	GenericIssueErrorTypeFormAutocompleteAttributeEmptyError       GenericIssueErrorType = "FormAutocompleteAttributeEmptyError"
+	GenericIssueErrorTypeFormEmptyIDAndNameAttributesForInputError GenericIssueErrorType = "FormEmptyIdAndNameAttributesForInputError"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -947,6 +949,10 @@ func (t *GenericIssueErrorType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = GenericIssueErrorTypeFormDuplicateIDForInputError
 	case GenericIssueErrorTypeFormInputWithNoLabelError:
 		*t = GenericIssueErrorTypeFormInputWithNoLabelError
+	case GenericIssueErrorTypeFormAutocompleteAttributeEmptyError:
+		*t = GenericIssueErrorTypeFormAutocompleteAttributeEmptyError
+	case GenericIssueErrorTypeFormEmptyIDAndNameAttributesForInputError:
+		*t = GenericIssueErrorTypeFormEmptyIDAndNameAttributesForInputError
 
 	default:
 		in.AddError(fmt.Errorf("unknown GenericIssueErrorType value: %v", v))
