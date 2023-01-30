@@ -925,6 +925,7 @@ const (
 	GenericIssueErrorTypeFormInputWithNoLabelError                 GenericIssueErrorType = "FormInputWithNoLabelError"
 	GenericIssueErrorTypeFormAutocompleteAttributeEmptyError       GenericIssueErrorType = "FormAutocompleteAttributeEmptyError"
 	GenericIssueErrorTypeFormEmptyIDAndNameAttributesForInputError GenericIssueErrorType = "FormEmptyIdAndNameAttributesForInputError"
+	GenericIssueErrorTypeFormAriaLabelledByToNonExistingID         GenericIssueErrorType = "FormAriaLabelledByToNonExistingId"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -953,6 +954,8 @@ func (t *GenericIssueErrorType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = GenericIssueErrorTypeFormAutocompleteAttributeEmptyError
 	case GenericIssueErrorTypeFormEmptyIDAndNameAttributesForInputError:
 		*t = GenericIssueErrorTypeFormEmptyIDAndNameAttributesForInputError
+	case GenericIssueErrorTypeFormAriaLabelledByToNonExistingID:
+		*t = GenericIssueErrorTypeFormAriaLabelledByToNonExistingID
 
 	default:
 		in.AddError(fmt.Errorf("unknown GenericIssueErrorType value: %v", v))
@@ -1029,6 +1032,7 @@ const (
 	DeprecationIssueTypePrefixedVideoExitFullscreen                               DeprecationIssueType = "PrefixedVideoExitFullscreen"
 	DeprecationIssueTypePrefixedVideoExitFullScreen                               DeprecationIssueType = "PrefixedVideoExitFullScreen"
 	DeprecationIssueTypePrefixedVideoSupportsFullscreen                           DeprecationIssueType = "PrefixedVideoSupportsFullscreen"
+	DeprecationIssueTypePrivacySandboxExtensionsAPI                               DeprecationIssueType = "PrivacySandboxExtensionsAPI"
 	DeprecationIssueTypeRangeExpand                                               DeprecationIssueType = "RangeExpand"
 	DeprecationIssueTypeRequestedSubresourceWithEmbeddedCredentials               DeprecationIssueType = "RequestedSubresourceWithEmbeddedCredentials"
 	DeprecationIssueTypeRTCConstraintEnableDtlsSrtpFalse                          DeprecationIssueType = "RTCConstraintEnableDtlsSrtpFalse"
@@ -1144,6 +1148,8 @@ func (t *DeprecationIssueType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = DeprecationIssueTypePrefixedVideoExitFullScreen
 	case DeprecationIssueTypePrefixedVideoSupportsFullscreen:
 		*t = DeprecationIssueTypePrefixedVideoSupportsFullscreen
+	case DeprecationIssueTypePrivacySandboxExtensionsAPI:
+		*t = DeprecationIssueTypePrivacySandboxExtensionsAPI
 	case DeprecationIssueTypeRangeExpand:
 		*t = DeprecationIssueTypeRangeExpand
 	case DeprecationIssueTypeRequestedSubresourceWithEmbeddedCredentials:

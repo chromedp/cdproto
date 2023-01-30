@@ -1431,6 +1431,8 @@ const (
 	PrerenderFinalStatusPrimaryMainFrameRendererProcessCrashed     PrerenderFinalStatus = "PrimaryMainFrameRendererProcessCrashed"
 	PrerenderFinalStatusPrimaryMainFrameRendererProcessKilled      PrerenderFinalStatus = "PrimaryMainFrameRendererProcessKilled"
 	PrerenderFinalStatusActivationFramePolicyNotCompatible         PrerenderFinalStatus = "ActivationFramePolicyNotCompatible"
+	PrerenderFinalStatusPreloadingDisabled                         PrerenderFinalStatus = "PreloadingDisabled"
+	PrerenderFinalStatusBatterySaverEnabled                        PrerenderFinalStatus = "BatterySaverEnabled"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -1551,6 +1553,10 @@ func (t *PrerenderFinalStatus) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PrerenderFinalStatusPrimaryMainFrameRendererProcessKilled
 	case PrerenderFinalStatusActivationFramePolicyNotCompatible:
 		*t = PrerenderFinalStatusActivationFramePolicyNotCompatible
+	case PrerenderFinalStatusPreloadingDisabled:
+		*t = PrerenderFinalStatusPreloadingDisabled
+	case PrerenderFinalStatusBatterySaverEnabled:
+		*t = PrerenderFinalStatusBatterySaverEnabled
 
 	default:
 		in.AddError(fmt.Errorf("unknown PrerenderFinalStatus value: %v", v))
