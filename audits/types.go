@@ -919,13 +919,14 @@ func (t GenericIssueErrorType) String() string {
 
 // GenericIssueErrorType values.
 const (
-	GenericIssueErrorTypeCrossOriginPortalPostMessageError         GenericIssueErrorType = "CrossOriginPortalPostMessageError"
-	GenericIssueErrorTypeFormLabelForNameError                     GenericIssueErrorType = "FormLabelForNameError"
-	GenericIssueErrorTypeFormDuplicateIDForInputError              GenericIssueErrorType = "FormDuplicateIdForInputError"
-	GenericIssueErrorTypeFormInputWithNoLabelError                 GenericIssueErrorType = "FormInputWithNoLabelError"
-	GenericIssueErrorTypeFormAutocompleteAttributeEmptyError       GenericIssueErrorType = "FormAutocompleteAttributeEmptyError"
-	GenericIssueErrorTypeFormEmptyIDAndNameAttributesForInputError GenericIssueErrorType = "FormEmptyIdAndNameAttributesForInputError"
-	GenericIssueErrorTypeFormAriaLabelledByToNonExistingID         GenericIssueErrorType = "FormAriaLabelledByToNonExistingId"
+	GenericIssueErrorTypeCrossOriginPortalPostMessageError                          GenericIssueErrorType = "CrossOriginPortalPostMessageError"
+	GenericIssueErrorTypeFormLabelForNameError                                      GenericIssueErrorType = "FormLabelForNameError"
+	GenericIssueErrorTypeFormDuplicateIDForInputError                               GenericIssueErrorType = "FormDuplicateIdForInputError"
+	GenericIssueErrorTypeFormInputWithNoLabelError                                  GenericIssueErrorType = "FormInputWithNoLabelError"
+	GenericIssueErrorTypeFormAutocompleteAttributeEmptyError                        GenericIssueErrorType = "FormAutocompleteAttributeEmptyError"
+	GenericIssueErrorTypeFormEmptyIDAndNameAttributesForInputError                  GenericIssueErrorType = "FormEmptyIdAndNameAttributesForInputError"
+	GenericIssueErrorTypeFormAriaLabelledByToNonExistingID                          GenericIssueErrorType = "FormAriaLabelledByToNonExistingId"
+	GenericIssueErrorTypeFormInputAssignedAutocompleteValueToIDOrNameAttributeError GenericIssueErrorType = "FormInputAssignedAutocompleteValueToIdOrNameAttributeError"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -956,6 +957,8 @@ func (t *GenericIssueErrorType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = GenericIssueErrorTypeFormEmptyIDAndNameAttributesForInputError
 	case GenericIssueErrorTypeFormAriaLabelledByToNonExistingID:
 		*t = GenericIssueErrorTypeFormAriaLabelledByToNonExistingID
+	case GenericIssueErrorTypeFormInputAssignedAutocompleteValueToIDOrNameAttributeError:
+		*t = GenericIssueErrorTypeFormInputAssignedAutocompleteValueToIDOrNameAttributeError
 
 	default:
 		in.AddError(fmt.Errorf("unknown GenericIssueErrorType value: %v", v))
