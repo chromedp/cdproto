@@ -927,6 +927,8 @@ const (
 	GenericIssueErrorTypeFormEmptyIDAndNameAttributesForInputError                  GenericIssueErrorType = "FormEmptyIdAndNameAttributesForInputError"
 	GenericIssueErrorTypeFormAriaLabelledByToNonExistingID                          GenericIssueErrorType = "FormAriaLabelledByToNonExistingId"
 	GenericIssueErrorTypeFormInputAssignedAutocompleteValueToIDOrNameAttributeError GenericIssueErrorType = "FormInputAssignedAutocompleteValueToIdOrNameAttributeError"
+	GenericIssueErrorTypeFormLabelHasNeitherForNorNestedInput                       GenericIssueErrorType = "FormLabelHasNeitherForNorNestedInput"
+	GenericIssueErrorTypeFormLabelForMatchesNonExistingIDError                      GenericIssueErrorType = "FormLabelForMatchesNonExistingIdError"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -959,6 +961,10 @@ func (t *GenericIssueErrorType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = GenericIssueErrorTypeFormAriaLabelledByToNonExistingID
 	case GenericIssueErrorTypeFormInputAssignedAutocompleteValueToIDOrNameAttributeError:
 		*t = GenericIssueErrorTypeFormInputAssignedAutocompleteValueToIDOrNameAttributeError
+	case GenericIssueErrorTypeFormLabelHasNeitherForNorNestedInput:
+		*t = GenericIssueErrorTypeFormLabelHasNeitherForNorNestedInput
+	case GenericIssueErrorTypeFormLabelForMatchesNonExistingIDError:
+		*t = GenericIssueErrorTypeFormLabelForMatchesNonExistingIDError
 
 	default:
 		in.AddError(fmt.Errorf("unknown GenericIssueErrorType value: %v", v))

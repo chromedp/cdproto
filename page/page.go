@@ -1603,6 +1603,31 @@ func (p *SetSPCTransactionModeParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandSetSPCTransactionMode, p, nil)
 }
 
+// SetRPHRegistrationModeParams extensions for Custom Handlers API:
+// https://html.spec.whatwg.org/multipage/system-state.html#rph-automation.
+type SetRPHRegistrationModeParams struct {
+	Mode SetRPHRegistrationModeMode `json:"mode"`
+}
+
+// SetRPHRegistrationMode extensions for Custom Handlers API:
+// https://html.spec.whatwg.org/multipage/system-state.html#rph-automation.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-setRPHRegistrationMode
+//
+// parameters:
+//
+//	mode
+func SetRPHRegistrationMode(mode SetRPHRegistrationModeMode) *SetRPHRegistrationModeParams {
+	return &SetRPHRegistrationModeParams{
+		Mode: mode,
+	}
+}
+
+// Do executes Page.setRPHRegistrationMode against the provided context.
+func (p *SetRPHRegistrationModeParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetRPHRegistrationMode, p, nil)
+}
+
 // GenerateTestReportParams generates a report for testing.
 type GenerateTestReportParams struct {
 	Message string `json:"message"`         // Message to be displayed in the report.
@@ -1725,6 +1750,7 @@ const (
 	CommandAddCompilationCache                 = "Page.addCompilationCache"
 	CommandClearCompilationCache               = "Page.clearCompilationCache"
 	CommandSetSPCTransactionMode               = "Page.setSPCTransactionMode"
+	CommandSetRPHRegistrationMode              = "Page.setRPHRegistrationMode"
 	CommandGenerateTestReport                  = "Page.generateTestReport"
 	CommandWaitForDebugger                     = "Page.waitForDebugger"
 	CommandSetInterceptFileChooserDialog       = "Page.setInterceptFileChooserDialog"

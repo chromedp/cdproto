@@ -1936,3 +1936,51 @@ func (t *SetSPCTransactionModeMode) UnmarshalEasyJSON(in *jlexer.Lexer) {
 func (t *SetSPCTransactionModeMode) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
+
+// SetRPHRegistrationModeMode [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-setRPHRegistrationMode
+type SetRPHRegistrationModeMode string
+
+// String returns the SetRPHRegistrationModeMode as string value.
+func (t SetRPHRegistrationModeMode) String() string {
+	return string(t)
+}
+
+// SetRPHRegistrationModeMode values.
+const (
+	SetRPHRegistrationModeModeNone       SetRPHRegistrationModeMode = "none"
+	SetRPHRegistrationModeModeAutoaccept SetRPHRegistrationModeMode = "autoaccept"
+	SetRPHRegistrationModeModeAutoreject SetRPHRegistrationModeMode = "autoreject"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t SetRPHRegistrationModeMode) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t SetRPHRegistrationModeMode) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *SetRPHRegistrationModeMode) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	v := in.String()
+	switch SetRPHRegistrationModeMode(v) {
+	case SetRPHRegistrationModeModeNone:
+		*t = SetRPHRegistrationModeModeNone
+	case SetRPHRegistrationModeModeAutoaccept:
+		*t = SetRPHRegistrationModeModeAutoaccept
+	case SetRPHRegistrationModeModeAutoreject:
+		*t = SetRPHRegistrationModeModeAutoreject
+
+	default:
+		in.AddError(fmt.Errorf("unknown SetRPHRegistrationModeMode value: %v", v))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *SetRPHRegistrationModeMode) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
