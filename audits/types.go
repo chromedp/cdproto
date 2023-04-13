@@ -821,7 +821,6 @@ const (
 	AttributionReportingIssueTypeInvalidHeader                  AttributionReportingIssueType = "InvalidHeader"
 	AttributionReportingIssueTypeInvalidRegisterTriggerHeader   AttributionReportingIssueType = "InvalidRegisterTriggerHeader"
 	AttributionReportingIssueTypeInvalidEligibleHeader          AttributionReportingIssueType = "InvalidEligibleHeader"
-	AttributionReportingIssueTypeTooManyConcurrentRequests      AttributionReportingIssueType = "TooManyConcurrentRequests"
 	AttributionReportingIssueTypeSourceAndTriggerHeaders        AttributionReportingIssueType = "SourceAndTriggerHeaders"
 	AttributionReportingIssueTypeSourceIgnored                  AttributionReportingIssueType = "SourceIgnored"
 	AttributionReportingIssueTypeTriggerIgnored                 AttributionReportingIssueType = "TriggerIgnored"
@@ -858,8 +857,6 @@ func (t *AttributionReportingIssueType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = AttributionReportingIssueTypeInvalidRegisterTriggerHeader
 	case AttributionReportingIssueTypeInvalidEligibleHeader:
 		*t = AttributionReportingIssueTypeInvalidEligibleHeader
-	case AttributionReportingIssueTypeTooManyConcurrentRequests:
-		*t = AttributionReportingIssueTypeTooManyConcurrentRequests
 	case AttributionReportingIssueTypeSourceAndTriggerHeaders:
 		*t = AttributionReportingIssueTypeSourceAndTriggerHeaders
 	case AttributionReportingIssueTypeSourceIgnored:
