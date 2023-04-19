@@ -1010,6 +1010,18 @@ type DeprecationIssueDetails struct {
 	Type               string              `json:"type"` // One of the deprecation names from third_party/blink/renderer/core/frame/deprecation/deprecation.json5
 }
 
+// BounceTrackingIssueDetails this issue warns about sites in the redirect
+// chain of a finished navigation that may be flagged as trackers and have their
+// state cleared if they don't receive a user interaction. Note that in this
+// context 'site' means eTLD+1. For example, if the URL
+// https://example.test:80/bounce was in the redirect chain, the site reported
+// would be example.test.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-BounceTrackingIssueDetails
+type BounceTrackingIssueDetails struct {
+	TrackingSites []string `json:"trackingSites"`
+}
+
 // ClientHintIssueReason [no description].
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-ClientHintIssueReason
@@ -1078,34 +1090,39 @@ func (t FederatedAuthRequestIssueReason) String() string {
 
 // FederatedAuthRequestIssueReason values.
 const (
-	FederatedAuthRequestIssueReasonShouldEmbargo                 FederatedAuthRequestIssueReason = "ShouldEmbargo"
-	FederatedAuthRequestIssueReasonTooManyRequests               FederatedAuthRequestIssueReason = "TooManyRequests"
-	FederatedAuthRequestIssueReasonWellKnownHTTPNotFound         FederatedAuthRequestIssueReason = "WellKnownHttpNotFound"
-	FederatedAuthRequestIssueReasonWellKnownNoResponse           FederatedAuthRequestIssueReason = "WellKnownNoResponse"
-	FederatedAuthRequestIssueReasonWellKnownInvalidResponse      FederatedAuthRequestIssueReason = "WellKnownInvalidResponse"
-	FederatedAuthRequestIssueReasonWellKnownListEmpty            FederatedAuthRequestIssueReason = "WellKnownListEmpty"
-	FederatedAuthRequestIssueReasonConfigNotInWellKnown          FederatedAuthRequestIssueReason = "ConfigNotInWellKnown"
-	FederatedAuthRequestIssueReasonWellKnownTooBig               FederatedAuthRequestIssueReason = "WellKnownTooBig"
-	FederatedAuthRequestIssueReasonConfigHTTPNotFound            FederatedAuthRequestIssueReason = "ConfigHttpNotFound"
-	FederatedAuthRequestIssueReasonConfigNoResponse              FederatedAuthRequestIssueReason = "ConfigNoResponse"
-	FederatedAuthRequestIssueReasonConfigInvalidResponse         FederatedAuthRequestIssueReason = "ConfigInvalidResponse"
-	FederatedAuthRequestIssueReasonClientMetadataHTTPNotFound    FederatedAuthRequestIssueReason = "ClientMetadataHttpNotFound"
-	FederatedAuthRequestIssueReasonClientMetadataNoResponse      FederatedAuthRequestIssueReason = "ClientMetadataNoResponse"
-	FederatedAuthRequestIssueReasonClientMetadataInvalidResponse FederatedAuthRequestIssueReason = "ClientMetadataInvalidResponse"
-	FederatedAuthRequestIssueReasonDisabledInSettings            FederatedAuthRequestIssueReason = "DisabledInSettings"
-	FederatedAuthRequestIssueReasonErrorFetchingSignin           FederatedAuthRequestIssueReason = "ErrorFetchingSignin"
-	FederatedAuthRequestIssueReasonInvalidSigninResponse         FederatedAuthRequestIssueReason = "InvalidSigninResponse"
-	FederatedAuthRequestIssueReasonAccountsHTTPNotFound          FederatedAuthRequestIssueReason = "AccountsHttpNotFound"
-	FederatedAuthRequestIssueReasonAccountsNoResponse            FederatedAuthRequestIssueReason = "AccountsNoResponse"
-	FederatedAuthRequestIssueReasonAccountsInvalidResponse       FederatedAuthRequestIssueReason = "AccountsInvalidResponse"
-	FederatedAuthRequestIssueReasonAccountsListEmpty             FederatedAuthRequestIssueReason = "AccountsListEmpty"
-	FederatedAuthRequestIssueReasonIDTokenHTTPNotFound           FederatedAuthRequestIssueReason = "IdTokenHttpNotFound"
-	FederatedAuthRequestIssueReasonIDTokenNoResponse             FederatedAuthRequestIssueReason = "IdTokenNoResponse"
-	FederatedAuthRequestIssueReasonIDTokenInvalidResponse        FederatedAuthRequestIssueReason = "IdTokenInvalidResponse"
-	FederatedAuthRequestIssueReasonIDTokenInvalidRequest         FederatedAuthRequestIssueReason = "IdTokenInvalidRequest"
-	FederatedAuthRequestIssueReasonErrorIDToken                  FederatedAuthRequestIssueReason = "ErrorIdToken"
-	FederatedAuthRequestIssueReasonCanceled                      FederatedAuthRequestIssueReason = "Canceled"
-	FederatedAuthRequestIssueReasonRpPageNotVisible              FederatedAuthRequestIssueReason = "RpPageNotVisible"
+	FederatedAuthRequestIssueReasonShouldEmbargo                    FederatedAuthRequestIssueReason = "ShouldEmbargo"
+	FederatedAuthRequestIssueReasonTooManyRequests                  FederatedAuthRequestIssueReason = "TooManyRequests"
+	FederatedAuthRequestIssueReasonWellKnownHTTPNotFound            FederatedAuthRequestIssueReason = "WellKnownHttpNotFound"
+	FederatedAuthRequestIssueReasonWellKnownNoResponse              FederatedAuthRequestIssueReason = "WellKnownNoResponse"
+	FederatedAuthRequestIssueReasonWellKnownInvalidResponse         FederatedAuthRequestIssueReason = "WellKnownInvalidResponse"
+	FederatedAuthRequestIssueReasonWellKnownListEmpty               FederatedAuthRequestIssueReason = "WellKnownListEmpty"
+	FederatedAuthRequestIssueReasonWellKnownInvalidContentType      FederatedAuthRequestIssueReason = "WellKnownInvalidContentType"
+	FederatedAuthRequestIssueReasonConfigNotInWellKnown             FederatedAuthRequestIssueReason = "ConfigNotInWellKnown"
+	FederatedAuthRequestIssueReasonWellKnownTooBig                  FederatedAuthRequestIssueReason = "WellKnownTooBig"
+	FederatedAuthRequestIssueReasonConfigHTTPNotFound               FederatedAuthRequestIssueReason = "ConfigHttpNotFound"
+	FederatedAuthRequestIssueReasonConfigNoResponse                 FederatedAuthRequestIssueReason = "ConfigNoResponse"
+	FederatedAuthRequestIssueReasonConfigInvalidResponse            FederatedAuthRequestIssueReason = "ConfigInvalidResponse"
+	FederatedAuthRequestIssueReasonConfigInvalidContentType         FederatedAuthRequestIssueReason = "ConfigInvalidContentType"
+	FederatedAuthRequestIssueReasonClientMetadataHTTPNotFound       FederatedAuthRequestIssueReason = "ClientMetadataHttpNotFound"
+	FederatedAuthRequestIssueReasonClientMetadataNoResponse         FederatedAuthRequestIssueReason = "ClientMetadataNoResponse"
+	FederatedAuthRequestIssueReasonClientMetadataInvalidResponse    FederatedAuthRequestIssueReason = "ClientMetadataInvalidResponse"
+	FederatedAuthRequestIssueReasonClientMetadataInvalidContentType FederatedAuthRequestIssueReason = "ClientMetadataInvalidContentType"
+	FederatedAuthRequestIssueReasonDisabledInSettings               FederatedAuthRequestIssueReason = "DisabledInSettings"
+	FederatedAuthRequestIssueReasonErrorFetchingSignin              FederatedAuthRequestIssueReason = "ErrorFetchingSignin"
+	FederatedAuthRequestIssueReasonInvalidSigninResponse            FederatedAuthRequestIssueReason = "InvalidSigninResponse"
+	FederatedAuthRequestIssueReasonAccountsHTTPNotFound             FederatedAuthRequestIssueReason = "AccountsHttpNotFound"
+	FederatedAuthRequestIssueReasonAccountsNoResponse               FederatedAuthRequestIssueReason = "AccountsNoResponse"
+	FederatedAuthRequestIssueReasonAccountsInvalidResponse          FederatedAuthRequestIssueReason = "AccountsInvalidResponse"
+	FederatedAuthRequestIssueReasonAccountsListEmpty                FederatedAuthRequestIssueReason = "AccountsListEmpty"
+	FederatedAuthRequestIssueReasonAccountsInvalidContentType       FederatedAuthRequestIssueReason = "AccountsInvalidContentType"
+	FederatedAuthRequestIssueReasonIDTokenHTTPNotFound              FederatedAuthRequestIssueReason = "IdTokenHttpNotFound"
+	FederatedAuthRequestIssueReasonIDTokenNoResponse                FederatedAuthRequestIssueReason = "IdTokenNoResponse"
+	FederatedAuthRequestIssueReasonIDTokenInvalidResponse           FederatedAuthRequestIssueReason = "IdTokenInvalidResponse"
+	FederatedAuthRequestIssueReasonIDTokenInvalidRequest            FederatedAuthRequestIssueReason = "IdTokenInvalidRequest"
+	FederatedAuthRequestIssueReasonIDTokenInvalidContentType        FederatedAuthRequestIssueReason = "IdTokenInvalidContentType"
+	FederatedAuthRequestIssueReasonErrorIDToken                     FederatedAuthRequestIssueReason = "ErrorIdToken"
+	FederatedAuthRequestIssueReasonCanceled                         FederatedAuthRequestIssueReason = "Canceled"
+	FederatedAuthRequestIssueReasonRpPageNotVisible                 FederatedAuthRequestIssueReason = "RpPageNotVisible"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -1134,6 +1151,8 @@ func (t *FederatedAuthRequestIssueReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = FederatedAuthRequestIssueReasonWellKnownInvalidResponse
 	case FederatedAuthRequestIssueReasonWellKnownListEmpty:
 		*t = FederatedAuthRequestIssueReasonWellKnownListEmpty
+	case FederatedAuthRequestIssueReasonWellKnownInvalidContentType:
+		*t = FederatedAuthRequestIssueReasonWellKnownInvalidContentType
 	case FederatedAuthRequestIssueReasonConfigNotInWellKnown:
 		*t = FederatedAuthRequestIssueReasonConfigNotInWellKnown
 	case FederatedAuthRequestIssueReasonWellKnownTooBig:
@@ -1144,12 +1163,16 @@ func (t *FederatedAuthRequestIssueReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = FederatedAuthRequestIssueReasonConfigNoResponse
 	case FederatedAuthRequestIssueReasonConfigInvalidResponse:
 		*t = FederatedAuthRequestIssueReasonConfigInvalidResponse
+	case FederatedAuthRequestIssueReasonConfigInvalidContentType:
+		*t = FederatedAuthRequestIssueReasonConfigInvalidContentType
 	case FederatedAuthRequestIssueReasonClientMetadataHTTPNotFound:
 		*t = FederatedAuthRequestIssueReasonClientMetadataHTTPNotFound
 	case FederatedAuthRequestIssueReasonClientMetadataNoResponse:
 		*t = FederatedAuthRequestIssueReasonClientMetadataNoResponse
 	case FederatedAuthRequestIssueReasonClientMetadataInvalidResponse:
 		*t = FederatedAuthRequestIssueReasonClientMetadataInvalidResponse
+	case FederatedAuthRequestIssueReasonClientMetadataInvalidContentType:
+		*t = FederatedAuthRequestIssueReasonClientMetadataInvalidContentType
 	case FederatedAuthRequestIssueReasonDisabledInSettings:
 		*t = FederatedAuthRequestIssueReasonDisabledInSettings
 	case FederatedAuthRequestIssueReasonErrorFetchingSignin:
@@ -1164,6 +1187,8 @@ func (t *FederatedAuthRequestIssueReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = FederatedAuthRequestIssueReasonAccountsInvalidResponse
 	case FederatedAuthRequestIssueReasonAccountsListEmpty:
 		*t = FederatedAuthRequestIssueReasonAccountsListEmpty
+	case FederatedAuthRequestIssueReasonAccountsInvalidContentType:
+		*t = FederatedAuthRequestIssueReasonAccountsInvalidContentType
 	case FederatedAuthRequestIssueReasonIDTokenHTTPNotFound:
 		*t = FederatedAuthRequestIssueReasonIDTokenHTTPNotFound
 	case FederatedAuthRequestIssueReasonIDTokenNoResponse:
@@ -1172,6 +1197,8 @@ func (t *FederatedAuthRequestIssueReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = FederatedAuthRequestIssueReasonIDTokenInvalidResponse
 	case FederatedAuthRequestIssueReasonIDTokenInvalidRequest:
 		*t = FederatedAuthRequestIssueReasonIDTokenInvalidRequest
+	case FederatedAuthRequestIssueReasonIDTokenInvalidContentType:
+		*t = FederatedAuthRequestIssueReasonIDTokenInvalidContentType
 	case FederatedAuthRequestIssueReasonErrorIDToken:
 		*t = FederatedAuthRequestIssueReasonErrorIDToken
 	case FederatedAuthRequestIssueReasonCanceled:
@@ -1229,6 +1256,7 @@ const (
 	InspectorIssueCodeDeprecationIssue           InspectorIssueCode = "DeprecationIssue"
 	InspectorIssueCodeClientHintIssue            InspectorIssueCode = "ClientHintIssue"
 	InspectorIssueCodeFederatedAuthRequestIssue  InspectorIssueCode = "FederatedAuthRequestIssue"
+	InspectorIssueCodeBounceTrackingIssue        InspectorIssueCode = "BounceTrackingIssue"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -1277,6 +1305,8 @@ func (t *InspectorIssueCode) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = InspectorIssueCodeClientHintIssue
 	case InspectorIssueCodeFederatedAuthRequestIssue:
 		*t = InspectorIssueCodeFederatedAuthRequestIssue
+	case InspectorIssueCodeBounceTrackingIssue:
+		*t = InspectorIssueCodeBounceTrackingIssue
 
 	default:
 		in.AddError(fmt.Errorf("unknown InspectorIssueCode value: %v", v))
@@ -1310,6 +1340,7 @@ type InspectorIssueDetails struct {
 	DeprecationIssueDetails           *DeprecationIssueDetails           `json:"deprecationIssueDetails,omitempty"`
 	ClientHintIssueDetails            *ClientHintIssueDetails            `json:"clientHintIssueDetails,omitempty"`
 	FederatedAuthRequestIssueDetails  *FederatedAuthRequestIssueDetails  `json:"federatedAuthRequestIssueDetails,omitempty"`
+	BounceTrackingIssueDetails        *BounceTrackingIssueDetails        `json:"bounceTrackingIssueDetails,omitempty"`
 }
 
 // IssueID a unique id for a DevTools inspector issue. Allows other entities
