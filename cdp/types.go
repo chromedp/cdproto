@@ -739,7 +739,7 @@ func (t TimeSinceEpoch) MarshalJSON() ([]byte, error) {
 
 // UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
 func (t *TimeSinceEpoch) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	*t = TimeSinceEpoch(time.Unix(0, int64(in.Float64()*float64(time.Second))))
+	*t = TimeSinceEpoch(time.Unix(0, int64(in.Float64()*float64(time.Millisecond))))
 }
 
 // UnmarshalJSON satisfies json.Unmarshaler.
