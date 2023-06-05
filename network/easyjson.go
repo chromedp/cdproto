@@ -2819,7 +2819,7 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork23(in *jlexer.Lexer, o
 				out.ResponseTime = nil
 			} else {
 				if out.ResponseTime == nil {
-					out.ResponseTime = new(cdp.TimeSinceEpoch)
+					out.ResponseTime = new(cdp.TimeSinceEpochMilli)
 				}
 				(*out.ResponseTime).UnmarshalEasyJSON(in)
 			}

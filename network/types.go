@@ -1025,7 +1025,7 @@ type Response struct {
 	EncodedDataLength           float64                     `json:"encodedDataLength"`                     // Total number of bytes received for this request so far.
 	Timing                      *ResourceTiming             `json:"timing,omitempty"`                      // Timing information for the given request.
 	ServiceWorkerResponseSource ServiceWorkerResponseSource `json:"serviceWorkerResponseSource,omitempty"` // Response source of response from ServiceWorker.
-	ResponseTime                *cdp.TimeSinceEpoch         `json:"responseTime,omitempty"`                // The time at which the returned response was generated.
+	ResponseTime                *cdp.TimeSinceEpochMilli    `json:"responseTime,omitempty"`                // The time at which the returned response was generated.
 	CacheStorageCacheName       string                      `json:"cacheStorageCacheName,omitempty"`       // Cache Storage Cache Name.
 	Protocol                    string                      `json:"protocol,omitempty"`                    // Protocol used to fetch this request.
 	AlternateProtocolUsage      AlternateProtocolUsage      `json:"alternateProtocolUsage,omitempty"`      // The reason why Chrome uses a specific transport protocol for HTTP semantics.
