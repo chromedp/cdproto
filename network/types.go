@@ -1800,12 +1800,67 @@ type CrossOriginEmbedderPolicyStatus struct {
 	ReportOnlyReportingEndpoint string                         `json:"reportOnlyReportingEndpoint,omitempty"`
 }
 
+// ContentSecurityPolicySource [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-ContentSecurityPolicySource
+type ContentSecurityPolicySource string
+
+// String returns the ContentSecurityPolicySource as string value.
+func (t ContentSecurityPolicySource) String() string {
+	return string(t)
+}
+
+// ContentSecurityPolicySource values.
+const (
+	ContentSecurityPolicySourceHTTP ContentSecurityPolicySource = "HTTP"
+	ContentSecurityPolicySourceMeta ContentSecurityPolicySource = "Meta"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t ContentSecurityPolicySource) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t ContentSecurityPolicySource) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *ContentSecurityPolicySource) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	v := in.String()
+	switch ContentSecurityPolicySource(v) {
+	case ContentSecurityPolicySourceHTTP:
+		*t = ContentSecurityPolicySourceHTTP
+	case ContentSecurityPolicySourceMeta:
+		*t = ContentSecurityPolicySourceMeta
+
+	default:
+		in.AddError(fmt.Errorf("unknown ContentSecurityPolicySource value: %v", v))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *ContentSecurityPolicySource) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
+// ContentSecurityPolicyStatus [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-ContentSecurityPolicyStatus
+type ContentSecurityPolicyStatus struct {
+	EffectiveDirectives string                      `json:"effectiveDirectives"`
+	IsEnforced          bool                        `json:"isEnforced"`
+	Source              ContentSecurityPolicySource `json:"source"`
+}
+
 // SecurityIsolationStatus [no description].
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-SecurityIsolationStatus
 type SecurityIsolationStatus struct {
 	Coop *CrossOriginOpenerPolicyStatus   `json:"coop,omitempty"`
 	Coep *CrossOriginEmbedderPolicyStatus `json:"coep,omitempty"`
+	Csp  []*ContentSecurityPolicyStatus   `json:"csp,omitempty"`
 }
 
 // ReportStatus the status of a Reporting API report.

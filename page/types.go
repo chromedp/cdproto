@@ -1056,6 +1056,7 @@ const (
 	BackForwardCacheNotRestoredReasonIndexedDBEvent                                           BackForwardCacheNotRestoredReason = "IndexedDBEvent"
 	BackForwardCacheNotRestoredReasonDummy                                                    BackForwardCacheNotRestoredReason = "Dummy"
 	BackForwardCacheNotRestoredReasonAuthorizationHeader                                      BackForwardCacheNotRestoredReason = "AuthorizationHeader"
+	BackForwardCacheNotRestoredReasonWebSerial                                                BackForwardCacheNotRestoredReason = "WebSerial"
 	BackForwardCacheNotRestoredReasonContentSecurityHandler                                   BackForwardCacheNotRestoredReason = "ContentSecurityHandler"
 	BackForwardCacheNotRestoredReasonContentWebAuthenticationAPI                              BackForwardCacheNotRestoredReason = "ContentWebAuthenticationAPI"
 	BackForwardCacheNotRestoredReasonContentFileChooser                                       BackForwardCacheNotRestoredReason = "ContentFileChooser"
@@ -1297,6 +1298,8 @@ func (t *BackForwardCacheNotRestoredReason) UnmarshalEasyJSON(in *jlexer.Lexer) 
 		*t = BackForwardCacheNotRestoredReasonDummy
 	case BackForwardCacheNotRestoredReasonAuthorizationHeader:
 		*t = BackForwardCacheNotRestoredReasonAuthorizationHeader
+	case BackForwardCacheNotRestoredReasonWebSerial:
+		*t = BackForwardCacheNotRestoredReasonWebSerial
 	case BackForwardCacheNotRestoredReasonContentSecurityHandler:
 		*t = BackForwardCacheNotRestoredReasonContentSecurityHandler
 	case BackForwardCacheNotRestoredReasonContentWebAuthenticationAPI:
