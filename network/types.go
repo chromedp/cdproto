@@ -2250,6 +2250,7 @@ func (t TrustTokenOperationDoneStatus) String() string {
 const (
 	TrustTokenOperationDoneStatusOk                 TrustTokenOperationDoneStatus = "Ok"
 	TrustTokenOperationDoneStatusInvalidArgument    TrustTokenOperationDoneStatus = "InvalidArgument"
+	TrustTokenOperationDoneStatusMissingIssuerKeys  TrustTokenOperationDoneStatus = "MissingIssuerKeys"
 	TrustTokenOperationDoneStatusFailedPrecondition TrustTokenOperationDoneStatus = "FailedPrecondition"
 	TrustTokenOperationDoneStatusResourceExhausted  TrustTokenOperationDoneStatus = "ResourceExhausted"
 	TrustTokenOperationDoneStatusAlreadyExists      TrustTokenOperationDoneStatus = "AlreadyExists"
@@ -2279,6 +2280,8 @@ func (t *TrustTokenOperationDoneStatus) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = TrustTokenOperationDoneStatusOk
 	case TrustTokenOperationDoneStatusInvalidArgument:
 		*t = TrustTokenOperationDoneStatusInvalidArgument
+	case TrustTokenOperationDoneStatusMissingIssuerKeys:
+		*t = TrustTokenOperationDoneStatusMissingIssuerKeys
 	case TrustTokenOperationDoneStatusFailedPrecondition:
 		*t = TrustTokenOperationDoneStatusFailedPrecondition
 	case TrustTokenOperationDoneStatusResourceExhausted:
