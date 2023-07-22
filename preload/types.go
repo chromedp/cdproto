@@ -240,7 +240,6 @@ const (
 	PrerenderFinalStatusAudioOutputDeviceRequested                                 PrerenderFinalStatus = "AudioOutputDeviceRequested"
 	PrerenderFinalStatusMixedContent                                               PrerenderFinalStatus = "MixedContent"
 	PrerenderFinalStatusTriggerBackgrounded                                        PrerenderFinalStatus = "TriggerBackgrounded"
-	PrerenderFinalStatusEmbedderTriggeredAndCrossOriginRedirected                  PrerenderFinalStatus = "EmbedderTriggeredAndCrossOriginRedirected"
 	PrerenderFinalStatusMemoryLimitExceeded                                        PrerenderFinalStatus = "MemoryLimitExceeded"
 	PrerenderFinalStatusFailToGetMemoryUsage                                       PrerenderFinalStatus = "FailToGetMemoryUsage"
 	PrerenderFinalStatusDataSaverEnabled                                           PrerenderFinalStatus = "DataSaverEnabled"
@@ -275,6 +274,7 @@ const (
 	PrerenderFinalStatusPrerenderingDisabledByDevTools                             PrerenderFinalStatus = "PrerenderingDisabledByDevTools"
 	PrerenderFinalStatusResourceLoadBlockedByClient                                PrerenderFinalStatus = "ResourceLoadBlockedByClient"
 	PrerenderFinalStatusSpeculationRuleRemoved                                     PrerenderFinalStatus = "SpeculationRuleRemoved"
+	PrerenderFinalStatusActivatedWithAuxiliaryBrowsingContexts                     PrerenderFinalStatus = "ActivatedWithAuxiliaryBrowsingContexts"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -347,8 +347,6 @@ func (t *PrerenderFinalStatus) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PrerenderFinalStatusMixedContent
 	case PrerenderFinalStatusTriggerBackgrounded:
 		*t = PrerenderFinalStatusTriggerBackgrounded
-	case PrerenderFinalStatusEmbedderTriggeredAndCrossOriginRedirected:
-		*t = PrerenderFinalStatusEmbedderTriggeredAndCrossOriginRedirected
 	case PrerenderFinalStatusMemoryLimitExceeded:
 		*t = PrerenderFinalStatusMemoryLimitExceeded
 	case PrerenderFinalStatusFailToGetMemoryUsage:
@@ -417,6 +415,8 @@ func (t *PrerenderFinalStatus) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PrerenderFinalStatusResourceLoadBlockedByClient
 	case PrerenderFinalStatusSpeculationRuleRemoved:
 		*t = PrerenderFinalStatusSpeculationRuleRemoved
+	case PrerenderFinalStatusActivatedWithAuxiliaryBrowsingContexts:
+		*t = PrerenderFinalStatusActivatedWithAuxiliaryBrowsingContexts
 
 	default:
 		in.AddError(fmt.Errorf("unknown PrerenderFinalStatus value: %v", v))
