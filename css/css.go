@@ -371,6 +371,7 @@ type GetMatchedStylesForNodeReturns struct {
 	CSSPositionFallbackRules []*PositionFallbackRule          `json:"cssPositionFallbackRules,omitempty"` // A list of CSS position fallbacks matching this node.
 	CSSPropertyRules         []*PropertyRule                  `json:"cssPropertyRules,omitempty"`         // A list of CSS at-property rules matching this node.
 	CSSPropertyRegistrations []*PropertyRegistration          `json:"cssPropertyRegistrations,omitempty"` // A list of CSS property registrations matching this node.
+	CSSFontPaletteValuesRule *FontPaletteValuesRule           `json:"cssFontPaletteValuesRule,omitempty"` // A font-palette-values rule matching this node.
 	ParentLayoutNodeID       cdp.NodeID                       `json:"parentLayoutNodeId,omitempty"`       // Id of the first parent element that does not have display: contents.
 }
 
@@ -388,16 +389,17 @@ type GetMatchedStylesForNodeReturns struct {
 //	cssPositionFallbackRules - A list of CSS position fallbacks matching this node.
 //	cssPropertyRules - A list of CSS at-property rules matching this node.
 //	cssPropertyRegistrations - A list of CSS property registrations matching this node.
+//	cssFontPaletteValuesRule - A font-palette-values rule matching this node.
 //	parentLayoutNodeID - Id of the first parent element that does not have display: contents.
-func (p *GetMatchedStylesForNodeParams) Do(ctx context.Context) (inlineStyle *Style, attributesStyle *Style, matchedCSSRules []*RuleMatch, pseudoElements []*PseudoElementMatches, inherited []*InheritedStyleEntry, inheritedPseudoElements []*InheritedPseudoElementMatches, cssKeyframesRules []*KeyframesRule, cssPositionFallbackRules []*PositionFallbackRule, cssPropertyRules []*PropertyRule, cssPropertyRegistrations []*PropertyRegistration, parentLayoutNodeID cdp.NodeID, err error) {
+func (p *GetMatchedStylesForNodeParams) Do(ctx context.Context) (inlineStyle *Style, attributesStyle *Style, matchedCSSRules []*RuleMatch, pseudoElements []*PseudoElementMatches, inherited []*InheritedStyleEntry, inheritedPseudoElements []*InheritedPseudoElementMatches, cssKeyframesRules []*KeyframesRule, cssPositionFallbackRules []*PositionFallbackRule, cssPropertyRules []*PropertyRule, cssPropertyRegistrations []*PropertyRegistration, cssFontPaletteValuesRule *FontPaletteValuesRule, parentLayoutNodeID cdp.NodeID, err error) {
 	// execute
 	var res GetMatchedStylesForNodeReturns
 	err = cdp.Execute(ctx, CommandGetMatchedStylesForNode, p, &res)
 	if err != nil {
-		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, 0, err
+		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, 0, err
 	}
 
-	return res.InlineStyle, res.AttributesStyle, res.MatchedCSSRules, res.PseudoElements, res.Inherited, res.InheritedPseudoElements, res.CSSKeyframesRules, res.CSSPositionFallbackRules, res.CSSPropertyRules, res.CSSPropertyRegistrations, res.ParentLayoutNodeID, nil
+	return res.InlineStyle, res.AttributesStyle, res.MatchedCSSRules, res.PseudoElements, res.Inherited, res.InheritedPseudoElements, res.CSSKeyframesRules, res.CSSPositionFallbackRules, res.CSSPropertyRules, res.CSSPropertyRegistrations, res.CSSFontPaletteValuesRule, res.ParentLayoutNodeID, nil
 }
 
 // GetMediaQueriesParams returns all media queries parsed by the rendering

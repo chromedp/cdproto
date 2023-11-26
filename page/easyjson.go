@@ -2243,6 +2243,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoPage27(in *jlexer.Lexer, out 
 			(out.TransferMode).UnmarshalEasyJSON(in)
 		case "generateTaggedPDF":
 			out.GenerateTaggedPDF = bool(in.Bool())
+		case "generateDocumentOutline":
+			out.GenerateDocumentOutline = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -2367,6 +2369,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoPage27(out *jwriter.Writer, i
 		const prefix string = ",\"generateTaggedPDF\":"
 		out.RawString(prefix)
 		out.Bool(bool(in.GenerateTaggedPDF))
+	}
+	if in.GenerateDocumentOutline {
+		const prefix string = ",\"generateDocumentOutline\":"
+		out.RawString(prefix)
+		out.Bool(bool(in.GenerateDocumentOutline))
 	}
 	out.RawByte('}')
 }

@@ -1017,6 +1017,13 @@ func (t *AlternateProtocolUsage) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 
+// ServiceWorkerRouterInfo [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-ServiceWorkerRouterInfo
+type ServiceWorkerRouterInfo struct {
+	RuleIDMatched int64 `json:"ruleIdMatched"`
+}
+
 // Response HTTP response data.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-Response
@@ -1034,6 +1041,7 @@ type Response struct {
 	FromDiskCache               bool                        `json:"fromDiskCache,omitempty"`               // Specifies that the request was served from the disk cache.
 	FromServiceWorker           bool                        `json:"fromServiceWorker,omitempty"`           // Specifies that the request was served from the ServiceWorker.
 	FromPrefetchCache           bool                        `json:"fromPrefetchCache,omitempty"`           // Specifies that the request was served from the prefetch cache.
+	ServiceWorkerRouterInfo     *ServiceWorkerRouterInfo    `json:"serviceWorkerRouterInfo,omitempty"`     // Information about how Service Worker Static Router was used.
 	EncodedDataLength           float64                     `json:"encodedDataLength"`                     // Total number of bytes received for this request so far.
 	Timing                      *ResourceTiming             `json:"timing,omitempty"`                      // Timing information for the given request.
 	ServiceWorkerResponseSource ServiceWorkerResponseSource `json:"serviceWorkerResponseSource,omitempty"` // Response source of response from ServiceWorker.
@@ -1111,7 +1119,6 @@ type Cookie struct {
 	Session            bool               `json:"session"`                      // True in case of session cookie.
 	SameSite           CookieSameSite     `json:"sameSite,omitempty"`           // Cookie SameSite type.
 	Priority           CookiePriority     `json:"priority"`                     // Cookie Priority
-	SameParty          bool               `json:"sameParty"`                    // True if cookie is SameParty.
 	SourceScheme       CookieSourceScheme `json:"sourceScheme"`                 // Cookie source scheme type.
 	SourcePort         int64              `json:"sourcePort"`                   // Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port. An unspecified port value allows protocol clients to emulate legacy cookie scope for the port. This is a temporary ability and it will be removed in the future.
 	PartitionKey       string             `json:"partitionKey,omitempty"`       // Cookie partition key. The site of the top-level URL the browser was visiting at the start of the request to the endpoint that set the cookie.

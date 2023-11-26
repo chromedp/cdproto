@@ -883,7 +883,7 @@ func (p *SetHardwareConcurrencyOverrideParams) Do(ctx context.Context) (err erro
 // string.
 type SetUserAgentOverrideParams struct {
 	UserAgent         string             `json:"userAgent"`                   // User agent to use.
-	AcceptLanguage    string             `json:"acceptLanguage,omitempty"`    // Browser langugage to emulate.
+	AcceptLanguage    string             `json:"acceptLanguage,omitempty"`    // Browser language to emulate.
 	Platform          string             `json:"platform,omitempty"`          // The platform navigator.platform should return.
 	UserAgentMetadata *UserAgentMetadata `json:"userAgentMetadata,omitempty"` // To be sent in Sec-CH-UA-* headers and returned in navigator.userAgentData
 }
@@ -901,7 +901,7 @@ func SetUserAgentOverride(userAgent string) *SetUserAgentOverrideParams {
 	}
 }
 
-// WithAcceptLanguage browser langugage to emulate.
+// WithAcceptLanguage browser language to emulate.
 func (p SetUserAgentOverrideParams) WithAcceptLanguage(acceptLanguage string) *SetUserAgentOverrideParams {
 	p.AcceptLanguage = acceptLanguage
 	return &p
