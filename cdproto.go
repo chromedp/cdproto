@@ -357,6 +357,7 @@ const (
 	CommandFedCmDismissDialog                              = fedcm.CommandDismissDialog
 	CommandFedCmResetCooldown                              = fedcm.CommandResetCooldown
 	EventFedCmDialogShown                                  = "FedCm.dialogShown"
+	EventFedCmDialogClosed                                 = "FedCm.dialogClosed"
 	CommandFetchDisable                                    = fetch.CommandDisable
 	CommandFetchEnable                                     = fetch.CommandEnable
 	CommandFetchFailRequest                                = fetch.CommandFailRequest
@@ -1653,6 +1654,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case EventFedCmDialogShown:
 		v = new(fedcm.EventDialogShown)
+
+	case EventFedCmDialogClosed:
+		v = new(fedcm.EventDialogClosed)
 
 	case CommandFetchDisable:
 		return emptyVal, nil

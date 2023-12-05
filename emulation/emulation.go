@@ -219,6 +219,7 @@ type SetDeviceMetricsOverrideParams struct {
 	ScreenOrientation  *ScreenOrientation `json:"screenOrientation,omitempty"`  // Screen orientation override.
 	Viewport           *page.Viewport     `json:"viewport,omitempty"`           // If set, the visible area of the page will be overridden to this viewport. This viewport change is not observed by the page, e.g. viewport-relative elements do not change positions.
 	DisplayFeature     *DisplayFeature    `json:"displayFeature,omitempty"`     // If set, the display feature of a multi-segment screen. If not set, multi-segment support is turned-off.
+	DevicePosture      *DevicePosture     `json:"devicePosture,omitempty"`      // If set, the posture of a foldable device. If not set the posture is set to continuous.
 }
 
 // SetDeviceMetricsOverride overrides the values of device screen dimensions
@@ -302,6 +303,13 @@ func (p SetDeviceMetricsOverrideParams) WithViewport(viewport *page.Viewport) *S
 // If not set, multi-segment support is turned-off.
 func (p SetDeviceMetricsOverrideParams) WithDisplayFeature(displayFeature *DisplayFeature) *SetDeviceMetricsOverrideParams {
 	p.DisplayFeature = displayFeature
+	return &p
+}
+
+// WithDevicePosture if set, the posture of a foldable device. If not set the
+// posture is set to continuous.
+func (p SetDeviceMetricsOverrideParams) WithDevicePosture(devicePosture *DevicePosture) *SetDeviceMetricsOverrideParams {
+	p.DevicePosture = devicePosture
 	return &p
 }
 

@@ -71,6 +71,7 @@ const (
 	DialogTypeAccountChooser  DialogType = "AccountChooser"
 	DialogTypeAutoReauthn     DialogType = "AutoReauthn"
 	DialogTypeConfirmIdpLogin DialogType = "ConfirmIdpLogin"
+	DialogTypeError           DialogType = "Error"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -93,6 +94,8 @@ func (t *DialogType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = DialogTypeAutoReauthn
 	case DialogTypeConfirmIdpLogin:
 		*t = DialogTypeConfirmIdpLogin
+	case DialogTypeError:
+		*t = DialogTypeError
 
 	default:
 		in.AddError(fmt.Errorf("unknown DialogType value: %v", v))
@@ -117,6 +120,8 @@ func (t DialogButton) String() string {
 // DialogButton values.
 const (
 	DialogButtonConfirmIdpLoginContinue DialogButton = "ConfirmIdpLoginContinue"
+	DialogButtonErrorGotIt              DialogButton = "ErrorGotIt"
+	DialogButtonErrorMoreDetails        DialogButton = "ErrorMoreDetails"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -135,6 +140,10 @@ func (t *DialogButton) UnmarshalEasyJSON(in *jlexer.Lexer) {
 	switch DialogButton(v) {
 	case DialogButtonConfirmIdpLoginContinue:
 		*t = DialogButtonConfirmIdpLoginContinue
+	case DialogButtonErrorGotIt:
+		*t = DialogButtonErrorGotIt
+	case DialogButtonErrorMoreDetails:
+		*t = DialogButtonErrorMoreDetails
 
 	default:
 		in.AddError(fmt.Errorf("unknown DialogButton value: %v", v))

@@ -27,6 +27,13 @@ type DisplayFeature struct {
 	MaskLength  int64                     `json:"maskLength"`  // A display feature may mask content such that it is not physically displayed - this length along with the offset describes this area. A display feature that only splits content will have a 0 mask_length.
 }
 
+// DevicePosture [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#type-DevicePosture
+type DevicePosture struct {
+	Type DevicePostureType `json:"type"` // Current posture of the device
+}
+
 // MediaFeature [no description].
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#type-MediaFeature
@@ -363,6 +370,51 @@ func (t *DisplayFeatureOrientation) UnmarshalEasyJSON(in *jlexer.Lexer) {
 
 // UnmarshalJSON satisfies json.Unmarshaler.
 func (t *DisplayFeatureOrientation) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
+// DevicePostureType current posture of the device.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#type-DevicePosture
+type DevicePostureType string
+
+// String returns the DevicePostureType as string value.
+func (t DevicePostureType) String() string {
+	return string(t)
+}
+
+// DevicePostureType values.
+const (
+	DevicePostureTypeContinuous DevicePostureType = "continuous"
+	DevicePostureTypeFolded     DevicePostureType = "folded"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t DevicePostureType) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t DevicePostureType) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *DevicePostureType) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	v := in.String()
+	switch DevicePostureType(v) {
+	case DevicePostureTypeContinuous:
+		*t = DevicePostureTypeContinuous
+	case DevicePostureTypeFolded:
+		*t = DevicePostureTypeFolded
+
+	default:
+		in.AddError(fmt.Errorf("unknown DevicePostureType value: %v", v))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *DevicePostureType) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 

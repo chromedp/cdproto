@@ -110,6 +110,7 @@ const (
 	PermissionsPolicyFeatureSyncXhr                      PermissionsPolicyFeature = "sync-xhr"
 	PermissionsPolicyFeatureUnload                       PermissionsPolicyFeature = "unload"
 	PermissionsPolicyFeatureUsb                          PermissionsPolicyFeature = "usb"
+	PermissionsPolicyFeatureUsbUnrestricted              PermissionsPolicyFeature = "usb-unrestricted"
 	PermissionsPolicyFeatureVerticalScroll               PermissionsPolicyFeature = "vertical-scroll"
 	PermissionsPolicyFeatureWebPrinting                  PermissionsPolicyFeature = "web-printing"
 	PermissionsPolicyFeatureWebShare                     PermissionsPolicyFeature = "web-share"
@@ -280,6 +281,8 @@ func (t *PermissionsPolicyFeature) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PermissionsPolicyFeatureUnload
 	case PermissionsPolicyFeatureUsb:
 		*t = PermissionsPolicyFeatureUsb
+	case PermissionsPolicyFeatureUsbUnrestricted:
+		*t = PermissionsPolicyFeatureUsbUnrestricted
 	case PermissionsPolicyFeatureVerticalScroll:
 		*t = PermissionsPolicyFeatureVerticalScroll
 	case PermissionsPolicyFeatureWebPrinting:

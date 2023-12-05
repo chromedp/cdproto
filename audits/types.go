@@ -301,33 +301,34 @@ func (t MixedContentResourceType) String() string {
 
 // MixedContentResourceType values.
 const (
-	MixedContentResourceTypeAttributionSrc MixedContentResourceType = "AttributionSrc"
-	MixedContentResourceTypeAudio          MixedContentResourceType = "Audio"
-	MixedContentResourceTypeBeacon         MixedContentResourceType = "Beacon"
-	MixedContentResourceTypeCSPReport      MixedContentResourceType = "CSPReport"
-	MixedContentResourceTypeDownload       MixedContentResourceType = "Download"
-	MixedContentResourceTypeEventSource    MixedContentResourceType = "EventSource"
-	MixedContentResourceTypeFavicon        MixedContentResourceType = "Favicon"
-	MixedContentResourceTypeFont           MixedContentResourceType = "Font"
-	MixedContentResourceTypeForm           MixedContentResourceType = "Form"
-	MixedContentResourceTypeFrame          MixedContentResourceType = "Frame"
-	MixedContentResourceTypeImage          MixedContentResourceType = "Image"
-	MixedContentResourceTypeImport         MixedContentResourceType = "Import"
-	MixedContentResourceTypeManifest       MixedContentResourceType = "Manifest"
-	MixedContentResourceTypePing           MixedContentResourceType = "Ping"
-	MixedContentResourceTypePluginData     MixedContentResourceType = "PluginData"
-	MixedContentResourceTypePluginResource MixedContentResourceType = "PluginResource"
-	MixedContentResourceTypePrefetch       MixedContentResourceType = "Prefetch"
-	MixedContentResourceTypeResource       MixedContentResourceType = "Resource"
-	MixedContentResourceTypeScript         MixedContentResourceType = "Script"
-	MixedContentResourceTypeServiceWorker  MixedContentResourceType = "ServiceWorker"
-	MixedContentResourceTypeSharedWorker   MixedContentResourceType = "SharedWorker"
-	MixedContentResourceTypeStylesheet     MixedContentResourceType = "Stylesheet"
-	MixedContentResourceTypeTrack          MixedContentResourceType = "Track"
-	MixedContentResourceTypeVideo          MixedContentResourceType = "Video"
-	MixedContentResourceTypeWorker         MixedContentResourceType = "Worker"
-	MixedContentResourceTypeXMLHTTPRequest MixedContentResourceType = "XMLHttpRequest"
-	MixedContentResourceTypeXSLT           MixedContentResourceType = "XSLT"
+	MixedContentResourceTypeAttributionSrc   MixedContentResourceType = "AttributionSrc"
+	MixedContentResourceTypeAudio            MixedContentResourceType = "Audio"
+	MixedContentResourceTypeBeacon           MixedContentResourceType = "Beacon"
+	MixedContentResourceTypeCSPReport        MixedContentResourceType = "CSPReport"
+	MixedContentResourceTypeDownload         MixedContentResourceType = "Download"
+	MixedContentResourceTypeEventSource      MixedContentResourceType = "EventSource"
+	MixedContentResourceTypeFavicon          MixedContentResourceType = "Favicon"
+	MixedContentResourceTypeFont             MixedContentResourceType = "Font"
+	MixedContentResourceTypeForm             MixedContentResourceType = "Form"
+	MixedContentResourceTypeFrame            MixedContentResourceType = "Frame"
+	MixedContentResourceTypeImage            MixedContentResourceType = "Image"
+	MixedContentResourceTypeImport           MixedContentResourceType = "Import"
+	MixedContentResourceTypeManifest         MixedContentResourceType = "Manifest"
+	MixedContentResourceTypePing             MixedContentResourceType = "Ping"
+	MixedContentResourceTypePluginData       MixedContentResourceType = "PluginData"
+	MixedContentResourceTypePluginResource   MixedContentResourceType = "PluginResource"
+	MixedContentResourceTypePrefetch         MixedContentResourceType = "Prefetch"
+	MixedContentResourceTypeResource         MixedContentResourceType = "Resource"
+	MixedContentResourceTypeScript           MixedContentResourceType = "Script"
+	MixedContentResourceTypeServiceWorker    MixedContentResourceType = "ServiceWorker"
+	MixedContentResourceTypeSharedWorker     MixedContentResourceType = "SharedWorker"
+	MixedContentResourceTypeSpeculationRules MixedContentResourceType = "SpeculationRules"
+	MixedContentResourceTypeStylesheet       MixedContentResourceType = "Stylesheet"
+	MixedContentResourceTypeTrack            MixedContentResourceType = "Track"
+	MixedContentResourceTypeVideo            MixedContentResourceType = "Video"
+	MixedContentResourceTypeWorker           MixedContentResourceType = "Worker"
+	MixedContentResourceTypeXMLHTTPRequest   MixedContentResourceType = "XMLHttpRequest"
+	MixedContentResourceTypeXSLT             MixedContentResourceType = "XSLT"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -386,6 +387,8 @@ func (t *MixedContentResourceType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = MixedContentResourceTypeServiceWorker
 	case MixedContentResourceTypeSharedWorker:
 		*t = MixedContentResourceTypeSharedWorker
+	case MixedContentResourceTypeSpeculationRules:
+		*t = MixedContentResourceTypeSpeculationRules
 	case MixedContentResourceTypeStylesheet:
 		*t = MixedContentResourceTypeStylesheet
 	case MixedContentResourceTypeTrack:
