@@ -43,6 +43,7 @@ const (
 	PermissionsPolicyFeatureBluetooth                    PermissionsPolicyFeature = "bluetooth"
 	PermissionsPolicyFeatureBrowsingTopics               PermissionsPolicyFeature = "browsing-topics"
 	PermissionsPolicyFeatureCamera                       PermissionsPolicyFeature = "camera"
+	PermissionsPolicyFeatureCapturedSurfaceControl       PermissionsPolicyFeature = "captured-surface-control"
 	PermissionsPolicyFeatureChDpr                        PermissionsPolicyFeature = "ch-dpr"
 	PermissionsPolicyFeatureChDeviceMemory               PermissionsPolicyFeature = "ch-device-memory"
 	PermissionsPolicyFeatureChDownlink                   PermissionsPolicyFeature = "ch-downlink"
@@ -98,6 +99,7 @@ const (
 	PermissionsPolicyFeaturePrivateAggregation           PermissionsPolicyFeature = "private-aggregation"
 	PermissionsPolicyFeaturePrivateStateTokenIssuance    PermissionsPolicyFeature = "private-state-token-issuance"
 	PermissionsPolicyFeaturePrivateStateTokenRedemption  PermissionsPolicyFeature = "private-state-token-redemption"
+	PermissionsPolicyFeaturePublickeyCredentialsCreate   PermissionsPolicyFeature = "publickey-credentials-create"
 	PermissionsPolicyFeaturePublickeyCredentialsGet      PermissionsPolicyFeature = "publickey-credentials-get"
 	PermissionsPolicyFeatureRunAdAuction                 PermissionsPolicyFeature = "run-ad-auction"
 	PermissionsPolicyFeatureScreenWakeLock               PermissionsPolicyFeature = "screen-wake-lock"
@@ -107,6 +109,7 @@ const (
 	PermissionsPolicyFeatureSharedStorageSelectURL       PermissionsPolicyFeature = "shared-storage-select-url"
 	PermissionsPolicyFeatureSmartCard                    PermissionsPolicyFeature = "smart-card"
 	PermissionsPolicyFeatureStorageAccess                PermissionsPolicyFeature = "storage-access"
+	PermissionsPolicyFeatureSubApps                      PermissionsPolicyFeature = "sub-apps"
 	PermissionsPolicyFeatureSyncXhr                      PermissionsPolicyFeature = "sync-xhr"
 	PermissionsPolicyFeatureUnload                       PermissionsPolicyFeature = "unload"
 	PermissionsPolicyFeatureUsb                          PermissionsPolicyFeature = "usb"
@@ -147,6 +150,8 @@ func (t *PermissionsPolicyFeature) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PermissionsPolicyFeatureBrowsingTopics
 	case PermissionsPolicyFeatureCamera:
 		*t = PermissionsPolicyFeatureCamera
+	case PermissionsPolicyFeatureCapturedSurfaceControl:
+		*t = PermissionsPolicyFeatureCapturedSurfaceControl
 	case PermissionsPolicyFeatureChDpr:
 		*t = PermissionsPolicyFeatureChDpr
 	case PermissionsPolicyFeatureChDeviceMemory:
@@ -257,6 +262,8 @@ func (t *PermissionsPolicyFeature) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PermissionsPolicyFeaturePrivateStateTokenIssuance
 	case PermissionsPolicyFeaturePrivateStateTokenRedemption:
 		*t = PermissionsPolicyFeaturePrivateStateTokenRedemption
+	case PermissionsPolicyFeaturePublickeyCredentialsCreate:
+		*t = PermissionsPolicyFeaturePublickeyCredentialsCreate
 	case PermissionsPolicyFeaturePublickeyCredentialsGet:
 		*t = PermissionsPolicyFeaturePublickeyCredentialsGet
 	case PermissionsPolicyFeatureRunAdAuction:
@@ -275,6 +282,8 @@ func (t *PermissionsPolicyFeature) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PermissionsPolicyFeatureSmartCard
 	case PermissionsPolicyFeatureStorageAccess:
 		*t = PermissionsPolicyFeatureStorageAccess
+	case PermissionsPolicyFeatureSubApps:
+		*t = PermissionsPolicyFeatureSubApps
 	case PermissionsPolicyFeatureSyncXhr:
 		*t = PermissionsPolicyFeatureSyncXhr
 	case PermissionsPolicyFeatureUnload:
@@ -1065,6 +1074,8 @@ const (
 	BackForwardCacheNotRestoredReasonWebRTCSticky                                             BackForwardCacheNotRestoredReason = "WebRTCSticky"
 	BackForwardCacheNotRestoredReasonWebTransportSticky                                       BackForwardCacheNotRestoredReason = "WebTransportSticky"
 	BackForwardCacheNotRestoredReasonWebSocketSticky                                          BackForwardCacheNotRestoredReason = "WebSocketSticky"
+	BackForwardCacheNotRestoredReasonSmartCard                                                BackForwardCacheNotRestoredReason = "SmartCard"
+	BackForwardCacheNotRestoredReasonLiveMediaStreamTrack                                     BackForwardCacheNotRestoredReason = "LiveMediaStreamTrack"
 	BackForwardCacheNotRestoredReasonContentSecurityHandler                                   BackForwardCacheNotRestoredReason = "ContentSecurityHandler"
 	BackForwardCacheNotRestoredReasonContentWebAuthenticationAPI                              BackForwardCacheNotRestoredReason = "ContentWebAuthenticationAPI"
 	BackForwardCacheNotRestoredReasonContentFileChooser                                       BackForwardCacheNotRestoredReason = "ContentFileChooser"
@@ -1312,6 +1323,10 @@ func (t *BackForwardCacheNotRestoredReason) UnmarshalEasyJSON(in *jlexer.Lexer) 
 		*t = BackForwardCacheNotRestoredReasonWebTransportSticky
 	case BackForwardCacheNotRestoredReasonWebSocketSticky:
 		*t = BackForwardCacheNotRestoredReasonWebSocketSticky
+	case BackForwardCacheNotRestoredReasonSmartCard:
+		*t = BackForwardCacheNotRestoredReasonSmartCard
+	case BackForwardCacheNotRestoredReasonLiveMediaStreamTrack:
+		*t = BackForwardCacheNotRestoredReasonLiveMediaStreamTrack
 	case BackForwardCacheNotRestoredReasonContentSecurityHandler:
 		*t = BackForwardCacheNotRestoredReasonContentSecurityHandler
 	case BackForwardCacheNotRestoredReasonContentWebAuthenticationAPI:

@@ -496,6 +496,22 @@ type AttributionReportingFilterDataEntry struct {
 	Values []string `json:"values"`
 }
 
+// AttributionReportingFilterConfig [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-AttributionReportingFilterConfig
+type AttributionReportingFilterConfig struct {
+	FilterValues   []*AttributionReportingFilterDataEntry `json:"filterValues"`
+	LookbackWindow int64                                  `json:"lookbackWindow,omitempty"` // duration in seconds
+}
+
+// AttributionReportingFilterPair [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-AttributionReportingFilterPair
+type AttributionReportingFilterPair struct {
+	Filters    []*AttributionReportingFilterConfig `json:"filters"`
+	NotFilters []*AttributionReportingFilterConfig `json:"notFilters"`
+}
+
 // AttributionReportingAggregationKeysEntry [no description].
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-AttributionReportingAggregationKeysEntry
@@ -657,5 +673,278 @@ func (t *AttributionReportingSourceRegistrationResult) UnmarshalEasyJSON(in *jle
 
 // UnmarshalJSON satisfies json.Unmarshaler.
 func (t *AttributionReportingSourceRegistrationResult) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
+// AttributionReportingSourceRegistrationTimeConfig [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-AttributionReportingSourceRegistrationTimeConfig
+type AttributionReportingSourceRegistrationTimeConfig string
+
+// String returns the AttributionReportingSourceRegistrationTimeConfig as string value.
+func (t AttributionReportingSourceRegistrationTimeConfig) String() string {
+	return string(t)
+}
+
+// AttributionReportingSourceRegistrationTimeConfig values.
+const (
+	AttributionReportingSourceRegistrationTimeConfigInclude AttributionReportingSourceRegistrationTimeConfig = "include"
+	AttributionReportingSourceRegistrationTimeConfigExclude AttributionReportingSourceRegistrationTimeConfig = "exclude"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t AttributionReportingSourceRegistrationTimeConfig) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t AttributionReportingSourceRegistrationTimeConfig) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *AttributionReportingSourceRegistrationTimeConfig) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	v := in.String()
+	switch AttributionReportingSourceRegistrationTimeConfig(v) {
+	case AttributionReportingSourceRegistrationTimeConfigInclude:
+		*t = AttributionReportingSourceRegistrationTimeConfigInclude
+	case AttributionReportingSourceRegistrationTimeConfigExclude:
+		*t = AttributionReportingSourceRegistrationTimeConfigExclude
+
+	default:
+		in.AddError(fmt.Errorf("unknown AttributionReportingSourceRegistrationTimeConfig value: %v", v))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *AttributionReportingSourceRegistrationTimeConfig) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
+// AttributionReportingAggregatableValueEntry [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-AttributionReportingAggregatableValueEntry
+type AttributionReportingAggregatableValueEntry struct {
+	Key   string  `json:"key"`
+	Value float64 `json:"value"` // number instead of integer because not all uint32 can be represented by int
+}
+
+// AttributionReportingEventTriggerData [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-AttributionReportingEventTriggerData
+type AttributionReportingEventTriggerData struct {
+	Data     UnsignedInt64asBase10           `json:"data"`
+	Priority SignedInt64asBase10             `json:"priority"`
+	DedupKey UnsignedInt64asBase10           `json:"dedupKey,omitempty"`
+	Filters  *AttributionReportingFilterPair `json:"filters"`
+}
+
+// AttributionReportingAggregatableTriggerData [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-AttributionReportingAggregatableTriggerData
+type AttributionReportingAggregatableTriggerData struct {
+	KeyPiece   UnsignedInt128asBase16          `json:"keyPiece"`
+	SourceKeys []string                        `json:"sourceKeys"`
+	Filters    *AttributionReportingFilterPair `json:"filters"`
+}
+
+// AttributionReportingAggregatableDedupKey [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-AttributionReportingAggregatableDedupKey
+type AttributionReportingAggregatableDedupKey struct {
+	DedupKey UnsignedInt64asBase10           `json:"dedupKey,omitempty"`
+	Filters  *AttributionReportingFilterPair `json:"filters"`
+}
+
+// AttributionReportingTriggerRegistration [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-AttributionReportingTriggerRegistration
+type AttributionReportingTriggerRegistration struct {
+	Filters                      *AttributionReportingFilterPair                  `json:"filters"`
+	DebugKey                     UnsignedInt64asBase10                            `json:"debugKey,omitempty"`
+	AggregatableDedupKeys        []*AttributionReportingAggregatableDedupKey      `json:"aggregatableDedupKeys"`
+	EventTriggerData             []*AttributionReportingEventTriggerData          `json:"eventTriggerData"`
+	AggregatableTriggerData      []*AttributionReportingAggregatableTriggerData   `json:"aggregatableTriggerData"`
+	AggregatableValues           []*AttributionReportingAggregatableValueEntry    `json:"aggregatableValues"`
+	DebugReporting               bool                                             `json:"debugReporting"`
+	AggregationCoordinatorOrigin string                                           `json:"aggregationCoordinatorOrigin,omitempty"`
+	SourceRegistrationTimeConfig AttributionReportingSourceRegistrationTimeConfig `json:"sourceRegistrationTimeConfig"`
+	TriggerContextID             string                                           `json:"triggerContextId,omitempty"`
+}
+
+// AttributionReportingEventLevelResult [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-AttributionReportingEventLevelResult
+type AttributionReportingEventLevelResult string
+
+// String returns the AttributionReportingEventLevelResult as string value.
+func (t AttributionReportingEventLevelResult) String() string {
+	return string(t)
+}
+
+// AttributionReportingEventLevelResult values.
+const (
+	AttributionReportingEventLevelResultSuccess                             AttributionReportingEventLevelResult = "success"
+	AttributionReportingEventLevelResultSuccessDroppedLowerPriority         AttributionReportingEventLevelResult = "successDroppedLowerPriority"
+	AttributionReportingEventLevelResultInternalError                       AttributionReportingEventLevelResult = "internalError"
+	AttributionReportingEventLevelResultNoCapacityForAttributionDestination AttributionReportingEventLevelResult = "noCapacityForAttributionDestination"
+	AttributionReportingEventLevelResultNoMatchingSources                   AttributionReportingEventLevelResult = "noMatchingSources"
+	AttributionReportingEventLevelResultDeduplicated                        AttributionReportingEventLevelResult = "deduplicated"
+	AttributionReportingEventLevelResultExcessiveAttributions               AttributionReportingEventLevelResult = "excessiveAttributions"
+	AttributionReportingEventLevelResultPriorityTooLow                      AttributionReportingEventLevelResult = "priorityTooLow"
+	AttributionReportingEventLevelResultNeverAttributedSource               AttributionReportingEventLevelResult = "neverAttributedSource"
+	AttributionReportingEventLevelResultExcessiveReportingOrigins           AttributionReportingEventLevelResult = "excessiveReportingOrigins"
+	AttributionReportingEventLevelResultNoMatchingSourceFilterData          AttributionReportingEventLevelResult = "noMatchingSourceFilterData"
+	AttributionReportingEventLevelResultProhibitedByBrowserPolicy           AttributionReportingEventLevelResult = "prohibitedByBrowserPolicy"
+	AttributionReportingEventLevelResultNoMatchingConfigurations            AttributionReportingEventLevelResult = "noMatchingConfigurations"
+	AttributionReportingEventLevelResultExcessiveReports                    AttributionReportingEventLevelResult = "excessiveReports"
+	AttributionReportingEventLevelResultFalselyAttributedSource             AttributionReportingEventLevelResult = "falselyAttributedSource"
+	AttributionReportingEventLevelResultReportWindowPassed                  AttributionReportingEventLevelResult = "reportWindowPassed"
+	AttributionReportingEventLevelResultNotRegistered                       AttributionReportingEventLevelResult = "notRegistered"
+	AttributionReportingEventLevelResultReportWindowNotStarted              AttributionReportingEventLevelResult = "reportWindowNotStarted"
+	AttributionReportingEventLevelResultNoMatchingTriggerData               AttributionReportingEventLevelResult = "noMatchingTriggerData"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t AttributionReportingEventLevelResult) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t AttributionReportingEventLevelResult) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *AttributionReportingEventLevelResult) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	v := in.String()
+	switch AttributionReportingEventLevelResult(v) {
+	case AttributionReportingEventLevelResultSuccess:
+		*t = AttributionReportingEventLevelResultSuccess
+	case AttributionReportingEventLevelResultSuccessDroppedLowerPriority:
+		*t = AttributionReportingEventLevelResultSuccessDroppedLowerPriority
+	case AttributionReportingEventLevelResultInternalError:
+		*t = AttributionReportingEventLevelResultInternalError
+	case AttributionReportingEventLevelResultNoCapacityForAttributionDestination:
+		*t = AttributionReportingEventLevelResultNoCapacityForAttributionDestination
+	case AttributionReportingEventLevelResultNoMatchingSources:
+		*t = AttributionReportingEventLevelResultNoMatchingSources
+	case AttributionReportingEventLevelResultDeduplicated:
+		*t = AttributionReportingEventLevelResultDeduplicated
+	case AttributionReportingEventLevelResultExcessiveAttributions:
+		*t = AttributionReportingEventLevelResultExcessiveAttributions
+	case AttributionReportingEventLevelResultPriorityTooLow:
+		*t = AttributionReportingEventLevelResultPriorityTooLow
+	case AttributionReportingEventLevelResultNeverAttributedSource:
+		*t = AttributionReportingEventLevelResultNeverAttributedSource
+	case AttributionReportingEventLevelResultExcessiveReportingOrigins:
+		*t = AttributionReportingEventLevelResultExcessiveReportingOrigins
+	case AttributionReportingEventLevelResultNoMatchingSourceFilterData:
+		*t = AttributionReportingEventLevelResultNoMatchingSourceFilterData
+	case AttributionReportingEventLevelResultProhibitedByBrowserPolicy:
+		*t = AttributionReportingEventLevelResultProhibitedByBrowserPolicy
+	case AttributionReportingEventLevelResultNoMatchingConfigurations:
+		*t = AttributionReportingEventLevelResultNoMatchingConfigurations
+	case AttributionReportingEventLevelResultExcessiveReports:
+		*t = AttributionReportingEventLevelResultExcessiveReports
+	case AttributionReportingEventLevelResultFalselyAttributedSource:
+		*t = AttributionReportingEventLevelResultFalselyAttributedSource
+	case AttributionReportingEventLevelResultReportWindowPassed:
+		*t = AttributionReportingEventLevelResultReportWindowPassed
+	case AttributionReportingEventLevelResultNotRegistered:
+		*t = AttributionReportingEventLevelResultNotRegistered
+	case AttributionReportingEventLevelResultReportWindowNotStarted:
+		*t = AttributionReportingEventLevelResultReportWindowNotStarted
+	case AttributionReportingEventLevelResultNoMatchingTriggerData:
+		*t = AttributionReportingEventLevelResultNoMatchingTriggerData
+
+	default:
+		in.AddError(fmt.Errorf("unknown AttributionReportingEventLevelResult value: %v", v))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *AttributionReportingEventLevelResult) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
+// AttributionReportingAggregatableResult [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-AttributionReportingAggregatableResult
+type AttributionReportingAggregatableResult string
+
+// String returns the AttributionReportingAggregatableResult as string value.
+func (t AttributionReportingAggregatableResult) String() string {
+	return string(t)
+}
+
+// AttributionReportingAggregatableResult values.
+const (
+	AttributionReportingAggregatableResultSuccess                             AttributionReportingAggregatableResult = "success"
+	AttributionReportingAggregatableResultInternalError                       AttributionReportingAggregatableResult = "internalError"
+	AttributionReportingAggregatableResultNoCapacityForAttributionDestination AttributionReportingAggregatableResult = "noCapacityForAttributionDestination"
+	AttributionReportingAggregatableResultNoMatchingSources                   AttributionReportingAggregatableResult = "noMatchingSources"
+	AttributionReportingAggregatableResultExcessiveAttributions               AttributionReportingAggregatableResult = "excessiveAttributions"
+	AttributionReportingAggregatableResultExcessiveReportingOrigins           AttributionReportingAggregatableResult = "excessiveReportingOrigins"
+	AttributionReportingAggregatableResultNoHistograms                        AttributionReportingAggregatableResult = "noHistograms"
+	AttributionReportingAggregatableResultInsufficientBudget                  AttributionReportingAggregatableResult = "insufficientBudget"
+	AttributionReportingAggregatableResultNoMatchingSourceFilterData          AttributionReportingAggregatableResult = "noMatchingSourceFilterData"
+	AttributionReportingAggregatableResultNotRegistered                       AttributionReportingAggregatableResult = "notRegistered"
+	AttributionReportingAggregatableResultProhibitedByBrowserPolicy           AttributionReportingAggregatableResult = "prohibitedByBrowserPolicy"
+	AttributionReportingAggregatableResultDeduplicated                        AttributionReportingAggregatableResult = "deduplicated"
+	AttributionReportingAggregatableResultReportWindowPassed                  AttributionReportingAggregatableResult = "reportWindowPassed"
+	AttributionReportingAggregatableResultExcessiveReports                    AttributionReportingAggregatableResult = "excessiveReports"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t AttributionReportingAggregatableResult) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t AttributionReportingAggregatableResult) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *AttributionReportingAggregatableResult) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	v := in.String()
+	switch AttributionReportingAggregatableResult(v) {
+	case AttributionReportingAggregatableResultSuccess:
+		*t = AttributionReportingAggregatableResultSuccess
+	case AttributionReportingAggregatableResultInternalError:
+		*t = AttributionReportingAggregatableResultInternalError
+	case AttributionReportingAggregatableResultNoCapacityForAttributionDestination:
+		*t = AttributionReportingAggregatableResultNoCapacityForAttributionDestination
+	case AttributionReportingAggregatableResultNoMatchingSources:
+		*t = AttributionReportingAggregatableResultNoMatchingSources
+	case AttributionReportingAggregatableResultExcessiveAttributions:
+		*t = AttributionReportingAggregatableResultExcessiveAttributions
+	case AttributionReportingAggregatableResultExcessiveReportingOrigins:
+		*t = AttributionReportingAggregatableResultExcessiveReportingOrigins
+	case AttributionReportingAggregatableResultNoHistograms:
+		*t = AttributionReportingAggregatableResultNoHistograms
+	case AttributionReportingAggregatableResultInsufficientBudget:
+		*t = AttributionReportingAggregatableResultInsufficientBudget
+	case AttributionReportingAggregatableResultNoMatchingSourceFilterData:
+		*t = AttributionReportingAggregatableResultNoMatchingSourceFilterData
+	case AttributionReportingAggregatableResultNotRegistered:
+		*t = AttributionReportingAggregatableResultNotRegistered
+	case AttributionReportingAggregatableResultProhibitedByBrowserPolicy:
+		*t = AttributionReportingAggregatableResultProhibitedByBrowserPolicy
+	case AttributionReportingAggregatableResultDeduplicated:
+		*t = AttributionReportingAggregatableResultDeduplicated
+	case AttributionReportingAggregatableResultReportWindowPassed:
+		*t = AttributionReportingAggregatableResultReportWindowPassed
+	case AttributionReportingAggregatableResultExcessiveReports:
+		*t = AttributionReportingAggregatableResultExcessiveReports
+
+	default:
+		in.AddError(fmt.Errorf("unknown AttributionReportingAggregatableResult value: %v", v))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *AttributionReportingAggregatableResult) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }

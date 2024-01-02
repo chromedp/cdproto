@@ -864,6 +864,55 @@ func (p *SetAttachDebugStackParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandSetAttachDebugStack, p, nil)
 }
 
+// StreamResourceContentParams enables streaming of the response for the
+// given requestId. If enabled, the dataReceived event contains the data that
+// was received during streaming.
+type StreamResourceContentParams struct {
+	RequestID RequestID `json:"requestId"` // Identifier of the request to stream.
+}
+
+// StreamResourceContent enables streaming of the response for the given
+// requestId. If enabled, the dataReceived event contains the data that was
+// received during streaming.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-streamResourceContent
+//
+// parameters:
+//
+//	requestID - Identifier of the request to stream.
+func StreamResourceContent(requestID RequestID) *StreamResourceContentParams {
+	return &StreamResourceContentParams{
+		RequestID: requestID,
+	}
+}
+
+// StreamResourceContentReturns return values.
+type StreamResourceContentReturns struct {
+	BufferedData string `json:"bufferedData,omitempty"` // Data that has been buffered until streaming is enabled.
+}
+
+// Do executes Network.streamResourceContent against the provided context.
+//
+// returns:
+//
+//	bufferedData - Data that has been buffered until streaming is enabled.
+func (p *StreamResourceContentParams) Do(ctx context.Context) (bufferedData []byte, err error) {
+	// execute
+	var res StreamResourceContentReturns
+	err = cdp.Execute(ctx, CommandStreamResourceContent, p, &res)
+	if err != nil {
+		return nil, err
+	}
+
+	// decode
+	var dec []byte
+	dec, err = base64.StdEncoding.DecodeString(res.BufferedData)
+	if err != nil {
+		return nil, err
+	}
+	return dec, nil
+}
+
 // GetSecurityIsolationStatusParams returns information about the COEP/COOP
 // isolation status.
 type GetSecurityIsolationStatusParams struct {
@@ -1010,6 +1059,7 @@ const (
 	CommandSetCookies                              = "Network.setCookies"
 	CommandSetExtraHTTPHeaders                     = "Network.setExtraHTTPHeaders"
 	CommandSetAttachDebugStack                     = "Network.setAttachDebugStack"
+	CommandStreamResourceContent                   = "Network.streamResourceContent"
 	CommandGetSecurityIsolationStatus              = "Network.getSecurityIsolationStatus"
 	CommandEnableReportingAPI                      = "Network.enableReportingApi"
 	CommandLoadNetworkResource                     = "Network.loadNetworkResource"

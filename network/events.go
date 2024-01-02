@@ -14,6 +14,7 @@ type EventDataReceived struct {
 	Timestamp         *cdp.MonotonicTime `json:"timestamp"`         // Timestamp.
 	DataLength        int64              `json:"dataLength"`        // Data chunk length.
 	EncodedDataLength int64              `json:"encodedDataLength"` // Actual bytes received (might be less than dataLength for compressed encodings).
+	Data              string             `json:"data,omitempty"`    // Data that was received.
 }
 
 // EventEventSourceMessageReceived fired when EventSource message is

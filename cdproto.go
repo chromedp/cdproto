@@ -475,6 +475,7 @@ const (
 	CommandNetworkSetCookies                               = network.CommandSetCookies
 	CommandNetworkSetExtraHTTPHeaders                      = network.CommandSetExtraHTTPHeaders
 	CommandNetworkSetAttachDebugStack                      = network.CommandSetAttachDebugStack
+	CommandNetworkStreamResourceContent                    = network.CommandStreamResourceContent
 	CommandNetworkGetSecurityIsolationStatus               = network.CommandGetSecurityIsolationStatus
 	CommandNetworkEnableReportingAPI                       = network.CommandEnableReportingAPI
 	CommandNetworkLoadNetworkResource                      = network.CommandLoadNetworkResource
@@ -725,6 +726,7 @@ const (
 	EventStorageStorageBucketCreatedOrUpdated              = "Storage.storageBucketCreatedOrUpdated"
 	EventStorageStorageBucketDeleted                       = "Storage.storageBucketDeleted"
 	EventStorageAttributionReportingSourceRegistered       = "Storage.attributionReportingSourceRegistered"
+	EventStorageAttributionReportingTriggerRegistered      = "Storage.attributionReportingTriggerRegistered"
 	CommandSystemInfoGetInfo                               = systeminfo.CommandGetInfo
 	CommandSystemInfoGetFeatureState                       = systeminfo.CommandGetFeatureState
 	CommandSystemInfoGetProcessInfo                        = systeminfo.CommandGetProcessInfo
@@ -2009,6 +2011,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandNetworkSetAttachDebugStack:
 		return emptyVal, nil
 
+	case CommandNetworkStreamResourceContent:
+		v = new(network.StreamResourceContentReturns)
+
 	case CommandNetworkGetSecurityIsolationStatus:
 		v = new(network.GetSecurityIsolationStatusReturns)
 
@@ -2758,6 +2763,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case EventStorageAttributionReportingSourceRegistered:
 		v = new(storage.EventAttributionReportingSourceRegistered)
+
+	case EventStorageAttributionReportingTriggerRegistered:
+		v = new(storage.EventAttributionReportingTriggerRegistered)
 
 	case CommandSystemInfoGetInfo:
 		v = new(systeminfo.GetInfoReturns)

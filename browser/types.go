@@ -98,6 +98,7 @@ const (
 	PermissionTypeAudioCapture             PermissionType = "audioCapture"
 	PermissionTypeBackgroundSync           PermissionType = "backgroundSync"
 	PermissionTypeBackgroundFetch          PermissionType = "backgroundFetch"
+	PermissionTypeCapturedSurfaceControl   PermissionType = "capturedSurfaceControl"
 	PermissionTypeClipboardReadWrite       PermissionType = "clipboardReadWrite"
 	PermissionTypeClipboardSanitizedWrite  PermissionType = "clipboardSanitizedWrite"
 	PermissionTypeDisplayCapture           PermissionType = "displayCapture"
@@ -145,6 +146,8 @@ func (t *PermissionType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PermissionTypeBackgroundSync
 	case PermissionTypeBackgroundFetch:
 		*t = PermissionTypeBackgroundFetch
+	case PermissionTypeCapturedSurfaceControl:
+		*t = PermissionTypeCapturedSurfaceControl
 	case PermissionTypeClipboardReadWrite:
 		*t = PermissionTypeClipboardReadWrite
 	case PermissionTypeClipboardSanitizedWrite:

@@ -2026,6 +2026,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoCss20(in *jlexer.Lexer, out *
 				}
 				in.Delim(']')
 			}
+		case "nodeForPropertySyntaxValidation":
+			(out.NodeForPropertySyntaxValidation).UnmarshalEasyJSON(in)
 		default:
 			in.SkipRecursive()
 		}
@@ -2059,6 +2061,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoCss20(out *jwriter.Writer, in
 			}
 			out.RawByte(']')
 		}
+	}
+	if in.NodeForPropertySyntaxValidation != 0 {
+		const prefix string = ",\"nodeForPropertySyntaxValidation\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.NodeForPropertySyntaxValidation))
 	}
 	out.RawByte('}')
 }
@@ -9310,6 +9317,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoCss91(in *jlexer.Lexer, out *
 				}
 				(*out.Location).UnmarshalEasyJSON(in)
 			}
+		case "nodeForPropertySyntaxValidation":
+			(out.NodeForPropertySyntaxValidation).UnmarshalEasyJSON(in)
 		default:
 			in.SkipRecursive()
 		}
@@ -9342,6 +9351,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoCss91(out *jwriter.Writer, in
 		} else {
 			(*in.Location).MarshalEasyJSON(out)
 		}
+	}
+	if in.NodeForPropertySyntaxValidation != 0 {
+		const prefix string = ",\"nodeForPropertySyntaxValidation\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.NodeForPropertySyntaxValidation))
 	}
 	out.RawByte('}')
 }

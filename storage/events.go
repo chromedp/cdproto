@@ -84,11 +84,19 @@ type EventStorageBucketDeleted struct {
 	BucketID string `json:"bucketId"`
 }
 
-// EventAttributionReportingSourceRegistered tODO(crbug.com/1458532): Add
-// other Attribution Reporting events, e.g. trigger registration.
+// EventAttributionReportingSourceRegistered [no description].
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#event-attributionReportingSourceRegistered
 type EventAttributionReportingSourceRegistered struct {
 	Registration *AttributionReportingSourceRegistration      `json:"registration"`
 	Result       AttributionReportingSourceRegistrationResult `json:"result"`
+}
+
+// EventAttributionReportingTriggerRegistered [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#event-attributionReportingTriggerRegistered
+type EventAttributionReportingTriggerRegistered struct {
+	Registration *AttributionReportingTriggerRegistration `json:"registration"`
+	EventLevel   AttributionReportingEventLevelResult     `json:"eventLevel"`
+	Aggregatable AttributionReportingAggregatableResult   `json:"aggregatable"`
 }

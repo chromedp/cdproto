@@ -24,9 +24,10 @@ import (
 // AddRuleParams inserts a new rule with the given ruleText in a stylesheet
 // with given styleSheetId, at the position specified by location.
 type AddRuleParams struct {
-	StyleSheetID StyleSheetID `json:"styleSheetId"` // The css style sheet identifier where a new rule should be inserted.
-	RuleText     string       `json:"ruleText"`     // The text of a new rule.
-	Location     *SourceRange `json:"location"`     // Text position of a new rule in the target style sheet.
+	StyleSheetID                    StyleSheetID `json:"styleSheetId"`                              // The css style sheet identifier where a new rule should be inserted.
+	RuleText                        string       `json:"ruleText"`                                  // The text of a new rule.
+	Location                        *SourceRange `json:"location"`                                  // Text position of a new rule in the target style sheet.
+	NodeForPropertySyntaxValidation cdp.NodeID   `json:"nodeForPropertySyntaxValidation,omitempty"` // NodeId for the DOM node in whose context custom property declarations for registered properties should be validated. If omitted, declarations in the new rule text can only be validated statically, which may produce incorrect results if the declaration contains a var() for example.
 }
 
 // AddRule inserts a new rule with the given ruleText in a stylesheet with
@@ -45,6 +46,16 @@ func AddRule(styleSheetID StyleSheetID, ruleText string, location *SourceRange) 
 		RuleText:     ruleText,
 		Location:     location,
 	}
+}
+
+// WithNodeForPropertySyntaxValidation nodeId for the DOM node in whose
+// context custom property declarations for registered properties should be
+// validated. If omitted, declarations in the new rule text can only be
+// validated statically, which may produce incorrect results if the declaration
+// contains a var() for example.
+func (p AddRuleParams) WithNodeForPropertySyntaxValidation(nodeForPropertySyntaxValidation cdp.NodeID) *AddRuleParams {
+	p.NodeForPropertySyntaxValidation = nodeForPropertySyntaxValidation
+	return &p
 }
 
 // AddRuleReturns return values.
@@ -1023,7 +1034,8 @@ func (p *SetStyleSheetTextParams) Do(ctx context.Context) (sourceMapURL string, 
 // SetStyleTextsParams applies specified style edits one after another in the
 // given order.
 type SetStyleTextsParams struct {
-	Edits []*StyleDeclarationEdit `json:"edits"`
+	Edits                           []*StyleDeclarationEdit `json:"edits"`
+	NodeForPropertySyntaxValidation cdp.NodeID              `json:"nodeForPropertySyntaxValidation,omitempty"` // NodeId for the DOM node in whose context custom property declarations for registered properties should be validated. If omitted, declarations in the new rule text can only be validated statically, which may produce incorrect results if the declaration contains a var() for example.
 }
 
 // SetStyleTexts applies specified style edits one after another in the given
@@ -1038,6 +1050,16 @@ func SetStyleTexts(edits []*StyleDeclarationEdit) *SetStyleTextsParams {
 	return &SetStyleTextsParams{
 		Edits: edits,
 	}
+}
+
+// WithNodeForPropertySyntaxValidation nodeId for the DOM node in whose
+// context custom property declarations for registered properties should be
+// validated. If omitted, declarations in the new rule text can only be
+// validated statically, which may produce incorrect results if the declaration
+// contains a var() for example.
+func (p SetStyleTextsParams) WithNodeForPropertySyntaxValidation(nodeForPropertySyntaxValidation cdp.NodeID) *SetStyleTextsParams {
+	p.NodeForPropertySyntaxValidation = nodeForPropertySyntaxValidation
+	return &p
 }
 
 // SetStyleTextsReturns return values.
