@@ -1076,6 +1076,7 @@ const (
 	BackForwardCacheNotRestoredReasonWebSocketSticky                                          BackForwardCacheNotRestoredReason = "WebSocketSticky"
 	BackForwardCacheNotRestoredReasonSmartCard                                                BackForwardCacheNotRestoredReason = "SmartCard"
 	BackForwardCacheNotRestoredReasonLiveMediaStreamTrack                                     BackForwardCacheNotRestoredReason = "LiveMediaStreamTrack"
+	BackForwardCacheNotRestoredReasonUnloadHandler                                            BackForwardCacheNotRestoredReason = "UnloadHandler"
 	BackForwardCacheNotRestoredReasonContentSecurityHandler                                   BackForwardCacheNotRestoredReason = "ContentSecurityHandler"
 	BackForwardCacheNotRestoredReasonContentWebAuthenticationAPI                              BackForwardCacheNotRestoredReason = "ContentWebAuthenticationAPI"
 	BackForwardCacheNotRestoredReasonContentFileChooser                                       BackForwardCacheNotRestoredReason = "ContentFileChooser"
@@ -1327,6 +1328,8 @@ func (t *BackForwardCacheNotRestoredReason) UnmarshalEasyJSON(in *jlexer.Lexer) 
 		*t = BackForwardCacheNotRestoredReasonSmartCard
 	case BackForwardCacheNotRestoredReasonLiveMediaStreamTrack:
 		*t = BackForwardCacheNotRestoredReasonLiveMediaStreamTrack
+	case BackForwardCacheNotRestoredReasonUnloadHandler:
+		*t = BackForwardCacheNotRestoredReasonUnloadHandler
 	case BackForwardCacheNotRestoredReasonContentSecurityHandler:
 		*t = BackForwardCacheNotRestoredReasonContentSecurityHandler
 	case BackForwardCacheNotRestoredReasonContentWebAuthenticationAPI:

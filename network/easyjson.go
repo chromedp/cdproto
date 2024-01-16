@@ -2958,6 +2958,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork26(in *jlexer.Lexer, o
 			}
 		case "mimeType":
 			out.MimeType = string(in.String())
+		case "charset":
+			out.Charset = string(in.String())
 		case "requestHeaders":
 			if in.IsNull() {
 				in.Skip()
@@ -3110,6 +3112,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoNetwork26(out *jwriter.Writer
 		const prefix string = ",\"mimeType\":"
 		out.RawString(prefix)
 		out.String(string(in.MimeType))
+	}
+	{
+		const prefix string = ",\"charset\":"
+		out.RawString(prefix)
+		out.String(string(in.Charset))
 	}
 	if len(in.RequestHeaders) != 0 {
 		const prefix string = ",\"requestHeaders\":"
