@@ -119,6 +119,17 @@ type TrustTokens struct {
 	Count        float64 `json:"count"`
 }
 
+// InterestGroupAuctionID protected audience interest group auction
+// identifier.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-InterestGroupAuctionId
+type InterestGroupAuctionID string
+
+// String returns the InterestGroupAuctionID as string value.
+func (t InterestGroupAuctionID) String() string {
+	return string(t)
+}
+
 // InterestGroupAccessType enum of interest group access types.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-InterestGroupAccessType
@@ -131,15 +142,17 @@ func (t InterestGroupAccessType) String() string {
 
 // InterestGroupAccessType values.
 const (
-	InterestGroupAccessTypeJoin             InterestGroupAccessType = "join"
-	InterestGroupAccessTypeLeave            InterestGroupAccessType = "leave"
-	InterestGroupAccessTypeUpdate           InterestGroupAccessType = "update"
-	InterestGroupAccessTypeLoaded           InterestGroupAccessType = "loaded"
-	InterestGroupAccessTypeBid              InterestGroupAccessType = "bid"
-	InterestGroupAccessTypeWin              InterestGroupAccessType = "win"
-	InterestGroupAccessTypeAdditionalBid    InterestGroupAccessType = "additionalBid"
-	InterestGroupAccessTypeAdditionalBidWin InterestGroupAccessType = "additionalBidWin"
-	InterestGroupAccessTypeClear            InterestGroupAccessType = "clear"
+	InterestGroupAccessTypeJoin                  InterestGroupAccessType = "join"
+	InterestGroupAccessTypeLeave                 InterestGroupAccessType = "leave"
+	InterestGroupAccessTypeUpdate                InterestGroupAccessType = "update"
+	InterestGroupAccessTypeLoaded                InterestGroupAccessType = "loaded"
+	InterestGroupAccessTypeBid                   InterestGroupAccessType = "bid"
+	InterestGroupAccessTypeWin                   InterestGroupAccessType = "win"
+	InterestGroupAccessTypeAdditionalBid         InterestGroupAccessType = "additionalBid"
+	InterestGroupAccessTypeAdditionalBidWin      InterestGroupAccessType = "additionalBidWin"
+	InterestGroupAccessTypeTopLevelBid           InterestGroupAccessType = "topLevelBid"
+	InterestGroupAccessTypeTopLevelAdditionalBid InterestGroupAccessType = "topLevelAdditionalBid"
+	InterestGroupAccessTypeClear                 InterestGroupAccessType = "clear"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -172,6 +185,10 @@ func (t *InterestGroupAccessType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = InterestGroupAccessTypeAdditionalBid
 	case InterestGroupAccessTypeAdditionalBidWin:
 		*t = InterestGroupAccessTypeAdditionalBidWin
+	case InterestGroupAccessTypeTopLevelBid:
+		*t = InterestGroupAccessTypeTopLevelBid
+	case InterestGroupAccessTypeTopLevelAdditionalBid:
+		*t = InterestGroupAccessTypeTopLevelAdditionalBid
 	case InterestGroupAccessTypeClear:
 		*t = InterestGroupAccessTypeClear
 
@@ -182,6 +199,105 @@ func (t *InterestGroupAccessType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 
 // UnmarshalJSON satisfies json.Unmarshaler.
 func (t *InterestGroupAccessType) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
+// InterestGroupAuctionEventType enum of auction events.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-InterestGroupAuctionEventType
+type InterestGroupAuctionEventType string
+
+// String returns the InterestGroupAuctionEventType as string value.
+func (t InterestGroupAuctionEventType) String() string {
+	return string(t)
+}
+
+// InterestGroupAuctionEventType values.
+const (
+	InterestGroupAuctionEventTypeStarted        InterestGroupAuctionEventType = "started"
+	InterestGroupAuctionEventTypeConfigResolved InterestGroupAuctionEventType = "configResolved"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t InterestGroupAuctionEventType) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t InterestGroupAuctionEventType) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *InterestGroupAuctionEventType) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	v := in.String()
+	switch InterestGroupAuctionEventType(v) {
+	case InterestGroupAuctionEventTypeStarted:
+		*t = InterestGroupAuctionEventTypeStarted
+	case InterestGroupAuctionEventTypeConfigResolved:
+		*t = InterestGroupAuctionEventTypeConfigResolved
+
+	default:
+		in.AddError(fmt.Errorf("unknown InterestGroupAuctionEventType value: %v", v))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *InterestGroupAuctionEventType) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
+// InterestGroupAuctionFetchType enum of network fetches auctions can do.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-InterestGroupAuctionFetchType
+type InterestGroupAuctionFetchType string
+
+// String returns the InterestGroupAuctionFetchType as string value.
+func (t InterestGroupAuctionFetchType) String() string {
+	return string(t)
+}
+
+// InterestGroupAuctionFetchType values.
+const (
+	InterestGroupAuctionFetchTypeBidderJs             InterestGroupAuctionFetchType = "bidderJs"
+	InterestGroupAuctionFetchTypeBidderWasm           InterestGroupAuctionFetchType = "bidderWasm"
+	InterestGroupAuctionFetchTypeSellerJs             InterestGroupAuctionFetchType = "sellerJs"
+	InterestGroupAuctionFetchTypeBidderTrustedSignals InterestGroupAuctionFetchType = "bidderTrustedSignals"
+	InterestGroupAuctionFetchTypeSellerTrustedSignals InterestGroupAuctionFetchType = "sellerTrustedSignals"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t InterestGroupAuctionFetchType) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t InterestGroupAuctionFetchType) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *InterestGroupAuctionFetchType) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	v := in.String()
+	switch InterestGroupAuctionFetchType(v) {
+	case InterestGroupAuctionFetchTypeBidderJs:
+		*t = InterestGroupAuctionFetchTypeBidderJs
+	case InterestGroupAuctionFetchTypeBidderWasm:
+		*t = InterestGroupAuctionFetchTypeBidderWasm
+	case InterestGroupAuctionFetchTypeSellerJs:
+		*t = InterestGroupAuctionFetchTypeSellerJs
+	case InterestGroupAuctionFetchTypeBidderTrustedSignals:
+		*t = InterestGroupAuctionFetchTypeBidderTrustedSignals
+	case InterestGroupAuctionFetchTypeSellerTrustedSignals:
+		*t = InterestGroupAuctionFetchTypeSellerTrustedSignals
+
+	default:
+		in.AddError(fmt.Errorf("unknown InterestGroupAuctionFetchType value: %v", v))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *InterestGroupAuctionFetchType) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 

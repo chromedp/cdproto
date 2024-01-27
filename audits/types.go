@@ -313,6 +313,7 @@ const (
 	MixedContentResourceTypeFrame            MixedContentResourceType = "Frame"
 	MixedContentResourceTypeImage            MixedContentResourceType = "Image"
 	MixedContentResourceTypeImport           MixedContentResourceType = "Import"
+	MixedContentResourceTypeJSON             MixedContentResourceType = "JSON"
 	MixedContentResourceTypeManifest         MixedContentResourceType = "Manifest"
 	MixedContentResourceTypePing             MixedContentResourceType = "Ping"
 	MixedContentResourceTypePluginData       MixedContentResourceType = "PluginData"
@@ -369,6 +370,8 @@ func (t *MixedContentResourceType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = MixedContentResourceTypeImage
 	case MixedContentResourceTypeImport:
 		*t = MixedContentResourceTypeImport
+	case MixedContentResourceTypeJSON:
+		*t = MixedContentResourceTypeJSON
 	case MixedContentResourceTypeManifest:
 		*t = MixedContentResourceTypeManifest
 	case MixedContentResourceTypePing:

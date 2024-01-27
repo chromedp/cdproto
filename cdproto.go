@@ -354,6 +354,7 @@ const (
 	CommandFedCmDisable                                    = fedcm.CommandDisable
 	CommandFedCmSelectAccount                              = fedcm.CommandSelectAccount
 	CommandFedCmClickDialogButton                          = fedcm.CommandClickDialogButton
+	CommandFedCmOpenURL                                    = fedcm.CommandOpenURL
 	CommandFedCmDismissDialog                              = fedcm.CommandDismissDialog
 	CommandFedCmResetCooldown                              = fedcm.CommandResetCooldown
 	EventFedCmDialogShown                                  = "FedCm.dialogShown"
@@ -705,6 +706,7 @@ const (
 	CommandStorageClearTrustTokens                         = storage.CommandClearTrustTokens
 	CommandStorageGetInterestGroupDetails                  = storage.CommandGetInterestGroupDetails
 	CommandStorageSetInterestGroupTracking                 = storage.CommandSetInterestGroupTracking
+	CommandStorageSetInterestGroupAuctionTracking          = storage.CommandSetInterestGroupAuctionTracking
 	CommandStorageGetSharedStorageMetadata                 = storage.CommandGetSharedStorageMetadata
 	CommandStorageGetSharedStorageEntries                  = storage.CommandGetSharedStorageEntries
 	CommandStorageSetSharedStorageEntry                    = storage.CommandSetSharedStorageEntry
@@ -722,6 +724,8 @@ const (
 	EventStorageIndexedDBContentUpdated                    = "Storage.indexedDBContentUpdated"
 	EventStorageIndexedDBListUpdated                       = "Storage.indexedDBListUpdated"
 	EventStorageInterestGroupAccessed                      = "Storage.interestGroupAccessed"
+	EventStorageInterestGroupAuctionEventOccurred          = "Storage.interestGroupAuctionEventOccurred"
+	EventStorageInterestGroupAuctionNetworkRequestCreated  = "Storage.interestGroupAuctionNetworkRequestCreated"
 	EventStorageSharedStorageAccessed                      = "Storage.sharedStorageAccessed"
 	EventStorageStorageBucketCreatedOrUpdated              = "Storage.storageBucketCreatedOrUpdated"
 	EventStorageStorageBucketDeleted                       = "Storage.storageBucketDeleted"
@@ -1646,6 +1650,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		return emptyVal, nil
 
 	case CommandFedCmClickDialogButton:
+		return emptyVal, nil
+
+	case CommandFedCmOpenURL:
 		return emptyVal, nil
 
 	case CommandFedCmDismissDialog:
@@ -2701,6 +2708,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandStorageSetInterestGroupTracking:
 		return emptyVal, nil
 
+	case CommandStorageSetInterestGroupAuctionTracking:
+		return emptyVal, nil
+
 	case CommandStorageGetSharedStorageMetadata:
 		v = new(storage.GetSharedStorageMetadataReturns)
 
@@ -2751,6 +2761,12 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case EventStorageInterestGroupAccessed:
 		v = new(storage.EventInterestGroupAccessed)
+
+	case EventStorageInterestGroupAuctionEventOccurred:
+		v = new(storage.EventInterestGroupAuctionEventOccurred)
+
+	case EventStorageInterestGroupAuctionNetworkRequestCreated:
+		v = new(storage.EventInterestGroupAuctionNetworkRequestCreated)
 
 	case EventStorageSharedStorageAccessed:
 		v = new(storage.EventSharedStorageAccessed)

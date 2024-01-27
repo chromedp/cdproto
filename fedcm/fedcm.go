@@ -108,6 +108,35 @@ func (p *ClickDialogButtonParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandClickDialogButton, p, nil)
 }
 
+// OpenURLParams [no description].
+type OpenURLParams struct {
+	DialogID       string         `json:"dialogId"`
+	AccountIndex   int64          `json:"accountIndex"`
+	AccountURLType AccountURLType `json:"accountUrlType"`
+}
+
+// OpenURL [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/FedCm#method-openUrl
+//
+// parameters:
+//
+//	dialogID
+//	accountIndex
+//	accountURLType
+func OpenURL(dialogID string, accountIndex int64, accountURLType AccountURLType) *OpenURLParams {
+	return &OpenURLParams{
+		DialogID:       dialogID,
+		AccountIndex:   accountIndex,
+		AccountURLType: accountURLType,
+	}
+}
+
+// Do executes FedCm.openUrl against the provided context.
+func (p *OpenURLParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandOpenURL, p, nil)
+}
+
 // DismissDialogParams [no description].
 type DismissDialogParams struct {
 	DialogID        string `json:"dialogId"`
@@ -161,6 +190,7 @@ const (
 	CommandDisable           = "FedCm.disable"
 	CommandSelectAccount     = "FedCm.selectAccount"
 	CommandClickDialogButton = "FedCm.clickDialogButton"
+	CommandOpenURL           = "FedCm.openUrl"
 	CommandDismissDialog     = "FedCm.dismissDialog"
 	CommandResetCooldown     = "FedCm.resetCooldown"
 )

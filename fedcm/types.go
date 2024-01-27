@@ -155,6 +155,51 @@ func (t *DialogButton) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 
+// AccountURLType the URLs that each account has.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/FedCm#type-AccountUrlType
+type AccountURLType string
+
+// String returns the AccountURLType as string value.
+func (t AccountURLType) String() string {
+	return string(t)
+}
+
+// AccountURLType values.
+const (
+	AccountURLTypeTermsOfService AccountURLType = "TermsOfService"
+	AccountURLTypePrivacyPolicy  AccountURLType = "PrivacyPolicy"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t AccountURLType) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t AccountURLType) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *AccountURLType) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	v := in.String()
+	switch AccountURLType(v) {
+	case AccountURLTypeTermsOfService:
+		*t = AccountURLTypeTermsOfService
+	case AccountURLTypePrivacyPolicy:
+		*t = AccountURLTypePrivacyPolicy
+
+	default:
+		in.AddError(fmt.Errorf("unknown AccountURLType value: %v", v))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *AccountURLType) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
 // Account corresponds to IdentityRequestAccount.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/FedCm#type-Account
