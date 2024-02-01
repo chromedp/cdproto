@@ -92,16 +92,17 @@ func (p *ClearBrowserCookiesParams) Do(ctx context.Context) (err error) {
 }
 
 // DeleteCookiesParams deletes browser cookies with matching name and url or
-// domain/path pair.
+// domain/path/partitionKey pair.
 type DeleteCookiesParams struct {
-	Name   string `json:"name"`             // Name of the cookies to remove.
-	URL    string `json:"url,omitempty"`    // If specified, deletes all the cookies with the given name where domain and path match provided URL.
-	Domain string `json:"domain,omitempty"` // If specified, deletes only cookies with the exact domain.
-	Path   string `json:"path,omitempty"`   // If specified, deletes only cookies with the exact path.
+	Name         string `json:"name"`                   // Name of the cookies to remove.
+	URL          string `json:"url,omitempty"`          // If specified, deletes all the cookies with the given name where domain and path match provided URL.
+	Domain       string `json:"domain,omitempty"`       // If specified, deletes only cookies with the exact domain.
+	Path         string `json:"path,omitempty"`         // If specified, deletes only cookies with the exact path.
+	PartitionKey string `json:"partitionKey,omitempty"` // If specified, deletes only cookies with the the given name and partitionKey where domain matches provided URL.
 }
 
 // DeleteCookies deletes browser cookies with matching name and url or
-// domain/path pair.
+// domain/path/partitionKey pair.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-deleteCookies
 //
@@ -130,6 +131,13 @@ func (p DeleteCookiesParams) WithDomain(domain string) *DeleteCookiesParams {
 // WithPath if specified, deletes only cookies with the exact path.
 func (p DeleteCookiesParams) WithPath(path string) *DeleteCookiesParams {
 	p.Path = path
+	return &p
+}
+
+// WithPartitionKey if specified, deletes only cookies with the the given
+// name and partitionKey where domain matches provided URL.
+func (p DeleteCookiesParams) WithPartitionKey(partitionKey string) *DeleteCookiesParams {
+	p.PartitionKey = partitionKey
 	return &p
 }
 

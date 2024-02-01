@@ -1320,6 +1320,73 @@ func (t *CookieBlockedReason) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 
+// CookieExemptionReason types of reasons why a cookie should have been
+// blocked by 3PCD but is exempted for the request.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-CookieExemptionReason
+type CookieExemptionReason string
+
+// String returns the CookieExemptionReason as string value.
+func (t CookieExemptionReason) String() string {
+	return string(t)
+}
+
+// CookieExemptionReason values.
+const (
+	CookieExemptionReasonNone                  CookieExemptionReason = "None"
+	CookieExemptionReasonUserSetting           CookieExemptionReason = "UserSetting"
+	CookieExemptionReasonTPCDMetadata          CookieExemptionReason = "TPCDMetadata"
+	CookieExemptionReasonTPCDDeprecationTrial  CookieExemptionReason = "TPCDDeprecationTrial"
+	CookieExemptionReasonTPCDHeuristics        CookieExemptionReason = "TPCDHeuristics"
+	CookieExemptionReasonEnterprisePolicy      CookieExemptionReason = "EnterprisePolicy"
+	CookieExemptionReasonStorageAccess         CookieExemptionReason = "StorageAccess"
+	CookieExemptionReasonTopLevelStorageAccess CookieExemptionReason = "TopLevelStorageAccess"
+	CookieExemptionReasonBrowserHeuristics     CookieExemptionReason = "BrowserHeuristics"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t CookieExemptionReason) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t CookieExemptionReason) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *CookieExemptionReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	v := in.String()
+	switch CookieExemptionReason(v) {
+	case CookieExemptionReasonNone:
+		*t = CookieExemptionReasonNone
+	case CookieExemptionReasonUserSetting:
+		*t = CookieExemptionReasonUserSetting
+	case CookieExemptionReasonTPCDMetadata:
+		*t = CookieExemptionReasonTPCDMetadata
+	case CookieExemptionReasonTPCDDeprecationTrial:
+		*t = CookieExemptionReasonTPCDDeprecationTrial
+	case CookieExemptionReasonTPCDHeuristics:
+		*t = CookieExemptionReasonTPCDHeuristics
+	case CookieExemptionReasonEnterprisePolicy:
+		*t = CookieExemptionReasonEnterprisePolicy
+	case CookieExemptionReasonStorageAccess:
+		*t = CookieExemptionReasonStorageAccess
+	case CookieExemptionReasonTopLevelStorageAccess:
+		*t = CookieExemptionReasonTopLevelStorageAccess
+	case CookieExemptionReasonBrowserHeuristics:
+		*t = CookieExemptionReasonBrowserHeuristics
+
+	default:
+		in.AddError(fmt.Errorf("unknown CookieExemptionReason value: %v", v))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *CookieExemptionReason) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
 // BlockedSetCookieWithReason a cookie which was not stored from a response
 // with the corresponding reason.
 //
@@ -1330,13 +1397,25 @@ type BlockedSetCookieWithReason struct {
 	Cookie         *Cookie                  `json:"cookie,omitempty"` // The cookie object which represents the cookie which was not stored. It is optional because sometimes complete cookie information is not available, such as in the case of parsing errors.
 }
 
-// BlockedCookieWithReason a cookie with was not sent with a request with the
-// corresponding reason.
+// ExemptedSetCookieWithReason a cookie should have been blocked by 3PCD but
+// is exempted and stored from a response with the corresponding reason. A
+// cookie could only have at most one exemption reason.
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-BlockedCookieWithReason
-type BlockedCookieWithReason struct {
-	BlockedReasons []CookieBlockedReason `json:"blockedReasons"` // The reason(s) the cookie was blocked.
-	Cookie         *Cookie               `json:"cookie"`         // The cookie object representing the cookie which was not sent.
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-ExemptedSetCookieWithReason
+type ExemptedSetCookieWithReason struct {
+	ExemptionReason CookieExemptionReason `json:"exemptionReason"` // The reason the cookie was exempted.
+	Cookie          *Cookie               `json:"cookie"`          // The cookie object representing the cookie.
+}
+
+// AssociatedCookie a cookie associated with the request which may or may not
+// be sent with it. Includes the cookies itself and reasons for blocking or
+// exemption.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-AssociatedCookie
+type AssociatedCookie struct {
+	Cookie          *Cookie               `json:"cookie"`                    // The cookie object representing the cookie which was not sent.
+	BlockedReasons  []CookieBlockedReason `json:"blockedReasons"`            // The reason(s) the cookie was blocked. If empty means the cookie is included.
+	ExemptionReason CookieExemptionReason `json:"exemptionReason,omitempty"` // The reason the cookie should have been blocked by 3PCD but is exempted. A cookie could only have at most one exemption reason.
 }
 
 // CookieParam cookie parameter object.
