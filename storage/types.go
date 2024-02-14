@@ -427,9 +427,10 @@ type SharedStorageEntry struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-SharedStorageMetadata
 type SharedStorageMetadata struct {
-	CreationTime    *cdp.TimeSinceEpoch `json:"creationTime"`
-	Length          int64               `json:"length"`
-	RemainingBudget float64             `json:"remainingBudget"`
+	CreationTime    *cdp.TimeSinceEpoch `json:"creationTime"`    // Time when the origin's shared storage was last created.
+	Length          int64               `json:"length"`          // Number of key-value pairs stored in origin's shared storage.
+	RemainingBudget float64             `json:"remainingBudget"` // Current amount of bits of entropy remaining in the navigation budget.
+	BytesUsed       int64               `json:"bytesUsed"`       // Total number of bytes stored as key-value pairs in origin's shared storage.
 }
 
 // SharedStorageReportingMetadata pair of reporting metadata details for a

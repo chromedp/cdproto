@@ -916,6 +916,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoStorage12(in *jlexer.Lexer, o
 			out.Length = int64(in.Int64())
 		case "remainingBudget":
 			out.RemainingBudget = float64(in.Float64())
+		case "bytesUsed":
+			out.BytesUsed = int64(in.Int64())
 		default:
 			in.SkipRecursive()
 		}
@@ -948,6 +950,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage12(out *jwriter.Writer
 		const prefix string = ",\"remainingBudget\":"
 		out.RawString(prefix)
 		out.Float64(float64(in.RemainingBudget))
+	}
+	{
+		const prefix string = ",\"bytesUsed\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.BytesUsed))
 	}
 	out.RawByte('}')
 }

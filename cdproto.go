@@ -796,6 +796,7 @@ const (
 	CommandWebAuthnClearCredentials                        = webauthn.CommandClearCredentials
 	CommandWebAuthnSetUserVerified                         = webauthn.CommandSetUserVerified
 	CommandWebAuthnSetAutomaticPresenceSimulation          = webauthn.CommandSetAutomaticPresenceSimulation
+	CommandWebAuthnSetCredentialProperties                 = webauthn.CommandSetCredentialProperties
 	EventWebAuthnCredentialAdded                           = "WebAuthn.credentialAdded"
 	EventWebAuthnCredentialAsserted                        = "WebAuthn.credentialAsserted"
 )
@@ -2976,6 +2977,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		return emptyVal, nil
 
 	case CommandWebAuthnSetAutomaticPresenceSimulation:
+		return emptyVal, nil
+
+	case CommandWebAuthnSetCredentialProperties:
 		return emptyVal, nil
 
 	case EventWebAuthnCredentialAdded:
