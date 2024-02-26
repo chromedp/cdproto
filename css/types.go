@@ -143,7 +143,7 @@ type SelectorList struct {
 type StyleSheetHeader struct {
 	StyleSheetID  StyleSheetID      `json:"styleSheetId"`            // The stylesheet identifier.
 	FrameID       cdp.FrameID       `json:"frameId"`                 // Owner frame identifier.
-	SourceURL     string            `json:"sourceURL"`               // Stylesheet resource URL. Empty if this is a constructed stylesheet created using new CSSStyleSheet() (but non-empty if this is a constructed sylesheet imported as a CSS module script).
+	SourceURL     string            `json:"sourceURL"`               // Stylesheet resource URL. Empty if this is a constructed stylesheet created using new CSSStyleSheet() (but non-empty if this is a constructed stylesheet imported as a CSS module script).
 	SourceMapURL  string            `json:"sourceMapURL,omitempty"`  // URL of source map associated with the stylesheet (if any).
 	Origin        StyleSheetOrigin  `json:"origin"`                  // Stylesheet origin.
 	Title         string            `json:"title"`                   // Stylesheet title.

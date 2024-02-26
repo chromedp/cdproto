@@ -2255,6 +2255,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork21(in *jlexer.Lexer, o
 		switch key {
 		case "ruleIdMatched":
 			out.RuleIDMatched = int64(in.Int64())
+		case "matchedSourceType":
+			(out.MatchedSourceType).UnmarshalEasyJSON(in)
 		default:
 			in.SkipRecursive()
 		}
@@ -2273,6 +2275,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoNetwork21(out *jwriter.Writer
 		const prefix string = ",\"ruleIdMatched\":"
 		out.RawString(prefix[1:])
 		out.Int64(int64(in.RuleIDMatched))
+	}
+	{
+		const prefix string = ",\"matchedSourceType\":"
+		out.RawString(prefix)
+		(in.MatchedSourceType).MarshalEasyJSON(out)
 	}
 	out.RawByte('}')
 }

@@ -838,12 +838,20 @@ func (t *AttributionReportingSourceRegistrationTimeConfig) UnmarshalJSON(buf []b
 	return easyjson.Unmarshal(buf, t)
 }
 
+// AttributionReportingAggregatableValueDictEntry [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-AttributionReportingAggregatableValueDictEntry
+type AttributionReportingAggregatableValueDictEntry struct {
+	Key   string  `json:"key"`
+	Value float64 `json:"value"` // number instead of integer because not all uint32 can be represented by int
+}
+
 // AttributionReportingAggregatableValueEntry [no description].
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-AttributionReportingAggregatableValueEntry
 type AttributionReportingAggregatableValueEntry struct {
-	Key   string  `json:"key"`
-	Value float64 `json:"value"` // number instead of integer because not all uint32 can be represented by int
+	Values  []*AttributionReportingAggregatableValueDictEntry `json:"values"`
+	Filters *AttributionReportingFilterPair                   `json:"filters"`
 }
 
 // AttributionReportingEventTriggerData [no description].

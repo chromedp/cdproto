@@ -108,6 +108,7 @@ const (
 	PermissionsPolicyFeatureSharedStorage                PermissionsPolicyFeature = "shared-storage"
 	PermissionsPolicyFeatureSharedStorageSelectURL       PermissionsPolicyFeature = "shared-storage-select-url"
 	PermissionsPolicyFeatureSmartCard                    PermissionsPolicyFeature = "smart-card"
+	PermissionsPolicyFeatureSpeakerSelection             PermissionsPolicyFeature = "speaker-selection"
 	PermissionsPolicyFeatureStorageAccess                PermissionsPolicyFeature = "storage-access"
 	PermissionsPolicyFeatureSubApps                      PermissionsPolicyFeature = "sub-apps"
 	PermissionsPolicyFeatureSyncXhr                      PermissionsPolicyFeature = "sync-xhr"
@@ -280,6 +281,8 @@ func (t *PermissionsPolicyFeature) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PermissionsPolicyFeatureSharedStorageSelectURL
 	case PermissionsPolicyFeatureSmartCard:
 		*t = PermissionsPolicyFeatureSmartCard
+	case PermissionsPolicyFeatureSpeakerSelection:
+		*t = PermissionsPolicyFeatureSpeakerSelection
 	case PermissionsPolicyFeatureStorageAccess:
 		*t = PermissionsPolicyFeatureStorageAccess
 	case PermissionsPolicyFeatureSubApps:
@@ -583,7 +586,7 @@ func (t *DialogType) UnmarshalJSON(buf []byte) error {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-AppManifestError
 type AppManifestError struct {
 	Message  string `json:"message"`  // Error message.
-	Critical int64  `json:"critical"` // If criticial, this is a non-recoverable parse error.
+	Critical int64  `json:"critical"` // If critical, this is a non-recoverable parse error.
 	Line     int64  `json:"line"`     // Error line.
 	Column   int64  `json:"column"`   // Error column.
 }
@@ -861,7 +864,7 @@ type CompilationCacheParams struct {
 	Eager bool   `json:"eager,omitempty"` // A hint to the backend whether eager compilation is recommended. (the actual compilation mode used is upon backend discretion).
 }
 
-// AutoResponseMode enum of possible auto-response for permissions / prompt
+// AutoResponseMode enum of possible auto-response for permission / prompt
 // dialogs.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-AutoResponseMode
@@ -1036,7 +1039,6 @@ const (
 	BackForwardCacheNotRestoredReasonSubresourceHasCacheControlNoCache                        BackForwardCacheNotRestoredReason = "SubresourceHasCacheControlNoCache"
 	BackForwardCacheNotRestoredReasonContainsPlugins                                          BackForwardCacheNotRestoredReason = "ContainsPlugins"
 	BackForwardCacheNotRestoredReasonDocumentLoaded                                           BackForwardCacheNotRestoredReason = "DocumentLoaded"
-	BackForwardCacheNotRestoredReasonDedicatedWorkerOrWorklet                                 BackForwardCacheNotRestoredReason = "DedicatedWorkerOrWorklet"
 	BackForwardCacheNotRestoredReasonOutstandingNetworkRequestOthers                          BackForwardCacheNotRestoredReason = "OutstandingNetworkRequestOthers"
 	BackForwardCacheNotRestoredReasonRequestedMIDIPermission                                  BackForwardCacheNotRestoredReason = "RequestedMIDIPermission"
 	BackForwardCacheNotRestoredReasonRequestedAudioCapturePermission                          BackForwardCacheNotRestoredReason = "RequestedAudioCapturePermission"
@@ -1248,8 +1250,6 @@ func (t *BackForwardCacheNotRestoredReason) UnmarshalEasyJSON(in *jlexer.Lexer) 
 		*t = BackForwardCacheNotRestoredReasonContainsPlugins
 	case BackForwardCacheNotRestoredReasonDocumentLoaded:
 		*t = BackForwardCacheNotRestoredReasonDocumentLoaded
-	case BackForwardCacheNotRestoredReasonDedicatedWorkerOrWorklet:
-		*t = BackForwardCacheNotRestoredReasonDedicatedWorkerOrWorklet
 	case BackForwardCacheNotRestoredReasonOutstandingNetworkRequestOthers:
 		*t = BackForwardCacheNotRestoredReasonOutstandingNetworkRequestOthers
 	case BackForwardCacheNotRestoredReasonRequestedMIDIPermission:

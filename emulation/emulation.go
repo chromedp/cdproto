@@ -15,37 +15,6 @@ import (
 	"github.com/chromedp/cdproto/page"
 )
 
-// CanEmulateParams tells whether emulation is supported.
-type CanEmulateParams struct{}
-
-// CanEmulate tells whether emulation is supported.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#method-canEmulate
-func CanEmulate() *CanEmulateParams {
-	return &CanEmulateParams{}
-}
-
-// CanEmulateReturns return values.
-type CanEmulateReturns struct {
-	Result bool `json:"result,omitempty"` // True if emulation is supported.
-}
-
-// Do executes Emulation.canEmulate against the provided context.
-//
-// returns:
-//
-//	result - True if emulation is supported.
-func (p *CanEmulateParams) Do(ctx context.Context) (result bool, err error) {
-	// execute
-	var res CanEmulateReturns
-	err = cdp.Execute(ctx, CommandCanEmulate, nil, &res)
-	if err != nil {
-		return false, err
-	}
-
-	return res.Result, nil
-}
-
 // ClearDeviceMetricsOverrideParams clears the overridden device metrics.
 type ClearDeviceMetricsOverrideParams struct{}
 
@@ -819,7 +788,7 @@ func (p *SetLocaleOverrideParams) Do(ctx context.Context) (err error) {
 // SetTimezoneOverrideParams overrides default host system timezone with the
 // specified one.
 type SetTimezoneOverrideParams struct {
-	TimezoneID string `json:"timezoneId"` // The timezone identifier. If empty, disables the override and restores default host system timezone.
+	TimezoneID string `json:"timezoneId"` // The timezone identifier. List of supported timezones: https://source.chromium.org/chromium/chromium/deps/icu.git/+/faee8bc70570192d82d2978a71e2a615788597d1:source/data/misc/metaZones.txt If empty, disables the override and restores default host system timezone.
 }
 
 // SetTimezoneOverride overrides default host system timezone with the
@@ -829,7 +798,7 @@ type SetTimezoneOverrideParams struct {
 //
 // parameters:
 //
-//	timezoneID - The timezone identifier. If empty, disables the override and restores default host system timezone.
+//	timezoneID - The timezone identifier. List of supported timezones: https://source.chromium.org/chromium/chromium/deps/icu.git/+/faee8bc70570192d82d2978a71e2a615788597d1:source/data/misc/metaZones.txt If empty, disables the override and restores default host system timezone.
 func SetTimezoneOverride(timezoneID string) *SetTimezoneOverrideParams {
 	return &SetTimezoneOverrideParams{
 		TimezoneID: timezoneID,
@@ -888,7 +857,7 @@ func (p *SetHardwareConcurrencyOverrideParams) Do(ctx context.Context) (err erro
 }
 
 // SetUserAgentOverrideParams allows overriding user agent with the given
-// string.
+// string. userAgentMetadata must be set for Client Hint headers to be sent.
 type SetUserAgentOverrideParams struct {
 	UserAgent         string             `json:"userAgent"`                   // User agent to use.
 	AcceptLanguage    string             `json:"acceptLanguage,omitempty"`    // Browser language to emulate.
@@ -897,6 +866,7 @@ type SetUserAgentOverrideParams struct {
 }
 
 // SetUserAgentOverride allows overriding user agent with the given string.
+// userAgentMetadata must be set for Client Hint headers to be sent.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#method-setUserAgentOverride
 //
@@ -958,7 +928,6 @@ func (p *SetAutomationOverrideParams) Do(ctx context.Context) (err error) {
 
 // Command names.
 const (
-	CommandCanEmulate                        = "Emulation.canEmulate"
 	CommandClearDeviceMetricsOverride        = "Emulation.clearDeviceMetricsOverride"
 	CommandClearGeolocationOverride          = "Emulation.clearGeolocationOverride"
 	CommandResetPageScaleFactor              = "Emulation.resetPageScaleFactor"

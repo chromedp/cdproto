@@ -349,7 +349,7 @@ func (p *FocusParams) Do(ctx context.Context) (err error) {
 
 // GetAttributesParams returns attributes for the specified node.
 type GetAttributesParams struct {
-	NodeID cdp.NodeID `json:"nodeId"` // Id of the node to retrieve attibutes for.
+	NodeID cdp.NodeID `json:"nodeId"` // Id of the node to retrieve attributes for.
 }
 
 // GetAttributes returns attributes for the specified node.
@@ -358,7 +358,7 @@ type GetAttributesParams struct {
 //
 // parameters:
 //
-//	nodeID - Id of the node to retrieve attibutes for.
+//	nodeID - Id of the node to retrieve attributes for.
 func GetAttributes(nodeID cdp.NodeID) *GetAttributesParams {
 	return &GetAttributesParams{
 		NodeID: nodeID,

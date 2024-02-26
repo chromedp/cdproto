@@ -316,7 +316,6 @@ const (
 	EventDeviceAccessDeviceRequestPrompted                 = "DeviceAccess.deviceRequestPrompted"
 	CommandDeviceOrientationClearDeviceOrientationOverride = deviceorientation.CommandClearDeviceOrientationOverride
 	CommandDeviceOrientationSetDeviceOrientationOverride   = deviceorientation.CommandSetDeviceOrientationOverride
-	CommandEmulationCanEmulate                             = emulation.CommandCanEmulate
 	CommandEmulationClearDeviceMetricsOverride             = emulation.CommandClearDeviceMetricsOverride
 	CommandEmulationClearGeolocationOverride               = emulation.CommandClearGeolocationOverride
 	CommandEmulationResetPageScaleFactor                   = emulation.CommandResetPageScaleFactor
@@ -1538,9 +1537,6 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandDeviceOrientationSetDeviceOrientationOverride:
 		return emptyVal, nil
-
-	case CommandEmulationCanEmulate:
-		v = new(emulation.CanEmulateReturns)
 
 	case CommandEmulationClearDeviceMetricsOverride:
 		return emptyVal, nil
