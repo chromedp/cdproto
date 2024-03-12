@@ -114,7 +114,7 @@ type EventJavascriptDialogOpening struct {
 	URL               string     `json:"url"`                     // Frame url.
 	Message           string     `json:"message"`                 // Message that will be displayed by the dialog.
 	Type              DialogType `json:"type"`                    // Dialog type.
-	HasBrowserHandler bool       `json:"hasBrowserHandler"`       // True iff browser is capable showing or acting on the given dialog. When browser has no dialog handler for given target, calling alert while Page domain is engaged will stall the page execution. Execution can be resumed via calling Page.handleJavaScriptDialog.
+	HasBrowserHandler bool       `json:"hasBrowserHandler"`       // True if browser is capable showing or acting on the given dialog. When browser has no dialog handler for given target, calling alert while Page domain is engaged will stall the page execution. Execution can be resumed via calling Page.handleJavaScriptDialog.
 	DefaultPrompt     string     `json:"defaultPrompt,omitempty"` // Default dialog prompt.
 }
 
