@@ -15,37 +15,6 @@ import (
 	"github.com/chromedp/cdproto/page"
 )
 
-// CanEmulateParams tells whether emulation is supported.
-type CanEmulateParams struct{}
-
-// CanEmulate tells whether emulation is supported.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#method-canEmulate
-func CanEmulate() *CanEmulateParams {
-	return &CanEmulateParams{}
-}
-
-// CanEmulateReturns return values.
-type CanEmulateReturns struct {
-	Result bool `json:"result,omitempty"` // True if emulation is supported.
-}
-
-// Do executes Emulation.canEmulate against the provided context.
-//
-// returns:
-//
-//	result - True if emulation is supported.
-func (p *CanEmulateParams) Do(ctx context.Context) (result bool, err error) {
-	// execute
-	var res CanEmulateReturns
-	err = cdp.Execute(ctx, CommandCanEmulate, nil, &res)
-	if err != nil {
-		return false, err
-	}
-
-	return res.Result, nil
-}
-
 // ClearDeviceMetricsOverrideParams clears the overridden device metrics.
 type ClearDeviceMetricsOverrideParams struct{}
 
@@ -959,7 +928,6 @@ func (p *SetAutomationOverrideParams) Do(ctx context.Context) (err error) {
 
 // Command names.
 const (
-	CommandCanEmulate                        = "Emulation.canEmulate"
 	CommandClearDeviceMetricsOverride        = "Emulation.clearDeviceMetricsOverride"
 	CommandClearGeolocationOverride          = "Emulation.clearGeolocationOverride"
 	CommandResetPageScaleFactor              = "Emulation.resetPageScaleFactor"

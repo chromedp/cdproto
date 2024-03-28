@@ -3591,8 +3591,6 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork29(in *jlexer.Lexer, o
 				}
 				in.Delim('}')
 			}
-		case "postData":
-			out.PostData = string(in.String())
 		case "hasPostData":
 			out.HasPostData = bool(in.Bool())
 		case "postDataEntries":
@@ -3701,11 +3699,6 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoNetwork29(out *jwriter.Writer
 			}
 			out.RawByte('}')
 		}
-	}
-	if in.PostData != "" {
-		const prefix string = ",\"postData\":"
-		out.RawString(prefix)
-		out.String(string(in.PostData))
 	}
 	if in.HasPostData {
 		const prefix string = ",\"hasPostData\":"
@@ -8990,6 +8983,12 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork83(in *jlexer.Lexer, o
 			out.UploadThroughput = float64(in.Float64())
 		case "connectionType":
 			(out.ConnectionType).UnmarshalEasyJSON(in)
+		case "packetLoss":
+			out.PacketLoss = float64(in.Float64())
+		case "packetQueueLength":
+			out.PacketQueueLength = int64(in.Int64())
+		case "packetReordering":
+			out.PacketReordering = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -9028,6 +9027,21 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoNetwork83(out *jwriter.Writer
 		const prefix string = ",\"connectionType\":"
 		out.RawString(prefix)
 		(in.ConnectionType).MarshalEasyJSON(out)
+	}
+	if in.PacketLoss != 0 {
+		const prefix string = ",\"packetLoss\":"
+		out.RawString(prefix)
+		out.Float64(float64(in.PacketLoss))
+	}
+	if in.PacketQueueLength != 0 {
+		const prefix string = ",\"packetQueueLength\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.PacketQueueLength))
+	}
+	if in.PacketReordering {
+		const prefix string = ",\"packetReordering\":"
+		out.RawString(prefix)
+		out.Bool(bool(in.PacketReordering))
 	}
 	out.RawByte('}')
 }

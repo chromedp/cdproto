@@ -786,6 +786,11 @@ const (
 	AttributionReportingIssueTypeWebAndOsHeaders                                      AttributionReportingIssueType = "WebAndOsHeaders"
 	AttributionReportingIssueTypeNoWebOrOsSupport                                     AttributionReportingIssueType = "NoWebOrOsSupport"
 	AttributionReportingIssueTypeNavigationRegistrationWithoutTransientUserActivation AttributionReportingIssueType = "NavigationRegistrationWithoutTransientUserActivation"
+	AttributionReportingIssueTypeInvalidInfoHeader                                    AttributionReportingIssueType = "InvalidInfoHeader"
+	AttributionReportingIssueTypeNoRegisterSourceHeader                               AttributionReportingIssueType = "NoRegisterSourceHeader"
+	AttributionReportingIssueTypeNoRegisterTriggerHeader                              AttributionReportingIssueType = "NoRegisterTriggerHeader"
+	AttributionReportingIssueTypeNoRegisterOsSourceHeader                             AttributionReportingIssueType = "NoRegisterOsSourceHeader"
+	AttributionReportingIssueTypeNoRegisterOsTriggerHeader                            AttributionReportingIssueType = "NoRegisterOsTriggerHeader"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -832,6 +837,16 @@ func (t *AttributionReportingIssueType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = AttributionReportingIssueTypeNoWebOrOsSupport
 	case AttributionReportingIssueTypeNavigationRegistrationWithoutTransientUserActivation:
 		*t = AttributionReportingIssueTypeNavigationRegistrationWithoutTransientUserActivation
+	case AttributionReportingIssueTypeInvalidInfoHeader:
+		*t = AttributionReportingIssueTypeInvalidInfoHeader
+	case AttributionReportingIssueTypeNoRegisterSourceHeader:
+		*t = AttributionReportingIssueTypeNoRegisterSourceHeader
+	case AttributionReportingIssueTypeNoRegisterTriggerHeader:
+		*t = AttributionReportingIssueTypeNoRegisterTriggerHeader
+	case AttributionReportingIssueTypeNoRegisterOsSourceHeader:
+		*t = AttributionReportingIssueTypeNoRegisterOsSourceHeader
+	case AttributionReportingIssueTypeNoRegisterOsTriggerHeader:
+		*t = AttributionReportingIssueTypeNoRegisterOsTriggerHeader
 
 	default:
 		in.AddError(fmt.Errorf("unknown AttributionReportingIssueType value: %v", v))

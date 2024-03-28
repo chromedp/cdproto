@@ -523,9 +523,8 @@ type Request struct {
 	URLFragment      string                    `json:"urlFragment,omitempty"`      // Fragment of the requested URL starting with hash, if present.
 	Method           string                    `json:"method"`                     // HTTP request method.
 	Headers          Headers                   `json:"headers"`                    // HTTP request headers.
-	PostData         string                    `json:"postData,omitempty"`         // HTTP POST request data.
 	HasPostData      bool                      `json:"hasPostData,omitempty"`      // True when the request has POST data. Note that postData might still be omitted when this flag is true when the data is too long.
-	PostDataEntries  []*PostDataEntry          `json:"postDataEntries,omitempty"`  // Request body elements. This will be converted from base64 to binary
+	PostDataEntries  []*PostDataEntry          `json:"postDataEntries,omitempty"`  // Request body elements (post data broken into individual entries).
 	MixedContentType security.MixedContentType `json:"mixedContentType,omitempty"` // The mixed content type of the request.
 	InitialPriority  ResourcePriority          `json:"initialPriority"`            // Priority of the resource request at the time request is sent.
 	ReferrerPolicy   ReferrerPolicy            `json:"referrerPolicy"`             // The referrer policy of the request, as defined in https://www.w3.org/TR/referrer-policy/

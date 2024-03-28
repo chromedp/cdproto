@@ -154,6 +154,7 @@ const (
 	CommandCSSGetPlatformFontsForNode                      = css.CommandGetPlatformFontsForNode
 	CommandCSSGetStyleSheetText                            = css.CommandGetStyleSheetText
 	CommandCSSGetLayersForNode                             = css.CommandGetLayersForNode
+	CommandCSSGetLocationForSelector                       = css.CommandGetLocationForSelector
 	CommandCSSTrackComputedStyleUpdates                    = css.CommandTrackComputedStyleUpdates
 	CommandCSSTakeComputedStyleUpdates                     = css.CommandTakeComputedStyleUpdates
 	CommandCSSSetEffectivePropertyValueForNode             = css.CommandSetEffectivePropertyValueForNode
@@ -316,7 +317,6 @@ const (
 	EventDeviceAccessDeviceRequestPrompted                 = "DeviceAccess.deviceRequestPrompted"
 	CommandDeviceOrientationClearDeviceOrientationOverride = deviceorientation.CommandClearDeviceOrientationOverride
 	CommandDeviceOrientationSetDeviceOrientationOverride   = deviceorientation.CommandSetDeviceOrientationOverride
-	CommandEmulationCanEmulate                             = emulation.CommandCanEmulate
 	CommandEmulationClearDeviceMetricsOverride             = emulation.CommandClearDeviceMetricsOverride
 	CommandEmulationClearGeolocationOverride               = emulation.CommandClearGeolocationOverride
 	CommandEmulationResetPageScaleFactor                   = emulation.CommandResetPageScaleFactor
@@ -719,6 +719,8 @@ const (
 	CommandStorageRunBounceTrackingMitigations             = storage.CommandRunBounceTrackingMitigations
 	CommandStorageSetAttributionReportingLocalTestingMode  = storage.CommandSetAttributionReportingLocalTestingMode
 	CommandStorageSetAttributionReportingTracking          = storage.CommandSetAttributionReportingTracking
+	CommandStorageSendPendingAttributionReports            = storage.CommandSendPendingAttributionReports
+	CommandStorageGetRelatedWebsiteSets                    = storage.CommandGetRelatedWebsiteSets
 	EventStorageCacheStorageContentUpdated                 = "Storage.cacheStorageContentUpdated"
 	EventStorageCacheStorageListUpdated                    = "Storage.cacheStorageListUpdated"
 	EventStorageIndexedDBContentUpdated                    = "Storage.indexedDBContentUpdated"
@@ -1052,6 +1054,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandCSSGetLayersForNode:
 		v = new(css.GetLayersForNodeReturns)
+
+	case CommandCSSGetLocationForSelector:
+		v = new(css.GetLocationForSelectorReturns)
 
 	case CommandCSSTrackComputedStyleUpdates:
 		return emptyVal, nil
@@ -1538,9 +1543,6 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandDeviceOrientationSetDeviceOrientationOverride:
 		return emptyVal, nil
-
-	case CommandEmulationCanEmulate:
-		v = new(emulation.CanEmulateReturns)
 
 	case CommandEmulationClearDeviceMetricsOverride:
 		return emptyVal, nil
@@ -2747,6 +2749,12 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandStorageSetAttributionReportingTracking:
 		return emptyVal, nil
+
+	case CommandStorageSendPendingAttributionReports:
+		v = new(storage.SendPendingAttributionReportsReturns)
+
+	case CommandStorageGetRelatedWebsiteSets:
+		v = new(storage.GetRelatedWebsiteSetsReturns)
 
 	case EventStorageCacheStorageContentUpdated:
 		v = new(storage.EventCacheStorageContentUpdated)
