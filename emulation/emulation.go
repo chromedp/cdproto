@@ -188,7 +188,6 @@ type SetDeviceMetricsOverrideParams struct {
 	ScreenOrientation  *ScreenOrientation `json:"screenOrientation,omitempty"`  // Screen orientation override.
 	Viewport           *page.Viewport     `json:"viewport,omitempty"`           // If set, the visible area of the page will be overridden to this viewport. This viewport change is not observed by the page, e.g. viewport-relative elements do not change positions.
 	DisplayFeature     *DisplayFeature    `json:"displayFeature,omitempty"`     // If set, the display feature of a multi-segment screen. If not set, multi-segment support is turned-off.
-	DevicePosture      *DevicePosture     `json:"devicePosture,omitempty"`      // If set, the posture of a foldable device. If not set the posture is set to continuous.
 }
 
 // SetDeviceMetricsOverride overrides the values of device screen dimensions
@@ -275,16 +274,57 @@ func (p SetDeviceMetricsOverrideParams) WithDisplayFeature(displayFeature *Displ
 	return &p
 }
 
-// WithDevicePosture if set, the posture of a foldable device. If not set the
-// posture is set to continuous.
-func (p SetDeviceMetricsOverrideParams) WithDevicePosture(devicePosture *DevicePosture) *SetDeviceMetricsOverrideParams {
-	p.DevicePosture = devicePosture
-	return &p
-}
-
 // Do executes Emulation.setDeviceMetricsOverride against the provided context.
 func (p *SetDeviceMetricsOverrideParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandSetDeviceMetricsOverride, p, nil)
+}
+
+// SetDevicePostureOverrideParams start reporting the given posture value to
+// the Device Posture API. This override can also be set in
+// setDeviceMetricsOverride().
+type SetDevicePostureOverrideParams struct {
+	Posture *DevicePosture `json:"posture"`
+}
+
+// SetDevicePostureOverride start reporting the given posture value to the
+// Device Posture API. This override can also be set in
+// setDeviceMetricsOverride().
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#method-setDevicePostureOverride
+//
+// parameters:
+//
+//	posture
+func SetDevicePostureOverride(posture *DevicePosture) *SetDevicePostureOverrideParams {
+	return &SetDevicePostureOverrideParams{
+		Posture: posture,
+	}
+}
+
+// Do executes Emulation.setDevicePostureOverride against the provided context.
+func (p *SetDevicePostureOverrideParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetDevicePostureOverride, p, nil)
+}
+
+// ClearDevicePostureOverrideParams clears a device posture override set with
+// either setDeviceMetricsOverride() or setDevicePostureOverride() and starts
+// using posture information from the platform again. Does nothing if no
+// override is set.
+type ClearDevicePostureOverrideParams struct{}
+
+// ClearDevicePostureOverride clears a device posture override set with
+// either setDeviceMetricsOverride() or setDevicePostureOverride() and starts
+// using posture information from the platform again. Does nothing if no
+// override is set.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#method-clearDevicePostureOverride
+func ClearDevicePostureOverride() *ClearDevicePostureOverrideParams {
+	return &ClearDevicePostureOverrideParams{}
+}
+
+// Do executes Emulation.clearDevicePostureOverride against the provided context.
+func (p *ClearDevicePostureOverrideParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandClearDevicePostureOverride, nil, nil)
 }
 
 // SetScrollbarsHiddenParams [no description].
@@ -936,6 +976,8 @@ const (
 	CommandSetCPUThrottlingRate              = "Emulation.setCPUThrottlingRate"
 	CommandSetDefaultBackgroundColorOverride = "Emulation.setDefaultBackgroundColorOverride"
 	CommandSetDeviceMetricsOverride          = "Emulation.setDeviceMetricsOverride"
+	CommandSetDevicePostureOverride          = "Emulation.setDevicePostureOverride"
+	CommandClearDevicePostureOverride        = "Emulation.clearDevicePostureOverride"
 	CommandSetScrollbarsHidden               = "Emulation.setScrollbarsHidden"
 	CommandSetDocumentCookieDisabled         = "Emulation.setDocumentCookieDisabled"
 	CommandSetEmitTouchEventsForMouse        = "Emulation.setEmitTouchEventsForMouse"

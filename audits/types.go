@@ -1109,6 +1109,8 @@ const (
 	FederatedAuthRequestIssueReasonSilentMediationFailure           FederatedAuthRequestIssueReason = "SilentMediationFailure"
 	FederatedAuthRequestIssueReasonThirdPartyCookiesBlocked         FederatedAuthRequestIssueReason = "ThirdPartyCookiesBlocked"
 	FederatedAuthRequestIssueReasonNotSignedInWithIdp               FederatedAuthRequestIssueReason = "NotSignedInWithIdp"
+	FederatedAuthRequestIssueReasonMissingTransientUserActivation   FederatedAuthRequestIssueReason = "MissingTransientUserActivation"
+	FederatedAuthRequestIssueReasonReplacedByButtonMode             FederatedAuthRequestIssueReason = "ReplacedByButtonMode"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -1201,6 +1203,10 @@ func (t *FederatedAuthRequestIssueReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = FederatedAuthRequestIssueReasonThirdPartyCookiesBlocked
 	case FederatedAuthRequestIssueReasonNotSignedInWithIdp:
 		*t = FederatedAuthRequestIssueReasonNotSignedInWithIdp
+	case FederatedAuthRequestIssueReasonMissingTransientUserActivation:
+		*t = FederatedAuthRequestIssueReasonMissingTransientUserActivation
+	case FederatedAuthRequestIssueReasonReplacedByButtonMode:
+		*t = FederatedAuthRequestIssueReasonReplacedByButtonMode
 
 	default:
 		in.AddError(fmt.Errorf("unknown FederatedAuthRequestIssueReason value: %v", v))

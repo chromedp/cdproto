@@ -51,6 +51,7 @@ import (
 	"github.com/chromedp/cdproto/performancetimeline"
 	"github.com/chromedp/cdproto/preload"
 	"github.com/chromedp/cdproto/profiler"
+	"github.com/chromedp/cdproto/pwa"
 	"github.com/chromedp/cdproto/runtime"
 	"github.com/chromedp/cdproto/security"
 	"github.com/chromedp/cdproto/serviceworker"
@@ -103,6 +104,7 @@ const (
 	EventAnimationAnimationCanceled                        = "Animation.animationCanceled"
 	EventAnimationAnimationCreated                         = "Animation.animationCreated"
 	EventAnimationAnimationStarted                         = "Animation.animationStarted"
+	EventAnimationAnimationUpdated                         = "Animation.animationUpdated"
 	CommandAuditsGetEncodedResponse                        = audits.CommandGetEncodedResponse
 	CommandAuditsDisable                                   = audits.CommandDisable
 	CommandAuditsEnable                                    = audits.CommandEnable
@@ -325,6 +327,8 @@ const (
 	CommandEmulationSetCPUThrottlingRate                   = emulation.CommandSetCPUThrottlingRate
 	CommandEmulationSetDefaultBackgroundColorOverride      = emulation.CommandSetDefaultBackgroundColorOverride
 	CommandEmulationSetDeviceMetricsOverride               = emulation.CommandSetDeviceMetricsOverride
+	CommandEmulationSetDevicePostureOverride               = emulation.CommandSetDevicePostureOverride
+	CommandEmulationClearDevicePostureOverride             = emulation.CommandClearDevicePostureOverride
 	CommandEmulationSetScrollbarsHidden                    = emulation.CommandSetScrollbarsHidden
 	CommandEmulationSetDocumentCookieDisabled              = emulation.CommandSetDocumentCookieDisabled
 	CommandEmulationSetEmitTouchEventsForMouse             = emulation.CommandSetEmitTouchEventsForMouse
@@ -501,6 +505,7 @@ const (
 	EventNetworkWebTransportClosed                         = "Network.webTransportClosed"
 	EventNetworkRequestWillBeSentExtraInfo                 = "Network.requestWillBeSentExtraInfo"
 	EventNetworkResponseReceivedExtraInfo                  = "Network.responseReceivedExtraInfo"
+	EventNetworkResponseReceivedEarlyHints                 = "Network.responseReceivedEarlyHints"
 	EventNetworkTrustTokenOperationDone                    = "Network.trustTokenOperationDone"
 	EventNetworkSubresourceWebBundleMetadataReceived       = "Network.subresourceWebBundleMetadataReceived"
 	EventNetworkSubresourceWebBundleMetadataError          = "Network.subresourceWebBundleMetadataError"
@@ -540,6 +545,7 @@ const (
 	EventOverlayNodeHighlightRequested                     = "Overlay.nodeHighlightRequested"
 	EventOverlayScreenshotRequested                        = "Overlay.screenshotRequested"
 	EventOverlayInspectModeCanceled                        = "Overlay.inspectModeCanceled"
+	CommandPWAGetOsAppState                                = pwa.CommandGetOsAppState
 	CommandPageAddScriptToEvaluateOnNewDocument            = page.CommandAddScriptToEvaluateOnNewDocument
 	CommandPageBringToFront                                = page.CommandBringToFront
 	CommandPageCaptureScreenshot                           = page.CommandCaptureScreenshot
@@ -901,6 +907,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case EventAnimationAnimationStarted:
 		v = new(animation.EventAnimationStarted)
+
+	case EventAnimationAnimationUpdated:
+		v = new(animation.EventAnimationUpdated)
 
 	case CommandAuditsGetEncodedResponse:
 		v = new(audits.GetEncodedResponseReturns)
@@ -1568,6 +1577,12 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandEmulationSetDeviceMetricsOverride:
 		return emptyVal, nil
 
+	case CommandEmulationSetDevicePostureOverride:
+		return emptyVal, nil
+
+	case CommandEmulationClearDevicePostureOverride:
+		return emptyVal, nil
+
 	case CommandEmulationSetScrollbarsHidden:
 		return emptyVal, nil
 
@@ -2096,6 +2111,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case EventNetworkResponseReceivedExtraInfo:
 		v = new(network.EventResponseReceivedExtraInfo)
 
+	case EventNetworkResponseReceivedEarlyHints:
+		v = new(network.EventResponseReceivedEarlyHints)
+
 	case EventNetworkTrustTokenOperationDone:
 		v = new(network.EventTrustTokenOperationDone)
 
@@ -2212,6 +2230,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case EventOverlayInspectModeCanceled:
 		v = new(overlay.EventInspectModeCanceled)
+
+	case CommandPWAGetOsAppState:
+		v = new(pwa.GetOsAppStateReturns)
 
 	case CommandPageAddScriptToEvaluateOnNewDocument:
 		v = new(page.AddScriptToEvaluateOnNewDocumentReturns)

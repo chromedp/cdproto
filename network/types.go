@@ -1093,6 +1093,7 @@ type Response struct {
 	FromDiskCache               bool                        `json:"fromDiskCache,omitempty"`               // Specifies that the request was served from the disk cache.
 	FromServiceWorker           bool                        `json:"fromServiceWorker,omitempty"`           // Specifies that the request was served from the ServiceWorker.
 	FromPrefetchCache           bool                        `json:"fromPrefetchCache,omitempty"`           // Specifies that the request was served from the prefetch cache.
+	FromEarlyHints              bool                        `json:"fromEarlyHints,omitempty"`              // Specifies that the request was served from the prefetch cache.
 	ServiceWorkerRouterInfo     *ServiceWorkerRouterInfo    `json:"serviceWorkerRouterInfo,omitempty"`     // Information about how Service Worker Static Router was used.
 	EncodedDataLength           float64                     `json:"encodedDataLength"`                     // Total number of bytes received for this request so far.
 	Timing                      *ResourceTiming             `json:"timing,omitempty"`                      // Timing information for the given request.
@@ -1455,6 +1456,7 @@ type BlockedSetCookieWithReason struct {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-ExemptedSetCookieWithReason
 type ExemptedSetCookieWithReason struct {
 	ExemptionReason CookieExemptionReason `json:"exemptionReason"` // The reason the cookie was exempted.
+	CookieLine      string                `json:"cookieLine"`      // The string representing this individual cookie as it would appear in the header.
 	Cookie          *Cookie               `json:"cookie"`          // The cookie object representing the cookie.
 }
 

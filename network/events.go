@@ -235,6 +235,17 @@ type EventResponseReceivedExtraInfo struct {
 	ExemptedCookies          []*ExemptedSetCookieWithReason `json:"exemptedCookies,omitempty"`          // A list of cookies which should have been blocked by 3PCD but are exempted and stored from the response with the corresponding reason.
 }
 
+// EventResponseReceivedEarlyHints fired when 103 Early Hints headers is
+// received in addition to the common response. Not every responseReceived event
+// will have an responseReceivedEarlyHints fired. Only one
+// responseReceivedEarlyHints may be fired for eached responseReceived event.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-responseReceivedEarlyHints
+type EventResponseReceivedEarlyHints struct {
+	RequestID RequestID `json:"requestId"` // Request identifier. Used to match this information to another responseReceived event.
+	Headers   Headers   `json:"headers"`   // Raw response headers as they were received over the wire.
+}
+
 // EventTrustTokenOperationDone fired exactly once for each Trust Token
 // operation. Depending on the type of the operation and whether the operation
 // succeeded or failed, the event is fired before the corresponding request was
