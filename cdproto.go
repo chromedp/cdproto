@@ -32,6 +32,7 @@ import (
 	"github.com/chromedp/cdproto/domstorage"
 	"github.com/chromedp/cdproto/emulation"
 	"github.com/chromedp/cdproto/eventbreakpoints"
+	"github.com/chromedp/cdproto/extensions"
 	"github.com/chromedp/cdproto/fedcm"
 	"github.com/chromedp/cdproto/fetch"
 	"github.com/chromedp/cdproto/headlessexperimental"
@@ -354,6 +355,7 @@ const (
 	CommandEventBreakpointsSetInstrumentationBreakpoint    = eventbreakpoints.CommandSetInstrumentationBreakpoint
 	CommandEventBreakpointsRemoveInstrumentationBreakpoint = eventbreakpoints.CommandRemoveInstrumentationBreakpoint
 	CommandEventBreakpointsDisable                         = eventbreakpoints.CommandDisable
+	CommandExtensionsLoadUnpacked                          = extensions.CommandLoadUnpacked
 	CommandFedCmEnable                                     = fedcm.CommandEnable
 	CommandFedCmDisable                                    = fedcm.CommandDisable
 	CommandFedCmSelectAccount                              = fedcm.CommandSelectAccount
@@ -1657,6 +1659,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandEventBreakpointsDisable:
 		return emptyVal, nil
+
+	case CommandExtensionsLoadUnpacked:
+		v = new(extensions.LoadUnpackedReturns)
 
 	case CommandFedCmEnable:
 		return emptyVal, nil

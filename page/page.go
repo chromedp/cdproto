@@ -318,7 +318,7 @@ func (p *EnableParams) Do(ctx context.Context) (err error) {
 // GetAppManifestParams gets the processed manifest for this current
 // document. This API always waits for the manifest to be loaded. If manifestId
 // is provided, and it does not match the manifest of the current document, this
-// API errors out. If there isn’t a loaded page, this API errors out
+// API errors out. If there is not a loaded page, this API errors out
 // immediately.
 type GetAppManifestParams struct {
 	ManifestID string `json:"manifestId,omitempty"`
@@ -327,7 +327,7 @@ type GetAppManifestParams struct {
 // GetAppManifest gets the processed manifest for this current document. This
 // API always waits for the manifest to be loaded. If manifestId is provided,
 // and it does not match the manifest of the current document, this API errors
-// out. If there isn’t a loaded page, this API errors out immediately.
+// out. If there is not a loaded page, this API errors out immediately.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-getAppManifest
 //
