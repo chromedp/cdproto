@@ -1131,6 +1131,50 @@ func (p *GetTopLayerElementsParams) Do(ctx context.Context) (nodeIDs []cdp.NodeI
 	return res.NodeIDs, nil
 }
 
+// GetElementByRelationParams returns the NodeId of the matched element
+// according to certain relations.
+type GetElementByRelationParams struct {
+	NodeID   cdp.NodeID                   `json:"nodeId"`   // Id of the node from which to query the relation.
+	Relation GetElementByRelationRelation `json:"relation"` // Type of relation to get.
+}
+
+// GetElementByRelation returns the NodeId of the matched element according
+// to certain relations.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-getElementByRelation
+//
+// parameters:
+//
+//	nodeID - Id of the node from which to query the relation.
+//	relation - Type of relation to get.
+func GetElementByRelation(nodeID cdp.NodeID, relation GetElementByRelationRelation) *GetElementByRelationParams {
+	return &GetElementByRelationParams{
+		NodeID:   nodeID,
+		Relation: relation,
+	}
+}
+
+// GetElementByRelationReturns return values.
+type GetElementByRelationReturns struct {
+	NodeID cdp.NodeID `json:"nodeId,omitempty"` // NodeId of the element matching the queried relation.
+}
+
+// Do executes DOM.getElementByRelation against the provided context.
+//
+// returns:
+//
+//	nodeID - NodeId of the element matching the queried relation.
+func (p *GetElementByRelationParams) Do(ctx context.Context) (nodeID cdp.NodeID, err error) {
+	// execute
+	var res GetElementByRelationReturns
+	err = cdp.Execute(ctx, CommandGetElementByRelation, p, &res)
+	if err != nil {
+		return 0, err
+	}
+
+	return res.NodeID, nil
+}
+
 // RedoParams re-does the last undone action.
 type RedoParams struct{}
 
@@ -1879,6 +1923,7 @@ const (
 	CommandQuerySelector                      = "DOM.querySelector"
 	CommandQuerySelectorAll                   = "DOM.querySelectorAll"
 	CommandGetTopLayerElements                = "DOM.getTopLayerElements"
+	CommandGetElementByRelation               = "DOM.getElementByRelation"
 	CommandRedo                               = "DOM.redo"
 	CommandRemoveAttribute                    = "DOM.removeAttribute"
 	CommandRemoveNode                         = "DOM.removeNode"

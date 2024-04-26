@@ -242,3 +242,45 @@ func (t *EnableIncludeWhitespace) UnmarshalEasyJSON(in *jlexer.Lexer) {
 func (t *EnableIncludeWhitespace) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
+
+// GetElementByRelationRelation type of relation to get.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-getElementByRelation
+type GetElementByRelationRelation string
+
+// String returns the GetElementByRelationRelation as string value.
+func (t GetElementByRelationRelation) String() string {
+	return string(t)
+}
+
+// GetElementByRelationRelation values.
+const (
+	GetElementByRelationRelationPopoverTarget GetElementByRelationRelation = "PopoverTarget"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t GetElementByRelationRelation) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t GetElementByRelationRelation) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *GetElementByRelationRelation) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	v := in.String()
+	switch GetElementByRelationRelation(v) {
+	case GetElementByRelationRelationPopoverTarget:
+		*t = GetElementByRelationRelationPopoverTarget
+
+	default:
+		in.AddError(fmt.Errorf("unknown GetElementByRelationRelation value: %v", v))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *GetElementByRelationRelation) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}

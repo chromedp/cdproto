@@ -217,6 +217,7 @@ const (
 	CommandDOMQuerySelector                                = dom.CommandQuerySelector
 	CommandDOMQuerySelectorAll                             = dom.CommandQuerySelectorAll
 	CommandDOMGetTopLayerElements                          = dom.CommandGetTopLayerElements
+	CommandDOMGetElementByRelation                         = dom.CommandGetElementByRelation
 	CommandDOMRedo                                         = dom.CommandRedo
 	CommandDOMRemoveAttribute                              = dom.CommandRemoveAttribute
 	CommandDOMRemoveNode                                   = dom.CommandRemoveNode
@@ -1245,6 +1246,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandDOMGetTopLayerElements:
 		v = new(dom.GetTopLayerElementsReturns)
+
+	case CommandDOMGetElementByRelation:
+		v = new(dom.GetElementByRelationReturns)
 
 	case CommandDOMRedo:
 		return emptyVal, nil
