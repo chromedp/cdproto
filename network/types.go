@@ -1071,8 +1071,8 @@ func (t *ServiceWorkerRouterSource) UnmarshalJSON(buf []byte) error {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-ServiceWorkerRouterInfo
 type ServiceWorkerRouterInfo struct {
-	RuleIDMatched     int64                     `json:"ruleIdMatched"`
-	MatchedSourceType ServiceWorkerRouterSource `json:"matchedSourceType"`
+	RuleIDMatched     int64                     `json:"ruleIdMatched,omitempty"`     // ID of the rule matched. If there is a matched rule, this field will be set, otherwiser no value will be set.
+	MatchedSourceType ServiceWorkerRouterSource `json:"matchedSourceType,omitempty"` // The router source of the matched rule. If there is a matched rule, this field will be set, otherwise no value will be set.
 }
 
 // Response HTTP response data.
@@ -1094,7 +1094,7 @@ type Response struct {
 	FromServiceWorker           bool                        `json:"fromServiceWorker,omitempty"`           // Specifies that the request was served from the ServiceWorker.
 	FromPrefetchCache           bool                        `json:"fromPrefetchCache,omitempty"`           // Specifies that the request was served from the prefetch cache.
 	FromEarlyHints              bool                        `json:"fromEarlyHints,omitempty"`              // Specifies that the request was served from the prefetch cache.
-	ServiceWorkerRouterInfo     *ServiceWorkerRouterInfo    `json:"serviceWorkerRouterInfo,omitempty"`     // Information about how Service Worker Static Router was used.
+	ServiceWorkerRouterInfo     *ServiceWorkerRouterInfo    `json:"serviceWorkerRouterInfo,omitempty"`     // Information about how ServiceWorker Static Router API was used. If this field is set with matchedSourceType field, a matching rule is found. If this field is set without matchedSource, no matching rule is found. Otherwise, the API is not used.
 	EncodedDataLength           float64                     `json:"encodedDataLength"`                     // Total number of bytes received for this request so far.
 	Timing                      *ResourceTiming             `json:"timing,omitempty"`                      // Timing information for the given request.
 	ServiceWorkerResponseSource ServiceWorkerResponseSource `json:"serviceWorkerResponseSource,omitempty"` // Response source of response from ServiceWorker.

@@ -56,7 +56,79 @@ func (p *GetOsAppStateParams) Do(ctx context.Context) (badgeCount int64, fileHan
 	return res.BadgeCount, res.FileHandlers, nil
 }
 
+// InstallParams installs the given manifest identity, optionally using the
+// given install_url or IWA bundle location. TODO(crbug.com/337872319) Support
+// IWA to meet the following specific requirement. IWA-specific install
+// description: If the manifest_id is isolated-app://, install_url_or_bundle_url
+// is required, and can be either an http(s) URL or file:// URL pointing to a
+// signed web bundle (.swbn). The .swbn file's signing key must correspond to
+// manifest_id. If Chrome is not in IWA dev mode, the installation will fail,
+// regardless of the state of the allowlist.
+type InstallParams struct {
+	ManifestID            string `json:"manifestId"`
+	InstallURLOrBundleURL string `json:"installUrlOrBundleUrl,omitempty"` // The location of the app or bundle overriding the one derived from the manifestId.
+}
+
+// Install installs the given manifest identity, optionally using the given
+// install_url or IWA bundle location. TODO(crbug.com/337872319) Support IWA to
+// meet the following specific requirement. IWA-specific install description: If
+// the manifest_id is isolated-app://, install_url_or_bundle_url is required,
+// and can be either an http(s) URL or file:// URL pointing to a signed web
+// bundle (.swbn). The .swbn file's signing key must correspond to manifest_id.
+// If Chrome is not in IWA dev mode, the installation will fail, regardless of
+// the state of the allowlist.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/PWA#method-install
+//
+// parameters:
+//
+//	manifestID
+func Install(manifestID string) *InstallParams {
+	return &InstallParams{
+		ManifestID: manifestID,
+	}
+}
+
+// WithInstallURLOrBundleURL the location of the app or bundle overriding the
+// one derived from the manifestId.
+func (p InstallParams) WithInstallURLOrBundleURL(installURLOrBundleURL string) *InstallParams {
+	p.InstallURLOrBundleURL = installURLOrBundleURL
+	return &p
+}
+
+// Do executes PWA.install against the provided context.
+func (p *InstallParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandInstall, p, nil)
+}
+
+// UninstallParams uninstals the given manifest_id and closes any opened app
+// windows.
+type UninstallParams struct {
+	ManifestID string `json:"manifestId"`
+}
+
+// Uninstall uninstals the given manifest_id and closes any opened app
+// windows.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/PWA#method-uninstall
+//
+// parameters:
+//
+//	manifestID
+func Uninstall(manifestID string) *UninstallParams {
+	return &UninstallParams{
+		ManifestID: manifestID,
+	}
+}
+
+// Do executes PWA.uninstall against the provided context.
+func (p *UninstallParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandUninstall, p, nil)
+}
+
 // Command names.
 const (
 	CommandGetOsAppState = "PWA.getOsAppState"
+	CommandInstall       = "PWA.install"
+	CommandUninstall     = "PWA.uninstall"
 )

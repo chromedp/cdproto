@@ -549,6 +549,8 @@ const (
 	EventOverlayScreenshotRequested                        = "Overlay.screenshotRequested"
 	EventOverlayInspectModeCanceled                        = "Overlay.inspectModeCanceled"
 	CommandPWAGetOsAppState                                = pwa.CommandGetOsAppState
+	CommandPWAInstall                                      = pwa.CommandInstall
+	CommandPWAUninstall                                    = pwa.CommandUninstall
 	CommandPageAddScriptToEvaluateOnNewDocument            = page.CommandAddScriptToEvaluateOnNewDocument
 	CommandPageBringToFront                                = page.CommandBringToFront
 	CommandPageCaptureScreenshot                           = page.CommandCaptureScreenshot
@@ -2242,6 +2244,12 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandPWAGetOsAppState:
 		v = new(pwa.GetOsAppStateReturns)
+
+	case CommandPWAInstall:
+		return emptyVal, nil
+
+	case CommandPWAUninstall:
+		return emptyVal, nil
 
 	case CommandPageAddScriptToEvaluateOnNewDocument:
 		v = new(page.AddScriptToEvaluateOnNewDocumentReturns)

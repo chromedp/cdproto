@@ -2271,14 +2271,20 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoNetwork21(out *jwriter.Writer
 	out.RawByte('{')
 	first := true
 	_ = first
-	{
+	if in.RuleIDMatched != 0 {
 		const prefix string = ",\"ruleIdMatched\":"
+		first = false
 		out.RawString(prefix[1:])
 		out.Int64(int64(in.RuleIDMatched))
 	}
-	{
+	if in.MatchedSourceType != "" {
 		const prefix string = ",\"matchedSourceType\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		(in.MatchedSourceType).MarshalEasyJSON(out)
 	}
 	out.RawByte('}')

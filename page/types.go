@@ -119,7 +119,6 @@ const (
 	PermissionsPolicyFeatureWebPrinting                  PermissionsPolicyFeature = "web-printing"
 	PermissionsPolicyFeatureWebShare                     PermissionsPolicyFeature = "web-share"
 	PermissionsPolicyFeatureWindowManagement             PermissionsPolicyFeature = "window-management"
-	PermissionsPolicyFeatureWindowPlacement              PermissionsPolicyFeature = "window-placement"
 	PermissionsPolicyFeatureXrSpatialTracking            PermissionsPolicyFeature = "xr-spatial-tracking"
 )
 
@@ -303,8 +302,6 @@ func (t *PermissionsPolicyFeature) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PermissionsPolicyFeatureWebShare
 	case PermissionsPolicyFeatureWindowManagement:
 		*t = PermissionsPolicyFeatureWindowManagement
-	case PermissionsPolicyFeatureWindowPlacement:
-		*t = PermissionsPolicyFeatureWindowPlacement
 	case PermissionsPolicyFeatureXrSpatialTracking:
 		*t = PermissionsPolicyFeatureXrSpatialTracking
 
