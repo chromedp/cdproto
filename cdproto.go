@@ -551,6 +551,7 @@ const (
 	CommandPWAGetOsAppState                                = pwa.CommandGetOsAppState
 	CommandPWAInstall                                      = pwa.CommandInstall
 	CommandPWAUninstall                                    = pwa.CommandUninstall
+	CommandPWALaunch                                       = pwa.CommandLaunch
 	CommandPageAddScriptToEvaluateOnNewDocument            = page.CommandAddScriptToEvaluateOnNewDocument
 	CommandPageBringToFront                                = page.CommandBringToFront
 	CommandPageCaptureScreenshot                           = page.CommandCaptureScreenshot
@@ -2250,6 +2251,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandPWAUninstall:
 		return emptyVal, nil
+
+	case CommandPWALaunch:
+		v = new(pwa.LaunchReturns)
 
 	case CommandPageAddScriptToEvaluateOnNewDocument:
 		v = new(page.AddScriptToEvaluateOnNewDocumentReturns)

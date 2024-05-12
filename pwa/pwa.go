@@ -12,6 +12,7 @@ import (
 	"context"
 
 	"github.com/chromedp/cdproto/cdp"
+	"github.com/chromedp/cdproto/target"
 )
 
 // GetOsAppStateParams returns the following OS state for the given manifest
@@ -126,9 +127,62 @@ func (p *UninstallParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandUninstall, p, nil)
 }
 
+// LaunchParams launches the installed web app, or an url in the same web app
+// instead of the default start url if it is provided. Returns a tab / web
+// contents based Target.TargetID which can be used to attach to via
+// Target.attachToTarget or similar APIs.
+type LaunchParams struct {
+	ManifestID string `json:"manifestId"`
+	URL        string `json:"url,omitempty"`
+}
+
+// Launch launches the installed web app, or an url in the same web app
+// instead of the default start url if it is provided. Returns a tab / web
+// contents based Target.TargetID which can be used to attach to via
+// Target.attachToTarget or similar APIs.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/PWA#method-launch
+//
+// parameters:
+//
+//	manifestID
+func Launch(manifestID string) *LaunchParams {
+	return &LaunchParams{
+		ManifestID: manifestID,
+	}
+}
+
+// WithURL [no description].
+func (p LaunchParams) WithURL(url string) *LaunchParams {
+	p.URL = url
+	return &p
+}
+
+// LaunchReturns return values.
+type LaunchReturns struct {
+	TargetID target.ID `json:"targetId,omitempty"` // ID of the tab target created as a result.
+}
+
+// Do executes PWA.launch against the provided context.
+//
+// returns:
+//
+//	targetID - ID of the tab target created as a result.
+func (p *LaunchParams) Do(ctx context.Context) (targetID target.ID, err error) {
+	// execute
+	var res LaunchReturns
+	err = cdp.Execute(ctx, CommandLaunch, p, &res)
+	if err != nil {
+		return "", err
+	}
+
+	return res.TargetID, nil
+}
+
 // Command names.
 const (
 	CommandGetOsAppState = "PWA.getOsAppState"
 	CommandInstall       = "PWA.install"
 	CommandUninstall     = "PWA.uninstall"
+	CommandLaunch        = "PWA.launch"
 )
