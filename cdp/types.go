@@ -175,13 +175,14 @@ const (
 	PseudoTypeMarker                  PseudoType = "marker"
 	PseudoTypeBackdrop                PseudoType = "backdrop"
 	PseudoTypeSelection               PseudoType = "selection"
+	PseudoTypeSearchText              PseudoType = "search-text"
 	PseudoTypeTargetText              PseudoType = "target-text"
 	PseudoTypeSpellingError           PseudoType = "spelling-error"
 	PseudoTypeGrammarError            PseudoType = "grammar-error"
 	PseudoTypeHighlight               PseudoType = "highlight"
 	PseudoTypeFirstLineInherited      PseudoType = "first-line-inherited"
 	PseudoTypeScrollMarker            PseudoType = "scroll-marker"
-	PseudoTypeScrollMarkers           PseudoType = "scroll-markers"
+	PseudoTypeScrollMarkerGroup       PseudoType = "scroll-marker-group"
 	PseudoTypeScrollbar               PseudoType = "scrollbar"
 	PseudoTypeScrollbarThumb          PseudoType = "scrollbar-thumb"
 	PseudoTypeScrollbarButton         PseudoType = "scrollbar-button"
@@ -225,6 +226,8 @@ func (t *PseudoType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PseudoTypeBackdrop
 	case PseudoTypeSelection:
 		*t = PseudoTypeSelection
+	case PseudoTypeSearchText:
+		*t = PseudoTypeSearchText
 	case PseudoTypeTargetText:
 		*t = PseudoTypeTargetText
 	case PseudoTypeSpellingError:
@@ -237,8 +240,8 @@ func (t *PseudoType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PseudoTypeFirstLineInherited
 	case PseudoTypeScrollMarker:
 		*t = PseudoTypeScrollMarker
-	case PseudoTypeScrollMarkers:
-		*t = PseudoTypeScrollMarkers
+	case PseudoTypeScrollMarkerGroup:
+		*t = PseudoTypeScrollMarkerGroup
 	case PseudoTypeScrollbar:
 		*t = PseudoTypeScrollbar
 	case PseudoTypeScrollbarThumb:

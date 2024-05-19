@@ -1394,6 +1394,7 @@ const (
 	CookieExemptionReasonStorageAccess         CookieExemptionReason = "StorageAccess"
 	CookieExemptionReasonTopLevelStorageAccess CookieExemptionReason = "TopLevelStorageAccess"
 	CookieExemptionReasonCorsOptIn             CookieExemptionReason = "CorsOptIn"
+	CookieExemptionReasonScheme                CookieExemptionReason = "Scheme"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -1428,6 +1429,8 @@ func (t *CookieExemptionReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = CookieExemptionReasonTopLevelStorageAccess
 	case CookieExemptionReasonCorsOptIn:
 		*t = CookieExemptionReasonCorsOptIn
+	case CookieExemptionReasonScheme:
+		*t = CookieExemptionReasonScheme
 
 	default:
 		in.AddError(fmt.Errorf("unknown CookieExemptionReason value: %v", v))

@@ -2636,6 +2636,10 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoAudits23(in *jlexer.Lexer, ou
 				}
 				in.Delim(']')
 			}
+		case "optOutPercentage":
+			out.OptOutPercentage = float64(in.Float64())
+		case "isOptOutTopLevel":
+			out.IsOptOutTopLevel = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -2665,6 +2669,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoAudits23(out *jwriter.Writer,
 			}
 			out.RawByte(']')
 		}
+	}
+	{
+		const prefix string = ",\"optOutPercentage\":"
+		out.RawString(prefix)
+		out.Float64(float64(in.OptOutPercentage))
+	}
+	{
+		const prefix string = ",\"isOptOutTopLevel\":"
+		out.RawString(prefix)
+		out.Bool(bool(in.IsOptOutTopLevel))
 	}
 	out.RawByte('}')
 }

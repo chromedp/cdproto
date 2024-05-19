@@ -1116,7 +1116,9 @@ type BounceTrackingIssueDetails struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-CookieDeprecationMetadataIssueDetails
 type CookieDeprecationMetadataIssueDetails struct {
-	AllowedSites []string `json:"allowedSites"`
+	AllowedSites     []string `json:"allowedSites"`
+	OptOutPercentage float64  `json:"optOutPercentage"`
+	IsOptOutTopLevel bool     `json:"isOptOutTopLevel"`
 }
 
 // ClientHintIssueReason [no description].

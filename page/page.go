@@ -990,8 +990,9 @@ func (p *PrintToPDFParams) Do(ctx context.Context) (data []byte, stream io.Strea
 
 // ReloadParams reloads given page optionally ignoring the cache.
 type ReloadParams struct {
-	IgnoreCache            bool   `json:"ignoreCache,omitempty"`            // If true, browser cache is ignored (as if the user pressed Shift+refresh).
-	ScriptToEvaluateOnLoad string `json:"scriptToEvaluateOnLoad,omitempty"` // If set, the script will be injected into all frames of the inspected page after reload. Argument will be ignored if reloading dataURL origin.
+	IgnoreCache            bool         `json:"ignoreCache,omitempty"`            // If true, browser cache is ignored (as if the user pressed Shift+refresh).
+	ScriptToEvaluateOnLoad string       `json:"scriptToEvaluateOnLoad,omitempty"` // If set, the script will be injected into all frames of the inspected page after reload. Argument will be ignored if reloading dataURL origin.
+	LoaderID               cdp.LoaderID `json:"loaderId,omitempty"`               // If set, an error will be thrown if the target page's main frame's loader id does not match the provided id. This prevents accidentally reloading an unintended target in case there's a racing navigation.
 }
 
 // Reload reloads given page optionally ignoring the cache.
@@ -1015,6 +1016,14 @@ func (p ReloadParams) WithIgnoreCache(ignoreCache bool) *ReloadParams {
 // reloading dataURL origin.
 func (p ReloadParams) WithScriptToEvaluateOnLoad(scriptToEvaluateOnLoad string) *ReloadParams {
 	p.ScriptToEvaluateOnLoad = scriptToEvaluateOnLoad
+	return &p
+}
+
+// WithLoaderID if set, an error will be thrown if the target page's main
+// frame's loader id does not match the provided id. This prevents accidentally
+// reloading an unintended target in case there's a racing navigation.
+func (p ReloadParams) WithLoaderID(loaderID cdp.LoaderID) *ReloadParams {
+	p.LoaderID = loaderID
 	return &p
 }
 

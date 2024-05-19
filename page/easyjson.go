@@ -3006,6 +3006,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoPage29(in *jlexer.Lexer, out 
 			out.IgnoreCache = bool(in.Bool())
 		case "scriptToEvaluateOnLoad":
 			out.ScriptToEvaluateOnLoad = string(in.String())
+		case "loaderId":
+			out.LoaderID = cdp.LoaderID(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -3035,6 +3037,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoPage29(out *jwriter.Writer, i
 			out.RawString(prefix)
 		}
 		out.String(string(in.ScriptToEvaluateOnLoad))
+	}
+	if in.LoaderID != "" {
+		const prefix string = ",\"loaderId\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(in.LoaderID))
 	}
 	out.RawByte('}')
 }
