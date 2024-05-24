@@ -179,10 +179,75 @@ func (p *LaunchParams) Do(ctx context.Context) (targetID target.ID, err error) {
 	return res.TargetID, nil
 }
 
+// LaunchFilesInAppParams opens one or more local files from an installed web
+// app identified by its manifestId. The web app needs to have file handlers
+// registered to process the files. The API returns one or more tabs / web
+// contents' based Target.TargetIDs which can be used to attach to via
+// Target.attachToTarget or similar APIs. If some files in the parameters cannot
+// be handled by the web app, they will be ignored. If none of the files can be
+// handled, this API returns an error. If no files provided as the parameter,
+// this API also returns an error. According to the definition of the file
+// handlers in the manifest file, one Target.TargetID may represent a tab
+// handling one or more files. The order of the returned Target.TargetIDs is
+// also not guaranteed. TODO(crbug.com/339454034): Check the existences of the
+// input files.
+type LaunchFilesInAppParams struct {
+	ManifestID string   `json:"manifestId"`
+	Files      []string `json:"files"`
+}
+
+// LaunchFilesInApp opens one or more local files from an installed web app
+// identified by its manifestId. The web app needs to have file handlers
+// registered to process the files. The API returns one or more tabs / web
+// contents' based Target.TargetIDs which can be used to attach to via
+// Target.attachToTarget or similar APIs. If some files in the parameters cannot
+// be handled by the web app, they will be ignored. If none of the files can be
+// handled, this API returns an error. If no files provided as the parameter,
+// this API also returns an error. According to the definition of the file
+// handlers in the manifest file, one Target.TargetID may represent a tab
+// handling one or more files. The order of the returned Target.TargetIDs is
+// also not guaranteed. TODO(crbug.com/339454034): Check the existences of the
+// input files.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/PWA#method-launchFilesInApp
+//
+// parameters:
+//
+//	manifestID
+//	files
+func LaunchFilesInApp(manifestID string, files []string) *LaunchFilesInAppParams {
+	return &LaunchFilesInAppParams{
+		ManifestID: manifestID,
+		Files:      files,
+	}
+}
+
+// LaunchFilesInAppReturns return values.
+type LaunchFilesInAppReturns struct {
+	TargetIDs []target.ID `json:"targetIds,omitempty"` // IDs of the tab targets created as the result.
+}
+
+// Do executes PWA.launchFilesInApp against the provided context.
+//
+// returns:
+//
+//	targetIDs - IDs of the tab targets created as the result.
+func (p *LaunchFilesInAppParams) Do(ctx context.Context) (targetIDs []target.ID, err error) {
+	// execute
+	var res LaunchFilesInAppReturns
+	err = cdp.Execute(ctx, CommandLaunchFilesInApp, p, &res)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.TargetIDs, nil
+}
+
 // Command names.
 const (
-	CommandGetOsAppState = "PWA.getOsAppState"
-	CommandInstall       = "PWA.install"
-	CommandUninstall     = "PWA.uninstall"
-	CommandLaunch        = "PWA.launch"
+	CommandGetOsAppState    = "PWA.getOsAppState"
+	CommandInstall          = "PWA.install"
+	CommandUninstall        = "PWA.uninstall"
+	CommandLaunch           = "PWA.launch"
+	CommandLaunchFilesInApp = "PWA.launchFilesInApp"
 )

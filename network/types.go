@@ -433,25 +433,27 @@ func (t *CookieSourceScheme) UnmarshalJSON(buf []byte) error {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-ResourceTiming
 type ResourceTiming struct {
-	RequestTime              float64 `json:"requestTime"`              // Timing's requestTime is a baseline in seconds, while the other numbers are ticks in milliseconds relatively to this requestTime.
-	ProxyStart               float64 `json:"proxyStart"`               // Started resolving proxy.
-	ProxyEnd                 float64 `json:"proxyEnd"`                 // Finished resolving proxy.
-	DNSStart                 float64 `json:"dnsStart"`                 // Started DNS address resolve.
-	DNSEnd                   float64 `json:"dnsEnd"`                   // Finished DNS address resolve.
-	ConnectStart             float64 `json:"connectStart"`             // Started connecting to the remote host.
-	ConnectEnd               float64 `json:"connectEnd"`               // Connected to the remote host.
-	SslStart                 float64 `json:"sslStart"`                 // Started SSL handshake.
-	SslEnd                   float64 `json:"sslEnd"`                   // Finished SSL handshake.
-	WorkerStart              float64 `json:"workerStart"`              // Started running ServiceWorker.
-	WorkerReady              float64 `json:"workerReady"`              // Finished Starting ServiceWorker.
-	WorkerFetchStart         float64 `json:"workerFetchStart"`         // Started fetch event.
-	WorkerRespondWithSettled float64 `json:"workerRespondWithSettled"` // Settled fetch event respondWith promise.
-	SendStart                float64 `json:"sendStart"`                // Started sending request.
-	SendEnd                  float64 `json:"sendEnd"`                  // Finished sending request.
-	PushStart                float64 `json:"pushStart"`                // Time the server started pushing request.
-	PushEnd                  float64 `json:"pushEnd"`                  // Time the server finished pushing request.
-	ReceiveHeadersStart      float64 `json:"receiveHeadersStart"`      // Started receiving response headers.
-	ReceiveHeadersEnd        float64 `json:"receiveHeadersEnd"`        // Finished receiving response headers.
+	RequestTime                 float64 `json:"requestTime"`                           // Timing's requestTime is a baseline in seconds, while the other numbers are ticks in milliseconds relatively to this requestTime.
+	ProxyStart                  float64 `json:"proxyStart"`                            // Started resolving proxy.
+	ProxyEnd                    float64 `json:"proxyEnd"`                              // Finished resolving proxy.
+	DNSStart                    float64 `json:"dnsStart"`                              // Started DNS address resolve.
+	DNSEnd                      float64 `json:"dnsEnd"`                                // Finished DNS address resolve.
+	ConnectStart                float64 `json:"connectStart"`                          // Started connecting to the remote host.
+	ConnectEnd                  float64 `json:"connectEnd"`                            // Connected to the remote host.
+	SslStart                    float64 `json:"sslStart"`                              // Started SSL handshake.
+	SslEnd                      float64 `json:"sslEnd"`                                // Finished SSL handshake.
+	WorkerStart                 float64 `json:"workerStart"`                           // Started running ServiceWorker.
+	WorkerReady                 float64 `json:"workerReady"`                           // Finished Starting ServiceWorker.
+	WorkerFetchStart            float64 `json:"workerFetchStart"`                      // Started fetch event.
+	WorkerRespondWithSettled    float64 `json:"workerRespondWithSettled"`              // Settled fetch event respondWith promise.
+	WorkerRouterEvaluationStart float64 `json:"workerRouterEvaluationStart,omitempty"` // Started ServiceWorker static routing source evaluation.
+	WorkerCacheLookupStart      float64 `json:"workerCacheLookupStart,omitempty"`      // Started cache lookup when the source was evaluated to cache.
+	SendStart                   float64 `json:"sendStart"`                             // Started sending request.
+	SendEnd                     float64 `json:"sendEnd"`                               // Finished sending request.
+	PushStart                   float64 `json:"pushStart"`                             // Time the server started pushing request.
+	PushEnd                     float64 `json:"pushEnd"`                               // Time the server finished pushing request.
+	ReceiveHeadersStart         float64 `json:"receiveHeadersStart"`                   // Started receiving response headers.
+	ReceiveHeadersEnd           float64 `json:"receiveHeadersEnd"`                     // Finished receiving response headers.
 }
 
 // ResourcePriority loading priority of a resource request.
@@ -1073,6 +1075,7 @@ func (t *ServiceWorkerRouterSource) UnmarshalJSON(buf []byte) error {
 type ServiceWorkerRouterInfo struct {
 	RuleIDMatched     int64                     `json:"ruleIdMatched,omitempty"`     // ID of the rule matched. If there is a matched rule, this field will be set, otherwiser no value will be set.
 	MatchedSourceType ServiceWorkerRouterSource `json:"matchedSourceType,omitempty"` // The router source of the matched rule. If there is a matched rule, this field will be set, otherwise no value will be set.
+	ActualSourceType  ServiceWorkerRouterSource `json:"actualSourceType,omitempty"`  // The actual router source used.
 }
 
 // Response HTTP response data.

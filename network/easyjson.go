@@ -2257,6 +2257,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork21(in *jlexer.Lexer, o
 			out.RuleIDMatched = int64(in.Int64())
 		case "matchedSourceType":
 			(out.MatchedSourceType).UnmarshalEasyJSON(in)
+		case "actualSourceType":
+			(out.ActualSourceType).UnmarshalEasyJSON(in)
 		default:
 			in.SkipRecursive()
 		}
@@ -2286,6 +2288,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoNetwork21(out *jwriter.Writer
 			out.RawString(prefix)
 		}
 		(in.MatchedSourceType).MarshalEasyJSON(out)
+	}
+	if in.ActualSourceType != "" {
+		const prefix string = ",\"actualSourceType\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		(in.ActualSourceType).MarshalEasyJSON(out)
 	}
 	out.RawByte('}')
 }
@@ -3319,6 +3331,10 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork27(in *jlexer.Lexer, o
 			out.WorkerFetchStart = float64(in.Float64())
 		case "workerRespondWithSettled":
 			out.WorkerRespondWithSettled = float64(in.Float64())
+		case "workerRouterEvaluationStart":
+			out.WorkerRouterEvaluationStart = float64(in.Float64())
+		case "workerCacheLookupStart":
+			out.WorkerCacheLookupStart = float64(in.Float64())
 		case "sendStart":
 			out.SendStart = float64(in.Float64())
 		case "sendEnd":
@@ -3409,6 +3425,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoNetwork27(out *jwriter.Writer
 		const prefix string = ",\"workerRespondWithSettled\":"
 		out.RawString(prefix)
 		out.Float64(float64(in.WorkerRespondWithSettled))
+	}
+	if in.WorkerRouterEvaluationStart != 0 {
+		const prefix string = ",\"workerRouterEvaluationStart\":"
+		out.RawString(prefix)
+		out.Float64(float64(in.WorkerRouterEvaluationStart))
+	}
+	if in.WorkerCacheLookupStart != 0 {
+		const prefix string = ",\"workerCacheLookupStart\":"
+		out.RawString(prefix)
+		out.Float64(float64(in.WorkerCacheLookupStart))
 	}
 	{
 		const prefix string = ",\"sendStart\":"

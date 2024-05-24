@@ -1116,9 +1116,10 @@ type BounceTrackingIssueDetails struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-CookieDeprecationMetadataIssueDetails
 type CookieDeprecationMetadataIssueDetails struct {
-	AllowedSites     []string `json:"allowedSites"`
-	OptOutPercentage float64  `json:"optOutPercentage"`
-	IsOptOutTopLevel bool     `json:"isOptOutTopLevel"`
+	AllowedSites     []string        `json:"allowedSites"`
+	OptOutPercentage float64         `json:"optOutPercentage"`
+	IsOptOutTopLevel bool            `json:"isOptOutTopLevel"`
+	Operation        CookieOperation `json:"operation"`
 }
 
 // ClientHintIssueReason [no description].
@@ -1229,6 +1230,7 @@ const (
 	FederatedAuthRequestIssueReasonNotSignedInWithIdp               FederatedAuthRequestIssueReason = "NotSignedInWithIdp"
 	FederatedAuthRequestIssueReasonMissingTransientUserActivation   FederatedAuthRequestIssueReason = "MissingTransientUserActivation"
 	FederatedAuthRequestIssueReasonReplacedByButtonMode             FederatedAuthRequestIssueReason = "ReplacedByButtonMode"
+	FederatedAuthRequestIssueReasonRelyingPartyOriginIsOpaque       FederatedAuthRequestIssueReason = "RelyingPartyOriginIsOpaque"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -1325,6 +1327,8 @@ func (t *FederatedAuthRequestIssueReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = FederatedAuthRequestIssueReasonMissingTransientUserActivation
 	case FederatedAuthRequestIssueReasonReplacedByButtonMode:
 		*t = FederatedAuthRequestIssueReasonReplacedByButtonMode
+	case FederatedAuthRequestIssueReasonRelyingPartyOriginIsOpaque:
+		*t = FederatedAuthRequestIssueReasonRelyingPartyOriginIsOpaque
 
 	default:
 		in.AddError(fmt.Errorf("unknown FederatedAuthRequestIssueReason value: %v", v))

@@ -552,6 +552,7 @@ const (
 	CommandPWAInstall                                      = pwa.CommandInstall
 	CommandPWAUninstall                                    = pwa.CommandUninstall
 	CommandPWALaunch                                       = pwa.CommandLaunch
+	CommandPWALaunchFilesInApp                             = pwa.CommandLaunchFilesInApp
 	CommandPageAddScriptToEvaluateOnNewDocument            = page.CommandAddScriptToEvaluateOnNewDocument
 	CommandPageBringToFront                                = page.CommandBringToFront
 	CommandPageCaptureScreenshot                           = page.CommandCaptureScreenshot
@@ -2254,6 +2255,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandPWALaunch:
 		v = new(pwa.LaunchReturns)
+
+	case CommandPWALaunchFilesInApp:
+		v = new(pwa.LaunchFilesInAppReturns)
 
 	case CommandPageAddScriptToEvaluateOnNewDocument:
 		v = new(page.AddScriptToEvaluateOnNewDocumentReturns)
