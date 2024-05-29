@@ -238,6 +238,7 @@ const (
 	CommandDOMGetFrameOwner                                = dom.CommandGetFrameOwner
 	CommandDOMGetContainerForNode                          = dom.CommandGetContainerForNode
 	CommandDOMGetQueryingDescendantsForContainer           = dom.CommandGetQueryingDescendantsForContainer
+	CommandDOMGetAnchorElement                             = dom.CommandGetAnchorElement
 	EventDOMAttributeModified                              = "DOM.attributeModified"
 	EventDOMAttributeRemoved                               = "DOM.attributeRemoved"
 	EventDOMCharacterDataModified                          = "DOM.characterDataModified"
@@ -1313,6 +1314,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandDOMGetQueryingDescendantsForContainer:
 		v = new(dom.GetQueryingDescendantsForContainerReturns)
+
+	case CommandDOMGetAnchorElement:
+		v = new(dom.GetAnchorElementReturns)
 
 	case EventDOMAttributeModified:
 		v = new(dom.EventAttributeModified)

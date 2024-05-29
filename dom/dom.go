@@ -1896,6 +1896,58 @@ func (p *GetQueryingDescendantsForContainerParams) Do(ctx context.Context) (node
 	return res.NodeIDs, nil
 }
 
+// GetAnchorElementParams returns the target anchor element of the given
+// anchor query according to
+// https://www.w3.org/TR/css-anchor-position-1/#target.
+type GetAnchorElementParams struct {
+	NodeID          cdp.NodeID `json:"nodeId"`                    // Id of the positioned element from which to find the anchor.
+	AnchorSpecifier string     `json:"anchorSpecifier,omitempty"` // An optional anchor specifier, as defined in https://www.w3.org/TR/css-anchor-position-1/#anchor-specifier. If not provided, it will return the implicit anchor element for the given positioned element.
+}
+
+// GetAnchorElement returns the target anchor element of the given anchor
+// query according to https://www.w3.org/TR/css-anchor-position-1/#target.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-getAnchorElement
+//
+// parameters:
+//
+//	nodeID - Id of the positioned element from which to find the anchor.
+func GetAnchorElement(nodeID cdp.NodeID) *GetAnchorElementParams {
+	return &GetAnchorElementParams{
+		NodeID: nodeID,
+	}
+}
+
+// WithAnchorSpecifier an optional anchor specifier, as defined in
+// https://www.w3.org/TR/css-anchor-position-1/#anchor-specifier. If not
+// provided, it will return the implicit anchor element for the given positioned
+// element.
+func (p GetAnchorElementParams) WithAnchorSpecifier(anchorSpecifier string) *GetAnchorElementParams {
+	p.AnchorSpecifier = anchorSpecifier
+	return &p
+}
+
+// GetAnchorElementReturns return values.
+type GetAnchorElementReturns struct {
+	NodeID cdp.NodeID `json:"nodeId,omitempty"` // The anchor element of the given anchor query.
+}
+
+// Do executes DOM.getAnchorElement against the provided context.
+//
+// returns:
+//
+//	nodeID - The anchor element of the given anchor query.
+func (p *GetAnchorElementParams) Do(ctx context.Context) (nodeID cdp.NodeID, err error) {
+	// execute
+	var res GetAnchorElementReturns
+	err = cdp.Execute(ctx, CommandGetAnchorElement, p, &res)
+	if err != nil {
+		return 0, err
+	}
+
+	return res.NodeID, nil
+}
+
 // Command names.
 const (
 	CommandCollectClassNamesFromSubtree       = "DOM.collectClassNamesFromSubtree"
@@ -1944,4 +1996,5 @@ const (
 	CommandGetFrameOwner                      = "DOM.getFrameOwner"
 	CommandGetContainerForNode                = "DOM.getContainerForNode"
 	CommandGetQueryingDescendantsForContainer = "DOM.getQueryingDescendantsForContainer"
+	CommandGetAnchorElement                   = "DOM.getAnchorElement"
 )
