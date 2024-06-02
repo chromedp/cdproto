@@ -2427,7 +2427,7 @@ const (
 	TrustTokenOperationDoneStatusFailedPrecondition TrustTokenOperationDoneStatus = "FailedPrecondition"
 	TrustTokenOperationDoneStatusResourceExhausted  TrustTokenOperationDoneStatus = "ResourceExhausted"
 	TrustTokenOperationDoneStatusAlreadyExists      TrustTokenOperationDoneStatus = "AlreadyExists"
-	TrustTokenOperationDoneStatusUnavailable        TrustTokenOperationDoneStatus = "Unavailable"
+	TrustTokenOperationDoneStatusResourceLimited    TrustTokenOperationDoneStatus = "ResourceLimited"
 	TrustTokenOperationDoneStatusUnauthorized       TrustTokenOperationDoneStatus = "Unauthorized"
 	TrustTokenOperationDoneStatusBadResponse        TrustTokenOperationDoneStatus = "BadResponse"
 	TrustTokenOperationDoneStatusInternalError      TrustTokenOperationDoneStatus = "InternalError"
@@ -2461,8 +2461,8 @@ func (t *TrustTokenOperationDoneStatus) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = TrustTokenOperationDoneStatusResourceExhausted
 	case TrustTokenOperationDoneStatusAlreadyExists:
 		*t = TrustTokenOperationDoneStatusAlreadyExists
-	case TrustTokenOperationDoneStatusUnavailable:
-		*t = TrustTokenOperationDoneStatusUnavailable
+	case TrustTokenOperationDoneStatusResourceLimited:
+		*t = TrustTokenOperationDoneStatusResourceLimited
 	case TrustTokenOperationDoneStatusUnauthorized:
 		*t = TrustTokenOperationDoneStatusUnauthorized
 	case TrustTokenOperationDoneStatusBadResponse:
