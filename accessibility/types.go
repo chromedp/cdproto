@@ -336,7 +336,6 @@ const (
 	PropertyNameFlowto           PropertyName = "flowto"
 	PropertyNameLabelledby       PropertyName = "labelledby"
 	PropertyNameOwns             PropertyName = "owns"
-	PropertyNameURL              PropertyName = "url"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -431,8 +430,6 @@ func (t *PropertyName) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PropertyNameLabelledby
 	case PropertyNameOwns:
 		*t = PropertyNameOwns
-	case PropertyNameURL:
-		*t = PropertyNameURL
 
 	default:
 		in.AddError(fmt.Errorf("unknown PropertyName value: %v", v))

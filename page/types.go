@@ -71,7 +71,6 @@ const (
 	PermissionsPolicyFeatureClipboardWrite               PermissionsPolicyFeature = "clipboard-write"
 	PermissionsPolicyFeatureComputePressure              PermissionsPolicyFeature = "compute-pressure"
 	PermissionsPolicyFeatureCrossOriginIsolated          PermissionsPolicyFeature = "cross-origin-isolated"
-	PermissionsPolicyFeatureDeferredFetch                PermissionsPolicyFeature = "deferred-fetch"
 	PermissionsPolicyFeatureDirectSockets                PermissionsPolicyFeature = "direct-sockets"
 	PermissionsPolicyFeatureDisplayCapture               PermissionsPolicyFeature = "display-capture"
 	PermissionsPolicyFeatureDocumentDomain               PermissionsPolicyFeature = "document-domain"
@@ -207,8 +206,6 @@ func (t *PermissionsPolicyFeature) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PermissionsPolicyFeatureComputePressure
 	case PermissionsPolicyFeatureCrossOriginIsolated:
 		*t = PermissionsPolicyFeatureCrossOriginIsolated
-	case PermissionsPolicyFeatureDeferredFetch:
-		*t = PermissionsPolicyFeatureDeferredFetch
 	case PermissionsPolicyFeatureDirectSockets:
 		*t = PermissionsPolicyFeatureDirectSockets
 	case PermissionsPolicyFeatureDisplayCapture:
@@ -1149,11 +1146,6 @@ const (
 	BackForwardCacheNotRestoredReasonHTTPAuthRequired                                         BackForwardCacheNotRestoredReason = "HTTPAuthRequired"
 	BackForwardCacheNotRestoredReasonCookieFlushed                                            BackForwardCacheNotRestoredReason = "CookieFlushed"
 	BackForwardCacheNotRestoredReasonBroadcastChannelOnMessage                                BackForwardCacheNotRestoredReason = "BroadcastChannelOnMessage"
-	BackForwardCacheNotRestoredReasonWebViewSettingsChanged                                   BackForwardCacheNotRestoredReason = "WebViewSettingsChanged"
-	BackForwardCacheNotRestoredReasonWebViewJavaScriptObjectChanged                           BackForwardCacheNotRestoredReason = "WebViewJavaScriptObjectChanged"
-	BackForwardCacheNotRestoredReasonWebViewMessageListenerInjected                           BackForwardCacheNotRestoredReason = "WebViewMessageListenerInjected"
-	BackForwardCacheNotRestoredReasonWebViewSafeBrowsingAllowlistChanged                      BackForwardCacheNotRestoredReason = "WebViewSafeBrowsingAllowlistChanged"
-	BackForwardCacheNotRestoredReasonWebViewDocumentStartJavascriptChanged                    BackForwardCacheNotRestoredReason = "WebViewDocumentStartJavascriptChanged"
 	BackForwardCacheNotRestoredReasonWebSocket                                                BackForwardCacheNotRestoredReason = "WebSocket"
 	BackForwardCacheNotRestoredReasonWebTransport                                             BackForwardCacheNotRestoredReason = "WebTransport"
 	BackForwardCacheNotRestoredReasonWebRTC                                                   BackForwardCacheNotRestoredReason = "WebRTC"
@@ -1360,16 +1352,6 @@ func (t *BackForwardCacheNotRestoredReason) UnmarshalEasyJSON(in *jlexer.Lexer) 
 		*t = BackForwardCacheNotRestoredReasonCookieFlushed
 	case BackForwardCacheNotRestoredReasonBroadcastChannelOnMessage:
 		*t = BackForwardCacheNotRestoredReasonBroadcastChannelOnMessage
-	case BackForwardCacheNotRestoredReasonWebViewSettingsChanged:
-		*t = BackForwardCacheNotRestoredReasonWebViewSettingsChanged
-	case BackForwardCacheNotRestoredReasonWebViewJavaScriptObjectChanged:
-		*t = BackForwardCacheNotRestoredReasonWebViewJavaScriptObjectChanged
-	case BackForwardCacheNotRestoredReasonWebViewMessageListenerInjected:
-		*t = BackForwardCacheNotRestoredReasonWebViewMessageListenerInjected
-	case BackForwardCacheNotRestoredReasonWebViewSafeBrowsingAllowlistChanged:
-		*t = BackForwardCacheNotRestoredReasonWebViewSafeBrowsingAllowlistChanged
-	case BackForwardCacheNotRestoredReasonWebViewDocumentStartJavascriptChanged:
-		*t = BackForwardCacheNotRestoredReasonWebViewDocumentStartJavascriptChanged
 	case BackForwardCacheNotRestoredReasonWebSocket:
 		*t = BackForwardCacheNotRestoredReasonWebSocket
 	case BackForwardCacheNotRestoredReasonWebTransport:

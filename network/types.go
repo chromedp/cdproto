@@ -632,20 +632,18 @@ func (t BlockedReason) String() string {
 
 // BlockedReason values.
 const (
-	BlockedReasonOther                                                   BlockedReason = "other"
-	BlockedReasonCsp                                                     BlockedReason = "csp"
-	BlockedReasonMixedContent                                            BlockedReason = "mixed-content"
-	BlockedReasonOrigin                                                  BlockedReason = "origin"
-	BlockedReasonInspector                                               BlockedReason = "inspector"
-	BlockedReasonSubresourceFilter                                       BlockedReason = "subresource-filter"
-	BlockedReasonContentType                                             BlockedReason = "content-type"
-	BlockedReasonCoepFrameResourceNeedsCoepHeader                        BlockedReason = "coep-frame-resource-needs-coep-header"
-	BlockedReasonCoopSandboxedIframeCannotNavigateToCoopPage             BlockedReason = "coop-sandboxed-iframe-cannot-navigate-to-coop-page"
-	BlockedReasonCorpNotSameOrigin                                       BlockedReason = "corp-not-same-origin"
-	BlockedReasonCorpNotSameOriginAfterDefaultedToSameOriginByCoep       BlockedReason = "corp-not-same-origin-after-defaulted-to-same-origin-by-coep"
-	BlockedReasonCorpNotSameOriginAfterDefaultedToSameOriginByDip        BlockedReason = "corp-not-same-origin-after-defaulted-to-same-origin-by-dip"
-	BlockedReasonCorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip BlockedReason = "corp-not-same-origin-after-defaulted-to-same-origin-by-coep-and-dip"
-	BlockedReasonCorpNotSameSite                                         BlockedReason = "corp-not-same-site"
+	BlockedReasonOther                                             BlockedReason = "other"
+	BlockedReasonCsp                                               BlockedReason = "csp"
+	BlockedReasonMixedContent                                      BlockedReason = "mixed-content"
+	BlockedReasonOrigin                                            BlockedReason = "origin"
+	BlockedReasonInspector                                         BlockedReason = "inspector"
+	BlockedReasonSubresourceFilter                                 BlockedReason = "subresource-filter"
+	BlockedReasonContentType                                       BlockedReason = "content-type"
+	BlockedReasonCoepFrameResourceNeedsCoepHeader                  BlockedReason = "coep-frame-resource-needs-coep-header"
+	BlockedReasonCoopSandboxedIframeCannotNavigateToCoopPage       BlockedReason = "coop-sandboxed-iframe-cannot-navigate-to-coop-page"
+	BlockedReasonCorpNotSameOrigin                                 BlockedReason = "corp-not-same-origin"
+	BlockedReasonCorpNotSameOriginAfterDefaultedToSameOriginByCoep BlockedReason = "corp-not-same-origin-after-defaulted-to-same-origin-by-coep"
+	BlockedReasonCorpNotSameSite                                   BlockedReason = "corp-not-same-site"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -684,10 +682,6 @@ func (t *BlockedReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = BlockedReasonCorpNotSameOrigin
 	case BlockedReasonCorpNotSameOriginAfterDefaultedToSameOriginByCoep:
 		*t = BlockedReasonCorpNotSameOriginAfterDefaultedToSameOriginByCoep
-	case BlockedReasonCorpNotSameOriginAfterDefaultedToSameOriginByDip:
-		*t = BlockedReasonCorpNotSameOriginAfterDefaultedToSameOriginByDip
-	case BlockedReasonCorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip:
-		*t = BlockedReasonCorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip
 	case BlockedReasonCorpNotSameSite:
 		*t = BlockedReasonCorpNotSameSite
 
@@ -1166,35 +1160,25 @@ type Initiator struct {
 	RequestID    RequestID           `json:"requestId,omitempty"`    // Set if another request triggered this request (e.g. preflight).
 }
 
-// CookiePartitionKey cookiePartitionKey object The representation of the
-// components of the key that are created by the cookiePartitionKey class
-// contained in net/cookies/cookie_partition_key.h.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-CookiePartitionKey
-type CookiePartitionKey struct {
-	TopLevelSite         string `json:"topLevelSite"`         // The site of the top-level URL the browser was visiting at the start of the request to the endpoint that set the cookie.
-	HasCrossSiteAncestor bool   `json:"hasCrossSiteAncestor"` // Indicates if the cookie has any ancestors that are cross-site to the topLevelSite.
-}
-
 // Cookie cookie object.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-Cookie
 type Cookie struct {
-	Name               string              `json:"name"`                         // Cookie name.
-	Value              string              `json:"value"`                        // Cookie value.
-	Domain             string              `json:"domain"`                       // Cookie domain.
-	Path               string              `json:"path"`                         // Cookie path.
-	Expires            float64             `json:"expires"`                      // Cookie expiration date as the number of seconds since the UNIX epoch.
-	Size               int64               `json:"size"`                         // Cookie size.
-	HTTPOnly           bool                `json:"httpOnly"`                     // True if cookie is http-only.
-	Secure             bool                `json:"secure"`                       // True if cookie is secure.
-	Session            bool                `json:"session"`                      // True in case of session cookie.
-	SameSite           CookieSameSite      `json:"sameSite,omitempty"`           // Cookie SameSite type.
-	Priority           CookiePriority      `json:"priority"`                     // Cookie Priority
-	SourceScheme       CookieSourceScheme  `json:"sourceScheme"`                 // Cookie source scheme type.
-	SourcePort         int64               `json:"sourcePort"`                   // Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port. An unspecified port value allows protocol clients to emulate legacy cookie scope for the port. This is a temporary ability and it will be removed in the future.
-	PartitionKey       *CookiePartitionKey `json:"partitionKey,omitempty"`       // Cookie partition key.
-	PartitionKeyOpaque bool                `json:"partitionKeyOpaque,omitempty"` // True if cookie partition key is opaque.
+	Name               string             `json:"name"`                         // Cookie name.
+	Value              string             `json:"value"`                        // Cookie value.
+	Domain             string             `json:"domain"`                       // Cookie domain.
+	Path               string             `json:"path"`                         // Cookie path.
+	Expires            float64            `json:"expires"`                      // Cookie expiration date as the number of seconds since the UNIX epoch.
+	Size               int64              `json:"size"`                         // Cookie size.
+	HTTPOnly           bool               `json:"httpOnly"`                     // True if cookie is http-only.
+	Secure             bool               `json:"secure"`                       // True if cookie is secure.
+	Session            bool               `json:"session"`                      // True in case of session cookie.
+	SameSite           CookieSameSite     `json:"sameSite,omitempty"`           // Cookie SameSite type.
+	Priority           CookiePriority     `json:"priority"`                     // Cookie Priority
+	SourceScheme       CookieSourceScheme `json:"sourceScheme"`                 // Cookie source scheme type.
+	SourcePort         int64              `json:"sourcePort"`                   // Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port. An unspecified port value allows protocol clients to emulate legacy cookie scope for the port. This is a temporary ability and it will be removed in the future.
+	PartitionKey       string             `json:"partitionKey,omitempty"`       // Cookie partition key. The site of the top-level URL the browser was visiting at the start of the request to the endpoint that set the cookie.
+	PartitionKeyOpaque bool               `json:"partitionKeyOpaque,omitempty"` // True if cookie partition key is opaque.
 }
 
 // SetCookieBlockedReason types of reasons why a cookie may not be stored
@@ -1510,7 +1494,7 @@ type CookieParam struct {
 	SameParty    bool                `json:"sameParty,omitempty"`    // True if cookie is SameParty.
 	SourceScheme CookieSourceScheme  `json:"sourceScheme,omitempty"` // Cookie source scheme type.
 	SourcePort   int64               `json:"sourcePort,omitempty"`   // Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port. An unspecified port value allows protocol clients to emulate legacy cookie scope for the port. This is a temporary ability and it will be removed in the future.
-	PartitionKey *CookiePartitionKey `json:"partitionKey,omitempty"` // Cookie partition key. If not set, the cookie will be set as not partitioned.
+	PartitionKey string              `json:"partitionKey,omitempty"` // Cookie partition key. The site of the top-level URL the browser was visiting at the start of the request to the endpoint that set the cookie. If not set, the cookie will be set as not partitioned.
 }
 
 // AuthChallenge authorization challenge for HTTP status code 401 or 407.

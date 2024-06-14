@@ -128,18 +128,18 @@ func (p *UninstallParams) Do(ctx context.Context) (err error) {
 }
 
 // LaunchParams launches the installed web app, or an url in the same web app
-// instead of the default start url if it is provided. Returns a page
-// Target.TargetID which can be used to attach to via Target.attachToTarget or
-// similar APIs.
+// instead of the default start url if it is provided. Returns a tab / web
+// contents based Target.TargetID which can be used to attach to via
+// Target.attachToTarget or similar APIs.
 type LaunchParams struct {
 	ManifestID string `json:"manifestId"`
 	URL        string `json:"url,omitempty"`
 }
 
 // Launch launches the installed web app, or an url in the same web app
-// instead of the default start url if it is provided. Returns a page
-// Target.TargetID which can be used to attach to via Target.attachToTarget or
-// similar APIs.
+// instead of the default start url if it is provided. Returns a tab / web
+// contents based Target.TargetID which can be used to attach to via
+// Target.attachToTarget or similar APIs.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/PWA#method-launch
 //
@@ -181,15 +181,16 @@ func (p *LaunchParams) Do(ctx context.Context) (targetID target.ID, err error) {
 
 // LaunchFilesInAppParams opens one or more local files from an installed web
 // app identified by its manifestId. The web app needs to have file handlers
-// registered to process the files. The API returns one or more page
-// Target.TargetIDs which can be used to attach to via Target.attachToTarget or
-// similar APIs. If some files in the parameters cannot be handled by the web
-// app, they will be ignored. If none of the files can be handled, this API
-// returns an error. If no files provided as the parameter, this API also
-// returns an error. According to the definition of the file handlers in the
-// manifest file, one Target.TargetID may represent a page handling one or more
-// files. The order of the returned Target.TargetIDs is not guaranteed.
-// TODO(crbug.com/339454034): Check the existences of the input files.
+// registered to process the files. The API returns one or more tabs / web
+// contents' based Target.TargetIDs which can be used to attach to via
+// Target.attachToTarget or similar APIs. If some files in the parameters cannot
+// be handled by the web app, they will be ignored. If none of the files can be
+// handled, this API returns an error. If no files provided as the parameter,
+// this API also returns an error. According to the definition of the file
+// handlers in the manifest file, one Target.TargetID may represent a tab
+// handling one or more files. The order of the returned Target.TargetIDs is
+// also not guaranteed. TODO(crbug.com/339454034): Check the existences of the
+// input files.
 type LaunchFilesInAppParams struct {
 	ManifestID string   `json:"manifestId"`
 	Files      []string `json:"files"`
@@ -197,15 +198,16 @@ type LaunchFilesInAppParams struct {
 
 // LaunchFilesInApp opens one or more local files from an installed web app
 // identified by its manifestId. The web app needs to have file handlers
-// registered to process the files. The API returns one or more page
-// Target.TargetIDs which can be used to attach to via Target.attachToTarget or
-// similar APIs. If some files in the parameters cannot be handled by the web
-// app, they will be ignored. If none of the files can be handled, this API
-// returns an error. If no files provided as the parameter, this API also
-// returns an error. According to the definition of the file handlers in the
-// manifest file, one Target.TargetID may represent a page handling one or more
-// files. The order of the returned Target.TargetIDs is not guaranteed.
-// TODO(crbug.com/339454034): Check the existences of the input files.
+// registered to process the files. The API returns one or more tabs / web
+// contents' based Target.TargetIDs which can be used to attach to via
+// Target.attachToTarget or similar APIs. If some files in the parameters cannot
+// be handled by the web app, they will be ignored. If none of the files can be
+// handled, this API returns an error. If no files provided as the parameter,
+// this API also returns an error. According to the definition of the file
+// handlers in the manifest file, one Target.TargetID may represent a tab
+// handling one or more files. The order of the returned Target.TargetIDs is
+// also not guaranteed. TODO(crbug.com/339454034): Check the existences of the
+// input files.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/PWA#method-launchFilesInApp
 //
@@ -241,39 +243,11 @@ func (p *LaunchFilesInAppParams) Do(ctx context.Context) (targetIDs []target.ID,
 	return res.TargetIDs, nil
 }
 
-// OpenCurrentPageInAppParams opens the current page in its web app
-// identified by the manifest id, needs to be called on a page target. This
-// function returns immediately without waiting for the app finishing loading.
-type OpenCurrentPageInAppParams struct {
-	ManifestID string `json:"manifestId"`
-}
-
-// OpenCurrentPageInApp opens the current page in its web app identified by
-// the manifest id, needs to be called on a page target. This function returns
-// immediately without waiting for the app finishing loading.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/PWA#method-openCurrentPageInApp
-//
-// parameters:
-//
-//	manifestID
-func OpenCurrentPageInApp(manifestID string) *OpenCurrentPageInAppParams {
-	return &OpenCurrentPageInAppParams{
-		ManifestID: manifestID,
-	}
-}
-
-// Do executes PWA.openCurrentPageInApp against the provided context.
-func (p *OpenCurrentPageInAppParams) Do(ctx context.Context) (err error) {
-	return cdp.Execute(ctx, CommandOpenCurrentPageInApp, p, nil)
-}
-
 // Command names.
 const (
-	CommandGetOsAppState        = "PWA.getOsAppState"
-	CommandInstall              = "PWA.install"
-	CommandUninstall            = "PWA.uninstall"
-	CommandLaunch               = "PWA.launch"
-	CommandLaunchFilesInApp     = "PWA.launchFilesInApp"
-	CommandOpenCurrentPageInApp = "PWA.openCurrentPageInApp"
+	CommandGetOsAppState    = "PWA.getOsAppState"
+	CommandInstall          = "PWA.install"
+	CommandUninstall        = "PWA.uninstall"
+	CommandLaunch           = "PWA.launch"
+	CommandLaunchFilesInApp = "PWA.launchFilesInApp"
 )
