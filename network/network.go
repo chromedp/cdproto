@@ -94,11 +94,11 @@ func (p *ClearBrowserCookiesParams) Do(ctx context.Context) (err error) {
 // DeleteCookiesParams deletes browser cookies with matching name and url or
 // domain/path/partitionKey pair.
 type DeleteCookiesParams struct {
-	Name         string `json:"name"`                   // Name of the cookies to remove.
-	URL          string `json:"url,omitempty"`          // If specified, deletes all the cookies with the given name where domain and path match provided URL.
-	Domain       string `json:"domain,omitempty"`       // If specified, deletes only cookies with the exact domain.
-	Path         string `json:"path,omitempty"`         // If specified, deletes only cookies with the exact path.
-	PartitionKey string `json:"partitionKey,omitempty"` // If specified, deletes only cookies with the the given name and partitionKey where domain matches provided URL.
+	Name         string              `json:"name"`                   // Name of the cookies to remove.
+	URL          string              `json:"url,omitempty"`          // If specified, deletes all the cookies with the given name where domain and path match provided URL.
+	Domain       string              `json:"domain,omitempty"`       // If specified, deletes only cookies with the exact domain.
+	Path         string              `json:"path,omitempty"`         // If specified, deletes only cookies with the exact path.
+	PartitionKey *CookiePartitionKey `json:"partitionKey,omitempty"` // If specified, deletes only cookies with the the given name and partitionKey where all partition key attributes match the cookie partition key attribute.
 }
 
 // DeleteCookies deletes browser cookies with matching name and url or
@@ -135,8 +135,9 @@ func (p DeleteCookiesParams) WithPath(path string) *DeleteCookiesParams {
 }
 
 // WithPartitionKey if specified, deletes only cookies with the the given
-// name and partitionKey where domain matches provided URL.
-func (p DeleteCookiesParams) WithPartitionKey(partitionKey string) *DeleteCookiesParams {
+// name and partitionKey where all partition key attributes match the cookie
+// partition key attribute.
+func (p DeleteCookiesParams) WithPartitionKey(partitionKey *CookiePartitionKey) *DeleteCookiesParams {
 	p.PartitionKey = partitionKey
 	return &p
 }
@@ -719,7 +720,7 @@ type SetCookieParams struct {
 	SameParty    bool                `json:"sameParty,omitempty"`    // True if cookie is SameParty.
 	SourceScheme CookieSourceScheme  `json:"sourceScheme,omitempty"` // Cookie source scheme type.
 	SourcePort   int64               `json:"sourcePort,omitempty"`   // Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port. An unspecified port value allows protocol clients to emulate legacy cookie scope for the port. This is a temporary ability and it will be removed in the future.
-	PartitionKey string              `json:"partitionKey,omitempty"` // Cookie partition key. The site of the top-level URL the browser was visiting at the start of the request to the endpoint that set the cookie. If not set, the cookie will be set as not partitioned.
+	PartitionKey *CookiePartitionKey `json:"partitionKey,omitempty"` // Cookie partition key. If not set, the cookie will be set as not partitioned.
 }
 
 // SetCookie sets a cookie with the given cookie data; may overwrite
@@ -809,10 +810,9 @@ func (p SetCookieParams) WithSourcePort(sourcePort int64) *SetCookieParams {
 	return &p
 }
 
-// WithPartitionKey cookie partition key. The site of the top-level URL the
-// browser was visiting at the start of the request to the endpoint that set the
-// cookie. If not set, the cookie will be set as not partitioned.
-func (p SetCookieParams) WithPartitionKey(partitionKey string) *SetCookieParams {
+// WithPartitionKey cookie partition key. If not set, the cookie will be set
+// as not partitioned.
+func (p SetCookieParams) WithPartitionKey(partitionKey *CookiePartitionKey) *SetCookieParams {
 	p.PartitionKey = partitionKey
 	return &p
 }
