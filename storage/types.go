@@ -719,19 +719,20 @@ func (t AttributionReportingSourceRegistrationResult) String() string {
 
 // AttributionReportingSourceRegistrationResult values.
 const (
-	AttributionReportingSourceRegistrationResultSuccess                               AttributionReportingSourceRegistrationResult = "success"
-	AttributionReportingSourceRegistrationResultInternalError                         AttributionReportingSourceRegistrationResult = "internalError"
-	AttributionReportingSourceRegistrationResultInsufficientSourceCapacity            AttributionReportingSourceRegistrationResult = "insufficientSourceCapacity"
-	AttributionReportingSourceRegistrationResultInsufficientUniqueDestinationCapacity AttributionReportingSourceRegistrationResult = "insufficientUniqueDestinationCapacity"
-	AttributionReportingSourceRegistrationResultExcessiveReportingOrigins             AttributionReportingSourceRegistrationResult = "excessiveReportingOrigins"
-	AttributionReportingSourceRegistrationResultProhibitedByBrowserPolicy             AttributionReportingSourceRegistrationResult = "prohibitedByBrowserPolicy"
-	AttributionReportingSourceRegistrationResultSuccessNoised                         AttributionReportingSourceRegistrationResult = "successNoised"
-	AttributionReportingSourceRegistrationResultDestinationReportingLimitReached      AttributionReportingSourceRegistrationResult = "destinationReportingLimitReached"
-	AttributionReportingSourceRegistrationResultDestinationGlobalLimitReached         AttributionReportingSourceRegistrationResult = "destinationGlobalLimitReached"
-	AttributionReportingSourceRegistrationResultDestinationBothLimitsReached          AttributionReportingSourceRegistrationResult = "destinationBothLimitsReached"
-	AttributionReportingSourceRegistrationResultReportingOriginsPerSiteLimitReached   AttributionReportingSourceRegistrationResult = "reportingOriginsPerSiteLimitReached"
-	AttributionReportingSourceRegistrationResultExceedsMaxChannelCapacity             AttributionReportingSourceRegistrationResult = "exceedsMaxChannelCapacity"
-	AttributionReportingSourceRegistrationResultExceedsMaxTriggerStateCardinality     AttributionReportingSourceRegistrationResult = "exceedsMaxTriggerStateCardinality"
+	AttributionReportingSourceRegistrationResultSuccess                                AttributionReportingSourceRegistrationResult = "success"
+	AttributionReportingSourceRegistrationResultInternalError                          AttributionReportingSourceRegistrationResult = "internalError"
+	AttributionReportingSourceRegistrationResultInsufficientSourceCapacity             AttributionReportingSourceRegistrationResult = "insufficientSourceCapacity"
+	AttributionReportingSourceRegistrationResultInsufficientUniqueDestinationCapacity  AttributionReportingSourceRegistrationResult = "insufficientUniqueDestinationCapacity"
+	AttributionReportingSourceRegistrationResultExcessiveReportingOrigins              AttributionReportingSourceRegistrationResult = "excessiveReportingOrigins"
+	AttributionReportingSourceRegistrationResultProhibitedByBrowserPolicy              AttributionReportingSourceRegistrationResult = "prohibitedByBrowserPolicy"
+	AttributionReportingSourceRegistrationResultSuccessNoised                          AttributionReportingSourceRegistrationResult = "successNoised"
+	AttributionReportingSourceRegistrationResultDestinationReportingLimitReached       AttributionReportingSourceRegistrationResult = "destinationReportingLimitReached"
+	AttributionReportingSourceRegistrationResultDestinationGlobalLimitReached          AttributionReportingSourceRegistrationResult = "destinationGlobalLimitReached"
+	AttributionReportingSourceRegistrationResultDestinationBothLimitsReached           AttributionReportingSourceRegistrationResult = "destinationBothLimitsReached"
+	AttributionReportingSourceRegistrationResultReportingOriginsPerSiteLimitReached    AttributionReportingSourceRegistrationResult = "reportingOriginsPerSiteLimitReached"
+	AttributionReportingSourceRegistrationResultExceedsMaxChannelCapacity              AttributionReportingSourceRegistrationResult = "exceedsMaxChannelCapacity"
+	AttributionReportingSourceRegistrationResultExceedsMaxTriggerStateCardinality      AttributionReportingSourceRegistrationResult = "exceedsMaxTriggerStateCardinality"
+	AttributionReportingSourceRegistrationResultDestinationPerDayReportingLimitReached AttributionReportingSourceRegistrationResult = "destinationPerDayReportingLimitReached"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -774,6 +775,8 @@ func (t *AttributionReportingSourceRegistrationResult) UnmarshalEasyJSON(in *jle
 		*t = AttributionReportingSourceRegistrationResultExceedsMaxChannelCapacity
 	case AttributionReportingSourceRegistrationResultExceedsMaxTriggerStateCardinality:
 		*t = AttributionReportingSourceRegistrationResultExceedsMaxTriggerStateCardinality
+	case AttributionReportingSourceRegistrationResultDestinationPerDayReportingLimitReached:
+		*t = AttributionReportingSourceRegistrationResultDestinationPerDayReportingLimitReached
 
 	default:
 		in.AddError(fmt.Errorf("unknown AttributionReportingSourceRegistrationResult value: %v", v))

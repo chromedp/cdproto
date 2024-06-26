@@ -102,13 +102,13 @@ func (p *InstallParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandInstall, p, nil)
 }
 
-// UninstallParams uninstals the given manifest_id and closes any opened app
+// UninstallParams uninstalls the given manifest_id and closes any opened app
 // windows.
 type UninstallParams struct {
 	ManifestID string `json:"manifestId"`
 }
 
-// Uninstall uninstals the given manifest_id and closes any opened app
+// Uninstall uninstalls the given manifest_id and closes any opened app
 // windows.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/PWA#method-uninstall
@@ -128,18 +128,18 @@ func (p *UninstallParams) Do(ctx context.Context) (err error) {
 }
 
 // LaunchParams launches the installed web app, or an url in the same web app
-// instead of the default start url if it is provided. Returns a tab / web
-// contents based Target.TargetID which can be used to attach to via
-// Target.attachToTarget or similar APIs.
+// instead of the default start url if it is provided. Returns a page
+// Target.TargetID which can be used to attach to via Target.attachToTarget or
+// similar APIs.
 type LaunchParams struct {
 	ManifestID string `json:"manifestId"`
 	URL        string `json:"url,omitempty"`
 }
 
 // Launch launches the installed web app, or an url in the same web app
-// instead of the default start url if it is provided. Returns a tab / web
-// contents based Target.TargetID which can be used to attach to via
-// Target.attachToTarget or similar APIs.
+// instead of the default start url if it is provided. Returns a page
+// Target.TargetID which can be used to attach to via Target.attachToTarget or
+// similar APIs.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/PWA#method-launch
 //
@@ -181,16 +181,15 @@ func (p *LaunchParams) Do(ctx context.Context) (targetID target.ID, err error) {
 
 // LaunchFilesInAppParams opens one or more local files from an installed web
 // app identified by its manifestId. The web app needs to have file handlers
-// registered to process the files. The API returns one or more tabs / web
-// contents' based Target.TargetIDs which can be used to attach to via
-// Target.attachToTarget or similar APIs. If some files in the parameters cannot
-// be handled by the web app, they will be ignored. If none of the files can be
-// handled, this API returns an error. If no files provided as the parameter,
-// this API also returns an error. According to the definition of the file
-// handlers in the manifest file, one Target.TargetID may represent a tab
-// handling one or more files. The order of the returned Target.TargetIDs is
-// also not guaranteed. TODO(crbug.com/339454034): Check the existences of the
-// input files.
+// registered to process the files. The API returns one or more page
+// Target.TargetIDs which can be used to attach to via Target.attachToTarget or
+// similar APIs. If some files in the parameters cannot be handled by the web
+// app, they will be ignored. If none of the files can be handled, this API
+// returns an error. If no files are provided as the parameter, this API also
+// returns an error. According to the definition of the file handlers in the
+// manifest file, one Target.TargetID may represent a page handling one or more
+// files. The order of the returned Target.TargetIDs is not guaranteed.
+// TODO(crbug.com/339454034): Check the existences of the input files.
 type LaunchFilesInAppParams struct {
 	ManifestID string   `json:"manifestId"`
 	Files      []string `json:"files"`
@@ -198,16 +197,15 @@ type LaunchFilesInAppParams struct {
 
 // LaunchFilesInApp opens one or more local files from an installed web app
 // identified by its manifestId. The web app needs to have file handlers
-// registered to process the files. The API returns one or more tabs / web
-// contents' based Target.TargetIDs which can be used to attach to via
-// Target.attachToTarget or similar APIs. If some files in the parameters cannot
-// be handled by the web app, they will be ignored. If none of the files can be
-// handled, this API returns an error. If no files provided as the parameter,
-// this API also returns an error. According to the definition of the file
-// handlers in the manifest file, one Target.TargetID may represent a tab
-// handling one or more files. The order of the returned Target.TargetIDs is
-// also not guaranteed. TODO(crbug.com/339454034): Check the existences of the
-// input files.
+// registered to process the files. The API returns one or more page
+// Target.TargetIDs which can be used to attach to via Target.attachToTarget or
+// similar APIs. If some files in the parameters cannot be handled by the web
+// app, they will be ignored. If none of the files can be handled, this API
+// returns an error. If no files are provided as the parameter, this API also
+// returns an error. According to the definition of the file handlers in the
+// manifest file, one Target.TargetID may represent a page handling one or more
+// files. The order of the returned Target.TargetIDs is not guaranteed.
+// TODO(crbug.com/339454034): Check the existences of the input files.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/PWA#method-launchFilesInApp
 //
@@ -243,11 +241,94 @@ func (p *LaunchFilesInAppParams) Do(ctx context.Context) (targetIDs []target.ID,
 	return res.TargetIDs, nil
 }
 
+// OpenCurrentPageInAppParams opens the current page in its web app
+// identified by the manifest id, needs to be called on a page target. This
+// function returns immediately without waiting for the app to finish loading.
+type OpenCurrentPageInAppParams struct {
+	ManifestID string `json:"manifestId"`
+}
+
+// OpenCurrentPageInApp opens the current page in its web app identified by
+// the manifest id, needs to be called on a page target. This function returns
+// immediately without waiting for the app to finish loading.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/PWA#method-openCurrentPageInApp
+//
+// parameters:
+//
+//	manifestID
+func OpenCurrentPageInApp(manifestID string) *OpenCurrentPageInAppParams {
+	return &OpenCurrentPageInAppParams{
+		ManifestID: manifestID,
+	}
+}
+
+// Do executes PWA.openCurrentPageInApp against the provided context.
+func (p *OpenCurrentPageInAppParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandOpenCurrentPageInApp, p, nil)
+}
+
+// ChangeAppUserSettingsParams changes user settings of the web app
+// identified by its manifestId. If the app was not installed, this command
+// returns an error. Unset parameters will be ignored; unrecognized values will
+// cause an error. Unlike the ones defined in the manifest files of the web
+// apps, these settings are provided by the browser and controlled by the users,
+// they impact the way the browser handling the web apps. See the comment of
+// each parameter.
+type ChangeAppUserSettingsParams struct {
+	ManifestID    string      `json:"manifestId"`
+	LinkCapturing bool        `json:"linkCapturing,omitempty"` // If user allows the links clicked on by the user in the app's scope, or extended scope if the manifest has scope extensions and the flags DesktopPWAsLinkCapturingWithScopeExtensions and WebAppEnableScopeExtensions are enabled.  Note, the API does not support resetting the linkCapturing to the initial value, uninstalling and installing the web app again will reset it.  TODO(crbug.com/339453269): Setting this value on ChromeOS is not supported yet.
+	DisplayMode   DisplayMode `json:"displayMode,omitempty"`
+}
+
+// ChangeAppUserSettings changes user settings of the web app identified by
+// its manifestId. If the app was not installed, this command returns an error.
+// Unset parameters will be ignored; unrecognized values will cause an error.
+// Unlike the ones defined in the manifest files of the web apps, these settings
+// are provided by the browser and controlled by the users, they impact the way
+// the browser handling the web apps. See the comment of each parameter.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/PWA#method-changeAppUserSettings
+//
+// parameters:
+//
+//	manifestID
+func ChangeAppUserSettings(manifestID string) *ChangeAppUserSettingsParams {
+	return &ChangeAppUserSettingsParams{
+		ManifestID: manifestID,
+	}
+}
+
+// WithLinkCapturing if user allows the links clicked on by the user in the
+// app's scope, or extended scope if the manifest has scope extensions and the
+// flags DesktopPWAsLinkCapturingWithScopeExtensions and
+// WebAppEnableScopeExtensions are enabled. Note, the API does not support
+// resetting the linkCapturing to the initial value, uninstalling and installing
+// the web app again will reset it. TODO(crbug.com/339453269): Setting this
+// value on ChromeOS is not supported yet.
+func (p ChangeAppUserSettingsParams) WithLinkCapturing(linkCapturing bool) *ChangeAppUserSettingsParams {
+	p.LinkCapturing = linkCapturing
+	return &p
+}
+
+// WithDisplayMode [no description].
+func (p ChangeAppUserSettingsParams) WithDisplayMode(displayMode DisplayMode) *ChangeAppUserSettingsParams {
+	p.DisplayMode = displayMode
+	return &p
+}
+
+// Do executes PWA.changeAppUserSettings against the provided context.
+func (p *ChangeAppUserSettingsParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandChangeAppUserSettings, p, nil)
+}
+
 // Command names.
 const (
-	CommandGetOsAppState    = "PWA.getOsAppState"
-	CommandInstall          = "PWA.install"
-	CommandUninstall        = "PWA.uninstall"
-	CommandLaunch           = "PWA.launch"
-	CommandLaunchFilesInApp = "PWA.launchFilesInApp"
+	CommandGetOsAppState         = "PWA.getOsAppState"
+	CommandInstall               = "PWA.install"
+	CommandUninstall             = "PWA.uninstall"
+	CommandLaunch                = "PWA.launch"
+	CommandLaunchFilesInApp      = "PWA.launchFilesInApp"
+	CommandOpenCurrentPageInApp  = "PWA.openCurrentPageInApp"
+	CommandChangeAppUserSettings = "PWA.changeAppUserSettings"
 )

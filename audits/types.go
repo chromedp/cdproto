@@ -440,11 +440,13 @@ func (t BlockedByResponseReason) String() string {
 
 // BlockedByResponseReason values.
 const (
-	BlockedByResponseReasonCoepFrameResourceNeedsCoepHeader                  BlockedByResponseReason = "CoepFrameResourceNeedsCoepHeader"
-	BlockedByResponseReasonCoopSandboxedIFrameCannotNavigateToCoopPage       BlockedByResponseReason = "CoopSandboxedIFrameCannotNavigateToCoopPage"
-	BlockedByResponseReasonCorpNotSameOrigin                                 BlockedByResponseReason = "CorpNotSameOrigin"
-	BlockedByResponseReasonCorpNotSameOriginAfterDefaultedToSameOriginByCoep BlockedByResponseReason = "CorpNotSameOriginAfterDefaultedToSameOriginByCoep"
-	BlockedByResponseReasonCorpNotSameSite                                   BlockedByResponseReason = "CorpNotSameSite"
+	BlockedByResponseReasonCoepFrameResourceNeedsCoepHeader                        BlockedByResponseReason = "CoepFrameResourceNeedsCoepHeader"
+	BlockedByResponseReasonCoopSandboxedIFrameCannotNavigateToCoopPage             BlockedByResponseReason = "CoopSandboxedIFrameCannotNavigateToCoopPage"
+	BlockedByResponseReasonCorpNotSameOrigin                                       BlockedByResponseReason = "CorpNotSameOrigin"
+	BlockedByResponseReasonCorpNotSameOriginAfterDefaultedToSameOriginByCoep       BlockedByResponseReason = "CorpNotSameOriginAfterDefaultedToSameOriginByCoep"
+	BlockedByResponseReasonCorpNotSameOriginAfterDefaultedToSameOriginByDip        BlockedByResponseReason = "CorpNotSameOriginAfterDefaultedToSameOriginByDip"
+	BlockedByResponseReasonCorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip BlockedByResponseReason = "CorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip"
+	BlockedByResponseReasonCorpNotSameSite                                         BlockedByResponseReason = "CorpNotSameSite"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -469,6 +471,10 @@ func (t *BlockedByResponseReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = BlockedByResponseReasonCorpNotSameOrigin
 	case BlockedByResponseReasonCorpNotSameOriginAfterDefaultedToSameOriginByCoep:
 		*t = BlockedByResponseReasonCorpNotSameOriginAfterDefaultedToSameOriginByCoep
+	case BlockedByResponseReasonCorpNotSameOriginAfterDefaultedToSameOriginByDip:
+		*t = BlockedByResponseReasonCorpNotSameOriginAfterDefaultedToSameOriginByDip
+	case BlockedByResponseReasonCorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip:
+		*t = BlockedByResponseReasonCorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip
 	case BlockedByResponseReasonCorpNotSameSite:
 		*t = BlockedByResponseReasonCorpNotSameSite
 
@@ -1207,7 +1213,9 @@ const (
 	FederatedAuthRequestIssueReasonClientMetadataNoResponse         FederatedAuthRequestIssueReason = "ClientMetadataNoResponse"
 	FederatedAuthRequestIssueReasonClientMetadataInvalidResponse    FederatedAuthRequestIssueReason = "ClientMetadataInvalidResponse"
 	FederatedAuthRequestIssueReasonClientMetadataInvalidContentType FederatedAuthRequestIssueReason = "ClientMetadataInvalidContentType"
+	FederatedAuthRequestIssueReasonIdpNotPotentiallyTrustworthy     FederatedAuthRequestIssueReason = "IdpNotPotentiallyTrustworthy"
 	FederatedAuthRequestIssueReasonDisabledInSettings               FederatedAuthRequestIssueReason = "DisabledInSettings"
+	FederatedAuthRequestIssueReasonDisabledInFlags                  FederatedAuthRequestIssueReason = "DisabledInFlags"
 	FederatedAuthRequestIssueReasonErrorFetchingSignin              FederatedAuthRequestIssueReason = "ErrorFetchingSignin"
 	FederatedAuthRequestIssueReasonInvalidSigninResponse            FederatedAuthRequestIssueReason = "InvalidSigninResponse"
 	FederatedAuthRequestIssueReasonAccountsHTTPNotFound             FederatedAuthRequestIssueReason = "AccountsHttpNotFound"
@@ -1230,7 +1238,9 @@ const (
 	FederatedAuthRequestIssueReasonNotSignedInWithIdp               FederatedAuthRequestIssueReason = "NotSignedInWithIdp"
 	FederatedAuthRequestIssueReasonMissingTransientUserActivation   FederatedAuthRequestIssueReason = "MissingTransientUserActivation"
 	FederatedAuthRequestIssueReasonReplacedByButtonMode             FederatedAuthRequestIssueReason = "ReplacedByButtonMode"
+	FederatedAuthRequestIssueReasonInvalidFieldsSpecified           FederatedAuthRequestIssueReason = "InvalidFieldsSpecified"
 	FederatedAuthRequestIssueReasonRelyingPartyOriginIsOpaque       FederatedAuthRequestIssueReason = "RelyingPartyOriginIsOpaque"
+	FederatedAuthRequestIssueReasonTypeNotMatching                  FederatedAuthRequestIssueReason = "TypeNotMatching"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -1281,8 +1291,12 @@ func (t *FederatedAuthRequestIssueReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = FederatedAuthRequestIssueReasonClientMetadataInvalidResponse
 	case FederatedAuthRequestIssueReasonClientMetadataInvalidContentType:
 		*t = FederatedAuthRequestIssueReasonClientMetadataInvalidContentType
+	case FederatedAuthRequestIssueReasonIdpNotPotentiallyTrustworthy:
+		*t = FederatedAuthRequestIssueReasonIdpNotPotentiallyTrustworthy
 	case FederatedAuthRequestIssueReasonDisabledInSettings:
 		*t = FederatedAuthRequestIssueReasonDisabledInSettings
+	case FederatedAuthRequestIssueReasonDisabledInFlags:
+		*t = FederatedAuthRequestIssueReasonDisabledInFlags
 	case FederatedAuthRequestIssueReasonErrorFetchingSignin:
 		*t = FederatedAuthRequestIssueReasonErrorFetchingSignin
 	case FederatedAuthRequestIssueReasonInvalidSigninResponse:
@@ -1327,8 +1341,12 @@ func (t *FederatedAuthRequestIssueReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = FederatedAuthRequestIssueReasonMissingTransientUserActivation
 	case FederatedAuthRequestIssueReasonReplacedByButtonMode:
 		*t = FederatedAuthRequestIssueReasonReplacedByButtonMode
+	case FederatedAuthRequestIssueReasonInvalidFieldsSpecified:
+		*t = FederatedAuthRequestIssueReasonInvalidFieldsSpecified
 	case FederatedAuthRequestIssueReasonRelyingPartyOriginIsOpaque:
 		*t = FederatedAuthRequestIssueReasonRelyingPartyOriginIsOpaque
+	case FederatedAuthRequestIssueReasonTypeNotMatching:
+		*t = FederatedAuthRequestIssueReasonTypeNotMatching
 
 	default:
 		in.AddError(fmt.Errorf("unknown FederatedAuthRequestIssueReason value: %v", v))

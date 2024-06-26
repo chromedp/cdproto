@@ -511,6 +511,7 @@ const (
 	EventNetworkResponseReceivedExtraInfo                  = "Network.responseReceivedExtraInfo"
 	EventNetworkResponseReceivedEarlyHints                 = "Network.responseReceivedEarlyHints"
 	EventNetworkTrustTokenOperationDone                    = "Network.trustTokenOperationDone"
+	EventNetworkPolicyUpdated                              = "Network.policyUpdated"
 	EventNetworkSubresourceWebBundleMetadataReceived       = "Network.subresourceWebBundleMetadataReceived"
 	EventNetworkSubresourceWebBundleMetadataError          = "Network.subresourceWebBundleMetadataError"
 	EventNetworkSubresourceWebBundleInnerResponseParsed    = "Network.subresourceWebBundleInnerResponseParsed"
@@ -554,6 +555,8 @@ const (
 	CommandPWAUninstall                                    = pwa.CommandUninstall
 	CommandPWALaunch                                       = pwa.CommandLaunch
 	CommandPWALaunchFilesInApp                             = pwa.CommandLaunchFilesInApp
+	CommandPWAOpenCurrentPageInApp                         = pwa.CommandOpenCurrentPageInApp
+	CommandPWAChangeAppUserSettings                        = pwa.CommandChangeAppUserSettings
 	CommandPageAddScriptToEvaluateOnNewDocument            = page.CommandAddScriptToEvaluateOnNewDocument
 	CommandPageBringToFront                                = page.CommandBringToFront
 	CommandPageCaptureScreenshot                           = page.CommandCaptureScreenshot
@@ -2134,6 +2137,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case EventNetworkTrustTokenOperationDone:
 		v = new(network.EventTrustTokenOperationDone)
 
+	case EventNetworkPolicyUpdated:
+		v = new(network.EventPolicyUpdated)
+
 	case EventNetworkSubresourceWebBundleMetadataReceived:
 		v = new(network.EventSubresourceWebBundleMetadataReceived)
 
@@ -2262,6 +2268,12 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandPWALaunchFilesInApp:
 		v = new(pwa.LaunchFilesInAppReturns)
+
+	case CommandPWAOpenCurrentPageInApp:
+		return emptyVal, nil
+
+	case CommandPWAChangeAppUserSettings:
+		return emptyVal, nil
 
 	case CommandPageAddScriptToEvaluateOnNewDocument:
 		v = new(page.AddScriptToEvaluateOnNewDocumentReturns)

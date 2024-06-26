@@ -463,6 +463,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoBrowser5(in *jlexer.Lexer, ou
 			out.UserVisibleOnly = bool(in.Bool())
 		case "allowWithoutSanitization":
 			out.AllowWithoutSanitization = bool(in.Bool())
+		case "allowWithoutGesture":
+			out.AllowWithoutGesture = bool(in.Bool())
 		case "panTiltZoom":
 			out.PanTiltZoom = bool(in.Bool())
 		default:
@@ -498,6 +500,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoBrowser5(out *jwriter.Writer,
 		const prefix string = ",\"allowWithoutSanitization\":"
 		out.RawString(prefix)
 		out.Bool(bool(in.AllowWithoutSanitization))
+	}
+	if in.AllowWithoutGesture {
+		const prefix string = ",\"allowWithoutGesture\":"
+		out.RawString(prefix)
+		out.Bool(bool(in.AllowWithoutGesture))
 	}
 	if in.PanTiltZoom {
 		const prefix string = ",\"panTiltZoom\":"
