@@ -5910,6 +5910,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoStorage69(in *jlexer.Lexer, o
 				}
 				in.Delim(']')
 			}
+		case "aggregatableFilteringIdMaxBytes":
+			out.AggregatableFilteringIDMaxBytes = int64(in.Int64())
 		case "debugReporting":
 			out.DebugReporting = bool(in.Bool())
 		case "aggregationCoordinatorOrigin":
@@ -6025,6 +6027,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage69(out *jwriter.Writer
 			}
 			out.RawByte(']')
 		}
+	}
+	{
+		const prefix string = ",\"aggregatableFilteringIdMaxBytes\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.AggregatableFilteringIDMaxBytes))
 	}
 	{
 		const prefix string = ",\"debugReporting\":"
@@ -7217,6 +7224,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoStorage78(in *jlexer.Lexer, o
 			out.Key = string(in.String())
 		case "value":
 			out.Value = float64(in.Float64())
+		case "filteringId":
+			out.FilteringID = UnsignedInt64asBase10(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -7240,6 +7249,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage78(out *jwriter.Writer
 		const prefix string = ",\"value\":"
 		out.RawString(prefix)
 		out.Float64(float64(in.Value))
+	}
+	{
+		const prefix string = ",\"filteringId\":"
+		out.RawString(prefix)
+		out.String(string(in.FilteringID))
 	}
 	out.RawByte('}')
 }

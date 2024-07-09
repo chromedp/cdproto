@@ -379,7 +379,7 @@ type GetMatchedStylesForNodeReturns struct {
 	Inherited                []*InheritedStyleEntry           `json:"inherited,omitempty"`                // A chain of inherited styles (from the immediate node parent up to the DOM tree root).
 	InheritedPseudoElements  []*InheritedPseudoElementMatches `json:"inheritedPseudoElements,omitempty"`  // A chain of inherited pseudo element styles (from the immediate node parent up to the DOM tree root).
 	CSSKeyframesRules        []*KeyframesRule                 `json:"cssKeyframesRules,omitempty"`        // A list of CSS keyframed animations matching this node.
-	CSSPositionTryRules      []*PositionTryRule               `json:"cssPositionTryRules,omitempty"`      // A list of CSS @position-try rules matching this node, based on the position-try-options property.
+	CSSPositionTryRules      []*PositionTryRule               `json:"cssPositionTryRules,omitempty"`      // A list of CSS @position-try rules matching this node, based on the position-try-fallbacks property.
 	CSSPropertyRules         []*PropertyRule                  `json:"cssPropertyRules,omitempty"`         // A list of CSS at-property rules matching this node.
 	CSSPropertyRegistrations []*PropertyRegistration          `json:"cssPropertyRegistrations,omitempty"` // A list of CSS property registrations matching this node.
 	CSSFontPaletteValuesRule *FontPaletteValuesRule           `json:"cssFontPaletteValuesRule,omitempty"` // A font-palette-values rule matching this node.
@@ -397,7 +397,7 @@ type GetMatchedStylesForNodeReturns struct {
 //	inherited - A chain of inherited styles (from the immediate node parent up to the DOM tree root).
 //	inheritedPseudoElements - A chain of inherited pseudo element styles (from the immediate node parent up to the DOM tree root).
 //	cssKeyframesRules - A list of CSS keyframed animations matching this node.
-//	cssPositionTryRules - A list of CSS @position-try rules matching this node, based on the position-try-options property.
+//	cssPositionTryRules - A list of CSS @position-try rules matching this node, based on the position-try-fallbacks property.
 //	cssPropertyRules - A list of CSS at-property rules matching this node.
 //	cssPropertyRegistrations - A list of CSS property registrations matching this node.
 //	cssFontPaletteValuesRule - A font-palette-values rule matching this node.

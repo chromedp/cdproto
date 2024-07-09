@@ -438,6 +438,7 @@ type PositionTryRule struct {
 	StyleSheetID StyleSheetID     `json:"styleSheetId,omitempty"` // The css style sheet identifier (absent for user agent stylesheet and user-specified stylesheet rules) this rule came from.
 	Origin       StyleSheetOrigin `json:"origin"`                 // Parent stylesheet's origin.
 	Style        *Style           `json:"style"`                  // Associated style declaration.
+	Active       bool             `json:"active"`
 }
 
 // KeyframesRule CSS keyframes rule representation.

@@ -4777,6 +4777,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoCss46(in *jlexer.Lexer, out *
 				}
 				(*out.Style).UnmarshalEasyJSON(in)
 			}
+		case "active":
+			out.Active = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -4818,6 +4820,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoCss46(out *jwriter.Writer, in
 		} else {
 			(*in.Style).MarshalEasyJSON(out)
 		}
+	}
+	{
+		const prefix string = ",\"active\":"
+		out.RawString(prefix)
+		out.Bool(bool(in.Active))
 	}
 	out.RawByte('}')
 }

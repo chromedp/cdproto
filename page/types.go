@@ -72,6 +72,7 @@ const (
 	PermissionsPolicyFeatureComputePressure              PermissionsPolicyFeature = "compute-pressure"
 	PermissionsPolicyFeatureCrossOriginIsolated          PermissionsPolicyFeature = "cross-origin-isolated"
 	PermissionsPolicyFeatureDeferredFetch                PermissionsPolicyFeature = "deferred-fetch"
+	PermissionsPolicyFeatureDigitalCredentialsGet        PermissionsPolicyFeature = "digital-credentials-get"
 	PermissionsPolicyFeatureDirectSockets                PermissionsPolicyFeature = "direct-sockets"
 	PermissionsPolicyFeatureDisplayCapture               PermissionsPolicyFeature = "display-capture"
 	PermissionsPolicyFeatureDocumentDomain               PermissionsPolicyFeature = "document-domain"
@@ -209,6 +210,8 @@ func (t *PermissionsPolicyFeature) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PermissionsPolicyFeatureCrossOriginIsolated
 	case PermissionsPolicyFeatureDeferredFetch:
 		*t = PermissionsPolicyFeatureDeferredFetch
+	case PermissionsPolicyFeatureDigitalCredentialsGet:
+		*t = PermissionsPolicyFeatureDigitalCredentialsGet
 	case PermissionsPolicyFeatureDirectSockets:
 		*t = PermissionsPolicyFeatureDirectSockets
 	case PermissionsPolicyFeatureDisplayCapture:

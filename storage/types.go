@@ -837,8 +837,9 @@ func (t *AttributionReportingSourceRegistrationTimeConfig) UnmarshalJSON(buf []b
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-AttributionReportingAggregatableValueDictEntry
 type AttributionReportingAggregatableValueDictEntry struct {
-	Key   string  `json:"key"`
-	Value float64 `json:"value"` // number instead of integer because not all uint32 can be represented by int
+	Key         string                `json:"key"`
+	Value       float64               `json:"value"` // number instead of integer because not all uint32 can be represented by int
+	FilteringID UnsignedInt64asBase10 `json:"filteringId"`
 }
 
 // AttributionReportingAggregatableValueEntry [no description].
@@ -880,16 +881,17 @@ type AttributionReportingAggregatableDedupKey struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-AttributionReportingTriggerRegistration
 type AttributionReportingTriggerRegistration struct {
-	Filters                      *AttributionReportingFilterPair                  `json:"filters"`
-	DebugKey                     UnsignedInt64asBase10                            `json:"debugKey,omitempty"`
-	AggregatableDedupKeys        []*AttributionReportingAggregatableDedupKey      `json:"aggregatableDedupKeys"`
-	EventTriggerData             []*AttributionReportingEventTriggerData          `json:"eventTriggerData"`
-	AggregatableTriggerData      []*AttributionReportingAggregatableTriggerData   `json:"aggregatableTriggerData"`
-	AggregatableValues           []*AttributionReportingAggregatableValueEntry    `json:"aggregatableValues"`
-	DebugReporting               bool                                             `json:"debugReporting"`
-	AggregationCoordinatorOrigin string                                           `json:"aggregationCoordinatorOrigin,omitempty"`
-	SourceRegistrationTimeConfig AttributionReportingSourceRegistrationTimeConfig `json:"sourceRegistrationTimeConfig"`
-	TriggerContextID             string                                           `json:"triggerContextId,omitempty"`
+	Filters                         *AttributionReportingFilterPair                  `json:"filters"`
+	DebugKey                        UnsignedInt64asBase10                            `json:"debugKey,omitempty"`
+	AggregatableDedupKeys           []*AttributionReportingAggregatableDedupKey      `json:"aggregatableDedupKeys"`
+	EventTriggerData                []*AttributionReportingEventTriggerData          `json:"eventTriggerData"`
+	AggregatableTriggerData         []*AttributionReportingAggregatableTriggerData   `json:"aggregatableTriggerData"`
+	AggregatableValues              []*AttributionReportingAggregatableValueEntry    `json:"aggregatableValues"`
+	AggregatableFilteringIDMaxBytes int64                                            `json:"aggregatableFilteringIdMaxBytes"`
+	DebugReporting                  bool                                             `json:"debugReporting"`
+	AggregationCoordinatorOrigin    string                                           `json:"aggregationCoordinatorOrigin,omitempty"`
+	SourceRegistrationTimeConfig    AttributionReportingSourceRegistrationTimeConfig `json:"sourceRegistrationTimeConfig"`
+	TriggerContextID                string                                           `json:"triggerContextId,omitempty"`
 }
 
 // AttributionReportingEventLevelResult [no description].

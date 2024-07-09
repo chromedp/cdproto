@@ -280,6 +280,7 @@ const (
 	PrerenderFinalStatusJavaScriptInterfaceAdded                                   PrerenderFinalStatus = "JavaScriptInterfaceAdded"
 	PrerenderFinalStatusJavaScriptInterfaceRemoved                                 PrerenderFinalStatus = "JavaScriptInterfaceRemoved"
 	PrerenderFinalStatusAllPrerenderingCanceled                                    PrerenderFinalStatus = "AllPrerenderingCanceled"
+	PrerenderFinalStatusWindowClosed                                               PrerenderFinalStatus = "WindowClosed"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -432,6 +433,8 @@ func (t *PrerenderFinalStatus) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PrerenderFinalStatusJavaScriptInterfaceRemoved
 	case PrerenderFinalStatusAllPrerenderingCanceled:
 		*t = PrerenderFinalStatusAllPrerenderingCanceled
+	case PrerenderFinalStatusWindowClosed:
+		*t = PrerenderFinalStatusWindowClosed
 
 	default:
 		in.AddError(fmt.Errorf("unknown PrerenderFinalStatus value: %v", v))

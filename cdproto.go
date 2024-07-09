@@ -35,6 +35,7 @@ import (
 	"github.com/chromedp/cdproto/extensions"
 	"github.com/chromedp/cdproto/fedcm"
 	"github.com/chromedp/cdproto/fetch"
+	"github.com/chromedp/cdproto/filesystem"
 	"github.com/chromedp/cdproto/headlessexperimental"
 	"github.com/chromedp/cdproto/heapprofiler"
 	"github.com/chromedp/cdproto/indexeddb"
@@ -378,6 +379,7 @@ const (
 	CommandFetchTakeResponseBodyAsStream                   = fetch.CommandTakeResponseBodyAsStream
 	EventFetchRequestPaused                                = "Fetch.requestPaused"
 	EventFetchAuthRequired                                 = "Fetch.authRequired"
+	CommandFileSystemGetDirectory                          = filesystem.CommandGetDirectory
 	CommandHeadlessExperimentalBeginFrame                  = headlessexperimental.CommandBeginFrame
 	CommandHeapProfilerAddInspectedHeapObject              = heapprofiler.CommandAddInspectedHeapObject
 	CommandHeapProfilerCollectGarbage                      = heapprofiler.CommandCollectGarbage
@@ -1737,6 +1739,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case EventFetchAuthRequired:
 		v = new(fetch.EventAuthRequired)
+
+	case CommandFileSystemGetDirectory:
+		v = new(filesystem.GetDirectoryReturns)
 
 	case CommandHeadlessExperimentalBeginFrame:
 		v = new(headlessexperimental.BeginFrameReturns)
