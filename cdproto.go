@@ -342,6 +342,8 @@ const (
 	CommandEmulationGetOverriddenSensorInformation         = emulation.CommandGetOverriddenSensorInformation
 	CommandEmulationSetSensorOverrideEnabled               = emulation.CommandSetSensorOverrideEnabled
 	CommandEmulationSetSensorOverrideReadings              = emulation.CommandSetSensorOverrideReadings
+	CommandEmulationSetPressureSourceOverrideEnabled       = emulation.CommandSetPressureSourceOverrideEnabled
+	CommandEmulationSetPressureStateOverride               = emulation.CommandSetPressureStateOverride
 	CommandEmulationSetIdleOverride                        = emulation.CommandSetIdleOverride
 	CommandEmulationClearIdleOverride                      = emulation.CommandClearIdleOverride
 	CommandEmulationSetPageScaleFactor                     = emulation.CommandSetPageScaleFactor
@@ -1627,6 +1629,12 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		return emptyVal, nil
 
 	case CommandEmulationSetSensorOverrideReadings:
+		return emptyVal, nil
+
+	case CommandEmulationSetPressureSourceOverrideEnabled:
+		return emptyVal, nil
+
+	case CommandEmulationSetPressureStateOverride:
 		return emptyVal, nil
 
 	case CommandEmulationSetIdleOverride:

@@ -6707,6 +6707,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoCss63(in *jlexer.Lexer, out *
 				}
 				in.Delim(']')
 			}
+		case "activePositionFallbackIndex":
+			out.ActivePositionFallbackIndex = int64(in.Int64())
 		case "cssPropertyRules":
 			if in.IsNull() {
 				in.Skip()
@@ -6948,6 +6950,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoCss63(out *jwriter.Writer, in
 			}
 			out.RawByte(']')
 		}
+	}
+	if in.ActivePositionFallbackIndex != 0 {
+		const prefix string = ",\"activePositionFallbackIndex\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Int64(int64(in.ActivePositionFallbackIndex))
 	}
 	if len(in.CSSPropertyRules) != 0 {
 		const prefix string = ",\"cssPropertyRules\":"

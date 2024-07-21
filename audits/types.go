@@ -1016,7 +1016,6 @@ func (t GenericIssueErrorType) String() string {
 
 // GenericIssueErrorType values.
 const (
-	GenericIssueErrorTypeCrossOriginPortalPostMessageError                          GenericIssueErrorType = "CrossOriginPortalPostMessageError"
 	GenericIssueErrorTypeFormLabelForNameError                                      GenericIssueErrorType = "FormLabelForNameError"
 	GenericIssueErrorTypeFormDuplicateIDForInputError                               GenericIssueErrorType = "FormDuplicateIdForInputError"
 	GenericIssueErrorTypeFormInputWithNoLabelError                                  GenericIssueErrorType = "FormInputWithNoLabelError"
@@ -1044,8 +1043,6 @@ func (t GenericIssueErrorType) MarshalJSON() ([]byte, error) {
 func (t *GenericIssueErrorType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 	v := in.String()
 	switch GenericIssueErrorType(v) {
-	case GenericIssueErrorTypeCrossOriginPortalPostMessageError:
-		*t = GenericIssueErrorTypeCrossOriginPortalPostMessageError
 	case GenericIssueErrorTypeFormLabelForNameError:
 		*t = GenericIssueErrorTypeFormLabelForNameError
 	case GenericIssueErrorTypeFormDuplicateIDForInputError:

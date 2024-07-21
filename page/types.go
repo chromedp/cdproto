@@ -1186,7 +1186,6 @@ const (
 	BackForwardCacheNotRestoredReasonPrinting                                                 BackForwardCacheNotRestoredReason = "Printing"
 	BackForwardCacheNotRestoredReasonWebDatabase                                              BackForwardCacheNotRestoredReason = "WebDatabase"
 	BackForwardCacheNotRestoredReasonPictureInPicture                                         BackForwardCacheNotRestoredReason = "PictureInPicture"
-	BackForwardCacheNotRestoredReasonPortal                                                   BackForwardCacheNotRestoredReason = "Portal"
 	BackForwardCacheNotRestoredReasonSpeechRecognizer                                         BackForwardCacheNotRestoredReason = "SpeechRecognizer"
 	BackForwardCacheNotRestoredReasonIdleManager                                              BackForwardCacheNotRestoredReason = "IdleManager"
 	BackForwardCacheNotRestoredReasonPaymentManager                                           BackForwardCacheNotRestoredReason = "PaymentManager"
@@ -1431,8 +1430,6 @@ func (t *BackForwardCacheNotRestoredReason) UnmarshalEasyJSON(in *jlexer.Lexer) 
 		*t = BackForwardCacheNotRestoredReasonWebDatabase
 	case BackForwardCacheNotRestoredReasonPictureInPicture:
 		*t = BackForwardCacheNotRestoredReasonPictureInPicture
-	case BackForwardCacheNotRestoredReasonPortal:
-		*t = BackForwardCacheNotRestoredReasonPortal
 	case BackForwardCacheNotRestoredReasonSpeechRecognizer:
 		*t = BackForwardCacheNotRestoredReasonSpeechRecognizer
 	case BackForwardCacheNotRestoredReasonIdleManager:

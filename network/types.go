@@ -1908,6 +1908,7 @@ const (
 	CrossOriginOpenerPolicyValueUnsafeNone                 CrossOriginOpenerPolicyValue = "UnsafeNone"
 	CrossOriginOpenerPolicyValueSameOriginPlusCoep         CrossOriginOpenerPolicyValue = "SameOriginPlusCoep"
 	CrossOriginOpenerPolicyValueRestrictPropertiesPlusCoep CrossOriginOpenerPolicyValue = "RestrictPropertiesPlusCoep"
+	CrossOriginOpenerPolicyValueNoopenerAllowPopups        CrossOriginOpenerPolicyValue = "NoopenerAllowPopups"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -1936,6 +1937,8 @@ func (t *CrossOriginOpenerPolicyValue) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = CrossOriginOpenerPolicyValueSameOriginPlusCoep
 	case CrossOriginOpenerPolicyValueRestrictPropertiesPlusCoep:
 		*t = CrossOriginOpenerPolicyValueRestrictPropertiesPlusCoep
+	case CrossOriginOpenerPolicyValueNoopenerAllowPopups:
+		*t = CrossOriginOpenerPolicyValueNoopenerAllowPopups
 
 	default:
 		in.AddError(fmt.Errorf("unknown CrossOriginOpenerPolicyValue value: %v", v))

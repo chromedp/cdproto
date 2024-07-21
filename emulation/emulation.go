@@ -610,6 +610,75 @@ func (p *SetSensorOverrideReadingsParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandSetSensorOverrideReadings, p, nil)
 }
 
+// SetPressureSourceOverrideEnabledParams overrides a pressure source of a
+// given type, as used by the Compute Pressure API, so that updates to
+// PressureObserver.observe() are provided via setPressureStateOverride instead
+// of being retrieved from platform-provided telemetry data.
+type SetPressureSourceOverrideEnabledParams struct {
+	Enabled  bool              `json:"enabled"`
+	Source   PressureSource    `json:"source"`
+	Metadata *PressureMetadata `json:"metadata,omitempty"`
+}
+
+// SetPressureSourceOverrideEnabled overrides a pressure source of a given
+// type, as used by the Compute Pressure API, so that updates to
+// PressureObserver.observe() are provided via setPressureStateOverride instead
+// of being retrieved from platform-provided telemetry data.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#method-setPressureSourceOverrideEnabled
+//
+// parameters:
+//
+//	enabled
+//	source
+func SetPressureSourceOverrideEnabled(enabled bool, source PressureSource) *SetPressureSourceOverrideEnabledParams {
+	return &SetPressureSourceOverrideEnabledParams{
+		Enabled: enabled,
+		Source:  source,
+	}
+}
+
+// WithMetadata [no description].
+func (p SetPressureSourceOverrideEnabledParams) WithMetadata(metadata *PressureMetadata) *SetPressureSourceOverrideEnabledParams {
+	p.Metadata = metadata
+	return &p
+}
+
+// Do executes Emulation.setPressureSourceOverrideEnabled against the provided context.
+func (p *SetPressureSourceOverrideEnabledParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetPressureSourceOverrideEnabled, p, nil)
+}
+
+// SetPressureStateOverrideParams provides a given pressure state that will
+// be processed and eventually be delivered to PressureObserver users. |source|
+// must have been previously overridden by setPressureSourceOverrideEnabled.
+type SetPressureStateOverrideParams struct {
+	Source PressureSource `json:"source"`
+	State  PressureState  `json:"state"`
+}
+
+// SetPressureStateOverride provides a given pressure state that will be
+// processed and eventually be delivered to PressureObserver users. |source|
+// must have been previously overridden by setPressureSourceOverrideEnabled.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#method-setPressureStateOverride
+//
+// parameters:
+//
+//	source
+//	state
+func SetPressureStateOverride(source PressureSource, state PressureState) *SetPressureStateOverrideParams {
+	return &SetPressureStateOverrideParams{
+		Source: source,
+		State:  state,
+	}
+}
+
+// Do executes Emulation.setPressureStateOverride against the provided context.
+func (p *SetPressureStateOverrideParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetPressureStateOverride, p, nil)
+}
+
 // SetIdleOverrideParams overrides the Idle state.
 type SetIdleOverrideParams struct {
 	IsUserActive     bool `json:"isUserActive"`     // Mock isUserActive
@@ -987,6 +1056,8 @@ const (
 	CommandGetOverriddenSensorInformation    = "Emulation.getOverriddenSensorInformation"
 	CommandSetSensorOverrideEnabled          = "Emulation.setSensorOverrideEnabled"
 	CommandSetSensorOverrideReadings         = "Emulation.setSensorOverrideReadings"
+	CommandSetPressureSourceOverrideEnabled  = "Emulation.setPressureSourceOverrideEnabled"
+	CommandSetPressureStateOverride          = "Emulation.setPressureStateOverride"
 	CommandSetIdleOverride                   = "Emulation.setIdleOverride"
 	CommandClearIdleOverride                 = "Emulation.clearIdleOverride"
 	CommandSetPageScaleFactor                = "Emulation.setPageScaleFactor"
