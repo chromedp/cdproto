@@ -361,6 +361,7 @@ const (
 	CommandEventBreakpointsRemoveInstrumentationBreakpoint = eventbreakpoints.CommandRemoveInstrumentationBreakpoint
 	CommandEventBreakpointsDisable                         = eventbreakpoints.CommandDisable
 	CommandExtensionsLoadUnpacked                          = extensions.CommandLoadUnpacked
+	CommandExtensionsGetStorageItems                       = extensions.CommandGetStorageItems
 	CommandFedCmEnable                                     = fedcm.CommandEnable
 	CommandFedCmDisable                                    = fedcm.CommandDisable
 	CommandFedCmSelectAccount                              = fedcm.CommandSelectAccount
@@ -1687,6 +1688,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandExtensionsLoadUnpacked:
 		v = new(extensions.LoadUnpackedReturns)
+
+	case CommandExtensionsGetStorageItems:
+		v = new(extensions.GetStorageItemsReturns)
 
 	case CommandFedCmEnable:
 		return emptyVal, nil

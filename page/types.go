@@ -37,6 +37,7 @@ func (t PermissionsPolicyFeature) String() string {
 // PermissionsPolicyFeature values.
 const (
 	PermissionsPolicyFeatureAccelerometer                PermissionsPolicyFeature = "accelerometer"
+	PermissionsPolicyFeatureAllScreensCapture            PermissionsPolicyFeature = "all-screens-capture"
 	PermissionsPolicyFeatureAmbientLightSensor           PermissionsPolicyFeature = "ambient-light-sensor"
 	PermissionsPolicyFeatureAttributionReporting         PermissionsPolicyFeature = "attribution-reporting"
 	PermissionsPolicyFeatureAutoplay                     PermissionsPolicyFeature = "autoplay"
@@ -93,6 +94,7 @@ const (
 	PermissionsPolicyFeatureKeyboardMap                  PermissionsPolicyFeature = "keyboard-map"
 	PermissionsPolicyFeatureLocalFonts                   PermissionsPolicyFeature = "local-fonts"
 	PermissionsPolicyFeatureMagnetometer                 PermissionsPolicyFeature = "magnetometer"
+	PermissionsPolicyFeatureMediaPlaybackWhileNotVisible PermissionsPolicyFeature = "media-playback-while-not-visible"
 	PermissionsPolicyFeatureMicrophone                   PermissionsPolicyFeature = "microphone"
 	PermissionsPolicyFeatureMidi                         PermissionsPolicyFeature = "midi"
 	PermissionsPolicyFeatureOtpCredentials               PermissionsPolicyFeature = "otp-credentials"
@@ -140,6 +142,8 @@ func (t *PermissionsPolicyFeature) UnmarshalEasyJSON(in *jlexer.Lexer) {
 	switch PermissionsPolicyFeature(v) {
 	case PermissionsPolicyFeatureAccelerometer:
 		*t = PermissionsPolicyFeatureAccelerometer
+	case PermissionsPolicyFeatureAllScreensCapture:
+		*t = PermissionsPolicyFeatureAllScreensCapture
 	case PermissionsPolicyFeatureAmbientLightSensor:
 		*t = PermissionsPolicyFeatureAmbientLightSensor
 	case PermissionsPolicyFeatureAttributionReporting:
@@ -252,6 +256,8 @@ func (t *PermissionsPolicyFeature) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PermissionsPolicyFeatureLocalFonts
 	case PermissionsPolicyFeatureMagnetometer:
 		*t = PermissionsPolicyFeatureMagnetometer
+	case PermissionsPolicyFeatureMediaPlaybackWhileNotVisible:
+		*t = PermissionsPolicyFeatureMediaPlaybackWhileNotVisible
 	case PermissionsPolicyFeatureMicrophone:
 		*t = PermissionsPolicyFeatureMicrophone
 	case PermissionsPolicyFeatureMidi:
