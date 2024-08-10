@@ -7774,6 +7774,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoPage80(in *jlexer.Lexer, out 
 			(out.FrameID).UnmarshalEasyJSON(in)
 		case "url":
 			out.URL = string(in.String())
+		case "navigationType":
+			(out.NavigationType).UnmarshalEasyJSON(in)
 		default:
 			in.SkipRecursive()
 		}
@@ -7797,6 +7799,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoPage80(out *jwriter.Writer, i
 		const prefix string = ",\"url\":"
 		out.RawString(prefix)
 		out.String(string(in.URL))
+	}
+	{
+		const prefix string = ",\"navigationType\":"
+		out.RawString(prefix)
+		(in.NavigationType).MarshalEasyJSON(out)
 	}
 	out.RawByte('}')
 }

@@ -155,8 +155,9 @@ type EventLoadEventFired struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-navigatedWithinDocument
 type EventNavigatedWithinDocument struct {
-	FrameID cdp.FrameID `json:"frameId"` // Id of the frame.
-	URL     string      `json:"url"`     // Frame's new url.
+	FrameID        cdp.FrameID                           `json:"frameId"`        // Id of the frame.
+	URL            string                                `json:"url"`            // Frame's new url.
+	NavigationType NavigatedWithinDocumentNavigationType `json:"navigationType"` // Navigation type
 }
 
 // EventScreencastFrame compressed image data requested by the

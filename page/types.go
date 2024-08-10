@@ -683,14 +683,16 @@ func (t ClientNavigationReason) String() string {
 
 // ClientNavigationReason values.
 const (
-	ClientNavigationReasonFormSubmissionGet     ClientNavigationReason = "formSubmissionGet"
-	ClientNavigationReasonFormSubmissionPost    ClientNavigationReason = "formSubmissionPost"
-	ClientNavigationReasonHTTPHeaderRefresh     ClientNavigationReason = "httpHeaderRefresh"
-	ClientNavigationReasonScriptInitiated       ClientNavigationReason = "scriptInitiated"
-	ClientNavigationReasonMetaTagRefresh        ClientNavigationReason = "metaTagRefresh"
-	ClientNavigationReasonPageBlockInterstitial ClientNavigationReason = "pageBlockInterstitial"
-	ClientNavigationReasonReload                ClientNavigationReason = "reload"
-	ClientNavigationReasonAnchorClick           ClientNavigationReason = "anchorClick"
+	ClientNavigationReasonAnchorClick            ClientNavigationReason = "anchorClick"
+	ClientNavigationReasonFormSubmissionGet      ClientNavigationReason = "formSubmissionGet"
+	ClientNavigationReasonFormSubmissionPost     ClientNavigationReason = "formSubmissionPost"
+	ClientNavigationReasonHTTPHeaderRefresh      ClientNavigationReason = "httpHeaderRefresh"
+	ClientNavigationReasonInitialFrameNavigation ClientNavigationReason = "initialFrameNavigation"
+	ClientNavigationReasonMetaTagRefresh         ClientNavigationReason = "metaTagRefresh"
+	ClientNavigationReasonOther                  ClientNavigationReason = "other"
+	ClientNavigationReasonPageBlockInterstitial  ClientNavigationReason = "pageBlockInterstitial"
+	ClientNavigationReasonReload                 ClientNavigationReason = "reload"
+	ClientNavigationReasonScriptInitiated        ClientNavigationReason = "scriptInitiated"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -707,22 +709,26 @@ func (t ClientNavigationReason) MarshalJSON() ([]byte, error) {
 func (t *ClientNavigationReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 	v := in.String()
 	switch ClientNavigationReason(v) {
+	case ClientNavigationReasonAnchorClick:
+		*t = ClientNavigationReasonAnchorClick
 	case ClientNavigationReasonFormSubmissionGet:
 		*t = ClientNavigationReasonFormSubmissionGet
 	case ClientNavigationReasonFormSubmissionPost:
 		*t = ClientNavigationReasonFormSubmissionPost
 	case ClientNavigationReasonHTTPHeaderRefresh:
 		*t = ClientNavigationReasonHTTPHeaderRefresh
-	case ClientNavigationReasonScriptInitiated:
-		*t = ClientNavigationReasonScriptInitiated
+	case ClientNavigationReasonInitialFrameNavigation:
+		*t = ClientNavigationReasonInitialFrameNavigation
 	case ClientNavigationReasonMetaTagRefresh:
 		*t = ClientNavigationReasonMetaTagRefresh
+	case ClientNavigationReasonOther:
+		*t = ClientNavigationReasonOther
 	case ClientNavigationReasonPageBlockInterstitial:
 		*t = ClientNavigationReasonPageBlockInterstitial
 	case ClientNavigationReasonReload:
 		*t = ClientNavigationReasonReload
-	case ClientNavigationReasonAnchorClick:
-		*t = ClientNavigationReasonAnchorClick
+	case ClientNavigationReasonScriptInitiated:
+		*t = ClientNavigationReasonScriptInitiated
 
 	default:
 		in.AddError(fmt.Errorf("unknown ClientNavigationReason value: %v", v))
@@ -1704,6 +1710,54 @@ func (t *FrameDetachedReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 
 // UnmarshalJSON satisfies json.Unmarshaler.
 func (t *FrameDetachedReason) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
+// NavigatedWithinDocumentNavigationType navigation type.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-navigatedWithinDocument
+type NavigatedWithinDocumentNavigationType string
+
+// String returns the NavigatedWithinDocumentNavigationType as string value.
+func (t NavigatedWithinDocumentNavigationType) String() string {
+	return string(t)
+}
+
+// NavigatedWithinDocumentNavigationType values.
+const (
+	NavigatedWithinDocumentNavigationTypeFragment   NavigatedWithinDocumentNavigationType = "fragment"
+	NavigatedWithinDocumentNavigationTypeHistoryAPI NavigatedWithinDocumentNavigationType = "historyApi"
+	NavigatedWithinDocumentNavigationTypeOther      NavigatedWithinDocumentNavigationType = "other"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t NavigatedWithinDocumentNavigationType) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t NavigatedWithinDocumentNavigationType) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *NavigatedWithinDocumentNavigationType) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	v := in.String()
+	switch NavigatedWithinDocumentNavigationType(v) {
+	case NavigatedWithinDocumentNavigationTypeFragment:
+		*t = NavigatedWithinDocumentNavigationTypeFragment
+	case NavigatedWithinDocumentNavigationTypeHistoryAPI:
+		*t = NavigatedWithinDocumentNavigationTypeHistoryAPI
+	case NavigatedWithinDocumentNavigationTypeOther:
+		*t = NavigatedWithinDocumentNavigationTypeOther
+
+	default:
+		in.AddError(fmt.Errorf("unknown NavigatedWithinDocumentNavigationType value: %v", v))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *NavigatedWithinDocumentNavigationType) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 

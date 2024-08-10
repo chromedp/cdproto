@@ -1613,6 +1613,37 @@ func (p *GetFileInfoParams) Do(ctx context.Context) (path string, err error) {
 	return res.Path, nil
 }
 
+// GetDetachedDomNodesParams returns list of detached nodes.
+type GetDetachedDomNodesParams struct{}
+
+// GetDetachedDomNodes returns list of detached nodes.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-getDetachedDomNodes
+func GetDetachedDomNodes() *GetDetachedDomNodesParams {
+	return &GetDetachedDomNodesParams{}
+}
+
+// GetDetachedDomNodesReturns return values.
+type GetDetachedDomNodesReturns struct {
+	DetachedNodes []*DetachedElementInfo `json:"detachedNodes,omitempty"` // The list of detached nodes
+}
+
+// Do executes DOM.getDetachedDomNodes against the provided context.
+//
+// returns:
+//
+//	detachedNodes - The list of detached nodes
+func (p *GetDetachedDomNodesParams) Do(ctx context.Context) (detachedNodes []*DetachedElementInfo, err error) {
+	// execute
+	var res GetDetachedDomNodesReturns
+	err = cdp.Execute(ctx, CommandGetDetachedDomNodes, nil, &res)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.DetachedNodes, nil
+}
+
 // SetInspectedNodeParams enables console to refer to the node with given id
 // via $x (see Command Line API for more details $x functions).
 type SetInspectedNodeParams struct {
@@ -1988,6 +2019,7 @@ const (
 	CommandSetNodeStackTracesEnabled          = "DOM.setNodeStackTracesEnabled"
 	CommandGetNodeStackTraces                 = "DOM.getNodeStackTraces"
 	CommandGetFileInfo                        = "DOM.getFileInfo"
+	CommandGetDetachedDomNodes                = "DOM.getDetachedDomNodes"
 	CommandSetInspectedNode                   = "DOM.setInspectedNode"
 	CommandSetNodeName                        = "DOM.setNodeName"
 	CommandSetNodeValue                       = "DOM.setNodeValue"

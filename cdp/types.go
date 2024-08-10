@@ -183,6 +183,8 @@ const (
 	PseudoTypeFirstLineInherited      PseudoType = "first-line-inherited"
 	PseudoTypeScrollMarker            PseudoType = "scroll-marker"
 	PseudoTypeScrollMarkerGroup       PseudoType = "scroll-marker-group"
+	PseudoTypeScrollNextButton        PseudoType = "scroll-next-button"
+	PseudoTypeScrollPrevButton        PseudoType = "scroll-prev-button"
 	PseudoTypeScrollbar               PseudoType = "scrollbar"
 	PseudoTypeScrollbarThumb          PseudoType = "scrollbar-thumb"
 	PseudoTypeScrollbarButton         PseudoType = "scrollbar-button"
@@ -242,6 +244,10 @@ func (t *PseudoType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PseudoTypeScrollMarker
 	case PseudoTypeScrollMarkerGroup:
 		*t = PseudoTypeScrollMarkerGroup
+	case PseudoTypeScrollNextButton:
+		*t = PseudoTypeScrollNextButton
+	case PseudoTypeScrollPrevButton:
+		*t = PseudoTypeScrollPrevButton
 	case PseudoTypeScrollbar:
 		*t = PseudoTypeScrollbar
 	case PseudoTypeScrollbarThumb:
