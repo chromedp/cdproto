@@ -257,6 +257,7 @@ const (
 	EventDOMInlineStyleInvalidated                          = "DOM.inlineStyleInvalidated"
 	EventDOMPseudoElementAdded                              = "DOM.pseudoElementAdded"
 	EventDOMTopLayerElementsUpdated                         = "DOM.topLayerElementsUpdated"
+	EventDOMScrollableFlagUpdated                           = "DOM.scrollableFlagUpdated"
 	EventDOMPseudoElementRemoved                            = "DOM.pseudoElementRemoved"
 	EventDOMSetChildNodes                                   = "DOM.setChildNodes"
 	EventDOMShadowRootPopped                                = "DOM.shadowRootPopped"
@@ -368,6 +369,9 @@ const (
 	CommandEventBreakpointsDisable                          = eventbreakpoints.CommandDisable
 	CommandExtensionsLoadUnpacked                           = extensions.CommandLoadUnpacked
 	CommandExtensionsGetStorageItems                        = extensions.CommandGetStorageItems
+	CommandExtensionsRemoveStorageItems                     = extensions.CommandRemoveStorageItems
+	CommandExtensionsClearStorageItems                      = extensions.CommandClearStorageItems
+	CommandExtensionsSetStorageItems                        = extensions.CommandSetStorageItems
 	CommandFedCmEnable                                      = fedcm.CommandEnable
 	CommandFedCmDisable                                     = fedcm.CommandDisable
 	CommandFedCmSelectAccount                               = fedcm.CommandSelectAccount
@@ -463,6 +467,7 @@ const (
 	EventMediaPlayerErrorsRaised                            = "Media.playerErrorsRaised"
 	EventMediaPlayersCreated                                = "Media.playersCreated"
 	CommandMemoryGetDOMCounters                             = memory.CommandGetDOMCounters
+	CommandMemoryGetDOMCountersForLeakDetection             = memory.CommandGetDOMCountersForLeakDetection
 	CommandMemoryPrepareForLeakDetection                    = memory.CommandPrepareForLeakDetection
 	CommandMemoryForciblyPurgeJavaScriptMemory              = memory.CommandForciblyPurgeJavaScriptMemory
 	CommandMemorySetPressureNotificationsSuppressed         = memory.CommandSetPressureNotificationsSuppressed
@@ -552,7 +557,6 @@ const (
 	CommandOverlaySetShowPaintRects                         = overlay.CommandSetShowPaintRects
 	CommandOverlaySetShowLayoutShiftRegions                 = overlay.CommandSetShowLayoutShiftRegions
 	CommandOverlaySetShowScrollBottleneckRects              = overlay.CommandSetShowScrollBottleneckRects
-	CommandOverlaySetShowWebVitals                          = overlay.CommandSetShowWebVitals
 	CommandOverlaySetShowViewportSizeOnResize               = overlay.CommandSetShowViewportSizeOnResize
 	CommandOverlaySetShowHinge                              = overlay.CommandSetShowHinge
 	CommandOverlaySetShowIsolatedElements                   = overlay.CommandSetShowIsolatedElements
@@ -620,6 +624,7 @@ const (
 	EventPageFileChooserOpened                              = "Page.fileChooserOpened"
 	EventPageFrameAttached                                  = "Page.frameAttached"
 	EventPageFrameDetached                                  = "Page.frameDetached"
+	EventPageFrameSubtreeWillBeDetached                     = "Page.frameSubtreeWillBeDetached"
 	EventPageFrameNavigated                                 = "Page.frameNavigated"
 	EventPageDocumentOpened                                 = "Page.documentOpened"
 	EventPageFrameResized                                   = "Page.frameResized"
@@ -1380,6 +1385,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case EventDOMTopLayerElementsUpdated:
 		v = new(dom.EventTopLayerElementsUpdated)
 
+	case EventDOMScrollableFlagUpdated:
+		v = new(dom.EventScrollableFlagUpdated)
+
 	case EventDOMPseudoElementRemoved:
 		v = new(dom.EventPseudoElementRemoved)
 
@@ -1713,6 +1721,15 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandExtensionsGetStorageItems:
 		v = new(extensions.GetStorageItemsReturns)
 
+	case CommandExtensionsRemoveStorageItems:
+		return emptyVal, nil
+
+	case CommandExtensionsClearStorageItems:
+		return emptyVal, nil
+
+	case CommandExtensionsSetStorageItems:
+		return emptyVal, nil
+
 	case CommandFedCmEnable:
 		return emptyVal, nil
 
@@ -1998,6 +2015,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandMemoryGetDOMCounters:
 		v = new(memory.GetDOMCountersReturns)
 
+	case CommandMemoryGetDOMCountersForLeakDetection:
+		v = new(memory.GetDOMCountersForLeakDetectionReturns)
+
 	case CommandMemoryPrepareForLeakDetection:
 		return emptyVal, nil
 
@@ -2265,9 +2285,6 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandOverlaySetShowScrollBottleneckRects:
 		return emptyVal, nil
 
-	case CommandOverlaySetShowWebVitals:
-		return emptyVal, nil
-
 	case CommandOverlaySetShowViewportSizeOnResize:
 		return emptyVal, nil
 
@@ -2468,6 +2485,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case EventPageFrameDetached:
 		v = new(page.EventFrameDetached)
+
+	case EventPageFrameSubtreeWillBeDetached:
+		v = new(page.EventFrameSubtreeWillBeDetached)
 
 	case EventPageFrameNavigated:
 		v = new(page.EventFrameNavigated)

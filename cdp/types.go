@@ -168,36 +168,43 @@ func (t PseudoType) String() string {
 
 // PseudoType values.
 const (
-	PseudoTypeFirstLine               PseudoType = "first-line"
-	PseudoTypeFirstLetter             PseudoType = "first-letter"
-	PseudoTypeBefore                  PseudoType = "before"
-	PseudoTypeAfter                   PseudoType = "after"
-	PseudoTypeMarker                  PseudoType = "marker"
-	PseudoTypeBackdrop                PseudoType = "backdrop"
-	PseudoTypeSelection               PseudoType = "selection"
-	PseudoTypeSearchText              PseudoType = "search-text"
-	PseudoTypeTargetText              PseudoType = "target-text"
-	PseudoTypeSpellingError           PseudoType = "spelling-error"
-	PseudoTypeGrammarError            PseudoType = "grammar-error"
-	PseudoTypeHighlight               PseudoType = "highlight"
-	PseudoTypeFirstLineInherited      PseudoType = "first-line-inherited"
-	PseudoTypeScrollMarker            PseudoType = "scroll-marker"
-	PseudoTypeScrollMarkerGroup       PseudoType = "scroll-marker-group"
-	PseudoTypeScrollNextButton        PseudoType = "scroll-next-button"
-	PseudoTypeScrollPrevButton        PseudoType = "scroll-prev-button"
-	PseudoTypeScrollbar               PseudoType = "scrollbar"
-	PseudoTypeScrollbarThumb          PseudoType = "scrollbar-thumb"
-	PseudoTypeScrollbarButton         PseudoType = "scrollbar-button"
-	PseudoTypeScrollbarTrack          PseudoType = "scrollbar-track"
-	PseudoTypeScrollbarTrackPiece     PseudoType = "scrollbar-track-piece"
-	PseudoTypeScrollbarCorner         PseudoType = "scrollbar-corner"
-	PseudoTypeResizer                 PseudoType = "resizer"
-	PseudoTypeInputListButton         PseudoType = "input-list-button"
-	PseudoTypeViewTransition          PseudoType = "view-transition"
-	PseudoTypeViewTransitionGroup     PseudoType = "view-transition-group"
-	PseudoTypeViewTransitionImagePair PseudoType = "view-transition-image-pair"
-	PseudoTypeViewTransitionOld       PseudoType = "view-transition-old"
-	PseudoTypeViewTransitionNew       PseudoType = "view-transition-new"
+	PseudoTypeFirstLine                PseudoType = "first-line"
+	PseudoTypeFirstLetter              PseudoType = "first-letter"
+	PseudoTypeBefore                   PseudoType = "before"
+	PseudoTypeAfter                    PseudoType = "after"
+	PseudoTypeMarker                   PseudoType = "marker"
+	PseudoTypeBackdrop                 PseudoType = "backdrop"
+	PseudoTypeColumn                   PseudoType = "column"
+	PseudoTypeSelection                PseudoType = "selection"
+	PseudoTypeSearchText               PseudoType = "search-text"
+	PseudoTypeTargetText               PseudoType = "target-text"
+	PseudoTypeSpellingError            PseudoType = "spelling-error"
+	PseudoTypeGrammarError             PseudoType = "grammar-error"
+	PseudoTypeHighlight                PseudoType = "highlight"
+	PseudoTypeFirstLineInherited       PseudoType = "first-line-inherited"
+	PseudoTypeScrollMarker             PseudoType = "scroll-marker"
+	PseudoTypeScrollMarkerGroup        PseudoType = "scroll-marker-group"
+	PseudoTypeScrollNextButton         PseudoType = "scroll-next-button"
+	PseudoTypeScrollPrevButton         PseudoType = "scroll-prev-button"
+	PseudoTypeScrollbar                PseudoType = "scrollbar"
+	PseudoTypeScrollbarThumb           PseudoType = "scrollbar-thumb"
+	PseudoTypeScrollbarButton          PseudoType = "scrollbar-button"
+	PseudoTypeScrollbarTrack           PseudoType = "scrollbar-track"
+	PseudoTypeScrollbarTrackPiece      PseudoType = "scrollbar-track-piece"
+	PseudoTypeScrollbarCorner          PseudoType = "scrollbar-corner"
+	PseudoTypeResizer                  PseudoType = "resizer"
+	PseudoTypeInputListButton          PseudoType = "input-list-button"
+	PseudoTypeViewTransition           PseudoType = "view-transition"
+	PseudoTypeViewTransitionGroup      PseudoType = "view-transition-group"
+	PseudoTypeViewTransitionImagePair  PseudoType = "view-transition-image-pair"
+	PseudoTypeViewTransitionOld        PseudoType = "view-transition-old"
+	PseudoTypeViewTransitionNew        PseudoType = "view-transition-new"
+	PseudoTypePlaceholder              PseudoType = "placeholder"
+	PseudoTypeFileSelectorButton       PseudoType = "file-selector-button"
+	PseudoTypeDetailsContent           PseudoType = "details-content"
+	PseudoTypeSelectFallbackButton     PseudoType = "select-fallback-button"
+	PseudoTypeSelectFallbackButtonText PseudoType = "select-fallback-button-text"
+	PseudoTypePicker                   PseudoType = "picker"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -226,6 +233,8 @@ func (t *PseudoType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PseudoTypeMarker
 	case PseudoTypeBackdrop:
 		*t = PseudoTypeBackdrop
+	case PseudoTypeColumn:
+		*t = PseudoTypeColumn
 	case PseudoTypeSelection:
 		*t = PseudoTypeSelection
 	case PseudoTypeSearchText:
@@ -274,6 +283,18 @@ func (t *PseudoType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PseudoTypeViewTransitionOld
 	case PseudoTypeViewTransitionNew:
 		*t = PseudoTypeViewTransitionNew
+	case PseudoTypePlaceholder:
+		*t = PseudoTypePlaceholder
+	case PseudoTypeFileSelectorButton:
+		*t = PseudoTypeFileSelectorButton
+	case PseudoTypeDetailsContent:
+		*t = PseudoTypeDetailsContent
+	case PseudoTypeSelectFallbackButton:
+		*t = PseudoTypeSelectFallbackButton
+	case PseudoTypeSelectFallbackButtonText:
+		*t = PseudoTypeSelectFallbackButtonText
+	case PseudoTypePicker:
+		*t = PseudoTypePicker
 
 	default:
 		in.AddError(fmt.Errorf("unknown PseudoType value: %v", v))
@@ -416,6 +437,7 @@ type Node struct {
 	IsSVG             bool              `json:"isSVG,omitempty"`            // Whether the node is SVG.
 	CompatibilityMode CompatibilityMode `json:"compatibilityMode,omitempty"`
 	AssignedSlot      *BackendNode      `json:"assignedSlot,omitempty"`
+	IsScrollable      bool              `json:"isScrollable,omitempty"`
 	Parent            *Node             `json:"-"` // Parent node.
 	Invalidated       chan struct{}     `json:"-"` // Invalidated channel.
 	State             NodeState         `json:"-"` // Node state.

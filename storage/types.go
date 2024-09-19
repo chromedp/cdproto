@@ -706,6 +706,15 @@ type AttributionReportingAggregatableDebugReportingConfig struct {
 	AggregationCoordinatorOrigin string                                                `json:"aggregationCoordinatorOrigin,omitempty"`
 }
 
+// AttributionScopesData [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-AttributionScopesData
+type AttributionScopesData struct {
+	Values         []string `json:"values"`
+	Limit          float64  `json:"limit"` // number instead of integer because not all uint32 can be represented by int
+	MaxEventStates float64  `json:"maxEventStates"`
+}
+
 // AttributionReportingSourceRegistration [no description].
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-AttributionReportingSourceRegistration
@@ -726,6 +735,7 @@ type AttributionReportingSourceRegistration struct {
 	TriggerDataMatching              AttributionReportingTriggerDataMatching               `json:"triggerDataMatching"`
 	DestinationLimitPriority         SignedInt64asBase10                                   `json:"destinationLimitPriority"`
 	AggregatableDebugReportingConfig *AttributionReportingAggregatableDebugReportingConfig `json:"aggregatableDebugReportingConfig"`
+	ScopesData                       *AttributionScopesData                                `json:"scopesData,omitempty"`
 }
 
 // AttributionReportingSourceRegistrationResult [no description].
@@ -752,7 +762,9 @@ const (
 	AttributionReportingSourceRegistrationResultDestinationBothLimitsReached           AttributionReportingSourceRegistrationResult = "destinationBothLimitsReached"
 	AttributionReportingSourceRegistrationResultReportingOriginsPerSiteLimitReached    AttributionReportingSourceRegistrationResult = "reportingOriginsPerSiteLimitReached"
 	AttributionReportingSourceRegistrationResultExceedsMaxChannelCapacity              AttributionReportingSourceRegistrationResult = "exceedsMaxChannelCapacity"
+	AttributionReportingSourceRegistrationResultExceedsMaxScopesChannelCapacity        AttributionReportingSourceRegistrationResult = "exceedsMaxScopesChannelCapacity"
 	AttributionReportingSourceRegistrationResultExceedsMaxTriggerStateCardinality      AttributionReportingSourceRegistrationResult = "exceedsMaxTriggerStateCardinality"
+	AttributionReportingSourceRegistrationResultExceedsMaxEventStatesLimit             AttributionReportingSourceRegistrationResult = "exceedsMaxEventStatesLimit"
 	AttributionReportingSourceRegistrationResultDestinationPerDayReportingLimitReached AttributionReportingSourceRegistrationResult = "destinationPerDayReportingLimitReached"
 )
 
@@ -794,8 +806,12 @@ func (t *AttributionReportingSourceRegistrationResult) UnmarshalEasyJSON(in *jle
 		*t = AttributionReportingSourceRegistrationResultReportingOriginsPerSiteLimitReached
 	case AttributionReportingSourceRegistrationResultExceedsMaxChannelCapacity:
 		*t = AttributionReportingSourceRegistrationResultExceedsMaxChannelCapacity
+	case AttributionReportingSourceRegistrationResultExceedsMaxScopesChannelCapacity:
+		*t = AttributionReportingSourceRegistrationResultExceedsMaxScopesChannelCapacity
 	case AttributionReportingSourceRegistrationResultExceedsMaxTriggerStateCardinality:
 		*t = AttributionReportingSourceRegistrationResultExceedsMaxTriggerStateCardinality
+	case AttributionReportingSourceRegistrationResultExceedsMaxEventStatesLimit:
+		*t = AttributionReportingSourceRegistrationResultExceedsMaxEventStatesLimit
 	case AttributionReportingSourceRegistrationResultDestinationPerDayReportingLimitReached:
 		*t = AttributionReportingSourceRegistrationResultDestinationPerDayReportingLimitReached
 
@@ -914,6 +930,7 @@ type AttributionReportingTriggerRegistration struct {
 	SourceRegistrationTimeConfig     AttributionReportingSourceRegistrationTimeConfig      `json:"sourceRegistrationTimeConfig"`
 	TriggerContextID                 string                                                `json:"triggerContextId,omitempty"`
 	AggregatableDebugReportingConfig *AttributionReportingAggregatableDebugReportingConfig `json:"aggregatableDebugReportingConfig"`
+	Scopes                           []string                                              `json:"scopes"`
 }
 
 // AttributionReportingEventLevelResult [no description].

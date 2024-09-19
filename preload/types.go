@@ -530,7 +530,6 @@ const (
 	PrefetchStatusPrefetchFailedMIMENotSupported                              PrefetchStatus = "PrefetchFailedMIMENotSupported"
 	PrefetchStatusPrefetchFailedNetError                                      PrefetchStatus = "PrefetchFailedNetError"
 	PrefetchStatusPrefetchFailedNon2xX                                        PrefetchStatus = "PrefetchFailedNon2XX"
-	PrefetchStatusPrefetchFailedPerPageLimitExceeded                          PrefetchStatus = "PrefetchFailedPerPageLimitExceeded"
 	PrefetchStatusPrefetchEvictedAfterCandidateRemoved                        PrefetchStatus = "PrefetchEvictedAfterCandidateRemoved"
 	PrefetchStatusPrefetchEvictedForNewerPrefetch                             PrefetchStatus = "PrefetchEvictedForNewerPrefetch"
 	PrefetchStatusPrefetchHeldback                                            PrefetchStatus = "PrefetchHeldback"
@@ -583,8 +582,6 @@ func (t *PrefetchStatus) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PrefetchStatusPrefetchFailedNetError
 	case PrefetchStatusPrefetchFailedNon2xX:
 		*t = PrefetchStatusPrefetchFailedNon2xX
-	case PrefetchStatusPrefetchFailedPerPageLimitExceeded:
-		*t = PrefetchStatusPrefetchFailedPerPageLimitExceeded
 	case PrefetchStatusPrefetchEvictedAfterCandidateRemoved:
 		*t = PrefetchStatusPrefetchEvictedAfterCandidateRemoved
 	case PrefetchStatusPrefetchEvictedForNewerPrefetch:

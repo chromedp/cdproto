@@ -122,6 +122,7 @@ const (
 	PermissionTypeVideoCapturePanTiltZoom  PermissionType = "videoCapturePanTiltZoom"
 	PermissionTypeWakeLockScreen           PermissionType = "wakeLockScreen"
 	PermissionTypeWakeLockSystem           PermissionType = "wakeLockSystem"
+	PermissionTypeWebAppInstallation       PermissionType = "webAppInstallation"
 	PermissionTypeWindowManagement         PermissionType = "windowManagement"
 )
 
@@ -195,6 +196,8 @@ func (t *PermissionType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PermissionTypeWakeLockScreen
 	case PermissionTypeWakeLockSystem:
 		*t = PermissionTypeWakeLockSystem
+	case PermissionTypeWebAppInstallation:
+		*t = PermissionTypeWebAppInstallation
 	case PermissionTypeWindowManagement:
 		*t = PermissionTypeWindowManagement
 

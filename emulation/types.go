@@ -140,7 +140,6 @@ const (
 	SensorTypeGyroscope           SensorType = "gyroscope"
 	SensorTypeLinearAcceleration  SensorType = "linear-acceleration"
 	SensorTypeMagnetometer        SensorType = "magnetometer"
-	SensorTypeProximity           SensorType = "proximity"
 	SensorTypeRelativeOrientation SensorType = "relative-orientation"
 )
 
@@ -172,8 +171,6 @@ func (t *SensorType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = SensorTypeLinearAcceleration
 	case SensorTypeMagnetometer:
 		*t = SensorTypeMagnetometer
-	case SensorTypeProximity:
-		*t = SensorTypeProximity
 	case SensorTypeRelativeOrientation:
 		*t = SensorTypeRelativeOrientation
 

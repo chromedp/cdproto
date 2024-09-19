@@ -129,6 +129,8 @@ const (
 	CookieWarningReasonWarnDomainNonASCII                             CookieWarningReason = "WarnDomainNonASCII"
 	CookieWarningReasonWarnThirdPartyPhaseout                         CookieWarningReason = "WarnThirdPartyPhaseout"
 	CookieWarningReasonWarnCrossSiteRedirectDowngradeChangesInclusion CookieWarningReason = "WarnCrossSiteRedirectDowngradeChangesInclusion"
+	CookieWarningReasonWarnDeprecationTrialMetadata                   CookieWarningReason = "WarnDeprecationTrialMetadata"
+	CookieWarningReasonWarnThirdPartyCookieHeuristic                  CookieWarningReason = "WarnThirdPartyCookieHeuristic"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -169,6 +171,10 @@ func (t *CookieWarningReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = CookieWarningReasonWarnThirdPartyPhaseout
 	case CookieWarningReasonWarnCrossSiteRedirectDowngradeChangesInclusion:
 		*t = CookieWarningReasonWarnCrossSiteRedirectDowngradeChangesInclusion
+	case CookieWarningReasonWarnDeprecationTrialMetadata:
+		*t = CookieWarningReasonWarnDeprecationTrialMetadata
+	case CookieWarningReasonWarnThirdPartyCookieHeuristic:
+		*t = CookieWarningReasonWarnThirdPartyCookieHeuristic
 
 	default:
 		in.AddError(fmt.Errorf("unknown CookieWarningReason value: %v", v))
@@ -797,6 +803,7 @@ const (
 	AttributionReportingIssueTypeNoRegisterTriggerHeader                              AttributionReportingIssueType = "NoRegisterTriggerHeader"
 	AttributionReportingIssueTypeNoRegisterOsSourceHeader                             AttributionReportingIssueType = "NoRegisterOsSourceHeader"
 	AttributionReportingIssueTypeNoRegisterOsTriggerHeader                            AttributionReportingIssueType = "NoRegisterOsTriggerHeader"
+	AttributionReportingIssueTypeNavigationRegistrationUniqueScopeAlreadySet          AttributionReportingIssueType = "NavigationRegistrationUniqueScopeAlreadySet"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -853,6 +860,8 @@ func (t *AttributionReportingIssueType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = AttributionReportingIssueTypeNoRegisterOsSourceHeader
 	case AttributionReportingIssueTypeNoRegisterOsTriggerHeader:
 		*t = AttributionReportingIssueTypeNoRegisterOsTriggerHeader
+	case AttributionReportingIssueTypeNavigationRegistrationUniqueScopeAlreadySet:
+		*t = AttributionReportingIssueTypeNavigationRegistrationUniqueScopeAlreadySet
 
 	default:
 		in.AddError(fmt.Errorf("unknown AttributionReportingIssueType value: %v", v))

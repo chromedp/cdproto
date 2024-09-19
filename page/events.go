@@ -41,6 +41,14 @@ type EventFrameDetached struct {
 	Reason  FrameDetachedReason `json:"reason"`
 }
 
+// EventFrameSubtreeWillBeDetached fired before frame subtree is detached.
+// Emitted before any frame of the subtree is actually detached.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-frameSubtreeWillBeDetached
+type EventFrameSubtreeWillBeDetached struct {
+	FrameID cdp.FrameID `json:"frameId"` // Id of the frame that is the root of the subtree that will be detached.
+}
+
 // EventFrameNavigated fired once navigation of the frame has completed.
 // Frame is now associated with the new loader.
 //

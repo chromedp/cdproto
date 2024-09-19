@@ -1430,16 +1430,16 @@ func (t CookieExemptionReason) String() string {
 
 // CookieExemptionReason values.
 const (
-	CookieExemptionReasonNone                  CookieExemptionReason = "None"
-	CookieExemptionReasonUserSetting           CookieExemptionReason = "UserSetting"
-	CookieExemptionReasonTPCDMetadata          CookieExemptionReason = "TPCDMetadata"
-	CookieExemptionReasonTPCDDeprecationTrial  CookieExemptionReason = "TPCDDeprecationTrial"
-	CookieExemptionReasonTPCDHeuristics        CookieExemptionReason = "TPCDHeuristics"
-	CookieExemptionReasonEnterprisePolicy      CookieExemptionReason = "EnterprisePolicy"
-	CookieExemptionReasonStorageAccess         CookieExemptionReason = "StorageAccess"
-	CookieExemptionReasonTopLevelStorageAccess CookieExemptionReason = "TopLevelStorageAccess"
-	CookieExemptionReasonCorsOptIn             CookieExemptionReason = "CorsOptIn"
-	CookieExemptionReasonScheme                CookieExemptionReason = "Scheme"
+	CookieExemptionReasonNone                         CookieExemptionReason = "None"
+	CookieExemptionReasonUserSetting                  CookieExemptionReason = "UserSetting"
+	CookieExemptionReasonTPCDMetadata                 CookieExemptionReason = "TPCDMetadata"
+	CookieExemptionReasonTPCDDeprecationTrial         CookieExemptionReason = "TPCDDeprecationTrial"
+	CookieExemptionReasonTopLevelTPCDDeprecationTrial CookieExemptionReason = "TopLevelTPCDDeprecationTrial"
+	CookieExemptionReasonTPCDHeuristics               CookieExemptionReason = "TPCDHeuristics"
+	CookieExemptionReasonEnterprisePolicy             CookieExemptionReason = "EnterprisePolicy"
+	CookieExemptionReasonStorageAccess                CookieExemptionReason = "StorageAccess"
+	CookieExemptionReasonTopLevelStorageAccess        CookieExemptionReason = "TopLevelStorageAccess"
+	CookieExemptionReasonScheme                       CookieExemptionReason = "Scheme"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -1464,6 +1464,8 @@ func (t *CookieExemptionReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = CookieExemptionReasonTPCDMetadata
 	case CookieExemptionReasonTPCDDeprecationTrial:
 		*t = CookieExemptionReasonTPCDDeprecationTrial
+	case CookieExemptionReasonTopLevelTPCDDeprecationTrial:
+		*t = CookieExemptionReasonTopLevelTPCDDeprecationTrial
 	case CookieExemptionReasonTPCDHeuristics:
 		*t = CookieExemptionReasonTPCDHeuristics
 	case CookieExemptionReasonEnterprisePolicy:
@@ -1472,8 +1474,6 @@ func (t *CookieExemptionReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = CookieExemptionReasonStorageAccess
 	case CookieExemptionReasonTopLevelStorageAccess:
 		*t = CookieExemptionReasonTopLevelStorageAccess
-	case CookieExemptionReasonCorsOptIn:
-		*t = CookieExemptionReasonCorsOptIn
 	case CookieExemptionReasonScheme:
 		*t = CookieExemptionReasonScheme
 
