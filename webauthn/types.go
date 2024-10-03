@@ -196,4 +196,6 @@ type Credential struct {
 	LargeBlob            string `json:"largeBlob,omitempty"`         // The large blob associated with the credential. See https://w3c.github.io/webauthn/#sctn-large-blob-extension
 	BackupEligibility    bool   `json:"backupEligibility,omitempty"` // Assertions returned by this credential will have the backup eligibility (BE) flag set to this value. Defaults to the authenticator's defaultBackupEligibility value.
 	BackupState          bool   `json:"backupState,omitempty"`       // Assertions returned by this credential will have the backup state (BS) flag set to this value. Defaults to the authenticator's defaultBackupState value.
+	UserName             string `json:"userName,omitempty"`          // The credential's user.name property. Equivalent to empty if not set. https://w3c.github.io/webauthn/#dom-publickeycredentialentity-name
+	UserDisplayName      string `json:"userDisplayName,omitempty"`   // The credential's user.displayName property. Equivalent to empty if not set. https://w3c.github.io/webauthn/#dom-publickeycredentialuserentity-displayname
 }

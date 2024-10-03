@@ -290,7 +290,6 @@ func (t DebugSymbolsType) String() string {
 
 // DebugSymbolsType values.
 const (
-	DebugSymbolsTypeNone          DebugSymbolsType = "None"
 	DebugSymbolsTypeSourceMap     DebugSymbolsType = "SourceMap"
 	DebugSymbolsTypeEmbeddedDWARF DebugSymbolsType = "EmbeddedDWARF"
 	DebugSymbolsTypeExternalDWARF DebugSymbolsType = "ExternalDWARF"
@@ -310,8 +309,6 @@ func (t DebugSymbolsType) MarshalJSON() ([]byte, error) {
 func (t *DebugSymbolsType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 	v := in.String()
 	switch DebugSymbolsType(v) {
-	case DebugSymbolsTypeNone:
-		*t = DebugSymbolsTypeNone
 	case DebugSymbolsTypeSourceMap:
 		*t = DebugSymbolsTypeSourceMap
 	case DebugSymbolsTypeEmbeddedDWARF:

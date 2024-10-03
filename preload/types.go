@@ -283,6 +283,7 @@ const (
 	PrerenderFinalStatusWindowClosed                                               PrerenderFinalStatus = "WindowClosed"
 	PrerenderFinalStatusSlowNetwork                                                PrerenderFinalStatus = "SlowNetwork"
 	PrerenderFinalStatusOtherPrerenderedPageActivated                              PrerenderFinalStatus = "OtherPrerenderedPageActivated"
+	PrerenderFinalStatusV8optimizerDisabled                                        PrerenderFinalStatus = "V8OptimizerDisabled"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -441,6 +442,8 @@ func (t *PrerenderFinalStatus) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PrerenderFinalStatusSlowNetwork
 	case PrerenderFinalStatusOtherPrerenderedPageActivated:
 		*t = PrerenderFinalStatusOtherPrerenderedPageActivated
+	case PrerenderFinalStatusV8optimizerDisabled:
+		*t = PrerenderFinalStatusV8optimizerDisabled
 
 	default:
 		in.AddError(fmt.Errorf("unknown PrerenderFinalStatus value: %v", v))

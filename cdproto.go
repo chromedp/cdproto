@@ -303,6 +303,7 @@ const (
 	CommandDebuggerResume                                   = debugger.CommandResume
 	CommandDebuggerSearchInContent                          = debugger.CommandSearchInContent
 	CommandDebuggerSetAsyncCallStackDepth                   = debugger.CommandSetAsyncCallStackDepth
+	CommandDebuggerSetBlackboxExecutionContexts             = debugger.CommandSetBlackboxExecutionContexts
 	CommandDebuggerSetBlackboxPatterns                      = debugger.CommandSetBlackboxPatterns
 	CommandDebuggerSetBlackboxedRanges                      = debugger.CommandSetBlackboxedRanges
 	CommandDebuggerSetBreakpoint                            = debugger.CommandSetBreakpoint
@@ -833,6 +834,8 @@ const (
 	CommandWebAuthnSetAutomaticPresenceSimulation           = webauthn.CommandSetAutomaticPresenceSimulation
 	CommandWebAuthnSetCredentialProperties                  = webauthn.CommandSetCredentialProperties
 	EventWebAuthnCredentialAdded                            = "WebAuthn.credentialAdded"
+	EventWebAuthnCredentialDeleted                          = "WebAuthn.credentialDeleted"
+	EventWebAuthnCredentialUpdated                          = "WebAuthn.credentialUpdated"
 	EventWebAuthnCredentialAsserted                         = "WebAuthn.credentialAsserted"
 )
 
@@ -1521,6 +1524,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 		v = new(debugger.SearchInContentReturns)
 
 	case CommandDebuggerSetAsyncCallStackDepth:
+		return emptyVal, nil
+
+	case CommandDebuggerSetBlackboxExecutionContexts:
 		return emptyVal, nil
 
 	case CommandDebuggerSetBlackboxPatterns:
@@ -3112,6 +3118,12 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case EventWebAuthnCredentialAdded:
 		v = new(webauthn.EventCredentialAdded)
+
+	case EventWebAuthnCredentialDeleted:
+		v = new(webauthn.EventCredentialDeleted)
+
+	case EventWebAuthnCredentialUpdated:
+		v = new(webauthn.EventCredentialUpdated)
 
 	case EventWebAuthnCredentialAsserted:
 		v = new(webauthn.EventCredentialAsserted)
