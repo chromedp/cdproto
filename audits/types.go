@@ -1243,7 +1243,7 @@ const (
 	FederatedAuthRequestIssueReasonThirdPartyCookiesBlocked         FederatedAuthRequestIssueReason = "ThirdPartyCookiesBlocked"
 	FederatedAuthRequestIssueReasonNotSignedInWithIdp               FederatedAuthRequestIssueReason = "NotSignedInWithIdp"
 	FederatedAuthRequestIssueReasonMissingTransientUserActivation   FederatedAuthRequestIssueReason = "MissingTransientUserActivation"
-	FederatedAuthRequestIssueReasonReplacedByButtonMode             FederatedAuthRequestIssueReason = "ReplacedByButtonMode"
+	FederatedAuthRequestIssueReasonReplacedByActiveMode             FederatedAuthRequestIssueReason = "ReplacedByActiveMode"
 	FederatedAuthRequestIssueReasonInvalidFieldsSpecified           FederatedAuthRequestIssueReason = "InvalidFieldsSpecified"
 	FederatedAuthRequestIssueReasonRelyingPartyOriginIsOpaque       FederatedAuthRequestIssueReason = "RelyingPartyOriginIsOpaque"
 	FederatedAuthRequestIssueReasonTypeNotMatching                  FederatedAuthRequestIssueReason = "TypeNotMatching"
@@ -1345,8 +1345,8 @@ func (t *FederatedAuthRequestIssueReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = FederatedAuthRequestIssueReasonNotSignedInWithIdp
 	case FederatedAuthRequestIssueReasonMissingTransientUserActivation:
 		*t = FederatedAuthRequestIssueReasonMissingTransientUserActivation
-	case FederatedAuthRequestIssueReasonReplacedByButtonMode:
-		*t = FederatedAuthRequestIssueReasonReplacedByButtonMode
+	case FederatedAuthRequestIssueReasonReplacedByActiveMode:
+		*t = FederatedAuthRequestIssueReasonReplacedByActiveMode
 	case FederatedAuthRequestIssueReasonInvalidFieldsSpecified:
 		*t = FederatedAuthRequestIssueReasonInvalidFieldsSpecified
 	case FederatedAuthRequestIssueReasonRelyingPartyOriginIsOpaque:
