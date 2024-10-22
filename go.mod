@@ -1,9 +1,9 @@
 module github.com/chromedp/cdproto
 
-go 1.19
+go 1.23
 
 require (
-	github.com/chromedp/sysutil v1.0.0
+	github.com/chromedp/sysutil v1.1.0
 	github.com/mailru/easyjson v0.7.7
 )
 

@@ -168,43 +168,42 @@ func (t PseudoType) String() string {
 
 // PseudoType values.
 const (
-	PseudoTypeFirstLine                PseudoType = "first-line"
-	PseudoTypeFirstLetter              PseudoType = "first-letter"
-	PseudoTypeBefore                   PseudoType = "before"
-	PseudoTypeAfter                    PseudoType = "after"
-	PseudoTypeMarker                   PseudoType = "marker"
-	PseudoTypeBackdrop                 PseudoType = "backdrop"
-	PseudoTypeColumn                   PseudoType = "column"
-	PseudoTypeSelection                PseudoType = "selection"
-	PseudoTypeSearchText               PseudoType = "search-text"
-	PseudoTypeTargetText               PseudoType = "target-text"
-	PseudoTypeSpellingError            PseudoType = "spelling-error"
-	PseudoTypeGrammarError             PseudoType = "grammar-error"
-	PseudoTypeHighlight                PseudoType = "highlight"
-	PseudoTypeFirstLineInherited       PseudoType = "first-line-inherited"
-	PseudoTypeScrollMarker             PseudoType = "scroll-marker"
-	PseudoTypeScrollMarkerGroup        PseudoType = "scroll-marker-group"
-	PseudoTypeScrollNextButton         PseudoType = "scroll-next-button"
-	PseudoTypeScrollPrevButton         PseudoType = "scroll-prev-button"
-	PseudoTypeScrollbar                PseudoType = "scrollbar"
-	PseudoTypeScrollbarThumb           PseudoType = "scrollbar-thumb"
-	PseudoTypeScrollbarButton          PseudoType = "scrollbar-button"
-	PseudoTypeScrollbarTrack           PseudoType = "scrollbar-track"
-	PseudoTypeScrollbarTrackPiece      PseudoType = "scrollbar-track-piece"
-	PseudoTypeScrollbarCorner          PseudoType = "scrollbar-corner"
-	PseudoTypeResizer                  PseudoType = "resizer"
-	PseudoTypeInputListButton          PseudoType = "input-list-button"
-	PseudoTypeViewTransition           PseudoType = "view-transition"
-	PseudoTypeViewTransitionGroup      PseudoType = "view-transition-group"
-	PseudoTypeViewTransitionImagePair  PseudoType = "view-transition-image-pair"
-	PseudoTypeViewTransitionOld        PseudoType = "view-transition-old"
-	PseudoTypeViewTransitionNew        PseudoType = "view-transition-new"
-	PseudoTypePlaceholder              PseudoType = "placeholder"
-	PseudoTypeFileSelectorButton       PseudoType = "file-selector-button"
-	PseudoTypeDetailsContent           PseudoType = "details-content"
-	PseudoTypeSelectFallbackButton     PseudoType = "select-fallback-button"
-	PseudoTypeSelectFallbackButtonText PseudoType = "select-fallback-button-text"
-	PseudoTypePicker                   PseudoType = "picker"
+	PseudoTypeFirstLine               PseudoType = "first-line"
+	PseudoTypeFirstLetter             PseudoType = "first-letter"
+	PseudoTypeCheck                   PseudoType = "check"
+	PseudoTypeBefore                  PseudoType = "before"
+	PseudoTypeAfter                   PseudoType = "after"
+	PseudoTypeMarker                  PseudoType = "marker"
+	PseudoTypeBackdrop                PseudoType = "backdrop"
+	PseudoTypeColumn                  PseudoType = "column"
+	PseudoTypeSelection               PseudoType = "selection"
+	PseudoTypeSearchText              PseudoType = "search-text"
+	PseudoTypeTargetText              PseudoType = "target-text"
+	PseudoTypeSpellingError           PseudoType = "spelling-error"
+	PseudoTypeGrammarError            PseudoType = "grammar-error"
+	PseudoTypeHighlight               PseudoType = "highlight"
+	PseudoTypeFirstLineInherited      PseudoType = "first-line-inherited"
+	PseudoTypeScrollMarker            PseudoType = "scroll-marker"
+	PseudoTypeScrollMarkerGroup       PseudoType = "scroll-marker-group"
+	PseudoTypeScrollNextButton        PseudoType = "scroll-next-button"
+	PseudoTypeScrollPrevButton        PseudoType = "scroll-prev-button"
+	PseudoTypeScrollbar               PseudoType = "scrollbar"
+	PseudoTypeScrollbarThumb          PseudoType = "scrollbar-thumb"
+	PseudoTypeScrollbarButton         PseudoType = "scrollbar-button"
+	PseudoTypeScrollbarTrack          PseudoType = "scrollbar-track"
+	PseudoTypeScrollbarTrackPiece     PseudoType = "scrollbar-track-piece"
+	PseudoTypeScrollbarCorner         PseudoType = "scrollbar-corner"
+	PseudoTypeResizer                 PseudoType = "resizer"
+	PseudoTypeInputListButton         PseudoType = "input-list-button"
+	PseudoTypeViewTransition          PseudoType = "view-transition"
+	PseudoTypeViewTransitionGroup     PseudoType = "view-transition-group"
+	PseudoTypeViewTransitionImagePair PseudoType = "view-transition-image-pair"
+	PseudoTypeViewTransitionOld       PseudoType = "view-transition-old"
+	PseudoTypeViewTransitionNew       PseudoType = "view-transition-new"
+	PseudoTypePlaceholder             PseudoType = "placeholder"
+	PseudoTypeFileSelectorButton      PseudoType = "file-selector-button"
+	PseudoTypeDetailsContent          PseudoType = "details-content"
+	PseudoTypePicker                  PseudoType = "picker"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -225,6 +224,8 @@ func (t *PseudoType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PseudoTypeFirstLine
 	case PseudoTypeFirstLetter:
 		*t = PseudoTypeFirstLetter
+	case PseudoTypeCheck:
+		*t = PseudoTypeCheck
 	case PseudoTypeBefore:
 		*t = PseudoTypeBefore
 	case PseudoTypeAfter:
@@ -289,10 +290,6 @@ func (t *PseudoType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PseudoTypeFileSelectorButton
 	case PseudoTypeDetailsContent:
 		*t = PseudoTypeDetailsContent
-	case PseudoTypeSelectFallbackButton:
-		*t = PseudoTypeSelectFallbackButton
-	case PseudoTypeSelectFallbackButtonText:
-		*t = PseudoTypeSelectFallbackButtonText
 	case PseudoTypePicker:
 		*t = PseudoTypePicker
 
