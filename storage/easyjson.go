@@ -6434,6 +6434,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoStorage71(in *jlexer.Lexer, o
 				}
 				(*out.ScopesData).UnmarshalEasyJSON(in)
 			}
+		case "maxEventLevelReports":
+			out.MaxEventLevelReports = int64(in.Int64())
 		default:
 			in.SkipRecursive()
 		}
@@ -6596,6 +6598,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage71(out *jwriter.Writer
 		const prefix string = ",\"scopesData\":"
 		out.RawString(prefix)
 		(*in.ScopesData).MarshalEasyJSON(out)
+	}
+	{
+		const prefix string = ",\"maxEventLevelReports\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.MaxEventLevelReports))
 	}
 	out.RawByte('}')
 }

@@ -736,6 +736,7 @@ type AttributionReportingSourceRegistration struct {
 	DestinationLimitPriority         SignedInt64asBase10                                   `json:"destinationLimitPriority"`
 	AggregatableDebugReportingConfig *AttributionReportingAggregatableDebugReportingConfig `json:"aggregatableDebugReportingConfig"`
 	ScopesData                       *AttributionScopesData                                `json:"scopesData,omitempty"`
+	MaxEventLevelReports             int64                                                 `json:"maxEventLevelReports"`
 }
 
 // AttributionReportingSourceRegistrationResult [no description].
