@@ -126,8 +126,8 @@ type EventJavascriptDialogOpening struct {
 	DefaultPrompt     string     `json:"defaultPrompt,omitempty"` // Default dialog prompt.
 }
 
-// EventLifecycleEvent fired for top level page lifecycle events such as
-// navigation, load, paint, etc.
+// EventLifecycleEvent fired for lifecycle events (navigation, load, paint,
+// etc) in the current target (including local frames).
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-lifecycleEvent
 type EventLifecycleEvent struct {

@@ -1821,20 +1821,23 @@ func (p *GetFrameOwnerParams) Do(ctx context.Context) (backendNodeID cdp.Backend
 }
 
 // GetContainerForNodeParams returns the query container of the given node
-// based on container query conditions: containerName, physical, and logical
-// axes. If no axes are provided, the style container is returned, which is the
+// based on container query conditions: containerName, physical and logical
+// axes, and whether it queries scroll-state. If no axes are provided and
+// queriesScrollState is false, the style container is returned, which is the
 // direct parent or the closest element with a matching container-name.
 type GetContainerForNodeParams struct {
-	NodeID        cdp.NodeID   `json:"nodeId"`
-	ContainerName string       `json:"containerName,omitempty"`
-	PhysicalAxes  PhysicalAxes `json:"physicalAxes,omitempty"`
-	LogicalAxes   LogicalAxes  `json:"logicalAxes,omitempty"`
+	NodeID             cdp.NodeID   `json:"nodeId"`
+	ContainerName      string       `json:"containerName,omitempty"`
+	PhysicalAxes       PhysicalAxes `json:"physicalAxes,omitempty"`
+	LogicalAxes        LogicalAxes  `json:"logicalAxes,omitempty"`
+	QueriesScrollState bool         `json:"queriesScrollState,omitempty"`
 }
 
 // GetContainerForNode returns the query container of the given node based on
-// container query conditions: containerName, physical, and logical axes. If no
-// axes are provided, the style container is returned, which is the direct
-// parent or the closest element with a matching container-name.
+// container query conditions: containerName, physical and logical axes, and
+// whether it queries scroll-state. If no axes are provided and
+// queriesScrollState is false, the style container is returned, which is the
+// direct parent or the closest element with a matching container-name.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-getContainerForNode
 //
@@ -1862,6 +1865,12 @@ func (p GetContainerForNodeParams) WithPhysicalAxes(physicalAxes PhysicalAxes) *
 // WithLogicalAxes [no description].
 func (p GetContainerForNodeParams) WithLogicalAxes(logicalAxes LogicalAxes) *GetContainerForNodeParams {
 	p.LogicalAxes = logicalAxes
+	return &p
+}
+
+// WithQueriesScrollState [no description].
+func (p GetContainerForNodeParams) WithQueriesScrollState(queriesScrollState bool) *GetContainerForNodeParams {
+	p.QueriesScrollState = queriesScrollState
 	return &p
 }
 

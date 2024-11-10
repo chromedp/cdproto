@@ -164,6 +164,7 @@ const (
 	CommandCSSGetStyleSheetText                             = css.CommandGetStyleSheetText
 	CommandCSSGetLayersForNode                              = css.CommandGetLayersForNode
 	CommandCSSGetLocationForSelector                        = css.CommandGetLocationForSelector
+	CommandCSSTrackComputedStyleUpdatesForNode              = css.CommandTrackComputedStyleUpdatesForNode
 	CommandCSSTrackComputedStyleUpdates                     = css.CommandTrackComputedStyleUpdates
 	CommandCSSTakeComputedStyleUpdates                      = css.CommandTakeComputedStyleUpdates
 	CommandCSSSetEffectivePropertyValueForNode              = css.CommandSetEffectivePropertyValueForNode
@@ -185,6 +186,7 @@ const (
 	EventCSSStyleSheetAdded                                 = "CSS.styleSheetAdded"
 	EventCSSStyleSheetChanged                               = "CSS.styleSheetChanged"
 	EventCSSStyleSheetRemoved                               = "CSS.styleSheetRemoved"
+	EventCSSComputedStyleUpdated                            = "CSS.computedStyleUpdated"
 	CommandCacheStorageDeleteCache                          = cachestorage.CommandDeleteCache
 	CommandCacheStorageDeleteEntry                          = cachestorage.CommandDeleteEntry
 	CommandCacheStorageRequestCacheNames                    = cachestorage.CommandRequestCacheNames
@@ -1109,6 +1111,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandCSSGetLocationForSelector:
 		v = new(css.GetLocationForSelectorReturns)
 
+	case CommandCSSTrackComputedStyleUpdatesForNode:
+		return emptyVal, nil
+
 	case CommandCSSTrackComputedStyleUpdates:
 		return emptyVal, nil
 
@@ -1171,6 +1176,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case EventCSSStyleSheetRemoved:
 		v = new(css.EventStyleSheetRemoved)
+
+	case EventCSSComputedStyleUpdated:
+		v = new(css.EventComputedStyleUpdated)
 
 	case CommandCacheStorageDeleteCache:
 		return emptyVal, nil

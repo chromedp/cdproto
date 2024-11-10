@@ -1050,6 +1050,7 @@ const (
 	AttributionReportingAggregatableResultExcessiveReportingOrigins           AttributionReportingAggregatableResult = "excessiveReportingOrigins"
 	AttributionReportingAggregatableResultNoHistograms                        AttributionReportingAggregatableResult = "noHistograms"
 	AttributionReportingAggregatableResultInsufficientBudget                  AttributionReportingAggregatableResult = "insufficientBudget"
+	AttributionReportingAggregatableResultInsufficientNamedBudget             AttributionReportingAggregatableResult = "insufficientNamedBudget"
 	AttributionReportingAggregatableResultNoMatchingSourceFilterData          AttributionReportingAggregatableResult = "noMatchingSourceFilterData"
 	AttributionReportingAggregatableResultNotRegistered                       AttributionReportingAggregatableResult = "notRegistered"
 	AttributionReportingAggregatableResultProhibitedByBrowserPolicy           AttributionReportingAggregatableResult = "prohibitedByBrowserPolicy"
@@ -1088,6 +1089,8 @@ func (t *AttributionReportingAggregatableResult) UnmarshalEasyJSON(in *jlexer.Le
 		*t = AttributionReportingAggregatableResultNoHistograms
 	case AttributionReportingAggregatableResultInsufficientBudget:
 		*t = AttributionReportingAggregatableResultInsufficientBudget
+	case AttributionReportingAggregatableResultInsufficientNamedBudget:
+		*t = AttributionReportingAggregatableResultInsufficientNamedBudget
 	case AttributionReportingAggregatableResultNoMatchingSourceFilterData:
 		*t = AttributionReportingAggregatableResultNoMatchingSourceFilterData
 	case AttributionReportingAggregatableResultNotRegistered:

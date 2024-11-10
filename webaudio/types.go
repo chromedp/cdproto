@@ -79,9 +79,10 @@ func (t ContextState) String() string {
 
 // ContextState values.
 const (
-	ContextStateSuspended ContextState = "suspended"
-	ContextStateRunning   ContextState = "running"
-	ContextStateClosed    ContextState = "closed"
+	ContextStateSuspended   ContextState = "suspended"
+	ContextStateRunning     ContextState = "running"
+	ContextStateClosed      ContextState = "closed"
+	ContextStateInterrupted ContextState = "interrupted"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -104,6 +105,8 @@ func (t *ContextState) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = ContextStateRunning
 	case ContextStateClosed:
 		*t = ContextStateClosed
+	case ContextStateInterrupted:
+		*t = ContextStateInterrupted
 
 	default:
 		in.AddError(fmt.Errorf("unknown ContextState value: %v", v))

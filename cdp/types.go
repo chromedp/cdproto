@@ -173,6 +173,7 @@ const (
 	PseudoTypeCheck                   PseudoType = "check"
 	PseudoTypeBefore                  PseudoType = "before"
 	PseudoTypeAfter                   PseudoType = "after"
+	PseudoTypeSelectArrow             PseudoType = "select-arrow"
 	PseudoTypeMarker                  PseudoType = "marker"
 	PseudoTypeBackdrop                PseudoType = "backdrop"
 	PseudoTypeColumn                  PseudoType = "column"
@@ -230,6 +231,8 @@ func (t *PseudoType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PseudoTypeBefore
 	case PseudoTypeAfter:
 		*t = PseudoTypeAfter
+	case PseudoTypeSelectArrow:
+		*t = PseudoTypeSelectArrow
 	case PseudoTypeMarker:
 		*t = PseudoTypeMarker
 	case PseudoTypeBackdrop:

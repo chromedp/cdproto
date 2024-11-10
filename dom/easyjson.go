@@ -5115,6 +5115,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoDom63(in *jlexer.Lexer, out *
 			(out.PhysicalAxes).UnmarshalEasyJSON(in)
 		case "logicalAxes":
 			(out.LogicalAxes).UnmarshalEasyJSON(in)
+		case "queriesScrollState":
+			out.QueriesScrollState = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -5148,6 +5150,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoDom63(out *jwriter.Writer, in
 		const prefix string = ",\"logicalAxes\":"
 		out.RawString(prefix)
 		(in.LogicalAxes).MarshalEasyJSON(out)
+	}
+	if in.QueriesScrollState {
+		const prefix string = ",\"queriesScrollState\":"
+		out.RawString(prefix)
+		out.Bool(bool(in.QueriesScrollState))
 	}
 	out.RawByte('}')
 }

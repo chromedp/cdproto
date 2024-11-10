@@ -297,6 +297,7 @@ func (t PropertyName) String() string {
 
 // PropertyName values.
 const (
+	PropertyNameActions          PropertyName = "actions"
 	PropertyNameBusy             PropertyName = "busy"
 	PropertyNameDisabled         PropertyName = "disabled"
 	PropertyNameEditable         PropertyName = "editable"
@@ -353,6 +354,8 @@ func (t PropertyName) MarshalJSON() ([]byte, error) {
 func (t *PropertyName) UnmarshalEasyJSON(in *jlexer.Lexer) {
 	v := in.String()
 	switch PropertyName(v) {
+	case PropertyNameActions:
+		*t = PropertyNameActions
 	case PropertyNameBusy:
 		*t = PropertyNameBusy
 	case PropertyNameDisabled:

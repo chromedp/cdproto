@@ -60,6 +60,8 @@ const (
 	CookieExclusionReasonExcludeDomainNonASCII                         CookieExclusionReason = "ExcludeDomainNonASCII"
 	CookieExclusionReasonExcludeThirdPartyCookieBlockedInFirstPartySet CookieExclusionReason = "ExcludeThirdPartyCookieBlockedInFirstPartySet"
 	CookieExclusionReasonExcludeThirdPartyPhaseout                     CookieExclusionReason = "ExcludeThirdPartyPhaseout"
+	CookieExclusionReasonExcludePortMismatch                           CookieExclusionReason = "ExcludePortMismatch"
+	CookieExclusionReasonExcludeSchemeMismatch                         CookieExclusionReason = "ExcludeSchemeMismatch"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -94,6 +96,10 @@ func (t *CookieExclusionReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = CookieExclusionReasonExcludeThirdPartyCookieBlockedInFirstPartySet
 	case CookieExclusionReasonExcludeThirdPartyPhaseout:
 		*t = CookieExclusionReasonExcludeThirdPartyPhaseout
+	case CookieExclusionReasonExcludePortMismatch:
+		*t = CookieExclusionReasonExcludePortMismatch
+	case CookieExclusionReasonExcludeSchemeMismatch:
+		*t = CookieExclusionReasonExcludeSchemeMismatch
 
 	default:
 		in.AddError(fmt.Errorf("unknown CookieExclusionReason value: %v", v))

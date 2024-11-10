@@ -11,7 +11,8 @@ import (
 	"github.com/mailru/easyjson/jwriter"
 )
 
-// RequestID unique request identifier.
+// RequestID unique request identifier. Note that this does not identify
+// individual HTTP requests that are part of a network request.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Fetch#type-RequestId
 type RequestID string

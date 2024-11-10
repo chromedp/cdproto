@@ -621,6 +621,39 @@ func (p *GetLocationForSelectorParams) Do(ctx context.Context) (ranges []*Source
 	return res.Ranges, nil
 }
 
+// TrackComputedStyleUpdatesForNodeParams starts tracking the given node for
+// the computed style updates and whenever the computed style is updated for
+// node, it queues a computedStyleUpdated event with throttling. There can only
+// be 1 node tracked for computed style updates so passing a new node id removes
+// tracking from the previous node. Pass undefined to disable tracking.
+type TrackComputedStyleUpdatesForNodeParams struct {
+	NodeID cdp.NodeID `json:"nodeId,omitempty"`
+}
+
+// TrackComputedStyleUpdatesForNode starts tracking the given node for the
+// computed style updates and whenever the computed style is updated for node,
+// it queues a computedStyleUpdated event with throttling. There can only be 1
+// node tracked for computed style updates so passing a new node id removes
+// tracking from the previous node. Pass undefined to disable tracking.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#method-trackComputedStyleUpdatesForNode
+//
+// parameters:
+func TrackComputedStyleUpdatesForNode() *TrackComputedStyleUpdatesForNodeParams {
+	return &TrackComputedStyleUpdatesForNodeParams{}
+}
+
+// WithNodeID [no description].
+func (p TrackComputedStyleUpdatesForNodeParams) WithNodeID(nodeID cdp.NodeID) *TrackComputedStyleUpdatesForNodeParams {
+	p.NodeID = nodeID
+	return &p
+}
+
+// Do executes CSS.trackComputedStyleUpdatesForNode against the provided context.
+func (p *TrackComputedStyleUpdatesForNodeParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandTrackComputedStyleUpdatesForNode, p, nil)
+}
+
 // TrackComputedStyleUpdatesParams starts tracking the given computed styles
 // for updates. The specified array of properties replaces the one previously
 // specified. Pass empty array to disable tracking. Use takeComputedStyleUpdates
@@ -1258,6 +1291,7 @@ const (
 	CommandGetStyleSheetText                = "CSS.getStyleSheetText"
 	CommandGetLayersForNode                 = "CSS.getLayersForNode"
 	CommandGetLocationForSelector           = "CSS.getLocationForSelector"
+	CommandTrackComputedStyleUpdatesForNode = "CSS.trackComputedStyleUpdatesForNode"
 	CommandTrackComputedStyleUpdates        = "CSS.trackComputedStyleUpdates"
 	CommandTakeComputedStyleUpdates         = "CSS.takeComputedStyleUpdates"
 	CommandSetEffectivePropertyValueForNode = "CSS.setEffectivePropertyValueForNode"

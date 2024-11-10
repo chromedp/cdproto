@@ -110,7 +110,8 @@ func (t *ResourceType) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 
-// RequestID unique request identifier.
+// RequestID unique network request identifier. Note that this does not
+// identify individual HTTP requests that are part of a network request.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-RequestId
 type RequestID string
@@ -1162,7 +1163,7 @@ type CachedResource struct {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-Initiator
 type Initiator struct {
 	Type         InitiatorType       `json:"type"`                   // Type of this initiator.
-	Stack        *runtime.StackTrace `json:"stack,omitempty"`        // Initiator JavaScript stack trace, set for Script only.
+	Stack        *runtime.StackTrace `json:"stack,omitempty"`        // Initiator JavaScript stack trace, set for Script only. Requires the Debugger domain to be enabled.
 	URL          string              `json:"url,omitempty"`          // Initiator URL, set for Parser type or for Script type (when script is importing module) or for SignedExchange type.
 	LineNumber   float64             `json:"lineNumber,omitempty"`   // Initiator line number, set for Parser type or for Script type (when script is importing module) (0-based).
 	ColumnNumber float64             `json:"columnNumber,omitempty"` // Initiator column number, set for Parser type or for Script type (when script is importing module) (0-based).
@@ -1358,6 +1359,8 @@ const (
 	CookieBlockedReasonSchemefulSameSiteUnspecifiedTreatedAsLax CookieBlockedReason = "SchemefulSameSiteUnspecifiedTreatedAsLax"
 	CookieBlockedReasonSamePartyFromCrossPartyContext           CookieBlockedReason = "SamePartyFromCrossPartyContext"
 	CookieBlockedReasonNameValuePairExceedsMaxSize              CookieBlockedReason = "NameValuePairExceedsMaxSize"
+	CookieBlockedReasonPortMismatch                             CookieBlockedReason = "PortMismatch"
+	CookieBlockedReasonSchemeMismatch                           CookieBlockedReason = "SchemeMismatch"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -1406,6 +1409,10 @@ func (t *CookieBlockedReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = CookieBlockedReasonSamePartyFromCrossPartyContext
 	case CookieBlockedReasonNameValuePairExceedsMaxSize:
 		*t = CookieBlockedReasonNameValuePairExceedsMaxSize
+	case CookieBlockedReasonPortMismatch:
+		*t = CookieBlockedReasonPortMismatch
+	case CookieBlockedReasonSchemeMismatch:
+		*t = CookieBlockedReasonSchemeMismatch
 
 	default:
 		in.AddError(fmt.Errorf("unknown CookieBlockedReason value: %v", v))
