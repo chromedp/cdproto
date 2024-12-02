@@ -94,18 +94,21 @@ func (t PermissionType) String() string {
 
 // PermissionType values.
 const (
-	PermissionTypeAccessibilityEvents      PermissionType = "accessibilityEvents"
+	PermissionTypeAr                       PermissionType = "ar"
 	PermissionTypeAudioCapture             PermissionType = "audioCapture"
-	PermissionTypeBackgroundSync           PermissionType = "backgroundSync"
+	PermissionTypeAutomaticFullscreen      PermissionType = "automaticFullscreen"
 	PermissionTypeBackgroundFetch          PermissionType = "backgroundFetch"
+	PermissionTypeBackgroundSync           PermissionType = "backgroundSync"
+	PermissionTypeCameraPanTiltZoom        PermissionType = "cameraPanTiltZoom"
 	PermissionTypeCapturedSurfaceControl   PermissionType = "capturedSurfaceControl"
 	PermissionTypeClipboardReadWrite       PermissionType = "clipboardReadWrite"
 	PermissionTypeClipboardSanitizedWrite  PermissionType = "clipboardSanitizedWrite"
 	PermissionTypeDisplayCapture           PermissionType = "displayCapture"
 	PermissionTypeDurableStorage           PermissionType = "durableStorage"
-	PermissionTypeFlash                    PermissionType = "flash"
 	PermissionTypeGeolocation              PermissionType = "geolocation"
+	PermissionTypeHandTracking             PermissionType = "handTracking"
 	PermissionTypeIdleDetection            PermissionType = "idleDetection"
+	PermissionTypeKeyboardLock             PermissionType = "keyboardLock"
 	PermissionTypeLocalFonts               PermissionType = "localFonts"
 	PermissionTypeMidi                     PermissionType = "midi"
 	PermissionTypeMidiSysex                PermissionType = "midiSysex"
@@ -113,16 +116,19 @@ const (
 	PermissionTypeNotifications            PermissionType = "notifications"
 	PermissionTypePaymentHandler           PermissionType = "paymentHandler"
 	PermissionTypePeriodicBackgroundSync   PermissionType = "periodicBackgroundSync"
+	PermissionTypePointerLock              PermissionType = "pointerLock"
 	PermissionTypeProtectedMediaIdentifier PermissionType = "protectedMediaIdentifier"
 	PermissionTypeSensors                  PermissionType = "sensors"
-	PermissionTypeStorageAccess            PermissionType = "storageAccess"
+	PermissionTypeSmartCard                PermissionType = "smartCard"
 	PermissionTypeSpeakerSelection         PermissionType = "speakerSelection"
+	PermissionTypeStorageAccess            PermissionType = "storageAccess"
 	PermissionTypeTopLevelStorageAccess    PermissionType = "topLevelStorageAccess"
 	PermissionTypeVideoCapture             PermissionType = "videoCapture"
-	PermissionTypeVideoCapturePanTiltZoom  PermissionType = "videoCapturePanTiltZoom"
+	PermissionTypeVr                       PermissionType = "vr"
 	PermissionTypeWakeLockScreen           PermissionType = "wakeLockScreen"
 	PermissionTypeWakeLockSystem           PermissionType = "wakeLockSystem"
 	PermissionTypeWebAppInstallation       PermissionType = "webAppInstallation"
+	PermissionTypeWebPrinting              PermissionType = "webPrinting"
 	PermissionTypeWindowManagement         PermissionType = "windowManagement"
 )
 
@@ -140,14 +146,18 @@ func (t PermissionType) MarshalJSON() ([]byte, error) {
 func (t *PermissionType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 	v := in.String()
 	switch PermissionType(v) {
-	case PermissionTypeAccessibilityEvents:
-		*t = PermissionTypeAccessibilityEvents
+	case PermissionTypeAr:
+		*t = PermissionTypeAr
 	case PermissionTypeAudioCapture:
 		*t = PermissionTypeAudioCapture
-	case PermissionTypeBackgroundSync:
-		*t = PermissionTypeBackgroundSync
+	case PermissionTypeAutomaticFullscreen:
+		*t = PermissionTypeAutomaticFullscreen
 	case PermissionTypeBackgroundFetch:
 		*t = PermissionTypeBackgroundFetch
+	case PermissionTypeBackgroundSync:
+		*t = PermissionTypeBackgroundSync
+	case PermissionTypeCameraPanTiltZoom:
+		*t = PermissionTypeCameraPanTiltZoom
 	case PermissionTypeCapturedSurfaceControl:
 		*t = PermissionTypeCapturedSurfaceControl
 	case PermissionTypeClipboardReadWrite:
@@ -158,12 +168,14 @@ func (t *PermissionType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PermissionTypeDisplayCapture
 	case PermissionTypeDurableStorage:
 		*t = PermissionTypeDurableStorage
-	case PermissionTypeFlash:
-		*t = PermissionTypeFlash
 	case PermissionTypeGeolocation:
 		*t = PermissionTypeGeolocation
+	case PermissionTypeHandTracking:
+		*t = PermissionTypeHandTracking
 	case PermissionTypeIdleDetection:
 		*t = PermissionTypeIdleDetection
+	case PermissionTypeKeyboardLock:
+		*t = PermissionTypeKeyboardLock
 	case PermissionTypeLocalFonts:
 		*t = PermissionTypeLocalFonts
 	case PermissionTypeMidi:
@@ -178,26 +190,32 @@ func (t *PermissionType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PermissionTypePaymentHandler
 	case PermissionTypePeriodicBackgroundSync:
 		*t = PermissionTypePeriodicBackgroundSync
+	case PermissionTypePointerLock:
+		*t = PermissionTypePointerLock
 	case PermissionTypeProtectedMediaIdentifier:
 		*t = PermissionTypeProtectedMediaIdentifier
 	case PermissionTypeSensors:
 		*t = PermissionTypeSensors
-	case PermissionTypeStorageAccess:
-		*t = PermissionTypeStorageAccess
+	case PermissionTypeSmartCard:
+		*t = PermissionTypeSmartCard
 	case PermissionTypeSpeakerSelection:
 		*t = PermissionTypeSpeakerSelection
+	case PermissionTypeStorageAccess:
+		*t = PermissionTypeStorageAccess
 	case PermissionTypeTopLevelStorageAccess:
 		*t = PermissionTypeTopLevelStorageAccess
 	case PermissionTypeVideoCapture:
 		*t = PermissionTypeVideoCapture
-	case PermissionTypeVideoCapturePanTiltZoom:
-		*t = PermissionTypeVideoCapturePanTiltZoom
+	case PermissionTypeVr:
+		*t = PermissionTypeVr
 	case PermissionTypeWakeLockScreen:
 		*t = PermissionTypeWakeLockScreen
 	case PermissionTypeWakeLockSystem:
 		*t = PermissionTypeWakeLockSystem
 	case PermissionTypeWebAppInstallation:
 		*t = PermissionTypeWebAppInstallation
+	case PermissionTypeWebPrinting:
+		*t = PermissionTypeWebPrinting
 	case PermissionTypeWindowManagement:
 		*t = PermissionTypeWindowManagement
 

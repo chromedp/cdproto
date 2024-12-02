@@ -650,6 +650,7 @@ const (
 	BlockedReasonCorpNotSameOriginAfterDefaultedToSameOriginByDip        BlockedReason = "corp-not-same-origin-after-defaulted-to-same-origin-by-dip"
 	BlockedReasonCorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip BlockedReason = "corp-not-same-origin-after-defaulted-to-same-origin-by-coep-and-dip"
 	BlockedReasonCorpNotSameSite                                         BlockedReason = "corp-not-same-site"
+	BlockedReasonSriMessageSignatureMismatch                             BlockedReason = "sri-message-signature-mismatch"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -694,6 +695,8 @@ func (t *BlockedReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = BlockedReasonCorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip
 	case BlockedReasonCorpNotSameSite:
 		*t = BlockedReasonCorpNotSameSite
+	case BlockedReasonSriMessageSignatureMismatch:
+		*t = BlockedReasonSriMessageSignatureMismatch
 
 	default:
 		in.AddError(fmt.Errorf("unknown BlockedReason value: %v", v))

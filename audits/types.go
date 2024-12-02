@@ -237,6 +237,64 @@ func (t *CookieOperation) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 
+// InsightType represents the category of insight that a cookie issue falls
+// under.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-InsightType
+type InsightType string
+
+// String returns the InsightType as string value.
+func (t InsightType) String() string {
+	return string(t)
+}
+
+// InsightType values.
+const (
+	InsightTypeGitHubResource InsightType = "GitHubResource"
+	InsightTypeGracePeriod    InsightType = "GracePeriod"
+	InsightTypeHeuristics     InsightType = "Heuristics"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t InsightType) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t InsightType) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *InsightType) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	v := in.String()
+	switch InsightType(v) {
+	case InsightTypeGitHubResource:
+		*t = InsightTypeGitHubResource
+	case InsightTypeGracePeriod:
+		*t = InsightTypeGracePeriod
+	case InsightTypeHeuristics:
+		*t = InsightTypeHeuristics
+
+	default:
+		in.AddError(fmt.Errorf("unknown InsightType value: %v", v))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *InsightType) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
+// CookieIssueInsight information about the suggested solution to a cookie
+// issue.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-CookieIssueInsight
+type CookieIssueInsight struct {
+	Type          InsightType `json:"type"`
+	TableEntryURL string      `json:"tableEntryUrl,omitempty"` // Link to table entry in third-party cookie migration readiness list.
+}
+
 // CookieIssueDetails this information is currently necessary, as the
 // front-end has a difficult time finding a specific cookie. With this, we can
 // convey specific error information without the cookie.
@@ -251,6 +309,7 @@ type CookieIssueDetails struct {
 	SiteForCookies         string                  `json:"siteForCookies,omitempty"`
 	CookieURL              string                  `json:"cookieUrl,omitempty"`
 	Request                *AffectedRequest        `json:"request,omitempty"`
+	Insight                *CookieIssueInsight     `json:"insight,omitempty"` // The recommended solution to the issue.
 }
 
 // MixedContentResolutionStatus [no description].
@@ -459,6 +518,7 @@ const (
 	BlockedByResponseReasonCorpNotSameOriginAfterDefaultedToSameOriginByDip        BlockedByResponseReason = "CorpNotSameOriginAfterDefaultedToSameOriginByDip"
 	BlockedByResponseReasonCorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip BlockedByResponseReason = "CorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip"
 	BlockedByResponseReasonCorpNotSameSite                                         BlockedByResponseReason = "CorpNotSameSite"
+	BlockedByResponseReasonSRIMessageSignatureMismatch                             BlockedByResponseReason = "SRIMessageSignatureMismatch"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -489,6 +549,8 @@ func (t *BlockedByResponseReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = BlockedByResponseReasonCorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip
 	case BlockedByResponseReasonCorpNotSameSite:
 		*t = BlockedByResponseReasonCorpNotSameSite
+	case BlockedByResponseReasonSRIMessageSignatureMismatch:
+		*t = BlockedByResponseReasonSRIMessageSignatureMismatch
 
 	default:
 		in.AddError(fmt.Errorf("unknown BlockedByResponseReason value: %v", v))

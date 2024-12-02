@@ -170,7 +170,7 @@ func (t PseudoType) String() string {
 const (
 	PseudoTypeFirstLine               PseudoType = "first-line"
 	PseudoTypeFirstLetter             PseudoType = "first-letter"
-	PseudoTypeCheck                   PseudoType = "check"
+	PseudoTypeCheckmark               PseudoType = "checkmark"
 	PseudoTypeBefore                  PseudoType = "before"
 	PseudoTypeAfter                   PseudoType = "after"
 	PseudoTypeSelectArrow             PseudoType = "select-arrow"
@@ -186,8 +186,7 @@ const (
 	PseudoTypeFirstLineInherited      PseudoType = "first-line-inherited"
 	PseudoTypeScrollMarker            PseudoType = "scroll-marker"
 	PseudoTypeScrollMarkerGroup       PseudoType = "scroll-marker-group"
-	PseudoTypeScrollNextButton        PseudoType = "scroll-next-button"
-	PseudoTypeScrollPrevButton        PseudoType = "scroll-prev-button"
+	PseudoTypeScrollButton            PseudoType = "scroll-button"
 	PseudoTypeScrollbar               PseudoType = "scrollbar"
 	PseudoTypeScrollbarThumb          PseudoType = "scrollbar-thumb"
 	PseudoTypeScrollbarButton         PseudoType = "scrollbar-button"
@@ -225,8 +224,8 @@ func (t *PseudoType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PseudoTypeFirstLine
 	case PseudoTypeFirstLetter:
 		*t = PseudoTypeFirstLetter
-	case PseudoTypeCheck:
-		*t = PseudoTypeCheck
+	case PseudoTypeCheckmark:
+		*t = PseudoTypeCheckmark
 	case PseudoTypeBefore:
 		*t = PseudoTypeBefore
 	case PseudoTypeAfter:
@@ -257,10 +256,8 @@ func (t *PseudoType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PseudoTypeScrollMarker
 	case PseudoTypeScrollMarkerGroup:
 		*t = PseudoTypeScrollMarkerGroup
-	case PseudoTypeScrollNextButton:
-		*t = PseudoTypeScrollNextButton
-	case PseudoTypeScrollPrevButton:
-		*t = PseudoTypeScrollPrevButton
+	case PseudoTypeScrollButton:
+		*t = PseudoTypeScrollButton
 	case PseudoTypeScrollbar:
 		*t = PseudoTypeScrollbar
 	case PseudoTypeScrollbarThumb:

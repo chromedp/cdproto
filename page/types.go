@@ -74,6 +74,7 @@ const (
 	PermissionsPolicyFeatureControlledFrame                PermissionsPolicyFeature = "controlled-frame"
 	PermissionsPolicyFeatureCrossOriginIsolated            PermissionsPolicyFeature = "cross-origin-isolated"
 	PermissionsPolicyFeatureDeferredFetch                  PermissionsPolicyFeature = "deferred-fetch"
+	PermissionsPolicyFeatureDeferredFetchMinimal           PermissionsPolicyFeature = "deferred-fetch-minimal"
 	PermissionsPolicyFeatureDigitalCredentialsGet          PermissionsPolicyFeature = "digital-credentials-get"
 	PermissionsPolicyFeatureDirectSockets                  PermissionsPolicyFeature = "direct-sockets"
 	PermissionsPolicyFeatureDirectSocketsPrivate           PermissionsPolicyFeature = "direct-sockets-private"
@@ -221,6 +222,8 @@ func (t *PermissionsPolicyFeature) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PermissionsPolicyFeatureCrossOriginIsolated
 	case PermissionsPolicyFeatureDeferredFetch:
 		*t = PermissionsPolicyFeatureDeferredFetch
+	case PermissionsPolicyFeatureDeferredFetchMinimal:
+		*t = PermissionsPolicyFeatureDeferredFetchMinimal
 	case PermissionsPolicyFeatureDigitalCredentialsGet:
 		*t = PermissionsPolicyFeatureDigitalCredentialsGet
 	case PermissionsPolicyFeatureDirectSockets:
