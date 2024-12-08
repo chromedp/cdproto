@@ -157,6 +157,7 @@ const (
 	CommandCSSForcePseudoState                              = css.CommandForcePseudoState
 	CommandCSSGetBackgroundColors                           = css.CommandGetBackgroundColors
 	CommandCSSGetComputedStyleForNode                       = css.CommandGetComputedStyleForNode
+	CommandCSSResolveValues                                 = css.CommandResolveValues
 	CommandCSSGetInlineStylesForNode                        = css.CommandGetInlineStylesForNode
 	CommandCSSGetMatchedStylesForNode                       = css.CommandGetMatchedStylesForNode
 	CommandCSSGetMediaQueries                               = css.CommandGetMediaQueries
@@ -1089,6 +1090,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandCSSGetComputedStyleForNode:
 		v = new(css.GetComputedStyleForNodeReturns)
+
+	case CommandCSSResolveValues:
+		v = new(css.ResolveValuesReturns)
 
 	case CommandCSSGetInlineStylesForNode:
 		v = new(css.GetInlineStylesForNodeReturns)

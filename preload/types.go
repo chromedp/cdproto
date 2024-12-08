@@ -200,6 +200,20 @@ type IngAttemptSource struct {
 	NodeIDs    []cdp.BackendNodeID `json:"nodeIds"`
 }
 
+// PipelineID chrome manages different types of preloads together using a
+// concept of preloading pipeline. For example, if a site uses a
+// SpeculationRules for prerender, Chrome first starts a prefetch and then
+// upgrades it to prerender. CDP events for them are emitted separately but they
+// share PreloadPipelineId.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Preload#type-PreloadPipelineId
+type PipelineID string
+
+// String returns the PipelineID as string value.
+func (t PipelineID) String() string {
+	return string(t)
+}
+
 // PrerenderFinalStatus list of FinalStatus reasons for Prerender2.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Preload#type-PrerenderFinalStatus

@@ -623,6 +623,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoPreload6(in *jlexer.Lexer, ou
 				}
 				(*out.Key).UnmarshalEasyJSON(in)
 			}
+		case "pipelineId":
+			out.PipelineID = PipelineID(in.String())
 		case "status":
 			(out.Status).UnmarshalEasyJSON(in)
 		case "prerenderStatus":
@@ -682,6 +684,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoPreload6(out *jwriter.Writer,
 		} else {
 			(*in.Key).MarshalEasyJSON(out)
 		}
+	}
+	{
+		const prefix string = ",\"pipelineId\":"
+		out.RawString(prefix)
+		out.String(string(in.PipelineID))
 	}
 	{
 		const prefix string = ",\"status\":"
@@ -982,6 +989,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoPreload9(in *jlexer.Lexer, ou
 				}
 				(*out.Key).UnmarshalEasyJSON(in)
 			}
+		case "pipelineId":
+			out.PipelineID = PipelineID(in.String())
 		case "initiatingFrameId":
 			(out.InitiatingFrameID).UnmarshalEasyJSON(in)
 		case "prefetchUrl":
@@ -1014,6 +1023,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoPreload9(out *jwriter.Writer,
 		} else {
 			(*in.Key).MarshalEasyJSON(out)
 		}
+	}
+	{
+		const prefix string = ",\"pipelineId\":"
+		out.RawString(prefix)
+		out.String(string(in.PipelineID))
 	}
 	{
 		const prefix string = ",\"initiatingFrameId\":"

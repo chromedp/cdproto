@@ -226,7 +226,7 @@ type EventRequestWillBeSentExtraInfo struct {
 type EventResponseReceivedExtraInfo struct {
 	RequestID                RequestID                      `json:"requestId"`                          // Request identifier. Used to match this information to another responseReceived event.
 	BlockedCookies           []*BlockedSetCookieWithReason  `json:"blockedCookies"`                     // A list of cookies which were not stored from the response along with the corresponding reasons for blocking. The cookies here may not be valid due to syntax errors, which are represented by the invalid cookie line string instead of a proper cookie.
-	Headers                  Headers                        `json:"headers"`                            // Raw response headers as they were received over the wire.
+	Headers                  Headers                        `json:"headers"`                            // Raw response headers as they were received over the wire. Duplicate headers in the response are represented as a single key with their values concatentated using \n as the separator. See also headersText that contains verbatim text for HTTP/1.*.
 	ResourceIPAddressSpace   IPAddressSpace                 `json:"resourceIPAddressSpace"`             // The IP address space of the resource. The address space can only be determined once the transport established the connection, so we can't send it in requestWillBeSentExtraInfo.
 	StatusCode               int64                          `json:"statusCode"`                         // The status code of the response. This is useful in cases the request failed and no responseReceived event is triggered, which is the case for, e.g., CORS errors. This is also the correct status code for cached requests, where the status in responseReceived is a 200 and this will be 304.
 	HeadersText              string                         `json:"headersText,omitempty"`              // Raw response header text as it was received over the wire. The raw text may not always be available, such as in the case of HTTP/2 or QUIC.
@@ -243,7 +243,7 @@ type EventResponseReceivedExtraInfo struct {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-responseReceivedEarlyHints
 type EventResponseReceivedEarlyHints struct {
 	RequestID RequestID `json:"requestId"` // Request identifier. Used to match this information to another responseReceived event.
-	Headers   Headers   `json:"headers"`   // Raw response headers as they were received over the wire.
+	Headers   Headers   `json:"headers"`   // Raw response headers as they were received over the wire. Duplicate headers in the response are represented as a single key with their values concatentated using \n as the separator. See also headersText that contains verbatim text for HTTP/1.*.
 }
 
 // EventTrustTokenOperationDone fired exactly once for each Trust Token

@@ -3642,6 +3642,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoDebugger42(in *jlexer.Lexer, 
 			out.ExecutionContextID = runtime.ExecutionContextID(in.Int64())
 		case "hash":
 			out.Hash = string(in.String())
+		case "buildId":
+			out.BuildID = string(in.String())
 		case "executionContextAuxData":
 			(out.ExecutionContextAuxData).UnmarshalEasyJSON(in)
 		case "isLiveEdit":
@@ -3754,6 +3756,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoDebugger42(out *jwriter.Write
 		const prefix string = ",\"hash\":"
 		out.RawString(prefix)
 		out.String(string(in.Hash))
+	}
+	{
+		const prefix string = ",\"buildId\":"
+		out.RawString(prefix)
+		out.String(string(in.BuildID))
 	}
 	if (in.ExecutionContextAuxData).IsDefined() {
 		const prefix string = ",\"executionContextAuxData\":"
@@ -3884,6 +3891,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoDebugger43(in *jlexer.Lexer, 
 			out.ExecutionContextID = runtime.ExecutionContextID(in.Int64())
 		case "hash":
 			out.Hash = string(in.String())
+		case "buildId":
+			out.BuildID = string(in.String())
 		case "executionContextAuxData":
 			(out.ExecutionContextAuxData).UnmarshalEasyJSON(in)
 		case "sourceMapURL":
@@ -3963,6 +3972,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoDebugger43(out *jwriter.Write
 		const prefix string = ",\"hash\":"
 		out.RawString(prefix)
 		out.String(string(in.Hash))
+	}
+	{
+		const prefix string = ",\"buildId\":"
+		out.RawString(prefix)
+		out.String(string(in.BuildID))
 	}
 	if (in.ExecutionContextAuxData).IsDefined() {
 		const prefix string = ",\"executionContextAuxData\":"

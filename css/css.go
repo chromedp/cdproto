@@ -305,6 +305,76 @@ func (p *GetComputedStyleForNodeParams) Do(ctx context.Context) (computedStyle [
 	return res.ComputedStyle, nil
 }
 
+// ResolveValuesParams resolve the specified values in the context of the
+// provided element. For example, a value of '1em' is evaluated according to the
+// computed 'font-size' of the element and a value 'calc(1px + 2px)' will be
+// resolved to '3px'.
+type ResolveValuesParams struct {
+	Values           []string       `json:"values"`                     // Substitution functions (var()/env()/attr()) and cascade-dependent keywords (revert/revert-layer) do not work.
+	NodeID           cdp.NodeID     `json:"nodeId"`                     // Id of the node in whose context the expression is evaluated
+	PropertyName     string         `json:"propertyName,omitempty"`     // Only longhands and custom property names are accepted.
+	PseudoType       cdp.PseudoType `json:"pseudoType,omitempty"`       // Pseudo element type, only works for pseudo elements that generate elements in the tree, such as ::before and ::after.
+	PseudoIdentifier string         `json:"pseudoIdentifier,omitempty"` // Pseudo element custom ident.
+}
+
+// ResolveValues resolve the specified values in the context of the provided
+// element. For example, a value of '1em' is evaluated according to the computed
+// 'font-size' of the element and a value 'calc(1px + 2px)' will be resolved to
+// '3px'.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#method-resolveValues
+//
+// parameters:
+//
+//	values - Substitution functions (var()/env()/attr()) and cascade-dependent keywords (revert/revert-layer) do not work.
+//	nodeID - Id of the node in whose context the expression is evaluated
+func ResolveValues(values []string, nodeID cdp.NodeID) *ResolveValuesParams {
+	return &ResolveValuesParams{
+		Values: values,
+		NodeID: nodeID,
+	}
+}
+
+// WithPropertyName only longhands and custom property names are accepted.
+func (p ResolveValuesParams) WithPropertyName(propertyName string) *ResolveValuesParams {
+	p.PropertyName = propertyName
+	return &p
+}
+
+// WithPseudoType pseudo element type, only works for pseudo elements that
+// generate elements in the tree, such as ::before and ::after.
+func (p ResolveValuesParams) WithPseudoType(pseudoType cdp.PseudoType) *ResolveValuesParams {
+	p.PseudoType = pseudoType
+	return &p
+}
+
+// WithPseudoIdentifier pseudo element custom ident.
+func (p ResolveValuesParams) WithPseudoIdentifier(pseudoIdentifier string) *ResolveValuesParams {
+	p.PseudoIdentifier = pseudoIdentifier
+	return &p
+}
+
+// ResolveValuesReturns return values.
+type ResolveValuesReturns struct {
+	Results []string `json:"results,omitempty"`
+}
+
+// Do executes CSS.resolveValues against the provided context.
+//
+// returns:
+//
+//	results
+func (p *ResolveValuesParams) Do(ctx context.Context) (results []string, err error) {
+	// execute
+	var res ResolveValuesReturns
+	err = cdp.Execute(ctx, CommandResolveValues, p, &res)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.Results, nil
+}
+
 // GetInlineStylesForNodeParams returns the styles defined inline (explicitly
 // in the "style" attribute and implicitly, using DOM attributes) for a DOM node
 // identified by nodeId.
@@ -1284,6 +1354,7 @@ const (
 	CommandForcePseudoState                 = "CSS.forcePseudoState"
 	CommandGetBackgroundColors              = "CSS.getBackgroundColors"
 	CommandGetComputedStyleForNode          = "CSS.getComputedStyleForNode"
+	CommandResolveValues                    = "CSS.resolveValues"
 	CommandGetInlineStylesForNode           = "CSS.getInlineStylesForNode"
 	CommandGetMatchedStylesForNode          = "CSS.getMatchedStylesForNode"
 	CommandGetMediaQueries                  = "CSS.getMediaQueries"
