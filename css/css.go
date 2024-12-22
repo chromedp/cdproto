@@ -221,6 +221,34 @@ func (p *ForcePseudoStateParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandForcePseudoState, p, nil)
 }
 
+// ForceStartingStyleParams ensures that the given node is in its
+// starting-style state.
+type ForceStartingStyleParams struct {
+	NodeID cdp.NodeID `json:"nodeId"` // The element id for which to force the starting-style state.
+	Forced bool       `json:"forced"` // Boolean indicating if this is on or off.
+}
+
+// ForceStartingStyle ensures that the given node is in its starting-style
+// state.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#method-forceStartingStyle
+//
+// parameters:
+//
+//	nodeID - The element id for which to force the starting-style state.
+//	forced - Boolean indicating if this is on or off.
+func ForceStartingStyle(nodeID cdp.NodeID, forced bool) *ForceStartingStyleParams {
+	return &ForceStartingStyleParams{
+		NodeID: nodeID,
+		Forced: forced,
+	}
+}
+
+// Do executes CSS.forceStartingStyle against the provided context.
+func (p *ForceStartingStyleParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandForceStartingStyle, p, nil)
+}
+
 // GetBackgroundColorsParams [no description].
 type GetBackgroundColorsParams struct {
 	NodeID cdp.NodeID `json:"nodeId"` // Id of the node to get background colors for.
@@ -418,6 +446,53 @@ func (p *GetInlineStylesForNodeParams) Do(ctx context.Context) (inlineStyle *Sty
 	}
 
 	return res.InlineStyle, res.AttributesStyle, nil
+}
+
+// GetAnimatedStylesForNodeParams returns the styles coming from animations &
+// transitions including the animation & transition styles coming from
+// inheritance chain.
+type GetAnimatedStylesForNodeParams struct {
+	NodeID cdp.NodeID `json:"nodeId"`
+}
+
+// GetAnimatedStylesForNode returns the styles coming from animations &
+// transitions including the animation & transition styles coming from
+// inheritance chain.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#method-getAnimatedStylesForNode
+//
+// parameters:
+//
+//	nodeID
+func GetAnimatedStylesForNode(nodeID cdp.NodeID) *GetAnimatedStylesForNodeParams {
+	return &GetAnimatedStylesForNodeParams{
+		NodeID: nodeID,
+	}
+}
+
+// GetAnimatedStylesForNodeReturns return values.
+type GetAnimatedStylesForNodeReturns struct {
+	AnimationStyles  []*AnimationStyle              `json:"animationStyles,omitempty"`  // Styles coming from animations.
+	TransitionsStyle *Style                         `json:"transitionsStyle,omitempty"` // Style coming from transitions.
+	Inherited        []*InheritedAnimatedStyleEntry `json:"inherited,omitempty"`        // Inherited style entries for animationsStyle and transitionsStyle from the inheritance chain of the element.
+}
+
+// Do executes CSS.getAnimatedStylesForNode against the provided context.
+//
+// returns:
+//
+//	animationStyles - Styles coming from animations.
+//	transitionsStyle - Style coming from transitions.
+//	inherited - Inherited style entries for animationsStyle and transitionsStyle from the inheritance chain of the element.
+func (p *GetAnimatedStylesForNodeParams) Do(ctx context.Context) (animationStyles []*AnimationStyle, transitionsStyle *Style, inherited []*InheritedAnimatedStyleEntry, err error) {
+	// execute
+	var res GetAnimatedStylesForNodeReturns
+	err = cdp.Execute(ctx, CommandGetAnimatedStylesForNode, p, &res)
+	if err != nil {
+		return nil, nil, nil, err
+	}
+
+	return res.AnimationStyles, res.TransitionsStyle, res.Inherited, nil
 }
 
 // GetMatchedStylesForNodeParams returns requested styles for a DOM node
@@ -1352,10 +1427,12 @@ const (
 	CommandDisable                          = "CSS.disable"
 	CommandEnable                           = "CSS.enable"
 	CommandForcePseudoState                 = "CSS.forcePseudoState"
+	CommandForceStartingStyle               = "CSS.forceStartingStyle"
 	CommandGetBackgroundColors              = "CSS.getBackgroundColors"
 	CommandGetComputedStyleForNode          = "CSS.getComputedStyleForNode"
 	CommandResolveValues                    = "CSS.resolveValues"
 	CommandGetInlineStylesForNode           = "CSS.getInlineStylesForNode"
+	CommandGetAnimatedStylesForNode         = "CSS.getAnimatedStylesForNode"
 	CommandGetMatchedStylesForNode          = "CSS.getMatchedStylesForNode"
 	CommandGetMediaQueries                  = "CSS.getMediaQueries"
 	CommandGetPlatformFontsForNode          = "CSS.getPlatformFontsForNode"

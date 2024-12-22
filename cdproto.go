@@ -155,10 +155,12 @@ const (
 	CommandCSSDisable                                       = css.CommandDisable
 	CommandCSSEnable                                        = css.CommandEnable
 	CommandCSSForcePseudoState                              = css.CommandForcePseudoState
+	CommandCSSForceStartingStyle                            = css.CommandForceStartingStyle
 	CommandCSSGetBackgroundColors                           = css.CommandGetBackgroundColors
 	CommandCSSGetComputedStyleForNode                       = css.CommandGetComputedStyleForNode
 	CommandCSSResolveValues                                 = css.CommandResolveValues
 	CommandCSSGetInlineStylesForNode                        = css.CommandGetInlineStylesForNode
+	CommandCSSGetAnimatedStylesForNode                      = css.CommandGetAnimatedStylesForNode
 	CommandCSSGetMatchedStylesForNode                       = css.CommandGetMatchedStylesForNode
 	CommandCSSGetMediaQueries                               = css.CommandGetMediaQueries
 	CommandCSSGetPlatformFontsForNode                       = css.CommandGetPlatformFontsForNode
@@ -1085,6 +1087,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandCSSForcePseudoState:
 		return emptyVal, nil
 
+	case CommandCSSForceStartingStyle:
+		return emptyVal, nil
+
 	case CommandCSSGetBackgroundColors:
 		v = new(css.GetBackgroundColorsReturns)
 
@@ -1096,6 +1101,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandCSSGetInlineStylesForNode:
 		v = new(css.GetInlineStylesForNodeReturns)
+
+	case CommandCSSGetAnimatedStylesForNode:
+		v = new(css.GetAnimatedStylesForNodeReturns)
 
 	case CommandCSSGetMatchedStylesForNode:
 		v = new(css.GetMatchedStylesForNodeReturns)

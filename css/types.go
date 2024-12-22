@@ -85,12 +85,30 @@ type PseudoElementMatches struct {
 	Matches          []*RuleMatch   `json:"matches"`                    // Matches of CSS rules applicable to the pseudo style.
 }
 
+// AnimationStyle CSS style coming from animations with the name of the
+// animation.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#type-CSSAnimationStyle
+type AnimationStyle struct {
+	Name  string `json:"name,omitempty"` // The name of the animation.
+	Style *Style `json:"style"`          // The style coming from the animation.
+}
+
 // InheritedStyleEntry inherited CSS rule collection from ancestor node.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#type-InheritedStyleEntry
 type InheritedStyleEntry struct {
 	InlineStyle     *Style       `json:"inlineStyle,omitempty"` // The ancestor node's inline style, if any, in the style inheritance chain.
 	MatchedCSSRules []*RuleMatch `json:"matchedCSSRules"`       // Matches of CSS rules matching the ancestor node in the style inheritance chain.
+}
+
+// InheritedAnimatedStyleEntry inherited CSS style collection for animated
+// styles from ancestor node.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#type-InheritedAnimatedStyleEntry
+type InheritedAnimatedStyleEntry struct {
+	AnimationStyles  []*AnimationStyle `json:"animationStyles,omitempty"`  // Styles coming from the animations of the ancestor, if any, in the style inheritance chain.
+	TransitionsStyle *Style            `json:"transitionsStyle,omitempty"` // The style coming from the transitions of the ancestor, if any, in the style inheritance chain.
 }
 
 // InheritedPseudoElementMatches inherited pseudo element matches from
