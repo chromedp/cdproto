@@ -287,6 +287,8 @@ func (p *GetBrowserContextsParams) Do(ctx context.Context) (browserContextIDs []
 // CreateTargetParams creates a new page.
 type CreateTargetParams struct {
 	URL                     string               `json:"url"`                               // The initial URL the page will be navigated to. An empty string indicates about:blank.
+	Left                    int64                `json:"left,omitempty"`                    // Frame left origin in DIP (headless chrome only).
+	Top                     int64                `json:"top,omitempty"`                     // Frame top origin in DIP (headless chrome only).
 	Width                   int64                `json:"width,omitempty"`                   // Frame width in DIP (headless chrome only).
 	Height                  int64                `json:"height,omitempty"`                  // Frame height in DIP (headless chrome only).
 	BrowserContextID        cdp.BrowserContextID `json:"browserContextId,omitempty"`        // The browser context to create the page in.
@@ -307,6 +309,18 @@ func CreateTarget(url string) *CreateTargetParams {
 	return &CreateTargetParams{
 		URL: url,
 	}
+}
+
+// WithLeft frame left origin in DIP (headless chrome only).
+func (p CreateTargetParams) WithLeft(left int64) *CreateTargetParams {
+	p.Left = left
+	return &p
+}
+
+// WithTop frame top origin in DIP (headless chrome only).
+func (p CreateTargetParams) WithTop(top int64) *CreateTargetParams {
+	p.Top = top
+	return &p
 }
 
 // WithWidth frame width in DIP (headless chrome only).

@@ -2030,6 +2030,10 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoTarget23(in *jlexer.Lexer, ou
 		switch key {
 		case "url":
 			out.URL = string(in.String())
+		case "left":
+			out.Left = int64(in.Int64())
+		case "top":
+			out.Top = int64(in.Int64())
 		case "width":
 			out.Width = int64(in.Int64())
 		case "height":
@@ -2062,6 +2066,16 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoTarget23(out *jwriter.Writer,
 		const prefix string = ",\"url\":"
 		out.RawString(prefix[1:])
 		out.String(string(in.URL))
+	}
+	if in.Left != 0 {
+		const prefix string = ",\"left\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.Left))
+	}
+	if in.Top != 0 {
+		const prefix string = ",\"top\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.Top))
 	}
 	if in.Width != 0 {
 		const prefix string = ",\"width\":"

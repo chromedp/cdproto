@@ -28,8 +28,8 @@ type AffectedCookie struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-AffectedRequest
 type AffectedRequest struct {
-	RequestID network.RequestID `json:"requestId"` // The unique request id.
-	URL       string            `json:"url,omitempty"`
+	RequestID network.RequestID `json:"requestId,omitempty"` // The unique request id.
+	URL       string            `json:"url"`
 }
 
 // AffectedFrame information about the frame affected by an inspector issue.
@@ -1527,6 +1527,70 @@ type FailedRequestInfo struct {
 	RequestID      network.RequestID `json:"requestId,omitempty"`
 }
 
+// SelectElementAccessibilityIssueReason [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-SelectElementAccessibilityIssueReason
+type SelectElementAccessibilityIssueReason string
+
+// String returns the SelectElementAccessibilityIssueReason as string value.
+func (t SelectElementAccessibilityIssueReason) String() string {
+	return string(t)
+}
+
+// SelectElementAccessibilityIssueReason values.
+const (
+	SelectElementAccessibilityIssueReasonDisallowedSelectChild         SelectElementAccessibilityIssueReason = "DisallowedSelectChild"
+	SelectElementAccessibilityIssueReasonDisallowedOptGroupChild       SelectElementAccessibilityIssueReason = "DisallowedOptGroupChild"
+	SelectElementAccessibilityIssueReasonNonPhrasingContentOptionChild SelectElementAccessibilityIssueReason = "NonPhrasingContentOptionChild"
+	SelectElementAccessibilityIssueReasonInteractiveContentOptionChild SelectElementAccessibilityIssueReason = "InteractiveContentOptionChild"
+	SelectElementAccessibilityIssueReasonInteractiveContentLegendChild SelectElementAccessibilityIssueReason = "InteractiveContentLegendChild"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t SelectElementAccessibilityIssueReason) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t SelectElementAccessibilityIssueReason) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *SelectElementAccessibilityIssueReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	v := in.String()
+	switch SelectElementAccessibilityIssueReason(v) {
+	case SelectElementAccessibilityIssueReasonDisallowedSelectChild:
+		*t = SelectElementAccessibilityIssueReasonDisallowedSelectChild
+	case SelectElementAccessibilityIssueReasonDisallowedOptGroupChild:
+		*t = SelectElementAccessibilityIssueReasonDisallowedOptGroupChild
+	case SelectElementAccessibilityIssueReasonNonPhrasingContentOptionChild:
+		*t = SelectElementAccessibilityIssueReasonNonPhrasingContentOptionChild
+	case SelectElementAccessibilityIssueReasonInteractiveContentOptionChild:
+		*t = SelectElementAccessibilityIssueReasonInteractiveContentOptionChild
+	case SelectElementAccessibilityIssueReasonInteractiveContentLegendChild:
+		*t = SelectElementAccessibilityIssueReasonInteractiveContentLegendChild
+
+	default:
+		in.AddError(fmt.Errorf("unknown SelectElementAccessibilityIssueReason value: %v", v))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *SelectElementAccessibilityIssueReason) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
+// SelectElementAccessibilityIssueDetails this isue warns about errors in the
+// select element content model.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-SelectElementAccessibilityIssueDetails
+type SelectElementAccessibilityIssueDetails struct {
+	NodeID                                cdp.BackendNodeID                     `json:"nodeId"`
+	SelectElementAccessibilityIssueReason SelectElementAccessibilityIssueReason `json:"selectElementAccessibilityIssueReason"`
+	HasDisallowedAttributes               bool                                  `json:"hasDisallowedAttributes"`
+}
+
 // StyleSheetLoadingIssueReason [no description].
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-StyleSheetLoadingIssueReason
@@ -1678,6 +1742,7 @@ const (
 	InspectorIssueCodeFederatedAuthUserInfoRequestIssue InspectorIssueCode = "FederatedAuthUserInfoRequestIssue"
 	InspectorIssueCodePropertyRuleIssue                 InspectorIssueCode = "PropertyRuleIssue"
 	InspectorIssueCodeSharedDictionaryIssue             InspectorIssueCode = "SharedDictionaryIssue"
+	InspectorIssueCodeSelectElementAccessibilityIssue   InspectorIssueCode = "SelectElementAccessibilityIssue"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -1736,6 +1801,8 @@ func (t *InspectorIssueCode) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = InspectorIssueCodePropertyRuleIssue
 	case InspectorIssueCodeSharedDictionaryIssue:
 		*t = InspectorIssueCodeSharedDictionaryIssue
+	case InspectorIssueCodeSelectElementAccessibilityIssue:
+		*t = InspectorIssueCodeSelectElementAccessibilityIssue
 
 	default:
 		in.AddError(fmt.Errorf("unknown InspectorIssueCode value: %v", v))
@@ -1773,6 +1840,7 @@ type InspectorIssueDetails struct {
 	PropertyRuleIssueDetails                 *PropertyRuleIssueDetails                 `json:"propertyRuleIssueDetails,omitempty"`
 	FederatedAuthUserInfoRequestIssueDetails *FederatedAuthUserInfoRequestIssueDetails `json:"federatedAuthUserInfoRequestIssueDetails,omitempty"`
 	SharedDictionaryIssueDetails             *SharedDictionaryIssueDetails             `json:"sharedDictionaryIssueDetails,omitempty"`
+	SelectElementAccessibilityIssueDetails   *SelectElementAccessibilityIssueDetails   `json:"selectElementAccessibilityIssueDetails,omitempty"`
 }
 
 // IssueID a unique id for a DevTools inspector issue. Allows other entities
