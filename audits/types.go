@@ -1581,8 +1581,8 @@ func (t *SelectElementAccessibilityIssueReason) UnmarshalJSON(buf []byte) error 
 	return easyjson.Unmarshal(buf, t)
 }
 
-// SelectElementAccessibilityIssueDetails this isue warns about errors in the
-// select element content model.
+// SelectElementAccessibilityIssueDetails this issue warns about errors in
+// the select element content model.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-SelectElementAccessibilityIssueDetails
 type SelectElementAccessibilityIssueDetails struct {

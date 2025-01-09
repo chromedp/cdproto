@@ -33,7 +33,6 @@ func (t Type) String() string {
 
 // Type values.
 const (
-	TypeAppcache       Type = "appcache"
 	TypeCookies        Type = "cookies"
 	TypeFileSystems    Type = "file_systems"
 	TypeIndexeddb      Type = "indexeddb"
@@ -63,8 +62,6 @@ func (t Type) MarshalJSON() ([]byte, error) {
 func (t *Type) UnmarshalEasyJSON(in *jlexer.Lexer) {
 	v := in.String()
 	switch Type(v) {
-	case TypeAppcache:
-		*t = TypeAppcache
 	case TypeCookies:
 		*t = TypeCookies
 	case TypeFileSystems:

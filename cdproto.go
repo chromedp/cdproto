@@ -159,6 +159,7 @@ const (
 	CommandCSSGetBackgroundColors                           = css.CommandGetBackgroundColors
 	CommandCSSGetComputedStyleForNode                       = css.CommandGetComputedStyleForNode
 	CommandCSSResolveValues                                 = css.CommandResolveValues
+	CommandCSSGetLonghandProperties                         = css.CommandGetLonghandProperties
 	CommandCSSGetInlineStylesForNode                        = css.CommandGetInlineStylesForNode
 	CommandCSSGetAnimatedStylesForNode                      = css.CommandGetAnimatedStylesForNode
 	CommandCSSGetMatchedStylesForNode                       = css.CommandGetMatchedStylesForNode
@@ -510,6 +511,7 @@ const (
 	CommandNetworkGetSecurityIsolationStatus                = network.CommandGetSecurityIsolationStatus
 	CommandNetworkEnableReportingAPI                        = network.CommandEnableReportingAPI
 	CommandNetworkLoadNetworkResource                       = network.CommandLoadNetworkResource
+	CommandNetworkSetCookieControls                         = network.CommandSetCookieControls
 	EventNetworkDataReceived                                = "Network.dataReceived"
 	EventNetworkEventSourceMessageReceived                  = "Network.eventSourceMessageReceived"
 	EventNetworkLoadingFailed                               = "Network.loadingFailed"
@@ -1098,6 +1100,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandCSSResolveValues:
 		v = new(css.ResolveValuesReturns)
+
+	case CommandCSSGetLonghandProperties:
+		v = new(css.GetLonghandPropertiesReturns)
 
 	case CommandCSSGetInlineStylesForNode:
 		v = new(css.GetInlineStylesForNodeReturns)
@@ -2151,6 +2156,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandNetworkLoadNetworkResource:
 		v = new(network.LoadNetworkResourceReturns)
+
+	case CommandNetworkSetCookieControls:
+		return emptyVal, nil
 
 	case EventNetworkDataReceived:
 		v = new(network.EventDataReceived)

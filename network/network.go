@@ -1065,6 +1065,37 @@ func (p *LoadNetworkResourceParams) Do(ctx context.Context) (resource *LoadNetwo
 	return res.Resource, nil
 }
 
+// SetCookieControlsParams sets Controls for third-party cookie access Page
+// reload is required before the new cookie bahavior will be observed.
+type SetCookieControlsParams struct {
+	EnableThirdPartyCookieRestriction bool `json:"enableThirdPartyCookieRestriction"` // Whether 3pc restriction is enabled.
+	DisableThirdPartyCookieMetadata   bool `json:"disableThirdPartyCookieMetadata"`   // Whether 3pc grace period exception should be enabled; false by default.
+	DisableThirdPartyCookieHeuristics bool `json:"disableThirdPartyCookieHeuristics"` // Whether 3pc heuristics exceptions should be enabled; false by default.
+}
+
+// SetCookieControls sets Controls for third-party cookie access Page reload
+// is required before the new cookie bahavior will be observed.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-setCookieControls
+//
+// parameters:
+//
+//	enableThirdPartyCookieRestriction - Whether 3pc restriction is enabled.
+//	disableThirdPartyCookieMetadata - Whether 3pc grace period exception should be enabled; false by default.
+//	disableThirdPartyCookieHeuristics - Whether 3pc heuristics exceptions should be enabled; false by default.
+func SetCookieControls(enableThirdPartyCookieRestriction bool, disableThirdPartyCookieMetadata bool, disableThirdPartyCookieHeuristics bool) *SetCookieControlsParams {
+	return &SetCookieControlsParams{
+		EnableThirdPartyCookieRestriction: enableThirdPartyCookieRestriction,
+		DisableThirdPartyCookieMetadata:   disableThirdPartyCookieMetadata,
+		DisableThirdPartyCookieHeuristics: disableThirdPartyCookieHeuristics,
+	}
+}
+
+// Do executes Network.setCookieControls against the provided context.
+func (p *SetCookieControlsParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetCookieControls, p, nil)
+}
+
 // Command names.
 const (
 	CommandSetAcceptedEncodings                    = "Network.setAcceptedEncodings"
@@ -1094,4 +1125,5 @@ const (
 	CommandGetSecurityIsolationStatus              = "Network.getSecurityIsolationStatus"
 	CommandEnableReportingAPI                      = "Network.enableReportingApi"
 	CommandLoadNetworkResource                     = "Network.loadNetworkResource"
+	CommandSetCookieControls                       = "Network.setCookieControls"
 )

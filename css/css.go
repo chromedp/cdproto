@@ -403,6 +403,48 @@ func (p *ResolveValuesParams) Do(ctx context.Context) (results []string, err err
 	return res.Results, nil
 }
 
+// GetLonghandPropertiesParams [no description].
+type GetLonghandPropertiesParams struct {
+	ShorthandName string `json:"shorthandName"`
+	Value         string `json:"value"`
+}
+
+// GetLonghandProperties [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#method-getLonghandProperties
+//
+// parameters:
+//
+//	shorthandName
+//	value
+func GetLonghandProperties(shorthandName string, value string) *GetLonghandPropertiesParams {
+	return &GetLonghandPropertiesParams{
+		ShorthandName: shorthandName,
+		Value:         value,
+	}
+}
+
+// GetLonghandPropertiesReturns return values.
+type GetLonghandPropertiesReturns struct {
+	LonghandProperties []*Property `json:"longhandProperties,omitempty"`
+}
+
+// Do executes CSS.getLonghandProperties against the provided context.
+//
+// returns:
+//
+//	longhandProperties
+func (p *GetLonghandPropertiesParams) Do(ctx context.Context) (longhandProperties []*Property, err error) {
+	// execute
+	var res GetLonghandPropertiesReturns
+	err = cdp.Execute(ctx, CommandGetLonghandProperties, p, &res)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.LonghandProperties, nil
+}
+
 // GetInlineStylesForNodeParams returns the styles defined inline (explicitly
 // in the "style" attribute and implicitly, using DOM attributes) for a DOM node
 // identified by nodeId.
@@ -1431,6 +1473,7 @@ const (
 	CommandGetBackgroundColors              = "CSS.getBackgroundColors"
 	CommandGetComputedStyleForNode          = "CSS.getComputedStyleForNode"
 	CommandResolveValues                    = "CSS.resolveValues"
+	CommandGetLonghandProperties            = "CSS.getLonghandProperties"
 	CommandGetInlineStylesForNode           = "CSS.getInlineStylesForNode"
 	CommandGetAnimatedStylesForNode         = "CSS.getAnimatedStylesForNode"
 	CommandGetMatchedStylesForNode          = "CSS.getMatchedStylesForNode"

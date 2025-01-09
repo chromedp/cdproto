@@ -2488,6 +2488,7 @@ const (
 	TrustTokenOperationDoneStatusInternalError      TrustTokenOperationDoneStatus = "InternalError"
 	TrustTokenOperationDoneStatusUnknownError       TrustTokenOperationDoneStatus = "UnknownError"
 	TrustTokenOperationDoneStatusFulfilledLocally   TrustTokenOperationDoneStatus = "FulfilledLocally"
+	TrustTokenOperationDoneStatusSiteIssuerLimit    TrustTokenOperationDoneStatus = "SiteIssuerLimit"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -2528,6 +2529,8 @@ func (t *TrustTokenOperationDoneStatus) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = TrustTokenOperationDoneStatusUnknownError
 	case TrustTokenOperationDoneStatusFulfilledLocally:
 		*t = TrustTokenOperationDoneStatusFulfilledLocally
+	case TrustTokenOperationDoneStatusSiteIssuerLimit:
+		*t = TrustTokenOperationDoneStatusSiteIssuerLimit
 
 	default:
 		in.AddError(fmt.Errorf("unknown TrustTokenOperationDoneStatus value: %v", v))
