@@ -57,6 +57,7 @@ const (
 	PermissionsPolicyFeatureChUa                           PermissionsPolicyFeature = "ch-ua"
 	PermissionsPolicyFeatureChUaArch                       PermissionsPolicyFeature = "ch-ua-arch"
 	PermissionsPolicyFeatureChUaBitness                    PermissionsPolicyFeature = "ch-ua-bitness"
+	PermissionsPolicyFeatureChUaHighEntropyValues          PermissionsPolicyFeature = "ch-ua-high-entropy-values"
 	PermissionsPolicyFeatureChUaPlatform                   PermissionsPolicyFeature = "ch-ua-platform"
 	PermissionsPolicyFeatureChUaModel                      PermissionsPolicyFeature = "ch-ua-model"
 	PermissionsPolicyFeatureChUaMobile                     PermissionsPolicyFeature = "ch-ua-mobile"
@@ -188,6 +189,8 @@ func (t *PermissionsPolicyFeature) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PermissionsPolicyFeatureChUaArch
 	case PermissionsPolicyFeatureChUaBitness:
 		*t = PermissionsPolicyFeatureChUaBitness
+	case PermissionsPolicyFeatureChUaHighEntropyValues:
+		*t = PermissionsPolicyFeatureChUaHighEntropyValues
 	case PermissionsPolicyFeatureChUaPlatform:
 		*t = PermissionsPolicyFeatureChUaPlatform
 	case PermissionsPolicyFeatureChUaModel:

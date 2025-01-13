@@ -23,7 +23,6 @@ import (
 	"github.com/chromedp/cdproto/cast"
 	"github.com/chromedp/cdproto/cdp"
 	"github.com/chromedp/cdproto/css"
-	"github.com/chromedp/cdproto/database"
 	"github.com/chromedp/cdproto/debugger"
 	"github.com/chromedp/cdproto/deviceaccess"
 	"github.com/chromedp/cdproto/deviceorientation"
@@ -289,11 +288,6 @@ const (
 	EventDOMStorageDomStorageItemRemoved                    = "DOMStorage.domStorageItemRemoved"
 	EventDOMStorageDomStorageItemUpdated                    = "DOMStorage.domStorageItemUpdated"
 	EventDOMStorageDomStorageItemsCleared                   = "DOMStorage.domStorageItemsCleared"
-	CommandDatabaseDisable                                  = database.CommandDisable
-	CommandDatabaseEnable                                   = database.CommandEnable
-	CommandDatabaseExecuteSQL                               = database.CommandExecuteSQL
-	CommandDatabaseGetDatabaseTableNames                    = database.CommandGetDatabaseTableNames
-	EventDatabaseAddDatabase                                = "Database.addDatabase"
 	CommandDebuggerContinueToLocation                       = debugger.CommandContinueToLocation
 	CommandDebuggerDisable                                  = debugger.CommandDisable
 	CommandDebuggerEnable                                   = debugger.CommandEnable
@@ -1490,21 +1484,6 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case EventDOMStorageDomStorageItemsCleared:
 		v = new(domstorage.EventDomStorageItemsCleared)
-
-	case CommandDatabaseDisable:
-		return emptyVal, nil
-
-	case CommandDatabaseEnable:
-		return emptyVal, nil
-
-	case CommandDatabaseExecuteSQL:
-		v = new(database.ExecuteSQLReturns)
-
-	case CommandDatabaseGetDatabaseTableNames:
-		v = new(database.GetDatabaseTableNamesReturns)
-
-	case EventDatabaseAddDatabase:
-		v = new(database.EventAddDatabase)
 
 	case CommandDebuggerContinueToLocation:
 		return emptyVal, nil

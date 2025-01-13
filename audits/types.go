@@ -1315,6 +1315,7 @@ const (
 	FederatedAuthRequestIssueReasonInvalidFieldsSpecified           FederatedAuthRequestIssueReason = "InvalidFieldsSpecified"
 	FederatedAuthRequestIssueReasonRelyingPartyOriginIsOpaque       FederatedAuthRequestIssueReason = "RelyingPartyOriginIsOpaque"
 	FederatedAuthRequestIssueReasonTypeNotMatching                  FederatedAuthRequestIssueReason = "TypeNotMatching"
+	FederatedAuthRequestIssueReasonUIDismissedNoEmbargo             FederatedAuthRequestIssueReason = "UiDismissedNoEmbargo"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -1421,6 +1422,8 @@ func (t *FederatedAuthRequestIssueReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = FederatedAuthRequestIssueReasonRelyingPartyOriginIsOpaque
 	case FederatedAuthRequestIssueReasonTypeNotMatching:
 		*t = FederatedAuthRequestIssueReasonTypeNotMatching
+	case FederatedAuthRequestIssueReasonUIDismissedNoEmbargo:
+		*t = FederatedAuthRequestIssueReasonUIDismissedNoEmbargo
 
 	default:
 		in.AddError(fmt.Errorf("unknown FederatedAuthRequestIssueReason value: %v", v))
