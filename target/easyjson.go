@@ -2038,6 +2038,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoTarget23(in *jlexer.Lexer, ou
 			out.Width = int64(in.Int64())
 		case "height":
 			out.Height = int64(in.Int64())
+		case "windowState":
+			(out.WindowState).UnmarshalEasyJSON(in)
 		case "browserContextId":
 			out.BrowserContextID = cdp.BrowserContextID(in.String())
 		case "enableBeginFrameControl":
@@ -2086,6 +2088,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoTarget23(out *jwriter.Writer,
 		const prefix string = ",\"height\":"
 		out.RawString(prefix)
 		out.Int64(int64(in.Height))
+	}
+	if in.WindowState != "" {
+		const prefix string = ",\"windowState\":"
+		out.RawString(prefix)
+		(in.WindowState).MarshalEasyJSON(out)
 	}
 	if in.BrowserContextID != "" {
 		const prefix string = ",\"browserContextId\":"

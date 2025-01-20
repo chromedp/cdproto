@@ -291,6 +291,7 @@ type CreateTargetParams struct {
 	Top                     int64                `json:"top,omitempty"`                     // Frame top origin in DIP (requires newWindow to be true or headless shell).
 	Width                   int64                `json:"width,omitempty"`                   // Frame width in DIP (requires newWindow to be true or headless shell).
 	Height                  int64                `json:"height,omitempty"`                  // Frame height in DIP (requires newWindow to be true or headless shell).
+	WindowState             WindowState          `json:"windowState,omitempty"`             // Frame window state (requires newWindow to be true or headless shell). Default is normal.
 	BrowserContextID        cdp.BrowserContextID `json:"browserContextId,omitempty"`        // The browser context to create the page in.
 	EnableBeginFrameControl bool                 `json:"enableBeginFrameControl,omitempty"` // Whether BeginFrames for this target will be controlled via DevTools (headless shell only, not supported on MacOS yet, false by default).
 	NewWindow               bool                 `json:"newWindow,omitempty"`               // Whether to create a new Window or Tab (false by default, not supported by headless shell).
@@ -336,6 +337,13 @@ func (p CreateTargetParams) WithWidth(width int64) *CreateTargetParams {
 // shell).
 func (p CreateTargetParams) WithHeight(height int64) *CreateTargetParams {
 	p.Height = height
+	return &p
+}
+
+// WithWindowState frame window state (requires newWindow to be true or
+// headless shell). Default is normal.
+func (p CreateTargetParams) WithWindowState(windowState WindowState) *CreateTargetParams {
+	p.WindowState = windowState
 	return &p
 }
 
