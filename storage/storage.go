@@ -1080,41 +1080,90 @@ func (p *GetRelatedWebsiteSetsParams) Do(ctx context.Context) (sets []*RelatedWe
 	return res.Sets, nil
 }
 
+// GetAffectedUrlsForThirdPartyCookieMetadataParams returns the list of URLs
+// from a page and its embedded resources that match existing grace period URL
+// pattern rules.
+// https://developers.google.com/privacy-sandbox/cookies/temporary-exceptions/grace-period.
+type GetAffectedUrlsForThirdPartyCookieMetadataParams struct {
+	FirstPartyURL  string   `json:"firstPartyUrl"`  // The URL of the page currently being visited.
+	ThirdPartyUrls []string `json:"thirdPartyUrls"` // The list of embedded resource URLs from the page.
+}
+
+// GetAffectedUrlsForThirdPartyCookieMetadata returns the list of URLs from a
+// page and its embedded resources that match existing grace period URL pattern
+// rules.
+// https://developers.google.com/privacy-sandbox/cookies/temporary-exceptions/grace-period.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#method-getAffectedUrlsForThirdPartyCookieMetadata
+//
+// parameters:
+//
+//	firstPartyURL - The URL of the page currently being visited.
+//	thirdPartyUrls - The list of embedded resource URLs from the page.
+func GetAffectedUrlsForThirdPartyCookieMetadata(firstPartyURL string, thirdPartyUrls []string) *GetAffectedUrlsForThirdPartyCookieMetadataParams {
+	return &GetAffectedUrlsForThirdPartyCookieMetadataParams{
+		FirstPartyURL:  firstPartyURL,
+		ThirdPartyUrls: thirdPartyUrls,
+	}
+}
+
+// GetAffectedUrlsForThirdPartyCookieMetadataReturns return values.
+type GetAffectedUrlsForThirdPartyCookieMetadataReturns struct {
+	MatchedUrls []string `json:"matchedUrls,omitempty"` // Array of matching URLs. If there is a primary pattern match for the first- party URL, only the first-party URL is returned in the array.
+}
+
+// Do executes Storage.getAffectedUrlsForThirdPartyCookieMetadata against the provided context.
+//
+// returns:
+//
+//	matchedUrls - Array of matching URLs. If there is a primary pattern match for the first- party URL, only the first-party URL is returned in the array.
+func (p *GetAffectedUrlsForThirdPartyCookieMetadataParams) Do(ctx context.Context) (matchedUrls []string, err error) {
+	// execute
+	var res GetAffectedUrlsForThirdPartyCookieMetadataReturns
+	err = cdp.Execute(ctx, CommandGetAffectedUrlsForThirdPartyCookieMetadata, p, &res)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.MatchedUrls, nil
+}
+
 // Command names.
 const (
-	CommandGetStorageKeyForFrame                   = "Storage.getStorageKeyForFrame"
-	CommandClearDataForOrigin                      = "Storage.clearDataForOrigin"
-	CommandClearDataForStorageKey                  = "Storage.clearDataForStorageKey"
-	CommandGetCookies                              = "Storage.getCookies"
-	CommandSetCookies                              = "Storage.setCookies"
-	CommandClearCookies                            = "Storage.clearCookies"
-	CommandGetUsageAndQuota                        = "Storage.getUsageAndQuota"
-	CommandOverrideQuotaForOrigin                  = "Storage.overrideQuotaForOrigin"
-	CommandTrackCacheStorageForOrigin              = "Storage.trackCacheStorageForOrigin"
-	CommandTrackCacheStorageForStorageKey          = "Storage.trackCacheStorageForStorageKey"
-	CommandTrackIndexedDBForOrigin                 = "Storage.trackIndexedDBForOrigin"
-	CommandTrackIndexedDBForStorageKey             = "Storage.trackIndexedDBForStorageKey"
-	CommandUntrackCacheStorageForOrigin            = "Storage.untrackCacheStorageForOrigin"
-	CommandUntrackCacheStorageForStorageKey        = "Storage.untrackCacheStorageForStorageKey"
-	CommandUntrackIndexedDBForOrigin               = "Storage.untrackIndexedDBForOrigin"
-	CommandUntrackIndexedDBForStorageKey           = "Storage.untrackIndexedDBForStorageKey"
-	CommandGetTrustTokens                          = "Storage.getTrustTokens"
-	CommandClearTrustTokens                        = "Storage.clearTrustTokens"
-	CommandGetInterestGroupDetails                 = "Storage.getInterestGroupDetails"
-	CommandSetInterestGroupTracking                = "Storage.setInterestGroupTracking"
-	CommandSetInterestGroupAuctionTracking         = "Storage.setInterestGroupAuctionTracking"
-	CommandGetSharedStorageMetadata                = "Storage.getSharedStorageMetadata"
-	CommandGetSharedStorageEntries                 = "Storage.getSharedStorageEntries"
-	CommandSetSharedStorageEntry                   = "Storage.setSharedStorageEntry"
-	CommandDeleteSharedStorageEntry                = "Storage.deleteSharedStorageEntry"
-	CommandClearSharedStorageEntries               = "Storage.clearSharedStorageEntries"
-	CommandResetSharedStorageBudget                = "Storage.resetSharedStorageBudget"
-	CommandSetSharedStorageTracking                = "Storage.setSharedStorageTracking"
-	CommandSetStorageBucketTracking                = "Storage.setStorageBucketTracking"
-	CommandDeleteStorageBucket                     = "Storage.deleteStorageBucket"
-	CommandRunBounceTrackingMitigations            = "Storage.runBounceTrackingMitigations"
-	CommandSetAttributionReportingLocalTestingMode = "Storage.setAttributionReportingLocalTestingMode"
-	CommandSetAttributionReportingTracking         = "Storage.setAttributionReportingTracking"
-	CommandSendPendingAttributionReports           = "Storage.sendPendingAttributionReports"
-	CommandGetRelatedWebsiteSets                   = "Storage.getRelatedWebsiteSets"
+	CommandGetStorageKeyForFrame                      = "Storage.getStorageKeyForFrame"
+	CommandClearDataForOrigin                         = "Storage.clearDataForOrigin"
+	CommandClearDataForStorageKey                     = "Storage.clearDataForStorageKey"
+	CommandGetCookies                                 = "Storage.getCookies"
+	CommandSetCookies                                 = "Storage.setCookies"
+	CommandClearCookies                               = "Storage.clearCookies"
+	CommandGetUsageAndQuota                           = "Storage.getUsageAndQuota"
+	CommandOverrideQuotaForOrigin                     = "Storage.overrideQuotaForOrigin"
+	CommandTrackCacheStorageForOrigin                 = "Storage.trackCacheStorageForOrigin"
+	CommandTrackCacheStorageForStorageKey             = "Storage.trackCacheStorageForStorageKey"
+	CommandTrackIndexedDBForOrigin                    = "Storage.trackIndexedDBForOrigin"
+	CommandTrackIndexedDBForStorageKey                = "Storage.trackIndexedDBForStorageKey"
+	CommandUntrackCacheStorageForOrigin               = "Storage.untrackCacheStorageForOrigin"
+	CommandUntrackCacheStorageForStorageKey           = "Storage.untrackCacheStorageForStorageKey"
+	CommandUntrackIndexedDBForOrigin                  = "Storage.untrackIndexedDBForOrigin"
+	CommandUntrackIndexedDBForStorageKey              = "Storage.untrackIndexedDBForStorageKey"
+	CommandGetTrustTokens                             = "Storage.getTrustTokens"
+	CommandClearTrustTokens                           = "Storage.clearTrustTokens"
+	CommandGetInterestGroupDetails                    = "Storage.getInterestGroupDetails"
+	CommandSetInterestGroupTracking                   = "Storage.setInterestGroupTracking"
+	CommandSetInterestGroupAuctionTracking            = "Storage.setInterestGroupAuctionTracking"
+	CommandGetSharedStorageMetadata                   = "Storage.getSharedStorageMetadata"
+	CommandGetSharedStorageEntries                    = "Storage.getSharedStorageEntries"
+	CommandSetSharedStorageEntry                      = "Storage.setSharedStorageEntry"
+	CommandDeleteSharedStorageEntry                   = "Storage.deleteSharedStorageEntry"
+	CommandClearSharedStorageEntries                  = "Storage.clearSharedStorageEntries"
+	CommandResetSharedStorageBudget                   = "Storage.resetSharedStorageBudget"
+	CommandSetSharedStorageTracking                   = "Storage.setSharedStorageTracking"
+	CommandSetStorageBucketTracking                   = "Storage.setStorageBucketTracking"
+	CommandDeleteStorageBucket                        = "Storage.deleteStorageBucket"
+	CommandRunBounceTrackingMitigations               = "Storage.runBounceTrackingMitigations"
+	CommandSetAttributionReportingLocalTestingMode    = "Storage.setAttributionReportingLocalTestingMode"
+	CommandSetAttributionReportingTracking            = "Storage.setAttributionReportingTracking"
+	CommandSendPendingAttributionReports              = "Storage.sendPendingAttributionReports"
+	CommandGetRelatedWebsiteSets                      = "Storage.getRelatedWebsiteSets"
+	CommandGetAffectedUrlsForThirdPartyCookieMetadata = "Storage.getAffectedUrlsForThirdPartyCookieMetadata"
 )
