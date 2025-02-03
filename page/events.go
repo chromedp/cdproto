@@ -70,6 +70,22 @@ type EventDocumentOpened struct {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-frameResized
 type EventFrameResized struct{}
 
+// EventFrameStartedNavigating fired when a navigation starts. This event is
+// fired for both renderer-initiated and browser-initiated navigations. For
+// renderer-initiated navigations, the event is fired after
+// frameRequestedNavigation. Navigation may still be cancelled after the event
+// is issued. Multiple events can be fired for a single navigation, for example,
+// when a same-document navigation becomes a cross-document navigation (such as
+// in the case of a frameset).
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-frameStartedNavigating
+type EventFrameStartedNavigating struct {
+	FrameID        cdp.FrameID                          `json:"frameId"`  // ID of the frame that is being navigated.
+	URL            string                               `json:"url"`      // The URL the navigation started with. The final URL can be different.
+	LoaderID       cdp.LoaderID                         `json:"loaderId"` // Loader identifier. Even though it is present in case of same-document navigation, the previously committed loaderId would not change unless the navigation changes from a same-document to a cross-document navigation.
+	NavigationType FrameStartedNavigatingNavigationType `json:"navigationType"`
+}
+
 // EventFrameRequestedNavigation fired when a renderer-initiated navigation
 // is requested. Navigation may still be cancelled after the event is issued.
 //

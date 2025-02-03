@@ -2568,6 +2568,10 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoRuntime26(in *jlexer.Lexer, o
 			out.UsedSize = float64(in.Float64())
 		case "totalSize":
 			out.TotalSize = float64(in.Float64())
+		case "embedderHeapUsedSize":
+			out.EmbedderHeapUsedSize = float64(in.Float64())
+		case "backingStorageSize":
+			out.BackingStorageSize = float64(in.Float64())
 		default:
 			in.SkipRecursive()
 		}
@@ -2597,6 +2601,26 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoRuntime26(out *jwriter.Writer
 			out.RawString(prefix)
 		}
 		out.Float64(float64(in.TotalSize))
+	}
+	if in.EmbedderHeapUsedSize != 0 {
+		const prefix string = ",\"embedderHeapUsedSize\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Float64(float64(in.EmbedderHeapUsedSize))
+	}
+	if in.BackingStorageSize != 0 {
+		const prefix string = ",\"backingStorageSize\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Float64(float64(in.BackingStorageSize))
 	}
 	out.RawByte('}')
 }

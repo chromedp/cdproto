@@ -319,7 +319,6 @@ const (
 	CommandDebuggerStepInto                                  = debugger.CommandStepInto
 	CommandDebuggerStepOut                                   = debugger.CommandStepOut
 	CommandDebuggerStepOver                                  = debugger.CommandStepOver
-	EventDebuggerBreakpointResolved                          = "Debugger.breakpointResolved"
 	EventDebuggerPaused                                      = "Debugger.paused"
 	EventDebuggerResumed                                     = "Debugger.resumed"
 	EventDebuggerScriptFailedToParse                         = "Debugger.scriptFailedToParse"
@@ -630,6 +629,7 @@ const (
 	EventPageFrameNavigated                                  = "Page.frameNavigated"
 	EventPageDocumentOpened                                  = "Page.documentOpened"
 	EventPageFrameResized                                    = "Page.frameResized"
+	EventPageFrameStartedNavigating                          = "Page.frameStartedNavigating"
 	EventPageFrameRequestedNavigation                        = "Page.frameRequestedNavigation"
 	EventPageFrameStartedLoading                             = "Page.frameStartedLoading"
 	EventPageFrameStoppedLoading                             = "Page.frameStoppedLoading"
@@ -1579,9 +1579,6 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandDebuggerStepOver:
 		return emptyVal, nil
 
-	case EventDebuggerBreakpointResolved:
-		v = new(debugger.EventBreakpointResolved)
-
 	case EventDebuggerPaused:
 		v = new(debugger.EventPaused)
 
@@ -2511,6 +2508,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case EventPageFrameResized:
 		v = new(page.EventFrameResized)
+
+	case EventPageFrameStartedNavigating:
+		v = new(page.EventFrameStartedNavigating)
 
 	case EventPageFrameRequestedNavigation:
 		v = new(page.EventFrameRequestedNavigation)

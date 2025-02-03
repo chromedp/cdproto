@@ -10127,6 +10127,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoCss98(in *jlexer.Lexer, out *
 		switch key {
 		case "frameId":
 			(out.FrameID).UnmarshalEasyJSON(in)
+		case "force":
+			out.Force = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -10145,6 +10147,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoCss98(out *jwriter.Writer, in
 		const prefix string = ",\"frameId\":"
 		out.RawString(prefix[1:])
 		out.String(string(in.FrameID))
+	}
+	if in.Force {
+		const prefix string = ",\"force\":"
+		out.RawString(prefix)
+		out.Bool(bool(in.Force))
 	}
 	out.RawByte('}')
 }

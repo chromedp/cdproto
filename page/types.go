@@ -1740,6 +1740,69 @@ func (t *FrameDetachedReason) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 
+// FrameStartedNavigatingNavigationType [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-frameStartedNavigating
+type FrameStartedNavigatingNavigationType string
+
+// String returns the FrameStartedNavigatingNavigationType as string value.
+func (t FrameStartedNavigatingNavigationType) String() string {
+	return string(t)
+}
+
+// FrameStartedNavigatingNavigationType values.
+const (
+	FrameStartedNavigatingNavigationTypeReload                   FrameStartedNavigatingNavigationType = "reload"
+	FrameStartedNavigatingNavigationTypeReloadBypassingCache     FrameStartedNavigatingNavigationType = "reloadBypassingCache"
+	FrameStartedNavigatingNavigationTypeRestore                  FrameStartedNavigatingNavigationType = "restore"
+	FrameStartedNavigatingNavigationTypeRestoreWithPost          FrameStartedNavigatingNavigationType = "restoreWithPost"
+	FrameStartedNavigatingNavigationTypeHistorySameDocument      FrameStartedNavigatingNavigationType = "historySameDocument"
+	FrameStartedNavigatingNavigationTypeHistoryDifferentDocument FrameStartedNavigatingNavigationType = "historyDifferentDocument"
+	FrameStartedNavigatingNavigationTypeSameDocument             FrameStartedNavigatingNavigationType = "sameDocument"
+	FrameStartedNavigatingNavigationTypeDifferentDocument        FrameStartedNavigatingNavigationType = "differentDocument"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t FrameStartedNavigatingNavigationType) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t FrameStartedNavigatingNavigationType) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *FrameStartedNavigatingNavigationType) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	v := in.String()
+	switch FrameStartedNavigatingNavigationType(v) {
+	case FrameStartedNavigatingNavigationTypeReload:
+		*t = FrameStartedNavigatingNavigationTypeReload
+	case FrameStartedNavigatingNavigationTypeReloadBypassingCache:
+		*t = FrameStartedNavigatingNavigationTypeReloadBypassingCache
+	case FrameStartedNavigatingNavigationTypeRestore:
+		*t = FrameStartedNavigatingNavigationTypeRestore
+	case FrameStartedNavigatingNavigationTypeRestoreWithPost:
+		*t = FrameStartedNavigatingNavigationTypeRestoreWithPost
+	case FrameStartedNavigatingNavigationTypeHistorySameDocument:
+		*t = FrameStartedNavigatingNavigationTypeHistorySameDocument
+	case FrameStartedNavigatingNavigationTypeHistoryDifferentDocument:
+		*t = FrameStartedNavigatingNavigationTypeHistoryDifferentDocument
+	case FrameStartedNavigatingNavigationTypeSameDocument:
+		*t = FrameStartedNavigatingNavigationTypeSameDocument
+	case FrameStartedNavigatingNavigationTypeDifferentDocument:
+		*t = FrameStartedNavigatingNavigationTypeDifferentDocument
+
+	default:
+		in.AddError(fmt.Errorf("unknown FrameStartedNavigatingNavigationType value: %v", v))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *FrameStartedNavigatingNavigationType) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
 // NavigatedWithinDocumentNavigationType navigation type.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-navigatedWithinDocument

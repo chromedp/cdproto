@@ -539,25 +539,29 @@ func GetHeapUsage() *GetHeapUsageParams {
 
 // GetHeapUsageReturns return values.
 type GetHeapUsageReturns struct {
-	UsedSize  float64 `json:"usedSize,omitempty"`  // Used heap size in bytes.
-	TotalSize float64 `json:"totalSize,omitempty"` // Allocated heap size in bytes.
+	UsedSize             float64 `json:"usedSize,omitempty"`             // Used JavaScript heap size in bytes.
+	TotalSize            float64 `json:"totalSize,omitempty"`            // Allocated JavaScript heap size in bytes.
+	EmbedderHeapUsedSize float64 `json:"embedderHeapUsedSize,omitempty"` // Used size in bytes in the embedder's garbage-collected heap.
+	BackingStorageSize   float64 `json:"backingStorageSize,omitempty"`   // Size in bytes of backing storage for array buffers and external strings.
 }
 
 // Do executes Runtime.getHeapUsage against the provided context.
 //
 // returns:
 //
-//	usedSize - Used heap size in bytes.
-//	totalSize - Allocated heap size in bytes.
-func (p *GetHeapUsageParams) Do(ctx context.Context) (usedSize float64, totalSize float64, err error) {
+//	usedSize - Used JavaScript heap size in bytes.
+//	totalSize - Allocated JavaScript heap size in bytes.
+//	embedderHeapUsedSize - Used size in bytes in the embedder's garbage-collected heap.
+//	backingStorageSize - Size in bytes of backing storage for array buffers and external strings.
+func (p *GetHeapUsageParams) Do(ctx context.Context) (usedSize float64, totalSize float64, embedderHeapUsedSize float64, backingStorageSize float64, err error) {
 	// execute
 	var res GetHeapUsageReturns
 	err = cdp.Execute(ctx, CommandGetHeapUsage, nil, &res)
 	if err != nil {
-		return 0, 0, err
+		return 0, 0, 0, 0, err
 	}
 
-	return res.UsedSize, res.TotalSize, nil
+	return res.UsedSize, res.TotalSize, res.EmbedderHeapUsedSize, res.BackingStorageSize, nil
 }
 
 // GetPropertiesParams returns properties of a given object. Object group of

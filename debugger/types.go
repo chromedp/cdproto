@@ -161,6 +161,14 @@ type DebugSymbols struct {
 	ExternalURL string           `json:"externalURL,omitempty"` // URL of the external symbol source.
 }
 
+// ResolvedBreakpoint [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#type-ResolvedBreakpoint
+type ResolvedBreakpoint struct {
+	BreakpointID BreakpointID `json:"breakpointId"` // Breakpoint unique identifier.
+	Location     *Location    `json:"location"`     // Actual breakpoint location.
+}
+
 // ScopeType scope type.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#type-Scope

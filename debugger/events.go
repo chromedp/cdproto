@@ -7,15 +7,6 @@ import (
 	"github.com/mailru/easyjson"
 )
 
-// EventBreakpointResolved fired when breakpoint is resolved to an actual
-// script and location.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#event-breakpointResolved
-type EventBreakpointResolved struct {
-	BreakpointID BreakpointID `json:"breakpointId"` // Breakpoint unique identifier.
-	Location     *Location    `json:"location"`     // Actual breakpoint location.
-}
-
 // EventPaused fired when the virtual machine stopped on breakpoint or
 // exception or any other stop criteria.
 //
@@ -74,14 +65,15 @@ type EventScriptParsed struct {
 	Hash                    string                     `json:"hash"`               // Content hash of the script, SHA-256.
 	BuildID                 string                     `json:"buildId"`            // For Wasm modules, the content of the build_id custom section.
 	ExecutionContextAuxData easyjson.RawMessage        `json:"executionContextAuxData,omitempty"`
-	IsLiveEdit              bool                       `json:"isLiveEdit,omitempty"`     // True, if this script is generated as a result of the live edit operation.
-	SourceMapURL            string                     `json:"sourceMapURL,omitempty"`   // URL of source map associated with script (if any).
-	HasSourceURL            bool                       `json:"hasSourceURL,omitempty"`   // True, if this script has sourceURL.
-	IsModule                bool                       `json:"isModule,omitempty"`       // True, if this script is ES6 module.
-	Length                  int64                      `json:"length,omitempty"`         // This script length.
-	StackTrace              *runtime.StackTrace        `json:"stackTrace,omitempty"`     // JavaScript top stack frame of where the script parsed event was triggered if available.
-	CodeOffset              int64                      `json:"codeOffset,omitempty"`     // If the scriptLanguage is WebAssembly, the code section offset in the module.
-	ScriptLanguage          ScriptLanguage             `json:"scriptLanguage,omitempty"` // The language of the script.
-	DebugSymbols            []*DebugSymbols            `json:"debugSymbols,omitempty"`   // If the scriptLanguage is WebAssembly, the source of debug symbols for the module.
-	EmbedderName            string                     `json:"embedderName,omitempty"`   // The name the embedder supplied for this script.
+	IsLiveEdit              bool                       `json:"isLiveEdit,omitempty"`          // True, if this script is generated as a result of the live edit operation.
+	SourceMapURL            string                     `json:"sourceMapURL,omitempty"`        // URL of source map associated with script (if any).
+	HasSourceURL            bool                       `json:"hasSourceURL,omitempty"`        // True, if this script has sourceURL.
+	IsModule                bool                       `json:"isModule,omitempty"`            // True, if this script is ES6 module.
+	Length                  int64                      `json:"length,omitempty"`              // This script length.
+	StackTrace              *runtime.StackTrace        `json:"stackTrace,omitempty"`          // JavaScript top stack frame of where the script parsed event was triggered if available.
+	CodeOffset              int64                      `json:"codeOffset,omitempty"`          // If the scriptLanguage is WebAssembly, the code section offset in the module.
+	ScriptLanguage          ScriptLanguage             `json:"scriptLanguage,omitempty"`      // The language of the script.
+	DebugSymbols            []*DebugSymbols            `json:"debugSymbols,omitempty"`        // If the scriptLanguage is WebAssembly, the source of debug symbols for the module.
+	EmbedderName            string                     `json:"embedderName,omitempty"`        // The name the embedder supplied for this script.
+	ResolvedBreakpoints     []*ResolvedBreakpoint      `json:"resolvedBreakpoints,omitempty"` // The list of set breakpoints in this script if calls to setBreakpointByUrl matches this script's URL or hash. Clients that use this list can ignore the breakpointResolved event. They are equivalent.
 }

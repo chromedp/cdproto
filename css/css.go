@@ -121,7 +121,8 @@ func (p *CollectClassNamesParams) Do(ctx context.Context) (classNames []string, 
 // CreateStyleSheetParams creates a new special "via-inspector" stylesheet in
 // the frame with given frameId.
 type CreateStyleSheetParams struct {
-	FrameID cdp.FrameID `json:"frameId"` // Identifier of the frame where "via-inspector" stylesheet should be created.
+	FrameID cdp.FrameID `json:"frameId"`         // Identifier of the frame where "via-inspector" stylesheet should be created.
+	Force   bool        `json:"force,omitempty"` // If true, creates a new stylesheet for every call. If false, returns a stylesheet previously created by a call with force=false for the frame's document if it exists or creates a new stylesheet (default: false).
 }
 
 // CreateStyleSheet creates a new special "via-inspector" stylesheet in the
@@ -136,6 +137,14 @@ func CreateStyleSheet(frameID cdp.FrameID) *CreateStyleSheetParams {
 	return &CreateStyleSheetParams{
 		FrameID: frameID,
 	}
+}
+
+// WithForce if true, creates a new stylesheet for every call. If false,
+// returns a stylesheet previously created by a call with force=false for the
+// frame's document if it exists or creates a new stylesheet (default: false).
+func (p CreateStyleSheetParams) WithForce(force bool) *CreateStyleSheetParams {
+	p.Force = force
+	return &p
 }
 
 // CreateStyleSheetReturns return values.
