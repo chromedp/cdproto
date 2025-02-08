@@ -4,16 +4,16 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - name: Install Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: stable
-    - name: Install Packages
-      run: |
-        sudo apt-get -qq update
-        sudo apt-get install -y build-essential
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: Build
-      run: |
-        go build ./...
+      - name: Install Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - name: Install Packages
+        run: |
+          sudo apt-get -qq update
+          sudo apt-get install -y build-essential
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Build
+        run: |
+          go build ./...

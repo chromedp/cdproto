@@ -62,6 +62,33 @@ func (p *LoadUnpackedParams) Do(ctx context.Context) (id string, err error) {
 	return res.ID, nil
 }
 
+// UninstallParams uninstalls an unpacked extension (others not supported)
+// from the profile. Available if the client is connected using the
+// --remote-debugging-pipe flag and the --enable-unsafe-extension-debugging.
+type UninstallParams struct {
+	ID string `json:"id"` // Extension id.
+}
+
+// Uninstall uninstalls an unpacked extension (others not supported) from the
+// profile. Available if the client is connected using the
+// --remote-debugging-pipe flag and the --enable-unsafe-extension-debugging.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Extensions#method-uninstall
+//
+// parameters:
+//
+//	id - Extension id.
+func Uninstall(id string) *UninstallParams {
+	return &UninstallParams{
+		ID: id,
+	}
+}
+
+// Do executes Extensions.uninstall against the provided context.
+func (p *UninstallParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandUninstall, p, nil)
+}
+
 // GetStorageItemsParams gets data from extension storage in the given
 // storageArea. If keys is specified, these are used to filter the result.
 type GetStorageItemsParams struct {
@@ -205,6 +232,7 @@ func (p *SetStorageItemsParams) Do(ctx context.Context) (err error) {
 // Command names.
 const (
 	CommandLoadUnpacked       = "Extensions.loadUnpacked"
+	CommandUninstall          = "Extensions.uninstall"
 	CommandGetStorageItems    = "Extensions.getStorageItems"
 	CommandRemoveStorageItems = "Extensions.removeStorageItems"
 	CommandClearStorageItems  = "Extensions.clearStorageItems"

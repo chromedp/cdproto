@@ -368,6 +368,7 @@ const (
 	CommandEventBreakpointsRemoveInstrumentationBreakpoint   = eventbreakpoints.CommandRemoveInstrumentationBreakpoint
 	CommandEventBreakpointsDisable                           = eventbreakpoints.CommandDisable
 	CommandExtensionsLoadUnpacked                            = extensions.CommandLoadUnpacked
+	CommandExtensionsUninstall                               = extensions.CommandUninstall
 	CommandExtensionsGetStorageItems                         = extensions.CommandGetStorageItems
 	CommandExtensionsRemoveStorageItems                      = extensions.CommandRemoveStorageItems
 	CommandExtensionsClearStorageItems                       = extensions.CommandClearStorageItems
@@ -1725,6 +1726,9 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 
 	case CommandExtensionsLoadUnpacked:
 		v = new(extensions.LoadUnpackedReturns)
+
+	case CommandExtensionsUninstall:
+		return emptyVal, nil
 
 	case CommandExtensionsGetStorageItems:
 		v = new(extensions.GetStorageItemsReturns)
