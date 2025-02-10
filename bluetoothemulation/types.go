@@ -72,7 +72,7 @@ type ManufacturerData struct {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/BluetoothEmulation#type-ScanRecord
 type ScanRecord struct {
 	Name             string              `json:"name,omitempty"`
-	Uuids            []string            `json:"uuids,omitempty"`
+	UUIDs            []string            `json:"uuids,omitempty"`
 	Appearance       int64               `json:"appearance,omitempty"`       // Stores the external appearance description of the device.
 	TxPower          int64               `json:"txPower,omitempty"`          // Stores the transmission power of a broadcasting device.
 	ManufacturerData []*ManufacturerData `json:"manufacturerData,omitempty"` // Key is the company identifier and the value is an array of bytes of manufacturer specific data.

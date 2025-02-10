@@ -135,7 +135,7 @@ const (
 	CommandBrowserCancelDownload                             = browser.CommandCancelDownload
 	CommandBrowserClose                                      = browser.CommandClose
 	CommandBrowserCrash                                      = browser.CommandCrash
-	CommandBrowserCrashGpuProcess                            = browser.CommandCrashGpuProcess
+	CommandBrowserCrashGPUProcess                            = browser.CommandCrashGPUProcess
 	CommandBrowserGetVersion                                 = browser.CommandGetVersion
 	CommandBrowserGetBrowserCommandLine                      = browser.CommandGetBrowserCommandLine
 	CommandBrowserGetHistograms                              = browser.CommandGetHistograms
@@ -494,7 +494,7 @@ const (
 	CommandNetworkTakeResponseBodyForInterceptionAsStream    = network.CommandTakeResponseBodyForInterceptionAsStream
 	CommandNetworkReplayXHR                                  = network.CommandReplayXHR
 	CommandNetworkSearchInResponseBody                       = network.CommandSearchInResponseBody
-	CommandNetworkSetBlockedURLS                             = network.CommandSetBlockedURLS
+	CommandNetworkSetBlockedURLs                             = network.CommandSetBlockedURLs
 	CommandNetworkSetBypassServiceWorker                     = network.CommandSetBypassServiceWorker
 	CommandNetworkSetCacheDisabled                           = network.CommandSetCacheDisabled
 	CommandNetworkSetCookie                                  = network.CommandSetCookie
@@ -757,7 +757,7 @@ const (
 	CommandStorageSetAttributionReportingTracking            = storage.CommandSetAttributionReportingTracking
 	CommandStorageSendPendingAttributionReports              = storage.CommandSendPendingAttributionReports
 	CommandStorageGetRelatedWebsiteSets                      = storage.CommandGetRelatedWebsiteSets
-	CommandStorageGetAffectedUrlsForThirdPartyCookieMetadata = storage.CommandGetAffectedUrlsForThirdPartyCookieMetadata
+	CommandStorageGetAffectedURLsForThirdPartyCookieMetadata = storage.CommandGetAffectedURLsForThirdPartyCookieMetadata
 	EventStorageCacheStorageContentUpdated                   = "Storage.cacheStorageContentUpdated"
 	EventStorageCacheStorageListUpdated                      = "Storage.cacheStorageListUpdated"
 	EventStorageIndexedDBContentUpdated                      = "Storage.indexedDBContentUpdated"
@@ -1028,7 +1028,7 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandBrowserCrash:
 		return emptyVal, nil
 
-	case CommandBrowserCrashGpuProcess:
+	case CommandBrowserCrashGPUProcess:
 		return emptyVal, nil
 
 	case CommandBrowserGetVersion:
@@ -2105,7 +2105,7 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandNetworkSearchInResponseBody:
 		v = new(network.SearchInResponseBodyReturns)
 
-	case CommandNetworkSetBlockedURLS:
+	case CommandNetworkSetBlockedURLs:
 		return emptyVal, nil
 
 	case CommandNetworkSetBypassServiceWorker:
@@ -2894,8 +2894,8 @@ func UnmarshalMessage(msg *Message) (interface{}, error) {
 	case CommandStorageGetRelatedWebsiteSets:
 		v = new(storage.GetRelatedWebsiteSetsReturns)
 
-	case CommandStorageGetAffectedUrlsForThirdPartyCookieMetadata:
-		v = new(storage.GetAffectedUrlsForThirdPartyCookieMetadataReturns)
+	case CommandStorageGetAffectedURLsForThirdPartyCookieMetadata:
+		v = new(storage.GetAffectedURLsForThirdPartyCookieMetadataReturns)
 
 	case EventStorageCacheStorageContentUpdated:
 		v = new(storage.EventCacheStorageContentUpdated)

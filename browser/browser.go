@@ -229,19 +229,19 @@ func (p *CrashParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandCrash, nil, nil)
 }
 
-// CrashGpuProcessParams crashes GPU process.
-type CrashGpuProcessParams struct{}
+// CrashGPUProcessParams crashes GPU process.
+type CrashGPUProcessParams struct{}
 
-// CrashGpuProcess crashes GPU process.
+// CrashGPUProcess crashes GPU process.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#method-crashGpuProcess
-func CrashGpuProcess() *CrashGpuProcessParams {
-	return &CrashGpuProcessParams{}
+func CrashGPUProcess() *CrashGPUProcessParams {
+	return &CrashGPUProcessParams{}
 }
 
 // Do executes Browser.crashGpuProcess against the provided context.
-func (p *CrashGpuProcessParams) Do(ctx context.Context) (err error) {
-	return cdp.Execute(ctx, CommandCrashGpuProcess, nil, nil)
+func (p *CrashGPUProcessParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandCrashGPUProcess, nil, nil)
 }
 
 // GetVersionParams returns version information.
@@ -615,7 +615,7 @@ const (
 	CommandCancelDownload                      = "Browser.cancelDownload"
 	CommandClose                               = "Browser.close"
 	CommandCrash                               = "Browser.crash"
-	CommandCrashGpuProcess                     = "Browser.crashGpuProcess"
+	CommandCrashGPUProcess                     = "Browser.crashGpuProcess"
 	CommandGetVersion                          = "Browser.getVersion"
 	CommandGetBrowserCommandLine               = "Browser.getBrowserCommandLine"
 	CommandGetHistograms                       = "Browser.getHistograms"

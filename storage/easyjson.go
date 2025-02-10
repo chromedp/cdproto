@@ -1083,17 +1083,17 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoStorage14(in *jlexer.Lexer, o
 		case "urlsWithMetadata":
 			if in.IsNull() {
 				in.Skip()
-				out.UrlsWithMetadata = nil
+				out.URLsWithMetadata = nil
 			} else {
 				in.Delim('[')
-				if out.UrlsWithMetadata == nil {
+				if out.URLsWithMetadata == nil {
 					if !in.IsDelim(']') {
-						out.UrlsWithMetadata = make([]*SharedStorageURLWithMetadata, 0, 8)
+						out.URLsWithMetadata = make([]*SharedStorageURLWithMetadata, 0, 8)
 					} else {
-						out.UrlsWithMetadata = []*SharedStorageURLWithMetadata{}
+						out.URLsWithMetadata = []*SharedStorageURLWithMetadata{}
 					}
 				} else {
-					out.UrlsWithMetadata = (out.UrlsWithMetadata)[:0]
+					out.URLsWithMetadata = (out.URLsWithMetadata)[:0]
 				}
 				for !in.IsDelim(']') {
 					var v4 *SharedStorageURLWithMetadata
@@ -1106,7 +1106,7 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoStorage14(in *jlexer.Lexer, o
 						}
 						(*v4).UnmarshalEasyJSON(in)
 					}
-					out.UrlsWithMetadata = append(out.UrlsWithMetadata, v4)
+					out.URLsWithMetadata = append(out.URLsWithMetadata, v4)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -1157,7 +1157,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage14(out *jwriter.Writer
 		}
 		out.String(string(in.SerializedData))
 	}
-	if len(in.UrlsWithMetadata) != 0 {
+	if len(in.URLsWithMetadata) != 0 {
 		const prefix string = ",\"urlsWithMetadata\":"
 		if first {
 			first = false
@@ -1167,7 +1167,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage14(out *jwriter.Writer
 		}
 		{
 			out.RawByte('[')
-			for v5, v6 := range in.UrlsWithMetadata {
+			for v5, v6 := range in.URLsWithMetadata {
 				if v5 > 0 {
 					out.RawByte(',')
 				}
@@ -3752,7 +3752,7 @@ func (v *GetCookiesParams) UnmarshalJSON(data []byte) error {
 func (v *GetCookiesParams) UnmarshalEasyJSON(l *jlexer.Lexer) {
 	easyjsonC5a4559bDecodeGithubComChromedpCdprotoStorage45(l, v)
 }
-func easyjsonC5a4559bDecodeGithubComChromedpCdprotoStorage46(in *jlexer.Lexer, out *GetAffectedUrlsForThirdPartyCookieMetadataReturns) {
+func easyjsonC5a4559bDecodeGithubComChromedpCdprotoStorage46(in *jlexer.Lexer, out *GetAffectedURLsForThirdPartyCookieMetadataReturns) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -3774,22 +3774,22 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoStorage46(in *jlexer.Lexer, o
 		case "matchedUrls":
 			if in.IsNull() {
 				in.Skip()
-				out.MatchedUrls = nil
+				out.MatchedURLs = nil
 			} else {
 				in.Delim('[')
-				if out.MatchedUrls == nil {
+				if out.MatchedURLs == nil {
 					if !in.IsDelim(']') {
-						out.MatchedUrls = make([]string, 0, 4)
+						out.MatchedURLs = make([]string, 0, 4)
 					} else {
-						out.MatchedUrls = []string{}
+						out.MatchedURLs = []string{}
 					}
 				} else {
-					out.MatchedUrls = (out.MatchedUrls)[:0]
+					out.MatchedURLs = (out.MatchedURLs)[:0]
 				}
 				for !in.IsDelim(']') {
 					var v37 string
 					v37 = string(in.String())
-					out.MatchedUrls = append(out.MatchedUrls, v37)
+					out.MatchedURLs = append(out.MatchedURLs, v37)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -3804,17 +3804,17 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoStorage46(in *jlexer.Lexer, o
 		in.Consumed()
 	}
 }
-func easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage46(out *jwriter.Writer, in GetAffectedUrlsForThirdPartyCookieMetadataReturns) {
+func easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage46(out *jwriter.Writer, in GetAffectedURLsForThirdPartyCookieMetadataReturns) {
 	out.RawByte('{')
 	first := true
 	_ = first
-	if len(in.MatchedUrls) != 0 {
+	if len(in.MatchedURLs) != 0 {
 		const prefix string = ",\"matchedUrls\":"
 		first = false
 		out.RawString(prefix[1:])
 		{
 			out.RawByte('[')
-			for v38, v39 := range in.MatchedUrls {
+			for v38, v39 := range in.MatchedURLs {
 				if v38 > 0 {
 					out.RawByte(',')
 				}
@@ -3827,29 +3827,29 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage46(out *jwriter.Writer
 }
 
 // MarshalJSON supports json.Marshaler interface
-func (v GetAffectedUrlsForThirdPartyCookieMetadataReturns) MarshalJSON() ([]byte, error) {
+func (v GetAffectedURLsForThirdPartyCookieMetadataReturns) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
 	easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage46(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
-func (v GetAffectedUrlsForThirdPartyCookieMetadataReturns) MarshalEasyJSON(w *jwriter.Writer) {
+func (v GetAffectedURLsForThirdPartyCookieMetadataReturns) MarshalEasyJSON(w *jwriter.Writer) {
 	easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage46(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
-func (v *GetAffectedUrlsForThirdPartyCookieMetadataReturns) UnmarshalJSON(data []byte) error {
+func (v *GetAffectedURLsForThirdPartyCookieMetadataReturns) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
 	easyjsonC5a4559bDecodeGithubComChromedpCdprotoStorage46(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *GetAffectedUrlsForThirdPartyCookieMetadataReturns) UnmarshalEasyJSON(l *jlexer.Lexer) {
+func (v *GetAffectedURLsForThirdPartyCookieMetadataReturns) UnmarshalEasyJSON(l *jlexer.Lexer) {
 	easyjsonC5a4559bDecodeGithubComChromedpCdprotoStorage46(l, v)
 }
-func easyjsonC5a4559bDecodeGithubComChromedpCdprotoStorage47(in *jlexer.Lexer, out *GetAffectedUrlsForThirdPartyCookieMetadataParams) {
+func easyjsonC5a4559bDecodeGithubComChromedpCdprotoStorage47(in *jlexer.Lexer, out *GetAffectedURLsForThirdPartyCookieMetadataParams) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -3873,22 +3873,22 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoStorage47(in *jlexer.Lexer, o
 		case "thirdPartyUrls":
 			if in.IsNull() {
 				in.Skip()
-				out.ThirdPartyUrls = nil
+				out.ThirdPartyURLs = nil
 			} else {
 				in.Delim('[')
-				if out.ThirdPartyUrls == nil {
+				if out.ThirdPartyURLs == nil {
 					if !in.IsDelim(']') {
-						out.ThirdPartyUrls = make([]string, 0, 4)
+						out.ThirdPartyURLs = make([]string, 0, 4)
 					} else {
-						out.ThirdPartyUrls = []string{}
+						out.ThirdPartyURLs = []string{}
 					}
 				} else {
-					out.ThirdPartyUrls = (out.ThirdPartyUrls)[:0]
+					out.ThirdPartyURLs = (out.ThirdPartyURLs)[:0]
 				}
 				for !in.IsDelim(']') {
 					var v40 string
 					v40 = string(in.String())
-					out.ThirdPartyUrls = append(out.ThirdPartyUrls, v40)
+					out.ThirdPartyURLs = append(out.ThirdPartyURLs, v40)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -3903,7 +3903,7 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoStorage47(in *jlexer.Lexer, o
 		in.Consumed()
 	}
 }
-func easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage47(out *jwriter.Writer, in GetAffectedUrlsForThirdPartyCookieMetadataParams) {
+func easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage47(out *jwriter.Writer, in GetAffectedURLsForThirdPartyCookieMetadataParams) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -3915,11 +3915,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage47(out *jwriter.Writer
 	{
 		const prefix string = ",\"thirdPartyUrls\":"
 		out.RawString(prefix)
-		if in.ThirdPartyUrls == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+		if in.ThirdPartyURLs == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
 			out.RawString("null")
 		} else {
 			out.RawByte('[')
-			for v41, v42 := range in.ThirdPartyUrls {
+			for v41, v42 := range in.ThirdPartyURLs {
 				if v41 > 0 {
 					out.RawByte(',')
 				}
@@ -3932,26 +3932,26 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage47(out *jwriter.Writer
 }
 
 // MarshalJSON supports json.Marshaler interface
-func (v GetAffectedUrlsForThirdPartyCookieMetadataParams) MarshalJSON() ([]byte, error) {
+func (v GetAffectedURLsForThirdPartyCookieMetadataParams) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
 	easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage47(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
-func (v GetAffectedUrlsForThirdPartyCookieMetadataParams) MarshalEasyJSON(w *jwriter.Writer) {
+func (v GetAffectedURLsForThirdPartyCookieMetadataParams) MarshalEasyJSON(w *jwriter.Writer) {
 	easyjsonC5a4559bEncodeGithubComChromedpCdprotoStorage47(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
-func (v *GetAffectedUrlsForThirdPartyCookieMetadataParams) UnmarshalJSON(data []byte) error {
+func (v *GetAffectedURLsForThirdPartyCookieMetadataParams) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
 	easyjsonC5a4559bDecodeGithubComChromedpCdprotoStorage47(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *GetAffectedUrlsForThirdPartyCookieMetadataParams) UnmarshalEasyJSON(l *jlexer.Lexer) {
+func (v *GetAffectedURLsForThirdPartyCookieMetadataParams) UnmarshalEasyJSON(l *jlexer.Lexer) {
 	easyjsonC5a4559bDecodeGithubComChromedpCdprotoStorage47(l, v)
 }
 func easyjsonC5a4559bDecodeGithubComChromedpCdprotoStorage48(in *jlexer.Lexer, out *EventStorageBucketDeleted) {

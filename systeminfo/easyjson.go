@@ -706,12 +706,12 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoSysteminfo7(in *jlexer.Lexer,
 		case "gpu":
 			if in.IsNull() {
 				in.Skip()
-				out.Gpu = nil
+				out.GPU = nil
 			} else {
-				if out.Gpu == nil {
-					out.Gpu = new(GPUInfo)
+				if out.GPU == nil {
+					out.GPU = new(GPUInfo)
 				}
-				(*out.Gpu).UnmarshalEasyJSON(in)
+				(*out.GPU).UnmarshalEasyJSON(in)
 			}
 		case "modelName":
 			out.ModelName = string(in.String())
@@ -733,11 +733,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoSysteminfo7(out *jwriter.Writ
 	out.RawByte('{')
 	first := true
 	_ = first
-	if in.Gpu != nil {
+	if in.GPU != nil {
 		const prefix string = ",\"gpu\":"
 		first = false
 		out.RawString(prefix[1:])
-		(*in.Gpu).MarshalEasyJSON(out)
+		(*in.GPU).MarshalEasyJSON(out)
 	}
 	if in.ModelName != "" {
 		const prefix string = ",\"modelName\":"

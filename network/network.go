@@ -313,7 +313,7 @@ func (p *GetCertificateParams) Do(ctx context.Context) (tableNames []string, err
 // Depending on the backend support, will return detailed cookie information in
 // the cookies field.
 type GetCookiesParams struct {
-	Urls []string `json:"urls,omitempty"` // The list of URLs for which applicable cookies will be fetched. If not specified, it's assumed to be set to the list containing the URLs of the page and all of its subframes.
+	URLs []string `json:"urls,omitempty"` // The list of URLs for which applicable cookies will be fetched. If not specified, it's assumed to be set to the list containing the URLs of the page and all of its subframes.
 }
 
 // GetCookies returns all browser cookies for the current URL. Depending on
@@ -327,11 +327,11 @@ func GetCookies() *GetCookiesParams {
 	return &GetCookiesParams{}
 }
 
-// WithUrls the list of URLs for which applicable cookies will be fetched. If
+// WithURLs the list of URLs for which applicable cookies will be fetched. If
 // not specified, it's assumed to be set to the list containing the URLs of the
 // page and all of its subframes.
-func (p GetCookiesParams) WithUrls(urls []string) *GetCookiesParams {
-	p.Urls = urls
+func (p GetCookiesParams) WithURLs(urls []string) *GetCookiesParams {
+	p.URLs = urls
 	return &p
 }
 
@@ -631,27 +631,27 @@ func (p *SearchInResponseBodyParams) Do(ctx context.Context) (result []*debugger
 	return res.Result, nil
 }
 
-// SetBlockedURLSParams blocks URLs from loading.
-type SetBlockedURLSParams struct {
-	Urls []string `json:"urls"` // URL patterns to block. Wildcards ('*') are allowed.
+// SetBlockedURLsParams blocks URLs from loading.
+type SetBlockedURLsParams struct {
+	URLs []string `json:"urls"` // URL patterns to block. Wildcards ('*') are allowed.
 }
 
-// SetBlockedURLS blocks URLs from loading.
+// SetBlockedURLs blocks URLs from loading.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-setBlockedURLs
 //
 // parameters:
 //
 //	urls - URL patterns to block. Wildcards ('*') are allowed.
-func SetBlockedURLS(urls []string) *SetBlockedURLSParams {
-	return &SetBlockedURLSParams{
-		Urls: urls,
+func SetBlockedURLs(urls []string) *SetBlockedURLsParams {
+	return &SetBlockedURLsParams{
+		URLs: urls,
 	}
 }
 
 // Do executes Network.setBlockedURLs against the provided context.
-func (p *SetBlockedURLSParams) Do(ctx context.Context) (err error) {
-	return cdp.Execute(ctx, CommandSetBlockedURLS, p, nil)
+func (p *SetBlockedURLsParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetBlockedURLs, p, nil)
 }
 
 // SetBypassServiceWorkerParams toggles ignoring of service worker for each
@@ -1114,7 +1114,7 @@ const (
 	CommandTakeResponseBodyForInterceptionAsStream = "Network.takeResponseBodyForInterceptionAsStream"
 	CommandReplayXHR                               = "Network.replayXHR"
 	CommandSearchInResponseBody                    = "Network.searchInResponseBody"
-	CommandSetBlockedURLS                          = "Network.setBlockedURLs"
+	CommandSetBlockedURLs                          = "Network.setBlockedURLs"
 	CommandSetBypassServiceWorker                  = "Network.setBypassServiceWorker"
 	CommandSetCacheDisabled                        = "Network.setCacheDisabled"
 	CommandSetCookie                               = "Network.setCookie"

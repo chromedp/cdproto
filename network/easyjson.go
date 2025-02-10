@@ -2060,7 +2060,7 @@ func (v *SetBypassServiceWorkerParams) UnmarshalJSON(data []byte) error {
 func (v *SetBypassServiceWorkerParams) UnmarshalEasyJSON(l *jlexer.Lexer) {
 	easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork18(l, v)
 }
-func easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork19(in *jlexer.Lexer, out *SetBlockedURLSParams) {
+func easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork19(in *jlexer.Lexer, out *SetBlockedURLsParams) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -2082,22 +2082,22 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork19(in *jlexer.Lexer, o
 		case "urls":
 			if in.IsNull() {
 				in.Skip()
-				out.Urls = nil
+				out.URLs = nil
 			} else {
 				in.Delim('[')
-				if out.Urls == nil {
+				if out.URLs == nil {
 					if !in.IsDelim(']') {
-						out.Urls = make([]string, 0, 4)
+						out.URLs = make([]string, 0, 4)
 					} else {
-						out.Urls = []string{}
+						out.URLs = []string{}
 					}
 				} else {
-					out.Urls = (out.Urls)[:0]
+					out.URLs = (out.URLs)[:0]
 				}
 				for !in.IsDelim(']') {
 					var v26 string
 					v26 = string(in.String())
-					out.Urls = append(out.Urls, v26)
+					out.URLs = append(out.URLs, v26)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -2112,18 +2112,18 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork19(in *jlexer.Lexer, o
 		in.Consumed()
 	}
 }
-func easyjsonC5a4559bEncodeGithubComChromedpCdprotoNetwork19(out *jwriter.Writer, in SetBlockedURLSParams) {
+func easyjsonC5a4559bEncodeGithubComChromedpCdprotoNetwork19(out *jwriter.Writer, in SetBlockedURLsParams) {
 	out.RawByte('{')
 	first := true
 	_ = first
 	{
 		const prefix string = ",\"urls\":"
 		out.RawString(prefix[1:])
-		if in.Urls == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+		if in.URLs == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
 			out.RawString("null")
 		} else {
 			out.RawByte('[')
-			for v27, v28 := range in.Urls {
+			for v27, v28 := range in.URLs {
 				if v27 > 0 {
 					out.RawByte(',')
 				}
@@ -2136,26 +2136,26 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoNetwork19(out *jwriter.Writer
 }
 
 // MarshalJSON supports json.Marshaler interface
-func (v SetBlockedURLSParams) MarshalJSON() ([]byte, error) {
+func (v SetBlockedURLsParams) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
 	easyjsonC5a4559bEncodeGithubComChromedpCdprotoNetwork19(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
-func (v SetBlockedURLSParams) MarshalEasyJSON(w *jwriter.Writer) {
+func (v SetBlockedURLsParams) MarshalEasyJSON(w *jwriter.Writer) {
 	easyjsonC5a4559bEncodeGithubComChromedpCdprotoNetwork19(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
-func (v *SetBlockedURLSParams) UnmarshalJSON(data []byte) error {
+func (v *SetBlockedURLsParams) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
 	easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork19(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *SetBlockedURLSParams) UnmarshalEasyJSON(l *jlexer.Lexer) {
+func (v *SetBlockedURLsParams) UnmarshalEasyJSON(l *jlexer.Lexer) {
 	easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork19(l, v)
 }
 func easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork20(in *jlexer.Lexer, out *SetAttachDebugStackParams) {
@@ -5442,22 +5442,22 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork49(in *jlexer.Lexer, o
 		case "urls":
 			if in.IsNull() {
 				in.Skip()
-				out.Urls = nil
+				out.URLs = nil
 			} else {
 				in.Delim('[')
-				if out.Urls == nil {
+				if out.URLs == nil {
 					if !in.IsDelim(']') {
-						out.Urls = make([]string, 0, 4)
+						out.URLs = make([]string, 0, 4)
 					} else {
-						out.Urls = []string{}
+						out.URLs = []string{}
 					}
 				} else {
-					out.Urls = (out.Urls)[:0]
+					out.URLs = (out.URLs)[:0]
 				}
 				for !in.IsDelim(']') {
 					var v58 string
 					v58 = string(in.String())
-					out.Urls = append(out.Urls, v58)
+					out.URLs = append(out.URLs, v58)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -5476,13 +5476,13 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoNetwork49(out *jwriter.Writer
 	out.RawByte('{')
 	first := true
 	_ = first
-	if len(in.Urls) != 0 {
+	if len(in.URLs) != 0 {
 		const prefix string = ",\"urls\":"
 		first = false
 		out.RawString(prefix[1:])
 		{
 			out.RawByte('[')
-			for v59, v60 := range in.Urls {
+			for v59, v60 := range in.URLs {
 				if v59 > 0 {
 					out.RawByte(',')
 				}
@@ -6874,22 +6874,22 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoNetwork64(in *jlexer.Lexer, o
 		case "urls":
 			if in.IsNull() {
 				in.Skip()
-				out.Urls = nil
+				out.URLs = nil
 			} else {
 				in.Delim('[')
-				if out.Urls == nil {
+				if out.URLs == nil {
 					if !in.IsDelim(']') {
-						out.Urls = make([]string, 0, 4)
+						out.URLs = make([]string, 0, 4)
 					} else {
-						out.Urls = []string{}
+						out.URLs = []string{}
 					}
 				} else {
-					out.Urls = (out.Urls)[:0]
+					out.URLs = (out.URLs)[:0]
 				}
 				for !in.IsDelim(']') {
 					var v64 string
 					v64 = string(in.String())
-					out.Urls = append(out.Urls, v64)
+					out.URLs = append(out.URLs, v64)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -6916,11 +6916,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoNetwork64(out *jwriter.Writer
 	{
 		const prefix string = ",\"urls\":"
 		out.RawString(prefix)
-		if in.Urls == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+		if in.URLs == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
 			out.RawString("null")
 		} else {
 			out.RawByte('[')
-			for v65, v66 := range in.Urls {
+			for v65, v66 := range in.URLs {
 				if v65 > 0 {
 					out.RawByte(',')
 				}

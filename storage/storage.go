@@ -1080,16 +1080,16 @@ func (p *GetRelatedWebsiteSetsParams) Do(ctx context.Context) (sets []*RelatedWe
 	return res.Sets, nil
 }
 
-// GetAffectedUrlsForThirdPartyCookieMetadataParams returns the list of URLs
+// GetAffectedURLsForThirdPartyCookieMetadataParams returns the list of URLs
 // from a page and its embedded resources that match existing grace period URL
 // pattern rules.
 // https://developers.google.com/privacy-sandbox/cookies/temporary-exceptions/grace-period.
-type GetAffectedUrlsForThirdPartyCookieMetadataParams struct {
+type GetAffectedURLsForThirdPartyCookieMetadataParams struct {
 	FirstPartyURL  string   `json:"firstPartyUrl"`  // The URL of the page currently being visited.
-	ThirdPartyUrls []string `json:"thirdPartyUrls"` // The list of embedded resource URLs from the page.
+	ThirdPartyURLs []string `json:"thirdPartyUrls"` // The list of embedded resource URLs from the page.
 }
 
-// GetAffectedUrlsForThirdPartyCookieMetadata returns the list of URLs from a
+// GetAffectedURLsForThirdPartyCookieMetadata returns the list of URLs from a
 // page and its embedded resources that match existing grace period URL pattern
 // rules.
 // https://developers.google.com/privacy-sandbox/cookies/temporary-exceptions/grace-period.
@@ -1099,33 +1099,33 @@ type GetAffectedUrlsForThirdPartyCookieMetadataParams struct {
 // parameters:
 //
 //	firstPartyURL - The URL of the page currently being visited.
-//	thirdPartyUrls - The list of embedded resource URLs from the page.
-func GetAffectedUrlsForThirdPartyCookieMetadata(firstPartyURL string, thirdPartyUrls []string) *GetAffectedUrlsForThirdPartyCookieMetadataParams {
-	return &GetAffectedUrlsForThirdPartyCookieMetadataParams{
+//	thirdPartyURLs - The list of embedded resource URLs from the page.
+func GetAffectedURLsForThirdPartyCookieMetadata(firstPartyURL string, thirdPartyURLs []string) *GetAffectedURLsForThirdPartyCookieMetadataParams {
+	return &GetAffectedURLsForThirdPartyCookieMetadataParams{
 		FirstPartyURL:  firstPartyURL,
-		ThirdPartyUrls: thirdPartyUrls,
+		ThirdPartyURLs: thirdPartyURLs,
 	}
 }
 
-// GetAffectedUrlsForThirdPartyCookieMetadataReturns return values.
-type GetAffectedUrlsForThirdPartyCookieMetadataReturns struct {
-	MatchedUrls []string `json:"matchedUrls,omitempty"` // Array of matching URLs. If there is a primary pattern match for the first- party URL, only the first-party URL is returned in the array.
+// GetAffectedURLsForThirdPartyCookieMetadataReturns return values.
+type GetAffectedURLsForThirdPartyCookieMetadataReturns struct {
+	MatchedURLs []string `json:"matchedUrls,omitempty"` // Array of matching URLs. If there is a primary pattern match for the first- party URL, only the first-party URL is returned in the array.
 }
 
 // Do executes Storage.getAffectedUrlsForThirdPartyCookieMetadata against the provided context.
 //
 // returns:
 //
-//	matchedUrls - Array of matching URLs. If there is a primary pattern match for the first- party URL, only the first-party URL is returned in the array.
-func (p *GetAffectedUrlsForThirdPartyCookieMetadataParams) Do(ctx context.Context) (matchedUrls []string, err error) {
+//	matchedURLs - Array of matching URLs. If there is a primary pattern match for the first- party URL, only the first-party URL is returned in the array.
+func (p *GetAffectedURLsForThirdPartyCookieMetadataParams) Do(ctx context.Context) (matchedURLs []string, err error) {
 	// execute
-	var res GetAffectedUrlsForThirdPartyCookieMetadataReturns
-	err = cdp.Execute(ctx, CommandGetAffectedUrlsForThirdPartyCookieMetadata, p, &res)
+	var res GetAffectedURLsForThirdPartyCookieMetadataReturns
+	err = cdp.Execute(ctx, CommandGetAffectedURLsForThirdPartyCookieMetadata, p, &res)
 	if err != nil {
 		return nil, err
 	}
 
-	return res.MatchedUrls, nil
+	return res.MatchedURLs, nil
 }
 
 // Command names.
@@ -1165,5 +1165,5 @@ const (
 	CommandSetAttributionReportingTracking            = "Storage.setAttributionReportingTracking"
 	CommandSendPendingAttributionReports              = "Storage.sendPendingAttributionReports"
 	CommandGetRelatedWebsiteSets                      = "Storage.getRelatedWebsiteSets"
-	CommandGetAffectedUrlsForThirdPartyCookieMetadata = "Storage.getAffectedUrlsForThirdPartyCookieMetadata"
+	CommandGetAffectedURLsForThirdPartyCookieMetadata = "Storage.getAffectedUrlsForThirdPartyCookieMetadata"
 )

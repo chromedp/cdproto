@@ -74,22 +74,22 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoBluetoothemulation(in *jlexer
 		case "knownServiceUuids":
 			if in.IsNull() {
 				in.Skip()
-				out.KnownServiceUuids = nil
+				out.KnownServiceUUIDs = nil
 			} else {
 				in.Delim('[')
-				if out.KnownServiceUuids == nil {
+				if out.KnownServiceUUIDs == nil {
 					if !in.IsDelim(']') {
-						out.KnownServiceUuids = make([]string, 0, 4)
+						out.KnownServiceUUIDs = make([]string, 0, 4)
 					} else {
-						out.KnownServiceUuids = []string{}
+						out.KnownServiceUUIDs = []string{}
 					}
 				} else {
-					out.KnownServiceUuids = (out.KnownServiceUuids)[:0]
+					out.KnownServiceUUIDs = (out.KnownServiceUUIDs)[:0]
 				}
 				for !in.IsDelim(']') {
 					var v2 string
 					v2 = string(in.String())
-					out.KnownServiceUuids = append(out.KnownServiceUuids, v2)
+					out.KnownServiceUUIDs = append(out.KnownServiceUUIDs, v2)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -141,11 +141,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoBluetoothemulation(out *jwrit
 	{
 		const prefix string = ",\"knownServiceUuids\":"
 		out.RawString(prefix)
-		if in.KnownServiceUuids == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+		if in.KnownServiceUUIDs == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
 			out.RawString("null")
 		} else {
 			out.RawByte('[')
-			for v5, v6 := range in.KnownServiceUuids {
+			for v5, v6 := range in.KnownServiceUUIDs {
 				if v5 > 0 {
 					out.RawByte(',')
 				}
@@ -282,22 +282,22 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoBluetoothemulation2(in *jlexe
 		case "uuids":
 			if in.IsNull() {
 				in.Skip()
-				out.Uuids = nil
+				out.UUIDs = nil
 			} else {
 				in.Delim('[')
-				if out.Uuids == nil {
+				if out.UUIDs == nil {
 					if !in.IsDelim(']') {
-						out.Uuids = make([]string, 0, 4)
+						out.UUIDs = make([]string, 0, 4)
 					} else {
-						out.Uuids = []string{}
+						out.UUIDs = []string{}
 					}
 				} else {
-					out.Uuids = (out.Uuids)[:0]
+					out.UUIDs = (out.UUIDs)[:0]
 				}
 				for !in.IsDelim(']') {
 					var v7 string
 					v7 = string(in.String())
-					out.Uuids = append(out.Uuids, v7)
+					out.UUIDs = append(out.UUIDs, v7)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -357,7 +357,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoBluetoothemulation2(out *jwri
 		out.RawString(prefix[1:])
 		out.String(string(in.Name))
 	}
-	if len(in.Uuids) != 0 {
+	if len(in.UUIDs) != 0 {
 		const prefix string = ",\"uuids\":"
 		if first {
 			first = false
@@ -367,7 +367,7 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoBluetoothemulation2(out *jwri
 		}
 		{
 			out.RawByte('[')
-			for v9, v10 := range in.Uuids {
+			for v9, v10 := range in.UUIDs {
 				if v9 > 0 {
 					out.RawByte(',')
 				}

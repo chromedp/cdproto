@@ -60,7 +60,7 @@ type SimulatePreconnectedPeripheralParams struct {
 	Address           string              `json:"address"`
 	Name              string              `json:"name"`
 	ManufacturerData  []*ManufacturerData `json:"manufacturerData"`
-	KnownServiceUuids []string            `json:"knownServiceUuids"`
+	KnownServiceUUIDs []string            `json:"knownServiceUuids"`
 }
 
 // SimulatePreconnectedPeripheral simulates a peripheral with |address|,
@@ -73,13 +73,13 @@ type SimulatePreconnectedPeripheralParams struct {
 //	address
 //	name
 //	manufacturerData
-//	knownServiceUuids
-func SimulatePreconnectedPeripheral(address string, name string, manufacturerData []*ManufacturerData, knownServiceUuids []string) *SimulatePreconnectedPeripheralParams {
+//	knownServiceUUIDs
+func SimulatePreconnectedPeripheral(address string, name string, manufacturerData []*ManufacturerData, knownServiceUUIDs []string) *SimulatePreconnectedPeripheralParams {
 	return &SimulatePreconnectedPeripheralParams{
 		Address:           address,
 		Name:              name,
 		ManufacturerData:  manufacturerData,
-		KnownServiceUuids: knownServiceUuids,
+		KnownServiceUUIDs: knownServiceUUIDs,
 	}
 }
 

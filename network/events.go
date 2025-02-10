@@ -273,7 +273,7 @@ type EventPolicyUpdated struct{}
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-subresourceWebBundleMetadataReceived
 type EventSubresourceWebBundleMetadataReceived struct {
 	RequestID RequestID `json:"requestId"` // Request identifier. Used to match this information to another event.
-	Urls      []string  `json:"urls"`      // A list of URLs of resources in the subresource Web Bundle.
+	URLs      []string  `json:"urls"`      // A list of URLs of resources in the subresource Web Bundle.
 }
 
 // EventSubresourceWebBundleMetadataError fired once when parsing the .wbn
