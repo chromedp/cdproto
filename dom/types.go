@@ -265,7 +265,8 @@ func (t GetElementByRelationRelation) String() string {
 
 // GetElementByRelationRelation values.
 const (
-	GetElementByRelationRelationPopoverTarget GetElementByRelationRelation = "PopoverTarget"
+	GetElementByRelationRelationPopoverTarget  GetElementByRelationRelation = "PopoverTarget"
+	GetElementByRelationRelationInterestTarget GetElementByRelationRelation = "InterestTarget"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -284,6 +285,8 @@ func (t *GetElementByRelationRelation) UnmarshalEasyJSON(in *jlexer.Lexer) {
 	switch GetElementByRelationRelation(v) {
 	case GetElementByRelationRelationPopoverTarget:
 		*t = GetElementByRelationRelationPopoverTarget
+	case GetElementByRelationRelationInterestTarget:
+		*t = GetElementByRelationRelationInterestTarget
 
 	default:
 		in.AddError(fmt.Errorf("unknown GetElementByRelationRelation value: %v", v))

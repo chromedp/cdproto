@@ -150,8 +150,9 @@ func (p *CloseTargetParams) Do(ctx context.Context) (err error) {
 // protocol - binding.onmessage = json => handleMessage(json) - a callback that
 // will be called for the protocol notifications and command responses.
 type ExposeDevToolsProtocolParams struct {
-	TargetID    ID     `json:"targetId"`
-	BindingName string `json:"bindingName,omitempty"` // Binding name, 'cdp' if not specified.
+	TargetID           ID     `json:"targetId"`
+	BindingName        string `json:"bindingName,omitempty"`        // Binding name, 'cdp' if not specified.
+	InheritPermissions bool   `json:"inheritPermissions,omitempty"` // If true, inherits the current root session's permissions (default: false).
 }
 
 // ExposeDevToolsProtocol inject object to the target's main frame that
@@ -175,6 +176,13 @@ func ExposeDevToolsProtocol(targetID ID) *ExposeDevToolsProtocolParams {
 // WithBindingName binding name, 'cdp' if not specified.
 func (p ExposeDevToolsProtocolParams) WithBindingName(bindingName string) *ExposeDevToolsProtocolParams {
 	p.BindingName = bindingName
+	return &p
+}
+
+// WithInheritPermissions if true, inherits the current root session's
+// permissions (default: false).
+func (p ExposeDevToolsProtocolParams) WithInheritPermissions(inheritPermissions bool) *ExposeDevToolsProtocolParams {
+	p.InheritPermissions = inheritPermissions
 	return &p
 }
 

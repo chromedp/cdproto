@@ -691,6 +691,7 @@ const (
 	ContentSecurityPolicyViolationTypeKInlineViolation             ContentSecurityPolicyViolationType = "kInlineViolation"
 	ContentSecurityPolicyViolationTypeKEvalViolation               ContentSecurityPolicyViolationType = "kEvalViolation"
 	ContentSecurityPolicyViolationTypeKURLViolation                ContentSecurityPolicyViolationType = "kURLViolation"
+	ContentSecurityPolicyViolationTypeKSRIViolation                ContentSecurityPolicyViolationType = "kSRIViolation"
 	ContentSecurityPolicyViolationTypeKTrustedTypesSinkViolation   ContentSecurityPolicyViolationType = "kTrustedTypesSinkViolation"
 	ContentSecurityPolicyViolationTypeKTrustedTypesPolicyViolation ContentSecurityPolicyViolationType = "kTrustedTypesPolicyViolation"
 	ContentSecurityPolicyViolationTypeKWasmEvalViolation           ContentSecurityPolicyViolationType = "kWasmEvalViolation"
@@ -716,6 +717,8 @@ func (t *ContentSecurityPolicyViolationType) UnmarshalEasyJSON(in *jlexer.Lexer)
 		*t = ContentSecurityPolicyViolationTypeKEvalViolation
 	case ContentSecurityPolicyViolationTypeKURLViolation:
 		*t = ContentSecurityPolicyViolationTypeKURLViolation
+	case ContentSecurityPolicyViolationTypeKSRIViolation:
+		*t = ContentSecurityPolicyViolationTypeKSRIViolation
 	case ContentSecurityPolicyViolationTypeKTrustedTypesSinkViolation:
 		*t = ContentSecurityPolicyViolationTypeKTrustedTypesSinkViolation
 	case ContentSecurityPolicyViolationTypeKTrustedTypesPolicyViolation:
@@ -1316,6 +1319,7 @@ const (
 	FederatedAuthRequestIssueReasonRelyingPartyOriginIsOpaque       FederatedAuthRequestIssueReason = "RelyingPartyOriginIsOpaque"
 	FederatedAuthRequestIssueReasonTypeNotMatching                  FederatedAuthRequestIssueReason = "TypeNotMatching"
 	FederatedAuthRequestIssueReasonUIDismissedNoEmbargo             FederatedAuthRequestIssueReason = "UiDismissedNoEmbargo"
+	FederatedAuthRequestIssueReasonCorsError                        FederatedAuthRequestIssueReason = "CorsError"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -1424,6 +1428,8 @@ func (t *FederatedAuthRequestIssueReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = FederatedAuthRequestIssueReasonTypeNotMatching
 	case FederatedAuthRequestIssueReasonUIDismissedNoEmbargo:
 		*t = FederatedAuthRequestIssueReasonUIDismissedNoEmbargo
+	case FederatedAuthRequestIssueReasonCorsError:
+		*t = FederatedAuthRequestIssueReasonCorsError
 
 	default:
 		in.AddError(fmt.Errorf("unknown FederatedAuthRequestIssueReason value: %v", v))
@@ -1528,6 +1534,59 @@ type FailedRequestInfo struct {
 	URL            string            `json:"url"`            // The URL that failed to load.
 	FailureMessage string            `json:"failureMessage"` // The failure message for the failed request.
 	RequestID      network.RequestID `json:"requestId,omitempty"`
+}
+
+// PartitioningBlobURLInfo [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-PartitioningBlobURLInfo
+type PartitioningBlobURLInfo string
+
+// String returns the PartitioningBlobURLInfo as string value.
+func (t PartitioningBlobURLInfo) String() string {
+	return string(t)
+}
+
+// PartitioningBlobURLInfo values.
+const (
+	PartitioningBlobURLInfoBlockedCrossPartitionFetching PartitioningBlobURLInfo = "BlockedCrossPartitionFetching"
+	PartitioningBlobURLInfoEnforceNoopenerForNavigation  PartitioningBlobURLInfo = "EnforceNoopenerForNavigation"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t PartitioningBlobURLInfo) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t PartitioningBlobURLInfo) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *PartitioningBlobURLInfo) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	v := in.String()
+	switch PartitioningBlobURLInfo(v) {
+	case PartitioningBlobURLInfoBlockedCrossPartitionFetching:
+		*t = PartitioningBlobURLInfoBlockedCrossPartitionFetching
+	case PartitioningBlobURLInfoEnforceNoopenerForNavigation:
+		*t = PartitioningBlobURLInfoEnforceNoopenerForNavigation
+
+	default:
+		in.AddError(fmt.Errorf("unknown PartitioningBlobURLInfo value: %v", v))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *PartitioningBlobURLInfo) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
+// PartitioningBlobURLIssueDetails [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-PartitioningBlobURLIssueDetails
+type PartitioningBlobURLIssueDetails struct {
+	URL                     string                  `json:"url"`                     // The BlobURL that failed to load.
+	PartitioningBlobURLInfo PartitioningBlobURLInfo `json:"partitioningBlobURLInfo"` // Additional information about the Partitioning Blob URL issue.
 }
 
 // SelectElementAccessibilityIssueReason [no description].
@@ -1734,6 +1793,7 @@ const (
 	InspectorIssueCodeCorsIssue                         InspectorIssueCode = "CorsIssue"
 	InspectorIssueCodeAttributionReportingIssue         InspectorIssueCode = "AttributionReportingIssue"
 	InspectorIssueCodeQuirksModeIssue                   InspectorIssueCode = "QuirksModeIssue"
+	InspectorIssueCodePartitioningBlobURLIssue          InspectorIssueCode = "PartitioningBlobURLIssue"
 	InspectorIssueCodeNavigatorUserAgentIssue           InspectorIssueCode = "NavigatorUserAgentIssue"
 	InspectorIssueCodeGenericIssue                      InspectorIssueCode = "GenericIssue"
 	InspectorIssueCodeDeprecationIssue                  InspectorIssueCode = "DeprecationIssue"
@@ -1782,6 +1842,8 @@ func (t *InspectorIssueCode) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = InspectorIssueCodeAttributionReportingIssue
 	case InspectorIssueCodeQuirksModeIssue:
 		*t = InspectorIssueCodeQuirksModeIssue
+	case InspectorIssueCodePartitioningBlobURLIssue:
+		*t = InspectorIssueCodePartitioningBlobURLIssue
 	case InspectorIssueCodeNavigatorUserAgentIssue:
 		*t = InspectorIssueCodeNavigatorUserAgentIssue
 	case InspectorIssueCodeGenericIssue:
@@ -1833,6 +1895,7 @@ type InspectorIssueDetails struct {
 	CorsIssueDetails                         *CorsIssueDetails                         `json:"corsIssueDetails,omitempty"`
 	AttributionReportingIssueDetails         *AttributionReportingIssueDetails         `json:"attributionReportingIssueDetails,omitempty"`
 	QuirksModeIssueDetails                   *QuirksModeIssueDetails                   `json:"quirksModeIssueDetails,omitempty"`
+	PartitioningBlobURLIssueDetails          *PartitioningBlobURLIssueDetails          `json:"partitioningBlobURLIssueDetails,omitempty"`
 	GenericIssueDetails                      *GenericIssueDetails                      `json:"genericIssueDetails,omitempty"`
 	DeprecationIssueDetails                  *DeprecationIssueDetails                  `json:"deprecationIssueDetails,omitempty"`
 	ClientHintIssueDetails                   *ClientHintIssueDetails                   `json:"clientHintIssueDetails,omitempty"`

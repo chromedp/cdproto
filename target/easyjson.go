@@ -1226,6 +1226,8 @@ func easyjsonC5a4559bDecodeGithubComChromedpCdprotoTarget12(in *jlexer.Lexer, ou
 			out.TargetID = ID(in.String())
 		case "bindingName":
 			out.BindingName = string(in.String())
+		case "inheritPermissions":
+			out.InheritPermissions = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -1249,6 +1251,11 @@ func easyjsonC5a4559bEncodeGithubComChromedpCdprotoTarget12(out *jwriter.Writer,
 		const prefix string = ",\"bindingName\":"
 		out.RawString(prefix)
 		out.String(string(in.BindingName))
+	}
+	if in.InheritPermissions {
+		const prefix string = ",\"inheritPermissions\":"
+		out.RawString(prefix)
+		out.Bool(bool(in.InheritPermissions))
 	}
 	out.RawByte('}')
 }
