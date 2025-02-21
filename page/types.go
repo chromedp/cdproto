@@ -1267,6 +1267,7 @@ const (
 	BackForwardCacheNotRestoredReasonEmbedderExtensionSentMessageToCachedFrame                BackForwardCacheNotRestoredReason = "EmbedderExtensionSentMessageToCachedFrame"
 	BackForwardCacheNotRestoredReasonRequestedByWebViewClient                                 BackForwardCacheNotRestoredReason = "RequestedByWebViewClient"
 	BackForwardCacheNotRestoredReasonPostMessageByWebViewClient                               BackForwardCacheNotRestoredReason = "PostMessageByWebViewClient"
+	BackForwardCacheNotRestoredReasonCacheControlNoStoreDeviceBoundSessionTerminated          BackForwardCacheNotRestoredReason = "CacheControlNoStoreDeviceBoundSessionTerminated"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -1561,6 +1562,8 @@ func (t *BackForwardCacheNotRestoredReason) UnmarshalEasyJSON(in *jlexer.Lexer) 
 		*t = BackForwardCacheNotRestoredReasonRequestedByWebViewClient
 	case BackForwardCacheNotRestoredReasonPostMessageByWebViewClient:
 		*t = BackForwardCacheNotRestoredReasonPostMessageByWebViewClient
+	case BackForwardCacheNotRestoredReasonCacheControlNoStoreDeviceBoundSessionTerminated:
+		*t = BackForwardCacheNotRestoredReasonCacheControlNoStoreDeviceBoundSessionTerminated
 
 	default:
 		in.AddError(fmt.Errorf("unknown BackForwardCacheNotRestoredReason value: %v", v))

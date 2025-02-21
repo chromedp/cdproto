@@ -1052,6 +1052,105 @@ func (t *SharedDictionaryError) UnmarshalJSON(buf []byte) error {
 	return easyjson.Unmarshal(buf, t)
 }
 
+// SRIMessageSignatureError [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-SRIMessageSignatureError
+type SRIMessageSignatureError string
+
+// String returns the SRIMessageSignatureError as string value.
+func (t SRIMessageSignatureError) String() string {
+	return string(t)
+}
+
+// SRIMessageSignatureError values.
+const (
+	SRIMessageSignatureErrorMissingSignatureHeader                               SRIMessageSignatureError = "MissingSignatureHeader"
+	SRIMessageSignatureErrorMissingSignatureInputHeader                          SRIMessageSignatureError = "MissingSignatureInputHeader"
+	SRIMessageSignatureErrorInvalidSignatureHeader                               SRIMessageSignatureError = "InvalidSignatureHeader"
+	SRIMessageSignatureErrorInvalidSignatureInputHeader                          SRIMessageSignatureError = "InvalidSignatureInputHeader"
+	SRIMessageSignatureErrorSignatureHeaderValueIsNotByteSequence                SRIMessageSignatureError = "SignatureHeaderValueIsNotByteSequence"
+	SRIMessageSignatureErrorSignatureHeaderValueIsParameterized                  SRIMessageSignatureError = "SignatureHeaderValueIsParameterized"
+	SRIMessageSignatureErrorSignatureHeaderValueIsIncorrectLength                SRIMessageSignatureError = "SignatureHeaderValueIsIncorrectLength"
+	SRIMessageSignatureErrorSignatureInputHeaderMissingLabel                     SRIMessageSignatureError = "SignatureInputHeaderMissingLabel"
+	SRIMessageSignatureErrorSignatureInputHeaderValueNotInnerList                SRIMessageSignatureError = "SignatureInputHeaderValueNotInnerList"
+	SRIMessageSignatureErrorSignatureInputHeaderValueMissingComponents           SRIMessageSignatureError = "SignatureInputHeaderValueMissingComponents"
+	SRIMessageSignatureErrorSignatureInputHeaderInvalidComponentType             SRIMessageSignatureError = "SignatureInputHeaderInvalidComponentType"
+	SRIMessageSignatureErrorSignatureInputHeaderInvalidComponentName             SRIMessageSignatureError = "SignatureInputHeaderInvalidComponentName"
+	SRIMessageSignatureErrorSignatureInputHeaderInvalidHeaderComponentParameter  SRIMessageSignatureError = "SignatureInputHeaderInvalidHeaderComponentParameter"
+	SRIMessageSignatureErrorSignatureInputHeaderInvalidDerivedComponentParameter SRIMessageSignatureError = "SignatureInputHeaderInvalidDerivedComponentParameter"
+	SRIMessageSignatureErrorSignatureInputHeaderKeyIDLength                      SRIMessageSignatureError = "SignatureInputHeaderKeyIdLength"
+	SRIMessageSignatureErrorSignatureInputHeaderInvalidParameter                 SRIMessageSignatureError = "SignatureInputHeaderInvalidParameter"
+	SRIMessageSignatureErrorSignatureInputHeaderMissingRequiredParameters        SRIMessageSignatureError = "SignatureInputHeaderMissingRequiredParameters"
+	SRIMessageSignatureErrorValidationFailedSignatureExpired                     SRIMessageSignatureError = "ValidationFailedSignatureExpired"
+	SRIMessageSignatureErrorValidationFailedInvalidLength                        SRIMessageSignatureError = "ValidationFailedInvalidLength"
+	SRIMessageSignatureErrorValidationFailedSignatureMismatch                    SRIMessageSignatureError = "ValidationFailedSignatureMismatch"
+)
+
+// MarshalEasyJSON satisfies easyjson.Marshaler.
+func (t SRIMessageSignatureError) MarshalEasyJSON(out *jwriter.Writer) {
+	out.String(string(t))
+}
+
+// MarshalJSON satisfies json.Marshaler.
+func (t SRIMessageSignatureError) MarshalJSON() ([]byte, error) {
+	return easyjson.Marshal(t)
+}
+
+// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
+func (t *SRIMessageSignatureError) UnmarshalEasyJSON(in *jlexer.Lexer) {
+	v := in.String()
+	switch SRIMessageSignatureError(v) {
+	case SRIMessageSignatureErrorMissingSignatureHeader:
+		*t = SRIMessageSignatureErrorMissingSignatureHeader
+	case SRIMessageSignatureErrorMissingSignatureInputHeader:
+		*t = SRIMessageSignatureErrorMissingSignatureInputHeader
+	case SRIMessageSignatureErrorInvalidSignatureHeader:
+		*t = SRIMessageSignatureErrorInvalidSignatureHeader
+	case SRIMessageSignatureErrorInvalidSignatureInputHeader:
+		*t = SRIMessageSignatureErrorInvalidSignatureInputHeader
+	case SRIMessageSignatureErrorSignatureHeaderValueIsNotByteSequence:
+		*t = SRIMessageSignatureErrorSignatureHeaderValueIsNotByteSequence
+	case SRIMessageSignatureErrorSignatureHeaderValueIsParameterized:
+		*t = SRIMessageSignatureErrorSignatureHeaderValueIsParameterized
+	case SRIMessageSignatureErrorSignatureHeaderValueIsIncorrectLength:
+		*t = SRIMessageSignatureErrorSignatureHeaderValueIsIncorrectLength
+	case SRIMessageSignatureErrorSignatureInputHeaderMissingLabel:
+		*t = SRIMessageSignatureErrorSignatureInputHeaderMissingLabel
+	case SRIMessageSignatureErrorSignatureInputHeaderValueNotInnerList:
+		*t = SRIMessageSignatureErrorSignatureInputHeaderValueNotInnerList
+	case SRIMessageSignatureErrorSignatureInputHeaderValueMissingComponents:
+		*t = SRIMessageSignatureErrorSignatureInputHeaderValueMissingComponents
+	case SRIMessageSignatureErrorSignatureInputHeaderInvalidComponentType:
+		*t = SRIMessageSignatureErrorSignatureInputHeaderInvalidComponentType
+	case SRIMessageSignatureErrorSignatureInputHeaderInvalidComponentName:
+		*t = SRIMessageSignatureErrorSignatureInputHeaderInvalidComponentName
+	case SRIMessageSignatureErrorSignatureInputHeaderInvalidHeaderComponentParameter:
+		*t = SRIMessageSignatureErrorSignatureInputHeaderInvalidHeaderComponentParameter
+	case SRIMessageSignatureErrorSignatureInputHeaderInvalidDerivedComponentParameter:
+		*t = SRIMessageSignatureErrorSignatureInputHeaderInvalidDerivedComponentParameter
+	case SRIMessageSignatureErrorSignatureInputHeaderKeyIDLength:
+		*t = SRIMessageSignatureErrorSignatureInputHeaderKeyIDLength
+	case SRIMessageSignatureErrorSignatureInputHeaderInvalidParameter:
+		*t = SRIMessageSignatureErrorSignatureInputHeaderInvalidParameter
+	case SRIMessageSignatureErrorSignatureInputHeaderMissingRequiredParameters:
+		*t = SRIMessageSignatureErrorSignatureInputHeaderMissingRequiredParameters
+	case SRIMessageSignatureErrorValidationFailedSignatureExpired:
+		*t = SRIMessageSignatureErrorValidationFailedSignatureExpired
+	case SRIMessageSignatureErrorValidationFailedInvalidLength:
+		*t = SRIMessageSignatureErrorValidationFailedInvalidLength
+	case SRIMessageSignatureErrorValidationFailedSignatureMismatch:
+		*t = SRIMessageSignatureErrorValidationFailedSignatureMismatch
+
+	default:
+		in.AddError(fmt.Errorf("unknown SRIMessageSignatureError value: %v", v))
+	}
+}
+
+// UnmarshalJSON satisfies json.Unmarshaler.
+func (t *SRIMessageSignatureError) UnmarshalJSON(buf []byte) error {
+	return easyjson.Unmarshal(buf, t)
+}
+
 // AttributionReportingIssueDetails details for issues around "Attribution
 // Reporting API" usage. Explainer:
 // https://github.com/WICG/attribution-reporting-api.
@@ -1082,6 +1181,14 @@ type QuirksModeIssueDetails struct {
 type SharedDictionaryIssueDetails struct {
 	SharedDictionaryError SharedDictionaryError `json:"sharedDictionaryError"`
 	Request               *AffectedRequest      `json:"request"`
+}
+
+// SRIMessageSignatureIssueDetails [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-SRIMessageSignatureIssueDetails
+type SRIMessageSignatureIssueDetails struct {
+	Error   SRIMessageSignatureError `json:"error"`
+	Request *AffectedRequest         `json:"request"`
 }
 
 // GenericIssueErrorType [no description].
@@ -1806,6 +1913,7 @@ const (
 	InspectorIssueCodePropertyRuleIssue                 InspectorIssueCode = "PropertyRuleIssue"
 	InspectorIssueCodeSharedDictionaryIssue             InspectorIssueCode = "SharedDictionaryIssue"
 	InspectorIssueCodeSelectElementAccessibilityIssue   InspectorIssueCode = "SelectElementAccessibilityIssue"
+	InspectorIssueCodeSRIMessageSignatureIssue          InspectorIssueCode = "SRIMessageSignatureIssue"
 )
 
 // MarshalEasyJSON satisfies easyjson.Marshaler.
@@ -1868,6 +1976,8 @@ func (t *InspectorIssueCode) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = InspectorIssueCodeSharedDictionaryIssue
 	case InspectorIssueCodeSelectElementAccessibilityIssue:
 		*t = InspectorIssueCodeSelectElementAccessibilityIssue
+	case InspectorIssueCodeSRIMessageSignatureIssue:
+		*t = InspectorIssueCodeSRIMessageSignatureIssue
 
 	default:
 		in.AddError(fmt.Errorf("unknown InspectorIssueCode value: %v", v))
@@ -1907,6 +2017,7 @@ type InspectorIssueDetails struct {
 	FederatedAuthUserInfoRequestIssueDetails *FederatedAuthUserInfoRequestIssueDetails `json:"federatedAuthUserInfoRequestIssueDetails,omitempty"`
 	SharedDictionaryIssueDetails             *SharedDictionaryIssueDetails             `json:"sharedDictionaryIssueDetails,omitempty"`
 	SelectElementAccessibilityIssueDetails   *SelectElementAccessibilityIssueDetails   `json:"selectElementAccessibilityIssueDetails,omitempty"`
+	SriMessageSignatureIssueDetails          *SRIMessageSignatureIssueDetails          `json:"sriMessageSignatureIssueDetails,omitempty"`
 }
 
 // IssueID a unique id for a DevTools inspector issue. Allows other entities
