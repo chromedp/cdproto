@@ -4,11 +4,9 @@ package target
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/chromedp/cdproto/cdp"
-	"github.com/mailru/easyjson"
-	"github.com/mailru/easyjson/jlexer"
-	"github.com/mailru/easyjson/jwriter"
 )
 
 // ID [no description].
@@ -39,12 +37,12 @@ type Info struct {
 	Type             string               `json:"type"` // List of types: https://source.chromium.org/chromium/chromium/src/+/main:content/browser/devtools/devtools_agent_host_impl.cc?ss=chromium&q=f:devtools%20-f:out%20%22::kTypeTab%5B%5D%22
 	Title            string               `json:"title"`
 	URL              string               `json:"url"`
-	Attached         bool                 `json:"attached"`                // Whether the target has an attached client.
-	OpenerID         ID                   `json:"openerId,omitempty"`      // Opener target Id
-	CanAccessOpener  bool                 `json:"canAccessOpener"`         // Whether the target has access to the originating window.
-	OpenerFrameID    cdp.FrameID          `json:"openerFrameId,omitempty"` // Frame id of originating window (is only set if target has an opener).
-	BrowserContextID cdp.BrowserContextID `json:"browserContextId,omitempty"`
-	Subtype          string               `json:"subtype,omitempty"` // Provides additional details for specific target types. For example, for the type of "page", this may be set to "prerender".
+	Attached         bool                 `json:"attached"`                         // Whether the target has an attached client.
+	OpenerID         ID                   `json:"openerId,omitempty,omitzero"`      // Opener target Id
+	CanAccessOpener  bool                 `json:"canAccessOpener"`                  // Whether the target has access to the originating window.
+	OpenerFrameID    cdp.FrameID          `json:"openerFrameId,omitempty,omitzero"` // Frame id of originating window (is only set if target has an opener).
+	BrowserContextID cdp.BrowserContextID `json:"browserContextId,omitempty,omitzero"`
+	Subtype          string               `json:"subtype,omitempty,omitzero"` // Provides additional details for specific target types. For example, for the type of "page", this may be set to "prerender".
 }
 
 // FilterEntry a filter used by target query/discovery/auto-attach
@@ -52,8 +50,8 @@ type Info struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Target#type-FilterEntry
 type FilterEntry struct {
-	Exclude bool   `json:"exclude,omitempty"` // If set, causes exclusion of matching targets from the list.
-	Type    string `json:"type,omitempty"`    // If not present, matches any type.
+	Exclude bool   `json:"exclude,omitempty,omitzero"` // If set, causes exclusion of matching targets from the list.
+	Type    string `json:"type,omitempty,omitzero"`    // If not present, matches any type.
 }
 
 // Filter the entries in TargetFilter are matched sequentially against
@@ -64,8 +62,8 @@ type FilterEntry struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Target#type-TargetFilter
 type Filter []struct {
-	Exclude bool   `json:"exclude,omitempty"` // If set, causes exclusion of matching targets from the list.
-	Type    string `json:"type,omitempty"`    // If not present, matches any type.
+	Exclude bool   `json:"exclude,omitempty,omitzero"` // If set, causes exclusion of matching targets from the list.
+	Type    string `json:"type,omitempty,omitzero"`    // If not present, matches any type.
 }
 
 // RemoteLocation [no description].
@@ -94,20 +92,12 @@ const (
 	WindowStateFullscreen WindowState = "fullscreen"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t WindowState) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *WindowState) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t WindowState) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *WindowState) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch WindowState(v) {
+	switch WindowState(s) {
 	case WindowStateNormal:
 		*t = WindowStateNormal
 	case WindowStateMinimized:
@@ -116,13 +106,8 @@ func (t *WindowState) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = WindowStateMaximized
 	case WindowStateFullscreen:
 		*t = WindowStateFullscreen
-
 	default:
-		in.AddError(fmt.Errorf("unknown WindowState value: %v", v))
+		return fmt.Errorf("unknown WindowState value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *WindowState) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }

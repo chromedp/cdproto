@@ -4,11 +4,9 @@ package storage
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/chromedp/cdproto/cdp"
-	"github.com/mailru/easyjson"
-	"github.com/mailru/easyjson/jlexer"
-	"github.com/mailru/easyjson/jwriter"
 )
 
 // SerializedStorageKey [no description].
@@ -48,20 +46,12 @@ const (
 	TypeOther          Type = "other"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t Type) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *Type) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t Type) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *Type) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch Type(v) {
+	switch Type(s) {
 	case TypeCookies:
 		*t = TypeCookies
 	case TypeFileSystems:
@@ -88,15 +78,10 @@ func (t *Type) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = TypeAll
 	case TypeOther:
 		*t = TypeOther
-
 	default:
-		in.AddError(fmt.Errorf("unknown Type value: %v", v))
+		return fmt.Errorf("unknown Type value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *Type) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // UsageForType usage for a storage type.
@@ -152,20 +137,12 @@ const (
 	InterestGroupAccessTypeClear                 InterestGroupAccessType = "clear"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t InterestGroupAccessType) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *InterestGroupAccessType) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t InterestGroupAccessType) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *InterestGroupAccessType) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch InterestGroupAccessType(v) {
+	switch InterestGroupAccessType(s) {
 	case InterestGroupAccessTypeJoin:
 		*t = InterestGroupAccessTypeJoin
 	case InterestGroupAccessTypeLeave:
@@ -188,15 +165,10 @@ func (t *InterestGroupAccessType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = InterestGroupAccessTypeTopLevelAdditionalBid
 	case InterestGroupAccessTypeClear:
 		*t = InterestGroupAccessTypeClear
-
 	default:
-		in.AddError(fmt.Errorf("unknown InterestGroupAccessType value: %v", v))
+		return fmt.Errorf("unknown InterestGroupAccessType value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *InterestGroupAccessType) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // InterestGroupAuctionEventType enum of auction events.
@@ -215,33 +187,20 @@ const (
 	InterestGroupAuctionEventTypeConfigResolved InterestGroupAuctionEventType = "configResolved"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t InterestGroupAuctionEventType) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *InterestGroupAuctionEventType) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t InterestGroupAuctionEventType) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *InterestGroupAuctionEventType) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch InterestGroupAuctionEventType(v) {
+	switch InterestGroupAuctionEventType(s) {
 	case InterestGroupAuctionEventTypeStarted:
 		*t = InterestGroupAuctionEventTypeStarted
 	case InterestGroupAuctionEventTypeConfigResolved:
 		*t = InterestGroupAuctionEventTypeConfigResolved
-
 	default:
-		in.AddError(fmt.Errorf("unknown InterestGroupAuctionEventType value: %v", v))
+		return fmt.Errorf("unknown InterestGroupAuctionEventType value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *InterestGroupAuctionEventType) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // InterestGroupAuctionFetchType enum of network fetches auctions can do.
@@ -263,20 +222,12 @@ const (
 	InterestGroupAuctionFetchTypeSellerTrustedSignals InterestGroupAuctionFetchType = "sellerTrustedSignals"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t InterestGroupAuctionFetchType) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *InterestGroupAuctionFetchType) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t InterestGroupAuctionFetchType) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *InterestGroupAuctionFetchType) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch InterestGroupAuctionFetchType(v) {
+	switch InterestGroupAuctionFetchType(s) {
 	case InterestGroupAuctionFetchTypeBidderJs:
 		*t = InterestGroupAuctionFetchTypeBidderJs
 	case InterestGroupAuctionFetchTypeBidderWasm:
@@ -287,15 +238,10 @@ func (t *InterestGroupAuctionFetchType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = InterestGroupAuctionFetchTypeBidderTrustedSignals
 	case InterestGroupAuctionFetchTypeSellerTrustedSignals:
 		*t = InterestGroupAuctionFetchTypeSellerTrustedSignals
-
 	default:
-		in.AddError(fmt.Errorf("unknown InterestGroupAuctionFetchType value: %v", v))
+		return fmt.Errorf("unknown InterestGroupAuctionFetchType value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *InterestGroupAuctionFetchType) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // SharedStorageAccessType enum of shared storage access types.
@@ -333,20 +279,12 @@ const (
 	SharedStorageAccessTypeHeaderClear            SharedStorageAccessType = "headerClear"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t SharedStorageAccessType) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *SharedStorageAccessType) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t SharedStorageAccessType) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *SharedStorageAccessType) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch SharedStorageAccessType(v) {
+	switch SharedStorageAccessType(s) {
 	case SharedStorageAccessTypeDocumentAddModule:
 		*t = SharedStorageAccessTypeDocumentAddModule
 	case SharedStorageAccessTypeDocumentSelectURL:
@@ -389,15 +327,10 @@ func (t *SharedStorageAccessType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = SharedStorageAccessTypeHeaderDelete
 	case SharedStorageAccessTypeHeaderClear:
 		*t = SharedStorageAccessTypeHeaderClear
-
 	default:
-		in.AddError(fmt.Errorf("unknown SharedStorageAccessType value: %v", v))
+		return fmt.Errorf("unknown SharedStorageAccessType value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *SharedStorageAccessType) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // SharedStorageEntry struct for a single key-value pair in an origin's
@@ -442,13 +375,13 @@ type SharedStorageURLWithMetadata struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-SharedStorageAccessParams
 type SharedStorageAccessParams struct {
-	ScriptSourceURL  string                          `json:"scriptSourceUrl,omitempty"`  // Spec of the module script URL. Present only for SharedStorageAccessType.documentAddModule.
-	OperationName    string                          `json:"operationName,omitempty"`    // Name of the registered operation to be run. Present only for SharedStorageAccessType.documentRun and SharedStorageAccessType.documentSelectURL.
-	SerializedData   string                          `json:"serializedData,omitempty"`   // The operation's serialized data in bytes (converted to a string). Present only for SharedStorageAccessType.documentRun and SharedStorageAccessType.documentSelectURL.
-	URLsWithMetadata []*SharedStorageURLWithMetadata `json:"urlsWithMetadata,omitempty"` // Array of candidate URLs' specs, along with any associated metadata. Present only for SharedStorageAccessType.documentSelectURL.
-	Key              string                          `json:"key,omitempty"`              // Key for a specific entry in an origin's shared storage. Present only for SharedStorageAccessType.documentSet, SharedStorageAccessType.documentAppend, SharedStorageAccessType.documentDelete, SharedStorageAccessType.workletSet, SharedStorageAccessType.workletAppend, SharedStorageAccessType.workletDelete, SharedStorageAccessType.workletGet, SharedStorageAccessType.headerSet, SharedStorageAccessType.headerAppend, and SharedStorageAccessType.headerDelete.
-	Value            string                          `json:"value,omitempty"`            // Value for a specific entry in an origin's shared storage. Present only for SharedStorageAccessType.documentSet, SharedStorageAccessType.documentAppend, SharedStorageAccessType.workletSet, SharedStorageAccessType.workletAppend, SharedStorageAccessType.headerSet, and SharedStorageAccessType.headerAppend.
-	IgnoreIfPresent  bool                            `json:"ignoreIfPresent,omitempty"`  // Whether or not to set an entry for a key if that key is already present. Present only for SharedStorageAccessType.documentSet, SharedStorageAccessType.workletSet, and SharedStorageAccessType.headerSet.
+	ScriptSourceURL  string                          `json:"scriptSourceUrl,omitempty,omitzero"`  // Spec of the module script URL. Present only for SharedStorageAccessType.documentAddModule.
+	OperationName    string                          `json:"operationName,omitempty,omitzero"`    // Name of the registered operation to be run. Present only for SharedStorageAccessType.documentRun and SharedStorageAccessType.documentSelectURL.
+	SerializedData   string                          `json:"serializedData,omitempty,omitzero"`   // The operation's serialized data in bytes (converted to a string). Present only for SharedStorageAccessType.documentRun and SharedStorageAccessType.documentSelectURL.
+	URLsWithMetadata []*SharedStorageURLWithMetadata `json:"urlsWithMetadata,omitempty,omitzero"` // Array of candidate URLs' specs, along with any associated metadata. Present only for SharedStorageAccessType.documentSelectURL.
+	Key              string                          `json:"key,omitempty,omitzero"`              // Key for a specific entry in an origin's shared storage. Present only for SharedStorageAccessType.documentSet, SharedStorageAccessType.documentAppend, SharedStorageAccessType.documentDelete, SharedStorageAccessType.workletSet, SharedStorageAccessType.workletAppend, SharedStorageAccessType.workletDelete, SharedStorageAccessType.workletGet, SharedStorageAccessType.headerSet, SharedStorageAccessType.headerAppend, and SharedStorageAccessType.headerDelete.
+	Value            string                          `json:"value,omitempty,omitzero"`            // Value for a specific entry in an origin's shared storage. Present only for SharedStorageAccessType.documentSet, SharedStorageAccessType.documentAppend, SharedStorageAccessType.workletSet, SharedStorageAccessType.workletAppend, SharedStorageAccessType.headerSet, and SharedStorageAccessType.headerAppend.
+	IgnoreIfPresent  bool                            `json:"ignoreIfPresent,omitempty,omitzero"`  // Whether or not to set an entry for a key if that key is already present. Present only for SharedStorageAccessType.documentSet, SharedStorageAccessType.workletSet, and SharedStorageAccessType.headerSet.
 }
 
 // BucketsDurability [no description].
@@ -467,33 +400,20 @@ const (
 	BucketsDurabilityStrict  BucketsDurability = "strict"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t BucketsDurability) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *BucketsDurability) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t BucketsDurability) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *BucketsDurability) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch BucketsDurability(v) {
+	switch BucketsDurability(s) {
 	case BucketsDurabilityRelaxed:
 		*t = BucketsDurabilityRelaxed
 	case BucketsDurabilityStrict:
 		*t = BucketsDurabilityStrict
-
 	default:
-		in.AddError(fmt.Errorf("unknown BucketsDurability value: %v", v))
+		return fmt.Errorf("unknown BucketsDurability value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *BucketsDurability) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // Bucket [no description].
@@ -501,7 +421,7 @@ func (t *BucketsDurability) UnmarshalJSON(buf []byte) error {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-StorageBucket
 type Bucket struct {
 	StorageKey SerializedStorageKey `json:"storageKey"`
-	Name       string               `json:"name,omitempty"` // If not specified, it is the default bucket of the storageKey.
+	Name       string               `json:"name,omitempty,omitzero"` // If not specified, it is the default bucket of the storageKey.
 }
 
 // BucketInfo [no description].
@@ -532,33 +452,20 @@ const (
 	AttributionReportingSourceTypeEvent      AttributionReportingSourceType = "event"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t AttributionReportingSourceType) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *AttributionReportingSourceType) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t AttributionReportingSourceType) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *AttributionReportingSourceType) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch AttributionReportingSourceType(v) {
+	switch AttributionReportingSourceType(s) {
 	case AttributionReportingSourceTypeNavigation:
 		*t = AttributionReportingSourceTypeNavigation
 	case AttributionReportingSourceTypeEvent:
 		*t = AttributionReportingSourceTypeEvent
-
 	default:
-		in.AddError(fmt.Errorf("unknown AttributionReportingSourceType value: %v", v))
+		return fmt.Errorf("unknown AttributionReportingSourceType value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *AttributionReportingSourceType) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // UnsignedInt64asBase10 [no description].
@@ -604,7 +511,7 @@ type AttributionReportingFilterDataEntry struct {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-AttributionReportingFilterConfig
 type AttributionReportingFilterConfig struct {
 	FilterValues   []*AttributionReportingFilterDataEntry `json:"filterValues"`
-	LookbackWindow int64                                  `json:"lookbackWindow,omitempty"` // duration in seconds
+	LookbackWindow int64                                  `json:"lookbackWindow,omitempty,omitzero"` // duration in seconds
 }
 
 // AttributionReportingFilterPair [no description].
@@ -655,33 +562,20 @@ const (
 	AttributionReportingTriggerDataMatchingModulus AttributionReportingTriggerDataMatching = "modulus"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t AttributionReportingTriggerDataMatching) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *AttributionReportingTriggerDataMatching) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t AttributionReportingTriggerDataMatching) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *AttributionReportingTriggerDataMatching) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch AttributionReportingTriggerDataMatching(v) {
+	switch AttributionReportingTriggerDataMatching(s) {
 	case AttributionReportingTriggerDataMatchingExact:
 		*t = AttributionReportingTriggerDataMatchingExact
 	case AttributionReportingTriggerDataMatchingModulus:
 		*t = AttributionReportingTriggerDataMatchingModulus
-
 	default:
-		in.AddError(fmt.Errorf("unknown AttributionReportingTriggerDataMatching value: %v", v))
+		return fmt.Errorf("unknown AttributionReportingTriggerDataMatching value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *AttributionReportingTriggerDataMatching) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // AttributionReportingAggregatableDebugReportingData [no description].
@@ -697,10 +591,10 @@ type AttributionReportingAggregatableDebugReportingData struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-AttributionReportingAggregatableDebugReportingConfig
 type AttributionReportingAggregatableDebugReportingConfig struct {
-	Budget                       float64                                               `json:"budget,omitempty"` // number instead of integer because not all uint32 can be represented by int, only present for source registrations
+	Budget                       float64                                               `json:"budget,omitempty,omitzero"` // number instead of integer because not all uint32 can be represented by int, only present for source registrations
 	KeyPiece                     UnsignedInt128asBase16                                `json:"keyPiece"`
 	DebugData                    []*AttributionReportingAggregatableDebugReportingData `json:"debugData"`
-	AggregationCoordinatorOrigin string                                                `json:"aggregationCoordinatorOrigin,omitempty"`
+	AggregationCoordinatorOrigin string                                                `json:"aggregationCoordinatorOrigin,omitempty,omitzero"`
 }
 
 // AttributionScopesData [no description].
@@ -728,11 +622,11 @@ type AttributionReportingSourceRegistration struct {
 	Priority                         SignedInt64asBase10                                   `json:"priority"`
 	FilterData                       []*AttributionReportingFilterDataEntry                `json:"filterData"`
 	AggregationKeys                  []*AttributionReportingAggregationKeysEntry           `json:"aggregationKeys"`
-	DebugKey                         UnsignedInt64asBase10                                 `json:"debugKey,omitempty"`
+	DebugKey                         UnsignedInt64asBase10                                 `json:"debugKey,omitempty,omitzero"`
 	TriggerDataMatching              AttributionReportingTriggerDataMatching               `json:"triggerDataMatching"`
 	DestinationLimitPriority         SignedInt64asBase10                                   `json:"destinationLimitPriority"`
 	AggregatableDebugReportingConfig *AttributionReportingAggregatableDebugReportingConfig `json:"aggregatableDebugReportingConfig"`
-	ScopesData                       *AttributionScopesData                                `json:"scopesData,omitempty"`
+	ScopesData                       *AttributionScopesData                                `json:"scopesData,omitempty,omitzero"`
 	MaxEventLevelReports             int64                                                 `json:"maxEventLevelReports"`
 }
 
@@ -766,20 +660,12 @@ const (
 	AttributionReportingSourceRegistrationResultDestinationPerDayReportingLimitReached AttributionReportingSourceRegistrationResult = "destinationPerDayReportingLimitReached"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t AttributionReportingSourceRegistrationResult) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *AttributionReportingSourceRegistrationResult) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t AttributionReportingSourceRegistrationResult) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *AttributionReportingSourceRegistrationResult) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch AttributionReportingSourceRegistrationResult(v) {
+	switch AttributionReportingSourceRegistrationResult(s) {
 	case AttributionReportingSourceRegistrationResultSuccess:
 		*t = AttributionReportingSourceRegistrationResultSuccess
 	case AttributionReportingSourceRegistrationResultInternalError:
@@ -812,15 +698,10 @@ func (t *AttributionReportingSourceRegistrationResult) UnmarshalEasyJSON(in *jle
 		*t = AttributionReportingSourceRegistrationResultExceedsMaxEventStatesLimit
 	case AttributionReportingSourceRegistrationResultDestinationPerDayReportingLimitReached:
 		*t = AttributionReportingSourceRegistrationResultDestinationPerDayReportingLimitReached
-
 	default:
-		in.AddError(fmt.Errorf("unknown AttributionReportingSourceRegistrationResult value: %v", v))
+		return fmt.Errorf("unknown AttributionReportingSourceRegistrationResult value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *AttributionReportingSourceRegistrationResult) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // AttributionReportingSourceRegistrationTimeConfig [no description].
@@ -839,33 +720,20 @@ const (
 	AttributionReportingSourceRegistrationTimeConfigExclude AttributionReportingSourceRegistrationTimeConfig = "exclude"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t AttributionReportingSourceRegistrationTimeConfig) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *AttributionReportingSourceRegistrationTimeConfig) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t AttributionReportingSourceRegistrationTimeConfig) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *AttributionReportingSourceRegistrationTimeConfig) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch AttributionReportingSourceRegistrationTimeConfig(v) {
+	switch AttributionReportingSourceRegistrationTimeConfig(s) {
 	case AttributionReportingSourceRegistrationTimeConfigInclude:
 		*t = AttributionReportingSourceRegistrationTimeConfigInclude
 	case AttributionReportingSourceRegistrationTimeConfigExclude:
 		*t = AttributionReportingSourceRegistrationTimeConfigExclude
-
 	default:
-		in.AddError(fmt.Errorf("unknown AttributionReportingSourceRegistrationTimeConfig value: %v", v))
+		return fmt.Errorf("unknown AttributionReportingSourceRegistrationTimeConfig value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *AttributionReportingSourceRegistrationTimeConfig) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // AttributionReportingAggregatableValueDictEntry [no description].
@@ -891,7 +759,7 @@ type AttributionReportingAggregatableValueEntry struct {
 type AttributionReportingEventTriggerData struct {
 	Data     UnsignedInt64asBase10           `json:"data"`
 	Priority SignedInt64asBase10             `json:"priority"`
-	DedupKey UnsignedInt64asBase10           `json:"dedupKey,omitempty"`
+	DedupKey UnsignedInt64asBase10           `json:"dedupKey,omitempty,omitzero"`
 	Filters  *AttributionReportingFilterPair `json:"filters"`
 }
 
@@ -908,7 +776,7 @@ type AttributionReportingAggregatableTriggerData struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-AttributionReportingAggregatableDedupKey
 type AttributionReportingAggregatableDedupKey struct {
-	DedupKey UnsignedInt64asBase10           `json:"dedupKey,omitempty"`
+	DedupKey UnsignedInt64asBase10           `json:"dedupKey,omitempty,omitzero"`
 	Filters  *AttributionReportingFilterPair `json:"filters"`
 }
 
@@ -917,16 +785,16 @@ type AttributionReportingAggregatableDedupKey struct {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-AttributionReportingTriggerRegistration
 type AttributionReportingTriggerRegistration struct {
 	Filters                          *AttributionReportingFilterPair                       `json:"filters"`
-	DebugKey                         UnsignedInt64asBase10                                 `json:"debugKey,omitempty"`
+	DebugKey                         UnsignedInt64asBase10                                 `json:"debugKey,omitempty,omitzero"`
 	AggregatableDedupKeys            []*AttributionReportingAggregatableDedupKey           `json:"aggregatableDedupKeys"`
 	EventTriggerData                 []*AttributionReportingEventTriggerData               `json:"eventTriggerData"`
 	AggregatableTriggerData          []*AttributionReportingAggregatableTriggerData        `json:"aggregatableTriggerData"`
 	AggregatableValues               []*AttributionReportingAggregatableValueEntry         `json:"aggregatableValues"`
 	AggregatableFilteringIDMaxBytes  int64                                                 `json:"aggregatableFilteringIdMaxBytes"`
 	DebugReporting                   bool                                                  `json:"debugReporting"`
-	AggregationCoordinatorOrigin     string                                                `json:"aggregationCoordinatorOrigin,omitempty"`
+	AggregationCoordinatorOrigin     string                                                `json:"aggregationCoordinatorOrigin,omitempty,omitzero"`
 	SourceRegistrationTimeConfig     AttributionReportingSourceRegistrationTimeConfig      `json:"sourceRegistrationTimeConfig"`
-	TriggerContextID                 string                                                `json:"triggerContextId,omitempty"`
+	TriggerContextID                 string                                                `json:"triggerContextId,omitempty,omitzero"`
 	AggregatableDebugReportingConfig *AttributionReportingAggregatableDebugReportingConfig `json:"aggregatableDebugReportingConfig"`
 	Scopes                           []string                                              `json:"scopes"`
 }
@@ -964,20 +832,12 @@ const (
 	AttributionReportingEventLevelResultNoMatchingTriggerData               AttributionReportingEventLevelResult = "noMatchingTriggerData"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t AttributionReportingEventLevelResult) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *AttributionReportingEventLevelResult) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t AttributionReportingEventLevelResult) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *AttributionReportingEventLevelResult) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch AttributionReportingEventLevelResult(v) {
+	switch AttributionReportingEventLevelResult(s) {
 	case AttributionReportingEventLevelResultSuccess:
 		*t = AttributionReportingEventLevelResultSuccess
 	case AttributionReportingEventLevelResultSuccessDroppedLowerPriority:
@@ -1016,15 +876,10 @@ func (t *AttributionReportingEventLevelResult) UnmarshalEasyJSON(in *jlexer.Lexe
 		*t = AttributionReportingEventLevelResultReportWindowNotStarted
 	case AttributionReportingEventLevelResultNoMatchingTriggerData:
 		*t = AttributionReportingEventLevelResultNoMatchingTriggerData
-
 	default:
-		in.AddError(fmt.Errorf("unknown AttributionReportingEventLevelResult value: %v", v))
+		return fmt.Errorf("unknown AttributionReportingEventLevelResult value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *AttributionReportingEventLevelResult) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // AttributionReportingAggregatableResult [no description].
@@ -1056,20 +911,12 @@ const (
 	AttributionReportingAggregatableResultExcessiveReports                    AttributionReportingAggregatableResult = "excessiveReports"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t AttributionReportingAggregatableResult) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *AttributionReportingAggregatableResult) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t AttributionReportingAggregatableResult) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *AttributionReportingAggregatableResult) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch AttributionReportingAggregatableResult(v) {
+	switch AttributionReportingAggregatableResult(s) {
 	case AttributionReportingAggregatableResultSuccess:
 		*t = AttributionReportingAggregatableResultSuccess
 	case AttributionReportingAggregatableResultInternalError:
@@ -1100,15 +947,10 @@ func (t *AttributionReportingAggregatableResult) UnmarshalEasyJSON(in *jlexer.Le
 		*t = AttributionReportingAggregatableResultReportWindowPassed
 	case AttributionReportingAggregatableResultExcessiveReports:
 		*t = AttributionReportingAggregatableResultExcessiveReports
-
 	default:
-		in.AddError(fmt.Errorf("unknown AttributionReportingAggregatableResult value: %v", v))
+		return fmt.Errorf("unknown AttributionReportingAggregatableResult value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *AttributionReportingAggregatableResult) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // RelatedWebsiteSet a single Related Website Set object.

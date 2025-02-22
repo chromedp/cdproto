@@ -17,10 +17,10 @@ import (
 
 // SetPermissionParams set permission settings for given origin.
 type SetPermissionParams struct {
-	Permission       *PermissionDescriptor `json:"permission"`                 // Descriptor of permission to override.
-	Setting          PermissionSetting     `json:"setting"`                    // Setting of the permission.
-	Origin           string                `json:"origin,omitempty"`           // Origin the permission applies to, all origins if not specified.
-	BrowserContextID cdp.BrowserContextID  `json:"browserContextId,omitempty"` // Context to override. When omitted, default browser context is used.
+	Permission       *PermissionDescriptor `json:"permission"`                          // Descriptor of permission to override.
+	Setting          PermissionSetting     `json:"setting"`                             // Setting of the permission.
+	Origin           string                `json:"origin,omitempty,omitzero"`           // Origin the permission applies to, all origins if not specified.
+	BrowserContextID cdp.BrowserContextID  `json:"browserContextId,omitempty,omitzero"` // Context to override. When omitted, default browser context is used.
 }
 
 // SetPermission set permission settings for given origin.
@@ -60,8 +60,8 @@ func (p *SetPermissionParams) Do(ctx context.Context) (err error) {
 // reject all others.
 type GrantPermissionsParams struct {
 	Permissions      []PermissionType     `json:"permissions"`
-	Origin           string               `json:"origin,omitempty"`           // Origin the permission applies to, all origins if not specified.
-	BrowserContextID cdp.BrowserContextID `json:"browserContextId,omitempty"` // BrowserContext to override permissions. When omitted, default browser context is used.
+	Origin           string               `json:"origin,omitempty,omitzero"`           // Origin the permission applies to, all origins if not specified.
+	BrowserContextID cdp.BrowserContextID `json:"browserContextId,omitempty,omitzero"` // BrowserContext to override permissions. When omitted, default browser context is used.
 }
 
 // GrantPermissions grant specific permissions to the given origin and reject
@@ -98,7 +98,7 @@ func (p *GrantPermissionsParams) Do(ctx context.Context) (err error) {
 
 // ResetPermissionsParams reset all permission management for all origins.
 type ResetPermissionsParams struct {
-	BrowserContextID cdp.BrowserContextID `json:"browserContextId,omitempty"` // BrowserContext to reset permissions. When omitted, default browser context is used.
+	BrowserContextID cdp.BrowserContextID `json:"browserContextId,omitempty,omitzero"` // BrowserContext to reset permissions. When omitted, default browser context is used.
 }
 
 // ResetPermissions reset all permission management for all origins.
@@ -124,10 +124,10 @@ func (p *ResetPermissionsParams) Do(ctx context.Context) (err error) {
 
 // SetDownloadBehaviorParams set the behavior when downloading a file.
 type SetDownloadBehaviorParams struct {
-	Behavior         SetDownloadBehaviorBehavior `json:"behavior"`                   // Whether to allow all or deny all download requests, or use default Chrome behavior if available (otherwise deny). |allowAndName| allows download and names files according to their download guids.
-	BrowserContextID cdp.BrowserContextID        `json:"browserContextId,omitempty"` // BrowserContext to set download behavior. When omitted, default browser context is used.
-	DownloadPath     string                      `json:"downloadPath,omitempty"`     // The default path to save downloaded files to. This is required if behavior is set to 'allow' or 'allowAndName'.
-	EventsEnabled    bool                        `json:"eventsEnabled,omitempty"`    // Whether to emit download events (defaults to false).
+	Behavior         SetDownloadBehaviorBehavior `json:"behavior"`                            // Whether to allow all or deny all download requests, or use default Chrome behavior if available (otherwise deny). |allowAndName| allows download and names files according to their download guids.
+	BrowserContextID cdp.BrowserContextID        `json:"browserContextId,omitempty,omitzero"` // BrowserContext to set download behavior. When omitted, default browser context is used.
+	DownloadPath     string                      `json:"downloadPath,omitempty,omitzero"`     // The default path to save downloaded files to. This is required if behavior is set to 'allow' or 'allowAndName'.
+	EventsEnabled    bool                        `json:"eventsEnabled,omitempty,omitzero"`    // Whether to emit download events (defaults to false).
 }
 
 // SetDownloadBehavior set the behavior when downloading a file.
@@ -170,8 +170,8 @@ func (p *SetDownloadBehaviorParams) Do(ctx context.Context) (err error) {
 
 // CancelDownloadParams cancel a download if in progress.
 type CancelDownloadParams struct {
-	GUID             string               `json:"guid"`                       // Global unique identifier of the download.
-	BrowserContextID cdp.BrowserContextID `json:"browserContextId,omitempty"` // BrowserContext to perform the action in. When omitted, default browser context is used.
+	GUID             string               `json:"guid"`                                // Global unique identifier of the download.
+	BrowserContextID cdp.BrowserContextID `json:"browserContextId,omitempty,omitzero"` // BrowserContext to perform the action in. When omitted, default browser context is used.
 }
 
 // CancelDownload cancel a download if in progress.
@@ -256,11 +256,11 @@ func GetVersion() *GetVersionParams {
 
 // GetVersionReturns return values.
 type GetVersionReturns struct {
-	ProtocolVersion string `json:"protocolVersion,omitempty"` // Protocol version.
-	Product         string `json:"product,omitempty"`         // Product name.
-	Revision        string `json:"revision,omitempty"`        // Product revision.
-	UserAgent       string `json:"userAgent,omitempty"`       // User-Agent.
-	JsVersion       string `json:"jsVersion,omitempty"`       // V8 version.
+	ProtocolVersion string `json:"protocolVersion,omitempty,omitzero"` // Protocol version.
+	Product         string `json:"product,omitempty,omitzero"`         // Product name.
+	Revision        string `json:"revision,omitempty,omitzero"`        // Product revision.
+	UserAgent       string `json:"userAgent,omitempty,omitzero"`       // User-Agent.
+	JsVersion       string `json:"jsVersion,omitempty,omitzero"`       // V8 version.
 }
 
 // Do executes Browser.getVersion against the provided context.
@@ -297,7 +297,7 @@ func GetBrowserCommandLine() *GetBrowserCommandLineParams {
 
 // GetBrowserCommandLineReturns return values.
 type GetBrowserCommandLineReturns struct {
-	Arguments []string `json:"arguments,omitempty"` // Commandline parameters
+	Arguments []string `json:"arguments,omitempty,omitzero"` // Commandline parameters
 }
 
 // Do executes Browser.getBrowserCommandLine against the provided context.
@@ -318,8 +318,8 @@ func (p *GetBrowserCommandLineParams) Do(ctx context.Context) (arguments []strin
 
 // GetHistogramsParams get Chrome histograms.
 type GetHistogramsParams struct {
-	Query string `json:"query,omitempty"` // Requested substring in name. Only histograms which have query as a substring in their name are extracted. An empty or absent query returns all histograms.
-	Delta bool   `json:"delta,omitempty"` // If true, retrieve delta since last delta call.
+	Query string `json:"query,omitempty,omitzero"` // Requested substring in name. Only histograms which have query as a substring in their name are extracted. An empty or absent query returns all histograms.
+	Delta bool   `json:"delta,omitempty,omitzero"` // If true, retrieve delta since last delta call.
 }
 
 // GetHistograms get Chrome histograms.
@@ -347,7 +347,7 @@ func (p GetHistogramsParams) WithDelta(delta bool) *GetHistogramsParams {
 
 // GetHistogramsReturns return values.
 type GetHistogramsReturns struct {
-	Histograms []*Histogram `json:"histograms,omitempty"` // Histograms.
+	Histograms []*Histogram `json:"histograms,omitempty,omitzero"` // Histograms.
 }
 
 // Do executes Browser.getHistograms against the provided context.
@@ -368,8 +368,8 @@ func (p *GetHistogramsParams) Do(ctx context.Context) (histograms []*Histogram, 
 
 // GetHistogramParams get a Chrome histogram by name.
 type GetHistogramParams struct {
-	Name  string `json:"name"`            // Requested histogram name.
-	Delta bool   `json:"delta,omitempty"` // If true, retrieve delta since last delta call.
+	Name  string `json:"name"`                     // Requested histogram name.
+	Delta bool   `json:"delta,omitempty,omitzero"` // If true, retrieve delta since last delta call.
 }
 
 // GetHistogram get a Chrome histogram by name.
@@ -393,7 +393,7 @@ func (p GetHistogramParams) WithDelta(delta bool) *GetHistogramParams {
 
 // GetHistogramReturns return values.
 type GetHistogramReturns struct {
-	Histogram *Histogram `json:"histogram,omitempty"` // Histogram.
+	Histogram *Histogram `json:"histogram,omitempty,omitzero"` // Histogram.
 }
 
 // Do executes Browser.getHistogram against the provided context.
@@ -432,7 +432,7 @@ func GetWindowBounds(windowID WindowID) *GetWindowBoundsParams {
 
 // GetWindowBoundsReturns return values.
 type GetWindowBoundsReturns struct {
-	Bounds *Bounds `json:"bounds,omitempty"` // Bounds information of the window. When window state is 'minimized', the restored window position and size are returned.
+	Bounds *Bounds `json:"bounds,omitempty,omitzero"` // Bounds information of the window. When window state is 'minimized', the restored window position and size are returned.
 }
 
 // Do executes Browser.getWindowBounds against the provided context.
@@ -454,7 +454,7 @@ func (p *GetWindowBoundsParams) Do(ctx context.Context) (bounds *Bounds, err err
 // GetWindowForTargetParams get the browser window that contains the devtools
 // target.
 type GetWindowForTargetParams struct {
-	TargetID target.ID `json:"targetId,omitempty"` // Devtools agent host id. If called as a part of the session, associated targetId is used.
+	TargetID target.ID `json:"targetId,omitempty,omitzero"` // Devtools agent host id. If called as a part of the session, associated targetId is used.
 }
 
 // GetWindowForTarget get the browser window that contains the devtools
@@ -476,8 +476,8 @@ func (p GetWindowForTargetParams) WithTargetID(targetID target.ID) *GetWindowFor
 
 // GetWindowForTargetReturns return values.
 type GetWindowForTargetReturns struct {
-	WindowID WindowID `json:"windowId,omitempty"` // Browser window id.
-	Bounds   *Bounds  `json:"bounds,omitempty"`   // Bounds information of the window. When window state is 'minimized', the restored window position and size are returned.
+	WindowID WindowID `json:"windowId,omitempty,omitzero"` // Browser window id.
+	Bounds   *Bounds  `json:"bounds,omitempty,omitzero"`   // Bounds information of the window. When window state is 'minimized', the restored window position and size are returned.
 }
 
 // Do executes Browser.getWindowForTarget against the provided context.
@@ -525,8 +525,8 @@ func (p *SetWindowBoundsParams) Do(ctx context.Context) (err error) {
 
 // SetDockTileParams set dock tile details, platform-specific.
 type SetDockTileParams struct {
-	BadgeLabel string `json:"badgeLabel,omitempty"`
-	Image      string `json:"image,omitempty"` // Png encoded image.
+	BadgeLabel string `json:"badgeLabel,omitempty,omitzero"`
+	Image      string `json:"image,omitempty,omitzero"` // Png encoded image.
 }
 
 // SetDockTile set dock tile details, platform-specific.

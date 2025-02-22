@@ -4,12 +4,10 @@ package preload
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/chromedp/cdproto/cdp"
 	"github.com/chromedp/cdproto/network"
-	"github.com/mailru/easyjson"
-	"github.com/mailru/easyjson/jlexer"
-	"github.com/mailru/easyjson/jwriter"
 )
 
 // RuleSetID unique id.
@@ -27,12 +25,12 @@ func (t RuleSetID) String() string {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Preload#type-RuleSet
 type RuleSet struct {
 	ID            RuleSetID         `json:"id"`
-	LoaderID      cdp.LoaderID      `json:"loaderId"`                // Identifies a document which the rule set is associated with.
-	SourceText    string            `json:"sourceText"`              // Source text of JSON representing the rule set. If it comes from <script> tag, it is the textContent of the node. Note that it is a JSON for valid case.  See also: - https://wicg.github.io/nav-speculation/speculation-rules.html - https://github.com/WICG/nav-speculation/blob/main/triggers.md
-	BackendNodeID cdp.BackendNodeID `json:"backendNodeId,omitempty"` // A speculation rule set is either added through an inline <script> tag or through an external resource via the 'Speculation-Rules' HTTP header. For the first case, we include the BackendNodeId of the relevant <script> tag. For the second case, we include the external URL where the rule set was loaded from, and also RequestId if Network domain is enabled.  See also: - https://wicg.github.io/nav-speculation/speculation-rules.html#speculation-rules-script - https://wicg.github.io/nav-speculation/speculation-rules.html#speculation-rules-header
-	URL           string            `json:"url,omitempty"`
-	RequestID     network.RequestID `json:"requestId,omitempty"`
-	ErrorType     RuleSetErrorType  `json:"errorType,omitempty"` // Error information errorMessage is null iff errorType is null.
+	LoaderID      cdp.LoaderID      `json:"loaderId"`                         // Identifies a document which the rule set is associated with.
+	SourceText    string            `json:"sourceText"`                       // Source text of JSON representing the rule set. If it comes from <script> tag, it is the textContent of the node. Note that it is a JSON for valid case.  See also: - https://wicg.github.io/nav-speculation/speculation-rules.html - https://github.com/WICG/nav-speculation/blob/main/triggers.md
+	BackendNodeID cdp.BackendNodeID `json:"backendNodeId,omitempty,omitzero"` // A speculation rule set is either added through an inline <script> tag or through an external resource via the 'Speculation-Rules' HTTP header. For the first case, we include the BackendNodeId of the relevant <script> tag. For the second case, we include the external URL where the rule set was loaded from, and also RequestId if Network domain is enabled.  See also: - https://wicg.github.io/nav-speculation/speculation-rules.html#speculation-rules-script - https://wicg.github.io/nav-speculation/speculation-rules.html#speculation-rules-header
+	URL           string            `json:"url,omitempty,omitzero"`
+	RequestID     network.RequestID `json:"requestId,omitempty,omitzero"`
+	ErrorType     RuleSetErrorType  `json:"errorType,omitempty,omitzero"` // Error information errorMessage is null iff errorType is null.
 }
 
 // RuleSetErrorType [no description].
@@ -51,33 +49,20 @@ const (
 	RuleSetErrorTypeInvalidRulesSkipped   RuleSetErrorType = "InvalidRulesSkipped"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t RuleSetErrorType) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *RuleSetErrorType) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t RuleSetErrorType) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *RuleSetErrorType) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch RuleSetErrorType(v) {
+	switch RuleSetErrorType(s) {
 	case RuleSetErrorTypeSourceIsNotJSONObject:
 		*t = RuleSetErrorTypeSourceIsNotJSONObject
 	case RuleSetErrorTypeInvalidRulesSkipped:
 		*t = RuleSetErrorTypeInvalidRulesSkipped
-
 	default:
-		in.AddError(fmt.Errorf("unknown RuleSetErrorType value: %v", v))
+		return fmt.Errorf("unknown RuleSetErrorType value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *RuleSetErrorType) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // SpeculationAction the type of preloading attempted. It corresponds to
@@ -98,33 +83,20 @@ const (
 	SpeculationActionPrerender SpeculationAction = "Prerender"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t SpeculationAction) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *SpeculationAction) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t SpeculationAction) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *SpeculationAction) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch SpeculationAction(v) {
+	switch SpeculationAction(s) {
 	case SpeculationActionPrefetch:
 		*t = SpeculationActionPrefetch
 	case SpeculationActionPrerender:
 		*t = SpeculationActionPrerender
-
 	default:
-		in.AddError(fmt.Errorf("unknown SpeculationAction value: %v", v))
+		return fmt.Errorf("unknown SpeculationAction value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *SpeculationAction) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // SpeculationTargetHint corresponds to mojom::SpeculationTargetHint. See
@@ -144,33 +116,20 @@ const (
 	SpeculationTargetHintSelf  SpeculationTargetHint = "Self"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t SpeculationTargetHint) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *SpeculationTargetHint) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t SpeculationTargetHint) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *SpeculationTargetHint) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch SpeculationTargetHint(v) {
+	switch SpeculationTargetHint(s) {
 	case SpeculationTargetHintBlank:
 		*t = SpeculationTargetHintBlank
 	case SpeculationTargetHintSelf:
 		*t = SpeculationTargetHintSelf
-
 	default:
-		in.AddError(fmt.Errorf("unknown SpeculationTargetHint value: %v", v))
+		return fmt.Errorf("unknown SpeculationTargetHint value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *SpeculationTargetHint) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // IngAttemptKey a key that identifies a preloading attempt. The url used is
@@ -184,7 +143,7 @@ type IngAttemptKey struct {
 	LoaderID   cdp.LoaderID          `json:"loaderId"`
 	Action     SpeculationAction     `json:"action"`
 	URL        string                `json:"url"`
-	TargetHint SpeculationTargetHint `json:"targetHint,omitempty"`
+	TargetHint SpeculationTargetHint `json:"targetHint,omitempty,omitzero"`
 }
 
 // IngAttemptSource lists sources for a preloading attempt, specifically the
@@ -302,20 +261,12 @@ const (
 	PrerenderFinalStatusBrowsingDataRemoved                                        PrerenderFinalStatus = "BrowsingDataRemoved"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t PrerenderFinalStatus) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *PrerenderFinalStatus) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t PrerenderFinalStatus) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *PrerenderFinalStatus) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch PrerenderFinalStatus(v) {
+	switch PrerenderFinalStatus(s) {
 	case PrerenderFinalStatusActivated:
 		*t = PrerenderFinalStatusActivated
 	case PrerenderFinalStatusDestroyed:
@@ -464,15 +415,10 @@ func (t *PrerenderFinalStatus) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PrerenderFinalStatusPrerenderFailedDuringPrefetch
 	case PrerenderFinalStatusBrowsingDataRemoved:
 		*t = PrerenderFinalStatusBrowsingDataRemoved
-
 	default:
-		in.AddError(fmt.Errorf("unknown PrerenderFinalStatus value: %v", v))
+		return fmt.Errorf("unknown PrerenderFinalStatus value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *PrerenderFinalStatus) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // IngStatus preloading status values, see also PreloadingTriggeringOutcome.
@@ -496,20 +442,12 @@ const (
 	IngStatusNotSupported IngStatus = "NotSupported"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t IngStatus) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *IngStatus) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t IngStatus) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *IngStatus) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch IngStatus(v) {
+	switch IngStatus(s) {
 	case IngStatusPending:
 		*t = IngStatusPending
 	case IngStatusRunning:
@@ -522,15 +460,10 @@ func (t *IngStatus) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = IngStatusFailure
 	case IngStatusNotSupported:
 		*t = IngStatusNotSupported
-
 	default:
-		in.AddError(fmt.Errorf("unknown IngStatus value: %v", v))
+		return fmt.Errorf("unknown IngStatus value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *IngStatus) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // PrefetchStatus tODO(https://crbug.com/1384419): revisit the list of
@@ -579,20 +512,12 @@ const (
 	PrefetchStatusPrefetchNotUsedProbeFailed                                  PrefetchStatus = "PrefetchNotUsedProbeFailed"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t PrefetchStatus) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *PrefetchStatus) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t PrefetchStatus) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *PrefetchStatus) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch PrefetchStatus(v) {
+	switch PrefetchStatus(s) {
 	case PrefetchStatusPrefetchAllowed:
 		*t = PrefetchStatusPrefetchAllowed
 	case PrefetchStatusPrefetchFailedIneligibleRedirect:
@@ -653,15 +578,10 @@ func (t *PrefetchStatus) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PrefetchStatusPrefetchSuccessfulButNotUsed
 	case PrefetchStatusPrefetchNotUsedProbeFailed:
 		*t = PrefetchStatusPrefetchNotUsedProbeFailed
-
 	default:
-		in.AddError(fmt.Errorf("unknown PrefetchStatus value: %v", v))
+		return fmt.Errorf("unknown PrefetchStatus value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *PrefetchStatus) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // PrerenderMismatchedHeaders information of headers to be displayed when the
@@ -670,6 +590,6 @@ func (t *PrefetchStatus) UnmarshalJSON(buf []byte) error {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Preload#type-PrerenderMismatchedHeaders
 type PrerenderMismatchedHeaders struct {
 	HeaderName      string `json:"headerName"`
-	InitialValue    string `json:"initialValue,omitempty"`
-	ActivationValue string `json:"activationValue,omitempty"`
+	InitialValue    string `json:"initialValue,omitempty,omitzero"`
+	ActivationValue string `json:"activationValue,omitempty,omitzero"`
 }

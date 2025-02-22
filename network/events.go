@@ -10,11 +10,11 @@ import (
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-dataReceived
 type EventDataReceived struct {
-	RequestID         RequestID          `json:"requestId"`         // Request identifier.
-	Timestamp         *cdp.MonotonicTime `json:"timestamp"`         // Timestamp.
-	DataLength        int64              `json:"dataLength"`        // Data chunk length.
-	EncodedDataLength int64              `json:"encodedDataLength"` // Actual bytes received (might be less than dataLength for compressed encodings).
-	Data              string             `json:"data,omitempty"`    // Data that was received.
+	RequestID         RequestID          `json:"requestId"`               // Request identifier.
+	Timestamp         *cdp.MonotonicTime `json:"timestamp"`               // Timestamp.
+	DataLength        int64              `json:"dataLength"`              // Data chunk length.
+	EncodedDataLength int64              `json:"encodedDataLength"`       // Actual bytes received (might be less than dataLength for compressed encodings).
+	Data              string             `json:"data,omitempty,omitzero"` // Data that was received.
 }
 
 // EventEventSourceMessageReceived fired when EventSource message is
@@ -33,13 +33,13 @@ type EventEventSourceMessageReceived struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-loadingFailed
 type EventLoadingFailed struct {
-	RequestID       RequestID          `json:"requestId"`                 // Request identifier.
-	Timestamp       *cdp.MonotonicTime `json:"timestamp"`                 // Timestamp.
-	Type            ResourceType       `json:"type"`                      // Resource type.
-	ErrorText       string             `json:"errorText"`                 // Error message. List of network errors: https://cs.chromium.org/chromium/src/net/base/net_error_list.h
-	Canceled        bool               `json:"canceled,omitempty"`        // True if loading was canceled.
-	BlockedReason   BlockedReason      `json:"blockedReason,omitempty"`   // The reason why loading was blocked, if any.
-	CorsErrorStatus *CorsErrorStatus   `json:"corsErrorStatus,omitempty"` // The reason why loading was blocked by CORS, if any.
+	RequestID       RequestID          `json:"requestId"`                          // Request identifier.
+	Timestamp       *cdp.MonotonicTime `json:"timestamp"`                          // Timestamp.
+	Type            ResourceType       `json:"type"`                               // Resource type.
+	ErrorText       string             `json:"errorText"`                          // Error message. List of network errors: https://cs.chromium.org/chromium/src/net/base/net_error_list.h
+	Canceled        bool               `json:"canceled,omitempty,omitzero"`        // True if loading was canceled.
+	BlockedReason   BlockedReason      `json:"blockedReason,omitempty,omitzero"`   // The reason why loading was blocked, if any.
+	CorsErrorStatus *CorsErrorStatus   `json:"corsErrorStatus,omitempty,omitzero"` // The reason why loading was blocked by CORS, if any.
 }
 
 // EventLoadingFinished fired when HTTP request has finished loading.
@@ -62,18 +62,18 @@ type EventRequestServedFromCache struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-requestWillBeSent
 type EventRequestWillBeSent struct {
-	RequestID            RequestID           `json:"requestId"`                  // Request identifier.
-	LoaderID             cdp.LoaderID        `json:"loaderId"`                   // Loader identifier. Empty string if the request is fetched from worker.
-	DocumentURL          string              `json:"documentURL"`                // URL of the document this request is loaded for.
-	Request              *Request            `json:"request"`                    // Request data.
-	Timestamp            *cdp.MonotonicTime  `json:"timestamp"`                  // Timestamp.
-	WallTime             *cdp.TimeSinceEpoch `json:"wallTime"`                   // Timestamp.
-	Initiator            *Initiator          `json:"initiator"`                  // Request initiator.
-	RedirectHasExtraInfo bool                `json:"redirectHasExtraInfo"`       // In the case that redirectResponse is populated, this flag indicates whether requestWillBeSentExtraInfo and responseReceivedExtraInfo events will be or were emitted for the request which was just redirected.
-	RedirectResponse     *Response           `json:"redirectResponse,omitempty"` // Redirect response data.
-	Type                 ResourceType        `json:"type,omitempty"`             // Type of this resource.
-	FrameID              cdp.FrameID         `json:"frameId,omitempty"`          // Frame identifier.
-	HasUserGesture       bool                `json:"hasUserGesture,omitempty"`   // Whether the request is initiated by a user gesture. Defaults to false.
+	RequestID            RequestID           `json:"requestId"`                           // Request identifier.
+	LoaderID             cdp.LoaderID        `json:"loaderId"`                            // Loader identifier. Empty string if the request is fetched from worker.
+	DocumentURL          string              `json:"documentURL"`                         // URL of the document this request is loaded for.
+	Request              *Request            `json:"request"`                             // Request data.
+	Timestamp            *cdp.MonotonicTime  `json:"timestamp"`                           // Timestamp.
+	WallTime             *cdp.TimeSinceEpoch `json:"wallTime"`                            // Timestamp.
+	Initiator            *Initiator          `json:"initiator"`                           // Request initiator.
+	RedirectHasExtraInfo bool                `json:"redirectHasExtraInfo"`                // In the case that redirectResponse is populated, this flag indicates whether requestWillBeSentExtraInfo and responseReceivedExtraInfo events will be or were emitted for the request which was just redirected.
+	RedirectResponse     *Response           `json:"redirectResponse,omitempty,omitzero"` // Redirect response data.
+	Type                 ResourceType        `json:"type,omitempty,omitzero"`             // Type of this resource.
+	FrameID              cdp.FrameID         `json:"frameId,omitempty,omitzero"`          // Frame identifier.
+	HasUserGesture       bool                `json:"hasUserGesture,omitempty,omitzero"`   // Whether the request is initiated by a user gesture. Defaults to false.
 }
 
 // EventResourceChangedPriority fired when resource loading priority is
@@ -99,13 +99,13 @@ type EventSignedExchangeReceived struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-responseReceived
 type EventResponseReceived struct {
-	RequestID    RequestID          `json:"requestId"`         // Request identifier.
-	LoaderID     cdp.LoaderID       `json:"loaderId"`          // Loader identifier. Empty string if the request is fetched from worker.
-	Timestamp    *cdp.MonotonicTime `json:"timestamp"`         // Timestamp.
-	Type         ResourceType       `json:"type"`              // Resource type.
-	Response     *Response          `json:"response"`          // Response data.
-	HasExtraInfo bool               `json:"hasExtraInfo"`      // Indicates whether requestWillBeSentExtraInfo and responseReceivedExtraInfo events will be or were emitted for this request.
-	FrameID      cdp.FrameID        `json:"frameId,omitempty"` // Frame identifier.
+	RequestID    RequestID          `json:"requestId"`                  // Request identifier.
+	LoaderID     cdp.LoaderID       `json:"loaderId"`                   // Loader identifier. Empty string if the request is fetched from worker.
+	Timestamp    *cdp.MonotonicTime `json:"timestamp"`                  // Timestamp.
+	Type         ResourceType       `json:"type"`                       // Resource type.
+	Response     *Response          `json:"response"`                   // Response data.
+	HasExtraInfo bool               `json:"hasExtraInfo"`               // Indicates whether requestWillBeSentExtraInfo and responseReceivedExtraInfo events will be or were emitted for this request.
+	FrameID      cdp.FrameID        `json:"frameId,omitempty,omitzero"` // Frame identifier.
 }
 
 // EventWebSocketClosed fired when WebSocket is closed.
@@ -120,9 +120,9 @@ type EventWebSocketClosed struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-webSocketCreated
 type EventWebSocketCreated struct {
-	RequestID RequestID  `json:"requestId"`           // Request identifier.
-	URL       string     `json:"url"`                 // WebSocket request URL.
-	Initiator *Initiator `json:"initiator,omitempty"` // Request initiator.
+	RequestID RequestID  `json:"requestId"`                    // Request identifier.
+	URL       string     `json:"url"`                          // WebSocket request URL.
+	Initiator *Initiator `json:"initiator,omitempty,omitzero"` // Request initiator.
 }
 
 // EventWebSocketFrameError fired when WebSocket message error occurs.
@@ -177,10 +177,10 @@ type EventWebSocketWillSendHandshakeRequest struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-webTransportCreated
 type EventWebTransportCreated struct {
-	TransportID RequestID          `json:"transportId"`         // WebTransport identifier.
-	URL         string             `json:"url"`                 // WebTransport request URL.
-	Timestamp   *cdp.MonotonicTime `json:"timestamp"`           // Timestamp.
-	Initiator   *Initiator         `json:"initiator,omitempty"` // Request initiator.
+	TransportID RequestID          `json:"transportId"`                  // WebTransport identifier.
+	URL         string             `json:"url"`                          // WebTransport request URL.
+	Timestamp   *cdp.MonotonicTime `json:"timestamp"`                    // Timestamp.
+	Initiator   *Initiator         `json:"initiator,omitempty,omitzero"` // Request initiator.
 }
 
 // EventWebTransportConnectionEstablished fired when WebTransport handshake
@@ -208,12 +208,12 @@ type EventWebTransportClosed struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-requestWillBeSentExtraInfo
 type EventRequestWillBeSentExtraInfo struct {
-	RequestID                     RequestID            `json:"requestId"`                               // Request identifier. Used to match this information to an existing requestWillBeSent event.
-	AssociatedCookies             []*AssociatedCookie  `json:"associatedCookies"`                       // A list of cookies potentially associated to the requested URL. This includes both cookies sent with the request and the ones not sent; the latter are distinguished by having blockedReasons field set.
-	Headers                       Headers              `json:"headers"`                                 // Raw request headers as they will be sent over the wire.
-	ConnectTiming                 *ConnectTiming       `json:"connectTiming"`                           // Connection timing information for the request.
-	ClientSecurityState           *ClientSecurityState `json:"clientSecurityState,omitempty"`           // The client security state set for the request.
-	SiteHasCookieInOtherPartition bool                 `json:"siteHasCookieInOtherPartition,omitempty"` // Whether the site has partitioned cookies stored in a partition different than the current one.
+	RequestID                     RequestID            `json:"requestId"`                                        // Request identifier. Used to match this information to an existing requestWillBeSent event.
+	AssociatedCookies             []*AssociatedCookie  `json:"associatedCookies"`                                // A list of cookies potentially associated to the requested URL. This includes both cookies sent with the request and the ones not sent; the latter are distinguished by having blockedReasons field set.
+	Headers                       Headers              `json:"headers"`                                          // Raw request headers as they will be sent over the wire.
+	ConnectTiming                 *ConnectTiming       `json:"connectTiming"`                                    // Connection timing information for the request.
+	ClientSecurityState           *ClientSecurityState `json:"clientSecurityState,omitempty,omitzero"`           // The client security state set for the request.
+	SiteHasCookieInOtherPartition bool                 `json:"siteHasCookieInOtherPartition,omitempty,omitzero"` // Whether the site has partitioned cookies stored in a partition different than the current one.
 }
 
 // EventResponseReceivedExtraInfo fired when additional information about a
@@ -224,15 +224,15 @@ type EventRequestWillBeSentExtraInfo struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-responseReceivedExtraInfo
 type EventResponseReceivedExtraInfo struct {
-	RequestID                RequestID                      `json:"requestId"`                          // Request identifier. Used to match this information to another responseReceived event.
-	BlockedCookies           []*BlockedSetCookieWithReason  `json:"blockedCookies"`                     // A list of cookies which were not stored from the response along with the corresponding reasons for blocking. The cookies here may not be valid due to syntax errors, which are represented by the invalid cookie line string instead of a proper cookie.
-	Headers                  Headers                        `json:"headers"`                            // Raw response headers as they were received over the wire. Duplicate headers in the response are represented as a single key with their values concatentated using \n as the separator. See also headersText that contains verbatim text for HTTP/1.*.
-	ResourceIPAddressSpace   IPAddressSpace                 `json:"resourceIPAddressSpace"`             // The IP address space of the resource. The address space can only be determined once the transport established the connection, so we can't send it in requestWillBeSentExtraInfo.
-	StatusCode               int64                          `json:"statusCode"`                         // The status code of the response. This is useful in cases the request failed and no responseReceived event is triggered, which is the case for, e.g., CORS errors. This is also the correct status code for cached requests, where the status in responseReceived is a 200 and this will be 304.
-	HeadersText              string                         `json:"headersText,omitempty"`              // Raw response header text as it was received over the wire. The raw text may not always be available, such as in the case of HTTP/2 or QUIC.
-	CookiePartitionKey       *CookiePartitionKey            `json:"cookiePartitionKey,omitempty"`       // The cookie partition key that will be used to store partitioned cookies set in this response. Only sent when partitioned cookies are enabled.
-	CookiePartitionKeyOpaque bool                           `json:"cookiePartitionKeyOpaque,omitempty"` // True if partitioned cookies are enabled, but the partition key is not serializable to string.
-	ExemptedCookies          []*ExemptedSetCookieWithReason `json:"exemptedCookies,omitempty"`          // A list of cookies which should have been blocked by 3PCD but are exempted and stored from the response with the corresponding reason.
+	RequestID                RequestID                      `json:"requestId"`                                   // Request identifier. Used to match this information to another responseReceived event.
+	BlockedCookies           []*BlockedSetCookieWithReason  `json:"blockedCookies"`                              // A list of cookies which were not stored from the response along with the corresponding reasons for blocking. The cookies here may not be valid due to syntax errors, which are represented by the invalid cookie line string instead of a proper cookie.
+	Headers                  Headers                        `json:"headers"`                                     // Raw response headers as they were received over the wire. Duplicate headers in the response are represented as a single key with their values concatentated using \n as the separator. See also headersText that contains verbatim text for HTTP/1.*.
+	ResourceIPAddressSpace   IPAddressSpace                 `json:"resourceIPAddressSpace"`                      // The IP address space of the resource. The address space can only be determined once the transport established the connection, so we can't send it in requestWillBeSentExtraInfo.
+	StatusCode               int64                          `json:"statusCode"`                                  // The status code of the response. This is useful in cases the request failed and no responseReceived event is triggered, which is the case for, e.g., CORS errors. This is also the correct status code for cached requests, where the status in responseReceived is a 200 and this will be 304.
+	HeadersText              string                         `json:"headersText,omitempty,omitzero"`              // Raw response header text as it was received over the wire. The raw text may not always be available, such as in the case of HTTP/2 or QUIC.
+	CookiePartitionKey       *CookiePartitionKey            `json:"cookiePartitionKey,omitempty,omitzero"`       // The cookie partition key that will be used to store partitioned cookies set in this response. Only sent when partitioned cookies are enabled.
+	CookiePartitionKeyOpaque bool                           `json:"cookiePartitionKeyOpaque,omitempty,omitzero"` // True if partitioned cookies are enabled, but the partition key is not serializable to string.
+	ExemptedCookies          []*ExemptedSetCookieWithReason `json:"exemptedCookies,omitempty,omitzero"`          // A list of cookies which should have been blocked by 3PCD but are exempted and stored from the response with the corresponding reason.
 }
 
 // EventResponseReceivedEarlyHints fired when 103 Early Hints headers is
@@ -256,9 +256,9 @@ type EventTrustTokenOperationDone struct {
 	Status           TrustTokenOperationDoneStatus `json:"status"` // Detailed success or error status of the operation. 'AlreadyExists' also signifies a successful operation, as the result of the operation already exists und thus, the operation was abort preemptively (e.g. a cache hit).
 	Type             TrustTokenOperationType       `json:"type"`
 	RequestID        RequestID                     `json:"requestId"`
-	TopLevelOrigin   string                        `json:"topLevelOrigin,omitempty"`   // Top level origin. The context in which the operation was attempted.
-	IssuerOrigin     string                        `json:"issuerOrigin,omitempty"`     // Origin of the issuer in case of a "Issuance" or "Redemption" operation.
-	IssuedTokenCount int64                         `json:"issuedTokenCount,omitempty"` // The number of obtained Trust Tokens on a successful "Issuance" operation.
+	TopLevelOrigin   string                        `json:"topLevelOrigin,omitempty,omitzero"`   // Top level origin. The context in which the operation was attempted.
+	IssuerOrigin     string                        `json:"issuerOrigin,omitempty,omitzero"`     // Origin of the issuer in case of a "Issuance" or "Redemption" operation.
+	IssuedTokenCount int64                         `json:"issuedTokenCount,omitempty,omitzero"` // The number of obtained Trust Tokens on a successful "Issuance" operation.
 }
 
 // EventPolicyUpdated fired once security policy has been updated.
@@ -291,9 +291,9 @@ type EventSubresourceWebBundleMetadataError struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-subresourceWebBundleInnerResponseParsed
 type EventSubresourceWebBundleInnerResponseParsed struct {
-	InnerRequestID  RequestID `json:"innerRequestId"`            // Request identifier of the subresource request
-	InnerRequestURL string    `json:"innerRequestURL"`           // URL of the subresource resource.
-	BundleRequestID RequestID `json:"bundleRequestId,omitempty"` // Bundle request identifier. Used to match this information to another event. This made be absent in case when the instrumentation was enabled only after webbundle was parsed.
+	InnerRequestID  RequestID `json:"innerRequestId"`                     // Request identifier of the subresource request
+	InnerRequestURL string    `json:"innerRequestURL"`                    // URL of the subresource resource.
+	BundleRequestID RequestID `json:"bundleRequestId,omitempty,omitzero"` // Bundle request identifier. Used to match this information to another event. This made be absent in case when the instrumentation was enabled only after webbundle was parsed.
 }
 
 // EventSubresourceWebBundleInnerResponseError fired when request for
@@ -301,10 +301,10 @@ type EventSubresourceWebBundleInnerResponseParsed struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-subresourceWebBundleInnerResponseError
 type EventSubresourceWebBundleInnerResponseError struct {
-	InnerRequestID  RequestID `json:"innerRequestId"`            // Request identifier of the subresource request
-	InnerRequestURL string    `json:"innerRequestURL"`           // URL of the subresource resource.
-	ErrorMessage    string    `json:"errorMessage"`              // Error message
-	BundleRequestID RequestID `json:"bundleRequestId,omitempty"` // Bundle request identifier. Used to match this information to another event. This made be absent in case when the instrumentation was enabled only after webbundle was parsed.
+	InnerRequestID  RequestID `json:"innerRequestId"`                     // Request identifier of the subresource request
+	InnerRequestURL string    `json:"innerRequestURL"`                    // URL of the subresource resource.
+	ErrorMessage    string    `json:"errorMessage"`                       // Error message
+	BundleRequestID RequestID `json:"bundleRequestId,omitempty,omitzero"` // Bundle request identifier. Used to match this information to another event. This made be absent in case when the instrumentation was enabled only after webbundle was parsed.
 }
 
 // EventReportingAPIReportAdded is sent whenever a new report is added. And

@@ -54,9 +54,9 @@ type EventPrerenderStatusUpdated struct {
 	Key                     *IngAttemptKey                `json:"key"`
 	PipelineID              PipelineID                    `json:"pipelineId"`
 	Status                  IngStatus                     `json:"status"`
-	PrerenderStatus         PrerenderFinalStatus          `json:"prerenderStatus,omitempty"`
-	DisallowedMojoInterface string                        `json:"disallowedMojoInterface,omitempty"` // This is used to give users more information about the name of Mojo interface that is incompatible with prerender and has caused the cancellation of the attempt.
-	MismatchedHeaders       []*PrerenderMismatchedHeaders `json:"mismatchedHeaders,omitempty"`
+	PrerenderStatus         PrerenderFinalStatus          `json:"prerenderStatus,omitempty,omitzero"`
+	DisallowedMojoInterface string                        `json:"disallowedMojoInterface,omitempty,omitzero"` // This is used to give users more information about the name of Mojo interface that is incompatible with prerender and has caused the cancellation of the attempt.
+	MismatchedHeaders       []*PrerenderMismatchedHeaders `json:"mismatchedHeaders,omitempty,omitzero"`
 }
 
 // EventPreloadingAttemptSourcesUpdated send a list of sources for all

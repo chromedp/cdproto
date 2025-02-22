@@ -24,9 +24,9 @@ import (
 // frame upon creation (before loading frame's scripts).
 type AddScriptToEvaluateOnNewDocumentParams struct {
 	Source                string `json:"source"`
-	WorldName             string `json:"worldName,omitempty"`             // If specified, creates an isolated world with the given name and evaluates given script in it. This world name will be used as the ExecutionContextDescription::name when the corresponding event is emitted.
-	IncludeCommandLineAPI bool   `json:"includeCommandLineAPI,omitempty"` // Specifies whether command line API should be available to the script, defaults to false.
-	RunImmediately        bool   `json:"runImmediately,omitempty"`        // If true, runs the script immediately on existing execution contexts or worlds. Default: false.
+	WorldName             string `json:"worldName,omitempty,omitzero"`             // If specified, creates an isolated world with the given name and evaluates given script in it. This world name will be used as the ExecutionContextDescription::name when the corresponding event is emitted.
+	IncludeCommandLineAPI bool   `json:"includeCommandLineAPI,omitempty,omitzero"` // Specifies whether command line API should be available to the script, defaults to false.
+	RunImmediately        bool   `json:"runImmediately,omitempty,omitzero"`        // If true, runs the script immediately on existing execution contexts or worlds. Default: false.
 }
 
 // AddScriptToEvaluateOnNewDocument evaluates given script in every frame
@@ -67,7 +67,7 @@ func (p AddScriptToEvaluateOnNewDocumentParams) WithRunImmediately(runImmediatel
 
 // AddScriptToEvaluateOnNewDocumentReturns return values.
 type AddScriptToEvaluateOnNewDocumentReturns struct {
-	Identifier ScriptIdentifier `json:"identifier,omitempty"` // Identifier of the added script.
+	Identifier ScriptIdentifier `json:"identifier,omitempty,omitzero"` // Identifier of the added script.
 }
 
 // Do executes Page.addScriptToEvaluateOnNewDocument against the provided context.
@@ -103,12 +103,12 @@ func (p *BringToFrontParams) Do(ctx context.Context) (err error) {
 
 // CaptureScreenshotParams capture page screenshot.
 type CaptureScreenshotParams struct {
-	Format                CaptureScreenshotFormat `json:"format,omitempty"`                // Image compression format (defaults to png).
-	Quality               int64                   `json:"quality,omitempty"`               // Compression quality from range [0..100] (jpeg only).
-	Clip                  *Viewport               `json:"clip,omitempty"`                  // Capture the screenshot of a given region only.
-	FromSurface           bool                    `json:"fromSurface,omitempty"`           // Capture the screenshot from the surface, rather than the view. Defaults to true.
-	CaptureBeyondViewport bool                    `json:"captureBeyondViewport,omitempty"` // Capture the screenshot beyond the viewport. Defaults to false.
-	OptimizeForSpeed      bool                    `json:"optimizeForSpeed,omitempty"`      // Optimize image encoding for speed, not for resulting size (defaults to false)
+	Format                CaptureScreenshotFormat `json:"format,omitempty,omitzero"`                // Image compression format (defaults to png).
+	Quality               int64                   `json:"quality,omitempty,omitzero"`               // Compression quality from range [0..100] (jpeg only).
+	Clip                  *Viewport               `json:"clip,omitempty,omitzero"`                  // Capture the screenshot of a given region only.
+	FromSurface           bool                    `json:"fromSurface,omitempty,omitzero"`           // Capture the screenshot from the surface, rather than the view. Defaults to true.
+	CaptureBeyondViewport bool                    `json:"captureBeyondViewport,omitempty,omitzero"` // Capture the screenshot beyond the viewport. Defaults to false.
+	OptimizeForSpeed      bool                    `json:"optimizeForSpeed,omitempty,omitzero"`      // Optimize image encoding for speed, not for resulting size (defaults to false)
 }
 
 // CaptureScreenshot capture page screenshot.
@@ -161,7 +161,7 @@ func (p CaptureScreenshotParams) WithOptimizeForSpeed(optimizeForSpeed bool) *Ca
 
 // CaptureScreenshotReturns return values.
 type CaptureScreenshotReturns struct {
-	Data string `json:"data,omitempty"` // Base64-encoded image data.
+	Data string `json:"data,omitempty,omitzero"` // Base64-encoded image data.
 }
 
 // Do executes Page.captureScreenshot against the provided context.
@@ -190,7 +190,7 @@ func (p *CaptureScreenshotParams) Do(ctx context.Context) (data []byte, err erro
 // MHTML format, the serialization includes iframes, shadow DOM, external
 // resources, and element-inline styles.
 type CaptureSnapshotParams struct {
-	Format CaptureSnapshotFormat `json:"format,omitempty"` // Format (defaults to mhtml).
+	Format CaptureSnapshotFormat `json:"format,omitempty,omitzero"` // Format (defaults to mhtml).
 }
 
 // CaptureSnapshot returns a snapshot of the page as a string. For MHTML
@@ -212,7 +212,7 @@ func (p CaptureSnapshotParams) WithFormat(format CaptureSnapshotFormat) *Capture
 
 // CaptureSnapshotReturns return values.
 type CaptureSnapshotReturns struct {
-	Data string `json:"data,omitempty"` // Serialized page data.
+	Data string `json:"data,omitempty,omitzero"` // Serialized page data.
 }
 
 // Do executes Page.captureSnapshot against the provided context.
@@ -233,9 +233,9 @@ func (p *CaptureSnapshotParams) Do(ctx context.Context) (data string, err error)
 
 // CreateIsolatedWorldParams creates an isolated world for the given frame.
 type CreateIsolatedWorldParams struct {
-	FrameID             cdp.FrameID `json:"frameId"`                       // Id of the frame in which the isolated world should be created.
-	WorldName           string      `json:"worldName,omitempty"`           // An optional name which is reported in the Execution Context.
-	GrantUniveralAccess bool        `json:"grantUniveralAccess,omitempty"` // Whether or not universal access should be granted to the isolated world. This is a powerful option, use with caution.
+	FrameID             cdp.FrameID `json:"frameId"`                                // Id of the frame in which the isolated world should be created.
+	WorldName           string      `json:"worldName,omitempty,omitzero"`           // An optional name which is reported in the Execution Context.
+	GrantUniveralAccess bool        `json:"grantUniveralAccess,omitempty,omitzero"` // Whether or not universal access should be granted to the isolated world. This is a powerful option, use with caution.
 }
 
 // CreateIsolatedWorld creates an isolated world for the given frame.
@@ -266,7 +266,7 @@ func (p CreateIsolatedWorldParams) WithGrantUniveralAccess(grantUniveralAccess b
 
 // CreateIsolatedWorldReturns return values.
 type CreateIsolatedWorldReturns struct {
-	ExecutionContextID runtime.ExecutionContextID `json:"executionContextId,omitempty"` // Execution context of the isolated world.
+	ExecutionContextID runtime.ExecutionContextID `json:"executionContextId,omitempty,omitzero"` // Execution context of the isolated world.
 }
 
 // Do executes Page.createIsolatedWorld against the provided context.
@@ -321,7 +321,7 @@ func (p *EnableParams) Do(ctx context.Context) (err error) {
 // API errors out. If there is not a loaded page, this API errors out
 // immediately.
 type GetAppManifestParams struct {
-	ManifestID string `json:"manifestId,omitempty"`
+	ManifestID string `json:"manifestId,omitempty,omitzero"`
 }
 
 // GetAppManifest gets the processed manifest for this current document. This
@@ -344,10 +344,10 @@ func (p GetAppManifestParams) WithManifestID(manifestID string) *GetAppManifestP
 
 // GetAppManifestReturns return values.
 type GetAppManifestReturns struct {
-	URL      string              `json:"url,omitempty"` // Manifest location.
-	Errors   []*AppManifestError `json:"errors,omitempty"`
-	Data     string              `json:"data,omitempty"` // Manifest content.
-	Manifest *WebAppManifest     `json:"manifest,omitempty"`
+	URL      string              `json:"url,omitempty,omitzero"` // Manifest location.
+	Errors   []*AppManifestError `json:"errors,omitempty,omitzero"`
+	Data     string              `json:"data,omitempty,omitzero"` // Manifest content.
+	Manifest *WebAppManifest     `json:"manifest,omitempty,omitzero"`
 }
 
 // Do executes Page.getAppManifest against the provided context.
@@ -381,7 +381,7 @@ func GetInstallabilityErrors() *GetInstallabilityErrorsParams {
 
 // GetInstallabilityErrorsReturns return values.
 type GetInstallabilityErrorsReturns struct {
-	InstallabilityErrors []*InstallabilityError `json:"installabilityErrors,omitempty"`
+	InstallabilityErrors []*InstallabilityError `json:"installabilityErrors,omitempty,omitzero"`
 }
 
 // Do executes Page.getInstallabilityErrors against the provided context.
@@ -414,8 +414,8 @@ func GetAppID() *GetAppIDParams {
 
 // GetAppIDReturns return values.
 type GetAppIDReturns struct {
-	AppID         string `json:"appId,omitempty"`         // App id, either from manifest's id attribute or computed from start_url
-	RecommendedID string `json:"recommendedId,omitempty"` // Recommendation for manifest's id attribute to match current id computed from start_url
+	AppID         string `json:"appId,omitempty,omitzero"`         // App id, either from manifest's id attribute or computed from start_url
+	RecommendedID string `json:"recommendedId,omitempty,omitzero"` // Recommendation for manifest's id attribute to match current id computed from start_url
 }
 
 // Do executes Page.getAppId against the provided context.
@@ -455,7 +455,7 @@ func GetAdScriptID(frameID cdp.FrameID) *GetAdScriptIDParams {
 
 // GetAdScriptIDReturns return values.
 type GetAdScriptIDReturns struct {
-	AdScriptID *AdScriptID `json:"adScriptId,omitempty"` // Identifies the bottom-most script which caused the frame to be labelled as an ad. Only sent if frame is labelled as an ad and id is available.
+	AdScriptID *AdScriptID `json:"adScriptId,omitempty,omitzero"` // Identifies the bottom-most script which caused the frame to be labelled as an ad. Only sent if frame is labelled as an ad and id is available.
 }
 
 // Do executes Page.getAdScriptId against the provided context.
@@ -486,7 +486,7 @@ func GetFrameTree() *GetFrameTreeParams {
 
 // GetFrameTreeReturns return values.
 type GetFrameTreeReturns struct {
-	FrameTree *FrameTree `json:"frameTree,omitempty"` // Present frame tree structure.
+	FrameTree *FrameTree `json:"frameTree,omitempty,omitzero"` // Present frame tree structure.
 }
 
 // Do executes Page.getFrameTree against the provided context.
@@ -561,8 +561,8 @@ func GetNavigationHistory() *GetNavigationHistoryParams {
 
 // GetNavigationHistoryReturns return values.
 type GetNavigationHistoryReturns struct {
-	CurrentIndex int64              `json:"currentIndex,omitempty"` // Index of the current navigation history entry.
-	Entries      []*NavigationEntry `json:"entries,omitempty"`      // Array of navigation history entries.
+	CurrentIndex int64              `json:"currentIndex,omitempty,omitzero"` // Index of the current navigation history entry.
+	Entries      []*NavigationEntry `json:"entries,omitempty,omitzero"`      // Array of navigation history entries.
 }
 
 // Do executes Page.getNavigationHistory against the provided context.
@@ -621,8 +621,8 @@ func GetResourceContent(frameID cdp.FrameID, url string) *GetResourceContentPara
 
 // GetResourceContentReturns return values.
 type GetResourceContentReturns struct {
-	Content       string `json:"content,omitempty"`       // Resource content.
-	Base64encoded bool   `json:"base64Encoded,omitempty"` // True, if content was served as base64.
+	Content       string `json:"content,omitempty,omitzero"`       // Resource content.
+	Base64encoded bool   `json:"base64Encoded,omitempty,omitzero"` // True, if content was served as base64.
 }
 
 // Do executes Page.getResourceContent against the provided context.
@@ -663,7 +663,7 @@ func GetResourceTree() *GetResourceTreeParams {
 
 // GetResourceTreeReturns return values.
 type GetResourceTreeReturns struct {
-	FrameTree *FrameResourceTree `json:"frameTree,omitempty"` // Present frame / resource tree structure.
+	FrameTree *FrameResourceTree `json:"frameTree,omitempty,omitzero"` // Present frame / resource tree structure.
 }
 
 // Do executes Page.getResourceTree against the provided context.
@@ -685,8 +685,8 @@ func (p *GetResourceTreeParams) Do(ctx context.Context) (frameTree *FrameResourc
 // HandleJavaScriptDialogParams accepts or dismisses a JavaScript initiated
 // dialog (alert, confirm, prompt, or onbeforeunload).
 type HandleJavaScriptDialogParams struct {
-	Accept     bool   `json:"accept"`               // Whether to accept or dismiss the dialog.
-	PromptText string `json:"promptText,omitempty"` // The text to enter into the dialog prompt before accepting. Used only if this is a prompt dialog.
+	Accept     bool   `json:"accept"`                        // Whether to accept or dismiss the dialog.
+	PromptText string `json:"promptText,omitempty,omitzero"` // The text to enter into the dialog prompt before accepting. Used only if this is a prompt dialog.
 }
 
 // HandleJavaScriptDialog accepts or dismisses a JavaScript initiated dialog
@@ -717,11 +717,11 @@ func (p *HandleJavaScriptDialogParams) Do(ctx context.Context) (err error) {
 
 // NavigateParams navigates current page to the given URL.
 type NavigateParams struct {
-	URL            string         `json:"url"`                      // URL to navigate the page to.
-	Referrer       string         `json:"referrer,omitempty"`       // Referrer URL.
-	TransitionType TransitionType `json:"transitionType,omitempty"` // Intended transition type.
-	FrameID        cdp.FrameID    `json:"frameId,omitempty"`        // Frame id to navigate, if not specified navigates the top frame.
-	ReferrerPolicy ReferrerPolicy `json:"referrerPolicy,omitempty"` // Referrer-policy used for the navigation.
+	URL            string         `json:"url"`                               // URL to navigate the page to.
+	Referrer       string         `json:"referrer,omitempty,omitzero"`       // Referrer URL.
+	TransitionType TransitionType `json:"transitionType,omitempty,omitzero"` // Intended transition type.
+	FrameID        cdp.FrameID    `json:"frameId,omitempty,omitzero"`        // Frame id to navigate, if not specified navigates the top frame.
+	ReferrerPolicy ReferrerPolicy `json:"referrerPolicy,omitempty,omitzero"` // Referrer-policy used for the navigation.
 }
 
 // Navigate navigates current page to the given URL.
@@ -764,9 +764,9 @@ func (p NavigateParams) WithReferrerPolicy(referrerPolicy ReferrerPolicy) *Navig
 
 // NavigateReturns return values.
 type NavigateReturns struct {
-	FrameID   cdp.FrameID  `json:"frameId,omitempty"`   // Frame id that has navigated (or failed to navigate)
-	LoaderID  cdp.LoaderID `json:"loaderId,omitempty"`  // Loader identifier. This is omitted in case of same-document navigation, as the previously committed loaderId would not change.
-	ErrorText string       `json:"errorText,omitempty"` // User friendly error message, present if and only if navigation has failed.
+	FrameID   cdp.FrameID  `json:"frameId,omitempty,omitzero"`   // Frame id that has navigated (or failed to navigate)
+	LoaderID  cdp.LoaderID `json:"loaderId,omitempty,omitzero"`  // Loader identifier. This is omitted in case of same-document navigation, as the previously committed loaderId would not change.
+	ErrorText string       `json:"errorText,omitempty,omitzero"` // User friendly error message, present if and only if navigation has failed.
 }
 
 // Do executes Page.navigate against the provided context.
@@ -813,23 +813,23 @@ func (p *NavigateToHistoryEntryParams) Do(ctx context.Context) (err error) {
 
 // PrintToPDFParams print page as PDF.
 type PrintToPDFParams struct {
-	Landscape               bool                   `json:"landscape,omitempty"`               // Paper orientation. Defaults to false.
-	DisplayHeaderFooter     bool                   `json:"displayHeaderFooter,omitempty"`     // Display header and footer. Defaults to false.
-	PrintBackground         bool                   `json:"printBackground,omitempty"`         // Print background graphics. Defaults to false.
-	Scale                   float64                `json:"scale,omitempty"`                   // Scale of the webpage rendering. Defaults to 1.
-	PaperWidth              float64                `json:"paperWidth,omitempty"`              // Paper width in inches. Defaults to 8.5 inches.
-	PaperHeight             float64                `json:"paperHeight,omitempty"`             // Paper height in inches. Defaults to 11 inches.
-	MarginTop               float64                `json:"marginTop"`                         // Top margin in inches. Defaults to 1cm (~0.4 inches).
-	MarginBottom            float64                `json:"marginBottom"`                      // Bottom margin in inches. Defaults to 1cm (~0.4 inches).
-	MarginLeft              float64                `json:"marginLeft"`                        // Left margin in inches. Defaults to 1cm (~0.4 inches).
-	MarginRight             float64                `json:"marginRight"`                       // Right margin in inches. Defaults to 1cm (~0.4 inches).
-	PageRanges              string                 `json:"pageRanges,omitempty"`              // Paper ranges to print, one based, e.g., '1-5, 8, 11-13'. Pages are printed in the document order, not in the order specified, and no more than once. Defaults to empty string, which implies the entire document is printed. The page numbers are quietly capped to actual page count of the document, and ranges beyond the end of the document are ignored. If this results in no pages to print, an error is reported. It is an error to specify a range with start greater than end.
-	HeaderTemplate          string                 `json:"headerTemplate,omitempty"`          // HTML template for the print header. Should be valid HTML markup with following classes used to inject printing values into them: - date: formatted print date - title: document title - url: document location - pageNumber: current page number - totalPages: total pages in the document  For example, <span class=title></span> would generate span containing the title.
-	FooterTemplate          string                 `json:"footerTemplate,omitempty"`          // HTML template for the print footer. Should use the same format as the headerTemplate.
-	PreferCSSPageSize       bool                   `json:"preferCSSPageSize,omitempty"`       // Whether or not to prefer page size as defined by css. Defaults to false, in which case the content will be scaled to fit the paper size.
-	TransferMode            PrintToPDFTransferMode `json:"transferMode,omitempty"`            // return as stream
-	GenerateTaggedPDF       bool                   `json:"generateTaggedPDF,omitempty"`       // Whether or not to generate tagged (accessible) PDF. Defaults to embedder choice.
-	GenerateDocumentOutline bool                   `json:"generateDocumentOutline,omitempty"` // Whether or not to embed the document outline into the PDF.
+	Landscape               bool                   `json:"landscape,omitempty,omitzero"`               // Paper orientation. Defaults to false.
+	DisplayHeaderFooter     bool                   `json:"displayHeaderFooter,omitempty,omitzero"`     // Display header and footer. Defaults to false.
+	PrintBackground         bool                   `json:"printBackground,omitempty,omitzero"`         // Print background graphics. Defaults to false.
+	Scale                   float64                `json:"scale,omitempty,omitzero"`                   // Scale of the webpage rendering. Defaults to 1.
+	PaperWidth              float64                `json:"paperWidth,omitempty,omitzero"`              // Paper width in inches. Defaults to 8.5 inches.
+	PaperHeight             float64                `json:"paperHeight,omitempty,omitzero"`             // Paper height in inches. Defaults to 11 inches.
+	MarginTop               float64                `json:"marginTop"`                                  // Top margin in inches. Defaults to 1cm (~0.4 inches).
+	MarginBottom            float64                `json:"marginBottom"`                               // Bottom margin in inches. Defaults to 1cm (~0.4 inches).
+	MarginLeft              float64                `json:"marginLeft"`                                 // Left margin in inches. Defaults to 1cm (~0.4 inches).
+	MarginRight             float64                `json:"marginRight"`                                // Right margin in inches. Defaults to 1cm (~0.4 inches).
+	PageRanges              string                 `json:"pageRanges,omitempty,omitzero"`              // Paper ranges to print, one based, e.g., '1-5, 8, 11-13'. Pages are printed in the document order, not in the order specified, and no more than once. Defaults to empty string, which implies the entire document is printed. The page numbers are quietly capped to actual page count of the document, and ranges beyond the end of the document are ignored. If this results in no pages to print, an error is reported. It is an error to specify a range with start greater than end.
+	HeaderTemplate          string                 `json:"headerTemplate,omitempty,omitzero"`          // HTML template for the print header. Should be valid HTML markup with following classes used to inject printing values into them: - date: formatted print date - title: document title - url: document location - pageNumber: current page number - totalPages: total pages in the document  For example, <span class=title></span> would generate span containing the title.
+	FooterTemplate          string                 `json:"footerTemplate,omitempty,omitzero"`          // HTML template for the print footer. Should use the same format as the headerTemplate.
+	PreferCSSPageSize       bool                   `json:"preferCSSPageSize,omitempty,omitzero"`       // Whether or not to prefer page size as defined by css. Defaults to false, in which case the content will be scaled to fit the paper size.
+	TransferMode            PrintToPDFTransferMode `json:"transferMode,omitempty,omitzero"`            // return as stream
+	GenerateTaggedPDF       bool                   `json:"generateTaggedPDF,omitempty,omitzero"`       // Whether or not to generate tagged (accessible) PDF. Defaults to embedder choice.
+	GenerateDocumentOutline bool                   `json:"generateDocumentOutline,omitempty,omitzero"` // Whether or not to embed the document outline into the PDF.
 }
 
 // PrintToPDF print page as PDF.
@@ -961,8 +961,8 @@ func (p PrintToPDFParams) WithGenerateDocumentOutline(generateDocumentOutline bo
 
 // PrintToPDFReturns return values.
 type PrintToPDFReturns struct {
-	Data   string          `json:"data,omitempty"`   // Base64-encoded pdf data. Empty if |returnAsStream| is specified.
-	Stream io.StreamHandle `json:"stream,omitempty"` // A handle of the stream that holds resulting PDF data.
+	Data   string          `json:"data,omitempty,omitzero"`   // Base64-encoded pdf data. Empty if |returnAsStream| is specified.
+	Stream io.StreamHandle `json:"stream,omitempty,omitzero"` // A handle of the stream that holds resulting PDF data.
 }
 
 // Do executes Page.printToPDF against the provided context.
@@ -990,9 +990,9 @@ func (p *PrintToPDFParams) Do(ctx context.Context) (data []byte, stream io.Strea
 
 // ReloadParams reloads given page optionally ignoring the cache.
 type ReloadParams struct {
-	IgnoreCache            bool         `json:"ignoreCache,omitempty"`            // If true, browser cache is ignored (as if the user pressed Shift+refresh).
-	ScriptToEvaluateOnLoad string       `json:"scriptToEvaluateOnLoad,omitempty"` // If set, the script will be injected into all frames of the inspected page after reload. Argument will be ignored if reloading dataURL origin.
-	LoaderID               cdp.LoaderID `json:"loaderId,omitempty"`               // If set, an error will be thrown if the target page's main frame's loader id does not match the provided id. This prevents accidentally reloading an unintended target in case there's a racing navigation.
+	IgnoreCache            bool         `json:"ignoreCache,omitempty,omitzero"`            // If true, browser cache is ignored (as if the user pressed Shift+refresh).
+	ScriptToEvaluateOnLoad string       `json:"scriptToEvaluateOnLoad,omitempty,omitzero"` // If set, the script will be injected into all frames of the inspected page after reload. Argument will be ignored if reloading dataURL origin.
+	LoaderID               cdp.LoaderID `json:"loaderId,omitempty,omitzero"`               // If set, an error will be thrown if the target page's main frame's loader id does not match the provided id. This prevents accidentally reloading an unintended target in case there's a racing navigation.
 }
 
 // Reload reloads given page optionally ignoring the cache.
@@ -1083,11 +1083,11 @@ func (p *ScreencastFrameAckParams) Do(ctx context.Context) (err error) {
 
 // SearchInResourceParams searches for given string in resource content.
 type SearchInResourceParams struct {
-	FrameID       cdp.FrameID `json:"frameId"`                 // Frame id for resource to search in.
-	URL           string      `json:"url"`                     // URL of the resource to search in.
-	Query         string      `json:"query"`                   // String to search for.
-	CaseSensitive bool        `json:"caseSensitive,omitempty"` // If true, search is case sensitive.
-	IsRegex       bool        `json:"isRegex,omitempty"`       // If true, treats string parameter as regex.
+	FrameID       cdp.FrameID `json:"frameId"`                          // Frame id for resource to search in.
+	URL           string      `json:"url"`                              // URL of the resource to search in.
+	Query         string      `json:"query"`                            // String to search for.
+	CaseSensitive bool        `json:"caseSensitive,omitempty,omitzero"` // If true, search is case sensitive.
+	IsRegex       bool        `json:"isRegex,omitempty,omitzero"`       // If true, treats string parameter as regex.
 }
 
 // SearchInResource searches for given string in resource content.
@@ -1121,7 +1121,7 @@ func (p SearchInResourceParams) WithIsRegex(isRegex bool) *SearchInResourceParam
 
 // SearchInResourceReturns return values.
 type SearchInResourceReturns struct {
-	Result []*debugger.SearchMatch `json:"result,omitempty"` // List of search matches.
+	Result []*debugger.SearchMatch `json:"result,omitempty,omitzero"` // List of search matches.
 }
 
 // Do executes Page.searchInResource against the provided context.
@@ -1208,7 +1208,7 @@ func GetPermissionsPolicyState(frameID cdp.FrameID) *GetPermissionsPolicyStatePa
 
 // GetPermissionsPolicyStateReturns return values.
 type GetPermissionsPolicyStateReturns struct {
-	States []*PermissionsPolicyFeatureState `json:"states,omitempty"`
+	States []*PermissionsPolicyFeatureState `json:"states,omitempty,omitzero"`
 }
 
 // Do executes Page.getPermissionsPolicyState against the provided context.
@@ -1247,7 +1247,7 @@ func GetOriginTrials(frameID cdp.FrameID) *GetOriginTrialsParams {
 
 // GetOriginTrialsReturns return values.
 type GetOriginTrialsReturns struct {
-	OriginTrials []*cdp.OriginTrial `json:"originTrials,omitempty"`
+	OriginTrials []*cdp.OriginTrial `json:"originTrials,omitempty,omitzero"`
 }
 
 // Do executes Page.getOriginTrials against the provided context.
@@ -1268,8 +1268,8 @@ func (p *GetOriginTrialsParams) Do(ctx context.Context) (originTrials []*cdp.Ori
 
 // SetFontFamiliesParams set generic font families.
 type SetFontFamiliesParams struct {
-	FontFamilies *FontFamilies         `json:"fontFamilies"`         // Specifies font families to set. If a font family is not specified, it won't be changed.
-	ForScripts   []*ScriptFontFamilies `json:"forScripts,omitempty"` // Specifies font families to set for individual scripts.
+	FontFamilies *FontFamilies         `json:"fontFamilies"`                  // Specifies font families to set. If a font family is not specified, it won't be changed.
+	ForScripts   []*ScriptFontFamilies `json:"forScripts,omitempty,omitzero"` // Specifies font families to set for individual scripts.
 }
 
 // SetFontFamilies set generic font families.
@@ -1373,11 +1373,11 @@ func (p *SetLifecycleEventsEnabledParams) Do(ctx context.Context) (err error) {
 // StartScreencastParams starts sending each frame using the screencastFrame
 // event.
 type StartScreencastParams struct {
-	Format        ScreencastFormat `json:"format,omitempty"`        // Image compression format.
-	Quality       int64            `json:"quality,omitempty"`       // Compression quality from range [0..100].
-	MaxWidth      int64            `json:"maxWidth,omitempty"`      // Maximum screenshot width.
-	MaxHeight     int64            `json:"maxHeight,omitempty"`     // Maximum screenshot height.
-	EveryNthFrame int64            `json:"everyNthFrame,omitempty"` // Send every n-th frame.
+	Format        ScreencastFormat `json:"format,omitempty,omitzero"`        // Image compression format.
+	Quality       int64            `json:"quality,omitempty,omitzero"`       // Compression quality from range [0..100].
+	MaxWidth      int64            `json:"maxWidth,omitempty,omitzero"`      // Maximum screenshot width.
+	MaxHeight     int64            `json:"maxHeight,omitempty,omitzero"`     // Maximum screenshot height.
+	EveryNthFrame int64            `json:"everyNthFrame,omitempty,omitzero"` // Send every n-th frame.
 }
 
 // StartScreencast starts sending each frame using the screencastFrame event.
@@ -1643,8 +1643,8 @@ func (p *SetRPHRegistrationModeParams) Do(ctx context.Context) (err error) {
 
 // GenerateTestReportParams generates a report for testing.
 type GenerateTestReportParams struct {
-	Message string `json:"message"`         // Message to be displayed in the report.
-	Group   string `json:"group,omitempty"` // Specifies the endpoint group to deliver the report to.
+	Message string `json:"message"`                  // Message to be displayed in the report.
+	Group   string `json:"group,omitempty,omitzero"` // Specifies the endpoint group to deliver the report to.
 }
 
 // GenerateTestReport generates a report for testing.

@@ -24,10 +24,10 @@ import (
 // AddRuleParams inserts a new rule with the given ruleText in a stylesheet
 // with given styleSheetId, at the position specified by location.
 type AddRuleParams struct {
-	StyleSheetID                    StyleSheetID `json:"styleSheetId"`                              // The css style sheet identifier where a new rule should be inserted.
-	RuleText                        string       `json:"ruleText"`                                  // The text of a new rule.
-	Location                        *SourceRange `json:"location"`                                  // Text position of a new rule in the target style sheet.
-	NodeForPropertySyntaxValidation cdp.NodeID   `json:"nodeForPropertySyntaxValidation,omitempty"` // NodeId for the DOM node in whose context custom property declarations for registered properties should be validated. If omitted, declarations in the new rule text can only be validated statically, which may produce incorrect results if the declaration contains a var() for example.
+	StyleSheetID                    StyleSheetID `json:"styleSheetId"`                                       // The css style sheet identifier where a new rule should be inserted.
+	RuleText                        string       `json:"ruleText"`                                           // The text of a new rule.
+	Location                        *SourceRange `json:"location"`                                           // Text position of a new rule in the target style sheet.
+	NodeForPropertySyntaxValidation cdp.NodeID   `json:"nodeForPropertySyntaxValidation,omitempty,omitzero"` // NodeId for the DOM node in whose context custom property declarations for registered properties should be validated. If omitted, declarations in the new rule text can only be validated statically, which may produce incorrect results if the declaration contains a var() for example.
 }
 
 // AddRule inserts a new rule with the given ruleText in a stylesheet with
@@ -60,7 +60,7 @@ func (p AddRuleParams) WithNodeForPropertySyntaxValidation(nodeForPropertySyntax
 
 // AddRuleReturns return values.
 type AddRuleReturns struct {
-	Rule *Rule `json:"rule,omitempty"` // The newly created rule.
+	Rule *Rule `json:"rule,omitempty,omitzero"` // The newly created rule.
 }
 
 // Do executes CSS.addRule against the provided context.
@@ -99,7 +99,7 @@ func CollectClassNames(styleSheetID StyleSheetID) *CollectClassNamesParams {
 
 // CollectClassNamesReturns return values.
 type CollectClassNamesReturns struct {
-	ClassNames []string `json:"classNames,omitempty"` // Class name list.
+	ClassNames []string `json:"classNames,omitempty,omitzero"` // Class name list.
 }
 
 // Do executes CSS.collectClassNames against the provided context.
@@ -121,8 +121,8 @@ func (p *CollectClassNamesParams) Do(ctx context.Context) (classNames []string, 
 // CreateStyleSheetParams creates a new special "via-inspector" stylesheet in
 // the frame with given frameId.
 type CreateStyleSheetParams struct {
-	FrameID cdp.FrameID `json:"frameId"`         // Identifier of the frame where "via-inspector" stylesheet should be created.
-	Force   bool        `json:"force,omitempty"` // If true, creates a new stylesheet for every call. If false, returns a stylesheet previously created by a call with force=false for the frame's document if it exists or creates a new stylesheet (default: false).
+	FrameID cdp.FrameID `json:"frameId"`                  // Identifier of the frame where "via-inspector" stylesheet should be created.
+	Force   bool        `json:"force,omitempty,omitzero"` // If true, creates a new stylesheet for every call. If false, returns a stylesheet previously created by a call with force=false for the frame's document if it exists or creates a new stylesheet (default: false).
 }
 
 // CreateStyleSheet creates a new special "via-inspector" stylesheet in the
@@ -149,7 +149,7 @@ func (p CreateStyleSheetParams) WithForce(force bool) *CreateStyleSheetParams {
 
 // CreateStyleSheetReturns return values.
 type CreateStyleSheetReturns struct {
-	StyleSheetID StyleSheetID `json:"styleSheetId,omitempty"` // Identifier of the created "via-inspector" stylesheet.
+	StyleSheetID StyleSheetID `json:"styleSheetId,omitempty,omitzero"` // Identifier of the created "via-inspector" stylesheet.
 }
 
 // Do executes CSS.createStyleSheet against the provided context.
@@ -278,9 +278,9 @@ func GetBackgroundColors(nodeID cdp.NodeID) *GetBackgroundColorsParams {
 
 // GetBackgroundColorsReturns return values.
 type GetBackgroundColorsReturns struct {
-	BackgroundColors   []string `json:"backgroundColors,omitempty"`   // The range of background colors behind this element, if it contains any visible text. If no visible text is present, this will be undefined. In the case of a flat background color, this will consist of simply that color. In the case of a gradient, this will consist of each of the color stops. For anything more complicated, this will be an empty array. Images will be ignored (as if the image had failed to load).
-	ComputedFontSize   string   `json:"computedFontSize,omitempty"`   // The computed font size for this node, as a CSS computed value string (e.g. '12px').
-	ComputedFontWeight string   `json:"computedFontWeight,omitempty"` // The computed font weight for this node, as a CSS computed value string (e.g. 'normal' or '100').
+	BackgroundColors   []string `json:"backgroundColors,omitempty,omitzero"`   // The range of background colors behind this element, if it contains any visible text. If no visible text is present, this will be undefined. In the case of a flat background color, this will consist of simply that color. In the case of a gradient, this will consist of each of the color stops. For anything more complicated, this will be an empty array. Images will be ignored (as if the image had failed to load).
+	ComputedFontSize   string   `json:"computedFontSize,omitempty,omitzero"`   // The computed font size for this node, as a CSS computed value string (e.g. '12px').
+	ComputedFontWeight string   `json:"computedFontWeight,omitempty,omitzero"` // The computed font weight for this node, as a CSS computed value string (e.g. 'normal' or '100').
 }
 
 // Do executes CSS.getBackgroundColors against the provided context.
@@ -323,7 +323,7 @@ func GetComputedStyleForNode(nodeID cdp.NodeID) *GetComputedStyleForNodeParams {
 
 // GetComputedStyleForNodeReturns return values.
 type GetComputedStyleForNodeReturns struct {
-	ComputedStyle []*ComputedStyleProperty `json:"computedStyle,omitempty"` // Computed style for the specified DOM node.
+	ComputedStyle []*ComputedStyleProperty `json:"computedStyle,omitempty,omitzero"` // Computed style for the specified DOM node.
 }
 
 // Do executes CSS.getComputedStyleForNode against the provided context.
@@ -347,11 +347,11 @@ func (p *GetComputedStyleForNodeParams) Do(ctx context.Context) (computedStyle [
 // computed 'font-size' of the element and a value 'calc(1px + 2px)' will be
 // resolved to '3px'.
 type ResolveValuesParams struct {
-	Values           []string       `json:"values"`                     // Substitution functions (var()/env()/attr()) and cascade-dependent keywords (revert/revert-layer) do not work.
-	NodeID           cdp.NodeID     `json:"nodeId"`                     // Id of the node in whose context the expression is evaluated
-	PropertyName     string         `json:"propertyName,omitempty"`     // Only longhands and custom property names are accepted.
-	PseudoType       cdp.PseudoType `json:"pseudoType,omitempty"`       // Pseudo element type, only works for pseudo elements that generate elements in the tree, such as ::before and ::after.
-	PseudoIdentifier string         `json:"pseudoIdentifier,omitempty"` // Pseudo element custom ident.
+	Values           []string       `json:"values"`                              // Substitution functions (var()/env()/attr()) and cascade-dependent keywords (revert/revert-layer) do not work.
+	NodeID           cdp.NodeID     `json:"nodeId"`                              // Id of the node in whose context the expression is evaluated
+	PropertyName     string         `json:"propertyName,omitempty,omitzero"`     // Only longhands and custom property names are accepted.
+	PseudoType       cdp.PseudoType `json:"pseudoType,omitempty,omitzero"`       // Pseudo element type, only works for pseudo elements that generate elements in the tree, such as ::before and ::after.
+	PseudoIdentifier string         `json:"pseudoIdentifier,omitempty,omitzero"` // Pseudo element custom ident.
 }
 
 // ResolveValues resolve the specified values in the context of the provided
@@ -393,7 +393,7 @@ func (p ResolveValuesParams) WithPseudoIdentifier(pseudoIdentifier string) *Reso
 
 // ResolveValuesReturns return values.
 type ResolveValuesReturns struct {
-	Results []string `json:"results,omitempty"`
+	Results []string `json:"results,omitempty,omitzero"`
 }
 
 // Do executes CSS.resolveValues against the provided context.
@@ -435,7 +435,7 @@ func GetLonghandProperties(shorthandName string, value string) *GetLonghandPrope
 
 // GetLonghandPropertiesReturns return values.
 type GetLonghandPropertiesReturns struct {
-	LonghandProperties []*Property `json:"longhandProperties,omitempty"`
+	LonghandProperties []*Property `json:"longhandProperties,omitempty,omitzero"`
 }
 
 // Do executes CSS.getLonghandProperties against the provided context.
@@ -478,8 +478,8 @@ func GetInlineStylesForNode(nodeID cdp.NodeID) *GetInlineStylesForNodeParams {
 
 // GetInlineStylesForNodeReturns return values.
 type GetInlineStylesForNodeReturns struct {
-	InlineStyle     *Style `json:"inlineStyle,omitempty"`     // Inline style for the specified DOM node.
-	AttributesStyle *Style `json:"attributesStyle,omitempty"` // Attribute-defined element style (e.g. resulting from "width=20 height=100%").
+	InlineStyle     *Style `json:"inlineStyle,omitempty,omitzero"`     // Inline style for the specified DOM node.
+	AttributesStyle *Style `json:"attributesStyle,omitempty,omitzero"` // Attribute-defined element style (e.g. resulting from "width=20 height=100%").
 }
 
 // Do executes CSS.getInlineStylesForNode against the provided context.
@@ -523,9 +523,9 @@ func GetAnimatedStylesForNode(nodeID cdp.NodeID) *GetAnimatedStylesForNodeParams
 
 // GetAnimatedStylesForNodeReturns return values.
 type GetAnimatedStylesForNodeReturns struct {
-	AnimationStyles  []*AnimationStyle              `json:"animationStyles,omitempty"`  // Styles coming from animations.
-	TransitionsStyle *Style                         `json:"transitionsStyle,omitempty"` // Style coming from transitions.
-	Inherited        []*InheritedAnimatedStyleEntry `json:"inherited,omitempty"`        // Inherited style entries for animationsStyle and transitionsStyle from the inheritance chain of the element.
+	AnimationStyles  []*AnimationStyle              `json:"animationStyles,omitempty,omitzero"`  // Styles coming from animations.
+	TransitionsStyle *Style                         `json:"transitionsStyle,omitempty,omitzero"` // Style coming from transitions.
+	Inherited        []*InheritedAnimatedStyleEntry `json:"inherited,omitempty,omitzero"`        // Inherited style entries for animationsStyle and transitionsStyle from the inheritance chain of the element.
 }
 
 // Do executes CSS.getAnimatedStylesForNode against the provided context.
@@ -568,19 +568,19 @@ func GetMatchedStylesForNode(nodeID cdp.NodeID) *GetMatchedStylesForNodeParams {
 
 // GetMatchedStylesForNodeReturns return values.
 type GetMatchedStylesForNodeReturns struct {
-	InlineStyle                 *Style                           `json:"inlineStyle,omitempty"`                 // Inline style for the specified DOM node.
-	AttributesStyle             *Style                           `json:"attributesStyle,omitempty"`             // Attribute-defined element style (e.g. resulting from "width=20 height=100%").
-	MatchedCSSRules             []*RuleMatch                     `json:"matchedCSSRules,omitempty"`             // CSS rules matching this node, from all applicable stylesheets.
-	PseudoElements              []*PseudoElementMatches          `json:"pseudoElements,omitempty"`              // Pseudo style matches for this node.
-	Inherited                   []*InheritedStyleEntry           `json:"inherited,omitempty"`                   // A chain of inherited styles (from the immediate node parent up to the DOM tree root).
-	InheritedPseudoElements     []*InheritedPseudoElementMatches `json:"inheritedPseudoElements,omitempty"`     // A chain of inherited pseudo element styles (from the immediate node parent up to the DOM tree root).
-	CSSKeyframesRules           []*KeyframesRule                 `json:"cssKeyframesRules,omitempty"`           // A list of CSS keyframed animations matching this node.
-	CSSPositionTryRules         []*PositionTryRule               `json:"cssPositionTryRules,omitempty"`         // A list of CSS @position-try rules matching this node, based on the position-try-fallbacks property.
-	ActivePositionFallbackIndex int64                            `json:"activePositionFallbackIndex,omitempty"` // Index of the active fallback in the applied position-try-fallback property, will not be set if there is no active position-try fallback.
-	CSSPropertyRules            []*PropertyRule                  `json:"cssPropertyRules,omitempty"`            // A list of CSS at-property rules matching this node.
-	CSSPropertyRegistrations    []*PropertyRegistration          `json:"cssPropertyRegistrations,omitempty"`    // A list of CSS property registrations matching this node.
-	CSSFontPaletteValuesRule    *FontPaletteValuesRule           `json:"cssFontPaletteValuesRule,omitempty"`    // A font-palette-values rule matching this node.
-	ParentLayoutNodeID          cdp.NodeID                       `json:"parentLayoutNodeId,omitempty"`          // Id of the first parent element that does not have display: contents.
+	InlineStyle                 *Style                           `json:"inlineStyle,omitempty,omitzero"`                 // Inline style for the specified DOM node.
+	AttributesStyle             *Style                           `json:"attributesStyle,omitempty,omitzero"`             // Attribute-defined element style (e.g. resulting from "width=20 height=100%").
+	MatchedCSSRules             []*RuleMatch                     `json:"matchedCSSRules,omitempty,omitzero"`             // CSS rules matching this node, from all applicable stylesheets.
+	PseudoElements              []*PseudoElementMatches          `json:"pseudoElements,omitempty,omitzero"`              // Pseudo style matches for this node.
+	Inherited                   []*InheritedStyleEntry           `json:"inherited,omitempty,omitzero"`                   // A chain of inherited styles (from the immediate node parent up to the DOM tree root).
+	InheritedPseudoElements     []*InheritedPseudoElementMatches `json:"inheritedPseudoElements,omitempty,omitzero"`     // A chain of inherited pseudo element styles (from the immediate node parent up to the DOM tree root).
+	CSSKeyframesRules           []*KeyframesRule                 `json:"cssKeyframesRules,omitempty,omitzero"`           // A list of CSS keyframed animations matching this node.
+	CSSPositionTryRules         []*PositionTryRule               `json:"cssPositionTryRules,omitempty,omitzero"`         // A list of CSS @position-try rules matching this node, based on the position-try-fallbacks property.
+	ActivePositionFallbackIndex int64                            `json:"activePositionFallbackIndex,omitempty,omitzero"` // Index of the active fallback in the applied position-try-fallback property, will not be set if there is no active position-try fallback.
+	CSSPropertyRules            []*PropertyRule                  `json:"cssPropertyRules,omitempty,omitzero"`            // A list of CSS at-property rules matching this node.
+	CSSPropertyRegistrations    []*PropertyRegistration          `json:"cssPropertyRegistrations,omitempty,omitzero"`    // A list of CSS property registrations matching this node.
+	CSSFontPaletteValuesRule    *FontPaletteValuesRule           `json:"cssFontPaletteValuesRule,omitempty,omitzero"`    // A font-palette-values rule matching this node.
+	ParentLayoutNodeID          cdp.NodeID                       `json:"parentLayoutNodeId,omitempty,omitzero"`          // Id of the first parent element that does not have display: contents.
 }
 
 // Do executes CSS.getMatchedStylesForNode against the provided context.
@@ -624,7 +624,7 @@ func GetMediaQueries() *GetMediaQueriesParams {
 
 // GetMediaQueriesReturns return values.
 type GetMediaQueriesReturns struct {
-	Medias []*Media `json:"medias,omitempty"`
+	Medias []*Media `json:"medias,omitempty,omitzero"`
 }
 
 // Do executes CSS.getMediaQueries against the provided context.
@@ -665,7 +665,7 @@ func GetPlatformFontsForNode(nodeID cdp.NodeID) *GetPlatformFontsForNodeParams {
 
 // GetPlatformFontsForNodeReturns return values.
 type GetPlatformFontsForNodeReturns struct {
-	Fonts []*PlatformFontUsage `json:"fonts,omitempty"` // Usage statistics for every employed platform font.
+	Fonts []*PlatformFontUsage `json:"fonts,omitempty,omitzero"` // Usage statistics for every employed platform font.
 }
 
 // Do executes CSS.getPlatformFontsForNode against the provided context.
@@ -705,7 +705,7 @@ func GetStyleSheetText(styleSheetID StyleSheetID) *GetStyleSheetTextParams {
 
 // GetStyleSheetTextReturns return values.
 type GetStyleSheetTextReturns struct {
-	Text string `json:"text,omitempty"` // The stylesheet text.
+	Text string `json:"text,omitempty,omitzero"` // The stylesheet text.
 }
 
 // Do executes CSS.getStyleSheetText against the provided context.
@@ -752,7 +752,7 @@ func GetLayersForNode(nodeID cdp.NodeID) *GetLayersForNodeParams {
 
 // GetLayersForNodeReturns return values.
 type GetLayersForNodeReturns struct {
-	RootLayer *LayerData `json:"rootLayer,omitempty"`
+	RootLayer *LayerData `json:"rootLayer,omitempty,omitzero"`
 }
 
 // Do executes CSS.getLayersForNode against the provided context.
@@ -798,7 +798,7 @@ func GetLocationForSelector(styleSheetID StyleSheetID, selectorText string) *Get
 
 // GetLocationForSelectorReturns return values.
 type GetLocationForSelectorReturns struct {
-	Ranges []*SourceRange `json:"ranges,omitempty"`
+	Ranges []*SourceRange `json:"ranges,omitempty,omitzero"`
 }
 
 // Do executes CSS.getLocationForSelector against the provided context.
@@ -823,7 +823,7 @@ func (p *GetLocationForSelectorParams) Do(ctx context.Context) (ranges []*Source
 // be 1 node tracked for computed style updates so passing a new node id removes
 // tracking from the previous node. Pass undefined to disable tracking.
 type TrackComputedStyleUpdatesForNodeParams struct {
-	NodeID cdp.NodeID `json:"nodeId,omitempty"`
+	NodeID cdp.NodeID `json:"nodeId,omitempty,omitzero"`
 }
 
 // TrackComputedStyleUpdatesForNode starts tracking the given node for the
@@ -900,7 +900,7 @@ func TakeComputedStyleUpdates() *TakeComputedStyleUpdatesParams {
 
 // TakeComputedStyleUpdatesReturns return values.
 type TakeComputedStyleUpdatesReturns struct {
-	NodeIDs []cdp.NodeID `json:"nodeIds,omitempty"` // The list of node Ids that have their tracked computed styles updated.
+	NodeIDs []cdp.NodeID `json:"nodeIds,omitempty,omitzero"` // The list of node Ids that have their tracked computed styles updated.
 }
 
 // Do executes CSS.takeComputedStyleUpdates against the provided context.
@@ -977,7 +977,7 @@ func SetPropertyRulePropertyName(styleSheetID StyleSheetID, rangeVal *SourceRang
 
 // SetPropertyRulePropertyNameReturns return values.
 type SetPropertyRulePropertyNameReturns struct {
-	PropertyName *Value `json:"propertyName,omitempty"` // The resulting key text after modification.
+	PropertyName *Value `json:"propertyName,omitempty,omitzero"` // The resulting key text after modification.
 }
 
 // Do executes CSS.setPropertyRulePropertyName against the provided context.
@@ -1022,7 +1022,7 @@ func SetKeyframeKey(styleSheetID StyleSheetID, rangeVal *SourceRange, keyText st
 
 // SetKeyframeKeyReturns return values.
 type SetKeyframeKeyReturns struct {
-	KeyText *Value `json:"keyText,omitempty"` // The resulting key text after modification.
+	KeyText *Value `json:"keyText,omitempty,omitzero"` // The resulting key text after modification.
 }
 
 // Do executes CSS.setKeyframeKey against the provided context.
@@ -1067,7 +1067,7 @@ func SetMediaText(styleSheetID StyleSheetID, rangeVal *SourceRange, text string)
 
 // SetMediaTextReturns return values.
 type SetMediaTextReturns struct {
-	Media *Media `json:"media,omitempty"` // The resulting CSS media rule after modification.
+	Media *Media `json:"media,omitempty,omitzero"` // The resulting CSS media rule after modification.
 }
 
 // Do executes CSS.setMediaText against the provided context.
@@ -1112,7 +1112,7 @@ func SetContainerQueryText(styleSheetID StyleSheetID, rangeVal *SourceRange, tex
 
 // SetContainerQueryTextReturns return values.
 type SetContainerQueryTextReturns struct {
-	ContainerQuery *ContainerQuery `json:"containerQuery,omitempty"` // The resulting CSS container query rule after modification.
+	ContainerQuery *ContainerQuery `json:"containerQuery,omitempty,omitzero"` // The resulting CSS container query rule after modification.
 }
 
 // Do executes CSS.setContainerQueryText against the provided context.
@@ -1157,7 +1157,7 @@ func SetSupportsText(styleSheetID StyleSheetID, rangeVal *SourceRange, text stri
 
 // SetSupportsTextReturns return values.
 type SetSupportsTextReturns struct {
-	Supports *Supports `json:"supports,omitempty"` // The resulting CSS Supports rule after modification.
+	Supports *Supports `json:"supports,omitempty,omitzero"` // The resulting CSS Supports rule after modification.
 }
 
 // Do executes CSS.setSupportsText against the provided context.
@@ -1202,7 +1202,7 @@ func SetScopeText(styleSheetID StyleSheetID, rangeVal *SourceRange, text string)
 
 // SetScopeTextReturns return values.
 type SetScopeTextReturns struct {
-	Scope *Scope `json:"scope,omitempty"` // The resulting CSS Scope rule after modification.
+	Scope *Scope `json:"scope,omitempty,omitzero"` // The resulting CSS Scope rule after modification.
 }
 
 // Do executes CSS.setScopeText against the provided context.
@@ -1247,7 +1247,7 @@ func SetRuleSelector(styleSheetID StyleSheetID, rangeVal *SourceRange, selector 
 
 // SetRuleSelectorReturns return values.
 type SetRuleSelectorReturns struct {
-	SelectorList *SelectorList `json:"selectorList,omitempty"` // The resulting selector list after modification.
+	SelectorList *SelectorList `json:"selectorList,omitempty,omitzero"` // The resulting selector list after modification.
 }
 
 // Do executes CSS.setRuleSelector against the provided context.
@@ -1289,7 +1289,7 @@ func SetStyleSheetText(styleSheetID StyleSheetID, text string) *SetStyleSheetTex
 
 // SetStyleSheetTextReturns return values.
 type SetStyleSheetTextReturns struct {
-	SourceMapURL string `json:"sourceMapURL,omitempty"` // URL of source map associated with script (if any).
+	SourceMapURL string `json:"sourceMapURL,omitempty,omitzero"` // URL of source map associated with script (if any).
 }
 
 // Do executes CSS.setStyleSheetText against the provided context.
@@ -1312,7 +1312,7 @@ func (p *SetStyleSheetTextParams) Do(ctx context.Context) (sourceMapURL string, 
 // given order.
 type SetStyleTextsParams struct {
 	Edits                           []*StyleDeclarationEdit `json:"edits"`
-	NodeForPropertySyntaxValidation cdp.NodeID              `json:"nodeForPropertySyntaxValidation,omitempty"` // NodeId for the DOM node in whose context custom property declarations for registered properties should be validated. If omitted, declarations in the new rule text can only be validated statically, which may produce incorrect results if the declaration contains a var() for example.
+	NodeForPropertySyntaxValidation cdp.NodeID              `json:"nodeForPropertySyntaxValidation,omitempty,omitzero"` // NodeId for the DOM node in whose context custom property declarations for registered properties should be validated. If omitted, declarations in the new rule text can only be validated statically, which may produce incorrect results if the declaration contains a var() for example.
 }
 
 // SetStyleTexts applies specified style edits one after another in the given
@@ -1341,7 +1341,7 @@ func (p SetStyleTextsParams) WithNodeForPropertySyntaxValidation(nodeForProperty
 
 // SetStyleTextsReturns return values.
 type SetStyleTextsReturns struct {
-	Styles []*Style `json:"styles,omitempty"` // The resulting styles after modification.
+	Styles []*Style `json:"styles,omitempty,omitzero"` // The resulting styles after modification.
 }
 
 // Do executes CSS.setStyleTexts against the provided context.
@@ -1391,7 +1391,7 @@ func StopRuleUsageTracking() *StopRuleUsageTrackingParams {
 
 // StopRuleUsageTrackingReturns return values.
 type StopRuleUsageTrackingReturns struct {
-	RuleUsage []*RuleUsage `json:"ruleUsage,omitempty"`
+	RuleUsage []*RuleUsage `json:"ruleUsage,omitempty,omitzero"`
 }
 
 // Do executes CSS.stopRuleUsageTracking against the provided context.
@@ -1424,8 +1424,8 @@ func TakeCoverageDelta() *TakeCoverageDeltaParams {
 
 // TakeCoverageDeltaReturns return values.
 type TakeCoverageDeltaReturns struct {
-	Coverage  []*RuleUsage `json:"coverage,omitempty"`
-	Timestamp float64      `json:"timestamp,omitempty"` // Monotonically increasing time, in seconds.
+	Coverage  []*RuleUsage `json:"coverage,omitempty,omitzero"`
+	Timestamp float64      `json:"timestamp,omitempty,omitzero"` // Monotonically increasing time, in seconds.
 }
 
 // Do executes CSS.takeCoverageDelta against the provided context.

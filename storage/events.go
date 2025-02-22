@@ -5,7 +5,7 @@ package storage
 import (
 	"github.com/chromedp/cdproto/cdp"
 	"github.com/chromedp/cdproto/network"
-	"github.com/mailru/easyjson"
+	"github.com/go-json-experiment/json/jsontext"
 )
 
 // EventCacheStorageContentUpdated a cache's contents have been modified.
@@ -58,10 +58,10 @@ type EventInterestGroupAccessed struct {
 	Type                  InterestGroupAccessType `json:"type"`
 	OwnerOrigin           string                  `json:"ownerOrigin"`
 	Name                  string                  `json:"name"`
-	ComponentSellerOrigin string                  `json:"componentSellerOrigin,omitempty"` // For topLevelBid/topLevelAdditionalBid, and when appropriate, win and additionalBidWin
-	Bid                   float64                 `json:"bid,omitempty"`                   // For bid or somethingBid event, if done locally and not on a server.
-	BidCurrency           string                  `json:"bidCurrency,omitempty"`
-	UniqueAuctionID       InterestGroupAuctionID  `json:"uniqueAuctionId,omitempty"` // For non-global events --- links to interestGroupAuctionEvent
+	ComponentSellerOrigin string                  `json:"componentSellerOrigin,omitempty,omitzero"` // For topLevelBid/topLevelAdditionalBid, and when appropriate, win and additionalBidWin
+	Bid                   float64                 `json:"bid,omitempty,omitzero"`                   // For bid or somethingBid event, if done locally and not on a server.
+	BidCurrency           string                  `json:"bidCurrency,omitempty,omitzero"`
+	UniqueAuctionID       InterestGroupAuctionID  `json:"uniqueAuctionId,omitempty,omitzero"` // For non-global events --- links to interestGroupAuctionEvent
 }
 
 // EventInterestGroupAuctionEventOccurred an auction involving interest
@@ -72,8 +72,8 @@ type EventInterestGroupAuctionEventOccurred struct {
 	EventTime       *cdp.TimeSinceEpoch           `json:"eventTime"`
 	Type            InterestGroupAuctionEventType `json:"type"`
 	UniqueAuctionID InterestGroupAuctionID        `json:"uniqueAuctionId"`
-	ParentAuctionID InterestGroupAuctionID        `json:"parentAuctionId,omitempty"` // Set for child auctions.
-	AuctionConfig   easyjson.RawMessage           `json:"auctionConfig,omitempty"`
+	ParentAuctionID InterestGroupAuctionID        `json:"parentAuctionId,omitempty,omitzero"` // Set for child auctions.
+	AuctionConfig   jsontext.Value                `json:"auctionConfig,omitempty,omitzero"`
 }
 
 // EventInterestGroupAuctionNetworkRequestCreated specifies which auctions a

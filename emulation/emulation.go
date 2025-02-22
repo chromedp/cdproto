@@ -92,7 +92,7 @@ func (p *SetFocusEmulationEnabledParams) Do(ctx context.Context) (err error) {
 // SetAutoDarkModeOverrideParams automatically render all web contents using
 // a dark theme.
 type SetAutoDarkModeOverrideParams struct {
-	Enabled bool `json:"enabled,omitempty"` // Whether to enable or disable automatic dark mode. If not specified, any existing override will be cleared.
+	Enabled bool `json:"enabled,omitempty,omitzero"` // Whether to enable or disable automatic dark mode. If not specified, any existing override will be cleared.
 }
 
 // SetAutoDarkModeOverride automatically render all web contents using a dark
@@ -144,7 +144,7 @@ func (p *SetCPUThrottlingRateParams) Do(ctx context.Context) (err error) {
 // default background color of the frame. This override is used if the content
 // does not specify one.
 type SetDefaultBackgroundColorOverrideParams struct {
-	Color *cdp.RGBA `json:"color,omitempty"` // RGBA of the default background color. If not specified, any existing override will be cleared.
+	Color *cdp.RGBA `json:"color,omitempty,omitzero"` // RGBA of the default background color. If not specified, any existing override will be cleared.
 }
 
 // SetDefaultBackgroundColorOverride sets or clears an override of the
@@ -175,19 +175,19 @@ func (p *SetDefaultBackgroundColorOverrideParams) Do(ctx context.Context) (err e
 // window.innerHeight, and "device-width"/"device-height"-related CSS media
 // query results).
 type SetDeviceMetricsOverrideParams struct {
-	Width              int64              `json:"width"`                        // Overriding width value in pixels (minimum 0, maximum 10000000). 0 disables the override.
-	Height             int64              `json:"height"`                       // Overriding height value in pixels (minimum 0, maximum 10000000). 0 disables the override.
-	DeviceScaleFactor  float64            `json:"deviceScaleFactor"`            // Overriding device scale factor value. 0 disables the override.
-	Mobile             bool               `json:"mobile"`                       // Whether to emulate mobile device. This includes viewport meta tag, overlay scrollbars, text autosizing and more.
-	Scale              float64            `json:"scale,omitempty"`              // Scale to apply to resulting view image.
-	ScreenWidth        int64              `json:"screenWidth,omitempty"`        // Overriding screen width value in pixels (minimum 0, maximum 10000000).
-	ScreenHeight       int64              `json:"screenHeight,omitempty"`       // Overriding screen height value in pixels (minimum 0, maximum 10000000).
-	PositionX          int64              `json:"positionX,omitempty"`          // Overriding view X position on screen in pixels (minimum 0, maximum 10000000).
-	PositionY          int64              `json:"positionY,omitempty"`          // Overriding view Y position on screen in pixels (minimum 0, maximum 10000000).
-	DontSetVisibleSize bool               `json:"dontSetVisibleSize,omitempty"` // Do not set visible view size, rely upon explicit setVisibleSize call.
-	ScreenOrientation  *ScreenOrientation `json:"screenOrientation,omitempty"`  // Screen orientation override.
-	Viewport           *page.Viewport     `json:"viewport,omitempty"`           // If set, the visible area of the page will be overridden to this viewport. This viewport change is not observed by the page, e.g. viewport-relative elements do not change positions.
-	DisplayFeature     *DisplayFeature    `json:"displayFeature,omitempty"`     // If set, the display feature of a multi-segment screen. If not set, multi-segment support is turned-off.
+	Width              int64              `json:"width"`                                 // Overriding width value in pixels (minimum 0, maximum 10000000). 0 disables the override.
+	Height             int64              `json:"height"`                                // Overriding height value in pixels (minimum 0, maximum 10000000). 0 disables the override.
+	DeviceScaleFactor  float64            `json:"deviceScaleFactor"`                     // Overriding device scale factor value. 0 disables the override.
+	Mobile             bool               `json:"mobile"`                                // Whether to emulate mobile device. This includes viewport meta tag, overlay scrollbars, text autosizing and more.
+	Scale              float64            `json:"scale,omitempty,omitzero"`              // Scale to apply to resulting view image.
+	ScreenWidth        int64              `json:"screenWidth,omitempty,omitzero"`        // Overriding screen width value in pixels (minimum 0, maximum 10000000).
+	ScreenHeight       int64              `json:"screenHeight,omitempty,omitzero"`       // Overriding screen height value in pixels (minimum 0, maximum 10000000).
+	PositionX          int64              `json:"positionX,omitempty,omitzero"`          // Overriding view X position on screen in pixels (minimum 0, maximum 10000000).
+	PositionY          int64              `json:"positionY,omitempty,omitzero"`          // Overriding view Y position on screen in pixels (minimum 0, maximum 10000000).
+	DontSetVisibleSize bool               `json:"dontSetVisibleSize,omitempty,omitzero"` // Do not set visible view size, rely upon explicit setVisibleSize call.
+	ScreenOrientation  *ScreenOrientation `json:"screenOrientation,omitempty,omitzero"`  // Screen orientation override.
+	Viewport           *page.Viewport     `json:"viewport,omitempty,omitzero"`           // If set, the visible area of the page will be overridden to this viewport. This viewport change is not observed by the page, e.g. viewport-relative elements do not change positions.
+	DisplayFeature     *DisplayFeature    `json:"displayFeature,omitempty,omitzero"`     // If set, the display feature of a multi-segment screen. If not set, multi-segment support is turned-off.
 }
 
 // SetDeviceMetricsOverride overrides the values of device screen dimensions
@@ -375,8 +375,8 @@ func (p *SetDocumentCookieDisabledParams) Do(ctx context.Context) (err error) {
 
 // SetEmitTouchEventsForMouseParams [no description].
 type SetEmitTouchEventsForMouseParams struct {
-	Enabled       bool                                    `json:"enabled"`                 // Whether touch emulation based on mouse input should be enabled.
-	Configuration SetEmitTouchEventsForMouseConfiguration `json:"configuration,omitempty"` // Touch/gesture events configuration. Default: current platform.
+	Enabled       bool                                    `json:"enabled"`                          // Whether touch emulation based on mouse input should be enabled.
+	Configuration SetEmitTouchEventsForMouseConfiguration `json:"configuration,omitempty,omitzero"` // Touch/gesture events configuration. Default: current platform.
 }
 
 // SetEmitTouchEventsForMouse [no description].
@@ -407,8 +407,8 @@ func (p *SetEmitTouchEventsForMouseParams) Do(ctx context.Context) (err error) {
 // SetEmulatedMediaParams emulates the given media type or media feature for
 // CSS media queries.
 type SetEmulatedMediaParams struct {
-	Media    string          `json:"media,omitempty"`    // Media type to emulate. Empty string disables the override.
-	Features []*MediaFeature `json:"features,omitempty"` // Media features to emulate.
+	Media    string          `json:"media,omitempty,omitzero"`    // Media type to emulate. Empty string disables the override.
+	Features []*MediaFeature `json:"features,omitempty,omitzero"` // Media features to emulate.
 }
 
 // SetEmulatedMedia emulates the given media type or media feature for CSS
@@ -464,9 +464,9 @@ func (p *SetEmulatedVisionDeficiencyParams) Do(ctx context.Context) (err error) 
 // SetGeolocationOverrideParams overrides the Geolocation Position or Error.
 // Omitting any of the parameters emulates position unavailable.
 type SetGeolocationOverrideParams struct {
-	Latitude  float64 `json:"latitude,omitempty"`  // Mock latitude
-	Longitude float64 `json:"longitude,omitempty"` // Mock longitude
-	Accuracy  float64 `json:"accuracy,omitempty"`  // Mock accuracy
+	Latitude  float64 `json:"latitude,omitempty,omitzero"`  // Mock latitude
+	Longitude float64 `json:"longitude,omitempty,omitzero"` // Mock longitude
+	Accuracy  float64 `json:"accuracy,omitempty,omitzero"`  // Mock accuracy
 }
 
 // SetGeolocationOverride overrides the Geolocation Position or Error.
@@ -522,7 +522,7 @@ func GetOverriddenSensorInformation(typeVal SensorType) *GetOverriddenSensorInfo
 
 // GetOverriddenSensorInformationReturns return values.
 type GetOverriddenSensorInformationReturns struct {
-	RequestedSamplingFrequency float64 `json:"requestedSamplingFrequency,omitempty"`
+	RequestedSamplingFrequency float64 `json:"requestedSamplingFrequency,omitempty,omitzero"`
 }
 
 // Do executes Emulation.getOverriddenSensorInformation against the provided context.
@@ -549,7 +549,7 @@ func (p *GetOverriddenSensorInformationParams) Do(ctx context.Context) (requeste
 type SetSensorOverrideEnabledParams struct {
 	Enabled  bool            `json:"enabled"`
 	Type     SensorType      `json:"type"`
-	Metadata *SensorMetadata `json:"metadata,omitempty"`
+	Metadata *SensorMetadata `json:"metadata,omitempty,omitzero"`
 }
 
 // SetSensorOverrideEnabled overrides a platform sensor of a given type. If
@@ -617,7 +617,7 @@ func (p *SetSensorOverrideReadingsParams) Do(ctx context.Context) (err error) {
 type SetPressureSourceOverrideEnabledParams struct {
 	Enabled  bool              `json:"enabled"`
 	Source   PressureSource    `json:"source"`
-	Metadata *PressureMetadata `json:"metadata,omitempty"`
+	Metadata *PressureMetadata `json:"metadata,omitempty,omitzero"`
 }
 
 // SetPressureSourceOverrideEnabled overrides a pressure source of a given
@@ -769,8 +769,8 @@ func (p *SetScriptExecutionDisabledParams) Do(ctx context.Context) (err error) {
 // SetTouchEmulationEnabledParams enables touch on platforms which do not
 // support them.
 type SetTouchEmulationEnabledParams struct {
-	Enabled        bool  `json:"enabled"`                  // Whether the touch event emulation should be enabled.
-	MaxTouchPoints int64 `json:"maxTouchPoints,omitempty"` // Maximum touch points supported. Defaults to one.
+	Enabled        bool  `json:"enabled"`                           // Whether the touch event emulation should be enabled.
+	MaxTouchPoints int64 `json:"maxTouchPoints,omitempty,omitzero"` // Maximum touch points supported. Defaults to one.
 }
 
 // SetTouchEmulationEnabled enables touch on platforms which do not support
@@ -803,9 +803,9 @@ func (p *SetTouchEmulationEnabledParams) Do(ctx context.Context) (err error) {
 // policy. Note this supersedes any previous time budget.
 type SetVirtualTimePolicyParams struct {
 	Policy                            VirtualTimePolicy   `json:"policy"`
-	Budget                            float64             `json:"budget,omitempty"`                            // If set, after this many virtual milliseconds have elapsed virtual time will be paused and a virtualTimeBudgetExpired event is sent.
-	MaxVirtualTimeTaskStarvationCount int64               `json:"maxVirtualTimeTaskStarvationCount,omitempty"` // If set this specifies the maximum number of tasks that can be run before virtual is forced forwards to prevent deadlock.
-	InitialVirtualTime                *cdp.TimeSinceEpoch `json:"initialVirtualTime,omitempty"`                // If set, base::Time::Now will be overridden to initially return this value.
+	Budget                            float64             `json:"budget,omitempty,omitzero"`                            // If set, after this many virtual milliseconds have elapsed virtual time will be paused and a virtualTimeBudgetExpired event is sent.
+	MaxVirtualTimeTaskStarvationCount int64               `json:"maxVirtualTimeTaskStarvationCount,omitempty,omitzero"` // If set this specifies the maximum number of tasks that can be run before virtual is forced forwards to prevent deadlock.
+	InitialVirtualTime                *cdp.TimeSinceEpoch `json:"initialVirtualTime,omitempty,omitzero"`                // If set, base::Time::Now will be overridden to initially return this value.
 }
 
 // SetVirtualTimePolicy turns on virtual time for all frames (replacing
@@ -847,7 +847,7 @@ func (p SetVirtualTimePolicyParams) WithInitialVirtualTime(initialVirtualTime *c
 
 // SetVirtualTimePolicyReturns return values.
 type SetVirtualTimePolicyReturns struct {
-	VirtualTimeTicksBase float64 `json:"virtualTimeTicksBase,omitempty"` // Absolute timestamp at which virtual time was first enabled (up time in milliseconds).
+	VirtualTimeTicksBase float64 `json:"virtualTimeTicksBase,omitempty,omitzero"` // Absolute timestamp at which virtual time was first enabled (up time in milliseconds).
 }
 
 // Do executes Emulation.setVirtualTimePolicy against the provided context.
@@ -869,7 +869,7 @@ func (p *SetVirtualTimePolicyParams) Do(ctx context.Context) (virtualTimeTicksBa
 // SetLocaleOverrideParams overrides default host system locale with the
 // specified one.
 type SetLocaleOverrideParams struct {
-	Locale string `json:"locale,omitempty"` // ICU style C locale (e.g. "en_US"). If not specified or empty, disables the override and restores default host system locale.
+	Locale string `json:"locale,omitempty,omitzero"` // ICU style C locale (e.g. "en_US"). If not specified or empty, disables the override and restores default host system locale.
 }
 
 // SetLocaleOverride overrides default host system locale with the specified
@@ -968,10 +968,10 @@ func (p *SetHardwareConcurrencyOverrideParams) Do(ctx context.Context) (err erro
 // SetUserAgentOverrideParams allows overriding user agent with the given
 // string. userAgentMetadata must be set for Client Hint headers to be sent.
 type SetUserAgentOverrideParams struct {
-	UserAgent         string             `json:"userAgent"`                   // User agent to use.
-	AcceptLanguage    string             `json:"acceptLanguage,omitempty"`    // Browser language to emulate.
-	Platform          string             `json:"platform,omitempty"`          // The platform navigator.platform should return.
-	UserAgentMetadata *UserAgentMetadata `json:"userAgentMetadata,omitempty"` // To be sent in Sec-CH-UA-* headers and returned in navigator.userAgentData
+	UserAgent         string             `json:"userAgent"`                            // User agent to use.
+	AcceptLanguage    string             `json:"acceptLanguage,omitempty,omitzero"`    // Browser language to emulate.
+	Platform          string             `json:"platform,omitempty,omitzero"`          // The platform navigator.platform should return.
+	UserAgentMetadata *UserAgentMetadata `json:"userAgentMetadata,omitempty,omitzero"` // To be sent in Sec-CH-UA-* headers and returned in navigator.userAgentData
 }
 
 // SetUserAgentOverride allows overriding user agent with the given string.

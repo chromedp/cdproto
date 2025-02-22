@@ -40,7 +40,7 @@ func (p *ActivateTargetParams) Do(ctx context.Context) (err error) {
 // AttachToTargetParams attaches to the target with given id.
 type AttachToTargetParams struct {
 	TargetID ID   `json:"targetId"`
-	Flatten  bool `json:"flatten,omitempty"` // Enables "flat" access to the session via specifying sessionId attribute in the commands. We plan to make this the default, deprecate non-flattened mode, and eventually retire it. See crbug.com/991325.
+	Flatten  bool `json:"flatten,omitempty,omitzero"` // Enables "flat" access to the session via specifying sessionId attribute in the commands. We plan to make this the default, deprecate non-flattened mode, and eventually retire it. See crbug.com/991325.
 }
 
 // AttachToTarget attaches to the target with given id.
@@ -66,7 +66,7 @@ func (p AttachToTargetParams) WithFlatten(flatten bool) *AttachToTargetParams {
 
 // AttachToTargetReturns return values.
 type AttachToTargetReturns struct {
-	SessionID SessionID `json:"sessionId,omitempty"` // Id assigned to the session.
+	SessionID SessionID `json:"sessionId,omitempty,omitzero"` // Id assigned to the session.
 }
 
 // Do executes Target.attachToTarget against the provided context.
@@ -99,7 +99,7 @@ func AttachToBrowserTarget() *AttachToBrowserTargetParams {
 
 // AttachToBrowserTargetReturns return values.
 type AttachToBrowserTargetReturns struct {
-	SessionID SessionID `json:"sessionId,omitempty"` // Id assigned to the session.
+	SessionID SessionID `json:"sessionId,omitempty,omitzero"` // Id assigned to the session.
 }
 
 // Do executes Target.attachToBrowserTarget against the provided context.
@@ -151,8 +151,8 @@ func (p *CloseTargetParams) Do(ctx context.Context) (err error) {
 // will be called for the protocol notifications and command responses.
 type ExposeDevToolsProtocolParams struct {
 	TargetID           ID     `json:"targetId"`
-	BindingName        string `json:"bindingName,omitempty"`        // Binding name, 'cdp' if not specified.
-	InheritPermissions bool   `json:"inheritPermissions,omitempty"` // If true, inherits the current root session's permissions (default: false).
+	BindingName        string `json:"bindingName,omitempty,omitzero"`        // Binding name, 'cdp' if not specified.
+	InheritPermissions bool   `json:"inheritPermissions,omitempty,omitzero"` // If true, inherits the current root session's permissions (default: false).
 }
 
 // ExposeDevToolsProtocol inject object to the target's main frame that
@@ -194,10 +194,10 @@ func (p *ExposeDevToolsProtocolParams) Do(ctx context.Context) (err error) {
 // CreateBrowserContextParams creates a new empty BrowserContext. Similar to
 // an incognito profile but you can have more than one.
 type CreateBrowserContextParams struct {
-	DisposeOnDetach                   bool     `json:"disposeOnDetach,omitempty"`                   // If specified, disposes this context when debugging session disconnects.
-	ProxyServer                       string   `json:"proxyServer,omitempty"`                       // Proxy server, similar to the one passed to --proxy-server
-	ProxyBypassList                   string   `json:"proxyBypassList,omitempty"`                   // Proxy bypass list, similar to the one passed to --proxy-bypass-list
-	OriginsWithUniversalNetworkAccess []string `json:"originsWithUniversalNetworkAccess,omitempty"` // An optional list of origins to grant unlimited cross-origin access to. Parts of the URL other than those constituting origin are ignored.
+	DisposeOnDetach                   bool     `json:"disposeOnDetach,omitempty,omitzero"`                   // If specified, disposes this context when debugging session disconnects.
+	ProxyServer                       string   `json:"proxyServer,omitempty,omitzero"`                       // Proxy server, similar to the one passed to --proxy-server
+	ProxyBypassList                   string   `json:"proxyBypassList,omitempty,omitzero"`                   // Proxy bypass list, similar to the one passed to --proxy-bypass-list
+	OriginsWithUniversalNetworkAccess []string `json:"originsWithUniversalNetworkAccess,omitempty,omitzero"` // An optional list of origins to grant unlimited cross-origin access to. Parts of the URL other than those constituting origin are ignored.
 }
 
 // CreateBrowserContext creates a new empty BrowserContext. Similar to an
@@ -240,7 +240,7 @@ func (p CreateBrowserContextParams) WithOriginsWithUniversalNetworkAccess(origin
 
 // CreateBrowserContextReturns return values.
 type CreateBrowserContextReturns struct {
-	BrowserContextID cdp.BrowserContextID `json:"browserContextId,omitempty"` // The id of the context created.
+	BrowserContextID cdp.BrowserContextID `json:"browserContextId,omitempty,omitzero"` // The id of the context created.
 }
 
 // Do executes Target.createBrowserContext against the provided context.
@@ -273,7 +273,7 @@ func GetBrowserContexts() *GetBrowserContextsParams {
 
 // GetBrowserContextsReturns return values.
 type GetBrowserContextsReturns struct {
-	BrowserContextIDs []cdp.BrowserContextID `json:"browserContextIds,omitempty"` // An array of browser context ids.
+	BrowserContextIDs []cdp.BrowserContextID `json:"browserContextIds,omitempty,omitzero"` // An array of browser context ids.
 }
 
 // Do executes Target.getBrowserContexts against the provided context.
@@ -294,17 +294,17 @@ func (p *GetBrowserContextsParams) Do(ctx context.Context) (browserContextIDs []
 
 // CreateTargetParams creates a new page.
 type CreateTargetParams struct {
-	URL                     string               `json:"url"`                               // The initial URL the page will be navigated to. An empty string indicates about:blank.
-	Left                    int64                `json:"left,omitempty"`                    // Frame left origin in DIP (requires newWindow to be true or headless shell).
-	Top                     int64                `json:"top,omitempty"`                     // Frame top origin in DIP (requires newWindow to be true or headless shell).
-	Width                   int64                `json:"width,omitempty"`                   // Frame width in DIP (requires newWindow to be true or headless shell).
-	Height                  int64                `json:"height,omitempty"`                  // Frame height in DIP (requires newWindow to be true or headless shell).
-	WindowState             WindowState          `json:"windowState,omitempty"`             // Frame window state (requires newWindow to be true or headless shell). Default is normal.
-	BrowserContextID        cdp.BrowserContextID `json:"browserContextId,omitempty"`        // The browser context to create the page in.
-	EnableBeginFrameControl bool                 `json:"enableBeginFrameControl,omitempty"` // Whether BeginFrames for this target will be controlled via DevTools (headless shell only, not supported on MacOS yet, false by default).
-	NewWindow               bool                 `json:"newWindow,omitempty"`               // Whether to create a new Window or Tab (false by default, not supported by headless shell).
-	Background              bool                 `json:"background,omitempty"`              // Whether to create the target in background or foreground (false by default, not supported by headless shell).
-	ForTab                  bool                 `json:"forTab,omitempty"`                  // Whether to create the target of type "tab".
+	URL                     string               `json:"url"`                                        // The initial URL the page will be navigated to. An empty string indicates about:blank.
+	Left                    int64                `json:"left,omitempty,omitzero"`                    // Frame left origin in DIP (requires newWindow to be true or headless shell).
+	Top                     int64                `json:"top,omitempty,omitzero"`                     // Frame top origin in DIP (requires newWindow to be true or headless shell).
+	Width                   int64                `json:"width,omitempty,omitzero"`                   // Frame width in DIP (requires newWindow to be true or headless shell).
+	Height                  int64                `json:"height,omitempty,omitzero"`                  // Frame height in DIP (requires newWindow to be true or headless shell).
+	WindowState             WindowState          `json:"windowState,omitempty,omitzero"`             // Frame window state (requires newWindow to be true or headless shell). Default is normal.
+	BrowserContextID        cdp.BrowserContextID `json:"browserContextId,omitempty,omitzero"`        // The browser context to create the page in.
+	EnableBeginFrameControl bool                 `json:"enableBeginFrameControl,omitempty,omitzero"` // Whether BeginFrames for this target will be controlled via DevTools (headless shell only, not supported on MacOS yet, false by default).
+	NewWindow               bool                 `json:"newWindow,omitempty,omitzero"`               // Whether to create a new Window or Tab (false by default, not supported by headless shell).
+	Background              bool                 `json:"background,omitempty,omitzero"`              // Whether to create the target in background or foreground (false by default, not supported by headless shell).
+	ForTab                  bool                 `json:"forTab,omitempty,omitzero"`                  // Whether to create the target of type "tab".
 }
 
 // CreateTarget creates a new page.
@@ -391,7 +391,7 @@ func (p CreateTargetParams) WithForTab(forTab bool) *CreateTargetParams {
 
 // CreateTargetReturns return values.
 type CreateTargetReturns struct {
-	TargetID ID `json:"targetId,omitempty"` // The id of the page opened.
+	TargetID ID `json:"targetId,omitempty,omitzero"` // The id of the page opened.
 }
 
 // Do executes Target.createTarget against the provided context.
@@ -412,7 +412,7 @@ func (p *CreateTargetParams) Do(ctx context.Context) (targetID ID, err error) {
 
 // DetachFromTargetParams detaches session with given id.
 type DetachFromTargetParams struct {
-	SessionID SessionID `json:"sessionId,omitempty"` // Session to detach.
+	SessionID SessionID `json:"sessionId,omitempty,omitzero"` // Session to detach.
 }
 
 // DetachFromTarget detaches session with given id.
@@ -462,7 +462,7 @@ func (p *DisposeBrowserContextParams) Do(ctx context.Context) (err error) {
 
 // GetTargetInfoParams returns information about a target.
 type GetTargetInfoParams struct {
-	TargetID ID `json:"targetId,omitempty"`
+	TargetID ID `json:"targetId,omitempty,omitzero"`
 }
 
 // GetTargetInfo returns information about a target.
@@ -482,7 +482,7 @@ func (p GetTargetInfoParams) WithTargetID(targetID ID) *GetTargetInfoParams {
 
 // GetTargetInfoReturns return values.
 type GetTargetInfoReturns struct {
-	TargetInfo *Info `json:"targetInfo,omitempty"`
+	TargetInfo *Info `json:"targetInfo,omitempty,omitzero"`
 }
 
 // Do executes Target.getTargetInfo against the provided context.
@@ -503,7 +503,7 @@ func (p *GetTargetInfoParams) Do(ctx context.Context) (targetInfo *Info, err err
 
 // GetTargetsParams retrieves a list of available targets.
 type GetTargetsParams struct {
-	Filter Filter `json:"filter,omitempty"` // Only targets matching filter will be reported. If filter is not specified and target discovery is currently enabled, a filter used for target discovery is used for consistency.
+	Filter Filter `json:"filter,omitempty,omitzero"` // Only targets matching filter will be reported. If filter is not specified and target discovery is currently enabled, a filter used for target discovery is used for consistency.
 }
 
 // GetTargets retrieves a list of available targets.
@@ -525,7 +525,7 @@ func (p GetTargetsParams) WithFilter(filter Filter) *GetTargetsParams {
 
 // GetTargetsReturns return values.
 type GetTargetsReturns struct {
-	TargetInfos []*Info `json:"targetInfos,omitempty"` // The list of targets.
+	TargetInfos []*Info `json:"targetInfos,omitempty,omitzero"` // The list of targets.
 }
 
 // Do executes Target.getTargets against the provided context.
@@ -551,10 +551,10 @@ func (p *GetTargetsParams) Do(ctx context.Context) (targetInfos []*Info, err err
 // all targets added by autoAttachRelated from the list of targets to watch for
 // creation of related targets.
 type SetAutoAttachParams struct {
-	AutoAttach             bool   `json:"autoAttach"`             // Whether to auto-attach to related targets.
-	WaitForDebuggerOnStart bool   `json:"waitForDebuggerOnStart"` // Whether to pause new targets when attaching to them. Use Runtime.runIfWaitingForDebugger to run paused targets.
-	Flatten                bool   `json:"flatten,omitempty"`      // Enables "flat" access to the session via specifying sessionId attribute in the commands. We plan to make this the default, deprecate non-flattened mode, and eventually retire it. See crbug.com/991325.
-	Filter                 Filter `json:"filter,omitempty"`       // Only targets matching filter will be attached.
+	AutoAttach             bool   `json:"autoAttach"`                 // Whether to auto-attach to related targets.
+	WaitForDebuggerOnStart bool   `json:"waitForDebuggerOnStart"`     // Whether to pause new targets when attaching to them. Use Runtime.runIfWaitingForDebugger to run paused targets.
+	Flatten                bool   `json:"flatten,omitempty,omitzero"` // Enables "flat" access to the session via specifying sessionId attribute in the commands. We plan to make this the default, deprecate non-flattened mode, and eventually retire it. See crbug.com/991325.
+	Filter                 Filter `json:"filter,omitempty,omitzero"`  // Only targets matching filter will be attached.
 }
 
 // SetAutoAttach controls whether to automatically attach to new targets
@@ -604,8 +604,8 @@ func (p *SetAutoAttachParams) Do(ctx context.Context) (err error) {
 // setAutoAttach. Only available at the Browser target.
 type AutoAttachRelatedParams struct {
 	TargetID               ID     `json:"targetId"`
-	WaitForDebuggerOnStart bool   `json:"waitForDebuggerOnStart"` // Whether to pause new targets when attaching to them. Use Runtime.runIfWaitingForDebugger to run paused targets.
-	Filter                 Filter `json:"filter,omitempty"`       // Only targets matching filter will be attached.
+	WaitForDebuggerOnStart bool   `json:"waitForDebuggerOnStart"`    // Whether to pause new targets when attaching to them. Use Runtime.runIfWaitingForDebugger to run paused targets.
+	Filter                 Filter `json:"filter,omitempty,omitzero"` // Only targets matching filter will be attached.
 }
 
 // AutoAttachRelated adds the specified target to the list of targets that
@@ -642,8 +642,8 @@ func (p *AutoAttachRelatedParams) Do(ctx context.Context) (err error) {
 // SetDiscoverTargetsParams controls whether to discover available targets
 // and notify via targetCreated/targetInfoChanged/targetDestroyed events.
 type SetDiscoverTargetsParams struct {
-	Discover bool   `json:"discover"`         // Whether to discover available targets.
-	Filter   Filter `json:"filter,omitempty"` // Only targets matching filter will be attached. If discover is false, filter must be omitted or empty.
+	Discover bool   `json:"discover"`                  // Whether to discover available targets.
+	Filter   Filter `json:"filter,omitempty,omitzero"` // Only targets matching filter will be attached. If discover is false, filter must be omitted or empty.
 }
 
 // SetDiscoverTargets controls whether to discover available targets and

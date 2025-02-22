@@ -35,7 +35,7 @@ type EventLastSeenObjectID struct {
 type EventReportHeapSnapshotProgress struct {
 	Done     int64 `json:"done"`
 	Total    int64 `json:"total"`
-	Finished bool  `json:"finished,omitempty"`
+	Finished bool  `json:"finished,omitempty,omitzero"`
 }
 
 // EventResetProfiles [no description].

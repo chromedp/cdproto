@@ -19,18 +19,18 @@ type EventDomContentEventFired struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-fileChooserOpened
 type EventFileChooserOpened struct {
-	FrameID       cdp.FrameID           `json:"frameId"`                 // Id of the frame containing input node.
-	Mode          FileChooserOpenedMode `json:"mode"`                    // Input mode.
-	BackendNodeID cdp.BackendNodeID     `json:"backendNodeId,omitempty"` // Input node id. Only present for file choosers opened via an <input type="file"> element.
+	FrameID       cdp.FrameID           `json:"frameId"`                          // Id of the frame containing input node.
+	Mode          FileChooserOpenedMode `json:"mode"`                             // Input mode.
+	BackendNodeID cdp.BackendNodeID     `json:"backendNodeId,omitempty,omitzero"` // Input node id. Only present for file choosers opened via an <input type="file"> element.
 }
 
 // EventFrameAttached fired when frame has been attached to its parent.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-frameAttached
 type EventFrameAttached struct {
-	FrameID       cdp.FrameID         `json:"frameId"`         // Id of the frame that has been attached.
-	ParentFrameID cdp.FrameID         `json:"parentFrameId"`   // Parent frame identifier.
-	Stack         *runtime.StackTrace `json:"stack,omitempty"` // JavaScript stack trace of when frame was attached, only set if frame initiated from script.
+	FrameID       cdp.FrameID         `json:"frameId"`                  // Id of the frame that has been attached.
+	ParentFrameID cdp.FrameID         `json:"parentFrameId"`            // Parent frame identifier.
+	Stack         *runtime.StackTrace `json:"stack,omitempty,omitzero"` // JavaScript stack trace of when frame was attached, only set if frame initiated from script.
 }
 
 // EventFrameDetached fired when frame has been detached from its parent.
@@ -135,11 +135,11 @@ type EventJavascriptDialogClosed struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-javascriptDialogOpening
 type EventJavascriptDialogOpening struct {
-	URL               string     `json:"url"`                     // Frame url.
-	Message           string     `json:"message"`                 // Message that will be displayed by the dialog.
-	Type              DialogType `json:"type"`                    // Dialog type.
-	HasBrowserHandler bool       `json:"hasBrowserHandler"`       // True iff browser is capable showing or acting on the given dialog. When browser has no dialog handler for given target, calling alert while Page domain is engaged will stall the page execution. Execution can be resumed via calling Page.handleJavaScriptDialog.
-	DefaultPrompt     string     `json:"defaultPrompt,omitempty"` // Default dialog prompt.
+	URL               string     `json:"url"`                              // Frame url.
+	Message           string     `json:"message"`                          // Message that will be displayed by the dialog.
+	Type              DialogType `json:"type"`                             // Dialog type.
+	HasBrowserHandler bool       `json:"hasBrowserHandler"`                // True iff browser is capable showing or acting on the given dialog. When browser has no dialog handler for given target, calling alert while Page domain is engaged will stall the page execution. Execution can be resumed via calling Page.handleJavaScriptDialog.
+	DefaultPrompt     string     `json:"defaultPrompt,omitempty,omitzero"` // Default dialog prompt.
 }
 
 // EventLifecycleEvent fired for lifecycle events (navigation, load, paint,
@@ -161,10 +161,10 @@ type EventLifecycleEvent struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-backForwardCacheNotUsed
 type EventBackForwardCacheNotUsed struct {
-	LoaderID                    cdp.LoaderID                                `json:"loaderId"`                              // The loader id for the associated navigation.
-	FrameID                     cdp.FrameID                                 `json:"frameId"`                               // The frame id of the associated frame.
-	NotRestoredExplanations     []*BackForwardCacheNotRestoredExplanation   `json:"notRestoredExplanations"`               // Array of reasons why the page could not be cached. This must not be empty.
-	NotRestoredExplanationsTree *BackForwardCacheNotRestoredExplanationTree `json:"notRestoredExplanationsTree,omitempty"` // Tree structure of reasons why the page could not be cached for each frame.
+	LoaderID                    cdp.LoaderID                                `json:"loaderId"`                                       // The loader id for the associated navigation.
+	FrameID                     cdp.FrameID                                 `json:"frameId"`                                        // The frame id of the associated frame.
+	NotRestoredExplanations     []*BackForwardCacheNotRestoredExplanation   `json:"notRestoredExplanations"`                        // Array of reasons why the page could not be cached. This must not be empty.
+	NotRestoredExplanationsTree *BackForwardCacheNotRestoredExplanationTree `json:"notRestoredExplanationsTree,omitempty,omitzero"` // Tree structure of reasons why the page could not be cached for each frame.
 }
 
 // EventLoadEventFired [no description].

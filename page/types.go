@@ -4,13 +4,11 @@ package page
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/chromedp/cdproto/cdp"
 	"github.com/chromedp/cdproto/network"
 	"github.com/chromedp/cdproto/runtime"
-	"github.com/mailru/easyjson"
-	"github.com/mailru/easyjson/jlexer"
-	"github.com/mailru/easyjson/jwriter"
 )
 
 // AdScriptID identifies the bottom-most script which caused the frame to be
@@ -133,20 +131,12 @@ const (
 	PermissionsPolicyFeatureXrSpatialTracking              PermissionsPolicyFeature = "xr-spatial-tracking"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t PermissionsPolicyFeature) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *PermissionsPolicyFeature) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t PermissionsPolicyFeature) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *PermissionsPolicyFeature) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch PermissionsPolicyFeature(v) {
+	switch PermissionsPolicyFeature(s) {
 	case PermissionsPolicyFeatureAccelerometer:
 		*t = PermissionsPolicyFeatureAccelerometer
 	case PermissionsPolicyFeatureAllScreensCapture:
@@ -337,15 +327,10 @@ func (t *PermissionsPolicyFeature) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PermissionsPolicyFeatureWindowManagement
 	case PermissionsPolicyFeatureXrSpatialTracking:
 		*t = PermissionsPolicyFeatureXrSpatialTracking
-
 	default:
-		in.AddError(fmt.Errorf("unknown PermissionsPolicyFeature value: %v", v))
+		return fmt.Errorf("unknown PermissionsPolicyFeature value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *PermissionsPolicyFeature) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // PermissionsPolicyBlockReason reason for a permissions policy feature to be
@@ -367,20 +352,12 @@ const (
 	PermissionsPolicyBlockReasonInIsolatedApp     PermissionsPolicyBlockReason = "InIsolatedApp"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t PermissionsPolicyBlockReason) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *PermissionsPolicyBlockReason) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t PermissionsPolicyBlockReason) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *PermissionsPolicyBlockReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch PermissionsPolicyBlockReason(v) {
+	switch PermissionsPolicyBlockReason(s) {
 	case PermissionsPolicyBlockReasonHeader:
 		*t = PermissionsPolicyBlockReasonHeader
 	case PermissionsPolicyBlockReasonIframeAttribute:
@@ -389,15 +366,10 @@ func (t *PermissionsPolicyBlockReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PermissionsPolicyBlockReasonInFencedFrameTree
 	case PermissionsPolicyBlockReasonInIsolatedApp:
 		*t = PermissionsPolicyBlockReasonInIsolatedApp
-
 	default:
-		in.AddError(fmt.Errorf("unknown PermissionsPolicyBlockReason value: %v", v))
+		return fmt.Errorf("unknown PermissionsPolicyBlockReason value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *PermissionsPolicyBlockReason) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // PermissionsPolicyBlockLocator [no description].
@@ -414,20 +386,20 @@ type PermissionsPolicyBlockLocator struct {
 type PermissionsPolicyFeatureState struct {
 	Feature PermissionsPolicyFeature       `json:"feature"`
 	Allowed bool                           `json:"allowed"`
-	Locator *PermissionsPolicyBlockLocator `json:"locator,omitempty"`
+	Locator *PermissionsPolicyBlockLocator `json:"locator,omitempty,omitzero"`
 }
 
 // FrameResource information about the Resource on the page.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-FrameResource
 type FrameResource struct {
-	URL          string               `json:"url"`                    // Resource URL.
-	Type         network.ResourceType `json:"type"`                   // Type of this resource.
-	MimeType     string               `json:"mimeType"`               // Resource mimeType as determined by the browser.
-	LastModified *cdp.TimeSinceEpoch  `json:"lastModified,omitempty"` // last-modified timestamp as reported by server.
-	ContentSize  float64              `json:"contentSize,omitempty"`  // Resource content size.
-	Failed       bool                 `json:"failed,omitempty"`       // True if the resource failed to load.
-	Canceled     bool                 `json:"canceled,omitempty"`     // True if the resource was canceled during loading.
+	URL          string               `json:"url"`                             // Resource URL.
+	Type         network.ResourceType `json:"type"`                            // Type of this resource.
+	MimeType     string               `json:"mimeType"`                        // Resource mimeType as determined by the browser.
+	LastModified *cdp.TimeSinceEpoch  `json:"lastModified,omitempty,omitzero"` // last-modified timestamp as reported by server.
+	ContentSize  float64              `json:"contentSize,omitempty,omitzero"`  // Resource content size.
+	Failed       bool                 `json:"failed,omitempty,omitzero"`       // True if the resource failed to load.
+	Canceled     bool                 `json:"canceled,omitempty,omitzero"`     // True if the resource was canceled during loading.
 }
 
 // FrameResourceTree information about the Frame hierarchy along with their
@@ -435,17 +407,17 @@ type FrameResource struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-FrameResourceTree
 type FrameResourceTree struct {
-	Frame       *cdp.Frame           `json:"frame"`                 // Frame information for this tree item.
-	ChildFrames []*FrameResourceTree `json:"childFrames,omitempty"` // Child frames.
-	Resources   []*FrameResource     `json:"resources"`             // Information about frame resources.
+	Frame       *cdp.Frame           `json:"frame"`                          // Frame information for this tree item.
+	ChildFrames []*FrameResourceTree `json:"childFrames,omitempty,omitzero"` // Child frames.
+	Resources   []*FrameResource     `json:"resources"`                      // Information about frame resources.
 }
 
 // FrameTree information about the Frame hierarchy.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-FrameTree
 type FrameTree struct {
-	Frame       *cdp.Frame   `json:"frame"`                 // Frame information for this tree item.
-	ChildFrames []*FrameTree `json:"childFrames,omitempty"` // Child frames.
+	Frame       *cdp.Frame   `json:"frame"`                          // Frame information for this tree item.
+	ChildFrames []*FrameTree `json:"childFrames,omitempty,omitzero"` // Child frames.
 }
 
 // ScriptIdentifier unique script identifier.
@@ -485,20 +457,12 @@ const (
 	TransitionTypeOther            TransitionType = "other"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t TransitionType) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *TransitionType) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t TransitionType) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *TransitionType) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch TransitionType(v) {
+	switch TransitionType(s) {
 	case TransitionTypeLink:
 		*t = TransitionTypeLink
 	case TransitionTypeTyped:
@@ -525,15 +489,10 @@ func (t *TransitionType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = TransitionTypeKeywordGenerated
 	case TransitionTypeOther:
 		*t = TransitionTypeOther
-
 	default:
-		in.AddError(fmt.Errorf("unknown TransitionType value: %v", v))
+		return fmt.Errorf("unknown TransitionType value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *TransitionType) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // NavigationEntry navigation history entry.
@@ -551,13 +510,13 @@ type NavigationEntry struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-ScreencastFrameMetadata
 type ScreencastFrameMetadata struct {
-	OffsetTop       float64             `json:"offsetTop"`           // Top offset in DIP.
-	PageScaleFactor float64             `json:"pageScaleFactor"`     // Page scale factor.
-	DeviceWidth     float64             `json:"deviceWidth"`         // Device screen width in DIP.
-	DeviceHeight    float64             `json:"deviceHeight"`        // Device screen height in DIP.
-	ScrollOffsetX   float64             `json:"scrollOffsetX"`       // Position of horizontal scroll in CSS pixels.
-	ScrollOffsetY   float64             `json:"scrollOffsetY"`       // Position of vertical scroll in CSS pixels.
-	Timestamp       *cdp.TimeSinceEpoch `json:"timestamp,omitempty"` // Frame swap timestamp.
+	OffsetTop       float64             `json:"offsetTop"`                    // Top offset in DIP.
+	PageScaleFactor float64             `json:"pageScaleFactor"`              // Page scale factor.
+	DeviceWidth     float64             `json:"deviceWidth"`                  // Device screen width in DIP.
+	DeviceHeight    float64             `json:"deviceHeight"`                 // Device screen height in DIP.
+	ScrollOffsetX   float64             `json:"scrollOffsetX"`                // Position of horizontal scroll in CSS pixels.
+	ScrollOffsetY   float64             `json:"scrollOffsetY"`                // Position of vertical scroll in CSS pixels.
+	Timestamp       *cdp.TimeSinceEpoch `json:"timestamp,omitempty,omitzero"` // Frame swap timestamp.
 }
 
 // DialogType javascript dialog type.
@@ -578,20 +537,12 @@ const (
 	DialogTypeBeforeunload DialogType = "beforeunload"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t DialogType) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *DialogType) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t DialogType) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *DialogType) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch DialogType(v) {
+	switch DialogType(s) {
 	case DialogTypeAlert:
 		*t = DialogTypeAlert
 	case DialogTypeConfirm:
@@ -600,15 +551,10 @@ func (t *DialogType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = DialogTypePrompt
 	case DialogTypeBeforeunload:
 		*t = DialogTypeBeforeunload
-
 	default:
-		in.AddError(fmt.Errorf("unknown DialogType value: %v", v))
+		return fmt.Errorf("unknown DialogType value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *DialogType) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // AppManifestError error while paring app manifest.
@@ -642,14 +588,14 @@ type LayoutViewport struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-VisualViewport
 type VisualViewport struct {
-	OffsetX      float64 `json:"offsetX"`        // Horizontal offset relative to the layout viewport (CSS pixels).
-	OffsetY      float64 `json:"offsetY"`        // Vertical offset relative to the layout viewport (CSS pixels).
-	PageX        float64 `json:"pageX"`          // Horizontal offset relative to the document (CSS pixels).
-	PageY        float64 `json:"pageY"`          // Vertical offset relative to the document (CSS pixels).
-	ClientWidth  float64 `json:"clientWidth"`    // Width (CSS pixels), excludes scrollbar if present.
-	ClientHeight float64 `json:"clientHeight"`   // Height (CSS pixels), excludes scrollbar if present.
-	Scale        float64 `json:"scale"`          // Scale relative to the ideal viewport (size at width=device-width).
-	Zoom         float64 `json:"zoom,omitempty"` // Page zoom factor (CSS to device independent pixels ratio).
+	OffsetX      float64 `json:"offsetX"`                 // Horizontal offset relative to the layout viewport (CSS pixels).
+	OffsetY      float64 `json:"offsetY"`                 // Vertical offset relative to the layout viewport (CSS pixels).
+	PageX        float64 `json:"pageX"`                   // Horizontal offset relative to the document (CSS pixels).
+	PageY        float64 `json:"pageY"`                   // Vertical offset relative to the document (CSS pixels).
+	ClientWidth  float64 `json:"clientWidth"`             // Width (CSS pixels), excludes scrollbar if present.
+	ClientHeight float64 `json:"clientHeight"`            // Height (CSS pixels), excludes scrollbar if present.
+	Scale        float64 `json:"scale"`                   // Scale relative to the ideal viewport (size at width=device-width).
+	Zoom         float64 `json:"zoom,omitempty,omitzero"` // Page zoom factor (CSS to device independent pixels ratio).
 }
 
 // Viewport viewport for capturing screenshot.
@@ -667,13 +613,13 @@ type Viewport struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-FontFamilies
 type FontFamilies struct {
-	Standard  string `json:"standard,omitempty"`  // The standard font-family.
-	Fixed     string `json:"fixed,omitempty"`     // The fixed font-family.
-	Serif     string `json:"serif,omitempty"`     // The serif font-family.
-	SansSerif string `json:"sansSerif,omitempty"` // The sansSerif font-family.
-	Cursive   string `json:"cursive,omitempty"`   // The cursive font-family.
-	Fantasy   string `json:"fantasy,omitempty"`   // The fantasy font-family.
-	Math      string `json:"math,omitempty"`      // The math font-family.
+	Standard  string `json:"standard,omitempty,omitzero"`  // The standard font-family.
+	Fixed     string `json:"fixed,omitempty,omitzero"`     // The fixed font-family.
+	Serif     string `json:"serif,omitempty,omitzero"`     // The serif font-family.
+	SansSerif string `json:"sansSerif,omitempty,omitzero"` // The sansSerif font-family.
+	Cursive   string `json:"cursive,omitempty,omitzero"`   // The cursive font-family.
+	Fantasy   string `json:"fantasy,omitempty,omitzero"`   // The fantasy font-family.
+	Math      string `json:"math,omitempty,omitzero"`      // The math font-family.
 }
 
 // ScriptFontFamilies font families collection for a script.
@@ -688,8 +634,8 @@ type ScriptFontFamilies struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-FontSizes
 type FontSizes struct {
-	Standard int64 `json:"standard,omitempty"` // Default standard font size.
-	Fixed    int64 `json:"fixed,omitempty"`    // Default fixed font size.
+	Standard int64 `json:"standard,omitempty,omitzero"` // Default standard font size.
+	Fixed    int64 `json:"fixed,omitempty,omitzero"`    // Default fixed font size.
 }
 
 // ClientNavigationReason [no description].
@@ -716,20 +662,12 @@ const (
 	ClientNavigationReasonScriptInitiated        ClientNavigationReason = "scriptInitiated"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t ClientNavigationReason) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *ClientNavigationReason) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t ClientNavigationReason) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *ClientNavigationReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch ClientNavigationReason(v) {
+	switch ClientNavigationReason(s) {
 	case ClientNavigationReasonAnchorClick:
 		*t = ClientNavigationReasonAnchorClick
 	case ClientNavigationReasonFormSubmissionGet:
@@ -750,15 +688,10 @@ func (t *ClientNavigationReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = ClientNavigationReasonReload
 	case ClientNavigationReasonScriptInitiated:
 		*t = ClientNavigationReasonScriptInitiated
-
 	default:
-		in.AddError(fmt.Errorf("unknown ClientNavigationReason value: %v", v))
+		return fmt.Errorf("unknown ClientNavigationReason value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *ClientNavigationReason) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // ClientNavigationDisposition [no description].
@@ -779,20 +712,12 @@ const (
 	ClientNavigationDispositionDownload   ClientNavigationDisposition = "download"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t ClientNavigationDisposition) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *ClientNavigationDisposition) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t ClientNavigationDisposition) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *ClientNavigationDisposition) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch ClientNavigationDisposition(v) {
+	switch ClientNavigationDisposition(s) {
 	case ClientNavigationDispositionCurrentTab:
 		*t = ClientNavigationDispositionCurrentTab
 	case ClientNavigationDispositionNewTab:
@@ -801,15 +726,10 @@ func (t *ClientNavigationDisposition) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = ClientNavigationDispositionNewWindow
 	case ClientNavigationDispositionDownload:
 		*t = ClientNavigationDispositionDownload
-
 	default:
-		in.AddError(fmt.Errorf("unknown ClientNavigationDisposition value: %v", v))
+		return fmt.Errorf("unknown ClientNavigationDisposition value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *ClientNavigationDisposition) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // InstallabilityErrorArgument [no description].
@@ -850,20 +770,12 @@ const (
 	ReferrerPolicyUnsafeURL                   ReferrerPolicy = "unsafeUrl"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t ReferrerPolicy) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *ReferrerPolicy) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t ReferrerPolicy) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *ReferrerPolicy) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch ReferrerPolicy(v) {
+	switch ReferrerPolicy(s) {
 	case ReferrerPolicyNoReferrer:
 		*t = ReferrerPolicyNoReferrer
 	case ReferrerPolicyNoReferrerWhenDowngrade:
@@ -880,15 +792,10 @@ func (t *ReferrerPolicy) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = ReferrerPolicyStrictOriginWhenCrossOrigin
 	case ReferrerPolicyUnsafeURL:
 		*t = ReferrerPolicyUnsafeURL
-
 	default:
-		in.AddError(fmt.Errorf("unknown ReferrerPolicy value: %v", v))
+		return fmt.Errorf("unknown ReferrerPolicy value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *ReferrerPolicy) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // CompilationCacheParams per-script compilation cache parameters for
@@ -896,16 +803,16 @@ func (t *ReferrerPolicy) UnmarshalJSON(buf []byte) error {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-CompilationCacheParams
 type CompilationCacheParams struct {
-	URL   string `json:"url"`             // The URL of the script to produce a compilation cache entry for.
-	Eager bool   `json:"eager,omitempty"` // A hint to the backend whether eager compilation is recommended. (the actual compilation mode used is upon backend discretion).
+	URL   string `json:"url"`                      // The URL of the script to produce a compilation cache entry for.
+	Eager bool   `json:"eager,omitempty,omitzero"` // A hint to the backend whether eager compilation is recommended. (the actual compilation mode used is upon backend discretion).
 }
 
 // FileFilter [no description].
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-FileFilter
 type FileFilter struct {
-	Name    string   `json:"name,omitempty"`
-	Accepts []string `json:"accepts,omitempty"`
+	Name    string   `json:"name,omitempty,omitzero"`
+	Accepts []string `json:"accepts,omitempty,omitzero"`
 }
 
 // FileHandler [no description].
@@ -914,9 +821,9 @@ type FileFilter struct {
 type FileHandler struct {
 	Action     string           `json:"action"`
 	Name       string           `json:"name"`
-	Icons      []*ImageResource `json:"icons,omitempty"`
-	Accepts    []*FileFilter    `json:"accepts,omitempty"` // Mimic a map, name is the key, accepts is the value.
-	LaunchType string           `json:"launchType"`        // Won't repeat the enums, using string for easy comparison. Same as the other enums below.
+	Icons      []*ImageResource `json:"icons,omitempty,omitzero"`
+	Accepts    []*FileFilter    `json:"accepts,omitempty,omitzero"` // Mimic a map, name is the key, accepts is the value.
+	LaunchType string           `json:"launchType"`                 // Won't repeat the enums, using string for easy comparison. Same as the other enums below.
 }
 
 // ImageResource the image definition used in both icon and screenshot.
@@ -924,8 +831,8 @@ type FileHandler struct {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-ImageResource
 type ImageResource struct {
 	URL   string `json:"url"` // The src field in the definition, but changing to url in favor of consistency.
-	Sizes string `json:"sizes,omitempty"`
-	Type  string `json:"type,omitempty"`
+	Sizes string `json:"sizes,omitempty,omitzero"`
+	Type  string `json:"type,omitempty,omitzero"`
 }
 
 // LaunchHandler [no description].
@@ -947,7 +854,7 @@ type ProtocolHandler struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-RelatedApplication
 type RelatedApplication struct {
-	ID  string `json:"id,omitempty"`
+	ID  string `json:"id,omitempty,omitzero"`
 	URL string `json:"url"`
 }
 
@@ -965,7 +872,7 @@ type ScopeExtension struct {
 type Screenshot struct {
 	Image      *ImageResource `json:"image"`
 	FormFactor string         `json:"formFactor"`
-	Label      string         `json:"label,omitempty"`
+	Label      string         `json:"label,omitempty,omitzero"`
 }
 
 // ShareTarget [no description].
@@ -975,10 +882,10 @@ type ShareTarget struct {
 	Action  string        `json:"action"`
 	Method  string        `json:"method"`
 	Enctype string        `json:"enctype"`
-	Title   string        `json:"title,omitempty"` // Embed the ShareTargetParams
-	Text    string        `json:"text,omitempty"`
-	URL     string        `json:"url,omitempty"`
-	Files   []*FileFilter `json:"files,omitempty"`
+	Title   string        `json:"title,omitempty,omitzero"` // Embed the ShareTargetParams
+	Text    string        `json:"text,omitempty,omitzero"`
+	URL     string        `json:"url,omitempty,omitzero"`
+	Files   []*FileFilter `json:"files,omitempty,omitzero"`
 }
 
 // Shortcut [no description].
@@ -993,29 +900,29 @@ type Shortcut struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-WebAppManifest
 type WebAppManifest struct {
-	BackgroundColor           string                `json:"backgroundColor,omitempty"`
-	Description               string                `json:"description,omitempty"` // The extra description provided by the manifest.
-	Dir                       string                `json:"dir,omitempty"`
-	Display                   string                `json:"display,omitempty"`
-	DisplayOverrides          []string              `json:"displayOverrides,omitempty"` // The overrided display mode controlled by the user.
-	FileHandlers              []*FileHandler        `json:"fileHandlers,omitempty"`     // The handlers to open files.
-	Icons                     []*ImageResource      `json:"icons,omitempty"`
-	ID                        string                `json:"id,omitempty"`
-	Lang                      string                `json:"lang,omitempty"`
-	LaunchHandler             *LaunchHandler        `json:"launchHandler,omitempty"` // TODO(crbug.com/1231886): This field is non-standard and part of a Chrome experiment. See: https://github.com/WICG/web-app-launch/blob/main/launch_handler.md
-	Name                      string                `json:"name,omitempty"`
-	Orientation               string                `json:"orientation,omitempty"`
-	PreferRelatedApplications bool                  `json:"preferRelatedApplications,omitempty"`
-	ProtocolHandlers          []*ProtocolHandler    `json:"protocolHandlers,omitempty"` // The handlers to open protocols.
-	RelatedApplications       []*RelatedApplication `json:"relatedApplications,omitempty"`
-	Scope                     string                `json:"scope,omitempty"`
-	ScopeExtensions           []*ScopeExtension     `json:"scopeExtensions,omitempty"` // Non-standard, see https://github.com/WICG/manifest-incubations/blob/gh-pages/scope_extensions-explainer.md
-	Screenshots               []*Screenshot         `json:"screenshots,omitempty"`     // The screenshots used by chromium.
-	ShareTarget               *ShareTarget          `json:"shareTarget,omitempty"`
-	ShortName                 string                `json:"shortName,omitempty"`
-	Shortcuts                 []*Shortcut           `json:"shortcuts,omitempty"`
-	StartURL                  string                `json:"startUrl,omitempty"`
-	ThemeColor                string                `json:"themeColor,omitempty"`
+	BackgroundColor           string                `json:"backgroundColor,omitempty,omitzero"`
+	Description               string                `json:"description,omitempty,omitzero"` // The extra description provided by the manifest.
+	Dir                       string                `json:"dir,omitempty,omitzero"`
+	Display                   string                `json:"display,omitempty,omitzero"`
+	DisplayOverrides          []string              `json:"displayOverrides,omitempty,omitzero"` // The overrided display mode controlled by the user.
+	FileHandlers              []*FileHandler        `json:"fileHandlers,omitempty,omitzero"`     // The handlers to open files.
+	Icons                     []*ImageResource      `json:"icons,omitempty,omitzero"`
+	ID                        string                `json:"id,omitempty,omitzero"`
+	Lang                      string                `json:"lang,omitempty,omitzero"`
+	LaunchHandler             *LaunchHandler        `json:"launchHandler,omitempty,omitzero"` // TODO(crbug.com/1231886): This field is non-standard and part of a Chrome experiment. See: https://github.com/WICG/web-app-launch/blob/main/launch_handler.md
+	Name                      string                `json:"name,omitempty,omitzero"`
+	Orientation               string                `json:"orientation,omitempty,omitzero"`
+	PreferRelatedApplications bool                  `json:"preferRelatedApplications,omitempty,omitzero"`
+	ProtocolHandlers          []*ProtocolHandler    `json:"protocolHandlers,omitempty,omitzero"` // The handlers to open protocols.
+	RelatedApplications       []*RelatedApplication `json:"relatedApplications,omitempty,omitzero"`
+	Scope                     string                `json:"scope,omitempty,omitzero"`
+	ScopeExtensions           []*ScopeExtension     `json:"scopeExtensions,omitempty,omitzero"` // Non-standard, see https://github.com/WICG/manifest-incubations/blob/gh-pages/scope_extensions-explainer.md
+	Screenshots               []*Screenshot         `json:"screenshots,omitempty,omitzero"`     // The screenshots used by chromium.
+	ShareTarget               *ShareTarget          `json:"shareTarget,omitempty,omitzero"`
+	ShortName                 string                `json:"shortName,omitempty,omitzero"`
+	Shortcuts                 []*Shortcut           `json:"shortcuts,omitempty,omitzero"`
+	StartURL                  string                `json:"startUrl,omitempty,omitzero"`
+	ThemeColor                string                `json:"themeColor,omitempty,omitzero"`
 }
 
 // AutoResponseMode enum of possible auto-response for permission / prompt
@@ -1037,20 +944,12 @@ const (
 	AutoResponseModeAutoOptOut AutoResponseMode = "autoOptOut"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t AutoResponseMode) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *AutoResponseMode) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t AutoResponseMode) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *AutoResponseMode) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch AutoResponseMode(v) {
+	switch AutoResponseMode(s) {
 	case AutoResponseModeNone:
 		*t = AutoResponseModeNone
 	case AutoResponseModeAutoAccept:
@@ -1059,15 +958,10 @@ func (t *AutoResponseMode) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = AutoResponseModeAutoReject
 	case AutoResponseModeAutoOptOut:
 		*t = AutoResponseModeAutoOptOut
-
 	default:
-		in.AddError(fmt.Errorf("unknown AutoResponseMode value: %v", v))
+		return fmt.Errorf("unknown AutoResponseMode value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *AutoResponseMode) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // NavigationType the type of a frameNavigated event.
@@ -1086,33 +980,20 @@ const (
 	NavigationTypeBackForwardCacheRestore NavigationType = "BackForwardCacheRestore"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t NavigationType) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *NavigationType) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t NavigationType) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *NavigationType) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch NavigationType(v) {
+	switch NavigationType(s) {
 	case NavigationTypeNavigation:
 		*t = NavigationTypeNavigation
 	case NavigationTypeBackForwardCacheRestore:
 		*t = NavigationTypeBackForwardCacheRestore
-
 	default:
-		in.AddError(fmt.Errorf("unknown NavigationType value: %v", v))
+		return fmt.Errorf("unknown NavigationType value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *NavigationType) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // BackForwardCacheNotRestoredReason list of not restored reasons for
@@ -1270,20 +1151,12 @@ const (
 	BackForwardCacheNotRestoredReasonCacheControlNoStoreDeviceBoundSessionTerminated          BackForwardCacheNotRestoredReason = "CacheControlNoStoreDeviceBoundSessionTerminated"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t BackForwardCacheNotRestoredReason) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *BackForwardCacheNotRestoredReason) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t BackForwardCacheNotRestoredReason) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *BackForwardCacheNotRestoredReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch BackForwardCacheNotRestoredReason(v) {
+	switch BackForwardCacheNotRestoredReason(s) {
 	case BackForwardCacheNotRestoredReasonNotPrimaryMainFrame:
 		*t = BackForwardCacheNotRestoredReasonNotPrimaryMainFrame
 	case BackForwardCacheNotRestoredReasonBackForwardCacheDisabled:
@@ -1564,15 +1437,10 @@ func (t *BackForwardCacheNotRestoredReason) UnmarshalEasyJSON(in *jlexer.Lexer) 
 		*t = BackForwardCacheNotRestoredReasonPostMessageByWebViewClient
 	case BackForwardCacheNotRestoredReasonCacheControlNoStoreDeviceBoundSessionTerminated:
 		*t = BackForwardCacheNotRestoredReasonCacheControlNoStoreDeviceBoundSessionTerminated
-
 	default:
-		in.AddError(fmt.Errorf("unknown BackForwardCacheNotRestoredReason value: %v", v))
+		return fmt.Errorf("unknown BackForwardCacheNotRestoredReason value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *BackForwardCacheNotRestoredReason) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // BackForwardCacheNotRestoredReasonType types of not restored reasons for
@@ -1593,55 +1461,42 @@ const (
 	BackForwardCacheNotRestoredReasonTypeCircumstantial    BackForwardCacheNotRestoredReasonType = "Circumstantial"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t BackForwardCacheNotRestoredReasonType) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *BackForwardCacheNotRestoredReasonType) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t BackForwardCacheNotRestoredReasonType) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *BackForwardCacheNotRestoredReasonType) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch BackForwardCacheNotRestoredReasonType(v) {
+	switch BackForwardCacheNotRestoredReasonType(s) {
 	case BackForwardCacheNotRestoredReasonTypeSupportPending:
 		*t = BackForwardCacheNotRestoredReasonTypeSupportPending
 	case BackForwardCacheNotRestoredReasonTypePageSupportNeeded:
 		*t = BackForwardCacheNotRestoredReasonTypePageSupportNeeded
 	case BackForwardCacheNotRestoredReasonTypeCircumstantial:
 		*t = BackForwardCacheNotRestoredReasonTypeCircumstantial
-
 	default:
-		in.AddError(fmt.Errorf("unknown BackForwardCacheNotRestoredReasonType value: %v", v))
+		return fmt.Errorf("unknown BackForwardCacheNotRestoredReasonType value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *BackForwardCacheNotRestoredReasonType) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // BackForwardCacheBlockingDetails [no description].
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-BackForwardCacheBlockingDetails
 type BackForwardCacheBlockingDetails struct {
-	URL          string `json:"url,omitempty"`      // Url of the file where blockage happened. Optional because of tests.
-	Function     string `json:"function,omitempty"` // Function name where blockage happened. Optional because of anonymous functions and tests.
-	LineNumber   int64  `json:"lineNumber"`         // Line number in the script (0-based).
-	ColumnNumber int64  `json:"columnNumber"`       // Column number in the script (0-based).
+	URL          string `json:"url,omitempty,omitzero"`      // Url of the file where blockage happened. Optional because of tests.
+	Function     string `json:"function,omitempty,omitzero"` // Function name where blockage happened. Optional because of anonymous functions and tests.
+	LineNumber   int64  `json:"lineNumber"`                  // Line number in the script (0-based).
+	ColumnNumber int64  `json:"columnNumber"`                // Column number in the script (0-based).
 }
 
 // BackForwardCacheNotRestoredExplanation [no description].
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-BackForwardCacheNotRestoredExplanation
 type BackForwardCacheNotRestoredExplanation struct {
-	Type    BackForwardCacheNotRestoredReasonType `json:"type"`              // Type of the reason
-	Reason  BackForwardCacheNotRestoredReason     `json:"reason"`            // Not restored reason
-	Context string                                `json:"context,omitempty"` // Context associated with the reason. The meaning of this context is dependent on the reason: - EmbedderExtensionSentMessageToCachedFrame: the extension ID.
-	Details []*BackForwardCacheBlockingDetails    `json:"details,omitempty"`
+	Type    BackForwardCacheNotRestoredReasonType `json:"type"`                       // Type of the reason
+	Reason  BackForwardCacheNotRestoredReason     `json:"reason"`                     // Not restored reason
+	Context string                                `json:"context,omitempty,omitzero"` // Context associated with the reason. The meaning of this context is dependent on the reason: - EmbedderExtensionSentMessageToCachedFrame: the extension ID.
+	Details []*BackForwardCacheBlockingDetails    `json:"details,omitempty,omitzero"`
 }
 
 // BackForwardCacheNotRestoredExplanationTree [no description].
@@ -1669,33 +1524,20 @@ const (
 	FileChooserOpenedModeSelectMultiple FileChooserOpenedMode = "selectMultiple"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t FileChooserOpenedMode) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *FileChooserOpenedMode) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t FileChooserOpenedMode) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *FileChooserOpenedMode) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch FileChooserOpenedMode(v) {
+	switch FileChooserOpenedMode(s) {
 	case FileChooserOpenedModeSelectSingle:
 		*t = FileChooserOpenedModeSelectSingle
 	case FileChooserOpenedModeSelectMultiple:
 		*t = FileChooserOpenedModeSelectMultiple
-
 	default:
-		in.AddError(fmt.Errorf("unknown FileChooserOpenedMode value: %v", v))
+		return fmt.Errorf("unknown FileChooserOpenedMode value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *FileChooserOpenedMode) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // FrameDetachedReason [no description].
@@ -1714,33 +1556,20 @@ const (
 	FrameDetachedReasonSwap   FrameDetachedReason = "swap"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t FrameDetachedReason) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *FrameDetachedReason) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t FrameDetachedReason) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *FrameDetachedReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch FrameDetachedReason(v) {
+	switch FrameDetachedReason(s) {
 	case FrameDetachedReasonRemove:
 		*t = FrameDetachedReasonRemove
 	case FrameDetachedReasonSwap:
 		*t = FrameDetachedReasonSwap
-
 	default:
-		in.AddError(fmt.Errorf("unknown FrameDetachedReason value: %v", v))
+		return fmt.Errorf("unknown FrameDetachedReason value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *FrameDetachedReason) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // FrameStartedNavigatingNavigationType [no description].
@@ -1765,20 +1594,12 @@ const (
 	FrameStartedNavigatingNavigationTypeDifferentDocument        FrameStartedNavigatingNavigationType = "differentDocument"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t FrameStartedNavigatingNavigationType) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *FrameStartedNavigatingNavigationType) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t FrameStartedNavigatingNavigationType) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *FrameStartedNavigatingNavigationType) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch FrameStartedNavigatingNavigationType(v) {
+	switch FrameStartedNavigatingNavigationType(s) {
 	case FrameStartedNavigatingNavigationTypeReload:
 		*t = FrameStartedNavigatingNavigationTypeReload
 	case FrameStartedNavigatingNavigationTypeReloadBypassingCache:
@@ -1795,15 +1616,10 @@ func (t *FrameStartedNavigatingNavigationType) UnmarshalEasyJSON(in *jlexer.Lexe
 		*t = FrameStartedNavigatingNavigationTypeSameDocument
 	case FrameStartedNavigatingNavigationTypeDifferentDocument:
 		*t = FrameStartedNavigatingNavigationTypeDifferentDocument
-
 	default:
-		in.AddError(fmt.Errorf("unknown FrameStartedNavigatingNavigationType value: %v", v))
+		return fmt.Errorf("unknown FrameStartedNavigatingNavigationType value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *FrameStartedNavigatingNavigationType) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // NavigatedWithinDocumentNavigationType navigation type.
@@ -1823,35 +1639,22 @@ const (
 	NavigatedWithinDocumentNavigationTypeOther      NavigatedWithinDocumentNavigationType = "other"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t NavigatedWithinDocumentNavigationType) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *NavigatedWithinDocumentNavigationType) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t NavigatedWithinDocumentNavigationType) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *NavigatedWithinDocumentNavigationType) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch NavigatedWithinDocumentNavigationType(v) {
+	switch NavigatedWithinDocumentNavigationType(s) {
 	case NavigatedWithinDocumentNavigationTypeFragment:
 		*t = NavigatedWithinDocumentNavigationTypeFragment
 	case NavigatedWithinDocumentNavigationTypeHistoryAPI:
 		*t = NavigatedWithinDocumentNavigationTypeHistoryAPI
 	case NavigatedWithinDocumentNavigationTypeOther:
 		*t = NavigatedWithinDocumentNavigationTypeOther
-
 	default:
-		in.AddError(fmt.Errorf("unknown NavigatedWithinDocumentNavigationType value: %v", v))
+		return fmt.Errorf("unknown NavigatedWithinDocumentNavigationType value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *NavigatedWithinDocumentNavigationType) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // CaptureScreenshotFormat image compression format (defaults to png).
@@ -1871,35 +1674,22 @@ const (
 	CaptureScreenshotFormatWebp CaptureScreenshotFormat = "webp"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t CaptureScreenshotFormat) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *CaptureScreenshotFormat) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t CaptureScreenshotFormat) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *CaptureScreenshotFormat) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch CaptureScreenshotFormat(v) {
+	switch CaptureScreenshotFormat(s) {
 	case CaptureScreenshotFormatJpeg:
 		*t = CaptureScreenshotFormatJpeg
 	case CaptureScreenshotFormatPng:
 		*t = CaptureScreenshotFormatPng
 	case CaptureScreenshotFormatWebp:
 		*t = CaptureScreenshotFormatWebp
-
 	default:
-		in.AddError(fmt.Errorf("unknown CaptureScreenshotFormat value: %v", v))
+		return fmt.Errorf("unknown CaptureScreenshotFormat value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *CaptureScreenshotFormat) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // CaptureSnapshotFormat format (defaults to mhtml).
@@ -1917,31 +1707,18 @@ const (
 	CaptureSnapshotFormatMhtml CaptureSnapshotFormat = "mhtml"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t CaptureSnapshotFormat) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *CaptureSnapshotFormat) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t CaptureSnapshotFormat) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *CaptureSnapshotFormat) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch CaptureSnapshotFormat(v) {
+	switch CaptureSnapshotFormat(s) {
 	case CaptureSnapshotFormatMhtml:
 		*t = CaptureSnapshotFormatMhtml
-
 	default:
-		in.AddError(fmt.Errorf("unknown CaptureSnapshotFormat value: %v", v))
+		return fmt.Errorf("unknown CaptureSnapshotFormat value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *CaptureSnapshotFormat) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // PrintToPDFTransferMode return as stream.
@@ -1960,33 +1737,20 @@ const (
 	PrintToPDFTransferModeReturnAsStream PrintToPDFTransferMode = "ReturnAsStream"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t PrintToPDFTransferMode) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *PrintToPDFTransferMode) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t PrintToPDFTransferMode) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *PrintToPDFTransferMode) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch PrintToPDFTransferMode(v) {
+	switch PrintToPDFTransferMode(s) {
 	case PrintToPDFTransferModeReturnAsBase64:
 		*t = PrintToPDFTransferModeReturnAsBase64
 	case PrintToPDFTransferModeReturnAsStream:
 		*t = PrintToPDFTransferModeReturnAsStream
-
 	default:
-		in.AddError(fmt.Errorf("unknown PrintToPDFTransferMode value: %v", v))
+		return fmt.Errorf("unknown PrintToPDFTransferMode value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *PrintToPDFTransferMode) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // ScreencastFormat image compression format.
@@ -2005,33 +1769,20 @@ const (
 	ScreencastFormatPng  ScreencastFormat = "png"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t ScreencastFormat) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *ScreencastFormat) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t ScreencastFormat) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *ScreencastFormat) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch ScreencastFormat(v) {
+	switch ScreencastFormat(s) {
 	case ScreencastFormatJpeg:
 		*t = ScreencastFormatJpeg
 	case ScreencastFormatPng:
 		*t = ScreencastFormatPng
-
 	default:
-		in.AddError(fmt.Errorf("unknown ScreencastFormat value: %v", v))
+		return fmt.Errorf("unknown ScreencastFormat value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *ScreencastFormat) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // SetWebLifecycleStateState target lifecycle state.
@@ -2050,31 +1801,18 @@ const (
 	SetWebLifecycleStateStateActive SetWebLifecycleStateState = "active"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t SetWebLifecycleStateState) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *SetWebLifecycleStateState) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t SetWebLifecycleStateState) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *SetWebLifecycleStateState) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch SetWebLifecycleStateState(v) {
+	switch SetWebLifecycleStateState(s) {
 	case SetWebLifecycleStateStateFrozen:
 		*t = SetWebLifecycleStateStateFrozen
 	case SetWebLifecycleStateStateActive:
 		*t = SetWebLifecycleStateStateActive
-
 	default:
-		in.AddError(fmt.Errorf("unknown SetWebLifecycleStateState value: %v", v))
+		return fmt.Errorf("unknown SetWebLifecycleStateState value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *SetWebLifecycleStateState) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }

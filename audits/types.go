@@ -4,13 +4,11 @@ package audits
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/chromedp/cdproto/cdp"
 	"github.com/chromedp/cdproto/network"
 	"github.com/chromedp/cdproto/runtime"
-	"github.com/mailru/easyjson"
-	"github.com/mailru/easyjson/jlexer"
-	"github.com/mailru/easyjson/jwriter"
 )
 
 // AffectedCookie information about a cookie that is affected by an inspector
@@ -28,7 +26,7 @@ type AffectedCookie struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-AffectedRequest
 type AffectedRequest struct {
-	RequestID network.RequestID `json:"requestId,omitempty"` // The unique request id.
+	RequestID network.RequestID `json:"requestId,omitempty,omitzero"` // The unique request id.
 	URL       string            `json:"url"`
 }
 
@@ -64,20 +62,12 @@ const (
 	CookieExclusionReasonExcludeSchemeMismatch                         CookieExclusionReason = "ExcludeSchemeMismatch"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t CookieExclusionReason) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *CookieExclusionReason) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t CookieExclusionReason) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *CookieExclusionReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch CookieExclusionReason(v) {
+	switch CookieExclusionReason(s) {
 	case CookieExclusionReasonExcludeSameSiteUnspecifiedTreatedAsLax:
 		*t = CookieExclusionReasonExcludeSameSiteUnspecifiedTreatedAsLax
 	case CookieExclusionReasonExcludeSameSiteNoneInsecure:
@@ -100,15 +90,10 @@ func (t *CookieExclusionReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = CookieExclusionReasonExcludePortMismatch
 	case CookieExclusionReasonExcludeSchemeMismatch:
 		*t = CookieExclusionReasonExcludeSchemeMismatch
-
 	default:
-		in.AddError(fmt.Errorf("unknown CookieExclusionReason value: %v", v))
+		return fmt.Errorf("unknown CookieExclusionReason value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *CookieExclusionReason) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // CookieWarningReason [no description].
@@ -139,20 +124,12 @@ const (
 	CookieWarningReasonWarnThirdPartyCookieHeuristic                  CookieWarningReason = "WarnThirdPartyCookieHeuristic"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t CookieWarningReason) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *CookieWarningReason) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t CookieWarningReason) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *CookieWarningReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch CookieWarningReason(v) {
+	switch CookieWarningReason(s) {
 	case CookieWarningReasonWarnSameSiteUnspecifiedCrossSiteContext:
 		*t = CookieWarningReasonWarnSameSiteUnspecifiedCrossSiteContext
 	case CookieWarningReasonWarnSameSiteNoneInsecure:
@@ -181,15 +158,10 @@ func (t *CookieWarningReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = CookieWarningReasonWarnDeprecationTrialMetadata
 	case CookieWarningReasonWarnThirdPartyCookieHeuristic:
 		*t = CookieWarningReasonWarnThirdPartyCookieHeuristic
-
 	default:
-		in.AddError(fmt.Errorf("unknown CookieWarningReason value: %v", v))
+		return fmt.Errorf("unknown CookieWarningReason value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *CookieWarningReason) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // CookieOperation [no description].
@@ -208,33 +180,20 @@ const (
 	CookieOperationReadCookie CookieOperation = "ReadCookie"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t CookieOperation) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *CookieOperation) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t CookieOperation) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *CookieOperation) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch CookieOperation(v) {
+	switch CookieOperation(s) {
 	case CookieOperationSetCookie:
 		*t = CookieOperationSetCookie
 	case CookieOperationReadCookie:
 		*t = CookieOperationReadCookie
-
 	default:
-		in.AddError(fmt.Errorf("unknown CookieOperation value: %v", v))
+		return fmt.Errorf("unknown CookieOperation value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *CookieOperation) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // InsightType represents the category of insight that a cookie issue falls
@@ -255,35 +214,22 @@ const (
 	InsightTypeHeuristics     InsightType = "Heuristics"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t InsightType) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *InsightType) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t InsightType) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *InsightType) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch InsightType(v) {
+	switch InsightType(s) {
 	case InsightTypeGitHubResource:
 		*t = InsightTypeGitHubResource
 	case InsightTypeGracePeriod:
 		*t = InsightTypeGracePeriod
 	case InsightTypeHeuristics:
 		*t = InsightTypeHeuristics
-
 	default:
-		in.AddError(fmt.Errorf("unknown InsightType value: %v", v))
+		return fmt.Errorf("unknown InsightType value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *InsightType) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // CookieIssueInsight information about the suggested solution to a cookie
@@ -292,7 +238,7 @@ func (t *InsightType) UnmarshalJSON(buf []byte) error {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-CookieIssueInsight
 type CookieIssueInsight struct {
 	Type          InsightType `json:"type"`
-	TableEntryURL string      `json:"tableEntryUrl,omitempty"` // Link to table entry in third-party cookie migration readiness list.
+	TableEntryURL string      `json:"tableEntryUrl,omitempty,omitzero"` // Link to table entry in third-party cookie migration readiness list.
 }
 
 // CookieIssueDetails this information is currently necessary, as the
@@ -301,15 +247,15 @@ type CookieIssueInsight struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-CookieIssueDetails
 type CookieIssueDetails struct {
-	Cookie                 *AffectedCookie         `json:"cookie,omitempty"` // If AffectedCookie is not set then rawCookieLine contains the raw Set-Cookie header string. This hints at a problem where the cookie line is syntactically or semantically malformed in a way that no valid cookie could be created.
-	RawCookieLine          string                  `json:"rawCookieLine,omitempty"`
+	Cookie                 *AffectedCookie         `json:"cookie,omitempty,omitzero"` // If AffectedCookie is not set then rawCookieLine contains the raw Set-Cookie header string. This hints at a problem where the cookie line is syntactically or semantically malformed in a way that no valid cookie could be created.
+	RawCookieLine          string                  `json:"rawCookieLine,omitempty,omitzero"`
 	CookieWarningReasons   []CookieWarningReason   `json:"cookieWarningReasons"`
 	CookieExclusionReasons []CookieExclusionReason `json:"cookieExclusionReasons"`
 	Operation              CookieOperation         `json:"operation"` // Optionally identifies the site-for-cookies and the cookie url, which may be used by the front-end as additional context.
-	SiteForCookies         string                  `json:"siteForCookies,omitempty"`
-	CookieURL              string                  `json:"cookieUrl,omitempty"`
-	Request                *AffectedRequest        `json:"request,omitempty"`
-	Insight                *CookieIssueInsight     `json:"insight,omitempty"` // The recommended solution to the issue.
+	SiteForCookies         string                  `json:"siteForCookies,omitempty,omitzero"`
+	CookieURL              string                  `json:"cookieUrl,omitempty,omitzero"`
+	Request                *AffectedRequest        `json:"request,omitempty,omitzero"`
+	Insight                *CookieIssueInsight     `json:"insight,omitempty,omitzero"` // The recommended solution to the issue.
 }
 
 // MixedContentResolutionStatus [no description].
@@ -329,35 +275,22 @@ const (
 	MixedContentResolutionStatusMixedContentWarning               MixedContentResolutionStatus = "MixedContentWarning"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t MixedContentResolutionStatus) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *MixedContentResolutionStatus) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t MixedContentResolutionStatus) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *MixedContentResolutionStatus) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch MixedContentResolutionStatus(v) {
+	switch MixedContentResolutionStatus(s) {
 	case MixedContentResolutionStatusMixedContentBlocked:
 		*t = MixedContentResolutionStatusMixedContentBlocked
 	case MixedContentResolutionStatusMixedContentAutomaticallyUpgraded:
 		*t = MixedContentResolutionStatusMixedContentAutomaticallyUpgraded
 	case MixedContentResolutionStatusMixedContentWarning:
 		*t = MixedContentResolutionStatusMixedContentWarning
-
 	default:
-		in.AddError(fmt.Errorf("unknown MixedContentResolutionStatus value: %v", v))
+		return fmt.Errorf("unknown MixedContentResolutionStatus value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *MixedContentResolutionStatus) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // MixedContentResourceType [no description].
@@ -403,20 +336,12 @@ const (
 	MixedContentResourceTypeXSLT             MixedContentResourceType = "XSLT"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t MixedContentResourceType) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *MixedContentResourceType) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t MixedContentResourceType) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *MixedContentResourceType) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch MixedContentResourceType(v) {
+	switch MixedContentResourceType(s) {
 	case MixedContentResourceTypeAttributionSrc:
 		*t = MixedContentResourceTypeAttributionSrc
 	case MixedContentResourceTypeAudio:
@@ -475,27 +400,22 @@ func (t *MixedContentResourceType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = MixedContentResourceTypeXMLHTTPRequest
 	case MixedContentResourceTypeXSLT:
 		*t = MixedContentResourceTypeXSLT
-
 	default:
-		in.AddError(fmt.Errorf("unknown MixedContentResourceType value: %v", v))
+		return fmt.Errorf("unknown MixedContentResourceType value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *MixedContentResourceType) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // MixedContentIssueDetails [no description].
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-MixedContentIssueDetails
 type MixedContentIssueDetails struct {
-	ResourceType     MixedContentResourceType     `json:"resourceType,omitempty"` // The type of resource causing the mixed content issue (css, js, iframe, form,...). Marked as optional because it is mapped to from blink::mojom::RequestContextType, which will be replaced by network::mojom::RequestDestination
-	ResolutionStatus MixedContentResolutionStatus `json:"resolutionStatus"`       // The way the mixed content issue is being resolved.
-	InsecureURL      string                       `json:"insecureURL"`            // The unsafe http url causing the mixed content issue.
-	MainResourceURL  string                       `json:"mainResourceURL"`        // The url responsible for the call to an unsafe url.
-	Request          *AffectedRequest             `json:"request,omitempty"`      // The mixed content request. Does not always exist (e.g. for unsafe form submission urls).
-	Frame            *AffectedFrame               `json:"frame,omitempty"`        // Optional because not every mixed content issue is necessarily linked to a frame.
+	ResourceType     MixedContentResourceType     `json:"resourceType,omitempty,omitzero"` // The type of resource causing the mixed content issue (css, js, iframe, form,...). Marked as optional because it is mapped to from blink::mojom::RequestContextType, which will be replaced by network::mojom::RequestDestination
+	ResolutionStatus MixedContentResolutionStatus `json:"resolutionStatus"`                // The way the mixed content issue is being resolved.
+	InsecureURL      string                       `json:"insecureURL"`                     // The unsafe http url causing the mixed content issue.
+	MainResourceURL  string                       `json:"mainResourceURL"`                 // The url responsible for the call to an unsafe url.
+	Request          *AffectedRequest             `json:"request,omitempty,omitzero"`      // The mixed content request. Does not always exist (e.g. for unsafe form submission urls).
+	Frame            *AffectedFrame               `json:"frame,omitempty,omitzero"`        // Optional because not every mixed content issue is necessarily linked to a frame.
 }
 
 // BlockedByResponseReason enum indicating the reason a response has been
@@ -521,20 +441,12 @@ const (
 	BlockedByResponseReasonSRIMessageSignatureMismatch                             BlockedByResponseReason = "SRIMessageSignatureMismatch"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t BlockedByResponseReason) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *BlockedByResponseReason) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t BlockedByResponseReason) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *BlockedByResponseReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch BlockedByResponseReason(v) {
+	switch BlockedByResponseReason(s) {
 	case BlockedByResponseReasonCoepFrameResourceNeedsCoepHeader:
 		*t = BlockedByResponseReasonCoepFrameResourceNeedsCoepHeader
 	case BlockedByResponseReasonCoopSandboxedIFrameCannotNavigateToCoopPage:
@@ -551,15 +463,10 @@ func (t *BlockedByResponseReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = BlockedByResponseReasonCorpNotSameSite
 	case BlockedByResponseReasonSRIMessageSignatureMismatch:
 		*t = BlockedByResponseReasonSRIMessageSignatureMismatch
-
 	default:
-		in.AddError(fmt.Errorf("unknown BlockedByResponseReason value: %v", v))
+		return fmt.Errorf("unknown BlockedByResponseReason value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *BlockedByResponseReason) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // BlockedByResponseIssueDetails details for a request that has been blocked
@@ -569,8 +476,8 @@ func (t *BlockedByResponseReason) UnmarshalJSON(buf []byte) error {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-BlockedByResponseIssueDetails
 type BlockedByResponseIssueDetails struct {
 	Request      *AffectedRequest        `json:"request"`
-	ParentFrame  *AffectedFrame          `json:"parentFrame,omitempty"`
-	BlockedFrame *AffectedFrame          `json:"blockedFrame,omitempty"`
+	ParentFrame  *AffectedFrame          `json:"parentFrame,omitempty,omitzero"`
+	BlockedFrame *AffectedFrame          `json:"blockedFrame,omitempty,omitzero"`
 	Reason       BlockedByResponseReason `json:"reason"`
 }
 
@@ -590,33 +497,20 @@ const (
 	HeavyAdResolutionStatusHeavyAdWarning HeavyAdResolutionStatus = "HeavyAdWarning"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t HeavyAdResolutionStatus) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *HeavyAdResolutionStatus) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t HeavyAdResolutionStatus) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *HeavyAdResolutionStatus) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch HeavyAdResolutionStatus(v) {
+	switch HeavyAdResolutionStatus(s) {
 	case HeavyAdResolutionStatusHeavyAdBlocked:
 		*t = HeavyAdResolutionStatusHeavyAdBlocked
 	case HeavyAdResolutionStatusHeavyAdWarning:
 		*t = HeavyAdResolutionStatusHeavyAdWarning
-
 	default:
-		in.AddError(fmt.Errorf("unknown HeavyAdResolutionStatus value: %v", v))
+		return fmt.Errorf("unknown HeavyAdResolutionStatus value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *HeavyAdResolutionStatus) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // HeavyAdReason [no description].
@@ -636,35 +530,22 @@ const (
 	HeavyAdReasonCPUPeakLimit      HeavyAdReason = "CpuPeakLimit"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t HeavyAdReason) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *HeavyAdReason) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t HeavyAdReason) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *HeavyAdReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch HeavyAdReason(v) {
+	switch HeavyAdReason(s) {
 	case HeavyAdReasonNetworkTotalLimit:
 		*t = HeavyAdReasonNetworkTotalLimit
 	case HeavyAdReasonCPUTotalLimit:
 		*t = HeavyAdReasonCPUTotalLimit
 	case HeavyAdReasonCPUPeakLimit:
 		*t = HeavyAdReasonCPUPeakLimit
-
 	default:
-		in.AddError(fmt.Errorf("unknown HeavyAdReason value: %v", v))
+		return fmt.Errorf("unknown HeavyAdReason value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *HeavyAdReason) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // HeavyAdIssueDetails [no description].
@@ -697,20 +578,12 @@ const (
 	ContentSecurityPolicyViolationTypeKWasmEvalViolation           ContentSecurityPolicyViolationType = "kWasmEvalViolation"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t ContentSecurityPolicyViolationType) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *ContentSecurityPolicyViolationType) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t ContentSecurityPolicyViolationType) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *ContentSecurityPolicyViolationType) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch ContentSecurityPolicyViolationType(v) {
+	switch ContentSecurityPolicyViolationType(s) {
 	case ContentSecurityPolicyViolationTypeKInlineViolation:
 		*t = ContentSecurityPolicyViolationTypeKInlineViolation
 	case ContentSecurityPolicyViolationTypeKEvalViolation:
@@ -725,22 +598,17 @@ func (t *ContentSecurityPolicyViolationType) UnmarshalEasyJSON(in *jlexer.Lexer)
 		*t = ContentSecurityPolicyViolationTypeKTrustedTypesPolicyViolation
 	case ContentSecurityPolicyViolationTypeKWasmEvalViolation:
 		*t = ContentSecurityPolicyViolationTypeKWasmEvalViolation
-
 	default:
-		in.AddError(fmt.Errorf("unknown ContentSecurityPolicyViolationType value: %v", v))
+		return fmt.Errorf("unknown ContentSecurityPolicyViolationType value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *ContentSecurityPolicyViolationType) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // SourceCodeLocation [no description].
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-SourceCodeLocation
 type SourceCodeLocation struct {
-	ScriptID     runtime.ScriptID `json:"scriptId,omitempty"`
+	ScriptID     runtime.ScriptID `json:"scriptId,omitempty,omitzero"`
 	URL          string           `json:"url"`
 	LineNumber   int64            `json:"lineNumber"`
 	ColumnNumber int64            `json:"columnNumber"`
@@ -750,13 +618,13 @@ type SourceCodeLocation struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-ContentSecurityPolicyIssueDetails
 type ContentSecurityPolicyIssueDetails struct {
-	BlockedURL                         string                             `json:"blockedURL,omitempty"` // The url not included in allowed sources.
-	ViolatedDirective                  string                             `json:"violatedDirective"`    // Specific directive that is violated, causing the CSP issue.
+	BlockedURL                         string                             `json:"blockedURL,omitempty,omitzero"` // The url not included in allowed sources.
+	ViolatedDirective                  string                             `json:"violatedDirective"`             // Specific directive that is violated, causing the CSP issue.
 	IsReportOnly                       bool                               `json:"isReportOnly"`
 	ContentSecurityPolicyViolationType ContentSecurityPolicyViolationType `json:"contentSecurityPolicyViolationType"`
-	FrameAncestor                      *AffectedFrame                     `json:"frameAncestor,omitempty"`
-	SourceCodeLocation                 *SourceCodeLocation                `json:"sourceCodeLocation,omitempty"`
-	ViolatingNodeID                    cdp.BackendNodeID                  `json:"violatingNodeId,omitempty"`
+	FrameAncestor                      *AffectedFrame                     `json:"frameAncestor,omitempty,omitzero"`
+	SourceCodeLocation                 *SourceCodeLocation                `json:"sourceCodeLocation,omitempty,omitzero"`
+	ViolatingNodeID                    cdp.BackendNodeID                  `json:"violatingNodeId,omitempty,omitzero"`
 }
 
 // SharedArrayBufferIssueType [no description].
@@ -775,33 +643,20 @@ const (
 	SharedArrayBufferIssueTypeCreationIssue SharedArrayBufferIssueType = "CreationIssue"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t SharedArrayBufferIssueType) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *SharedArrayBufferIssueType) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t SharedArrayBufferIssueType) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *SharedArrayBufferIssueType) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch SharedArrayBufferIssueType(v) {
+	switch SharedArrayBufferIssueType(s) {
 	case SharedArrayBufferIssueTypeTransferIssue:
 		*t = SharedArrayBufferIssueTypeTransferIssue
 	case SharedArrayBufferIssueTypeCreationIssue:
 		*t = SharedArrayBufferIssueTypeCreationIssue
-
 	default:
-		in.AddError(fmt.Errorf("unknown SharedArrayBufferIssueType value: %v", v))
+		return fmt.Errorf("unknown SharedArrayBufferIssueType value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *SharedArrayBufferIssueType) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // SharedArrayBufferIssueDetails details for a issue arising from an SAB
@@ -836,10 +691,10 @@ type CorsIssueDetails struct {
 	CorsErrorStatus        *network.CorsErrorStatus     `json:"corsErrorStatus"`
 	IsWarning              bool                         `json:"isWarning"`
 	Request                *AffectedRequest             `json:"request"`
-	Location               *SourceCodeLocation          `json:"location,omitempty"`
-	InitiatorOrigin        string                       `json:"initiatorOrigin,omitempty"`
-	ResourceIPAddressSpace network.IPAddressSpace       `json:"resourceIPAddressSpace,omitempty"`
-	ClientSecurityState    *network.ClientSecurityState `json:"clientSecurityState,omitempty"`
+	Location               *SourceCodeLocation          `json:"location,omitempty,omitzero"`
+	InitiatorOrigin        string                       `json:"initiatorOrigin,omitempty,omitzero"`
+	ResourceIPAddressSpace network.IPAddressSpace       `json:"resourceIPAddressSpace,omitempty,omitzero"`
+	ClientSecurityState    *network.ClientSecurityState `json:"clientSecurityState,omitempty,omitzero"`
 }
 
 // AttributionReportingIssueType [no description].
@@ -877,20 +732,12 @@ const (
 	AttributionReportingIssueTypeNavigationRegistrationUniqueScopeAlreadySet          AttributionReportingIssueType = "NavigationRegistrationUniqueScopeAlreadySet"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t AttributionReportingIssueType) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *AttributionReportingIssueType) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t AttributionReportingIssueType) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *AttributionReportingIssueType) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch AttributionReportingIssueType(v) {
+	switch AttributionReportingIssueType(s) {
 	case AttributionReportingIssueTypePermissionPolicyDisabled:
 		*t = AttributionReportingIssueTypePermissionPolicyDisabled
 	case AttributionReportingIssueTypeUntrustworthyReportingOrigin:
@@ -933,15 +780,10 @@ func (t *AttributionReportingIssueType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = AttributionReportingIssueTypeNoRegisterOsTriggerHeader
 	case AttributionReportingIssueTypeNavigationRegistrationUniqueScopeAlreadySet:
 		*t = AttributionReportingIssueTypeNavigationRegistrationUniqueScopeAlreadySet
-
 	default:
-		in.AddError(fmt.Errorf("unknown AttributionReportingIssueType value: %v", v))
+		return fmt.Errorf("unknown AttributionReportingIssueType value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *AttributionReportingIssueType) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // SharedDictionaryError [no description].
@@ -981,20 +823,12 @@ const (
 	SharedDictionaryErrorWriteErrorUnsupportedType                 SharedDictionaryError = "WriteErrorUnsupportedType"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t SharedDictionaryError) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *SharedDictionaryError) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t SharedDictionaryError) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *SharedDictionaryError) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch SharedDictionaryError(v) {
+	switch SharedDictionaryError(s) {
 	case SharedDictionaryErrorUseErrorCrossOriginNoCorsRequest:
 		*t = SharedDictionaryErrorUseErrorCrossOriginNoCorsRequest
 	case SharedDictionaryErrorUseErrorDictionaryLoadFailure:
@@ -1041,15 +875,10 @@ func (t *SharedDictionaryError) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = SharedDictionaryErrorWriteErrorTooLongIDField
 	case SharedDictionaryErrorWriteErrorUnsupportedType:
 		*t = SharedDictionaryErrorWriteErrorUnsupportedType
-
 	default:
-		in.AddError(fmt.Errorf("unknown SharedDictionaryError value: %v", v))
+		return fmt.Errorf("unknown SharedDictionaryError value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *SharedDictionaryError) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // SRIMessageSignatureError [no description].
@@ -1086,20 +915,12 @@ const (
 	SRIMessageSignatureErrorValidationFailedSignatureMismatch                    SRIMessageSignatureError = "ValidationFailedSignatureMismatch"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t SRIMessageSignatureError) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *SRIMessageSignatureError) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t SRIMessageSignatureError) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *SRIMessageSignatureError) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch SRIMessageSignatureError(v) {
+	switch SRIMessageSignatureError(s) {
 	case SRIMessageSignatureErrorMissingSignatureHeader:
 		*t = SRIMessageSignatureErrorMissingSignatureHeader
 	case SRIMessageSignatureErrorMissingSignatureInputHeader:
@@ -1140,15 +961,10 @@ func (t *SRIMessageSignatureError) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = SRIMessageSignatureErrorValidationFailedInvalidLength
 	case SRIMessageSignatureErrorValidationFailedSignatureMismatch:
 		*t = SRIMessageSignatureErrorValidationFailedSignatureMismatch
-
 	default:
-		in.AddError(fmt.Errorf("unknown SRIMessageSignatureError value: %v", v))
+		return fmt.Errorf("unknown SRIMessageSignatureError value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *SRIMessageSignatureError) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // AttributionReportingIssueDetails details for issues around "Attribution
@@ -1158,9 +974,9 @@ func (t *SRIMessageSignatureError) UnmarshalJSON(buf []byte) error {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-AttributionReportingIssueDetails
 type AttributionReportingIssueDetails struct {
 	ViolationType    AttributionReportingIssueType `json:"violationType"`
-	Request          *AffectedRequest              `json:"request,omitempty"`
-	ViolatingNodeID  cdp.BackendNodeID             `json:"violatingNodeId,omitempty"`
-	InvalidParameter string                        `json:"invalidParameter,omitempty"`
+	Request          *AffectedRequest              `json:"request,omitempty,omitzero"`
+	ViolatingNodeID  cdp.BackendNodeID             `json:"violatingNodeId,omitempty,omitzero"`
+	InvalidParameter string                        `json:"invalidParameter,omitempty,omitzero"`
 }
 
 // QuirksModeIssueDetails details for issues about documents in Quirks Mode
@@ -1216,20 +1032,12 @@ const (
 	GenericIssueErrorTypeResponseWasBlockedByORB                                    GenericIssueErrorType = "ResponseWasBlockedByORB"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t GenericIssueErrorType) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *GenericIssueErrorType) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t GenericIssueErrorType) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *GenericIssueErrorType) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch GenericIssueErrorType(v) {
+	switch GenericIssueErrorType(s) {
 	case GenericIssueErrorTypeFormLabelForNameError:
 		*t = GenericIssueErrorTypeFormLabelForNameError
 	case GenericIssueErrorTypeFormDuplicateIDForInputError:
@@ -1252,15 +1060,10 @@ func (t *GenericIssueErrorType) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = GenericIssueErrorTypeFormInputHasWrongButWellIntendedAutocompleteValueError
 	case GenericIssueErrorTypeResponseWasBlockedByORB:
 		*t = GenericIssueErrorTypeResponseWasBlockedByORB
-
 	default:
-		in.AddError(fmt.Errorf("unknown GenericIssueErrorType value: %v", v))
+		return fmt.Errorf("unknown GenericIssueErrorType value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *GenericIssueErrorType) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // GenericIssueDetails depending on the concrete errorType, different
@@ -1269,10 +1072,10 @@ func (t *GenericIssueErrorType) UnmarshalJSON(buf []byte) error {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-GenericIssueDetails
 type GenericIssueDetails struct {
 	ErrorType              GenericIssueErrorType `json:"errorType"` // Issues with the same errorType are aggregated in the frontend.
-	FrameID                cdp.FrameID           `json:"frameId,omitempty"`
-	ViolatingNodeID        cdp.BackendNodeID     `json:"violatingNodeId,omitempty"`
-	ViolatingNodeAttribute string                `json:"violatingNodeAttribute,omitempty"`
-	Request                *AffectedRequest      `json:"request,omitempty"`
+	FrameID                cdp.FrameID           `json:"frameId,omitempty,omitzero"`
+	ViolatingNodeID        cdp.BackendNodeID     `json:"violatingNodeId,omitempty,omitzero"`
+	ViolatingNodeAttribute string                `json:"violatingNodeAttribute,omitempty,omitzero"`
+	Request                *AffectedRequest      `json:"request,omitempty,omitzero"`
 }
 
 // DeprecationIssueDetails this issue tracks information needed to print a
@@ -1281,7 +1084,7 @@ type GenericIssueDetails struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-DeprecationIssueDetails
 type DeprecationIssueDetails struct {
-	AffectedFrame      *AffectedFrame      `json:"affectedFrame,omitempty"`
+	AffectedFrame      *AffectedFrame      `json:"affectedFrame,omitempty,omitzero"`
 	SourceCodeLocation *SourceCodeLocation `json:"sourceCodeLocation"`
 	Type               string              `json:"type"` // One of the deprecation names from third_party/blink/renderer/core/frame/deprecation/deprecation.json5
 }
@@ -1328,33 +1131,20 @@ const (
 	ClientHintIssueReasonMetaTagModifiedHTML           ClientHintIssueReason = "MetaTagModifiedHTML"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t ClientHintIssueReason) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *ClientHintIssueReason) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t ClientHintIssueReason) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *ClientHintIssueReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch ClientHintIssueReason(v) {
+	switch ClientHintIssueReason(s) {
 	case ClientHintIssueReasonMetaTagAllowListInvalidOrigin:
 		*t = ClientHintIssueReasonMetaTagAllowListInvalidOrigin
 	case ClientHintIssueReasonMetaTagModifiedHTML:
 		*t = ClientHintIssueReasonMetaTagModifiedHTML
-
 	default:
-		in.AddError(fmt.Errorf("unknown ClientHintIssueReason value: %v", v))
+		return fmt.Errorf("unknown ClientHintIssueReason value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *ClientHintIssueReason) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // FederatedAuthRequestIssueDetails [no description].
@@ -1429,20 +1219,12 @@ const (
 	FederatedAuthRequestIssueReasonCorsError                        FederatedAuthRequestIssueReason = "CorsError"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t FederatedAuthRequestIssueReason) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *FederatedAuthRequestIssueReason) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t FederatedAuthRequestIssueReason) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *FederatedAuthRequestIssueReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch FederatedAuthRequestIssueReason(v) {
+	switch FederatedAuthRequestIssueReason(s) {
 	case FederatedAuthRequestIssueReasonShouldEmbargo:
 		*t = FederatedAuthRequestIssueReasonShouldEmbargo
 	case FederatedAuthRequestIssueReasonTooManyRequests:
@@ -1537,15 +1319,10 @@ func (t *FederatedAuthRequestIssueReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = FederatedAuthRequestIssueReasonUIDismissedNoEmbargo
 	case FederatedAuthRequestIssueReasonCorsError:
 		*t = FederatedAuthRequestIssueReasonCorsError
-
 	default:
-		in.AddError(fmt.Errorf("unknown FederatedAuthRequestIssueReason value: %v", v))
+		return fmt.Errorf("unknown FederatedAuthRequestIssueReason value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *FederatedAuthRequestIssueReason) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // FederatedAuthUserInfoRequestIssueDetails [no description].
@@ -1581,20 +1358,12 @@ const (
 	FederatedAuthUserInfoRequestIssueReasonNoReturningUserFromFetchedAccounts FederatedAuthUserInfoRequestIssueReason = "NoReturningUserFromFetchedAccounts"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t FederatedAuthUserInfoRequestIssueReason) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *FederatedAuthUserInfoRequestIssueReason) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t FederatedAuthUserInfoRequestIssueReason) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *FederatedAuthUserInfoRequestIssueReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch FederatedAuthUserInfoRequestIssueReason(v) {
+	switch FederatedAuthUserInfoRequestIssueReason(s) {
 	case FederatedAuthUserInfoRequestIssueReasonNotSameOrigin:
 		*t = FederatedAuthUserInfoRequestIssueReasonNotSameOrigin
 	case FederatedAuthUserInfoRequestIssueReasonNotIframe:
@@ -1613,15 +1382,10 @@ func (t *FederatedAuthUserInfoRequestIssueReason) UnmarshalEasyJSON(in *jlexer.L
 		*t = FederatedAuthUserInfoRequestIssueReasonInvalidAccountsResponse
 	case FederatedAuthUserInfoRequestIssueReasonNoReturningUserFromFetchedAccounts:
 		*t = FederatedAuthUserInfoRequestIssueReasonNoReturningUserFromFetchedAccounts
-
 	default:
-		in.AddError(fmt.Errorf("unknown FederatedAuthUserInfoRequestIssueReason value: %v", v))
+		return fmt.Errorf("unknown FederatedAuthUserInfoRequestIssueReason value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *FederatedAuthUserInfoRequestIssueReason) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // ClientHintIssueDetails this issue tracks client hints related issues. It's
@@ -1640,7 +1404,7 @@ type ClientHintIssueDetails struct {
 type FailedRequestInfo struct {
 	URL            string            `json:"url"`            // The URL that failed to load.
 	FailureMessage string            `json:"failureMessage"` // The failure message for the failed request.
-	RequestID      network.RequestID `json:"requestId,omitempty"`
+	RequestID      network.RequestID `json:"requestId,omitempty,omitzero"`
 }
 
 // PartitioningBlobURLInfo [no description].
@@ -1659,33 +1423,20 @@ const (
 	PartitioningBlobURLInfoEnforceNoopenerForNavigation  PartitioningBlobURLInfo = "EnforceNoopenerForNavigation"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t PartitioningBlobURLInfo) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *PartitioningBlobURLInfo) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t PartitioningBlobURLInfo) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *PartitioningBlobURLInfo) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch PartitioningBlobURLInfo(v) {
+	switch PartitioningBlobURLInfo(s) {
 	case PartitioningBlobURLInfoBlockedCrossPartitionFetching:
 		*t = PartitioningBlobURLInfoBlockedCrossPartitionFetching
 	case PartitioningBlobURLInfoEnforceNoopenerForNavigation:
 		*t = PartitioningBlobURLInfoEnforceNoopenerForNavigation
-
 	default:
-		in.AddError(fmt.Errorf("unknown PartitioningBlobURLInfo value: %v", v))
+		return fmt.Errorf("unknown PartitioningBlobURLInfo value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *PartitioningBlobURLInfo) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // PartitioningBlobURLIssueDetails [no description].
@@ -1715,20 +1466,12 @@ const (
 	SelectElementAccessibilityIssueReasonInteractiveContentLegendChild SelectElementAccessibilityIssueReason = "InteractiveContentLegendChild"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t SelectElementAccessibilityIssueReason) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *SelectElementAccessibilityIssueReason) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t SelectElementAccessibilityIssueReason) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *SelectElementAccessibilityIssueReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch SelectElementAccessibilityIssueReason(v) {
+	switch SelectElementAccessibilityIssueReason(s) {
 	case SelectElementAccessibilityIssueReasonDisallowedSelectChild:
 		*t = SelectElementAccessibilityIssueReasonDisallowedSelectChild
 	case SelectElementAccessibilityIssueReasonDisallowedOptGroupChild:
@@ -1739,15 +1482,10 @@ func (t *SelectElementAccessibilityIssueReason) UnmarshalEasyJSON(in *jlexer.Lex
 		*t = SelectElementAccessibilityIssueReasonInteractiveContentOptionChild
 	case SelectElementAccessibilityIssueReasonInteractiveContentLegendChild:
 		*t = SelectElementAccessibilityIssueReasonInteractiveContentLegendChild
-
 	default:
-		in.AddError(fmt.Errorf("unknown SelectElementAccessibilityIssueReason value: %v", v))
+		return fmt.Errorf("unknown SelectElementAccessibilityIssueReason value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *SelectElementAccessibilityIssueReason) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // SelectElementAccessibilityIssueDetails this issue warns about errors in
@@ -1776,33 +1514,20 @@ const (
 	StyleSheetLoadingIssueReasonRequestFailed  StyleSheetLoadingIssueReason = "RequestFailed"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t StyleSheetLoadingIssueReason) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *StyleSheetLoadingIssueReason) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t StyleSheetLoadingIssueReason) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *StyleSheetLoadingIssueReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch StyleSheetLoadingIssueReason(v) {
+	switch StyleSheetLoadingIssueReason(s) {
 	case StyleSheetLoadingIssueReasonLateImportRule:
 		*t = StyleSheetLoadingIssueReasonLateImportRule
 	case StyleSheetLoadingIssueReasonRequestFailed:
 		*t = StyleSheetLoadingIssueReasonRequestFailed
-
 	default:
-		in.AddError(fmt.Errorf("unknown StyleSheetLoadingIssueReason value: %v", v))
+		return fmt.Errorf("unknown StyleSheetLoadingIssueReason value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *StyleSheetLoadingIssueReason) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // StylesheetLoadingIssueDetails this issue warns when a referenced
@@ -1810,9 +1535,9 @@ func (t *StyleSheetLoadingIssueReason) UnmarshalJSON(buf []byte) error {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-StylesheetLoadingIssueDetails
 type StylesheetLoadingIssueDetails struct {
-	SourceCodeLocation           *SourceCodeLocation          `json:"sourceCodeLocation"`           // Source code position that referenced the failing stylesheet.
-	StyleSheetLoadingIssueReason StyleSheetLoadingIssueReason `json:"styleSheetLoadingIssueReason"` // Reason why the stylesheet couldn't be loaded.
-	FailedRequestInfo            *FailedRequestInfo           `json:"failedRequestInfo,omitempty"`  // Contains additional info when the failure was due to a request.
+	SourceCodeLocation           *SourceCodeLocation          `json:"sourceCodeLocation"`                   // Source code position that referenced the failing stylesheet.
+	StyleSheetLoadingIssueReason StyleSheetLoadingIssueReason `json:"styleSheetLoadingIssueReason"`         // Reason why the stylesheet couldn't be loaded.
+	FailedRequestInfo            *FailedRequestInfo           `json:"failedRequestInfo,omitempty,omitzero"` // Contains additional info when the failure was due to a request.
 }
 
 // PropertyRuleIssueReason [no description].
@@ -1833,20 +1558,12 @@ const (
 	PropertyRuleIssueReasonInvalidName         PropertyRuleIssueReason = "InvalidName"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t PropertyRuleIssueReason) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *PropertyRuleIssueReason) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t PropertyRuleIssueReason) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *PropertyRuleIssueReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch PropertyRuleIssueReason(v) {
+	switch PropertyRuleIssueReason(s) {
 	case PropertyRuleIssueReasonInvalidSyntax:
 		*t = PropertyRuleIssueReasonInvalidSyntax
 	case PropertyRuleIssueReasonInvalidInitialValue:
@@ -1855,15 +1572,10 @@ func (t *PropertyRuleIssueReason) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = PropertyRuleIssueReasonInvalidInherits
 	case PropertyRuleIssueReasonInvalidName:
 		*t = PropertyRuleIssueReasonInvalidName
-
 	default:
-		in.AddError(fmt.Errorf("unknown PropertyRuleIssueReason value: %v", v))
+		return fmt.Errorf("unknown PropertyRuleIssueReason value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *PropertyRuleIssueReason) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // PropertyRuleIssueDetails this issue warns about errors in property rules
@@ -1871,9 +1583,9 @@ func (t *PropertyRuleIssueReason) UnmarshalJSON(buf []byte) error {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-PropertyRuleIssueDetails
 type PropertyRuleIssueDetails struct {
-	SourceCodeLocation      *SourceCodeLocation     `json:"sourceCodeLocation"`      // Source code position of the property rule.
-	PropertyRuleIssueReason PropertyRuleIssueReason `json:"propertyRuleIssueReason"` // Reason why the property rule was discarded.
-	PropertyValue           string                  `json:"propertyValue,omitempty"` // The value of the property rule property that failed to parse
+	SourceCodeLocation      *SourceCodeLocation     `json:"sourceCodeLocation"`               // Source code position of the property rule.
+	PropertyRuleIssueReason PropertyRuleIssueReason `json:"propertyRuleIssueReason"`          // Reason why the property rule was discarded.
+	PropertyValue           string                  `json:"propertyValue,omitempty,omitzero"` // The value of the property rule property that failed to parse
 }
 
 // InspectorIssueCode a unique identifier for the type of issue. Each type
@@ -1916,20 +1628,12 @@ const (
 	InspectorIssueCodeSRIMessageSignatureIssue          InspectorIssueCode = "SRIMessageSignatureIssue"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t InspectorIssueCode) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *InspectorIssueCode) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t InspectorIssueCode) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *InspectorIssueCode) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch InspectorIssueCode(v) {
+	switch InspectorIssueCode(s) {
 	case InspectorIssueCodeCookieIssue:
 		*t = InspectorIssueCodeCookieIssue
 	case InspectorIssueCodeMixedContentIssue:
@@ -1978,15 +1682,10 @@ func (t *InspectorIssueCode) UnmarshalEasyJSON(in *jlexer.Lexer) {
 		*t = InspectorIssueCodeSelectElementAccessibilityIssue
 	case InspectorIssueCodeSRIMessageSignatureIssue:
 		*t = InspectorIssueCodeSRIMessageSignatureIssue
-
 	default:
-		in.AddError(fmt.Errorf("unknown InspectorIssueCode value: %v", v))
+		return fmt.Errorf("unknown InspectorIssueCode value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *InspectorIssueCode) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }
 
 // InspectorIssueDetails this struct holds a list of optional fields with
@@ -1995,29 +1694,29 @@ func (t *InspectorIssueCode) UnmarshalJSON(buf []byte) error {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-InspectorIssueDetails
 type InspectorIssueDetails struct {
-	CookieIssueDetails                       *CookieIssueDetails                       `json:"cookieIssueDetails,omitempty"`
-	MixedContentIssueDetails                 *MixedContentIssueDetails                 `json:"mixedContentIssueDetails,omitempty"`
-	BlockedByResponseIssueDetails            *BlockedByResponseIssueDetails            `json:"blockedByResponseIssueDetails,omitempty"`
-	HeavyAdIssueDetails                      *HeavyAdIssueDetails                      `json:"heavyAdIssueDetails,omitempty"`
-	ContentSecurityPolicyIssueDetails        *ContentSecurityPolicyIssueDetails        `json:"contentSecurityPolicyIssueDetails,omitempty"`
-	SharedArrayBufferIssueDetails            *SharedArrayBufferIssueDetails            `json:"sharedArrayBufferIssueDetails,omitempty"`
-	LowTextContrastIssueDetails              *LowTextContrastIssueDetails              `json:"lowTextContrastIssueDetails,omitempty"`
-	CorsIssueDetails                         *CorsIssueDetails                         `json:"corsIssueDetails,omitempty"`
-	AttributionReportingIssueDetails         *AttributionReportingIssueDetails         `json:"attributionReportingIssueDetails,omitempty"`
-	QuirksModeIssueDetails                   *QuirksModeIssueDetails                   `json:"quirksModeIssueDetails,omitempty"`
-	PartitioningBlobURLIssueDetails          *PartitioningBlobURLIssueDetails          `json:"partitioningBlobURLIssueDetails,omitempty"`
-	GenericIssueDetails                      *GenericIssueDetails                      `json:"genericIssueDetails,omitempty"`
-	DeprecationIssueDetails                  *DeprecationIssueDetails                  `json:"deprecationIssueDetails,omitempty"`
-	ClientHintIssueDetails                   *ClientHintIssueDetails                   `json:"clientHintIssueDetails,omitempty"`
-	FederatedAuthRequestIssueDetails         *FederatedAuthRequestIssueDetails         `json:"federatedAuthRequestIssueDetails,omitempty"`
-	BounceTrackingIssueDetails               *BounceTrackingIssueDetails               `json:"bounceTrackingIssueDetails,omitempty"`
-	CookieDeprecationMetadataIssueDetails    *CookieDeprecationMetadataIssueDetails    `json:"cookieDeprecationMetadataIssueDetails,omitempty"`
-	StylesheetLoadingIssueDetails            *StylesheetLoadingIssueDetails            `json:"stylesheetLoadingIssueDetails,omitempty"`
-	PropertyRuleIssueDetails                 *PropertyRuleIssueDetails                 `json:"propertyRuleIssueDetails,omitempty"`
-	FederatedAuthUserInfoRequestIssueDetails *FederatedAuthUserInfoRequestIssueDetails `json:"federatedAuthUserInfoRequestIssueDetails,omitempty"`
-	SharedDictionaryIssueDetails             *SharedDictionaryIssueDetails             `json:"sharedDictionaryIssueDetails,omitempty"`
-	SelectElementAccessibilityIssueDetails   *SelectElementAccessibilityIssueDetails   `json:"selectElementAccessibilityIssueDetails,omitempty"`
-	SriMessageSignatureIssueDetails          *SRIMessageSignatureIssueDetails          `json:"sriMessageSignatureIssueDetails,omitempty"`
+	CookieIssueDetails                       *CookieIssueDetails                       `json:"cookieIssueDetails,omitempty,omitzero"`
+	MixedContentIssueDetails                 *MixedContentIssueDetails                 `json:"mixedContentIssueDetails,omitempty,omitzero"`
+	BlockedByResponseIssueDetails            *BlockedByResponseIssueDetails            `json:"blockedByResponseIssueDetails,omitempty,omitzero"`
+	HeavyAdIssueDetails                      *HeavyAdIssueDetails                      `json:"heavyAdIssueDetails,omitempty,omitzero"`
+	ContentSecurityPolicyIssueDetails        *ContentSecurityPolicyIssueDetails        `json:"contentSecurityPolicyIssueDetails,omitempty,omitzero"`
+	SharedArrayBufferIssueDetails            *SharedArrayBufferIssueDetails            `json:"sharedArrayBufferIssueDetails,omitempty,omitzero"`
+	LowTextContrastIssueDetails              *LowTextContrastIssueDetails              `json:"lowTextContrastIssueDetails,omitempty,omitzero"`
+	CorsIssueDetails                         *CorsIssueDetails                         `json:"corsIssueDetails,omitempty,omitzero"`
+	AttributionReportingIssueDetails         *AttributionReportingIssueDetails         `json:"attributionReportingIssueDetails,omitempty,omitzero"`
+	QuirksModeIssueDetails                   *QuirksModeIssueDetails                   `json:"quirksModeIssueDetails,omitempty,omitzero"`
+	PartitioningBlobURLIssueDetails          *PartitioningBlobURLIssueDetails          `json:"partitioningBlobURLIssueDetails,omitempty,omitzero"`
+	GenericIssueDetails                      *GenericIssueDetails                      `json:"genericIssueDetails,omitempty,omitzero"`
+	DeprecationIssueDetails                  *DeprecationIssueDetails                  `json:"deprecationIssueDetails,omitempty,omitzero"`
+	ClientHintIssueDetails                   *ClientHintIssueDetails                   `json:"clientHintIssueDetails,omitempty,omitzero"`
+	FederatedAuthRequestIssueDetails         *FederatedAuthRequestIssueDetails         `json:"federatedAuthRequestIssueDetails,omitempty,omitzero"`
+	BounceTrackingIssueDetails               *BounceTrackingIssueDetails               `json:"bounceTrackingIssueDetails,omitempty,omitzero"`
+	CookieDeprecationMetadataIssueDetails    *CookieDeprecationMetadataIssueDetails    `json:"cookieDeprecationMetadataIssueDetails,omitempty,omitzero"`
+	StylesheetLoadingIssueDetails            *StylesheetLoadingIssueDetails            `json:"stylesheetLoadingIssueDetails,omitempty,omitzero"`
+	PropertyRuleIssueDetails                 *PropertyRuleIssueDetails                 `json:"propertyRuleIssueDetails,omitempty,omitzero"`
+	FederatedAuthUserInfoRequestIssueDetails *FederatedAuthUserInfoRequestIssueDetails `json:"federatedAuthUserInfoRequestIssueDetails,omitempty,omitzero"`
+	SharedDictionaryIssueDetails             *SharedDictionaryIssueDetails             `json:"sharedDictionaryIssueDetails,omitempty,omitzero"`
+	SelectElementAccessibilityIssueDetails   *SelectElementAccessibilityIssueDetails   `json:"selectElementAccessibilityIssueDetails,omitempty,omitzero"`
+	SriMessageSignatureIssueDetails          *SRIMessageSignatureIssueDetails          `json:"sriMessageSignatureIssueDetails,omitempty,omitzero"`
 }
 
 // IssueID a unique id for a DevTools inspector issue. Allows other entities
@@ -2037,7 +1736,7 @@ func (t IssueID) String() string {
 type InspectorIssue struct {
 	Code    InspectorIssueCode     `json:"code"`
 	Details *InspectorIssueDetails `json:"details"`
-	IssueID IssueID                `json:"issueId,omitempty"` // A unique id for this issue. May be omitted if no other entity (e.g. exception, CDP message, etc.) is referencing this issue.
+	IssueID IssueID                `json:"issueId,omitempty,omitzero"` // A unique id for this issue. May be omitted if no other entity (e.g. exception, CDP message, etc.) is referencing this issue.
 }
 
 // GetEncodedResponseEncoding the encoding to use.
@@ -2057,33 +1756,20 @@ const (
 	GetEncodedResponseEncodingPng  GetEncodedResponseEncoding = "png"
 )
 
-// MarshalEasyJSON satisfies easyjson.Marshaler.
-func (t GetEncodedResponseEncoding) MarshalEasyJSON(out *jwriter.Writer) {
-	out.String(string(t))
-}
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *GetEncodedResponseEncoding) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-// MarshalJSON satisfies json.Marshaler.
-func (t GetEncodedResponseEncoding) MarshalJSON() ([]byte, error) {
-	return easyjson.Marshal(t)
-}
-
-// UnmarshalEasyJSON satisfies easyjson.Unmarshaler.
-func (t *GetEncodedResponseEncoding) UnmarshalEasyJSON(in *jlexer.Lexer) {
-	v := in.String()
-	switch GetEncodedResponseEncoding(v) {
+	switch GetEncodedResponseEncoding(s) {
 	case GetEncodedResponseEncodingWebp:
 		*t = GetEncodedResponseEncodingWebp
 	case GetEncodedResponseEncodingJpeg:
 		*t = GetEncodedResponseEncodingJpeg
 	case GetEncodedResponseEncodingPng:
 		*t = GetEncodedResponseEncodingPng
-
 	default:
-		in.AddError(fmt.Errorf("unknown GetEncodedResponseEncoding value: %v", v))
+		return fmt.Errorf("unknown GetEncodedResponseEncoding value: %v", s)
 	}
-}
-
-// UnmarshalJSON satisfies json.Unmarshaler.
-func (t *GetEncodedResponseEncoding) UnmarshalJSON(buf []byte) error {
-	return easyjson.Unmarshal(buf, t)
+	return nil
 }

@@ -11,7 +11,7 @@ import (
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#event-fontsUpdated
 type EventFontsUpdated struct {
-	Font *FontFace `json:"font,omitempty"` // The web font that has loaded.
+	Font *FontFace `json:"font,omitempty,omitzero"` // The web font that has loaded.
 }
 
 // EventMediaQueryResultChanged fires whenever a MediaQuery result changes
