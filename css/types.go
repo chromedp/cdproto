@@ -483,6 +483,44 @@ type PropertyRule struct {
 	Style        *Style           `json:"style"`                           // Associated style declaration.
 }
 
+// FunctionParameter CSS function argument representation.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#type-CSSFunctionParameter
+type FunctionParameter struct {
+	Name string `json:"name"` // The parameter name.
+	Type string `json:"type"` // The parameter type.
+}
+
+// FunctionConditionNode CSS function conditional block representation.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#type-CSSFunctionConditionNode
+type FunctionConditionNode struct {
+	Media            *Media          `json:"media,omitempty,omitzero"`            // Media query for this conditional block. Only one type of condition should be set.
+	ContainerQueries *ContainerQuery `json:"containerQueries,omitempty,omitzero"` // Container query for this conditional block. Only one type of condition should be set.
+	Supports         *Supports       `json:"supports,omitempty,omitzero"`         // @supports CSS at-rule condition. Only one type of condition should be set.
+	Children         []*FunctionNode `json:"children"`                            // Block body.
+	ConditionText    string          `json:"conditionText"`                       // The condition text.
+}
+
+// FunctionNode section of the body of a CSS function rule.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#type-CSSFunctionNode
+type FunctionNode struct {
+	Condition *FunctionConditionNode `json:"condition,omitempty,omitzero"` // A conditional block. If set, style should not be set.
+	Style     *Style                 `json:"style,omitempty,omitzero"`     // Values set by this node. If set, condition should not be set.
+}
+
+// FunctionRule CSS function at-rule representation.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#type-CSSFunctionRule
+type FunctionRule struct {
+	Name         *Value               `json:"name"`                            // Name of the function.
+	StyleSheetID StyleSheetID         `json:"styleSheetId,omitempty,omitzero"` // The css style sheet identifier (absent for user agent stylesheet and user-specified stylesheet rules) this rule came from.
+	Origin       StyleSheetOrigin     `json:"origin"`                          // Parent stylesheet's origin.
+	Parameters   []*FunctionParameter `json:"parameters"`                      // List of parameters.
+	Children     []*FunctionNode      `json:"children"`                        // Function body.
+}
+
 // KeyframeRule CSS keyframe rule representation.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#type-CSSKeyframeRule

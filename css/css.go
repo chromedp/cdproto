@@ -581,6 +581,7 @@ type GetMatchedStylesForNodeReturns struct {
 	CSSPropertyRegistrations    []*PropertyRegistration          `json:"cssPropertyRegistrations,omitempty,omitzero"`    // A list of CSS property registrations matching this node.
 	CSSFontPaletteValuesRule    *FontPaletteValuesRule           `json:"cssFontPaletteValuesRule,omitempty,omitzero"`    // A font-palette-values rule matching this node.
 	ParentLayoutNodeID          cdp.NodeID                       `json:"parentLayoutNodeId,omitempty,omitzero"`          // Id of the first parent element that does not have display: contents.
+	CSSFunctionRules            []*FunctionRule                  `json:"cssFunctionRules,omitempty,omitzero"`            // A list of CSS at-function rules referenced by styles of this node.
 }
 
 // Do executes CSS.getMatchedStylesForNode against the provided context.
@@ -600,15 +601,16 @@ type GetMatchedStylesForNodeReturns struct {
 //	cssPropertyRegistrations - A list of CSS property registrations matching this node.
 //	cssFontPaletteValuesRule - A font-palette-values rule matching this node.
 //	parentLayoutNodeID - Id of the first parent element that does not have display: contents.
-func (p *GetMatchedStylesForNodeParams) Do(ctx context.Context) (inlineStyle *Style, attributesStyle *Style, matchedCSSRules []*RuleMatch, pseudoElements []*PseudoElementMatches, inherited []*InheritedStyleEntry, inheritedPseudoElements []*InheritedPseudoElementMatches, cssKeyframesRules []*KeyframesRule, cssPositionTryRules []*PositionTryRule, activePositionFallbackIndex int64, cssPropertyRules []*PropertyRule, cssPropertyRegistrations []*PropertyRegistration, cssFontPaletteValuesRule *FontPaletteValuesRule, parentLayoutNodeID cdp.NodeID, err error) {
+//	cssFunctionRules - A list of CSS at-function rules referenced by styles of this node.
+func (p *GetMatchedStylesForNodeParams) Do(ctx context.Context) (inlineStyle *Style, attributesStyle *Style, matchedCSSRules []*RuleMatch, pseudoElements []*PseudoElementMatches, inherited []*InheritedStyleEntry, inheritedPseudoElements []*InheritedPseudoElementMatches, cssKeyframesRules []*KeyframesRule, cssPositionTryRules []*PositionTryRule, activePositionFallbackIndex int64, cssPropertyRules []*PropertyRule, cssPropertyRegistrations []*PropertyRegistration, cssFontPaletteValuesRule *FontPaletteValuesRule, parentLayoutNodeID cdp.NodeID, cssFunctionRules []*FunctionRule, err error) {
 	// execute
 	var res GetMatchedStylesForNodeReturns
 	err = cdp.Execute(ctx, CommandGetMatchedStylesForNode, p, &res)
 	if err != nil {
-		return nil, nil, nil, nil, nil, nil, nil, nil, 0, nil, nil, nil, 0, err
+		return nil, nil, nil, nil, nil, nil, nil, nil, 0, nil, nil, nil, 0, nil, err
 	}
 
-	return res.InlineStyle, res.AttributesStyle, res.MatchedCSSRules, res.PseudoElements, res.Inherited, res.InheritedPseudoElements, res.CSSKeyframesRules, res.CSSPositionTryRules, res.ActivePositionFallbackIndex, res.CSSPropertyRules, res.CSSPropertyRegistrations, res.CSSFontPaletteValuesRule, res.ParentLayoutNodeID, nil
+	return res.InlineStyle, res.AttributesStyle, res.MatchedCSSRules, res.PseudoElements, res.Inherited, res.InheritedPseudoElements, res.CSSKeyframesRules, res.CSSPositionTryRules, res.ActivePositionFallbackIndex, res.CSSPropertyRules, res.CSSPropertyRegistrations, res.CSSFontPaletteValuesRule, res.ParentLayoutNodeID, res.CSSFunctionRules, nil
 }
 
 // GetMediaQueriesParams returns all media queries parsed by the rendering
