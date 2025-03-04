@@ -636,6 +636,7 @@ const (
 	CorsErrorPreflightMissingPrivateNetworkAccessName  CorsError = "PreflightMissingPrivateNetworkAccessName"
 	CorsErrorPrivateNetworkAccessPermissionUnavailable CorsError = "PrivateNetworkAccessPermissionUnavailable"
 	CorsErrorPrivateNetworkAccessPermissionDenied      CorsError = "PrivateNetworkAccessPermissionDenied"
+	CorsErrorLocalNetworkAccessPermissionDenied        CorsError = "LocalNetworkAccessPermissionDenied"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -712,6 +713,8 @@ func (t *CorsError) UnmarshalJSON(buf []byte) error {
 		*t = CorsErrorPrivateNetworkAccessPermissionUnavailable
 	case CorsErrorPrivateNetworkAccessPermissionDenied:
 		*t = CorsErrorPrivateNetworkAccessPermissionDenied
+	case CorsErrorLocalNetworkAccessPermissionDenied:
+		*t = CorsErrorLocalNetworkAccessPermissionDenied
 	default:
 		return fmt.Errorf("unknown CorsError value: %v", s)
 	}
@@ -1535,6 +1538,7 @@ const (
 	PrivateNetworkRequestPolicyWarnFromInsecureToMorePrivate  PrivateNetworkRequestPolicy = "WarnFromInsecureToMorePrivate"
 	PrivateNetworkRequestPolicyPreflightBlock                 PrivateNetworkRequestPolicy = "PreflightBlock"
 	PrivateNetworkRequestPolicyPreflightWarn                  PrivateNetworkRequestPolicy = "PreflightWarn"
+	PrivateNetworkRequestPolicyPermissionBlock                PrivateNetworkRequestPolicy = "PermissionBlock"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -1553,6 +1557,8 @@ func (t *PrivateNetworkRequestPolicy) UnmarshalJSON(buf []byte) error {
 		*t = PrivateNetworkRequestPolicyPreflightBlock
 	case PrivateNetworkRequestPolicyPreflightWarn:
 		*t = PrivateNetworkRequestPolicyPreflightWarn
+	case PrivateNetworkRequestPolicyPermissionBlock:
+		*t = PrivateNetworkRequestPolicyPermissionBlock
 	default:
 		return fmt.Errorf("unknown PrivateNetworkRequestPolicy value: %v", s)
 	}
