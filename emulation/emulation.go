@@ -170,6 +170,34 @@ func (p *SetDefaultBackgroundColorOverrideParams) Do(ctx context.Context) (err e
 	return cdp.Execute(ctx, CommandSetDefaultBackgroundColorOverride, p, nil)
 }
 
+// SetSafeAreaInsetsOverrideParams overrides the values for
+// env(safe-area-inset-*) and env(safe-area-max-inset-*). Unset values will
+// cause the respective variables to be undefined, even if previously
+// overridden.
+type SetSafeAreaInsetsOverrideParams struct {
+	Insets *SafeAreaInsets `json:"insets"`
+}
+
+// SetSafeAreaInsetsOverride overrides the values for env(safe-area-inset-*)
+// and env(safe-area-max-inset-*). Unset values will cause the respective
+// variables to be undefined, even if previously overridden.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#method-setSafeAreaInsetsOverride
+//
+// parameters:
+//
+//	insets
+func SetSafeAreaInsetsOverride(insets *SafeAreaInsets) *SetSafeAreaInsetsOverrideParams {
+	return &SetSafeAreaInsetsOverrideParams{
+		Insets: insets,
+	}
+}
+
+// Do executes Emulation.setSafeAreaInsetsOverride against the provided context.
+func (p *SetSafeAreaInsetsOverrideParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetSafeAreaInsetsOverride, p, nil)
+}
+
 // SetDeviceMetricsOverrideParams overrides the values of device screen
 // dimensions (window.screen.width, window.screen.height, window.innerWidth,
 // window.innerHeight, and "device-width"/"device-height"-related CSS media
@@ -1044,6 +1072,7 @@ const (
 	CommandSetAutoDarkModeOverride           = "Emulation.setAutoDarkModeOverride"
 	CommandSetCPUThrottlingRate              = "Emulation.setCPUThrottlingRate"
 	CommandSetDefaultBackgroundColorOverride = "Emulation.setDefaultBackgroundColorOverride"
+	CommandSetSafeAreaInsetsOverride         = "Emulation.setSafeAreaInsetsOverride"
 	CommandSetDeviceMetricsOverride          = "Emulation.setDeviceMetricsOverride"
 	CommandSetDevicePostureOverride          = "Emulation.setDevicePostureOverride"
 	CommandClearDevicePostureOverride        = "Emulation.clearDevicePostureOverride"

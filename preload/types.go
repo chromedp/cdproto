@@ -501,6 +501,9 @@ const (
 	PrefetchStatusPrefetchNotEligibleSchemeIsNotHTTPS                         PrefetchStatus = "PrefetchNotEligibleSchemeIsNotHttps"
 	PrefetchStatusPrefetchNotEligibleUserHasCookies                           PrefetchStatus = "PrefetchNotEligibleUserHasCookies"
 	PrefetchStatusPrefetchNotEligibleUserHasServiceWorker                     PrefetchStatus = "PrefetchNotEligibleUserHasServiceWorker"
+	PrefetchStatusPrefetchNotEligibleUserHasServiceWorkerNoFetchHandler       PrefetchStatus = "PrefetchNotEligibleUserHasServiceWorkerNoFetchHandler"
+	PrefetchStatusPrefetchNotEligibleRedirectFromServiceWorker                PrefetchStatus = "PrefetchNotEligibleRedirectFromServiceWorker"
+	PrefetchStatusPrefetchNotEligibleRedirectToServiceWorker                  PrefetchStatus = "PrefetchNotEligibleRedirectToServiceWorker"
 	PrefetchStatusPrefetchNotEligibleBatterySaverEnabled                      PrefetchStatus = "PrefetchNotEligibleBatterySaverEnabled"
 	PrefetchStatusPrefetchNotEligiblePreloadingDisabled                       PrefetchStatus = "PrefetchNotEligiblePreloadingDisabled"
 	PrefetchStatusPrefetchNotFinishedInTime                                   PrefetchStatus = "PrefetchNotFinishedInTime"
@@ -560,6 +563,12 @@ func (t *PrefetchStatus) UnmarshalJSON(buf []byte) error {
 		*t = PrefetchStatusPrefetchNotEligibleUserHasCookies
 	case PrefetchStatusPrefetchNotEligibleUserHasServiceWorker:
 		*t = PrefetchStatusPrefetchNotEligibleUserHasServiceWorker
+	case PrefetchStatusPrefetchNotEligibleUserHasServiceWorkerNoFetchHandler:
+		*t = PrefetchStatusPrefetchNotEligibleUserHasServiceWorkerNoFetchHandler
+	case PrefetchStatusPrefetchNotEligibleRedirectFromServiceWorker:
+		*t = PrefetchStatusPrefetchNotEligibleRedirectFromServiceWorker
+	case PrefetchStatusPrefetchNotEligibleRedirectToServiceWorker:
+		*t = PrefetchStatusPrefetchNotEligibleRedirectToServiceWorker
 	case PrefetchStatusPrefetchNotEligibleBatterySaverEnabled:
 		*t = PrefetchStatusPrefetchNotEligibleBatterySaverEnabled
 	case PrefetchStatusPrefetchNotEligiblePreloadingDisabled:

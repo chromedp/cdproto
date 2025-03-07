@@ -126,6 +126,7 @@ const (
 	EventBackgroundServiceRecordingStateChanged              = "BackgroundService.recordingStateChanged"
 	EventBackgroundServiceBackgroundServiceEventReceived     = "BackgroundService.backgroundServiceEventReceived"
 	CommandBluetoothEmulationEnable                          = bluetoothemulation.CommandEnable
+	CommandBluetoothEmulationSetSimulatedCentralState        = bluetoothemulation.CommandSetSimulatedCentralState
 	CommandBluetoothEmulationDisable                         = bluetoothemulation.CommandDisable
 	CommandBluetoothEmulationSimulatePreconnectedPeripheral  = bluetoothemulation.CommandSimulatePreconnectedPeripheral
 	CommandBluetoothEmulationSimulateAdvertisement           = bluetoothemulation.CommandSimulateAdvertisement
@@ -338,6 +339,7 @@ const (
 	CommandEmulationSetAutoDarkModeOverride                  = emulation.CommandSetAutoDarkModeOverride
 	CommandEmulationSetCPUThrottlingRate                     = emulation.CommandSetCPUThrottlingRate
 	CommandEmulationSetDefaultBackgroundColorOverride        = emulation.CommandSetDefaultBackgroundColorOverride
+	CommandEmulationSetSafeAreaInsetsOverride                = emulation.CommandSetSafeAreaInsetsOverride
 	CommandEmulationSetDeviceMetricsOverride                 = emulation.CommandSetDeviceMetricsOverride
 	CommandEmulationSetDevicePostureOverride                 = emulation.CommandSetDevicePostureOverride
 	CommandEmulationClearDevicePostureOverride               = emulation.CommandClearDevicePostureOverride
@@ -526,6 +528,10 @@ const (
 	EventNetworkWebTransportCreated                          = "Network.webTransportCreated"
 	EventNetworkWebTransportConnectionEstablished            = "Network.webTransportConnectionEstablished"
 	EventNetworkWebTransportClosed                           = "Network.webTransportClosed"
+	EventNetworkDirectTCPSocketCreated                       = "Network.directTCPSocketCreated"
+	EventNetworkDirectTCPSocketOpened                        = "Network.directTCPSocketOpened"
+	EventNetworkDirectTCPSocketAborted                       = "Network.directTCPSocketAborted"
+	EventNetworkDirectTCPSocketClosed                        = "Network.directTCPSocketClosed"
 	EventNetworkRequestWillBeSentExtraInfo                   = "Network.requestWillBeSentExtraInfo"
 	EventNetworkResponseReceivedExtraInfo                    = "Network.responseReceivedExtraInfo"
 	EventNetworkResponseReceivedEarlyHints                   = "Network.responseReceivedEarlyHints"
@@ -957,6 +963,8 @@ func UnmarshalMessage(msg *Message) (any, error) {
 		v = new(backgroundservice.EventBackgroundServiceEventReceived)
 	case CommandBluetoothEmulationEnable:
 		return emptyVal, nil
+	case CommandBluetoothEmulationSetSimulatedCentralState:
+		return emptyVal, nil
 	case CommandBluetoothEmulationDisable:
 		return emptyVal, nil
 	case CommandBluetoothEmulationSimulatePreconnectedPeripheral:
@@ -1381,6 +1389,8 @@ func UnmarshalMessage(msg *Message) (any, error) {
 		return emptyVal, nil
 	case CommandEmulationSetDefaultBackgroundColorOverride:
 		return emptyVal, nil
+	case CommandEmulationSetSafeAreaInsetsOverride:
+		return emptyVal, nil
 	case CommandEmulationSetDeviceMetricsOverride:
 		return emptyVal, nil
 	case CommandEmulationSetDevicePostureOverride:
@@ -1757,6 +1767,14 @@ func UnmarshalMessage(msg *Message) (any, error) {
 		v = new(network.EventWebTransportConnectionEstablished)
 	case EventNetworkWebTransportClosed:
 		v = new(network.EventWebTransportClosed)
+	case EventNetworkDirectTCPSocketCreated:
+		v = new(network.EventDirectTCPSocketCreated)
+	case EventNetworkDirectTCPSocketOpened:
+		v = new(network.EventDirectTCPSocketOpened)
+	case EventNetworkDirectTCPSocketAborted:
+		v = new(network.EventDirectTCPSocketAborted)
+	case EventNetworkDirectTCPSocketClosed:
+		v = new(network.EventDirectTCPSocketClosed)
 	case EventNetworkRequestWillBeSentExtraInfo:
 		v = new(network.EventRequestWillBeSentExtraInfo)
 	case EventNetworkResponseReceivedExtraInfo:

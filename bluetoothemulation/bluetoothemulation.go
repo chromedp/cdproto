@@ -17,7 +17,8 @@ import (
 
 // EnableParams enable the BluetoothEmulation domain.
 type EnableParams struct {
-	State CentralState `json:"state"` // State of the simulated central.
+	State       CentralState `json:"state"`       // State of the simulated central.
+	LeSupported bool         `json:"leSupported"` // If the simulated central supports low-energy.
 }
 
 // Enable enable the BluetoothEmulation domain.
@@ -27,15 +28,40 @@ type EnableParams struct {
 // parameters:
 //
 //	state - State of the simulated central.
-func Enable(state CentralState) *EnableParams {
+//	leSupported - If the simulated central supports low-energy.
+func Enable(state CentralState, leSupported bool) *EnableParams {
 	return &EnableParams{
-		State: state,
+		State:       state,
+		LeSupported: leSupported,
 	}
 }
 
 // Do executes BluetoothEmulation.enable against the provided context.
 func (p *EnableParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandEnable, p, nil)
+}
+
+// SetSimulatedCentralStateParams set the state of the simulated central.
+type SetSimulatedCentralStateParams struct {
+	State CentralState `json:"state"` // State of the simulated central.
+}
+
+// SetSimulatedCentralState set the state of the simulated central.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/BluetoothEmulation#method-setSimulatedCentralState
+//
+// parameters:
+//
+//	state - State of the simulated central.
+func SetSimulatedCentralState(state CentralState) *SetSimulatedCentralStateParams {
+	return &SetSimulatedCentralStateParams{
+		State: state,
+	}
+}
+
+// Do executes BluetoothEmulation.setSimulatedCentralState against the provided context.
+func (p *SetSimulatedCentralStateParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetSimulatedCentralState, p, nil)
 }
 
 // DisableParams disable the BluetoothEmulation domain.
@@ -116,6 +142,7 @@ func (p *SimulateAdvertisementParams) Do(ctx context.Context) (err error) {
 // Command names.
 const (
 	CommandEnable                         = "BluetoothEmulation.enable"
+	CommandSetSimulatedCentralState       = "BluetoothEmulation.setSimulatedCentralState"
 	CommandDisable                        = "BluetoothEmulation.disable"
 	CommandSimulatePreconnectedPeripheral = "BluetoothEmulation.simulatePreconnectedPeripheral"
 	CommandSimulateAdvertisement          = "BluetoothEmulation.simulateAdvertisement"

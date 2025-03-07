@@ -1521,6 +1521,49 @@ func (t *ContentEncoding) UnmarshalJSON(buf []byte) error {
 	return nil
 }
 
+// DirectSocketDNSQueryType [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-DirectSocketDnsQueryType
+type DirectSocketDNSQueryType string
+
+// String returns the DirectSocketDNSQueryType as string value.
+func (t DirectSocketDNSQueryType) String() string {
+	return string(t)
+}
+
+// DirectSocketDNSQueryType values.
+const (
+	DirectSocketDNSQueryTypeIpv4 DirectSocketDNSQueryType = "ipv4"
+	DirectSocketDNSQueryTypeIpv6 DirectSocketDNSQueryType = "ipv6"
+)
+
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *DirectSocketDNSQueryType) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
+
+	switch DirectSocketDNSQueryType(s) {
+	case DirectSocketDNSQueryTypeIpv4:
+		*t = DirectSocketDNSQueryTypeIpv4
+	case DirectSocketDNSQueryTypeIpv6:
+		*t = DirectSocketDNSQueryTypeIpv6
+	default:
+		return fmt.Errorf("unknown DirectSocketDNSQueryType value: %v", s)
+	}
+	return nil
+}
+
+// DirectTCPSocketOptions [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-DirectTCPSocketOptions
+type DirectTCPSocketOptions struct {
+	NoDelay           bool                     `json:"noDelay"`                              // TCP_NODELAY option
+	KeepAliveDelay    float64                  `json:"keepAliveDelay,omitempty,omitzero"`    // Expected to be unsigned integer.
+	SendBufferSize    float64                  `json:"sendBufferSize,omitempty,omitzero"`    // Expected to be unsigned integer.
+	ReceiveBufferSize float64                  `json:"receiveBufferSize,omitempty,omitzero"` // Expected to be unsigned integer.
+	DNSQueryType      DirectSocketDNSQueryType `json:"dnsQueryType,omitempty,omitzero"`
+}
+
 // PrivateNetworkRequestPolicy [no description].
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-PrivateNetworkRequestPolicy

@@ -200,6 +200,48 @@ type EventWebTransportClosed struct {
 	Timestamp   *cdp.MonotonicTime `json:"timestamp"`   // Timestamp.
 }
 
+// EventDirectTCPSocketCreated fired upon direct_socket.TCPSocket creation.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-directTCPSocketCreated
+type EventDirectTCPSocketCreated struct {
+	Identifier RequestID               `json:"identifier"`
+	RemoteAddr string                  `json:"remoteAddr"`
+	RemotePort int64                   `json:"remotePort"` // Unsigned int 16.
+	Options    *DirectTCPSocketOptions `json:"options"`
+	Timestamp  *cdp.MonotonicTime      `json:"timestamp"`
+	Initiator  *Initiator              `json:"initiator,omitempty,omitzero"`
+}
+
+// EventDirectTCPSocketOpened fired when direct_socket.TCPSocket connection
+// is opened.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-directTCPSocketOpened
+type EventDirectTCPSocketOpened struct {
+	Identifier RequestID          `json:"identifier"`
+	RemoteAddr string             `json:"remoteAddr"`
+	RemotePort int64              `json:"remotePort"` // Expected to be unsigned integer.
+	Timestamp  *cdp.MonotonicTime `json:"timestamp"`
+	LocalAddr  string             `json:"localAddr,omitempty,omitzero"`
+	LocalPort  int64              `json:"localPort,omitempty,omitzero"` // Expected to be unsigned integer.
+}
+
+// EventDirectTCPSocketAborted fired when direct_socket.TCPSocket is aborted.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-directTCPSocketAborted
+type EventDirectTCPSocketAborted struct {
+	Identifier   RequestID          `json:"identifier"`
+	ErrorMessage string             `json:"errorMessage"`
+	Timestamp    *cdp.MonotonicTime `json:"timestamp"`
+}
+
+// EventDirectTCPSocketClosed fired when direct_socket.TCPSocket is closed.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-directTCPSocketClosed
+type EventDirectTCPSocketClosed struct {
+	Identifier RequestID          `json:"identifier"`
+	Timestamp  *cdp.MonotonicTime `json:"timestamp"`
+}
+
 // EventRequestWillBeSentExtraInfo fired when additional information about a
 // requestWillBeSent event is available from the network stack. Not every
 // requestWillBeSent event will have an additional requestWillBeSentExtraInfo
