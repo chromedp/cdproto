@@ -1706,6 +1706,7 @@ func (p *WaitForDebuggerParams) Do(ctx context.Context) (err error) {
 // Page.fileChooserOpened is emitted.
 type SetInterceptFileChooserDialogParams struct {
 	Enabled bool `json:"enabled"`
+	Cancel  bool `json:"cancel,omitempty,omitzero"` // If true, cancels the dialog by emitting relevant events (if any) in addition to not showing it if the interception is enabled (default: false).
 }
 
 // SetInterceptFileChooserDialog intercept file chooser requests and transfer
@@ -1722,6 +1723,14 @@ func SetInterceptFileChooserDialog(enabled bool) *SetInterceptFileChooserDialogP
 	return &SetInterceptFileChooserDialogParams{
 		Enabled: enabled,
 	}
+}
+
+// WithCancel if true, cancels the dialog by emitting relevant events (if
+// any) in addition to not showing it if the interception is enabled (default:
+// false).
+func (p SetInterceptFileChooserDialogParams) WithCancel(cancel bool) *SetInterceptFileChooserDialogParams {
+	p.Cancel = cancel
+	return &p
 }
 
 // Do executes Page.setInterceptFileChooserDialog against the provided context.
