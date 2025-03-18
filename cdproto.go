@@ -148,6 +148,7 @@ const (
 	CommandBrowserSetDockTile                                = browser.CommandSetDockTile
 	CommandBrowserExecuteBrowserCommand                      = browser.CommandExecuteBrowserCommand
 	CommandBrowserAddPrivacySandboxEnrollmentOverride        = browser.CommandAddPrivacySandboxEnrollmentOverride
+	CommandBrowserAddPrivacySandboxCoordinatorKeyConfig      = browser.CommandAddPrivacySandboxCoordinatorKeyConfig
 	EventBrowserDownloadWillBegin                            = "Browser.downloadWillBegin"
 	EventBrowserDownloadProgress                             = "Browser.downloadProgress"
 	CommandCSSAddRule                                        = css.CommandAddRule
@@ -343,6 +344,8 @@ const (
 	CommandEmulationSetDeviceMetricsOverride                 = emulation.CommandSetDeviceMetricsOverride
 	CommandEmulationSetDevicePostureOverride                 = emulation.CommandSetDevicePostureOverride
 	CommandEmulationClearDevicePostureOverride               = emulation.CommandClearDevicePostureOverride
+	CommandEmulationSetDisplayFeaturesOverride               = emulation.CommandSetDisplayFeaturesOverride
+	CommandEmulationClearDisplayFeaturesOverride             = emulation.CommandClearDisplayFeaturesOverride
 	CommandEmulationSetScrollbarsHidden                      = emulation.CommandSetScrollbarsHidden
 	CommandEmulationSetDocumentCookieDisabled                = emulation.CommandSetDocumentCookieDisabled
 	CommandEmulationSetEmitTouchEventsForMouse               = emulation.CommandSetEmitTouchEventsForMouse
@@ -1007,6 +1010,8 @@ func UnmarshalMessage(msg *Message) (any, error) {
 		return emptyVal, nil
 	case CommandBrowserAddPrivacySandboxEnrollmentOverride:
 		return emptyVal, nil
+	case CommandBrowserAddPrivacySandboxCoordinatorKeyConfig:
+		return emptyVal, nil
 	case EventBrowserDownloadWillBegin:
 		v = new(browser.EventDownloadWillBegin)
 	case EventBrowserDownloadProgress:
@@ -1396,6 +1401,10 @@ func UnmarshalMessage(msg *Message) (any, error) {
 	case CommandEmulationSetDevicePostureOverride:
 		return emptyVal, nil
 	case CommandEmulationClearDevicePostureOverride:
+		return emptyVal, nil
+	case CommandEmulationSetDisplayFeaturesOverride:
+		return emptyVal, nil
+	case CommandEmulationClearDisplayFeaturesOverride:
 		return emptyVal, nil
 	case CommandEmulationSetScrollbarsHidden:
 		return emptyVal, nil

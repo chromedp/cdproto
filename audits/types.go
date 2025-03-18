@@ -1003,8 +1003,9 @@ type SharedDictionaryIssueDetails struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-SRIMessageSignatureIssueDetails
 type SRIMessageSignatureIssueDetails struct {
-	Error   SRIMessageSignatureError `json:"error"`
-	Request *AffectedRequest         `json:"request"`
+	Error         SRIMessageSignatureError `json:"error"`
+	SignatureBase string                   `json:"signatureBase"`
+	Request       *AffectedRequest         `json:"request"`
 }
 
 // GenericIssueErrorType [no description].

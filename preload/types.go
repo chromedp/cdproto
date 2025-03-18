@@ -486,6 +486,7 @@ const (
 	PrefetchStatusPrefetchFailedMIMENotSupported                              PrefetchStatus = "PrefetchFailedMIMENotSupported"
 	PrefetchStatusPrefetchFailedNetError                                      PrefetchStatus = "PrefetchFailedNetError"
 	PrefetchStatusPrefetchFailedNon2xX                                        PrefetchStatus = "PrefetchFailedNon2XX"
+	PrefetchStatusPrefetchEvictedAfterBrowsingDataRemoved                     PrefetchStatus = "PrefetchEvictedAfterBrowsingDataRemoved"
 	PrefetchStatusPrefetchEvictedAfterCandidateRemoved                        PrefetchStatus = "PrefetchEvictedAfterCandidateRemoved"
 	PrefetchStatusPrefetchEvictedForNewerPrefetch                             PrefetchStatus = "PrefetchEvictedForNewerPrefetch"
 	PrefetchStatusPrefetchHeldback                                            PrefetchStatus = "PrefetchHeldback"
@@ -533,6 +534,8 @@ func (t *PrefetchStatus) UnmarshalJSON(buf []byte) error {
 		*t = PrefetchStatusPrefetchFailedNetError
 	case PrefetchStatusPrefetchFailedNon2xX:
 		*t = PrefetchStatusPrefetchFailedNon2xX
+	case PrefetchStatusPrefetchEvictedAfterBrowsingDataRemoved:
+		*t = PrefetchStatusPrefetchEvictedAfterBrowsingDataRemoved
 	case PrefetchStatusPrefetchEvictedAfterCandidateRemoved:
 		*t = PrefetchStatusPrefetchEvictedAfterCandidateRemoved
 	case PrefetchStatusPrefetchEvictedForNewerPrefetch:

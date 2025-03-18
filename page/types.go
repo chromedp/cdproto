@@ -1149,6 +1149,7 @@ const (
 	BackForwardCacheNotRestoredReasonRequestedByWebViewClient                                 BackForwardCacheNotRestoredReason = "RequestedByWebViewClient"
 	BackForwardCacheNotRestoredReasonPostMessageByWebViewClient                               BackForwardCacheNotRestoredReason = "PostMessageByWebViewClient"
 	BackForwardCacheNotRestoredReasonCacheControlNoStoreDeviceBoundSessionTerminated          BackForwardCacheNotRestoredReason = "CacheControlNoStoreDeviceBoundSessionTerminated"
+	BackForwardCacheNotRestoredReasonCacheLimitPruned                                         BackForwardCacheNotRestoredReason = "CacheLimitPruned"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -1437,6 +1438,8 @@ func (t *BackForwardCacheNotRestoredReason) UnmarshalJSON(buf []byte) error {
 		*t = BackForwardCacheNotRestoredReasonPostMessageByWebViewClient
 	case BackForwardCacheNotRestoredReasonCacheControlNoStoreDeviceBoundSessionTerminated:
 		*t = BackForwardCacheNotRestoredReasonCacheControlNoStoreDeviceBoundSessionTerminated
+	case BackForwardCacheNotRestoredReasonCacheLimitPruned:
+		*t = BackForwardCacheNotRestoredReasonCacheLimitPruned
 	default:
 		return fmt.Errorf("unknown BackForwardCacheNotRestoredReason value: %v", s)
 	}

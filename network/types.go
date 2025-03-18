@@ -1582,6 +1582,7 @@ const (
 	PrivateNetworkRequestPolicyPreflightBlock                 PrivateNetworkRequestPolicy = "PreflightBlock"
 	PrivateNetworkRequestPolicyPreflightWarn                  PrivateNetworkRequestPolicy = "PreflightWarn"
 	PrivateNetworkRequestPolicyPermissionBlock                PrivateNetworkRequestPolicy = "PermissionBlock"
+	PrivateNetworkRequestPolicyPermissionWarn                 PrivateNetworkRequestPolicy = "PermissionWarn"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -1602,6 +1603,8 @@ func (t *PrivateNetworkRequestPolicy) UnmarshalJSON(buf []byte) error {
 		*t = PrivateNetworkRequestPolicyPreflightWarn
 	case PrivateNetworkRequestPolicyPermissionBlock:
 		*t = PrivateNetworkRequestPolicyPermissionBlock
+	case PrivateNetworkRequestPolicyPermissionWarn:
+		*t = PrivateNetworkRequestPolicyPermissionWarn
 	default:
 		return fmt.Errorf("unknown PrivateNetworkRequestPolicy value: %v", s)
 	}
