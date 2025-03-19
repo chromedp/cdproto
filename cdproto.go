@@ -879,7 +879,7 @@ type empty struct{}
 var emptyVal = &empty{}
 
 // UnmarshalMessage unmarshals the message result or params.
-func UnmarshalMessage(msg *Message) (any, error) {
+func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 	var v any
 	switch msg.Method {
 	case CommandAccessibilityDisable:
@@ -2427,7 +2427,7 @@ func UnmarshalMessage(msg *Message) (any, error) {
 	default:
 		return nil, cdp.ErrMsgMissingParamsOrResult
 	}
-	if err := jsonv2.Unmarshal(buf, v); err != nil {
+	if err := jsonv2.Unmarshal(buf, v, opts...); err != nil {
 		return nil, err
 	}
 	return v, nil
