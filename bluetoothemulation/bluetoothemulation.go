@@ -139,6 +139,198 @@ func (p *SimulateAdvertisementParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandSimulateAdvertisement, p, nil)
 }
 
+// SimulateGATTOperationResponseParams simulates the response code from the
+// peripheral with |address| for a GATT operation of |type|. The |code| value
+// follows the HCI Error Codes from Bluetooth Core Specification Vol 2 Part D
+// 1.3 List Of Error Codes.
+type SimulateGATTOperationResponseParams struct {
+	Address string            `json:"address"`
+	Type    GATTOperationType `json:"type"`
+	Code    int64             `json:"code"`
+}
+
+// SimulateGATTOperationResponse simulates the response code from the
+// peripheral with |address| for a GATT operation of |type|. The |code| value
+// follows the HCI Error Codes from Bluetooth Core Specification Vol 2 Part D
+// 1.3 List Of Error Codes.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/BluetoothEmulation#method-simulateGATTOperationResponse
+//
+// parameters:
+//
+//	address
+//	type
+//	code
+func SimulateGATTOperationResponse(address string, typeVal GATTOperationType, code int64) *SimulateGATTOperationResponseParams {
+	return &SimulateGATTOperationResponseParams{
+		Address: address,
+		Type:    typeVal,
+		Code:    code,
+	}
+}
+
+// Do executes BluetoothEmulation.simulateGATTOperationResponse against the provided context.
+func (p *SimulateGATTOperationResponseParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSimulateGATTOperationResponse, p, nil)
+}
+
+// AddServiceParams adds a service with |serviceUuid| to the peripheral with
+// |address|.
+type AddServiceParams struct {
+	Address     string `json:"address"`
+	ServiceUUID string `json:"serviceUuid"`
+}
+
+// AddService adds a service with |serviceUuid| to the peripheral with
+// |address|.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/BluetoothEmulation#method-addService
+//
+// parameters:
+//
+//	address
+//	serviceUUID
+func AddService(address string, serviceUUID string) *AddServiceParams {
+	return &AddServiceParams{
+		Address:     address,
+		ServiceUUID: serviceUUID,
+	}
+}
+
+// AddServiceReturns return values.
+type AddServiceReturns struct {
+	ServiceID string `json:"serviceId,omitempty,omitzero"` // An identifier that uniquely represents this service.
+}
+
+// Do executes BluetoothEmulation.addService against the provided context.
+//
+// returns:
+//
+//	serviceID - An identifier that uniquely represents this service.
+func (p *AddServiceParams) Do(ctx context.Context) (serviceID string, err error) {
+	// execute
+	var res AddServiceReturns
+	err = cdp.Execute(ctx, CommandAddService, p, &res)
+	if err != nil {
+		return "", err
+	}
+
+	return res.ServiceID, nil
+}
+
+// RemoveServiceParams removes the service respresented by |serviceId| from
+// the peripheral with |address|.
+type RemoveServiceParams struct {
+	Address   string `json:"address"`
+	ServiceID string `json:"serviceId"`
+}
+
+// RemoveService removes the service respresented by |serviceId| from the
+// peripheral with |address|.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/BluetoothEmulation#method-removeService
+//
+// parameters:
+//
+//	address
+//	serviceID
+func RemoveService(address string, serviceID string) *RemoveServiceParams {
+	return &RemoveServiceParams{
+		Address:   address,
+		ServiceID: serviceID,
+	}
+}
+
+// Do executes BluetoothEmulation.removeService against the provided context.
+func (p *RemoveServiceParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandRemoveService, p, nil)
+}
+
+// AddCharacteristicParams adds a characteristic with |characteristicUuid|
+// and |properties| to the service represented by |serviceId| in the peripheral
+// with |address|.
+type AddCharacteristicParams struct {
+	Address            string                    `json:"address"`
+	ServiceID          string                    `json:"serviceId"`
+	CharacteristicUUID string                    `json:"characteristicUuid"`
+	Properties         *CharacteristicProperties `json:"properties"`
+}
+
+// AddCharacteristic adds a characteristic with |characteristicUuid| and
+// |properties| to the service represented by |serviceId| in the peripheral with
+// |address|.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/BluetoothEmulation#method-addCharacteristic
+//
+// parameters:
+//
+//	address
+//	serviceID
+//	characteristicUUID
+//	properties
+func AddCharacteristic(address string, serviceID string, characteristicUUID string, properties *CharacteristicProperties) *AddCharacteristicParams {
+	return &AddCharacteristicParams{
+		Address:            address,
+		ServiceID:          serviceID,
+		CharacteristicUUID: characteristicUUID,
+		Properties:         properties,
+	}
+}
+
+// AddCharacteristicReturns return values.
+type AddCharacteristicReturns struct {
+	CharacteristicID string `json:"characteristicId,omitempty,omitzero"` // An identifier that uniquely represents this characteristic.
+}
+
+// Do executes BluetoothEmulation.addCharacteristic against the provided context.
+//
+// returns:
+//
+//	characteristicID - An identifier that uniquely represents this characteristic.
+func (p *AddCharacteristicParams) Do(ctx context.Context) (characteristicID string, err error) {
+	// execute
+	var res AddCharacteristicReturns
+	err = cdp.Execute(ctx, CommandAddCharacteristic, p, &res)
+	if err != nil {
+		return "", err
+	}
+
+	return res.CharacteristicID, nil
+}
+
+// RemoveCharacteristicParams removes the characteristic respresented by
+// |characteristicId| from the service respresented by |serviceId| in the
+// peripheral with |address|.
+type RemoveCharacteristicParams struct {
+	Address          string `json:"address"`
+	ServiceID        string `json:"serviceId"`
+	CharacteristicID string `json:"characteristicId"`
+}
+
+// RemoveCharacteristic removes the characteristic respresented by
+// |characteristicId| from the service respresented by |serviceId| in the
+// peripheral with |address|.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/BluetoothEmulation#method-removeCharacteristic
+//
+// parameters:
+//
+//	address
+//	serviceID
+//	characteristicID
+func RemoveCharacteristic(address string, serviceID string, characteristicID string) *RemoveCharacteristicParams {
+	return &RemoveCharacteristicParams{
+		Address:          address,
+		ServiceID:        serviceID,
+		CharacteristicID: characteristicID,
+	}
+}
+
+// Do executes BluetoothEmulation.removeCharacteristic against the provided context.
+func (p *RemoveCharacteristicParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandRemoveCharacteristic, p, nil)
+}
+
 // Command names.
 const (
 	CommandEnable                         = "BluetoothEmulation.enable"
@@ -146,4 +338,9 @@ const (
 	CommandDisable                        = "BluetoothEmulation.disable"
 	CommandSimulatePreconnectedPeripheral = "BluetoothEmulation.simulatePreconnectedPeripheral"
 	CommandSimulateAdvertisement          = "BluetoothEmulation.simulateAdvertisement"
+	CommandSimulateGATTOperationResponse  = "BluetoothEmulation.simulateGATTOperationResponse"
+	CommandAddService                     = "BluetoothEmulation.addService"
+	CommandRemoveService                  = "BluetoothEmulation.removeService"
+	CommandAddCharacteristic              = "BluetoothEmulation.addCharacteristic"
+	CommandRemoveCharacteristic           = "BluetoothEmulation.removeCharacteristic"
 )

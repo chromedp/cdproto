@@ -244,91 +244,111 @@ func (t *InterestGroupAuctionFetchType) UnmarshalJSON(buf []byte) error {
 	return nil
 }
 
-// SharedStorageAccessType enum of shared storage access types.
+// SharedStorageAccessScope enum of shared storage access scopes.
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-SharedStorageAccessType
-type SharedStorageAccessType string
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-SharedStorageAccessScope
+type SharedStorageAccessScope string
 
-// String returns the SharedStorageAccessType as string value.
-func (t SharedStorageAccessType) String() string {
+// String returns the SharedStorageAccessScope as string value.
+func (t SharedStorageAccessScope) String() string {
 	return string(t)
 }
 
-// SharedStorageAccessType values.
+// SharedStorageAccessScope values.
 const (
-	SharedStorageAccessTypeDocumentAddModule      SharedStorageAccessType = "documentAddModule"
-	SharedStorageAccessTypeDocumentSelectURL      SharedStorageAccessType = "documentSelectURL"
-	SharedStorageAccessTypeDocumentRun            SharedStorageAccessType = "documentRun"
-	SharedStorageAccessTypeDocumentSet            SharedStorageAccessType = "documentSet"
-	SharedStorageAccessTypeDocumentAppend         SharedStorageAccessType = "documentAppend"
-	SharedStorageAccessTypeDocumentDelete         SharedStorageAccessType = "documentDelete"
-	SharedStorageAccessTypeDocumentClear          SharedStorageAccessType = "documentClear"
-	SharedStorageAccessTypeDocumentGet            SharedStorageAccessType = "documentGet"
-	SharedStorageAccessTypeWorkletSet             SharedStorageAccessType = "workletSet"
-	SharedStorageAccessTypeWorkletAppend          SharedStorageAccessType = "workletAppend"
-	SharedStorageAccessTypeWorkletDelete          SharedStorageAccessType = "workletDelete"
-	SharedStorageAccessTypeWorkletClear           SharedStorageAccessType = "workletClear"
-	SharedStorageAccessTypeWorkletGet             SharedStorageAccessType = "workletGet"
-	SharedStorageAccessTypeWorkletKeys            SharedStorageAccessType = "workletKeys"
-	SharedStorageAccessTypeWorkletEntries         SharedStorageAccessType = "workletEntries"
-	SharedStorageAccessTypeWorkletLength          SharedStorageAccessType = "workletLength"
-	SharedStorageAccessTypeWorkletRemainingBudget SharedStorageAccessType = "workletRemainingBudget"
-	SharedStorageAccessTypeHeaderSet              SharedStorageAccessType = "headerSet"
-	SharedStorageAccessTypeHeaderAppend           SharedStorageAccessType = "headerAppend"
-	SharedStorageAccessTypeHeaderDelete           SharedStorageAccessType = "headerDelete"
-	SharedStorageAccessTypeHeaderClear            SharedStorageAccessType = "headerClear"
+	SharedStorageAccessScopeWindow                   SharedStorageAccessScope = "window"
+	SharedStorageAccessScopeSharedStorageWorklet     SharedStorageAccessScope = "sharedStorageWorklet"
+	SharedStorageAccessScopeProtectedAudienceWorklet SharedStorageAccessScope = "protectedAudienceWorklet"
+	SharedStorageAccessScopeHeader                   SharedStorageAccessScope = "header"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *SharedStorageAccessType) UnmarshalJSON(buf []byte) error {
+func (t *SharedStorageAccessScope) UnmarshalJSON(buf []byte) error {
 	s := string(buf)
 	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-	switch SharedStorageAccessType(s) {
-	case SharedStorageAccessTypeDocumentAddModule:
-		*t = SharedStorageAccessTypeDocumentAddModule
-	case SharedStorageAccessTypeDocumentSelectURL:
-		*t = SharedStorageAccessTypeDocumentSelectURL
-	case SharedStorageAccessTypeDocumentRun:
-		*t = SharedStorageAccessTypeDocumentRun
-	case SharedStorageAccessTypeDocumentSet:
-		*t = SharedStorageAccessTypeDocumentSet
-	case SharedStorageAccessTypeDocumentAppend:
-		*t = SharedStorageAccessTypeDocumentAppend
-	case SharedStorageAccessTypeDocumentDelete:
-		*t = SharedStorageAccessTypeDocumentDelete
-	case SharedStorageAccessTypeDocumentClear:
-		*t = SharedStorageAccessTypeDocumentClear
-	case SharedStorageAccessTypeDocumentGet:
-		*t = SharedStorageAccessTypeDocumentGet
-	case SharedStorageAccessTypeWorkletSet:
-		*t = SharedStorageAccessTypeWorkletSet
-	case SharedStorageAccessTypeWorkletAppend:
-		*t = SharedStorageAccessTypeWorkletAppend
-	case SharedStorageAccessTypeWorkletDelete:
-		*t = SharedStorageAccessTypeWorkletDelete
-	case SharedStorageAccessTypeWorkletClear:
-		*t = SharedStorageAccessTypeWorkletClear
-	case SharedStorageAccessTypeWorkletGet:
-		*t = SharedStorageAccessTypeWorkletGet
-	case SharedStorageAccessTypeWorkletKeys:
-		*t = SharedStorageAccessTypeWorkletKeys
-	case SharedStorageAccessTypeWorkletEntries:
-		*t = SharedStorageAccessTypeWorkletEntries
-	case SharedStorageAccessTypeWorkletLength:
-		*t = SharedStorageAccessTypeWorkletLength
-	case SharedStorageAccessTypeWorkletRemainingBudget:
-		*t = SharedStorageAccessTypeWorkletRemainingBudget
-	case SharedStorageAccessTypeHeaderSet:
-		*t = SharedStorageAccessTypeHeaderSet
-	case SharedStorageAccessTypeHeaderAppend:
-		*t = SharedStorageAccessTypeHeaderAppend
-	case SharedStorageAccessTypeHeaderDelete:
-		*t = SharedStorageAccessTypeHeaderDelete
-	case SharedStorageAccessTypeHeaderClear:
-		*t = SharedStorageAccessTypeHeaderClear
+	switch SharedStorageAccessScope(s) {
+	case SharedStorageAccessScopeWindow:
+		*t = SharedStorageAccessScopeWindow
+	case SharedStorageAccessScopeSharedStorageWorklet:
+		*t = SharedStorageAccessScopeSharedStorageWorklet
+	case SharedStorageAccessScopeProtectedAudienceWorklet:
+		*t = SharedStorageAccessScopeProtectedAudienceWorklet
+	case SharedStorageAccessScopeHeader:
+		*t = SharedStorageAccessScopeHeader
 	default:
-		return fmt.Errorf("unknown SharedStorageAccessType value: %v", s)
+		return fmt.Errorf("unknown SharedStorageAccessScope value: %v", s)
+	}
+	return nil
+}
+
+// SharedStorageAccessMethod enum of shared storage access methods.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-SharedStorageAccessMethod
+type SharedStorageAccessMethod string
+
+// String returns the SharedStorageAccessMethod as string value.
+func (t SharedStorageAccessMethod) String() string {
+	return string(t)
+}
+
+// SharedStorageAccessMethod values.
+const (
+	SharedStorageAccessMethodAddModule       SharedStorageAccessMethod = "addModule"
+	SharedStorageAccessMethodCreateWorklet   SharedStorageAccessMethod = "createWorklet"
+	SharedStorageAccessMethodSelectURL       SharedStorageAccessMethod = "selectURL"
+	SharedStorageAccessMethodRun             SharedStorageAccessMethod = "run"
+	SharedStorageAccessMethodBatchUpdate     SharedStorageAccessMethod = "batchUpdate"
+	SharedStorageAccessMethodSet             SharedStorageAccessMethod = "set"
+	SharedStorageAccessMethodAppend          SharedStorageAccessMethod = "append"
+	SharedStorageAccessMethodDelete          SharedStorageAccessMethod = "delete"
+	SharedStorageAccessMethodClear           SharedStorageAccessMethod = "clear"
+	SharedStorageAccessMethodGet             SharedStorageAccessMethod = "get"
+	SharedStorageAccessMethodKeys            SharedStorageAccessMethod = "keys"
+	SharedStorageAccessMethodValues          SharedStorageAccessMethod = "values"
+	SharedStorageAccessMethodEntries         SharedStorageAccessMethod = "entries"
+	SharedStorageAccessMethodLength          SharedStorageAccessMethod = "length"
+	SharedStorageAccessMethodRemainingBudget SharedStorageAccessMethod = "remainingBudget"
+)
+
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *SharedStorageAccessMethod) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
+
+	switch SharedStorageAccessMethod(s) {
+	case SharedStorageAccessMethodAddModule:
+		*t = SharedStorageAccessMethodAddModule
+	case SharedStorageAccessMethodCreateWorklet:
+		*t = SharedStorageAccessMethodCreateWorklet
+	case SharedStorageAccessMethodSelectURL:
+		*t = SharedStorageAccessMethodSelectURL
+	case SharedStorageAccessMethodRun:
+		*t = SharedStorageAccessMethodRun
+	case SharedStorageAccessMethodBatchUpdate:
+		*t = SharedStorageAccessMethodBatchUpdate
+	case SharedStorageAccessMethodSet:
+		*t = SharedStorageAccessMethodSet
+	case SharedStorageAccessMethodAppend:
+		*t = SharedStorageAccessMethodAppend
+	case SharedStorageAccessMethodDelete:
+		*t = SharedStorageAccessMethodDelete
+	case SharedStorageAccessMethodClear:
+		*t = SharedStorageAccessMethodClear
+	case SharedStorageAccessMethodGet:
+		*t = SharedStorageAccessMethodGet
+	case SharedStorageAccessMethodKeys:
+		*t = SharedStorageAccessMethodKeys
+	case SharedStorageAccessMethodValues:
+		*t = SharedStorageAccessMethodValues
+	case SharedStorageAccessMethodEntries:
+		*t = SharedStorageAccessMethodEntries
+	case SharedStorageAccessMethodLength:
+		*t = SharedStorageAccessMethodLength
+	case SharedStorageAccessMethodRemainingBudget:
+		*t = SharedStorageAccessMethodRemainingBudget
+	default:
+		return fmt.Errorf("unknown SharedStorageAccessMethod value: %v", s)
 	}
 	return nil
 }

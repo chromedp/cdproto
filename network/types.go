@@ -1168,6 +1168,7 @@ const (
 	CookieBlockedReasonNameValuePairExceedsMaxSize              CookieBlockedReason = "NameValuePairExceedsMaxSize"
 	CookieBlockedReasonPortMismatch                             CookieBlockedReason = "PortMismatch"
 	CookieBlockedReasonSchemeMismatch                           CookieBlockedReason = "SchemeMismatch"
+	CookieBlockedReasonAnonymousContext                         CookieBlockedReason = "AnonymousContext"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -1212,6 +1213,8 @@ func (t *CookieBlockedReason) UnmarshalJSON(buf []byte) error {
 		*t = CookieBlockedReasonPortMismatch
 	case CookieBlockedReasonSchemeMismatch:
 		*t = CookieBlockedReasonSchemeMismatch
+	case CookieBlockedReasonAnonymousContext:
+		*t = CookieBlockedReasonAnonymousContext
 	default:
 		return fmt.Errorf("unknown CookieBlockedReason value: %v", s)
 	}

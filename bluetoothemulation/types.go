@@ -42,6 +42,38 @@ func (t *CentralState) UnmarshalJSON(buf []byte) error {
 	return nil
 }
 
+// GATTOperationType indicates the various types of GATT event.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/BluetoothEmulation#type-GATTOperationType
+type GATTOperationType string
+
+// String returns the GATTOperationType as string value.
+func (t GATTOperationType) String() string {
+	return string(t)
+}
+
+// GATTOperationType values.
+const (
+	GATTOperationTypeConnection GATTOperationType = "connection"
+	GATTOperationTypeDiscovery  GATTOperationType = "discovery"
+)
+
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *GATTOperationType) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
+
+	switch GATTOperationType(s) {
+	case GATTOperationTypeConnection:
+		*t = GATTOperationTypeConnection
+	case GATTOperationTypeDiscovery:
+		*t = GATTOperationTypeDiscovery
+	default:
+		return fmt.Errorf("unknown GATTOperationType value: %v", s)
+	}
+	return nil
+}
+
 // ManufacturerData stores the manufacturer data.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/BluetoothEmulation#type-ManufacturerData
@@ -70,4 +102,20 @@ type ScanEntry struct {
 	DeviceAddress string      `json:"deviceAddress"`
 	Rssi          int64       `json:"rssi"`
 	ScanRecord    *ScanRecord `json:"scanRecord"`
+}
+
+// CharacteristicProperties describes the properties of a characteristic.
+// This follows Bluetooth Core Specification BT 4.2 Vol 3 Part G 3.3.1.
+// Characteristic Properties.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/BluetoothEmulation#type-CharacteristicProperties
+type CharacteristicProperties struct {
+	Broadcast                 bool `json:"broadcast,omitempty,omitzero"`
+	Read                      bool `json:"read,omitempty,omitzero"`
+	WriteWithoutResponse      bool `json:"writeWithoutResponse,omitempty,omitzero"`
+	Write                     bool `json:"write,omitempty,omitzero"`
+	Notify                    bool `json:"notify,omitempty,omitzero"`
+	Indicate                  bool `json:"indicate,omitempty,omitzero"`
+	AuthenticatedSignedWrites bool `json:"authenticatedSignedWrites,omitempty,omitzero"`
+	ExtendedProperties        bool `json:"extendedProperties,omitempty,omitzero"`
 }

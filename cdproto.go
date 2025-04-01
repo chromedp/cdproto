@@ -130,6 +130,12 @@ const (
 	CommandBluetoothEmulationDisable                         = bluetoothemulation.CommandDisable
 	CommandBluetoothEmulationSimulatePreconnectedPeripheral  = bluetoothemulation.CommandSimulatePreconnectedPeripheral
 	CommandBluetoothEmulationSimulateAdvertisement           = bluetoothemulation.CommandSimulateAdvertisement
+	CommandBluetoothEmulationSimulateGATTOperationResponse   = bluetoothemulation.CommandSimulateGATTOperationResponse
+	CommandBluetoothEmulationAddService                      = bluetoothemulation.CommandAddService
+	CommandBluetoothEmulationRemoveService                   = bluetoothemulation.CommandRemoveService
+	CommandBluetoothEmulationAddCharacteristic               = bluetoothemulation.CommandAddCharacteristic
+	CommandBluetoothEmulationRemoveCharacteristic            = bluetoothemulation.CommandRemoveCharacteristic
+	EventBluetoothEmulationGattOperationReceived             = "BluetoothEmulation.gattOperationReceived"
 	CommandBrowserSetPermission                              = browser.CommandSetPermission
 	CommandBrowserGrantPermissions                           = browser.CommandGrantPermissions
 	CommandBrowserResetPermissions                           = browser.CommandResetPermissions
@@ -974,6 +980,18 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		return emptyVal, nil
 	case CommandBluetoothEmulationSimulateAdvertisement:
 		return emptyVal, nil
+	case CommandBluetoothEmulationSimulateGATTOperationResponse:
+		return emptyVal, nil
+	case CommandBluetoothEmulationAddService:
+		v = new(bluetoothemulation.AddServiceReturns)
+	case CommandBluetoothEmulationRemoveService:
+		return emptyVal, nil
+	case CommandBluetoothEmulationAddCharacteristic:
+		v = new(bluetoothemulation.AddCharacteristicReturns)
+	case CommandBluetoothEmulationRemoveCharacteristic:
+		return emptyVal, nil
+	case EventBluetoothEmulationGattOperationReceived:
+		v = new(bluetoothemulation.EventGattOperationReceived)
 	case CommandBrowserSetPermission:
 		return emptyVal, nil
 	case CommandBrowserGrantPermissions:

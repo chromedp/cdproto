@@ -94,9 +94,11 @@ type EventInterestGroupAuctionNetworkRequestCreated struct {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#event-sharedStorageAccessed
 type EventSharedStorageAccessed struct {
 	AccessTime  *cdp.TimeSinceEpoch        `json:"accessTime"`  // Time of the access.
-	Type        SharedStorageAccessType    `json:"type"`        // Enum value indicating the Shared Storage API method invoked.
+	Scope       SharedStorageAccessScope   `json:"scope"`       // Enum value indicating the access scope.
+	Method      SharedStorageAccessMethod  `json:"method"`      // Enum value indicating the Shared Storage API method invoked.
 	MainFrameID cdp.FrameID                `json:"mainFrameId"` // DevTools Frame Token for the primary frame tree's root.
-	OwnerOrigin string                     `json:"ownerOrigin"` // Serialized origin for the context that invoked the Shared Storage API.
+	OwnerOrigin string                     `json:"ownerOrigin"` // Serialization of the origin owning the Shared Storage data.
+	OwnerSite   string                     `json:"ownerSite"`   // Serialization of the site owning the Shared Storage data.
 	Params      *SharedStorageAccessParams `json:"params"`      // The sub-parameters wrapped by params are all optional and their presence/absence depends on type.
 }
 

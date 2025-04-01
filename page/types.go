@@ -95,6 +95,7 @@ const (
 	PermissionsPolicyFeatureInterestCohort                 PermissionsPolicyFeature = "interest-cohort"
 	PermissionsPolicyFeatureJoinAdInterestGroup            PermissionsPolicyFeature = "join-ad-interest-group"
 	PermissionsPolicyFeatureKeyboardMap                    PermissionsPolicyFeature = "keyboard-map"
+	PermissionsPolicyFeatureLanguageDetector               PermissionsPolicyFeature = "language-detector"
 	PermissionsPolicyFeatureLocalFonts                     PermissionsPolicyFeature = "local-fonts"
 	PermissionsPolicyFeatureMagnetometer                   PermissionsPolicyFeature = "magnetometer"
 	PermissionsPolicyFeatureMediaPlaybackWhileNotVisible   PermissionsPolicyFeature = "media-playback-while-not-visible"
@@ -109,6 +110,7 @@ const (
 	PermissionsPolicyFeaturePrivateStateTokenRedemption    PermissionsPolicyFeature = "private-state-token-redemption"
 	PermissionsPolicyFeaturePublickeyCredentialsCreate     PermissionsPolicyFeature = "publickey-credentials-create"
 	PermissionsPolicyFeaturePublickeyCredentialsGet        PermissionsPolicyFeature = "publickey-credentials-get"
+	PermissionsPolicyFeatureRewriter                       PermissionsPolicyFeature = "rewriter"
 	PermissionsPolicyFeatureRunAdAuction                   PermissionsPolicyFeature = "run-ad-auction"
 	PermissionsPolicyFeatureScreenWakeLock                 PermissionsPolicyFeature = "screen-wake-lock"
 	PermissionsPolicyFeatureSerial                         PermissionsPolicyFeature = "serial"
@@ -119,7 +121,9 @@ const (
 	PermissionsPolicyFeatureSpeakerSelection               PermissionsPolicyFeature = "speaker-selection"
 	PermissionsPolicyFeatureStorageAccess                  PermissionsPolicyFeature = "storage-access"
 	PermissionsPolicyFeatureSubApps                        PermissionsPolicyFeature = "sub-apps"
+	PermissionsPolicyFeatureSummarizer                     PermissionsPolicyFeature = "summarizer"
 	PermissionsPolicyFeatureSyncXhr                        PermissionsPolicyFeature = "sync-xhr"
+	PermissionsPolicyFeatureTranslator                     PermissionsPolicyFeature = "translator"
 	PermissionsPolicyFeatureUnload                         PermissionsPolicyFeature = "unload"
 	PermissionsPolicyFeatureUsb                            PermissionsPolicyFeature = "usb"
 	PermissionsPolicyFeatureUsbUnrestricted                PermissionsPolicyFeature = "usb-unrestricted"
@@ -128,6 +132,7 @@ const (
 	PermissionsPolicyFeatureWebPrinting                    PermissionsPolicyFeature = "web-printing"
 	PermissionsPolicyFeatureWebShare                       PermissionsPolicyFeature = "web-share"
 	PermissionsPolicyFeatureWindowManagement               PermissionsPolicyFeature = "window-management"
+	PermissionsPolicyFeatureWriter                         PermissionsPolicyFeature = "writer"
 	PermissionsPolicyFeatureXrSpatialTracking              PermissionsPolicyFeature = "xr-spatial-tracking"
 )
 
@@ -259,6 +264,8 @@ func (t *PermissionsPolicyFeature) UnmarshalJSON(buf []byte) error {
 		*t = PermissionsPolicyFeatureJoinAdInterestGroup
 	case PermissionsPolicyFeatureKeyboardMap:
 		*t = PermissionsPolicyFeatureKeyboardMap
+	case PermissionsPolicyFeatureLanguageDetector:
+		*t = PermissionsPolicyFeatureLanguageDetector
 	case PermissionsPolicyFeatureLocalFonts:
 		*t = PermissionsPolicyFeatureLocalFonts
 	case PermissionsPolicyFeatureMagnetometer:
@@ -287,6 +294,8 @@ func (t *PermissionsPolicyFeature) UnmarshalJSON(buf []byte) error {
 		*t = PermissionsPolicyFeaturePublickeyCredentialsCreate
 	case PermissionsPolicyFeaturePublickeyCredentialsGet:
 		*t = PermissionsPolicyFeaturePublickeyCredentialsGet
+	case PermissionsPolicyFeatureRewriter:
+		*t = PermissionsPolicyFeatureRewriter
 	case PermissionsPolicyFeatureRunAdAuction:
 		*t = PermissionsPolicyFeatureRunAdAuction
 	case PermissionsPolicyFeatureScreenWakeLock:
@@ -307,8 +316,12 @@ func (t *PermissionsPolicyFeature) UnmarshalJSON(buf []byte) error {
 		*t = PermissionsPolicyFeatureStorageAccess
 	case PermissionsPolicyFeatureSubApps:
 		*t = PermissionsPolicyFeatureSubApps
+	case PermissionsPolicyFeatureSummarizer:
+		*t = PermissionsPolicyFeatureSummarizer
 	case PermissionsPolicyFeatureSyncXhr:
 		*t = PermissionsPolicyFeatureSyncXhr
+	case PermissionsPolicyFeatureTranslator:
+		*t = PermissionsPolicyFeatureTranslator
 	case PermissionsPolicyFeatureUnload:
 		*t = PermissionsPolicyFeatureUnload
 	case PermissionsPolicyFeatureUsb:
@@ -325,6 +338,8 @@ func (t *PermissionsPolicyFeature) UnmarshalJSON(buf []byte) error {
 		*t = PermissionsPolicyFeatureWebShare
 	case PermissionsPolicyFeatureWindowManagement:
 		*t = PermissionsPolicyFeatureWindowManagement
+	case PermissionsPolicyFeatureWriter:
+		*t = PermissionsPolicyFeatureWriter
 	case PermissionsPolicyFeatureXrSpatialTracking:
 		*t = PermissionsPolicyFeatureXrSpatialTracking
 	default:

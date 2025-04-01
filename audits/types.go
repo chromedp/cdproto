@@ -913,6 +913,7 @@ const (
 	SRIMessageSignatureErrorValidationFailedSignatureExpired                     SRIMessageSignatureError = "ValidationFailedSignatureExpired"
 	SRIMessageSignatureErrorValidationFailedInvalidLength                        SRIMessageSignatureError = "ValidationFailedInvalidLength"
 	SRIMessageSignatureErrorValidationFailedSignatureMismatch                    SRIMessageSignatureError = "ValidationFailedSignatureMismatch"
+	SRIMessageSignatureErrorValidationFailedIntegrityMismatch                    SRIMessageSignatureError = "ValidationFailedIntegrityMismatch"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -961,6 +962,8 @@ func (t *SRIMessageSignatureError) UnmarshalJSON(buf []byte) error {
 		*t = SRIMessageSignatureErrorValidationFailedInvalidLength
 	case SRIMessageSignatureErrorValidationFailedSignatureMismatch:
 		*t = SRIMessageSignatureErrorValidationFailedSignatureMismatch
+	case SRIMessageSignatureErrorValidationFailedIntegrityMismatch:
+		*t = SRIMessageSignatureErrorValidationFailedIntegrityMismatch
 	default:
 		return fmt.Errorf("unknown SRIMessageSignatureError value: %v", s)
 	}
@@ -1003,9 +1006,10 @@ type SharedDictionaryIssueDetails struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-SRIMessageSignatureIssueDetails
 type SRIMessageSignatureIssueDetails struct {
-	Error         SRIMessageSignatureError `json:"error"`
-	SignatureBase string                   `json:"signatureBase"`
-	Request       *AffectedRequest         `json:"request"`
+	Error               SRIMessageSignatureError `json:"error"`
+	SignatureBase       string                   `json:"signatureBase"`
+	IntegrityAssertions []string                 `json:"integrityAssertions"`
+	Request             *AffectedRequest         `json:"request"`
 }
 
 // GenericIssueErrorType [no description].
