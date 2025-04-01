@@ -119,9 +119,9 @@ func (p *StartParams) Do(ctx context.Context) (err error) {
 // JavaScript executed before enabling precise code coverage may be incomplete.
 // Enabling prevents running optimized code and resets execution counters.
 type StartPreciseCoverageParams struct {
-	CallCount             bool `json:"callCount,omitempty,omitzero"`             // Collect accurate call counts beyond simple 'covered' or 'not covered'.
-	Detailed              bool `json:"detailed,omitempty,omitzero"`              // Collect block-based coverage.
-	AllowTriggeredUpdates bool `json:"allowTriggeredUpdates,omitempty,omitzero"` // Allow the backend to send updates on its own initiative
+	CallCount             bool `json:"callCount"`             // Collect accurate call counts beyond simple 'covered' or 'not covered'.
+	Detailed              bool `json:"detailed"`              // Collect block-based coverage.
+	AllowTriggeredUpdates bool `json:"allowTriggeredUpdates"` // Allow the backend to send updates on its own initiative
 }
 
 // StartPreciseCoverage enable precise code coverage. Coverage data for
@@ -132,7 +132,11 @@ type StartPreciseCoverageParams struct {
 //
 // parameters:
 func StartPreciseCoverage() *StartPreciseCoverageParams {
-	return &StartPreciseCoverageParams{}
+	return &StartPreciseCoverageParams{
+		CallCount:             false,
+		Detailed:              false,
+		AllowTriggeredUpdates: false,
+	}
 }
 
 // WithCallCount collect accurate call counts beyond simple 'covered' or 'not

@@ -110,12 +110,12 @@ type ScanEntry struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/BluetoothEmulation#type-CharacteristicProperties
 type CharacteristicProperties struct {
-	Broadcast                 bool `json:"broadcast,omitempty,omitzero"`
-	Read                      bool `json:"read,omitempty,omitzero"`
-	WriteWithoutResponse      bool `json:"writeWithoutResponse,omitempty,omitzero"`
-	Write                     bool `json:"write,omitempty,omitzero"`
-	Notify                    bool `json:"notify,omitempty,omitzero"`
-	Indicate                  bool `json:"indicate,omitempty,omitzero"`
-	AuthenticatedSignedWrites bool `json:"authenticatedSignedWrites,omitempty,omitzero"`
-	ExtendedProperties        bool `json:"extendedProperties,omitempty,omitzero"`
+	Broadcast                 bool `json:"broadcast"`
+	Read                      bool `json:"read"`
+	WriteWithoutResponse      bool `json:"writeWithoutResponse"`
+	Write                     bool `json:"write"`
+	Notify                    bool `json:"notify"`
+	Indicate                  bool `json:"indicate"`
+	AuthenticatedSignedWrites bool `json:"authenticatedSignedWrites"`
+	ExtendedProperties        bool `json:"extendedProperties"`
 }

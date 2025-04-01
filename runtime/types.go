@@ -121,16 +121,16 @@ type EntryPreview struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#type-PropertyDescriptor
 type PropertyDescriptor struct {
-	Name         string        `json:"name"`                         // Property name or symbol description.
-	Value        *RemoteObject `json:"value,omitempty,omitzero"`     // The value associated with the property.
-	Writable     bool          `json:"writable,omitempty,omitzero"`  // True if the value associated with the property may be changed (data descriptors only).
-	Get          *RemoteObject `json:"get,omitempty,omitzero"`       // A function which serves as a getter for the property, or undefined if there is no getter (accessor descriptors only).
-	Set          *RemoteObject `json:"set,omitempty,omitzero"`       // A function which serves as a setter for the property, or undefined if there is no setter (accessor descriptors only).
-	Configurable bool          `json:"configurable"`                 // True if the type of this property descriptor may be changed and if the property may be deleted from the corresponding object.
-	Enumerable   bool          `json:"enumerable"`                   // True if this property shows up during enumeration of the properties on the corresponding object.
-	WasThrown    bool          `json:"wasThrown,omitempty,omitzero"` // True if the result was thrown during the evaluation.
-	IsOwn        bool          `json:"isOwn,omitempty,omitzero"`     // True if the property is owned for the object.
-	Symbol       *RemoteObject `json:"symbol,omitempty,omitzero"`    // Property symbol object, if the property is of the symbol type.
+	Name         string        `json:"name"`                      // Property name or symbol description.
+	Value        *RemoteObject `json:"value,omitempty,omitzero"`  // The value associated with the property.
+	Writable     bool          `json:"writable"`                  // True if the value associated with the property may be changed (data descriptors only).
+	Get          *RemoteObject `json:"get,omitempty,omitzero"`    // A function which serves as a getter for the property, or undefined if there is no getter (accessor descriptors only).
+	Set          *RemoteObject `json:"set,omitempty,omitzero"`    // A function which serves as a setter for the property, or undefined if there is no setter (accessor descriptors only).
+	Configurable bool          `json:"configurable"`              // True if the type of this property descriptor may be changed and if the property may be deleted from the corresponding object.
+	Enumerable   bool          `json:"enumerable"`                // True if this property shows up during enumeration of the properties on the corresponding object.
+	WasThrown    bool          `json:"wasThrown"`                 // True if the result was thrown during the evaluation.
+	IsOwn        bool          `json:"isOwn"`                     // True if the property is owned for the object.
+	Symbol       *RemoteObject `json:"symbol,omitempty,omitzero"` // Property symbol object, if the property is of the symbol type.
 }
 
 // InternalPropertyDescriptor object internal property descriptor. This

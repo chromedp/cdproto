@@ -51,11 +51,11 @@ func (p *EnableParams) Do(ctx context.Context) (err error) {
 // style information for the nodes. Shadow DOM in the returned DOM tree is
 // flattened.
 type CaptureSnapshotParams struct {
-	ComputedStyles                 []string `json:"computedStyles"`                                    // Whitelist of computed styles to return.
-	IncludePaintOrder              bool     `json:"includePaintOrder,omitempty,omitzero"`              // Whether to include layout object paint orders into the snapshot.
-	IncludeDOMRects                bool     `json:"includeDOMRects,omitempty,omitzero"`                // Whether to include DOM rectangles (offsetRects, clientRects, scrollRects) into the snapshot
-	IncludeBlendedBackgroundColors bool     `json:"includeBlendedBackgroundColors,omitempty,omitzero"` // Whether to include blended background colors in the snapshot (default: false). Blended background color is achieved by blending background colors of all elements that overlap with the current element.
-	IncludeTextColorOpacities      bool     `json:"includeTextColorOpacities,omitempty,omitzero"`      // Whether to include text color opacity in the snapshot (default: false). An element might have the opacity property set that affects the text color of the element. The final text color opacity is computed based on the opacity of all overlapping elements.
+	ComputedStyles                 []string `json:"computedStyles"`                 // Whitelist of computed styles to return.
+	IncludePaintOrder              bool     `json:"includePaintOrder"`              // Whether to include layout object paint orders into the snapshot.
+	IncludeDOMRects                bool     `json:"includeDOMRects"`                // Whether to include DOM rectangles (offsetRects, clientRects, scrollRects) into the snapshot
+	IncludeBlendedBackgroundColors bool     `json:"includeBlendedBackgroundColors"` // Whether to include blended background colors in the snapshot (default: false). Blended background color is achieved by blending background colors of all elements that overlap with the current element.
+	IncludeTextColorOpacities      bool     `json:"includeTextColorOpacities"`      // Whether to include text color opacity in the snapshot (default: false). An element might have the opacity property set that affects the text color of the element. The final text color opacity is computed based on the opacity of all overlapping elements.
 }
 
 // CaptureSnapshot returns a document snapshot, including the full DOM tree
@@ -71,7 +71,11 @@ type CaptureSnapshotParams struct {
 //	computedStyles - Whitelist of computed styles to return.
 func CaptureSnapshot(computedStyles []string) *CaptureSnapshotParams {
 	return &CaptureSnapshotParams{
-		ComputedStyles: computedStyles,
+		ComputedStyles:                 computedStyles,
+		IncludePaintOrder:              false,
+		IncludeDOMRects:                false,
+		IncludeBlendedBackgroundColors: false,
+		IncludeTextColorOpacities:      false,
 	}
 }
 

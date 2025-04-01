@@ -206,10 +206,10 @@ type ValueSource struct {
 	Value             *Value                `json:"value,omitempty,omitzero"`             // The value of this property source.
 	Attribute         string                `json:"attribute,omitempty,omitzero"`         // The name of the relevant attribute, if any.
 	AttributeValue    *Value                `json:"attributeValue,omitempty,omitzero"`    // The value of the relevant attribute, if any.
-	Superseded        bool                  `json:"superseded,omitempty,omitzero"`        // Whether this source is superseded by a higher priority source.
+	Superseded        bool                  `json:"superseded"`                           // Whether this source is superseded by a higher priority source.
 	NativeSource      ValueNativeSourceType `json:"nativeSource,omitempty,omitzero"`      // The native markup source for this value, e.g. a <label> element.
 	NativeSourceValue *Value                `json:"nativeSourceValue,omitempty,omitzero"` // The value, such as a node or node list, of the native source.
-	Invalid           bool                  `json:"invalid,omitempty,omitzero"`           // Whether the value for this property is invalid.
+	Invalid           bool                  `json:"invalid"`                              // Whether the value for this property is invalid.
 	InvalidReason     string                `json:"invalidReason,omitempty,omitzero"`     // Reason for the value being invalid, if it is.
 }
 

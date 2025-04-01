@@ -40,14 +40,14 @@ type Content struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/HAR#type-Cookie
 type Cookie struct {
-	Name     string `json:"name"`                        // The name of the cookie.
-	Value    string `json:"value"`                       // The cookie value.
-	Path     string `json:"path,omitempty,omitzero"`     // The path pertaining to the cookie.
-	Domain   string `json:"domain,omitempty,omitzero"`   // The host of the cookie.
-	Expires  string `json:"expires,omitempty,omitzero"`  // Cookie expiration time. (ISO 8601 - YYYY-MM-DDThh:mm:ss.sTZD, e.g. 2009-07-24T19:20:30.123+02:00).
-	HTTPOnly bool   `json:"httpOnly,omitempty,omitzero"` // Set to true if the cookie is HTTP only, false otherwise.
-	Secure   bool   `json:"secure,omitempty,omitzero"`   // True if the cookie was transmitted over ssl, false otherwise.
-	Comment  string `json:"comment,omitempty,omitzero"`  // A comment provided by the user or the application.
+	Name     string `json:"name"`                       // The name of the cookie.
+	Value    string `json:"value"`                      // The cookie value.
+	Path     string `json:"path,omitempty,omitzero"`    // The path pertaining to the cookie.
+	Domain   string `json:"domain,omitempty,omitzero"`  // The host of the cookie.
+	Expires  string `json:"expires,omitempty,omitzero"` // Cookie expiration time. (ISO 8601 - YYYY-MM-DDThh:mm:ss.sTZD, e.g. 2009-07-24T19:20:30.123+02:00).
+	HTTPOnly bool   `json:"httpOnly"`                   // Set to true if the cookie is HTTP only, false otherwise.
+	Secure   bool   `json:"secure"`                     // True if the cookie was transmitted over ssl, false otherwise.
+	Comment  string `json:"comment,omitempty,omitzero"` // A comment provided by the user or the application.
 }
 
 // Creator creator and browser objects share the same structure.

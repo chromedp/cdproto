@@ -20,10 +20,10 @@ import (
 // GetEncodedResponseParams returns the response body and size if it were
 // re-encoded with the specified settings. Only applies to images.
 type GetEncodedResponseParams struct {
-	RequestID network.RequestID          `json:"requestId"`                   // Identifier of the network request to get content for.
-	Encoding  GetEncodedResponseEncoding `json:"encoding"`                    // The encoding to use.
-	Quality   float64                    `json:"quality,omitempty,omitzero"`  // The quality of the encoding (0-1). (defaults to 1)
-	SizeOnly  bool                       `json:"sizeOnly,omitempty,omitzero"` // Whether to only return the size information (defaults to false).
+	RequestID network.RequestID          `json:"requestId"`                  // Identifier of the network request to get content for.
+	Encoding  GetEncodedResponseEncoding `json:"encoding"`                   // The encoding to use.
+	Quality   float64                    `json:"quality,omitempty,omitzero"` // The quality of the encoding (0-1). (defaults to 1)
+	SizeOnly  bool                       `json:"sizeOnly"`                   // Whether to only return the size information (defaults to false).
 }
 
 // GetEncodedResponse returns the response body and size if it were
@@ -39,6 +39,7 @@ func GetEncodedResponse(requestID network.RequestID, encoding GetEncodedResponse
 	return &GetEncodedResponseParams{
 		RequestID: requestID,
 		Encoding:  encoding,
+		SizeOnly:  false,
 	}
 }
 
@@ -123,7 +124,7 @@ func (p *EnableParams) Do(ctx context.Context) (err error) {
 // CheckContrastParams runs the contrast check for the target page. Found
 // issues are reported using Audits.issueAdded event.
 type CheckContrastParams struct {
-	ReportAAA bool `json:"reportAAA,omitempty,omitzero"` // Whether to report WCAG AAA level issues. Default is false.
+	ReportAAA bool `json:"reportAAA"` // Whether to report WCAG AAA level issues. Default is false.
 }
 
 // CheckContrast runs the contrast check for the target page. Found issues
@@ -133,7 +134,9 @@ type CheckContrastParams struct {
 //
 // parameters:
 func CheckContrast() *CheckContrastParams {
-	return &CheckContrastParams{}
+	return &CheckContrastParams{
+		ReportAAA: false,
+	}
 }
 
 // WithReportAAA whether to report WCAG AAA level issues. Default is false.

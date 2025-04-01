@@ -72,7 +72,7 @@ func GetFeatureState(featureState string) *GetFeatureStateParams {
 
 // GetFeatureStateReturns return values.
 type GetFeatureStateReturns struct {
-	FeatureEnabled bool `json:"featureEnabled,omitempty,omitzero"`
+	FeatureEnabled bool `json:"featureEnabled"`
 }
 
 // Do executes SystemInfo.getFeatureState against the provided context.

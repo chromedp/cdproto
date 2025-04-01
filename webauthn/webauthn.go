@@ -18,7 +18,7 @@ import (
 // EnableParams enable the WebAuthn domain and start intercepting credential
 // storage and retrieval with a virtual authenticator.
 type EnableParams struct {
-	EnableUI bool `json:"enableUI,omitempty,omitzero"` // Whether to enable the WebAuthn user interface. Enabling the UI is recommended for debugging and demo purposes, as it is closer to the real experience. Disabling the UI is recommended for automated testing. Supported at the embedder's discretion if UI is available. Defaults to false.
+	EnableUI bool `json:"enableUI"` // Whether to enable the WebAuthn user interface. Enabling the UI is recommended for debugging and demo purposes, as it is closer to the real experience. Disabling the UI is recommended for automated testing. Supported at the embedder's discretion if UI is available. Defaults to false.
 }
 
 // Enable enable the WebAuthn domain and start intercepting credential
@@ -28,7 +28,9 @@ type EnableParams struct {
 //
 // parameters:
 func Enable() *EnableParams {
-	return &EnableParams{}
+	return &EnableParams{
+		EnableUI: false,
+	}
 }
 
 // WithEnableUI whether to enable the WebAuthn user interface. Enabling the
@@ -103,9 +105,9 @@ func (p *AddVirtualAuthenticatorParams) Do(ctx context.Context) (authenticatorID
 // isBadUP to false if they are not present.
 type SetResponseOverrideBitsParams struct {
 	AuthenticatorID  AuthenticatorID `json:"authenticatorId"`
-	IsBogusSignature bool            `json:"isBogusSignature,omitempty,omitzero"` // If isBogusSignature is set, overrides the signature in the authenticator response to be zero. Defaults to false.
-	IsBadUV          bool            `json:"isBadUV,omitempty,omitzero"`          // If isBadUV is set, overrides the UV bit in the flags in the authenticator response to be zero. Defaults to false.
-	IsBadUP          bool            `json:"isBadUP,omitempty,omitzero"`          // If isBadUP is set, overrides the UP bit in the flags in the authenticator response to be zero. Defaults to false.
+	IsBogusSignature bool            `json:"isBogusSignature"` // If isBogusSignature is set, overrides the signature in the authenticator response to be zero. Defaults to false.
+	IsBadUV          bool            `json:"isBadUV"`          // If isBadUV is set, overrides the UV bit in the flags in the authenticator response to be zero. Defaults to false.
+	IsBadUP          bool            `json:"isBadUP"`          // If isBadUP is set, overrides the UP bit in the flags in the authenticator response to be zero. Defaults to false.
 }
 
 // SetResponseOverrideBits resets parameters isBogusSignature, isBadUV,
@@ -118,7 +120,10 @@ type SetResponseOverrideBitsParams struct {
 //	authenticatorID
 func SetResponseOverrideBits(authenticatorID AuthenticatorID) *SetResponseOverrideBitsParams {
 	return &SetResponseOverrideBitsParams{
-		AuthenticatorID: authenticatorID,
+		AuthenticatorID:  authenticatorID,
+		IsBogusSignature: false,
+		IsBadUV:          false,
+		IsBadUP:          false,
 	}
 }
 
@@ -395,8 +400,8 @@ func (p *SetAutomaticPresenceSimulationParams) Do(ctx context.Context) (err erro
 type SetCredentialPropertiesParams struct {
 	AuthenticatorID   AuthenticatorID `json:"authenticatorId"`
 	CredentialID      string          `json:"credentialId"`
-	BackupEligibility bool            `json:"backupEligibility,omitempty,omitzero"`
-	BackupState       bool            `json:"backupState,omitempty,omitzero"`
+	BackupEligibility bool            `json:"backupEligibility"`
+	BackupState       bool            `json:"backupState"`
 }
 
 // SetCredentialProperties allows setting credential properties.
@@ -410,8 +415,10 @@ type SetCredentialPropertiesParams struct {
 //	credentialID
 func SetCredentialProperties(authenticatorID AuthenticatorID, credentialID string) *SetCredentialPropertiesParams {
 	return &SetCredentialPropertiesParams{
-		AuthenticatorID: authenticatorID,
-		CredentialID:    credentialID,
+		AuthenticatorID:   authenticatorID,
+		CredentialID:      credentialID,
+		BackupEligibility: false,
+		BackupState:       false,
 	}
 }
 

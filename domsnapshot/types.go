@@ -17,8 +17,8 @@ type DOMNode struct {
 	NodeValue            string                       `json:"nodeValue"`                               // Node's nodeValue.
 	TextValue            string                       `json:"textValue,omitempty,omitzero"`            // Only set for textarea elements, contains the text value.
 	InputValue           string                       `json:"inputValue,omitempty,omitzero"`           // Only set for input elements, contains the input's associated text value.
-	InputChecked         bool                         `json:"inputChecked,omitempty,omitzero"`         // Only set for radio and checkbox input elements, indicates if the element has been checked
-	OptionSelected       bool                         `json:"optionSelected,omitempty,omitzero"`       // Only set for option elements, indicates if the element has been selected
+	InputChecked         bool                         `json:"inputChecked"`                            // Only set for radio and checkbox input elements, indicates if the element has been checked
+	OptionSelected       bool                         `json:"optionSelected"`                          // Only set for option elements, indicates if the element has been selected
 	BackendNodeID        cdp.BackendNodeID            `json:"backendNodeId"`                           // Node's id, corresponds to DOM.Node.backendNodeId.
 	ChildNodeIndexes     []int64                      `json:"childNodeIndexes,omitempty,omitzero"`     // The indexes of the node's child nodes in the domNodes array returned by getSnapshot, if any.
 	Attributes           []*NameValue                 `json:"attributes,omitempty,omitzero"`           // Attributes of an Element node.
@@ -34,7 +34,7 @@ type DOMNode struct {
 	ContentDocumentIndex int64                        `json:"contentDocumentIndex,omitempty,omitzero"` // The index of a frame owner element's content document in the domNodes array returned by getSnapshot, if any.
 	PseudoType           cdp.PseudoType               `json:"pseudoType,omitempty,omitzero"`           // Type of a pseudo element node.
 	ShadowRootType       cdp.ShadowRootType           `json:"shadowRootType,omitempty,omitzero"`       // Shadow root type.
-	IsClickable          bool                         `json:"isClickable,omitempty,omitzero"`          // Whether this DOM node responds to mouse clicks. This includes nodes that have had click event listeners attached via JavaScript as well as anchor tags that naturally navigate when clicked.
+	IsClickable          bool                         `json:"isClickable"`                             // Whether this DOM node responds to mouse clicks. This includes nodes that have had click event listeners attached via JavaScript as well as anchor tags that naturally navigate when clicked.
 	EventListeners       []*domdebugger.EventListener `json:"eventListeners,omitempty,omitzero"`       // Details of the node's event listeners, if any.
 	CurrentSourceURL     string                       `json:"currentSourceURL,omitempty,omitzero"`     // The selected url for nodes with a srcset attribute.
 	OriginURL            string                       `json:"originURL,omitempty,omitzero"`            // The url of the script (if any) that generates this node.
@@ -56,13 +56,13 @@ type InlineTextBox struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/DOMSnapshot#type-LayoutTreeNode
 type LayoutTreeNode struct {
-	DomNodeIndex      int64            `json:"domNodeIndex"`                         // The index of the related DOM node in the domNodes array returned by getSnapshot.
-	BoundingBox       *dom.Rect        `json:"boundingBox"`                          // The bounding box in document coordinates. Note that scroll offset of the document is ignored.
-	LayoutText        string           `json:"layoutText,omitempty,omitzero"`        // Contents of the LayoutText, if any.
-	InlineTextNodes   []*InlineTextBox `json:"inlineTextNodes,omitempty,omitzero"`   // The post-layout inline text nodes, if any.
-	StyleIndex        int64            `json:"styleIndex,omitempty,omitzero"`        // Index into the computedStyles array returned by getSnapshot.
-	PaintOrder        int64            `json:"paintOrder,omitempty,omitzero"`        // Global paint order index, which is determined by the stacking order of the nodes. Nodes that are painted together will have the same index. Only provided if includePaintOrder in getSnapshot was true.
-	IsStackingContext bool             `json:"isStackingContext,omitempty,omitzero"` // Set to true to indicate the element begins a new stacking context.
+	DomNodeIndex      int64            `json:"domNodeIndex"`                       // The index of the related DOM node in the domNodes array returned by getSnapshot.
+	BoundingBox       *dom.Rect        `json:"boundingBox"`                        // The bounding box in document coordinates. Note that scroll offset of the document is ignored.
+	LayoutText        string           `json:"layoutText,omitempty,omitzero"`      // Contents of the LayoutText, if any.
+	InlineTextNodes   []*InlineTextBox `json:"inlineTextNodes,omitempty,omitzero"` // The post-layout inline text nodes, if any.
+	StyleIndex        int64            `json:"styleIndex,omitempty,omitzero"`      // Index into the computedStyles array returned by getSnapshot.
+	PaintOrder        int64            `json:"paintOrder,omitempty,omitzero"`      // Global paint order index, which is determined by the stacking order of the nodes. Nodes that are painted together will have the same index. Only provided if includePaintOrder in getSnapshot was true.
+	IsStackingContext bool             `json:"isStackingContext"`                  // Set to true to indicate the element begins a new stacking context.
 }
 
 // ComputedStyle a subset of the full ComputedStyle as defined by the request

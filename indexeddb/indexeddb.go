@@ -254,7 +254,7 @@ func (p RequestDataParams) WithKeyRange(keyRange *KeyRange) *RequestDataParams {
 // RequestDataReturns return values.
 type RequestDataReturns struct {
 	ObjectStoreDataEntries []*DataEntry `json:"objectStoreDataEntries,omitempty,omitzero"` // Array of object store data entries.
-	HasMore                bool         `json:"hasMore,omitempty,omitzero"`                // If true, there are more entries to fetch in the given range.
+	HasMore                bool         `json:"hasMore"`                                   // If true, there are more entries to fetch in the given range.
 }
 
 // Do executes IndexedDB.requestData against the provided context.

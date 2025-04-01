@@ -24,24 +24,24 @@ type SourceOrderConfig struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Overlay#type-GridHighlightConfig
 type GridHighlightConfig struct {
-	ShowGridExtensionLines  bool      `json:"showGridExtensionLines,omitempty,omitzero"`  // Whether the extension lines from grid cells to the rulers should be shown (default: false).
-	ShowPositiveLineNumbers bool      `json:"showPositiveLineNumbers,omitempty,omitzero"` // Show Positive line number labels (default: false).
-	ShowNegativeLineNumbers bool      `json:"showNegativeLineNumbers,omitempty,omitzero"` // Show Negative line number labels (default: false).
-	ShowAreaNames           bool      `json:"showAreaNames,omitempty,omitzero"`           // Show area name labels (default: false).
-	ShowLineNames           bool      `json:"showLineNames,omitempty,omitzero"`           // Show line name labels (default: false).
-	ShowTrackSizes          bool      `json:"showTrackSizes,omitempty,omitzero"`          // Show track size labels (default: false).
-	GridBorderColor         *cdp.RGBA `json:"gridBorderColor,omitempty,omitzero"`         // The grid container border highlight color (default: transparent).
-	RowLineColor            *cdp.RGBA `json:"rowLineColor,omitempty,omitzero"`            // The row line color (default: transparent).
-	ColumnLineColor         *cdp.RGBA `json:"columnLineColor,omitempty,omitzero"`         // The column line color (default: transparent).
-	GridBorderDash          bool      `json:"gridBorderDash,omitempty,omitzero"`          // Whether the grid border is dashed (default: false).
-	RowLineDash             bool      `json:"rowLineDash,omitempty,omitzero"`             // Whether row lines are dashed (default: false).
-	ColumnLineDash          bool      `json:"columnLineDash,omitempty,omitzero"`          // Whether column lines are dashed (default: false).
-	RowGapColor             *cdp.RGBA `json:"rowGapColor,omitempty,omitzero"`             // The row gap highlight fill color (default: transparent).
-	RowHatchColor           *cdp.RGBA `json:"rowHatchColor,omitempty,omitzero"`           // The row gap hatching fill color (default: transparent).
-	ColumnGapColor          *cdp.RGBA `json:"columnGapColor,omitempty,omitzero"`          // The column gap highlight fill color (default: transparent).
-	ColumnHatchColor        *cdp.RGBA `json:"columnHatchColor,omitempty,omitzero"`        // The column gap hatching fill color (default: transparent).
-	AreaBorderColor         *cdp.RGBA `json:"areaBorderColor,omitempty,omitzero"`         // The named grid areas border color (Default: transparent).
-	GridBackgroundColor     *cdp.RGBA `json:"gridBackgroundColor,omitempty,omitzero"`     // The grid container background color (Default: transparent).
+	ShowGridExtensionLines  bool      `json:"showGridExtensionLines"`                 // Whether the extension lines from grid cells to the rulers should be shown (default: false).
+	ShowPositiveLineNumbers bool      `json:"showPositiveLineNumbers"`                // Show Positive line number labels (default: false).
+	ShowNegativeLineNumbers bool      `json:"showNegativeLineNumbers"`                // Show Negative line number labels (default: false).
+	ShowAreaNames           bool      `json:"showAreaNames"`                          // Show area name labels (default: false).
+	ShowLineNames           bool      `json:"showLineNames"`                          // Show line name labels (default: false).
+	ShowTrackSizes          bool      `json:"showTrackSizes"`                         // Show track size labels (default: false).
+	GridBorderColor         *cdp.RGBA `json:"gridBorderColor,omitempty,omitzero"`     // The grid container border highlight color (default: transparent).
+	RowLineColor            *cdp.RGBA `json:"rowLineColor,omitempty,omitzero"`        // The row line color (default: transparent).
+	ColumnLineColor         *cdp.RGBA `json:"columnLineColor,omitempty,omitzero"`     // The column line color (default: transparent).
+	GridBorderDash          bool      `json:"gridBorderDash"`                         // Whether the grid border is dashed (default: false).
+	RowLineDash             bool      `json:"rowLineDash"`                            // Whether row lines are dashed (default: false).
+	ColumnLineDash          bool      `json:"columnLineDash"`                         // Whether column lines are dashed (default: false).
+	RowGapColor             *cdp.RGBA `json:"rowGapColor,omitempty,omitzero"`         // The row gap highlight fill color (default: transparent).
+	RowHatchColor           *cdp.RGBA `json:"rowHatchColor,omitempty,omitzero"`       // The row gap hatching fill color (default: transparent).
+	ColumnGapColor          *cdp.RGBA `json:"columnGapColor,omitempty,omitzero"`      // The column gap highlight fill color (default: transparent).
+	ColumnHatchColor        *cdp.RGBA `json:"columnHatchColor,omitempty,omitzero"`    // The column gap hatching fill color (default: transparent).
+	AreaBorderColor         *cdp.RGBA `json:"areaBorderColor,omitempty,omitzero"`     // The named grid areas border color (Default: transparent).
+	GridBackgroundColor     *cdp.RGBA `json:"gridBackgroundColor,omitempty,omitzero"` // The grid container background color (Default: transparent).
 }
 
 // FlexContainerHighlightConfig configuration data for the highlighting of
@@ -124,11 +124,11 @@ func (t *ContrastAlgorithm) UnmarshalJSON(buf []byte) error {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Overlay#type-HighlightConfig
 type HighlightConfig struct {
-	ShowInfo                               bool                                    `json:"showInfo,omitempty,omitzero"`                               // Whether the node info tooltip should be shown (default: false).
-	ShowStyles                             bool                                    `json:"showStyles,omitempty,omitzero"`                             // Whether the node styles in the tooltip (default: false).
-	ShowRulers                             bool                                    `json:"showRulers,omitempty,omitzero"`                             // Whether the rulers should be shown (default: false).
-	ShowAccessibilityInfo                  bool                                    `json:"showAccessibilityInfo,omitempty,omitzero"`                  // Whether the a11y info should be shown (default: true).
-	ShowExtensionLines                     bool                                    `json:"showExtensionLines,omitempty,omitzero"`                     // Whether the extension lines from node to the rulers should be shown (default: false).
+	ShowInfo                               bool                                    `json:"showInfo"`                                                  // Whether the node info tooltip should be shown (default: false).
+	ShowStyles                             bool                                    `json:"showStyles"`                                                // Whether the node styles in the tooltip (default: false).
+	ShowRulers                             bool                                    `json:"showRulers"`                                                // Whether the rulers should be shown (default: false).
+	ShowAccessibilityInfo                  bool                                    `json:"showAccessibilityInfo"`                                     // Whether the a11y info should be shown (default: true).
+	ShowExtensionLines                     bool                                    `json:"showExtensionLines"`                                        // Whether the extension lines from node to the rulers should be shown (default: false).
 	ContentColor                           *cdp.RGBA                               `json:"contentColor,omitempty,omitzero"`                           // The content box highlight fill color (default: transparent).
 	PaddingColor                           *cdp.RGBA                               `json:"paddingColor,omitempty,omitzero"`                           // The padding highlight fill color (default: transparent).
 	BorderColor                            *cdp.RGBA                               `json:"borderColor,omitempty,omitzero"`                            // The border highlight fill color (default: transparent).

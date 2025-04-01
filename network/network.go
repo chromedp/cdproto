@@ -173,7 +173,7 @@ type EmulateNetworkConditionsParams struct {
 	ConnectionType     ConnectionType `json:"connectionType,omitempty,omitzero"`    // Connection type if known.
 	PacketLoss         float64        `json:"packetLoss,omitempty,omitzero"`        // WebRTC packet loss (percent, 0-100). 0 disables packet loss emulation, 100 drops all the packets.
 	PacketQueueLength  int64          `json:"packetQueueLength,omitempty,omitzero"` // WebRTC packet queue length (packet). 0 removes any queue length limitations.
-	PacketReordering   bool           `json:"packetReordering,omitempty,omitzero"`  // WebRTC packetReordering feature.
+	PacketReordering   bool           `json:"packetReordering"`                     // WebRTC packetReordering feature.
 }
 
 // EmulateNetworkConditions activates emulation of network conditions.
@@ -192,6 +192,7 @@ func EmulateNetworkConditions(offline bool, latency float64, downloadThroughput 
 		Latency:            latency,
 		DownloadThroughput: downloadThroughput,
 		UploadThroughput:   uploadThroughput,
+		PacketReordering:   false,
 	}
 }
 
@@ -376,8 +377,8 @@ func GetResponseBody(requestID RequestID) *GetResponseBodyParams {
 
 // GetResponseBodyReturns return values.
 type GetResponseBodyReturns struct {
-	Body          string `json:"body,omitempty,omitzero"`          // Response body.
-	Base64encoded bool   `json:"base64Encoded,omitempty,omitzero"` // True, if content was sent as base64.
+	Body          string `json:"body,omitempty,omitzero"` // Response body.
+	Base64encoded bool   `json:"base64Encoded"`           // True, if content was sent as base64.
 }
 
 // Do executes Network.getResponseBody against the provided context.
@@ -469,8 +470,8 @@ func GetResponseBodyForInterception(interceptionID InterceptionID) *GetResponseB
 
 // GetResponseBodyForInterceptionReturns return values.
 type GetResponseBodyForInterceptionReturns struct {
-	Body          string `json:"body,omitempty,omitzero"`          // Response body.
-	Base64encoded bool   `json:"base64Encoded,omitempty,omitzero"` // True, if content was sent as base64.
+	Body          string `json:"body,omitempty,omitzero"` // Response body.
+	Base64encoded bool   `json:"base64Encoded"`           // True, if content was sent as base64.
 }
 
 // Do executes Network.getResponseBodyForInterception against the provided context.
@@ -577,10 +578,10 @@ func (p *ReplayXHRParams) Do(ctx context.Context) (err error) {
 
 // SearchInResponseBodyParams searches for given string in response content.
 type SearchInResponseBodyParams struct {
-	RequestID     RequestID `json:"requestId"`                        // Identifier of the network response to search.
-	Query         string    `json:"query"`                            // String to search for.
-	CaseSensitive bool      `json:"caseSensitive,omitempty,omitzero"` // If true, search is case sensitive.
-	IsRegex       bool      `json:"isRegex,omitempty,omitzero"`       // If true, treats string parameter as regex.
+	RequestID     RequestID `json:"requestId"`     // Identifier of the network response to search.
+	Query         string    `json:"query"`         // String to search for.
+	CaseSensitive bool      `json:"caseSensitive"` // If true, search is case sensitive.
+	IsRegex       bool      `json:"isRegex"`       // If true, treats string parameter as regex.
 }
 
 // SearchInResponseBody searches for given string in response content.
@@ -593,8 +594,10 @@ type SearchInResponseBodyParams struct {
 //	query - String to search for.
 func SearchInResponseBody(requestID RequestID, query string) *SearchInResponseBodyParams {
 	return &SearchInResponseBodyParams{
-		RequestID: requestID,
-		Query:     query,
+		RequestID:     requestID,
+		Query:         query,
+		CaseSensitive: false,
+		IsRegex:       false,
 	}
 }
 
@@ -712,12 +715,12 @@ type SetCookieParams struct {
 	URL          string              `json:"url,omitempty,omitzero"`          // The request-URI to associate with the setting of the cookie. This value can affect the default domain, path, source port, and source scheme values of the created cookie.
 	Domain       string              `json:"domain,omitempty,omitzero"`       // Cookie domain.
 	Path         string              `json:"path,omitempty,omitzero"`         // Cookie path.
-	Secure       bool                `json:"secure,omitempty,omitzero"`       // True if cookie is secure.
-	HTTPOnly     bool                `json:"httpOnly,omitempty,omitzero"`     // True if cookie is http-only.
+	Secure       bool                `json:"secure"`                          // True if cookie is secure.
+	HTTPOnly     bool                `json:"httpOnly"`                        // True if cookie is http-only.
 	SameSite     CookieSameSite      `json:"sameSite,omitempty,omitzero"`     // Cookie SameSite type.
 	Expires      *cdp.TimeSinceEpoch `json:"expires,omitempty,omitzero"`      // Cookie expiration date, session cookie if not set
 	Priority     CookiePriority      `json:"priority,omitempty,omitzero"`     // Cookie Priority type.
-	SameParty    bool                `json:"sameParty,omitempty,omitzero"`    // True if cookie is SameParty.
+	SameParty    bool                `json:"sameParty"`                       // True if cookie is SameParty.
 	SourceScheme CookieSourceScheme  `json:"sourceScheme,omitempty,omitzero"` // Cookie source scheme type.
 	SourcePort   int64               `json:"sourcePort,omitempty,omitzero"`   // Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port. An unspecified port value allows protocol clients to emulate legacy cookie scope for the port. This is a temporary ability and it will be removed in the future.
 	PartitionKey *CookiePartitionKey `json:"partitionKey,omitempty,omitzero"` // Cookie partition key. If not set, the cookie will be set as not partitioned.
@@ -734,8 +737,11 @@ type SetCookieParams struct {
 //	value - Cookie value.
 func SetCookie(name string, value string) *SetCookieParams {
 	return &SetCookieParams{
-		Name:  name,
-		Value: value,
+		Name:      name,
+		Value:     value,
+		Secure:    false,
+		HTTPOnly:  false,
+		SameParty: false,
 	}
 }
 

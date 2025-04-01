@@ -413,8 +413,8 @@ type FrameResource struct {
 	MimeType     string               `json:"mimeType"`                        // Resource mimeType as determined by the browser.
 	LastModified *cdp.TimeSinceEpoch  `json:"lastModified,omitempty,omitzero"` // last-modified timestamp as reported by server.
 	ContentSize  float64              `json:"contentSize,omitempty,omitzero"`  // Resource content size.
-	Failed       bool                 `json:"failed,omitempty,omitzero"`       // True if the resource failed to load.
-	Canceled     bool                 `json:"canceled,omitempty,omitzero"`     // True if the resource was canceled during loading.
+	Failed       bool                 `json:"failed"`                          // True if the resource failed to load.
+	Canceled     bool                 `json:"canceled"`                        // True if the resource was canceled during loading.
 }
 
 // FrameResourceTree information about the Frame hierarchy along with their
@@ -818,8 +818,8 @@ func (t *ReferrerPolicy) UnmarshalJSON(buf []byte) error {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-CompilationCacheParams
 type CompilationCacheParams struct {
-	URL   string `json:"url"`                      // The URL of the script to produce a compilation cache entry for.
-	Eager bool   `json:"eager,omitempty,omitzero"` // A hint to the backend whether eager compilation is recommended. (the actual compilation mode used is upon backend discretion).
+	URL   string `json:"url"`   // The URL of the script to produce a compilation cache entry for.
+	Eager bool   `json:"eager"` // A hint to the backend whether eager compilation is recommended. (the actual compilation mode used is upon backend discretion).
 }
 
 // FileFilter [no description].
@@ -927,7 +927,7 @@ type WebAppManifest struct {
 	LaunchHandler             *LaunchHandler        `json:"launchHandler,omitempty,omitzero"` // TODO(crbug.com/1231886): This field is non-standard and part of a Chrome experiment. See: https://github.com/WICG/web-app-launch/blob/main/launch_handler.md
 	Name                      string                `json:"name,omitempty,omitzero"`
 	Orientation               string                `json:"orientation,omitempty,omitzero"`
-	PreferRelatedApplications bool                  `json:"preferRelatedApplications,omitempty,omitzero"`
+	PreferRelatedApplications bool                  `json:"preferRelatedApplications"`
 	ProtocolHandlers          []*ProtocolHandler    `json:"protocolHandlers,omitempty,omitzero"` // The handlers to open protocols.
 	RelatedApplications       []*RelatedApplication `json:"relatedApplications,omitempty,omitzero"`
 	Scope                     string                `json:"scope,omitempty,omitzero"`

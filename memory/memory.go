@@ -168,8 +168,8 @@ func (p *SimulatePressureNotificationParams) Do(ctx context.Context) (err error)
 
 // StartSamplingParams start collecting native memory profile.
 type StartSamplingParams struct {
-	SamplingInterval   int64 `json:"samplingInterval,omitempty,omitzero"`   // Average number of bytes between samples.
-	SuppressRandomness bool  `json:"suppressRandomness,omitempty,omitzero"` // Do not randomize intervals between samples.
+	SamplingInterval   int64 `json:"samplingInterval,omitempty,omitzero"` // Average number of bytes between samples.
+	SuppressRandomness bool  `json:"suppressRandomness"`                  // Do not randomize intervals between samples.
 }
 
 // StartSampling start collecting native memory profile.
@@ -178,7 +178,9 @@ type StartSamplingParams struct {
 //
 // parameters:
 func StartSampling() *StartSamplingParams {
-	return &StartSamplingParams{}
+	return &StartSamplingParams{
+		SuppressRandomness: false,
+	}
 }
 
 // WithSamplingInterval average number of bytes between samples.

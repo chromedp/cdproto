@@ -92,7 +92,7 @@ func (p *SetFocusEmulationEnabledParams) Do(ctx context.Context) (err error) {
 // SetAutoDarkModeOverrideParams automatically render all web contents using
 // a dark theme.
 type SetAutoDarkModeOverrideParams struct {
-	Enabled bool `json:"enabled,omitempty,omitzero"` // Whether to enable or disable automatic dark mode. If not specified, any existing override will be cleared.
+	Enabled bool `json:"enabled"` // Whether to enable or disable automatic dark mode. If not specified, any existing override will be cleared.
 }
 
 // SetAutoDarkModeOverride automatically render all web contents using a dark
@@ -102,7 +102,9 @@ type SetAutoDarkModeOverrideParams struct {
 //
 // parameters:
 func SetAutoDarkModeOverride() *SetAutoDarkModeOverrideParams {
-	return &SetAutoDarkModeOverrideParams{}
+	return &SetAutoDarkModeOverrideParams{
+		Enabled: false,
+	}
 }
 
 // WithEnabled whether to enable or disable automatic dark mode. If not
@@ -203,18 +205,18 @@ func (p *SetSafeAreaInsetsOverrideParams) Do(ctx context.Context) (err error) {
 // window.innerHeight, and "device-width"/"device-height"-related CSS media
 // query results).
 type SetDeviceMetricsOverrideParams struct {
-	Width              int64              `json:"width"`                                 // Overriding width value in pixels (minimum 0, maximum 10000000). 0 disables the override.
-	Height             int64              `json:"height"`                                // Overriding height value in pixels (minimum 0, maximum 10000000). 0 disables the override.
-	DeviceScaleFactor  float64            `json:"deviceScaleFactor"`                     // Overriding device scale factor value. 0 disables the override.
-	Mobile             bool               `json:"mobile"`                                // Whether to emulate mobile device. This includes viewport meta tag, overlay scrollbars, text autosizing and more.
-	Scale              float64            `json:"scale,omitempty,omitzero"`              // Scale to apply to resulting view image.
-	ScreenWidth        int64              `json:"screenWidth,omitempty,omitzero"`        // Overriding screen width value in pixels (minimum 0, maximum 10000000).
-	ScreenHeight       int64              `json:"screenHeight,omitempty,omitzero"`       // Overriding screen height value in pixels (minimum 0, maximum 10000000).
-	PositionX          int64              `json:"positionX,omitempty,omitzero"`          // Overriding view X position on screen in pixels (minimum 0, maximum 10000000).
-	PositionY          int64              `json:"positionY,omitempty,omitzero"`          // Overriding view Y position on screen in pixels (minimum 0, maximum 10000000).
-	DontSetVisibleSize bool               `json:"dontSetVisibleSize,omitempty,omitzero"` // Do not set visible view size, rely upon explicit setVisibleSize call.
-	ScreenOrientation  *ScreenOrientation `json:"screenOrientation,omitempty,omitzero"`  // Screen orientation override.
-	Viewport           *page.Viewport     `json:"viewport,omitempty,omitzero"`           // If set, the visible area of the page will be overridden to this viewport. This viewport change is not observed by the page, e.g. viewport-relative elements do not change positions.
+	Width              int64              `json:"width"`                                // Overriding width value in pixels (minimum 0, maximum 10000000). 0 disables the override.
+	Height             int64              `json:"height"`                               // Overriding height value in pixels (minimum 0, maximum 10000000). 0 disables the override.
+	DeviceScaleFactor  float64            `json:"deviceScaleFactor"`                    // Overriding device scale factor value. 0 disables the override.
+	Mobile             bool               `json:"mobile"`                               // Whether to emulate mobile device. This includes viewport meta tag, overlay scrollbars, text autosizing and more.
+	Scale              float64            `json:"scale,omitempty,omitzero"`             // Scale to apply to resulting view image.
+	ScreenWidth        int64              `json:"screenWidth,omitempty,omitzero"`       // Overriding screen width value in pixels (minimum 0, maximum 10000000).
+	ScreenHeight       int64              `json:"screenHeight,omitempty,omitzero"`      // Overriding screen height value in pixels (minimum 0, maximum 10000000).
+	PositionX          int64              `json:"positionX,omitempty,omitzero"`         // Overriding view X position on screen in pixels (minimum 0, maximum 10000000).
+	PositionY          int64              `json:"positionY,omitempty,omitzero"`         // Overriding view Y position on screen in pixels (minimum 0, maximum 10000000).
+	DontSetVisibleSize bool               `json:"dontSetVisibleSize"`                   // Do not set visible view size, rely upon explicit setVisibleSize call.
+	ScreenOrientation  *ScreenOrientation `json:"screenOrientation,omitempty,omitzero"` // Screen orientation override.
+	Viewport           *page.Viewport     `json:"viewport,omitempty,omitzero"`          // If set, the visible area of the page will be overridden to this viewport. This viewport change is not observed by the page, e.g. viewport-relative elements do not change positions.
 }
 
 // SetDeviceMetricsOverride overrides the values of device screen dimensions
@@ -232,10 +234,11 @@ type SetDeviceMetricsOverrideParams struct {
 //	mobile - Whether to emulate mobile device. This includes viewport meta tag, overlay scrollbars, text autosizing and more.
 func SetDeviceMetricsOverride(width int64, height int64, deviceScaleFactor float64, mobile bool) *SetDeviceMetricsOverrideParams {
 	return &SetDeviceMetricsOverrideParams{
-		Width:             width,
-		Height:            height,
-		DeviceScaleFactor: deviceScaleFactor,
-		Mobile:            mobile,
+		Width:              width,
+		Height:             height,
+		DeviceScaleFactor:  deviceScaleFactor,
+		Mobile:             mobile,
+		DontSetVisibleSize: false,
 	}
 }
 

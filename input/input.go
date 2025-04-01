@@ -80,7 +80,10 @@ type DispatchKeyEventParams struct {
 //	type - Type of the key event.
 func DispatchKeyEvent(typeVal KeyType) *DispatchKeyEventParams {
 	return &DispatchKeyEventParams{
-		Type: typeVal,
+		Type:        typeVal,
+		AutoRepeat:  false,
+		IsKeypad:    false,
+		IsSystemKey: false,
 	}
 }
 
@@ -623,7 +626,7 @@ type SynthesizeScrollGestureParams struct {
 	YDistance             float64           `json:"yDistance,omitempty,omitzero"`             // The distance to scroll along the Y axis (positive to scroll up).
 	XOverscroll           float64           `json:"xOverscroll,omitempty,omitzero"`           // The number of additional pixels to scroll back along the X axis, in addition to the given distance.
 	YOverscroll           float64           `json:"yOverscroll,omitempty,omitzero"`           // The number of additional pixels to scroll back along the Y axis, in addition to the given distance.
-	PreventFling          bool              `json:"preventFling,omitempty,omitzero"`          // Prevent fling (default: true).
+	PreventFling          bool              `json:"preventFling"`                             // Prevent fling (default: true).
 	Speed                 int64             `json:"speed,omitempty,omitzero"`                 // Swipe speed in pixels per second (default: 800).
 	GestureSourceType     GestureSourceType `json:"gestureSourceType,omitempty,omitzero"`     // Which type of input events to be generated (default: 'default', which queries the platform for the preferred input type).
 	RepeatCount           int64             `json:"repeatCount,omitempty,omitzero"`           // The number of times to repeat the gesture (default: 0).
@@ -642,8 +645,9 @@ type SynthesizeScrollGestureParams struct {
 //	y - Y coordinate of the start of the gesture in CSS pixels.
 func SynthesizeScrollGesture(x float64, y float64) *SynthesizeScrollGestureParams {
 	return &SynthesizeScrollGestureParams{
-		X: x,
-		Y: y,
+		X:            x,
+		Y:            y,
+		PreventFling: true,
 	}
 }
 

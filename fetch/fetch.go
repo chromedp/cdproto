@@ -37,8 +37,8 @@ func (p *DisableParams) Do(ctx context.Context) (err error) {
 // paused until client calls one of failRequest, fulfillRequest or
 // continueRequest/continueWithAuth.
 type EnableParams struct {
-	Patterns           []*RequestPattern `json:"patterns,omitempty,omitzero"`           // If specified, only requests matching any of these patterns will produce fetchRequested event and will be paused until clients response. If not set, all requests will be affected.
-	HandleAuthRequests bool              `json:"handleAuthRequests,omitempty,omitzero"` // If true, authRequired events will be issued and requests will be paused expecting a call to continueWithAuth.
+	Patterns           []*RequestPattern `json:"patterns,omitempty,omitzero"` // If specified, only requests matching any of these patterns will produce fetchRequested event and will be paused until clients response. If not set, all requests will be affected.
+	HandleAuthRequests bool              `json:"handleAuthRequests"`          // If true, authRequired events will be issued and requests will be paused expecting a call to continueWithAuth.
 }
 
 // Enable enables issuing of requestPaused events. A request will be paused
@@ -49,7 +49,9 @@ type EnableParams struct {
 //
 // parameters:
 func Enable() *EnableParams {
-	return &EnableParams{}
+	return &EnableParams{
+		HandleAuthRequests: false,
+	}
 }
 
 // WithPatterns if specified, only requests matching any of these patterns
@@ -161,12 +163,12 @@ func (p *FulfillRequestParams) Do(ctx context.Context) (err error) {
 // ContinueRequestParams continues the request, optionally modifying some of
 // its parameters.
 type ContinueRequestParams struct {
-	RequestID         RequestID      `json:"requestId"`                            // An id the client received in requestPaused event.
-	URL               string         `json:"url,omitempty,omitzero"`               // If set, the request url will be modified in a way that's not observable by page.
-	Method            string         `json:"method,omitempty,omitzero"`            // If set, the request method is overridden.
-	PostData          string         `json:"postData,omitempty,omitzero"`          // If set, overrides the post data in the request.
-	Headers           []*HeaderEntry `json:"headers,omitempty,omitzero"`           // If set, overrides the request headers. Note that the overrides do not extend to subsequent redirect hops, if a redirect happens. Another override may be applied to a different request produced by a redirect.
-	InterceptResponse bool           `json:"interceptResponse,omitempty,omitzero"` // If set, overrides response interception behavior for this request.
+	RequestID         RequestID      `json:"requestId"`                   // An id the client received in requestPaused event.
+	URL               string         `json:"url,omitempty,omitzero"`      // If set, the request url will be modified in a way that's not observable by page.
+	Method            string         `json:"method,omitempty,omitzero"`   // If set, the request method is overridden.
+	PostData          string         `json:"postData,omitempty,omitzero"` // If set, overrides the post data in the request.
+	Headers           []*HeaderEntry `json:"headers,omitempty,omitzero"`  // If set, overrides the request headers. Note that the overrides do not extend to subsequent redirect hops, if a redirect happens. Another override may be applied to a different request produced by a redirect.
+	InterceptResponse bool           `json:"interceptResponse"`           // If set, overrides response interception behavior for this request.
 }
 
 // ContinueRequest continues the request, optionally modifying some of its
@@ -179,7 +181,8 @@ type ContinueRequestParams struct {
 //	requestID - An id the client received in requestPaused event.
 func ContinueRequest(requestID RequestID) *ContinueRequestParams {
 	return &ContinueRequestParams{
-		RequestID: requestID,
+		RequestID:         requestID,
+		InterceptResponse: false,
 	}
 }
 
@@ -347,8 +350,8 @@ func GetResponseBody(requestID RequestID) *GetResponseBodyParams {
 
 // GetResponseBodyReturns return values.
 type GetResponseBodyReturns struct {
-	Body          string `json:"body,omitempty,omitzero"`          // Response body.
-	Base64encoded bool   `json:"base64Encoded,omitempty,omitzero"` // True, if content was sent as base64.
+	Body          string `json:"body,omitempty,omitzero"` // Response body.
+	Base64encoded bool   `json:"base64Encoded"`           // True, if content was sent as base64.
 }
 
 // Do executes Fetch.getResponseBody against the provided context.

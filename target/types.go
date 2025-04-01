@@ -50,8 +50,8 @@ type Info struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Target#type-FilterEntry
 type FilterEntry struct {
-	Exclude bool   `json:"exclude,omitempty,omitzero"` // If set, causes exclusion of matching targets from the list.
-	Type    string `json:"type,omitempty,omitzero"`    // If not present, matches any type.
+	Exclude bool   `json:"exclude"`                 // If set, causes exclusion of matching targets from the list.
+	Type    string `json:"type,omitempty,omitzero"` // If not present, matches any type.
 }
 
 // Filter the entries in TargetFilter are matched sequentially against
@@ -62,8 +62,8 @@ type FilterEntry struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Target#type-TargetFilter
 type Filter []struct {
-	Exclude bool   `json:"exclude,omitempty,omitzero"` // If set, causes exclusion of matching targets from the list.
-	Type    string `json:"type,omitempty,omitzero"`    // If not present, matches any type.
+	Exclude bool   `json:"exclude"`                 // If set, causes exclusion of matching targets from the list.
+	Type    string `json:"type,omitempty,omitzero"` // If not present, matches any type.
 }
 
 // RemoteLocation [no description].

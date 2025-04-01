@@ -226,7 +226,7 @@ func GetUsageAndQuota(origin string) *GetUsageAndQuotaParams {
 type GetUsageAndQuotaReturns struct {
 	Usage          float64         `json:"usage,omitempty,omitzero"`          // Storage usage (bytes).
 	Quota          float64         `json:"quota,omitempty,omitzero"`          // Storage quota (bytes).
-	OverrideActive bool            `json:"overrideActive,omitempty,omitzero"` // Whether or not the origin has an active storage quota override
+	OverrideActive bool            `json:"overrideActive"`                    // Whether or not the origin has an active storage quota override
 	UsageBreakdown []*UsageForType `json:"usageBreakdown,omitempty,omitzero"` // Storage usage per type (bytes).
 }
 
@@ -542,7 +542,7 @@ func ClearTrustTokens(issuerOrigin string) *ClearTrustTokensParams {
 
 // ClearTrustTokensReturns return values.
 type ClearTrustTokensReturns struct {
-	DidDeleteTokens bool `json:"didDeleteTokens,omitempty,omitzero"` // True if any tokens were deleted, false otherwise.
+	DidDeleteTokens bool `json:"didDeleteTokens"` // True if any tokens were deleted, false otherwise.
 }
 
 // Do executes Storage.clearTrustTokens against the provided context.
@@ -742,7 +742,7 @@ type SetSharedStorageEntryParams struct {
 	OwnerOrigin     string `json:"ownerOrigin"`
 	Key             string `json:"key"`
 	Value           string `json:"value"`
-	IgnoreIfPresent bool   `json:"ignoreIfPresent,omitempty,omitzero"` // If ignoreIfPresent is included and true, then only sets the entry if key doesn't already exist.
+	IgnoreIfPresent bool   `json:"ignoreIfPresent"` // If ignoreIfPresent is included and true, then only sets the entry if key doesn't already exist.
 }
 
 // SetSharedStorageEntry sets entry with key and value for a given origin's
@@ -757,9 +757,10 @@ type SetSharedStorageEntryParams struct {
 //	value
 func SetSharedStorageEntry(ownerOrigin string, key string, value string) *SetSharedStorageEntryParams {
 	return &SetSharedStorageEntryParams{
-		OwnerOrigin: ownerOrigin,
-		Key:         key,
-		Value:       value,
+		OwnerOrigin:     ownerOrigin,
+		Key:             key,
+		Value:           value,
+		IgnoreIfPresent: false,
 	}
 }
 

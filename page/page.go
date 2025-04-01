@@ -24,9 +24,9 @@ import (
 // frame upon creation (before loading frame's scripts).
 type AddScriptToEvaluateOnNewDocumentParams struct {
 	Source                string `json:"source"`
-	WorldName             string `json:"worldName,omitempty,omitzero"`             // If specified, creates an isolated world with the given name and evaluates given script in it. This world name will be used as the ExecutionContextDescription::name when the corresponding event is emitted.
-	IncludeCommandLineAPI bool   `json:"includeCommandLineAPI,omitempty,omitzero"` // Specifies whether command line API should be available to the script, defaults to false.
-	RunImmediately        bool   `json:"runImmediately,omitempty,omitzero"`        // If true, runs the script immediately on existing execution contexts or worlds. Default: false.
+	WorldName             string `json:"worldName,omitempty,omitzero"` // If specified, creates an isolated world with the given name and evaluates given script in it. This world name will be used as the ExecutionContextDescription::name when the corresponding event is emitted.
+	IncludeCommandLineAPI bool   `json:"includeCommandLineAPI"`        // Specifies whether command line API should be available to the script, defaults to false.
+	RunImmediately        bool   `json:"runImmediately"`               // If true, runs the script immediately on existing execution contexts or worlds. Default: false.
 }
 
 // AddScriptToEvaluateOnNewDocument evaluates given script in every frame
@@ -39,7 +39,9 @@ type AddScriptToEvaluateOnNewDocumentParams struct {
 //	source
 func AddScriptToEvaluateOnNewDocument(source string) *AddScriptToEvaluateOnNewDocumentParams {
 	return &AddScriptToEvaluateOnNewDocumentParams{
-		Source: source,
+		Source:                source,
+		IncludeCommandLineAPI: false,
+		RunImmediately:        false,
 	}
 }
 
@@ -103,12 +105,12 @@ func (p *BringToFrontParams) Do(ctx context.Context) (err error) {
 
 // CaptureScreenshotParams capture page screenshot.
 type CaptureScreenshotParams struct {
-	Format                CaptureScreenshotFormat `json:"format,omitempty,omitzero"`                // Image compression format (defaults to png).
-	Quality               int64                   `json:"quality,omitempty,omitzero"`               // Compression quality from range [0..100] (jpeg only).
-	Clip                  *Viewport               `json:"clip,omitempty,omitzero"`                  // Capture the screenshot of a given region only.
-	FromSurface           bool                    `json:"fromSurface,omitempty,omitzero"`           // Capture the screenshot from the surface, rather than the view. Defaults to true.
-	CaptureBeyondViewport bool                    `json:"captureBeyondViewport,omitempty,omitzero"` // Capture the screenshot beyond the viewport. Defaults to false.
-	OptimizeForSpeed      bool                    `json:"optimizeForSpeed,omitempty,omitzero"`      // Optimize image encoding for speed, not for resulting size (defaults to false)
+	Format                CaptureScreenshotFormat `json:"format,omitempty,omitzero"`  // Image compression format (defaults to png).
+	Quality               int64                   `json:"quality,omitempty,omitzero"` // Compression quality from range [0..100] (jpeg only).
+	Clip                  *Viewport               `json:"clip,omitempty,omitzero"`    // Capture the screenshot of a given region only.
+	FromSurface           bool                    `json:"fromSurface"`                // Capture the screenshot from the surface, rather than the view. Defaults to true.
+	CaptureBeyondViewport bool                    `json:"captureBeyondViewport"`      // Capture the screenshot beyond the viewport. Defaults to false.
+	OptimizeForSpeed      bool                    `json:"optimizeForSpeed"`           // Optimize image encoding for speed, not for resulting size (defaults to false)
 }
 
 // CaptureScreenshot capture page screenshot.
@@ -117,7 +119,11 @@ type CaptureScreenshotParams struct {
 //
 // parameters:
 func CaptureScreenshot() *CaptureScreenshotParams {
-	return &CaptureScreenshotParams{}
+	return &CaptureScreenshotParams{
+		FromSurface:           true,
+		CaptureBeyondViewport: false,
+		OptimizeForSpeed:      false,
+	}
 }
 
 // WithFormat image compression format (defaults to png).
@@ -233,9 +239,9 @@ func (p *CaptureSnapshotParams) Do(ctx context.Context) (data string, err error)
 
 // CreateIsolatedWorldParams creates an isolated world for the given frame.
 type CreateIsolatedWorldParams struct {
-	FrameID             cdp.FrameID `json:"frameId"`                                // Id of the frame in which the isolated world should be created.
-	WorldName           string      `json:"worldName,omitempty,omitzero"`           // An optional name which is reported in the Execution Context.
-	GrantUniveralAccess bool        `json:"grantUniveralAccess,omitempty,omitzero"` // Whether or not universal access should be granted to the isolated world. This is a powerful option, use with caution.
+	FrameID             cdp.FrameID `json:"frameId"`                      // Id of the frame in which the isolated world should be created.
+	WorldName           string      `json:"worldName,omitempty,omitzero"` // An optional name which is reported in the Execution Context.
+	GrantUniveralAccess bool        `json:"grantUniveralAccess"`          // Whether or not universal access should be granted to the isolated world. This is a powerful option, use with caution.
 }
 
 // CreateIsolatedWorld creates an isolated world for the given frame.
@@ -247,7 +253,8 @@ type CreateIsolatedWorldParams struct {
 //	frameID - Id of the frame in which the isolated world should be created.
 func CreateIsolatedWorld(frameID cdp.FrameID) *CreateIsolatedWorldParams {
 	return &CreateIsolatedWorldParams{
-		FrameID: frameID,
+		FrameID:             frameID,
+		GrantUniveralAccess: false,
 	}
 }
 
@@ -302,7 +309,7 @@ func (p *DisableParams) Do(ctx context.Context) (err error) {
 
 // EnableParams enables page domain notifications.
 type EnableParams struct {
-	EnableFileChooserOpenedEvent bool `json:"enableFileChooserOpenedEvent,omitempty,omitzero"` // If true, the Page.fileChooserOpened event will be emitted regardless of the state set by Page.setInterceptFileChooserDialog command (default: false).
+	EnableFileChooserOpenedEvent bool `json:"enableFileChooserOpenedEvent"` // If true, the Page.fileChooserOpened event will be emitted regardless of the state set by Page.setInterceptFileChooserDialog command (default: false).
 }
 
 // Enable enables page domain notifications.
@@ -311,7 +318,9 @@ type EnableParams struct {
 //
 // parameters:
 func Enable() *EnableParams {
-	return &EnableParams{}
+	return &EnableParams{
+		EnableFileChooserOpenedEvent: false,
+	}
 }
 
 // WithEnableFileChooserOpenedEvent if true, the Page.fileChooserOpened event
@@ -633,8 +642,8 @@ func GetResourceContent(frameID cdp.FrameID, url string) *GetResourceContentPara
 
 // GetResourceContentReturns return values.
 type GetResourceContentReturns struct {
-	Content       string `json:"content,omitempty,omitzero"`       // Resource content.
-	Base64encoded bool   `json:"base64Encoded,omitempty,omitzero"` // True, if content was served as base64.
+	Content       string `json:"content,omitempty,omitzero"` // Resource content.
+	Base64encoded bool   `json:"base64Encoded"`              // True, if content was served as base64.
 }
 
 // Do executes Page.getResourceContent against the provided context.
@@ -825,23 +834,23 @@ func (p *NavigateToHistoryEntryParams) Do(ctx context.Context) (err error) {
 
 // PrintToPDFParams print page as PDF.
 type PrintToPDFParams struct {
-	Landscape               bool                   `json:"landscape,omitempty,omitzero"`               // Paper orientation. Defaults to false.
-	DisplayHeaderFooter     bool                   `json:"displayHeaderFooter,omitempty,omitzero"`     // Display header and footer. Defaults to false.
-	PrintBackground         bool                   `json:"printBackground,omitempty,omitzero"`         // Print background graphics. Defaults to false.
-	Scale                   float64                `json:"scale,omitempty,omitzero"`                   // Scale of the webpage rendering. Defaults to 1.
-	PaperWidth              float64                `json:"paperWidth,omitempty,omitzero"`              // Paper width in inches. Defaults to 8.5 inches.
-	PaperHeight             float64                `json:"paperHeight,omitempty,omitzero"`             // Paper height in inches. Defaults to 11 inches.
-	MarginTop               float64                `json:"marginTop"`                                  // Top margin in inches. Defaults to 1cm (~0.4 inches).
-	MarginBottom            float64                `json:"marginBottom"`                               // Bottom margin in inches. Defaults to 1cm (~0.4 inches).
-	MarginLeft              float64                `json:"marginLeft"`                                 // Left margin in inches. Defaults to 1cm (~0.4 inches).
-	MarginRight             float64                `json:"marginRight"`                                // Right margin in inches. Defaults to 1cm (~0.4 inches).
-	PageRanges              string                 `json:"pageRanges,omitempty,omitzero"`              // Paper ranges to print, one based, e.g., '1-5, 8, 11-13'. Pages are printed in the document order, not in the order specified, and no more than once. Defaults to empty string, which implies the entire document is printed. The page numbers are quietly capped to actual page count of the document, and ranges beyond the end of the document are ignored. If this results in no pages to print, an error is reported. It is an error to specify a range with start greater than end.
-	HeaderTemplate          string                 `json:"headerTemplate,omitempty,omitzero"`          // HTML template for the print header. Should be valid HTML markup with following classes used to inject printing values into them: - date: formatted print date - title: document title - url: document location - pageNumber: current page number - totalPages: total pages in the document  For example, <span class=title></span> would generate span containing the title.
-	FooterTemplate          string                 `json:"footerTemplate,omitempty,omitzero"`          // HTML template for the print footer. Should use the same format as the headerTemplate.
-	PreferCSSPageSize       bool                   `json:"preferCSSPageSize,omitempty,omitzero"`       // Whether or not to prefer page size as defined by css. Defaults to false, in which case the content will be scaled to fit the paper size.
-	TransferMode            PrintToPDFTransferMode `json:"transferMode,omitempty,omitzero"`            // return as stream
-	GenerateTaggedPDF       bool                   `json:"generateTaggedPDF,omitempty,omitzero"`       // Whether or not to generate tagged (accessible) PDF. Defaults to embedder choice.
-	GenerateDocumentOutline bool                   `json:"generateDocumentOutline,omitempty,omitzero"` // Whether or not to embed the document outline into the PDF.
+	Landscape               bool                   `json:"landscape"`                         // Paper orientation. Defaults to false.
+	DisplayHeaderFooter     bool                   `json:"displayHeaderFooter"`               // Display header and footer. Defaults to false.
+	PrintBackground         bool                   `json:"printBackground"`                   // Print background graphics. Defaults to false.
+	Scale                   float64                `json:"scale,omitempty,omitzero"`          // Scale of the webpage rendering. Defaults to 1.
+	PaperWidth              float64                `json:"paperWidth,omitempty,omitzero"`     // Paper width in inches. Defaults to 8.5 inches.
+	PaperHeight             float64                `json:"paperHeight,omitempty,omitzero"`    // Paper height in inches. Defaults to 11 inches.
+	MarginTop               float64                `json:"marginTop"`                         // Top margin in inches. Defaults to 1cm (~0.4 inches).
+	MarginBottom            float64                `json:"marginBottom"`                      // Bottom margin in inches. Defaults to 1cm (~0.4 inches).
+	MarginLeft              float64                `json:"marginLeft"`                        // Left margin in inches. Defaults to 1cm (~0.4 inches).
+	MarginRight             float64                `json:"marginRight"`                       // Right margin in inches. Defaults to 1cm (~0.4 inches).
+	PageRanges              string                 `json:"pageRanges,omitempty,omitzero"`     // Paper ranges to print, one based, e.g., '1-5, 8, 11-13'. Pages are printed in the document order, not in the order specified, and no more than once. Defaults to empty string, which implies the entire document is printed. The page numbers are quietly capped to actual page count of the document, and ranges beyond the end of the document are ignored. If this results in no pages to print, an error is reported. It is an error to specify a range with start greater than end.
+	HeaderTemplate          string                 `json:"headerTemplate,omitempty,omitzero"` // HTML template for the print header. Should be valid HTML markup with following classes used to inject printing values into them: - date: formatted print date - title: document title - url: document location - pageNumber: current page number - totalPages: total pages in the document  For example, <span class=title></span> would generate span containing the title.
+	FooterTemplate          string                 `json:"footerTemplate,omitempty,omitzero"` // HTML template for the print footer. Should use the same format as the headerTemplate.
+	PreferCSSPageSize       bool                   `json:"preferCSSPageSize"`                 // Whether or not to prefer page size as defined by css. Defaults to false, in which case the content will be scaled to fit the paper size.
+	TransferMode            PrintToPDFTransferMode `json:"transferMode,omitempty,omitzero"`   // return as stream
+	GenerateTaggedPDF       bool                   `json:"generateTaggedPDF"`                 // Whether or not to generate tagged (accessible) PDF. Defaults to embedder choice.
+	GenerateDocumentOutline bool                   `json:"generateDocumentOutline"`           // Whether or not to embed the document outline into the PDF.
 }
 
 // PrintToPDF print page as PDF.
@@ -850,7 +859,14 @@ type PrintToPDFParams struct {
 //
 // parameters:
 func PrintToPDF() *PrintToPDFParams {
-	return &PrintToPDFParams{}
+	return &PrintToPDFParams{
+		Landscape:               false,
+		DisplayHeaderFooter:     false,
+		PrintBackground:         false,
+		PreferCSSPageSize:       false,
+		GenerateTaggedPDF:       false,
+		GenerateDocumentOutline: false,
+	}
 }
 
 // WithLandscape paper orientation. Defaults to false.
@@ -1002,7 +1018,7 @@ func (p *PrintToPDFParams) Do(ctx context.Context) (data []byte, stream io.Strea
 
 // ReloadParams reloads given page optionally ignoring the cache.
 type ReloadParams struct {
-	IgnoreCache            bool         `json:"ignoreCache,omitempty,omitzero"`            // If true, browser cache is ignored (as if the user pressed Shift+refresh).
+	IgnoreCache            bool         `json:"ignoreCache"`                               // If true, browser cache is ignored (as if the user pressed Shift+refresh).
 	ScriptToEvaluateOnLoad string       `json:"scriptToEvaluateOnLoad,omitempty,omitzero"` // If set, the script will be injected into all frames of the inspected page after reload. Argument will be ignored if reloading dataURL origin.
 	LoaderID               cdp.LoaderID `json:"loaderId,omitempty,omitzero"`               // If set, an error will be thrown if the target page's main frame's loader id does not match the provided id. This prevents accidentally reloading an unintended target in case there's a racing navigation.
 }
@@ -1013,7 +1029,9 @@ type ReloadParams struct {
 //
 // parameters:
 func Reload() *ReloadParams {
-	return &ReloadParams{}
+	return &ReloadParams{
+		IgnoreCache: false,
+	}
 }
 
 // WithIgnoreCache if true, browser cache is ignored (as if the user pressed
@@ -1095,11 +1113,11 @@ func (p *ScreencastFrameAckParams) Do(ctx context.Context) (err error) {
 
 // SearchInResourceParams searches for given string in resource content.
 type SearchInResourceParams struct {
-	FrameID       cdp.FrameID `json:"frameId"`                          // Frame id for resource to search in.
-	URL           string      `json:"url"`                              // URL of the resource to search in.
-	Query         string      `json:"query"`                            // String to search for.
-	CaseSensitive bool        `json:"caseSensitive,omitempty,omitzero"` // If true, search is case sensitive.
-	IsRegex       bool        `json:"isRegex,omitempty,omitzero"`       // If true, treats string parameter as regex.
+	FrameID       cdp.FrameID `json:"frameId"`       // Frame id for resource to search in.
+	URL           string      `json:"url"`           // URL of the resource to search in.
+	Query         string      `json:"query"`         // String to search for.
+	CaseSensitive bool        `json:"caseSensitive"` // If true, search is case sensitive.
+	IsRegex       bool        `json:"isRegex"`       // If true, treats string parameter as regex.
 }
 
 // SearchInResource searches for given string in resource content.
@@ -1113,9 +1131,11 @@ type SearchInResourceParams struct {
 //	query - String to search for.
 func SearchInResource(frameID cdp.FrameID, url string, query string) *SearchInResourceParams {
 	return &SearchInResourceParams{
-		FrameID: frameID,
-		URL:     url,
-		Query:   query,
+		FrameID:       frameID,
+		URL:           url,
+		Query:         query,
+		CaseSensitive: false,
+		IsRegex:       false,
 	}
 }
 
@@ -1706,7 +1726,7 @@ func (p *WaitForDebuggerParams) Do(ctx context.Context) (err error) {
 // Page.fileChooserOpened is emitted.
 type SetInterceptFileChooserDialogParams struct {
 	Enabled bool `json:"enabled"`
-	Cancel  bool `json:"cancel,omitempty,omitzero"` // If true, cancels the dialog by emitting relevant events (if any) in addition to not showing it if the interception is enabled (default: false).
+	Cancel  bool `json:"cancel"` // If true, cancels the dialog by emitting relevant events (if any) in addition to not showing it if the interception is enabled (default: false).
 }
 
 // SetInterceptFileChooserDialog intercept file chooser requests and transfer
@@ -1722,6 +1742,7 @@ type SetInterceptFileChooserDialogParams struct {
 func SetInterceptFileChooserDialog(enabled bool) *SetInterceptFileChooserDialogParams {
 	return &SetInterceptFileChooserDialogParams{
 		Enabled: enabled,
+		Cancel:  false,
 	}
 }
 

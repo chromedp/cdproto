@@ -75,7 +75,7 @@ type Layer struct {
 	AnchorZ                  float64                   `json:"anchorZ,omitempty,omitzero"`                  // Transform anchor point Z, absent if no transform specified
 	PaintCount               int64                     `json:"paintCount"`                                  // Indicates how many time this layer has painted.
 	DrawsContent             bool                      `json:"drawsContent"`                                // Indicates whether this layer hosts any content, rather than being used for transform/scrolling purposes only.
-	Invisible                bool                      `json:"invisible,omitempty,omitzero"`                // Set if layer is not visible.
+	Invisible                bool                      `json:"invisible"`                                   // Set if layer is not visible.
 	ScrollRects              []*ScrollRect             `json:"scrollRects,omitempty,omitzero"`              // Rectangles scrolling on main thread only.
 	StickyPositionConstraint *StickyPositionConstraint `json:"stickyPositionConstraint,omitempty,omitzero"` // Sticky position constraint information
 }

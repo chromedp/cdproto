@@ -379,10 +379,10 @@ type Node struct {
 	TemplateContent   *Node             `json:"templateContent,omitempty,omitzero"`  // Content document fragment for template elements.
 	PseudoElements    []*Node           `json:"pseudoElements,omitempty,omitzero"`   // Pseudo elements associated with this node.
 	DistributedNodes  []*BackendNode    `json:"distributedNodes,omitempty,omitzero"` // Distributed nodes for given insertion point.
-	IsSVG             bool              `json:"isSVG,omitempty,omitzero"`            // Whether the node is SVG.
+	IsSVG             bool              `json:"isSVG"`                               // Whether the node is SVG.
 	CompatibilityMode CompatibilityMode `json:"compatibilityMode,omitempty,omitzero"`
 	AssignedSlot      *BackendNode      `json:"assignedSlot,omitempty,omitzero"`
-	IsScrollable      bool              `json:"isScrollable,omitempty,omitzero"`
+	IsScrollable      bool              `json:"isScrollable"`
 	Parent            *Node             `json:"-"` // Parent node.
 	Invalidated       chan struct{}     `json:"-"` // Invalidated channel.
 	State             NodeState         `json:"-"` // Node state.

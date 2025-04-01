@@ -144,24 +144,24 @@ type SelectorList struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#type-CSSStyleSheetHeader
 type StyleSheetHeader struct {
-	StyleSheetID  StyleSheetID      `json:"styleSheetId"`                     // The stylesheet identifier.
-	FrameID       cdp.FrameID       `json:"frameId"`                          // Owner frame identifier.
-	SourceURL     string            `json:"sourceURL"`                        // Stylesheet resource URL. Empty if this is a constructed stylesheet created using new CSSStyleSheet() (but non-empty if this is a constructed stylesheet imported as a CSS module script).
-	SourceMapURL  string            `json:"sourceMapURL,omitempty,omitzero"`  // URL of source map associated with the stylesheet (if any).
-	Origin        StyleSheetOrigin  `json:"origin"`                           // Stylesheet origin.
-	Title         string            `json:"title"`                            // Stylesheet title.
-	OwnerNode     cdp.BackendNodeID `json:"ownerNode,omitempty,omitzero"`     // The backend id for the owner node of the stylesheet.
-	Disabled      bool              `json:"disabled"`                         // Denotes whether the stylesheet is disabled.
-	HasSourceURL  bool              `json:"hasSourceURL,omitempty,omitzero"`  // Whether the sourceURL field value comes from the sourceURL comment.
-	IsInline      bool              `json:"isInline"`                         // Whether this stylesheet is created for STYLE tag by parser. This flag is not set for document.written STYLE tags.
-	IsMutable     bool              `json:"isMutable"`                        // Whether this stylesheet is mutable. Inline stylesheets become mutable after they have been modified via CSSOM API. <link> element's stylesheets become mutable only if DevTools modifies them. Constructed stylesheets (new CSSStyleSheet()) are mutable immediately after creation.
-	IsConstructed bool              `json:"isConstructed"`                    // True if this stylesheet is created through new CSSStyleSheet() or imported as a CSS module script.
-	StartLine     float64           `json:"startLine"`                        // Line offset of the stylesheet within the resource (zero based).
-	StartColumn   float64           `json:"startColumn"`                      // Column offset of the stylesheet within the resource (zero based).
-	Length        float64           `json:"length"`                           // Size of the content (in characters).
-	EndLine       float64           `json:"endLine"`                          // Line offset of the end of the stylesheet within the resource (zero based).
-	EndColumn     float64           `json:"endColumn"`                        // Column offset of the end of the stylesheet within the resource (zero based).
-	LoadingFailed bool              `json:"loadingFailed,omitempty,omitzero"` // If the style sheet was loaded from a network resource, this indicates when the resource failed to load
+	StyleSheetID  StyleSheetID      `json:"styleSheetId"`                    // The stylesheet identifier.
+	FrameID       cdp.FrameID       `json:"frameId"`                         // Owner frame identifier.
+	SourceURL     string            `json:"sourceURL"`                       // Stylesheet resource URL. Empty if this is a constructed stylesheet created using new CSSStyleSheet() (but non-empty if this is a constructed stylesheet imported as a CSS module script).
+	SourceMapURL  string            `json:"sourceMapURL,omitempty,omitzero"` // URL of source map associated with the stylesheet (if any).
+	Origin        StyleSheetOrigin  `json:"origin"`                          // Stylesheet origin.
+	Title         string            `json:"title"`                           // Stylesheet title.
+	OwnerNode     cdp.BackendNodeID `json:"ownerNode,omitempty,omitzero"`    // The backend id for the owner node of the stylesheet.
+	Disabled      bool              `json:"disabled"`                        // Denotes whether the stylesheet is disabled.
+	HasSourceURL  bool              `json:"hasSourceURL"`                    // Whether the sourceURL field value comes from the sourceURL comment.
+	IsInline      bool              `json:"isInline"`                        // Whether this stylesheet is created for STYLE tag by parser. This flag is not set for document.written STYLE tags.
+	IsMutable     bool              `json:"isMutable"`                       // Whether this stylesheet is mutable. Inline stylesheets become mutable after they have been modified via CSSOM API. <link> element's stylesheets become mutable only if DevTools modifies them. Constructed stylesheets (new CSSStyleSheet()) are mutable immediately after creation.
+	IsConstructed bool              `json:"isConstructed"`                   // True if this stylesheet is created through new CSSStyleSheet() or imported as a CSS module script.
+	StartLine     float64           `json:"startLine"`                       // Line offset of the stylesheet within the resource (zero based).
+	StartColumn   float64           `json:"startColumn"`                     // Column offset of the stylesheet within the resource (zero based).
+	Length        float64           `json:"length"`                          // Size of the content (in characters).
+	EndLine       float64           `json:"endLine"`                         // Line offset of the end of the stylesheet within the resource (zero based).
+	EndColumn     float64           `json:"endColumn"`                       // Column offset of the end of the stylesheet within the resource (zero based).
+	LoadingFailed bool              `json:"loadingFailed"`                   // If the style sheet was loaded from a network resource, this indicates when the resource failed to load
 }
 
 // Rule CSS rule representation.
@@ -255,9 +255,9 @@ type SourceRange struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#type-ShorthandEntry
 type ShorthandEntry struct {
-	Name      string `json:"name"`                         // Shorthand name.
-	Value     string `json:"value"`                        // Shorthand value.
-	Important bool   `json:"important,omitempty,omitzero"` // Whether the property has "!important" annotation (implies false if absent).
+	Name      string `json:"name"`      // Shorthand name.
+	Value     string `json:"value"`     // Shorthand value.
+	Important bool   `json:"important"` // Whether the property has "!important" annotation (implies false if absent).
 }
 
 // ComputedStyleProperty [no description].
@@ -285,11 +285,11 @@ type Style struct {
 type Property struct {
 	Name               string       `json:"name"`                                  // The property name.
 	Value              string       `json:"value"`                                 // The property value.
-	Important          bool         `json:"important,omitempty,omitzero"`          // Whether the property has "!important" annotation (implies false if absent).
-	Implicit           bool         `json:"implicit,omitempty,omitzero"`           // Whether the property is implicit (implies false if absent).
+	Important          bool         `json:"important"`                             // Whether the property has "!important" annotation (implies false if absent).
+	Implicit           bool         `json:"implicit"`                              // Whether the property is implicit (implies false if absent).
 	Text               string       `json:"text,omitempty,omitzero"`               // The full property text as specified in the style.
-	ParsedOk           bool         `json:"parsedOk,omitempty,omitzero"`           // Whether the property is understood by the browser (implies true if absent).
-	Disabled           bool         `json:"disabled,omitempty,omitzero"`           // Whether the property is disabled by the user (present for source-based properties only).
+	ParsedOk           bool         `json:"parsedOk"`                              // Whether the property is understood by the browser (implies true if absent).
+	Disabled           bool         `json:"disabled"`                              // Whether the property is disabled by the user (present for source-based properties only).
 	Range              *SourceRange `json:"range,omitempty,omitzero"`              // The entire property range in the enclosing style declaration (if available).
 	LonghandProperties []*Property  `json:"longhandProperties,omitempty,omitzero"` // Parsed longhand components of this property if it is a shorthand. This field will be empty if the given property is not a shorthand.
 }
@@ -329,13 +329,13 @@ type MediaQueryExpression struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#type-CSSContainerQuery
 type ContainerQuery struct {
-	Text               string           `json:"text"`                                  // Container query text.
-	Range              *SourceRange     `json:"range,omitempty,omitzero"`              // The associated rule header range in the enclosing stylesheet (if available).
-	StyleSheetID       StyleSheetID     `json:"styleSheetId,omitempty,omitzero"`       // Identifier of the stylesheet containing this object (if exists).
-	Name               string           `json:"name,omitempty,omitzero"`               // Optional name for the container.
-	PhysicalAxes       dom.PhysicalAxes `json:"physicalAxes,omitempty,omitzero"`       // Optional physical axes queried for the container.
-	LogicalAxes        dom.LogicalAxes  `json:"logicalAxes,omitempty,omitzero"`        // Optional logical axes queried for the container.
-	QueriesScrollState bool             `json:"queriesScrollState,omitempty,omitzero"` // true if the query contains scroll-state() queries.
+	Text               string           `json:"text"`                            // Container query text.
+	Range              *SourceRange     `json:"range,omitempty,omitzero"`        // The associated rule header range in the enclosing stylesheet (if available).
+	StyleSheetID       StyleSheetID     `json:"styleSheetId,omitempty,omitzero"` // Identifier of the stylesheet containing this object (if exists).
+	Name               string           `json:"name,omitempty,omitzero"`         // Optional name for the container.
+	PhysicalAxes       dom.PhysicalAxes `json:"physicalAxes,omitempty,omitzero"` // Optional physical axes queried for the container.
+	LogicalAxes        dom.LogicalAxes  `json:"logicalAxes,omitempty,omitzero"`  // Optional logical axes queried for the container.
+	QueriesScrollState bool             `json:"queriesScrollState"`              // true if the query contains scroll-state() queries.
 }
 
 // Supports CSS Supports at-rule descriptor.

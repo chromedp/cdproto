@@ -277,7 +277,7 @@ func (p *OpenCurrentPageInAppParams) Do(ctx context.Context) (err error) {
 // each parameter.
 type ChangeAppUserSettingsParams struct {
 	ManifestID    string      `json:"manifestId"`
-	LinkCapturing bool        `json:"linkCapturing,omitempty,omitzero"` // If user allows the links clicked on by the user in the app's scope, or extended scope if the manifest has scope extensions and the flags DesktopPWAsLinkCapturingWithScopeExtensions and WebAppEnableScopeExtensions are enabled.  Note, the API does not support resetting the linkCapturing to the initial value, uninstalling and installing the web app again will reset it.  TODO(crbug.com/339453269): Setting this value on ChromeOS is not supported yet.
+	LinkCapturing bool        `json:"linkCapturing"` // If user allows the links clicked on by the user in the app's scope, or extended scope if the manifest has scope extensions and the flags DesktopPWAsLinkCapturingWithScopeExtensions and WebAppEnableScopeExtensions are enabled.  Note, the API does not support resetting the linkCapturing to the initial value, uninstalling and installing the web app again will reset it.  TODO(crbug.com/339453269): Setting this value on ChromeOS is not supported yet.
 	DisplayMode   DisplayMode `json:"displayMode,omitempty,omitzero"`
 }
 
@@ -295,7 +295,8 @@ type ChangeAppUserSettingsParams struct {
 //	manifestID
 func ChangeAppUserSettings(manifestID string) *ChangeAppUserSettingsParams {
 	return &ChangeAppUserSettingsParams{
-		ManifestID: manifestID,
+		ManifestID:    manifestID,
+		LinkCapturing: false,
 	}
 }
 

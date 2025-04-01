@@ -83,7 +83,7 @@ func (p *RecordClockSyncMarkerParams) Do(ctx context.Context) (err error) {
 
 // RequestMemoryDumpParams request a global memory dump.
 type RequestMemoryDumpParams struct {
-	Deterministic bool                    `json:"deterministic,omitempty,omitzero"` // Enables more deterministic results by forcing garbage collection
+	Deterministic bool                    `json:"deterministic"`                    // Enables more deterministic results by forcing garbage collection
 	LevelOfDetail MemoryDumpLevelOfDetail `json:"levelOfDetail,omitempty,omitzero"` // Specifies level of details in memory dump. Defaults to "detailed".
 }
 
@@ -93,7 +93,9 @@ type RequestMemoryDumpParams struct {
 //
 // parameters:
 func RequestMemoryDump() *RequestMemoryDumpParams {
-	return &RequestMemoryDumpParams{}
+	return &RequestMemoryDumpParams{
+		Deterministic: false,
+	}
 }
 
 // WithDeterministic enables more deterministic results by forcing garbage
@@ -113,7 +115,7 @@ func (p RequestMemoryDumpParams) WithLevelOfDetail(levelOfDetail MemoryDumpLevel
 // RequestMemoryDumpReturns return values.
 type RequestMemoryDumpReturns struct {
 	DumpGUID string `json:"dumpGuid,omitempty,omitzero"` // GUID of the resulting global memory dump.
-	Success  bool   `json:"success,omitempty,omitzero"`  // True iff the global memory dump succeeded.
+	Success  bool   `json:"success"`                     // True iff the global memory dump succeeded.
 }
 
 // Do executes Tracing.requestMemoryDump against the provided context.
