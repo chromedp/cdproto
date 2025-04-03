@@ -331,6 +331,94 @@ func (p *RemoveCharacteristicParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandRemoveCharacteristic, p, nil)
 }
 
+// AddDescriptorParams adds a descriptor with |descriptorUuid| to the
+// characteristic respresented by |characteristicId| in the service represented
+// by |serviceId| of the peripheral with |address|.
+type AddDescriptorParams struct {
+	Address          string `json:"address"`
+	ServiceID        string `json:"serviceId"`
+	CharacteristicID string `json:"characteristicId"`
+	DescriptorUUID   string `json:"descriptorUuid"`
+}
+
+// AddDescriptor adds a descriptor with |descriptorUuid| to the
+// characteristic respresented by |characteristicId| in the service represented
+// by |serviceId| of the peripheral with |address|.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/BluetoothEmulation#method-addDescriptor
+//
+// parameters:
+//
+//	address
+//	serviceID
+//	characteristicID
+//	descriptorUUID
+func AddDescriptor(address string, serviceID string, characteristicID string, descriptorUUID string) *AddDescriptorParams {
+	return &AddDescriptorParams{
+		Address:          address,
+		ServiceID:        serviceID,
+		CharacteristicID: characteristicID,
+		DescriptorUUID:   descriptorUUID,
+	}
+}
+
+// AddDescriptorReturns return values.
+type AddDescriptorReturns struct {
+	DescriptorID string `json:"descriptorId,omitempty,omitzero"` // An identifier that uniquely represents this descriptor.
+}
+
+// Do executes BluetoothEmulation.addDescriptor against the provided context.
+//
+// returns:
+//
+//	descriptorID - An identifier that uniquely represents this descriptor.
+func (p *AddDescriptorParams) Do(ctx context.Context) (descriptorID string, err error) {
+	// execute
+	var res AddDescriptorReturns
+	err = cdp.Execute(ctx, CommandAddDescriptor, p, &res)
+	if err != nil {
+		return "", err
+	}
+
+	return res.DescriptorID, nil
+}
+
+// RemoveDescriptorParams removes the descriptor with |descriptorId| from the
+// characteristic respresented by |characteristicId| in the service represented
+// by |serviceId| of the peripheral with |address|.
+type RemoveDescriptorParams struct {
+	Address          string `json:"address"`
+	ServiceID        string `json:"serviceId"`
+	CharacteristicID string `json:"characteristicId"`
+	DescriptorID     string `json:"descriptorId"`
+}
+
+// RemoveDescriptor removes the descriptor with |descriptorId| from the
+// characteristic respresented by |characteristicId| in the service represented
+// by |serviceId| of the peripheral with |address|.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/BluetoothEmulation#method-removeDescriptor
+//
+// parameters:
+//
+//	address
+//	serviceID
+//	characteristicID
+//	descriptorID
+func RemoveDescriptor(address string, serviceID string, characteristicID string, descriptorID string) *RemoveDescriptorParams {
+	return &RemoveDescriptorParams{
+		Address:          address,
+		ServiceID:        serviceID,
+		CharacteristicID: characteristicID,
+		DescriptorID:     descriptorID,
+	}
+}
+
+// Do executes BluetoothEmulation.removeDescriptor against the provided context.
+func (p *RemoveDescriptorParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandRemoveDescriptor, p, nil)
+}
+
 // Command names.
 const (
 	CommandEnable                         = "BluetoothEmulation.enable"
@@ -343,4 +431,6 @@ const (
 	CommandRemoveService                  = "BluetoothEmulation.removeService"
 	CommandAddCharacteristic              = "BluetoothEmulation.addCharacteristic"
 	CommandRemoveCharacteristic           = "BluetoothEmulation.removeCharacteristic"
+	CommandAddDescriptor                  = "BluetoothEmulation.addDescriptor"
+	CommandRemoveDescriptor               = "BluetoothEmulation.removeDescriptor"
 )

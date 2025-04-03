@@ -135,6 +135,8 @@ const (
 	CommandBluetoothEmulationRemoveService                   = bluetoothemulation.CommandRemoveService
 	CommandBluetoothEmulationAddCharacteristic               = bluetoothemulation.CommandAddCharacteristic
 	CommandBluetoothEmulationRemoveCharacteristic            = bluetoothemulation.CommandRemoveCharacteristic
+	CommandBluetoothEmulationAddDescriptor                   = bluetoothemulation.CommandAddDescriptor
+	CommandBluetoothEmulationRemoveDescriptor                = bluetoothemulation.CommandRemoveDescriptor
 	EventBluetoothEmulationGattOperationReceived             = "BluetoothEmulation.gattOperationReceived"
 	CommandBrowserSetPermission                              = browser.CommandSetPermission
 	CommandBrowserGrantPermissions                           = browser.CommandGrantPermissions
@@ -989,6 +991,10 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 	case CommandBluetoothEmulationAddCharacteristic:
 		v = new(bluetoothemulation.AddCharacteristicReturns)
 	case CommandBluetoothEmulationRemoveCharacteristic:
+		return emptyVal, nil
+	case CommandBluetoothEmulationAddDescriptor:
+		v = new(bluetoothemulation.AddDescriptorReturns)
+	case CommandBluetoothEmulationRemoveDescriptor:
 		return emptyVal, nil
 	case EventBluetoothEmulationGattOperationReceived:
 		v = new(bluetoothemulation.EventGattOperationReceived)

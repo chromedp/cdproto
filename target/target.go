@@ -309,6 +309,7 @@ type CreateTargetParams struct {
 	NewWindow               bool                 `json:"newWindow"`                           // Whether to create a new Window or Tab (false by default, not supported by headless shell).
 	Background              bool                 `json:"background"`                          // Whether to create the target in background or foreground (false by default, not supported by headless shell).
 	ForTab                  bool                 `json:"forTab"`                              // Whether to create the target of type "tab".
+	Hidden                  bool                 `json:"hidden"`                              // Whether to create a hidden target. The hidden target is observable via protocol, but not present in the tab UI strip. Cannot be created with forTab: true, newWindow: true or background: false. The life-time of the tab is limited to the life-time of the session.
 }
 
 // CreateTarget creates a new page.
@@ -325,6 +326,7 @@ func CreateTarget(url string) *CreateTargetParams {
 		NewWindow:               false,
 		Background:              false,
 		ForTab:                  false,
+		Hidden:                  false,
 	}
 }
 
@@ -394,6 +396,15 @@ func (p CreateTargetParams) WithBackground(background bool) *CreateTargetParams 
 // WithForTab whether to create the target of type "tab".
 func (p CreateTargetParams) WithForTab(forTab bool) *CreateTargetParams {
 	p.ForTab = forTab
+	return &p
+}
+
+// WithHidden whether to create a hidden target. The hidden target is
+// observable via protocol, but not present in the tab UI strip. Cannot be
+// created with forTab: true, newWindow: true or background: false. The
+// life-time of the tab is limited to the life-time of the session.
+func (p CreateTargetParams) WithHidden(hidden bool) *CreateTargetParams {
+	p.Hidden = hidden
 	return &p
 }
 

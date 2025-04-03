@@ -1222,6 +1222,7 @@ const (
 	FederatedAuthRequestIssueReasonTypeNotMatching                  FederatedAuthRequestIssueReason = "TypeNotMatching"
 	FederatedAuthRequestIssueReasonUIDismissedNoEmbargo             FederatedAuthRequestIssueReason = "UiDismissedNoEmbargo"
 	FederatedAuthRequestIssueReasonCorsError                        FederatedAuthRequestIssueReason = "CorsError"
+	FederatedAuthRequestIssueReasonSuppressedBySegmentationPlatform FederatedAuthRequestIssueReason = "SuppressedBySegmentationPlatform"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -1324,6 +1325,8 @@ func (t *FederatedAuthRequestIssueReason) UnmarshalJSON(buf []byte) error {
 		*t = FederatedAuthRequestIssueReasonUIDismissedNoEmbargo
 	case FederatedAuthRequestIssueReasonCorsError:
 		*t = FederatedAuthRequestIssueReasonCorsError
+	case FederatedAuthRequestIssueReasonSuppressedBySegmentationPlatform:
+		*t = FederatedAuthRequestIssueReasonSuppressedBySegmentationPlatform
 	default:
 		return fmt.Errorf("unknown FederatedAuthRequestIssueReason value: %v", s)
 	}
