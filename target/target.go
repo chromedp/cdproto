@@ -564,11 +564,13 @@ func (p *GetTargetsParams) Do(ctx context.Context) (targetInfos []*Info, err err
 }
 
 // SetAutoAttachParams controls whether to automatically attach to new
-// targets which are considered to be related to this one. When turned on,
-// attaches to all existing related targets as well. When turned off,
-// automatically detaches from all currently attached targets. This also clears
-// all targets added by autoAttachRelated from the list of targets to watch for
-// creation of related targets.
+// targets which are considered to be directly related to this one (for example,
+// iframes or workers). When turned on, attaches to all existing related targets
+// as well. When turned off, automatically detaches from all currently attached
+// targets. This also clears all targets added by autoAttachRelated from the
+// list of targets to watch for creation of related targets. You might want to
+// call this recursively for auto-attached targets to attach to all available
+// targets.
 type SetAutoAttachParams struct {
 	AutoAttach             bool   `json:"autoAttach"`                // Whether to auto-attach to related targets.
 	WaitForDebuggerOnStart bool   `json:"waitForDebuggerOnStart"`    // Whether to pause new targets when attaching to them. Use Runtime.runIfWaitingForDebugger to run paused targets.
@@ -577,10 +579,12 @@ type SetAutoAttachParams struct {
 }
 
 // SetAutoAttach controls whether to automatically attach to new targets
-// which are considered to be related to this one. When turned on, attaches to
-// all existing related targets as well. When turned off, automatically detaches
-// from all currently attached targets. This also clears all targets added by
-// autoAttachRelated from the list of targets to watch for creation of related
+// which are considered to be directly related to this one (for example, iframes
+// or workers). When turned on, attaches to all existing related targets as
+// well. When turned off, automatically detaches from all currently attached
+// targets. This also clears all targets added by autoAttachRelated from the
+// list of targets to watch for creation of related targets. You might want to
+// call this recursively for auto-attached targets to attach to all available
 // targets.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Target#method-setAutoAttach

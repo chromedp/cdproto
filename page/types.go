@@ -74,6 +74,7 @@ const (
 	PermissionsPolicyFeatureCrossOriginIsolated            PermissionsPolicyFeature = "cross-origin-isolated"
 	PermissionsPolicyFeatureDeferredFetch                  PermissionsPolicyFeature = "deferred-fetch"
 	PermissionsPolicyFeatureDeferredFetchMinimal           PermissionsPolicyFeature = "deferred-fetch-minimal"
+	PermissionsPolicyFeatureDeviceAttributes               PermissionsPolicyFeature = "device-attributes"
 	PermissionsPolicyFeatureDigitalCredentialsGet          PermissionsPolicyFeature = "digital-credentials-get"
 	PermissionsPolicyFeatureDirectSockets                  PermissionsPolicyFeature = "direct-sockets"
 	PermissionsPolicyFeatureDirectSocketsPrivate           PermissionsPolicyFeature = "direct-sockets-private"
@@ -222,6 +223,8 @@ func (t *PermissionsPolicyFeature) UnmarshalJSON(buf []byte) error {
 		*t = PermissionsPolicyFeatureDeferredFetch
 	case PermissionsPolicyFeatureDeferredFetchMinimal:
 		*t = PermissionsPolicyFeatureDeferredFetchMinimal
+	case PermissionsPolicyFeatureDeviceAttributes:
+		*t = PermissionsPolicyFeatureDeviceAttributes
 	case PermissionsPolicyFeatureDigitalCredentialsGet:
 		*t = PermissionsPolicyFeatureDigitalCredentialsGet
 	case PermissionsPolicyFeatureDirectSockets:

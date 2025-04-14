@@ -880,6 +880,7 @@ const (
 	ServiceWorkerRouterSourceCache                      ServiceWorkerRouterSource = "cache"
 	ServiceWorkerRouterSourceFetchEvent                 ServiceWorkerRouterSource = "fetch-event"
 	ServiceWorkerRouterSourceRaceNetworkAndFetchHandler ServiceWorkerRouterSource = "race-network-and-fetch-handler"
+	ServiceWorkerRouterSourceRaceNetworkAndCache        ServiceWorkerRouterSource = "race-network-and-cache"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -896,6 +897,8 @@ func (t *ServiceWorkerRouterSource) UnmarshalJSON(buf []byte) error {
 		*t = ServiceWorkerRouterSourceFetchEvent
 	case ServiceWorkerRouterSourceRaceNetworkAndFetchHandler:
 		*t = ServiceWorkerRouterSourceRaceNetworkAndFetchHandler
+	case ServiceWorkerRouterSourceRaceNetworkAndCache:
+		*t = ServiceWorkerRouterSourceRaceNetworkAndCache
 	default:
 		return fmt.Errorf("unknown ServiceWorkerRouterSource value: %v", s)
 	}

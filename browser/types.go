@@ -265,6 +265,7 @@ func (t CommandID) String() string {
 const (
 	CommandIDOpenTabSearch  CommandID = "openTabSearch"
 	CommandIDCloseTabSearch CommandID = "closeTabSearch"
+	CommandIDOpenGlic       CommandID = "openGlic"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -277,6 +278,8 @@ func (t *CommandID) UnmarshalJSON(buf []byte) error {
 		*t = CommandIDOpenTabSearch
 	case CommandIDCloseTabSearch:
 		*t = CommandIDCloseTabSearch
+	case CommandIDOpenGlic:
+		*t = CommandIDOpenGlic
 	default:
 		return fmt.Errorf("unknown CommandID value: %v", s)
 	}
