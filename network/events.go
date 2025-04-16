@@ -242,6 +242,38 @@ type EventDirectTCPSocketClosed struct {
 	Timestamp  *cdp.MonotonicTime `json:"timestamp"`
 }
 
+// EventDirectTCPSocketChunkSent fired when data is sent to tcp direct socket
+// stream.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-directTCPSocketChunkSent
+type EventDirectTCPSocketChunkSent struct {
+	Identifier RequestID          `json:"identifier"`
+	Data       string             `json:"data"`
+	Timestamp  *cdp.MonotonicTime `json:"timestamp"`
+}
+
+// EventDirectTCPSocketChunkReceived fired when data is received from tcp
+// direct socket stream.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-directTCPSocketChunkReceived
+type EventDirectTCPSocketChunkReceived struct {
+	Identifier RequestID          `json:"identifier"`
+	Data       string             `json:"data"`
+	Timestamp  *cdp.MonotonicTime `json:"timestamp"`
+}
+
+// EventDirectTCPSocketChunkError fired when there is an error when writing
+// to tcp direct socket stream. For example, if user writes illegal type like
+// string instead of ArrayBuffer or ArrayBufferView. There's no reporting for
+// reading, because we cannot know errors on the other side.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-directTCPSocketChunkError
+type EventDirectTCPSocketChunkError struct {
+	Identifier   RequestID          `json:"identifier"`
+	ErrorMessage string             `json:"errorMessage"`
+	Timestamp    *cdp.MonotonicTime `json:"timestamp"`
+}
+
 // EventRequestWillBeSentExtraInfo fired when additional information about a
 // requestWillBeSent event is available from the network stack. Not every
 // requestWillBeSent event will have an additional requestWillBeSentExtraInfo

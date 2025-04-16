@@ -543,6 +543,9 @@ const (
 	EventNetworkDirectTCPSocketOpened                        = "Network.directTCPSocketOpened"
 	EventNetworkDirectTCPSocketAborted                       = "Network.directTCPSocketAborted"
 	EventNetworkDirectTCPSocketClosed                        = "Network.directTCPSocketClosed"
+	EventNetworkDirectTCPSocketChunkSent                     = "Network.directTCPSocketChunkSent"
+	EventNetworkDirectTCPSocketChunkReceived                 = "Network.directTCPSocketChunkReceived"
+	EventNetworkDirectTCPSocketChunkError                    = "Network.directTCPSocketChunkError"
 	EventNetworkRequestWillBeSentExtraInfo                   = "Network.requestWillBeSentExtraInfo"
 	EventNetworkResponseReceivedExtraInfo                    = "Network.responseReceivedExtraInfo"
 	EventNetworkResponseReceivedEarlyHints                   = "Network.responseReceivedEarlyHints"
@@ -1808,6 +1811,12 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		v = new(network.EventDirectTCPSocketAborted)
 	case EventNetworkDirectTCPSocketClosed:
 		v = new(network.EventDirectTCPSocketClosed)
+	case EventNetworkDirectTCPSocketChunkSent:
+		v = new(network.EventDirectTCPSocketChunkSent)
+	case EventNetworkDirectTCPSocketChunkReceived:
+		v = new(network.EventDirectTCPSocketChunkReceived)
+	case EventNetworkDirectTCPSocketChunkError:
+		v = new(network.EventDirectTCPSocketChunkError)
 	case EventNetworkRequestWillBeSentExtraInfo:
 		v = new(network.EventRequestWillBeSentExtraInfo)
 	case EventNetworkResponseReceivedExtraInfo:

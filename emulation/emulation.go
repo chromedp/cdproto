@@ -533,15 +533,19 @@ func (p *SetEmulatedVisionDeficiencyParams) Do(ctx context.Context) (err error) 
 }
 
 // SetGeolocationOverrideParams overrides the Geolocation Position or Error.
-// Omitting any of the parameters emulates position unavailable.
+// Omitting latitude, longitude or accuracy emulates position unavailable.
 type SetGeolocationOverrideParams struct {
-	Latitude  float64 `json:"latitude,omitempty,omitzero"`  // Mock latitude
-	Longitude float64 `json:"longitude,omitempty,omitzero"` // Mock longitude
-	Accuracy  float64 `json:"accuracy,omitempty,omitzero"`  // Mock accuracy
+	Latitude         float64 `json:"latitude,omitempty,omitzero"`         // Mock latitude
+	Longitude        float64 `json:"longitude,omitempty,omitzero"`        // Mock longitude
+	Accuracy         float64 `json:"accuracy,omitempty,omitzero"`         // Mock accuracy
+	Altitude         float64 `json:"altitude,omitempty,omitzero"`         // Mock altitude
+	AltitudeAccuracy float64 `json:"altitudeAccuracy,omitempty,omitzero"` // Mock altitudeAccuracy
+	Heading          float64 `json:"heading,omitempty,omitzero"`          // Mock heading
+	Speed            float64 `json:"speed,omitempty,omitzero"`            // Mock speed
 }
 
 // SetGeolocationOverride overrides the Geolocation Position or Error.
-// Omitting any of the parameters emulates position unavailable.
+// Omitting latitude, longitude or accuracy emulates position unavailable.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#method-setGeolocationOverride
 //
@@ -565,6 +569,30 @@ func (p SetGeolocationOverrideParams) WithLongitude(longitude float64) *SetGeolo
 // WithAccuracy mock accuracy.
 func (p SetGeolocationOverrideParams) WithAccuracy(accuracy float64) *SetGeolocationOverrideParams {
 	p.Accuracy = accuracy
+	return &p
+}
+
+// WithAltitude mock altitude.
+func (p SetGeolocationOverrideParams) WithAltitude(altitude float64) *SetGeolocationOverrideParams {
+	p.Altitude = altitude
+	return &p
+}
+
+// WithAltitudeAccuracy mock altitudeAccuracy.
+func (p SetGeolocationOverrideParams) WithAltitudeAccuracy(altitudeAccuracy float64) *SetGeolocationOverrideParams {
+	p.AltitudeAccuracy = altitudeAccuracy
+	return &p
+}
+
+// WithHeading mock heading.
+func (p SetGeolocationOverrideParams) WithHeading(heading float64) *SetGeolocationOverrideParams {
+	p.Heading = heading
+	return &p
+}
+
+// WithSpeed mock speed.
+func (p SetGeolocationOverrideParams) WithSpeed(speed float64) *SetGeolocationOverrideParams {
+	p.Speed = speed
 	return &p
 }
 
