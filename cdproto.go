@@ -779,6 +779,7 @@ const (
 	CommandStorageSendPendingAttributionReports              = storage.CommandSendPendingAttributionReports
 	CommandStorageGetRelatedWebsiteSets                      = storage.CommandGetRelatedWebsiteSets
 	CommandStorageGetAffectedURLsForThirdPartyCookieMetadata = storage.CommandGetAffectedURLsForThirdPartyCookieMetadata
+	CommandStorageSetProtectedAudienceKAnonymity             = storage.CommandSetProtectedAudienceKAnonymity
 	EventStorageCacheStorageContentUpdated                   = "Storage.cacheStorageContentUpdated"
 	EventStorageCacheStorageListUpdated                      = "Storage.cacheStorageListUpdated"
 	EventStorageIndexedDBContentUpdated                      = "Storage.indexedDBContentUpdated"
@@ -2283,6 +2284,8 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		v = new(storage.GetRelatedWebsiteSetsReturns)
 	case CommandStorageGetAffectedURLsForThirdPartyCookieMetadata:
 		v = new(storage.GetAffectedURLsForThirdPartyCookieMetadataReturns)
+	case CommandStorageSetProtectedAudienceKAnonymity:
+		return emptyVal, nil
 	case EventStorageCacheStorageContentUpdated:
 		v = new(storage.EventCacheStorageContentUpdated)
 	case EventStorageCacheStorageListUpdated:

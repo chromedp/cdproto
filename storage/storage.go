@@ -1129,6 +1129,35 @@ func (p *GetAffectedURLsForThirdPartyCookieMetadataParams) Do(ctx context.Contex
 	return res.MatchedURLs, nil
 }
 
+// SetProtectedAudienceKAnonymityParams [no description].
+type SetProtectedAudienceKAnonymityParams struct {
+	Owner  string   `json:"owner"`
+	Name   string   `json:"name"`
+	Hashes []string `json:"hashes"`
+}
+
+// SetProtectedAudienceKAnonymity [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#method-setProtectedAudienceKAnonymity
+//
+// parameters:
+//
+//	owner
+//	name
+//	hashes
+func SetProtectedAudienceKAnonymity(owner string, name string, hashes []string) *SetProtectedAudienceKAnonymityParams {
+	return &SetProtectedAudienceKAnonymityParams{
+		Owner:  owner,
+		Name:   name,
+		Hashes: hashes,
+	}
+}
+
+// Do executes Storage.setProtectedAudienceKAnonymity against the provided context.
+func (p *SetProtectedAudienceKAnonymityParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetProtectedAudienceKAnonymity, p, nil)
+}
+
 // Command names.
 const (
 	CommandGetStorageKeyForFrame                      = "Storage.getStorageKeyForFrame"
@@ -1167,4 +1196,5 @@ const (
 	CommandSendPendingAttributionReports              = "Storage.sendPendingAttributionReports"
 	CommandGetRelatedWebsiteSets                      = "Storage.getRelatedWebsiteSets"
 	CommandGetAffectedURLsForThirdPartyCookieMetadata = "Storage.getAffectedUrlsForThirdPartyCookieMetadata"
+	CommandSetProtectedAudienceKAnonymity             = "Storage.setProtectedAudienceKAnonymity"
 )
