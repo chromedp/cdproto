@@ -377,6 +377,7 @@ const (
 	CommandEmulationSetHardwareConcurrencyOverride           = emulation.CommandSetHardwareConcurrencyOverride
 	CommandEmulationSetUserAgentOverride                     = emulation.CommandSetUserAgentOverride
 	CommandEmulationSetAutomationOverride                    = emulation.CommandSetAutomationOverride
+	CommandEmulationSetSmallViewportHeightDifferenceOverride = emulation.CommandSetSmallViewportHeightDifferenceOverride
 	EventEmulationVirtualTimeBudgetExpired                   = "Emulation.virtualTimeBudgetExpired"
 	CommandEventBreakpointsSetInstrumentationBreakpoint      = eventbreakpoints.CommandSetInstrumentationBreakpoint
 	CommandEventBreakpointsRemoveInstrumentationBreakpoint   = eventbreakpoints.CommandRemoveInstrumentationBreakpoint
@@ -1479,6 +1480,8 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 	case CommandEmulationSetUserAgentOverride:
 		return emptyVal, nil
 	case CommandEmulationSetAutomationOverride:
+		return emptyVal, nil
+	case CommandEmulationSetSmallViewportHeightDifferenceOverride:
 		return emptyVal, nil
 	case EventEmulationVirtualTimeBudgetExpired:
 		v = new(emulation.EventVirtualTimeBudgetExpired)

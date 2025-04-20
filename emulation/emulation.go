@@ -1134,42 +1134,71 @@ func (p *SetAutomationOverrideParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandSetAutomationOverride, p, nil)
 }
 
+// SetSmallViewportHeightDifferenceOverrideParams allows overriding the
+// difference between the small and large viewport sizes, which determine the
+// value of the svh and lvh unit, respectively. Only supported for top-level
+// frames.
+type SetSmallViewportHeightDifferenceOverrideParams struct {
+	Difference int64 `json:"difference"` // This will cause an element of size 100svh to be difference pixels smaller than an element of size 100lvh.
+}
+
+// SetSmallViewportHeightDifferenceOverride allows overriding the difference
+// between the small and large viewport sizes, which determine the value of the
+// svh and lvh unit, respectively. Only supported for top-level frames.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#method-setSmallViewportHeightDifferenceOverride
+//
+// parameters:
+//
+//	difference - This will cause an element of size 100svh to be difference pixels smaller than an element of size 100lvh.
+func SetSmallViewportHeightDifferenceOverride(difference int64) *SetSmallViewportHeightDifferenceOverrideParams {
+	return &SetSmallViewportHeightDifferenceOverrideParams{
+		Difference: difference,
+	}
+}
+
+// Do executes Emulation.setSmallViewportHeightDifferenceOverride against the provided context.
+func (p *SetSmallViewportHeightDifferenceOverrideParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetSmallViewportHeightDifferenceOverride, p, nil)
+}
+
 // Command names.
 const (
-	CommandClearDeviceMetricsOverride        = "Emulation.clearDeviceMetricsOverride"
-	CommandClearGeolocationOverride          = "Emulation.clearGeolocationOverride"
-	CommandResetPageScaleFactor              = "Emulation.resetPageScaleFactor"
-	CommandSetFocusEmulationEnabled          = "Emulation.setFocusEmulationEnabled"
-	CommandSetAutoDarkModeOverride           = "Emulation.setAutoDarkModeOverride"
-	CommandSetCPUThrottlingRate              = "Emulation.setCPUThrottlingRate"
-	CommandSetDefaultBackgroundColorOverride = "Emulation.setDefaultBackgroundColorOverride"
-	CommandSetSafeAreaInsetsOverride         = "Emulation.setSafeAreaInsetsOverride"
-	CommandSetDeviceMetricsOverride          = "Emulation.setDeviceMetricsOverride"
-	CommandSetDevicePostureOverride          = "Emulation.setDevicePostureOverride"
-	CommandClearDevicePostureOverride        = "Emulation.clearDevicePostureOverride"
-	CommandSetDisplayFeaturesOverride        = "Emulation.setDisplayFeaturesOverride"
-	CommandClearDisplayFeaturesOverride      = "Emulation.clearDisplayFeaturesOverride"
-	CommandSetScrollbarsHidden               = "Emulation.setScrollbarsHidden"
-	CommandSetDocumentCookieDisabled         = "Emulation.setDocumentCookieDisabled"
-	CommandSetEmitTouchEventsForMouse        = "Emulation.setEmitTouchEventsForMouse"
-	CommandSetEmulatedMedia                  = "Emulation.setEmulatedMedia"
-	CommandSetEmulatedVisionDeficiency       = "Emulation.setEmulatedVisionDeficiency"
-	CommandSetGeolocationOverride            = "Emulation.setGeolocationOverride"
-	CommandGetOverriddenSensorInformation    = "Emulation.getOverriddenSensorInformation"
-	CommandSetSensorOverrideEnabled          = "Emulation.setSensorOverrideEnabled"
-	CommandSetSensorOverrideReadings         = "Emulation.setSensorOverrideReadings"
-	CommandSetPressureSourceOverrideEnabled  = "Emulation.setPressureSourceOverrideEnabled"
-	CommandSetPressureStateOverride          = "Emulation.setPressureStateOverride"
-	CommandSetIdleOverride                   = "Emulation.setIdleOverride"
-	CommandClearIdleOverride                 = "Emulation.clearIdleOverride"
-	CommandSetPageScaleFactor                = "Emulation.setPageScaleFactor"
-	CommandSetScriptExecutionDisabled        = "Emulation.setScriptExecutionDisabled"
-	CommandSetTouchEmulationEnabled          = "Emulation.setTouchEmulationEnabled"
-	CommandSetVirtualTimePolicy              = "Emulation.setVirtualTimePolicy"
-	CommandSetLocaleOverride                 = "Emulation.setLocaleOverride"
-	CommandSetTimezoneOverride               = "Emulation.setTimezoneOverride"
-	CommandSetDisabledImageTypes             = "Emulation.setDisabledImageTypes"
-	CommandSetHardwareConcurrencyOverride    = "Emulation.setHardwareConcurrencyOverride"
-	CommandSetUserAgentOverride              = "Emulation.setUserAgentOverride"
-	CommandSetAutomationOverride             = "Emulation.setAutomationOverride"
+	CommandClearDeviceMetricsOverride               = "Emulation.clearDeviceMetricsOverride"
+	CommandClearGeolocationOverride                 = "Emulation.clearGeolocationOverride"
+	CommandResetPageScaleFactor                     = "Emulation.resetPageScaleFactor"
+	CommandSetFocusEmulationEnabled                 = "Emulation.setFocusEmulationEnabled"
+	CommandSetAutoDarkModeOverride                  = "Emulation.setAutoDarkModeOverride"
+	CommandSetCPUThrottlingRate                     = "Emulation.setCPUThrottlingRate"
+	CommandSetDefaultBackgroundColorOverride        = "Emulation.setDefaultBackgroundColorOverride"
+	CommandSetSafeAreaInsetsOverride                = "Emulation.setSafeAreaInsetsOverride"
+	CommandSetDeviceMetricsOverride                 = "Emulation.setDeviceMetricsOverride"
+	CommandSetDevicePostureOverride                 = "Emulation.setDevicePostureOverride"
+	CommandClearDevicePostureOverride               = "Emulation.clearDevicePostureOverride"
+	CommandSetDisplayFeaturesOverride               = "Emulation.setDisplayFeaturesOverride"
+	CommandClearDisplayFeaturesOverride             = "Emulation.clearDisplayFeaturesOverride"
+	CommandSetScrollbarsHidden                      = "Emulation.setScrollbarsHidden"
+	CommandSetDocumentCookieDisabled                = "Emulation.setDocumentCookieDisabled"
+	CommandSetEmitTouchEventsForMouse               = "Emulation.setEmitTouchEventsForMouse"
+	CommandSetEmulatedMedia                         = "Emulation.setEmulatedMedia"
+	CommandSetEmulatedVisionDeficiency              = "Emulation.setEmulatedVisionDeficiency"
+	CommandSetGeolocationOverride                   = "Emulation.setGeolocationOverride"
+	CommandGetOverriddenSensorInformation           = "Emulation.getOverriddenSensorInformation"
+	CommandSetSensorOverrideEnabled                 = "Emulation.setSensorOverrideEnabled"
+	CommandSetSensorOverrideReadings                = "Emulation.setSensorOverrideReadings"
+	CommandSetPressureSourceOverrideEnabled         = "Emulation.setPressureSourceOverrideEnabled"
+	CommandSetPressureStateOverride                 = "Emulation.setPressureStateOverride"
+	CommandSetIdleOverride                          = "Emulation.setIdleOverride"
+	CommandClearIdleOverride                        = "Emulation.clearIdleOverride"
+	CommandSetPageScaleFactor                       = "Emulation.setPageScaleFactor"
+	CommandSetScriptExecutionDisabled               = "Emulation.setScriptExecutionDisabled"
+	CommandSetTouchEmulationEnabled                 = "Emulation.setTouchEmulationEnabled"
+	CommandSetVirtualTimePolicy                     = "Emulation.setVirtualTimePolicy"
+	CommandSetLocaleOverride                        = "Emulation.setLocaleOverride"
+	CommandSetTimezoneOverride                      = "Emulation.setTimezoneOverride"
+	CommandSetDisabledImageTypes                    = "Emulation.setDisabledImageTypes"
+	CommandSetHardwareConcurrencyOverride           = "Emulation.setHardwareConcurrencyOverride"
+	CommandSetUserAgentOverride                     = "Emulation.setUserAgentOverride"
+	CommandSetAutomationOverride                    = "Emulation.setAutomationOverride"
+	CommandSetSmallViewportHeightDifferenceOverride = "Emulation.setSmallViewportHeightDifferenceOverride"
 )
