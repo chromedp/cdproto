@@ -456,43 +456,43 @@ func (p *GetAppIDParams) Do(ctx context.Context) (appID string, recommendedID st
 	return res.AppID, res.RecommendedID, nil
 }
 
-// GetAdScriptIDParams [no description].
-type GetAdScriptIDParams struct {
+// GetAdScriptAncestryIDsParams [no description].
+type GetAdScriptAncestryIDsParams struct {
 	FrameID cdp.FrameID `json:"frameId"`
 }
 
-// GetAdScriptID [no description].
+// GetAdScriptAncestryIDs [no description].
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-getAdScriptId
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-getAdScriptAncestryIds
 //
 // parameters:
 //
 //	frameID
-func GetAdScriptID(frameID cdp.FrameID) *GetAdScriptIDParams {
-	return &GetAdScriptIDParams{
+func GetAdScriptAncestryIDs(frameID cdp.FrameID) *GetAdScriptAncestryIDsParams {
+	return &GetAdScriptAncestryIDsParams{
 		FrameID: frameID,
 	}
 }
 
-// GetAdScriptIDReturns return values.
-type GetAdScriptIDReturns struct {
-	AdScriptID *AdScriptID `json:"adScriptId,omitempty,omitzero"` // Identifies the bottom-most script which caused the frame to be labelled as an ad. Only sent if frame is labelled as an ad and id is available.
+// GetAdScriptAncestryIDsReturns return values.
+type GetAdScriptAncestryIDsReturns struct {
+	AdScriptAncestryIDs []*AdScriptID `json:"adScriptAncestryIds,omitempty,omitzero"` // The ancestry chain of ad script identifiers leading to this frame's creation, ordered from the most immediate script (in the frame creation stack) to more distant ancestors (that created the immediately preceding script). Only sent if frame is labelled as an ad and ids are available.
 }
 
-// Do executes Page.getAdScriptId against the provided context.
+// Do executes Page.getAdScriptAncestryIds against the provided context.
 //
 // returns:
 //
-//	adScriptID - Identifies the bottom-most script which caused the frame to be labelled as an ad. Only sent if frame is labelled as an ad and id is available.
-func (p *GetAdScriptIDParams) Do(ctx context.Context) (adScriptID *AdScriptID, err error) {
+//	adScriptAncestryIDs - The ancestry chain of ad script identifiers leading to this frame's creation, ordered from the most immediate script (in the frame creation stack) to more distant ancestors (that created the immediately preceding script). Only sent if frame is labelled as an ad and ids are available.
+func (p *GetAdScriptAncestryIDsParams) Do(ctx context.Context) (adScriptAncestryIDs []*AdScriptID, err error) {
 	// execute
-	var res GetAdScriptIDReturns
-	err = cdp.Execute(ctx, CommandGetAdScriptID, p, &res)
+	var res GetAdScriptAncestryIDsReturns
+	err = cdp.Execute(ctx, CommandGetAdScriptAncestryIDs, p, &res)
 	if err != nil {
 		return nil, err
 	}
 
-	return res.AdScriptID, nil
+	return res.AdScriptAncestryIDs, nil
 }
 
 // GetFrameTreeParams returns present frame tree structure.
@@ -1802,7 +1802,7 @@ const (
 	CommandGetAppManifest                      = "Page.getAppManifest"
 	CommandGetInstallabilityErrors             = "Page.getInstallabilityErrors"
 	CommandGetAppID                            = "Page.getAppId"
-	CommandGetAdScriptID                       = "Page.getAdScriptId"
+	CommandGetAdScriptAncestryIDs              = "Page.getAdScriptAncestryIds"
 	CommandGetFrameTree                        = "Page.getFrameTree"
 	CommandGetLayoutMetrics                    = "Page.getLayoutMetrics"
 	CommandGetNavigationHistory                = "Page.getNavigationHistory"

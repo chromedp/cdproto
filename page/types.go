@@ -23,6 +23,7 @@ type AdScriptID struct {
 // PermissionsPolicyFeature all Permissions Policy features. This enum should
 // match the one defined in
 // services/network/public/cpp/permissions_policy/permissions_policy_features.json5.
+// LINT.IfChange(PermissionsPolicyFeature).
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-PermissionsPolicyFeature
 type PermissionsPolicyFeature string
@@ -98,6 +99,7 @@ const (
 	PermissionsPolicyFeatureKeyboardMap                    PermissionsPolicyFeature = "keyboard-map"
 	PermissionsPolicyFeatureLanguageDetector               PermissionsPolicyFeature = "language-detector"
 	PermissionsPolicyFeatureLocalFonts                     PermissionsPolicyFeature = "local-fonts"
+	PermissionsPolicyFeatureLocalNetworkAccess             PermissionsPolicyFeature = "local-network-access"
 	PermissionsPolicyFeatureMagnetometer                   PermissionsPolicyFeature = "magnetometer"
 	PermissionsPolicyFeatureMediaPlaybackWhileNotVisible   PermissionsPolicyFeature = "media-playback-while-not-visible"
 	PermissionsPolicyFeatureMicrophone                     PermissionsPolicyFeature = "microphone"
@@ -111,6 +113,7 @@ const (
 	PermissionsPolicyFeaturePrivateStateTokenRedemption    PermissionsPolicyFeature = "private-state-token-redemption"
 	PermissionsPolicyFeaturePublickeyCredentialsCreate     PermissionsPolicyFeature = "publickey-credentials-create"
 	PermissionsPolicyFeaturePublickeyCredentialsGet        PermissionsPolicyFeature = "publickey-credentials-get"
+	PermissionsPolicyFeatureRecordAdAuctionEvents          PermissionsPolicyFeature = "record-ad-auction-events"
 	PermissionsPolicyFeatureRewriter                       PermissionsPolicyFeature = "rewriter"
 	PermissionsPolicyFeatureRunAdAuction                   PermissionsPolicyFeature = "run-ad-auction"
 	PermissionsPolicyFeatureScreenWakeLock                 PermissionsPolicyFeature = "screen-wake-lock"
@@ -271,6 +274,8 @@ func (t *PermissionsPolicyFeature) UnmarshalJSON(buf []byte) error {
 		*t = PermissionsPolicyFeatureLanguageDetector
 	case PermissionsPolicyFeatureLocalFonts:
 		*t = PermissionsPolicyFeatureLocalFonts
+	case PermissionsPolicyFeatureLocalNetworkAccess:
+		*t = PermissionsPolicyFeatureLocalNetworkAccess
 	case PermissionsPolicyFeatureMagnetometer:
 		*t = PermissionsPolicyFeatureMagnetometer
 	case PermissionsPolicyFeatureMediaPlaybackWhileNotVisible:
@@ -297,6 +302,8 @@ func (t *PermissionsPolicyFeature) UnmarshalJSON(buf []byte) error {
 		*t = PermissionsPolicyFeaturePublickeyCredentialsCreate
 	case PermissionsPolicyFeaturePublickeyCredentialsGet:
 		*t = PermissionsPolicyFeaturePublickeyCredentialsGet
+	case PermissionsPolicyFeatureRecordAdAuctionEvents:
+		*t = PermissionsPolicyFeatureRecordAdAuctionEvents
 	case PermissionsPolicyFeatureRewriter:
 		*t = PermissionsPolicyFeatureRewriter
 	case PermissionsPolicyFeatureRunAdAuction:

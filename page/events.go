@@ -126,8 +126,9 @@ type EventInterstitialShown struct{}
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-javascriptDialogClosed
 type EventJavascriptDialogClosed struct {
-	Result    bool   `json:"result"`    // Whether dialog was confirmed.
-	UserInput string `json:"userInput"` // User input in case of prompt.
+	FrameID   cdp.FrameID `json:"frameId"`   // Frame id.
+	Result    bool        `json:"result"`    // Whether dialog was confirmed.
+	UserInput string      `json:"userInput"` // User input in case of prompt.
 }
 
 // EventJavascriptDialogOpening fired when a JavaScript initiated dialog
@@ -135,11 +136,12 @@ type EventJavascriptDialogClosed struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-javascriptDialogOpening
 type EventJavascriptDialogOpening struct {
-	URL               string     `json:"url"`                              // Frame url.
-	Message           string     `json:"message"`                          // Message that will be displayed by the dialog.
-	Type              DialogType `json:"type"`                             // Dialog type.
-	HasBrowserHandler bool       `json:"hasBrowserHandler"`                // True iff browser is capable showing or acting on the given dialog. When browser has no dialog handler for given target, calling alert while Page domain is engaged will stall the page execution. Execution can be resumed via calling Page.handleJavaScriptDialog.
-	DefaultPrompt     string     `json:"defaultPrompt,omitempty,omitzero"` // Default dialog prompt.
+	URL               string      `json:"url"`                              // Frame url.
+	FrameID           cdp.FrameID `json:"frameId"`                          // Frame id.
+	Message           string      `json:"message"`                          // Message that will be displayed by the dialog.
+	Type              DialogType  `json:"type"`                             // Dialog type.
+	HasBrowserHandler bool        `json:"hasBrowserHandler"`                // True iff browser is capable showing or acting on the given dialog. When browser has no dialog handler for given target, calling alert while Page domain is engaged will stall the page execution. Execution can be resumed via calling Page.handleJavaScriptDialog.
+	DefaultPrompt     string      `json:"defaultPrompt,omitempty,omitzero"` // Default dialog prompt.
 }
 
 // EventLifecycleEvent fired for lifecycle events (navigation, load, paint,

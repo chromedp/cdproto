@@ -174,6 +174,50 @@ func (p *SimulateGATTOperationResponseParams) Do(ctx context.Context) (err error
 	return cdp.Execute(ctx, CommandSimulateGATTOperationResponse, p, nil)
 }
 
+// SimulateCharacteristicOperationResponseParams simulates the response from
+// the characteristic with |characteristicId| for a characteristic operation of
+// |type|. The |code| value follows the Error Codes from Bluetooth Core
+// Specification Vol 3 Part F 3.4.1.1 Error Response. The |data| is expected to
+// exist when simulating a successful read operation response.
+type SimulateCharacteristicOperationResponseParams struct {
+	CharacteristicID string                      `json:"characteristicId"`
+	Type             CharacteristicOperationType `json:"type"`
+	Code             int64                       `json:"code"`
+	Data             string                      `json:"data,omitempty,omitzero"`
+}
+
+// SimulateCharacteristicOperationResponse simulates the response from the
+// characteristic with |characteristicId| for a characteristic operation of
+// |type|. The |code| value follows the Error Codes from Bluetooth Core
+// Specification Vol 3 Part F 3.4.1.1 Error Response. The |data| is expected to
+// exist when simulating a successful read operation response.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/BluetoothEmulation#method-simulateCharacteristicOperationResponse
+//
+// parameters:
+//
+//	characteristicID
+//	type
+//	code
+func SimulateCharacteristicOperationResponse(characteristicID string, typeVal CharacteristicOperationType, code int64) *SimulateCharacteristicOperationResponseParams {
+	return &SimulateCharacteristicOperationResponseParams{
+		CharacteristicID: characteristicID,
+		Type:             typeVal,
+		Code:             code,
+	}
+}
+
+// WithData [no description].
+func (p SimulateCharacteristicOperationResponseParams) WithData(data string) *SimulateCharacteristicOperationResponseParams {
+	p.Data = data
+	return &p
+}
+
+// Do executes BluetoothEmulation.simulateCharacteristicOperationResponse against the provided context.
+func (p *SimulateCharacteristicOperationResponseParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSimulateCharacteristicOperationResponse, p, nil)
+}
+
 // AddServiceParams adds a service with |serviceUuid| to the peripheral with
 // |address|.
 type AddServiceParams struct {
@@ -386,16 +430,17 @@ func (p *RemoveDescriptorParams) Do(ctx context.Context) (err error) {
 
 // Command names.
 const (
-	CommandEnable                         = "BluetoothEmulation.enable"
-	CommandSetSimulatedCentralState       = "BluetoothEmulation.setSimulatedCentralState"
-	CommandDisable                        = "BluetoothEmulation.disable"
-	CommandSimulatePreconnectedPeripheral = "BluetoothEmulation.simulatePreconnectedPeripheral"
-	CommandSimulateAdvertisement          = "BluetoothEmulation.simulateAdvertisement"
-	CommandSimulateGATTOperationResponse  = "BluetoothEmulation.simulateGATTOperationResponse"
-	CommandAddService                     = "BluetoothEmulation.addService"
-	CommandRemoveService                  = "BluetoothEmulation.removeService"
-	CommandAddCharacteristic              = "BluetoothEmulation.addCharacteristic"
-	CommandRemoveCharacteristic           = "BluetoothEmulation.removeCharacteristic"
-	CommandAddDescriptor                  = "BluetoothEmulation.addDescriptor"
-	CommandRemoveDescriptor               = "BluetoothEmulation.removeDescriptor"
+	CommandEnable                                  = "BluetoothEmulation.enable"
+	CommandSetSimulatedCentralState                = "BluetoothEmulation.setSimulatedCentralState"
+	CommandDisable                                 = "BluetoothEmulation.disable"
+	CommandSimulatePreconnectedPeripheral          = "BluetoothEmulation.simulatePreconnectedPeripheral"
+	CommandSimulateAdvertisement                   = "BluetoothEmulation.simulateAdvertisement"
+	CommandSimulateGATTOperationResponse           = "BluetoothEmulation.simulateGATTOperationResponse"
+	CommandSimulateCharacteristicOperationResponse = "BluetoothEmulation.simulateCharacteristicOperationResponse"
+	CommandAddService                              = "BluetoothEmulation.addService"
+	CommandRemoveService                           = "BluetoothEmulation.removeService"
+	CommandAddCharacteristic                       = "BluetoothEmulation.addCharacteristic"
+	CommandRemoveCharacteristic                    = "BluetoothEmulation.removeCharacteristic"
+	CommandAddDescriptor                           = "BluetoothEmulation.addDescriptor"
+	CommandRemoveDescriptor                        = "BluetoothEmulation.removeDescriptor"
 )
