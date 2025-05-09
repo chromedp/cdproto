@@ -230,9 +230,10 @@ func (p *EmulateNetworkConditionsParams) Do(ctx context.Context) (err error) {
 // EnableParams enables network tracking, network events will now be
 // delivered to the client.
 type EnableParams struct {
-	MaxTotalBufferSize    int64 `json:"maxTotalBufferSize,omitempty,omitzero"`    // Buffer size in bytes to use when preserving network payloads (XHRs, etc).
-	MaxResourceBufferSize int64 `json:"maxResourceBufferSize,omitempty,omitzero"` // Per-resource buffer size in bytes to use when preserving network payloads (XHRs, etc).
-	MaxPostDataSize       int64 `json:"maxPostDataSize,omitempty,omitzero"`       // Longest post body size (in bytes) that would be included in requestWillBeSent notification
+	MaxTotalBufferSize        int64 `json:"maxTotalBufferSize,omitempty,omitzero"`    // Buffer size in bytes to use when preserving network payloads (XHRs, etc).
+	MaxResourceBufferSize     int64 `json:"maxResourceBufferSize,omitempty,omitzero"` // Per-resource buffer size in bytes to use when preserving network payloads (XHRs, etc).
+	MaxPostDataSize           int64 `json:"maxPostDataSize,omitempty,omitzero"`       // Longest post body size (in bytes) that would be included in requestWillBeSent notification
+	ReportDirectSocketTraffic bool  `json:"reportDirectSocketTraffic"`                // Whether DirectSocket chunk send/receive events should be reported.
 }
 
 // Enable enables network tracking, network events will now be delivered to
@@ -242,7 +243,9 @@ type EnableParams struct {
 //
 // parameters:
 func Enable() *EnableParams {
-	return &EnableParams{}
+	return &EnableParams{
+		ReportDirectSocketTraffic: false,
+	}
 }
 
 // WithMaxTotalBufferSize buffer size in bytes to use when preserving network
@@ -263,6 +266,13 @@ func (p EnableParams) WithMaxResourceBufferSize(maxResourceBufferSize int64) *En
 // included in requestWillBeSent notification.
 func (p EnableParams) WithMaxPostDataSize(maxPostDataSize int64) *EnableParams {
 	p.MaxPostDataSize = maxPostDataSize
+	return &p
+}
+
+// WithReportDirectSocketTraffic whether DirectSocket chunk send/receive
+// events should be reported.
+func (p EnableParams) WithReportDirectSocketTraffic(reportDirectSocketTraffic bool) *EnableParams {
+	p.ReportDirectSocketTraffic = reportDirectSocketTraffic
 	return &p
 }
 
@@ -1072,7 +1082,7 @@ func (p *LoadNetworkResourceParams) Do(ctx context.Context) (resource *LoadNetwo
 }
 
 // SetCookieControlsParams sets Controls for third-party cookie access Page
-// reload is required before the new cookie bahavior will be observed.
+// reload is required before the new cookie behavior will be observed.
 type SetCookieControlsParams struct {
 	EnableThirdPartyCookieRestriction bool `json:"enableThirdPartyCookieRestriction"` // Whether 3pc restriction is enabled.
 	DisableThirdPartyCookieMetadata   bool `json:"disableThirdPartyCookieMetadata"`   // Whether 3pc grace period exception should be enabled; false by default.
@@ -1080,7 +1090,7 @@ type SetCookieControlsParams struct {
 }
 
 // SetCookieControls sets Controls for third-party cookie access Page reload
-// is required before the new cookie bahavior will be observed.
+// is required before the new cookie behavior will be observed.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-setCookieControls
 //

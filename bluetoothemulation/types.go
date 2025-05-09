@@ -149,6 +149,39 @@ func (t *CharacteristicOperationType) UnmarshalJSON(buf []byte) error {
 	return nil
 }
 
+// DescriptorOperationType indicates the various types of descriptor
+// operation.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/BluetoothEmulation#type-DescriptorOperationType
+type DescriptorOperationType string
+
+// String returns the DescriptorOperationType as string value.
+func (t DescriptorOperationType) String() string {
+	return string(t)
+}
+
+// DescriptorOperationType values.
+const (
+	DescriptorOperationTypeRead  DescriptorOperationType = "read"
+	DescriptorOperationTypeWrite DescriptorOperationType = "write"
+)
+
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *DescriptorOperationType) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
+
+	switch DescriptorOperationType(s) {
+	case DescriptorOperationTypeRead:
+		*t = DescriptorOperationTypeRead
+	case DescriptorOperationTypeWrite:
+		*t = DescriptorOperationTypeWrite
+	default:
+		return fmt.Errorf("unknown DescriptorOperationType value: %v", s)
+	}
+	return nil
+}
+
 // ManufacturerData stores the manufacturer data.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/BluetoothEmulation#type-ManufacturerData

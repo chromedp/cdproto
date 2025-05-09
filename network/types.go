@@ -536,6 +536,7 @@ const (
 	BlockedReasonMixedContent                                            BlockedReason = "mixed-content"
 	BlockedReasonOrigin                                                  BlockedReason = "origin"
 	BlockedReasonInspector                                               BlockedReason = "inspector"
+	BlockedReasonIntegrity                                               BlockedReason = "integrity"
 	BlockedReasonSubresourceFilter                                       BlockedReason = "subresource-filter"
 	BlockedReasonContentType                                             BlockedReason = "content-type"
 	BlockedReasonCoepFrameResourceNeedsCoepHeader                        BlockedReason = "coep-frame-resource-needs-coep-header"
@@ -564,6 +565,8 @@ func (t *BlockedReason) UnmarshalJSON(buf []byte) error {
 		*t = BlockedReasonOrigin
 	case BlockedReasonInspector:
 		*t = BlockedReasonInspector
+	case BlockedReasonIntegrity:
+		*t = BlockedReasonIntegrity
 	case BlockedReasonSubresourceFilter:
 		*t = BlockedReasonSubresourceFilter
 	case BlockedReasonContentType:
@@ -1568,6 +1571,28 @@ type DirectTCPSocketOptions struct {
 	SendBufferSize    float64                  `json:"sendBufferSize,omitempty,omitzero"`    // Expected to be unsigned integer.
 	ReceiveBufferSize float64                  `json:"receiveBufferSize,omitempty,omitzero"` // Expected to be unsigned integer.
 	DNSQueryType      DirectSocketDNSQueryType `json:"dnsQueryType,omitempty,omitzero"`
+}
+
+// DirectUDPSocketOptions [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-DirectUDPSocketOptions
+type DirectUDPSocketOptions struct {
+	RemoteAddr        string                   `json:"remoteAddr,omitempty,omitzero"`
+	RemotePort        int64                    `json:"remotePort,omitempty,omitzero"` // Unsigned int 16.
+	LocalAddr         string                   `json:"localAddr,omitempty,omitzero"`
+	LocalPort         int64                    `json:"localPort,omitempty,omitzero"` // Unsigned int 16.
+	DNSQueryType      DirectSocketDNSQueryType `json:"dnsQueryType,omitempty,omitzero"`
+	SendBufferSize    float64                  `json:"sendBufferSize,omitempty,omitzero"`    // Expected to be unsigned integer.
+	ReceiveBufferSize float64                  `json:"receiveBufferSize,omitempty,omitzero"` // Expected to be unsigned integer.
+}
+
+// DirectUDPMessage [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-DirectUDPMessage
+type DirectUDPMessage struct {
+	Data       string `json:"data"`
+	RemoteAddr string `json:"remoteAddr,omitempty,omitzero"` // Null for connected mode.
+	RemotePort int64  `json:"remotePort,omitempty,omitzero"` // Null for connected mode. Expected to be unsigned integer.
 }
 
 // PrivateNetworkRequestPolicy [no description].

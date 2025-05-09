@@ -132,3 +132,15 @@ type EventAttributionReportingTriggerRegistered struct {
 	EventLevel   AttributionReportingEventLevelResult     `json:"eventLevel"`
 	Aggregatable AttributionReportingAggregatableResult   `json:"aggregatable"`
 }
+
+// EventAttributionReportingReportSent [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#event-attributionReportingReportSent
+type EventAttributionReportingReportSent struct {
+	URL            string                           `json:"url"`
+	Body           jsontext.Value                   `json:"body"`
+	Result         AttributionReportingReportResult `json:"result"`
+	NetError       int64                            `json:"netError,omitempty,omitzero"` // If result is sent, populated with net/HTTP status.
+	NetErrorName   string                           `json:"netErrorName,omitempty,omitzero"`
+	HTTPStatusCode int64                            `json:"httpStatusCode,omitempty,omitzero"`
+}

@@ -1012,6 +1012,44 @@ func (t *AttributionReportingAggregatableResult) UnmarshalJSON(buf []byte) error
 	return nil
 }
 
+// AttributionReportingReportResult [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-AttributionReportingReportResult
+type AttributionReportingReportResult string
+
+// String returns the AttributionReportingReportResult as string value.
+func (t AttributionReportingReportResult) String() string {
+	return string(t)
+}
+
+// AttributionReportingReportResult values.
+const (
+	AttributionReportingReportResultSent             AttributionReportingReportResult = "sent"
+	AttributionReportingReportResultProhibited       AttributionReportingReportResult = "prohibited"
+	AttributionReportingReportResultFailedToAssemble AttributionReportingReportResult = "failedToAssemble"
+	AttributionReportingReportResultExpired          AttributionReportingReportResult = "expired"
+)
+
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *AttributionReportingReportResult) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
+
+	switch AttributionReportingReportResult(s) {
+	case AttributionReportingReportResultSent:
+		*t = AttributionReportingReportResultSent
+	case AttributionReportingReportResultProhibited:
+		*t = AttributionReportingReportResultProhibited
+	case AttributionReportingReportResultFailedToAssemble:
+		*t = AttributionReportingReportResultFailedToAssemble
+	case AttributionReportingReportResultExpired:
+		*t = AttributionReportingReportResultExpired
+	default:
+		return fmt.Errorf("unknown AttributionReportingReportResult value: %v", s)
+	}
+	return nil
+}
+
 // RelatedWebsiteSet a single Related Website Set object.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-RelatedWebsiteSet

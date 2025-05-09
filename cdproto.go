@@ -132,14 +132,17 @@ const (
 	CommandBluetoothEmulationSimulateAdvertisement                   = bluetoothemulation.CommandSimulateAdvertisement
 	CommandBluetoothEmulationSimulateGATTOperationResponse           = bluetoothemulation.CommandSimulateGATTOperationResponse
 	CommandBluetoothEmulationSimulateCharacteristicOperationResponse = bluetoothemulation.CommandSimulateCharacteristicOperationResponse
+	CommandBluetoothEmulationSimulateDescriptorOperationResponse     = bluetoothemulation.CommandSimulateDescriptorOperationResponse
 	CommandBluetoothEmulationAddService                              = bluetoothemulation.CommandAddService
 	CommandBluetoothEmulationRemoveService                           = bluetoothemulation.CommandRemoveService
 	CommandBluetoothEmulationAddCharacteristic                       = bluetoothemulation.CommandAddCharacteristic
 	CommandBluetoothEmulationRemoveCharacteristic                    = bluetoothemulation.CommandRemoveCharacteristic
 	CommandBluetoothEmulationAddDescriptor                           = bluetoothemulation.CommandAddDescriptor
 	CommandBluetoothEmulationRemoveDescriptor                        = bluetoothemulation.CommandRemoveDescriptor
+	CommandBluetoothEmulationSimulateGATTDisconnection               = bluetoothemulation.CommandSimulateGATTDisconnection
 	EventBluetoothEmulationGattOperationReceived                     = "BluetoothEmulation.gattOperationReceived"
 	EventBluetoothEmulationCharacteristicOperationReceived           = "BluetoothEmulation.characteristicOperationReceived"
+	EventBluetoothEmulationDescriptorOperationReceived               = "BluetoothEmulation.descriptorOperationReceived"
 	CommandBrowserSetPermission                                      = browser.CommandSetPermission
 	CommandBrowserGrantPermissions                                   = browser.CommandGrantPermissions
 	CommandBrowserResetPermissions                                   = browser.CommandResetPermissions
@@ -548,7 +551,12 @@ const (
 	EventNetworkDirectTCPSocketClosed                                = "Network.directTCPSocketClosed"
 	EventNetworkDirectTCPSocketChunkSent                             = "Network.directTCPSocketChunkSent"
 	EventNetworkDirectTCPSocketChunkReceived                         = "Network.directTCPSocketChunkReceived"
-	EventNetworkDirectTCPSocketChunkError                            = "Network.directTCPSocketChunkError"
+	EventNetworkDirectUDPSocketCreated                               = "Network.directUDPSocketCreated"
+	EventNetworkDirectUDPSocketOpened                                = "Network.directUDPSocketOpened"
+	EventNetworkDirectUDPSocketAborted                               = "Network.directUDPSocketAborted"
+	EventNetworkDirectUDPSocketClosed                                = "Network.directUDPSocketClosed"
+	EventNetworkDirectUDPSocketChunkSent                             = "Network.directUDPSocketChunkSent"
+	EventNetworkDirectUDPSocketChunkReceived                         = "Network.directUDPSocketChunkReceived"
 	EventNetworkRequestWillBeSentExtraInfo                           = "Network.requestWillBeSentExtraInfo"
 	EventNetworkResponseReceivedExtraInfo                            = "Network.responseReceivedExtraInfo"
 	EventNetworkResponseReceivedEarlyHints                           = "Network.responseReceivedEarlyHints"
@@ -795,6 +803,7 @@ const (
 	EventStorageStorageBucketDeleted                                 = "Storage.storageBucketDeleted"
 	EventStorageAttributionReportingSourceRegistered                 = "Storage.attributionReportingSourceRegistered"
 	EventStorageAttributionReportingTriggerRegistered                = "Storage.attributionReportingTriggerRegistered"
+	EventStorageAttributionReportingReportSent                       = "Storage.attributionReportingReportSent"
 	CommandSystemInfoGetInfo                                         = systeminfo.CommandGetInfo
 	CommandSystemInfoGetFeatureState                                 = systeminfo.CommandGetFeatureState
 	CommandSystemInfoGetProcessInfo                                  = systeminfo.CommandGetProcessInfo
@@ -993,6 +1002,8 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		return emptyVal, nil
 	case CommandBluetoothEmulationSimulateCharacteristicOperationResponse:
 		return emptyVal, nil
+	case CommandBluetoothEmulationSimulateDescriptorOperationResponse:
+		return emptyVal, nil
 	case CommandBluetoothEmulationAddService:
 		v = new(bluetoothemulation.AddServiceReturns)
 	case CommandBluetoothEmulationRemoveService:
@@ -1005,10 +1016,14 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		v = new(bluetoothemulation.AddDescriptorReturns)
 	case CommandBluetoothEmulationRemoveDescriptor:
 		return emptyVal, nil
+	case CommandBluetoothEmulationSimulateGATTDisconnection:
+		return emptyVal, nil
 	case EventBluetoothEmulationGattOperationReceived:
 		v = new(bluetoothemulation.EventGattOperationReceived)
 	case EventBluetoothEmulationCharacteristicOperationReceived:
 		v = new(bluetoothemulation.EventCharacteristicOperationReceived)
+	case EventBluetoothEmulationDescriptorOperationReceived:
+		v = new(bluetoothemulation.EventDescriptorOperationReceived)
 	case CommandBrowserSetPermission:
 		return emptyVal, nil
 	case CommandBrowserGrantPermissions:
@@ -1825,8 +1840,18 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		v = new(network.EventDirectTCPSocketChunkSent)
 	case EventNetworkDirectTCPSocketChunkReceived:
 		v = new(network.EventDirectTCPSocketChunkReceived)
-	case EventNetworkDirectTCPSocketChunkError:
-		v = new(network.EventDirectTCPSocketChunkError)
+	case EventNetworkDirectUDPSocketCreated:
+		v = new(network.EventDirectUDPSocketCreated)
+	case EventNetworkDirectUDPSocketOpened:
+		v = new(network.EventDirectUDPSocketOpened)
+	case EventNetworkDirectUDPSocketAborted:
+		v = new(network.EventDirectUDPSocketAborted)
+	case EventNetworkDirectUDPSocketClosed:
+		v = new(network.EventDirectUDPSocketClosed)
+	case EventNetworkDirectUDPSocketChunkSent:
+		v = new(network.EventDirectUDPSocketChunkSent)
+	case EventNetworkDirectUDPSocketChunkReceived:
+		v = new(network.EventDirectUDPSocketChunkReceived)
 	case EventNetworkRequestWillBeSentExtraInfo:
 		v = new(network.EventRequestWillBeSentExtraInfo)
 	case EventNetworkResponseReceivedExtraInfo:
@@ -2319,6 +2344,8 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		v = new(storage.EventAttributionReportingSourceRegistered)
 	case EventStorageAttributionReportingTriggerRegistered:
 		v = new(storage.EventAttributionReportingTriggerRegistered)
+	case EventStorageAttributionReportingReportSent:
+		v = new(storage.EventAttributionReportingReportSent)
 	case CommandSystemInfoGetInfo:
 		v = new(systeminfo.GetInfoReturns)
 	case CommandSystemInfoGetFeatureState:

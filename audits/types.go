@@ -1596,6 +1596,47 @@ type PropertyRuleIssueDetails struct {
 	PropertyValue           string                  `json:"propertyValue,omitempty,omitzero"` // The value of the property rule property that failed to parse
 }
 
+// UserReidentificationIssueType [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-UserReidentificationIssueType
+type UserReidentificationIssueType string
+
+// String returns the UserReidentificationIssueType as string value.
+func (t UserReidentificationIssueType) String() string {
+	return string(t)
+}
+
+// UserReidentificationIssueType values.
+const (
+	UserReidentificationIssueTypeBlockedFrameNavigation UserReidentificationIssueType = "BlockedFrameNavigation"
+	UserReidentificationIssueTypeBlockedSubresource     UserReidentificationIssueType = "BlockedSubresource"
+)
+
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *UserReidentificationIssueType) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
+
+	switch UserReidentificationIssueType(s) {
+	case UserReidentificationIssueTypeBlockedFrameNavigation:
+		*t = UserReidentificationIssueTypeBlockedFrameNavigation
+	case UserReidentificationIssueTypeBlockedSubresource:
+		*t = UserReidentificationIssueTypeBlockedSubresource
+	default:
+		return fmt.Errorf("unknown UserReidentificationIssueType value: %v", s)
+	}
+	return nil
+}
+
+// UserReidentificationIssueDetails this issue warns about uses of APIs that
+// may be considered misuse to re-identify users.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-UserReidentificationIssueDetails
+type UserReidentificationIssueDetails struct {
+	Type    UserReidentificationIssueType `json:"type"`
+	Request *AffectedRequest              `json:"request,omitempty,omitzero"` // Applies to BlockedFrameNavigation and BlockedSubresource issue types.
+}
+
 // InspectorIssueCode a unique identifier for the type of issue. Each type
 // may use one of the optional fields in InspectorIssueDetails to convey more
 // specific information about the kind of issue.
@@ -1634,6 +1675,7 @@ const (
 	InspectorIssueCodeSharedDictionaryIssue             InspectorIssueCode = "SharedDictionaryIssue"
 	InspectorIssueCodeSelectElementAccessibilityIssue   InspectorIssueCode = "SelectElementAccessibilityIssue"
 	InspectorIssueCodeSRIMessageSignatureIssue          InspectorIssueCode = "SRIMessageSignatureIssue"
+	InspectorIssueCodeUserReidentificationIssue         InspectorIssueCode = "UserReidentificationIssue"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -1690,6 +1732,8 @@ func (t *InspectorIssueCode) UnmarshalJSON(buf []byte) error {
 		*t = InspectorIssueCodeSelectElementAccessibilityIssue
 	case InspectorIssueCodeSRIMessageSignatureIssue:
 		*t = InspectorIssueCodeSRIMessageSignatureIssue
+	case InspectorIssueCodeUserReidentificationIssue:
+		*t = InspectorIssueCodeUserReidentificationIssue
 	default:
 		return fmt.Errorf("unknown InspectorIssueCode value: %v", s)
 	}
@@ -1725,6 +1769,7 @@ type InspectorIssueDetails struct {
 	SharedDictionaryIssueDetails             *SharedDictionaryIssueDetails             `json:"sharedDictionaryIssueDetails,omitempty,omitzero"`
 	SelectElementAccessibilityIssueDetails   *SelectElementAccessibilityIssueDetails   `json:"selectElementAccessibilityIssueDetails,omitempty,omitzero"`
 	SriMessageSignatureIssueDetails          *SRIMessageSignatureIssueDetails          `json:"sriMessageSignatureIssueDetails,omitempty,omitzero"`
+	UserReidentificationIssueDetails         *UserReidentificationIssueDetails         `json:"userReidentificationIssueDetails,omitempty,omitzero"`
 }
 
 // IssueID a unique id for a DevTools inspector issue. Allows other entities

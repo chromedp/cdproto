@@ -22,3 +22,14 @@ type EventCharacteristicOperationReceived struct {
 	Data             string                      `json:"data,omitempty,omitzero"`
 	WriteType        CharacteristicWriteType     `json:"writeType,omitempty,omitzero"`
 }
+
+// EventDescriptorOperationReceived event for when a descriptor operation of
+// |type| to the descriptor respresented by |descriptorId| happened. |data| is
+// expected to exist when |type| is write.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/BluetoothEmulation#event-descriptorOperationReceived
+type EventDescriptorOperationReceived struct {
+	DescriptorID string                      `json:"descriptorId"`
+	Type         CharacteristicOperationType `json:"type"`
+	Data         string                      `json:"data,omitempty,omitzero"`
+}
