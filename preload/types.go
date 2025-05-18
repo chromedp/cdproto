@@ -191,7 +191,6 @@ const (
 	PrerenderFinalStatusInvalidSchemeRedirect                                      PrerenderFinalStatus = "InvalidSchemeRedirect"
 	PrerenderFinalStatusInvalidSchemeNavigation                                    PrerenderFinalStatus = "InvalidSchemeNavigation"
 	PrerenderFinalStatusNavigationRequestBlockedByCsp                              PrerenderFinalStatus = "NavigationRequestBlockedByCsp"
-	PrerenderFinalStatusMainFrameNavigation                                        PrerenderFinalStatus = "MainFrameNavigation"
 	PrerenderFinalStatusMojoBinderPolicy                                           PrerenderFinalStatus = "MojoBinderPolicy"
 	PrerenderFinalStatusRendererProcessCrashed                                     PrerenderFinalStatus = "RendererProcessCrashed"
 	PrerenderFinalStatusRendererProcessKilled                                      PrerenderFinalStatus = "RendererProcessKilled"
@@ -279,8 +278,6 @@ func (t *PrerenderFinalStatus) UnmarshalJSON(buf []byte) error {
 		*t = PrerenderFinalStatusInvalidSchemeNavigation
 	case PrerenderFinalStatusNavigationRequestBlockedByCsp:
 		*t = PrerenderFinalStatusNavigationRequestBlockedByCsp
-	case PrerenderFinalStatusMainFrameNavigation:
-		*t = PrerenderFinalStatusMainFrameNavigation
 	case PrerenderFinalStatusMojoBinderPolicy:
 		*t = PrerenderFinalStatusMojoBinderPolicy
 	case PrerenderFinalStatusRendererProcessCrashed:

@@ -370,6 +370,7 @@ const (
 	CommandEmulationSetSensorOverrideReadings                        = emulation.CommandSetSensorOverrideReadings
 	CommandEmulationSetPressureSourceOverrideEnabled                 = emulation.CommandSetPressureSourceOverrideEnabled
 	CommandEmulationSetPressureStateOverride                         = emulation.CommandSetPressureStateOverride
+	CommandEmulationSetPressureDataOverride                          = emulation.CommandSetPressureDataOverride
 	CommandEmulationSetIdleOverride                                  = emulation.CommandSetIdleOverride
 	CommandEmulationClearIdleOverride                                = emulation.CommandClearIdleOverride
 	CommandEmulationSetPageScaleFactor                               = emulation.CommandSetPageScaleFactor
@@ -1477,6 +1478,8 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 	case CommandEmulationSetPressureSourceOverrideEnabled:
 		return emptyVal, nil
 	case CommandEmulationSetPressureStateOverride:
+		return emptyVal, nil
+	case CommandEmulationSetPressureDataOverride:
 		return emptyVal, nil
 	case CommandEmulationSetIdleOverride:
 		return emptyVal, nil

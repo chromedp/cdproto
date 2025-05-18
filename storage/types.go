@@ -577,14 +577,6 @@ type AttributionReportingEventReportWindows struct {
 	Ends  []int64 `json:"ends"`  // duration in seconds
 }
 
-// AttributionReportingTriggerSpec [no description].
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-AttributionReportingTriggerSpec
-type AttributionReportingTriggerSpec struct {
-	TriggerData        []float64                               `json:"triggerData"` // number instead of integer because not all uint32 can be represented by int
-	EventReportWindows *AttributionReportingEventReportWindows `json:"eventReportWindows"`
-}
-
 // AttributionReportingTriggerDataMatching [no description].
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-AttributionReportingTriggerDataMatching
@@ -658,8 +650,9 @@ type AttributionReportingNamedBudgetDef struct {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-AttributionReportingSourceRegistration
 type AttributionReportingSourceRegistration struct {
 	Time                             *cdp.TimeSinceEpoch                                   `json:"time"`
-	Expiry                           int64                                                 `json:"expiry"` // duration in seconds
-	TriggerSpecs                     []*AttributionReportingTriggerSpec                    `json:"triggerSpecs"`
+	Expiry                           int64                                                 `json:"expiry"`      // duration in seconds
+	TriggerData                      []float64                                             `json:"triggerData"` // number instead of integer because not all uint32 can be represented by int
+	EventReportWindows               *AttributionReportingEventReportWindows               `json:"eventReportWindows"`
 	AggregatableReportWindow         int64                                                 `json:"aggregatableReportWindow"` // duration in seconds
 	Type                             AttributionReportingSourceType                        `json:"type"`
 	SourceOrigin                     string                                                `json:"sourceOrigin"`

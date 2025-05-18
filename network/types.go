@@ -45,6 +45,7 @@ const (
 	ResourceTypePing               ResourceType = "Ping"
 	ResourceTypeCSPViolationReport ResourceType = "CSPViolationReport"
 	ResourceTypePreflight          ResourceType = "Preflight"
+	ResourceTypeFedCM              ResourceType = "FedCM"
 	ResourceTypeOther              ResourceType = "Other"
 )
 
@@ -88,6 +89,8 @@ func (t *ResourceType) UnmarshalJSON(buf []byte) error {
 		*t = ResourceTypeCSPViolationReport
 	case ResourceTypePreflight:
 		*t = ResourceTypePreflight
+	case ResourceTypeFedCM:
+		*t = ResourceTypeFedCM
 	case ResourceTypeOther:
 		*t = ResourceTypeOther
 	default:

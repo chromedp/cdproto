@@ -104,6 +104,7 @@ const (
 	PermissionsPolicyFeatureMediaPlaybackWhileNotVisible   PermissionsPolicyFeature = "media-playback-while-not-visible"
 	PermissionsPolicyFeatureMicrophone                     PermissionsPolicyFeature = "microphone"
 	PermissionsPolicyFeatureMidi                           PermissionsPolicyFeature = "midi"
+	PermissionsPolicyFeatureOnDeviceSpeechRecognition      PermissionsPolicyFeature = "on-device-speech-recognition"
 	PermissionsPolicyFeatureOtpCredentials                 PermissionsPolicyFeature = "otp-credentials"
 	PermissionsPolicyFeaturePayment                        PermissionsPolicyFeature = "payment"
 	PermissionsPolicyFeaturePictureInPicture               PermissionsPolicyFeature = "picture-in-picture"
@@ -284,6 +285,8 @@ func (t *PermissionsPolicyFeature) UnmarshalJSON(buf []byte) error {
 		*t = PermissionsPolicyFeatureMicrophone
 	case PermissionsPolicyFeatureMidi:
 		*t = PermissionsPolicyFeatureMidi
+	case PermissionsPolicyFeatureOnDeviceSpeechRecognition:
+		*t = PermissionsPolicyFeatureOnDeviceSpeechRecognition
 	case PermissionsPolicyFeatureOtpCredentials:
 		*t = PermissionsPolicyFeatureOtpCredentials
 	case PermissionsPolicyFeaturePayment:
