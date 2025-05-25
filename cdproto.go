@@ -800,6 +800,7 @@ const (
 	EventStorageInterestGroupAuctionEventOccurred                    = "Storage.interestGroupAuctionEventOccurred"
 	EventStorageInterestGroupAuctionNetworkRequestCreated            = "Storage.interestGroupAuctionNetworkRequestCreated"
 	EventStorageSharedStorageAccessed                                = "Storage.sharedStorageAccessed"
+	EventStorageSharedStorageWorkletOperationExecutionFinished       = "Storage.sharedStorageWorkletOperationExecutionFinished"
 	EventStorageStorageBucketCreatedOrUpdated                        = "Storage.storageBucketCreatedOrUpdated"
 	EventStorageStorageBucketDeleted                                 = "Storage.storageBucketDeleted"
 	EventStorageAttributionReportingSourceRegistered                 = "Storage.attributionReportingSourceRegistered"
@@ -2339,6 +2340,8 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		v = new(storage.EventInterestGroupAuctionNetworkRequestCreated)
 	case EventStorageSharedStorageAccessed:
 		v = new(storage.EventSharedStorageAccessed)
+	case EventStorageSharedStorageWorkletOperationExecutionFinished:
+		v = new(storage.EventSharedStorageWorkletOperationExecutionFinished)
 	case EventStorageStorageBucketCreatedOrUpdated:
 		v = new(storage.EventStorageBucketCreatedOrUpdated)
 	case EventStorageStorageBucketDeleted:
