@@ -191,6 +191,7 @@ const (
 	PseudoTypeFileSelectorButton      PseudoType = "file-selector-button"
 	PseudoTypeDetailsContent          PseudoType = "details-content"
 	PseudoTypePicker                  PseudoType = "picker"
+	PseudoTypePermissionIcon          PseudoType = "permission-icon"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -271,6 +272,8 @@ func (t *PseudoType) UnmarshalJSON(buf []byte) error {
 		*t = PseudoTypeDetailsContent
 	case PseudoTypePicker:
 		*t = PseudoTypePicker
+	case PseudoTypePermissionIcon:
+		*t = PseudoTypePermissionIcon
 	default:
 		return fmt.Errorf("unknown PseudoType value: %v", s)
 	}
