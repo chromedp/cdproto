@@ -532,6 +532,31 @@ func (p *SetEmulatedVisionDeficiencyParams) Do(ctx context.Context) (err error) 
 	return cdp.Execute(ctx, CommandSetEmulatedVisionDeficiency, p, nil)
 }
 
+// SetEmulatedOSTextScaleParams emulates the given OS text scale.
+type SetEmulatedOSTextScaleParams struct {
+	Scale float64 `json:"scale,omitempty,omitzero"`
+}
+
+// SetEmulatedOSTextScale emulates the given OS text scale.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#method-setEmulatedOSTextScale
+//
+// parameters:
+func SetEmulatedOSTextScale() *SetEmulatedOSTextScaleParams {
+	return &SetEmulatedOSTextScaleParams{}
+}
+
+// WithScale [no description].
+func (p SetEmulatedOSTextScaleParams) WithScale(scale float64) *SetEmulatedOSTextScaleParams {
+	p.Scale = scale
+	return &p
+}
+
+// Do executes Emulation.setEmulatedOSTextScale against the provided context.
+func (p *SetEmulatedOSTextScaleParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetEmulatedOSTextScale, p, nil)
+}
+
 // SetGeolocationOverrideParams overrides the Geolocation Position or Error.
 // Omitting latitude, longitude or accuracy emulates position unavailable.
 type SetGeolocationOverrideParams struct {
@@ -1221,6 +1246,7 @@ const (
 	CommandSetEmitTouchEventsForMouse               = "Emulation.setEmitTouchEventsForMouse"
 	CommandSetEmulatedMedia                         = "Emulation.setEmulatedMedia"
 	CommandSetEmulatedVisionDeficiency              = "Emulation.setEmulatedVisionDeficiency"
+	CommandSetEmulatedOSTextScale                   = "Emulation.setEmulatedOSTextScale"
 	CommandSetGeolocationOverride                   = "Emulation.setGeolocationOverride"
 	CommandGetOverriddenSensorInformation           = "Emulation.getOverriddenSensorInformation"
 	CommandSetSensorOverrideEnabled                 = "Emulation.setSensorOverrideEnabled"

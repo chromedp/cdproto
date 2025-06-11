@@ -364,6 +364,7 @@ const (
 	CommandEmulationSetEmitTouchEventsForMouse                       = emulation.CommandSetEmitTouchEventsForMouse
 	CommandEmulationSetEmulatedMedia                                 = emulation.CommandSetEmulatedMedia
 	CommandEmulationSetEmulatedVisionDeficiency                      = emulation.CommandSetEmulatedVisionDeficiency
+	CommandEmulationSetEmulatedOSTextScale                           = emulation.CommandSetEmulatedOSTextScale
 	CommandEmulationSetGeolocationOverride                           = emulation.CommandSetGeolocationOverride
 	CommandEmulationGetOverriddenSensorInformation                   = emulation.CommandGetOverriddenSensorInformation
 	CommandEmulationSetSensorOverrideEnabled                         = emulation.CommandSetSensorOverrideEnabled
@@ -617,7 +618,7 @@ const (
 	CommandPageGetAppManifest                                        = page.CommandGetAppManifest
 	CommandPageGetInstallabilityErrors                               = page.CommandGetInstallabilityErrors
 	CommandPageGetAppID                                              = page.CommandGetAppID
-	CommandPageGetAdScriptAncestryIDs                                = page.CommandGetAdScriptAncestryIDs
+	CommandPageGetAdScriptAncestry                                   = page.CommandGetAdScriptAncestry
 	CommandPageGetFrameTree                                          = page.CommandGetFrameTree
 	CommandPageGetLayoutMetrics                                      = page.CommandGetLayoutMetrics
 	CommandPageGetNavigationHistory                                  = page.CommandGetNavigationHistory
@@ -1468,6 +1469,8 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		return emptyVal, nil
 	case CommandEmulationSetEmulatedVisionDeficiency:
 		return emptyVal, nil
+	case CommandEmulationSetEmulatedOSTextScale:
+		return emptyVal, nil
 	case CommandEmulationSetGeolocationOverride:
 		return emptyVal, nil
 	case CommandEmulationGetOverriddenSensorInformation:
@@ -1974,8 +1977,8 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		v = new(page.GetInstallabilityErrorsReturns)
 	case CommandPageGetAppID:
 		v = new(page.GetAppIDReturns)
-	case CommandPageGetAdScriptAncestryIDs:
-		v = new(page.GetAdScriptAncestryIDsReturns)
+	case CommandPageGetAdScriptAncestry:
+		v = new(page.GetAdScriptAncestryReturns)
 	case CommandPageGetFrameTree:
 		v = new(page.GetFrameTreeReturns)
 	case CommandPageGetLayoutMetrics:

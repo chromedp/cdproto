@@ -11,13 +11,23 @@ import (
 	"github.com/chromedp/cdproto/runtime"
 )
 
-// AdScriptID identifies the bottom-most script which caused the frame to be
+// AdScriptID identifies the script which caused a script or frame to be
 // labelled as an ad.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-AdScriptId
 type AdScriptID struct {
-	ScriptID   runtime.ScriptID         `json:"scriptId"`   // Script Id of the bottom-most script which caused the frame to be labelled as an ad.
-	DebuggerID runtime.UniqueDebuggerID `json:"debuggerId"` // Id of adScriptId's debugger.
+	ScriptID   runtime.ScriptID         `json:"scriptId"`   // Script Id of the script which caused a script or frame to be labelled as an ad.
+	DebuggerID runtime.UniqueDebuggerID `json:"debuggerId"` // Id of scriptId's debugger.
+}
+
+// AdScriptAncestry encapsulates the script ancestry and the root script
+// filterlist rule that caused the frame to be labelled as an ad. Only created
+// when ancestryChain is not empty.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-AdScriptAncestry
+type AdScriptAncestry struct {
+	AncestryChain            []*AdScriptID `json:"ancestryChain"`                               // A chain of AdScriptIds representing the ancestry of an ad script that led to the creation of a frame. The chain is ordered from the script itself (lower level) up to its root ancestor that was flagged by filterlist.
+	RootScriptFilterlistRule string        `json:"rootScriptFilterlistRule,omitempty,omitzero"` // The filterlist rule that caused the root (last) script in ancestryChain to be ad-tagged. Only populated if the rule is available.
 }
 
 // PermissionsPolicyFeature all Permissions Policy features. This enum should
