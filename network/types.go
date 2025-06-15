@@ -1490,6 +1490,7 @@ type SignedExchangeError struct {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-SignedExchangeInfo
 type SignedExchangeInfo struct {
 	OuterResponse   *Response              `json:"outerResponse"`                      // The outer response of signed HTTP exchange which was received from network.
+	HasExtraInfo    bool                   `json:"hasExtraInfo"`                       // Whether network response for the signed exchange was accompanied by extra headers.
 	Header          *SignedExchangeHeader  `json:"header,omitempty,omitzero"`          // Information about the signed exchange header.
 	SecurityDetails *SecurityDetails       `json:"securityDetails,omitempty,omitzero"` // Security details for the signed exchange header.
 	Errors          []*SignedExchangeError `json:"errors,omitempty,omitzero"`          // Errors occurred while handling the signed exchange.

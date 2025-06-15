@@ -108,6 +108,7 @@ const (
 	PermissionsPolicyFeatureJoinAdInterestGroup            PermissionsPolicyFeature = "join-ad-interest-group"
 	PermissionsPolicyFeatureKeyboardMap                    PermissionsPolicyFeature = "keyboard-map"
 	PermissionsPolicyFeatureLanguageDetector               PermissionsPolicyFeature = "language-detector"
+	PermissionsPolicyFeatureLanguageModel                  PermissionsPolicyFeature = "language-model"
 	PermissionsPolicyFeatureLocalFonts                     PermissionsPolicyFeature = "local-fonts"
 	PermissionsPolicyFeatureLocalNetworkAccess             PermissionsPolicyFeature = "local-network-access"
 	PermissionsPolicyFeatureMagnetometer                   PermissionsPolicyFeature = "magnetometer"
@@ -283,6 +284,8 @@ func (t *PermissionsPolicyFeature) UnmarshalJSON(buf []byte) error {
 		*t = PermissionsPolicyFeatureKeyboardMap
 	case PermissionsPolicyFeatureLanguageDetector:
 		*t = PermissionsPolicyFeatureLanguageDetector
+	case PermissionsPolicyFeatureLanguageModel:
+		*t = PermissionsPolicyFeatureLanguageModel
 	case PermissionsPolicyFeatureLocalFonts:
 		*t = PermissionsPolicyFeatureLocalFonts
 	case PermissionsPolicyFeatureLocalNetworkAccess:

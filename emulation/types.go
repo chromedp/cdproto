@@ -92,54 +92,6 @@ func (t *VirtualTimePolicy) UnmarshalJSON(buf []byte) error {
 	return nil
 }
 
-// UserAgentFormFactor used to specify User Agent form-factor values. See
-// https://wicg.github.io/ua-client-hints/#sec-ch-ua-form-factors.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#type-UserAgentFormFactor
-type UserAgentFormFactor string
-
-// String returns the UserAgentFormFactor as string value.
-func (t UserAgentFormFactor) String() string {
-	return string(t)
-}
-
-// UserAgentFormFactor values.
-const (
-	UserAgentFormFactorDesktop    UserAgentFormFactor = "Desktop"
-	UserAgentFormFactorAutomotive UserAgentFormFactor = "Automotive"
-	UserAgentFormFactorMobile     UserAgentFormFactor = "Mobile"
-	UserAgentFormFactorTablet     UserAgentFormFactor = "Tablet"
-	UserAgentFormFactorXR         UserAgentFormFactor = "XR"
-	UserAgentFormFactorEInk       UserAgentFormFactor = "EInk"
-	UserAgentFormFactorWatch      UserAgentFormFactor = "Watch"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *UserAgentFormFactor) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch UserAgentFormFactor(s) {
-	case UserAgentFormFactorDesktop:
-		*t = UserAgentFormFactorDesktop
-	case UserAgentFormFactorAutomotive:
-		*t = UserAgentFormFactorAutomotive
-	case UserAgentFormFactorMobile:
-		*t = UserAgentFormFactorMobile
-	case UserAgentFormFactorTablet:
-		*t = UserAgentFormFactorTablet
-	case UserAgentFormFactorXR:
-		*t = UserAgentFormFactorXR
-	case UserAgentFormFactorEInk:
-		*t = UserAgentFormFactorEInk
-	case UserAgentFormFactorWatch:
-		*t = UserAgentFormFactorWatch
-	default:
-		return fmt.Errorf("unknown UserAgentFormFactor value: %v", s)
-	}
-	return nil
-}
-
 // UserAgentBrandVersion used to specify User Agent Client Hints to emulate.
 // See https://wicg.github.io/ua-client-hints.
 //
@@ -164,7 +116,7 @@ type UserAgentMetadata struct {
 	Mobile          bool                     `json:"mobile"`
 	Bitness         string                   `json:"bitness,omitempty,omitzero"`
 	Wow64           bool                     `json:"wow64"`
-	FormFactors     []UserAgentFormFactor    `json:"formFactors,omitempty,omitzero"`
+	FormFactors     []string                 `json:"formFactors,omitempty,omitzero"` // Used to specify User Agent form-factor values. See https://wicg.github.io/ua-client-hints/#sec-ch-ua-form-factors
 }
 
 // SensorType used to specify sensor types to emulate. See
