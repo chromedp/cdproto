@@ -160,3 +160,14 @@ type EventAttributionReportingReportSent struct {
 	NetErrorName   string                           `json:"netErrorName,omitempty,omitzero"`
 	HTTPStatusCode int64                            `json:"httpStatusCode,omitempty,omitzero"`
 }
+
+// EventAttributionReportingVerboseDebugReportSent [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#event-attributionReportingVerboseDebugReportSent
+type EventAttributionReportingVerboseDebugReportSent struct {
+	URL            string           `json:"url"`
+	Body           []jsontext.Value `json:"body,omitempty,omitzero"`
+	NetError       int64            `json:"netError,omitempty,omitzero"`
+	NetErrorName   string           `json:"netErrorName,omitempty,omitzero"`
+	HTTPStatusCode int64            `json:"httpStatusCode,omitempty,omitzero"`
+}

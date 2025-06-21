@@ -807,6 +807,7 @@ const (
 	EventStorageAttributionReportingSourceRegistered                 = "Storage.attributionReportingSourceRegistered"
 	EventStorageAttributionReportingTriggerRegistered                = "Storage.attributionReportingTriggerRegistered"
 	EventStorageAttributionReportingReportSent                       = "Storage.attributionReportingReportSent"
+	EventStorageAttributionReportingVerboseDebugReportSent           = "Storage.attributionReportingVerboseDebugReportSent"
 	CommandSystemInfoGetInfo                                         = systeminfo.CommandGetInfo
 	CommandSystemInfoGetFeatureState                                 = systeminfo.CommandGetFeatureState
 	CommandSystemInfoGetProcessInfo                                  = systeminfo.CommandGetProcessInfo
@@ -2355,6 +2356,8 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		v = new(storage.EventAttributionReportingTriggerRegistered)
 	case EventStorageAttributionReportingReportSent:
 		v = new(storage.EventAttributionReportingReportSent)
+	case EventStorageAttributionReportingVerboseDebugReportSent:
+		v = new(storage.EventAttributionReportingVerboseDebugReportSent)
 	case CommandSystemInfoGetInfo:
 		v = new(systeminfo.GetInfoReturns)
 	case CommandSystemInfoGetFeatureState:
