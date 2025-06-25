@@ -1455,55 +1455,58 @@ type PartitioningBlobURLIssueDetails struct {
 	PartitioningBlobURLInfo PartitioningBlobURLInfo `json:"partitioningBlobURLInfo"` // Additional information about the Partitioning Blob URL issue.
 }
 
-// SelectElementAccessibilityIssueReason [no description].
+// ElementAccessibilityIssueReason [no description].
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-SelectElementAccessibilityIssueReason
-type SelectElementAccessibilityIssueReason string
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-ElementAccessibilityIssueReason
+type ElementAccessibilityIssueReason string
 
-// String returns the SelectElementAccessibilityIssueReason as string value.
-func (t SelectElementAccessibilityIssueReason) String() string {
+// String returns the ElementAccessibilityIssueReason as string value.
+func (t ElementAccessibilityIssueReason) String() string {
 	return string(t)
 }
 
-// SelectElementAccessibilityIssueReason values.
+// ElementAccessibilityIssueReason values.
 const (
-	SelectElementAccessibilityIssueReasonDisallowedSelectChild         SelectElementAccessibilityIssueReason = "DisallowedSelectChild"
-	SelectElementAccessibilityIssueReasonDisallowedOptGroupChild       SelectElementAccessibilityIssueReason = "DisallowedOptGroupChild"
-	SelectElementAccessibilityIssueReasonNonPhrasingContentOptionChild SelectElementAccessibilityIssueReason = "NonPhrasingContentOptionChild"
-	SelectElementAccessibilityIssueReasonInteractiveContentOptionChild SelectElementAccessibilityIssueReason = "InteractiveContentOptionChild"
-	SelectElementAccessibilityIssueReasonInteractiveContentLegendChild SelectElementAccessibilityIssueReason = "InteractiveContentLegendChild"
+	ElementAccessibilityIssueReasonDisallowedSelectChild               ElementAccessibilityIssueReason = "DisallowedSelectChild"
+	ElementAccessibilityIssueReasonDisallowedOptGroupChild             ElementAccessibilityIssueReason = "DisallowedOptGroupChild"
+	ElementAccessibilityIssueReasonNonPhrasingContentOptionChild       ElementAccessibilityIssueReason = "NonPhrasingContentOptionChild"
+	ElementAccessibilityIssueReasonInteractiveContentOptionChild       ElementAccessibilityIssueReason = "InteractiveContentOptionChild"
+	ElementAccessibilityIssueReasonInteractiveContentLegendChild       ElementAccessibilityIssueReason = "InteractiveContentLegendChild"
+	ElementAccessibilityIssueReasonInteractiveContentSummaryDescendant ElementAccessibilityIssueReason = "InteractiveContentSummaryDescendant"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *SelectElementAccessibilityIssueReason) UnmarshalJSON(buf []byte) error {
+func (t *ElementAccessibilityIssueReason) UnmarshalJSON(buf []byte) error {
 	s := string(buf)
 	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
-	switch SelectElementAccessibilityIssueReason(s) {
-	case SelectElementAccessibilityIssueReasonDisallowedSelectChild:
-		*t = SelectElementAccessibilityIssueReasonDisallowedSelectChild
-	case SelectElementAccessibilityIssueReasonDisallowedOptGroupChild:
-		*t = SelectElementAccessibilityIssueReasonDisallowedOptGroupChild
-	case SelectElementAccessibilityIssueReasonNonPhrasingContentOptionChild:
-		*t = SelectElementAccessibilityIssueReasonNonPhrasingContentOptionChild
-	case SelectElementAccessibilityIssueReasonInteractiveContentOptionChild:
-		*t = SelectElementAccessibilityIssueReasonInteractiveContentOptionChild
-	case SelectElementAccessibilityIssueReasonInteractiveContentLegendChild:
-		*t = SelectElementAccessibilityIssueReasonInteractiveContentLegendChild
+	switch ElementAccessibilityIssueReason(s) {
+	case ElementAccessibilityIssueReasonDisallowedSelectChild:
+		*t = ElementAccessibilityIssueReasonDisallowedSelectChild
+	case ElementAccessibilityIssueReasonDisallowedOptGroupChild:
+		*t = ElementAccessibilityIssueReasonDisallowedOptGroupChild
+	case ElementAccessibilityIssueReasonNonPhrasingContentOptionChild:
+		*t = ElementAccessibilityIssueReasonNonPhrasingContentOptionChild
+	case ElementAccessibilityIssueReasonInteractiveContentOptionChild:
+		*t = ElementAccessibilityIssueReasonInteractiveContentOptionChild
+	case ElementAccessibilityIssueReasonInteractiveContentLegendChild:
+		*t = ElementAccessibilityIssueReasonInteractiveContentLegendChild
+	case ElementAccessibilityIssueReasonInteractiveContentSummaryDescendant:
+		*t = ElementAccessibilityIssueReasonInteractiveContentSummaryDescendant
 	default:
-		return fmt.Errorf("unknown SelectElementAccessibilityIssueReason value: %v", s)
+		return fmt.Errorf("unknown ElementAccessibilityIssueReason value: %v", s)
 	}
 	return nil
 }
 
-// SelectElementAccessibilityIssueDetails this issue warns about errors in
-// the select element content model.
+// ElementAccessibilityIssueDetails this issue warns about errors in the
+// select or summary element content model.
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-SelectElementAccessibilityIssueDetails
-type SelectElementAccessibilityIssueDetails struct {
-	NodeID                                cdp.BackendNodeID                     `json:"nodeId"`
-	SelectElementAccessibilityIssueReason SelectElementAccessibilityIssueReason `json:"selectElementAccessibilityIssueReason"`
-	HasDisallowedAttributes               bool                                  `json:"hasDisallowedAttributes"`
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-ElementAccessibilityIssueDetails
+type ElementAccessibilityIssueDetails struct {
+	NodeID                          cdp.BackendNodeID               `json:"nodeId"`
+	ElementAccessibilityIssueReason ElementAccessibilityIssueReason `json:"elementAccessibilityIssueReason"`
+	HasDisallowedAttributes         bool                            `json:"hasDisallowedAttributes"`
 }
 
 // StyleSheetLoadingIssueReason [no description].
@@ -1673,7 +1676,7 @@ const (
 	InspectorIssueCodeFederatedAuthUserInfoRequestIssue InspectorIssueCode = "FederatedAuthUserInfoRequestIssue"
 	InspectorIssueCodePropertyRuleIssue                 InspectorIssueCode = "PropertyRuleIssue"
 	InspectorIssueCodeSharedDictionaryIssue             InspectorIssueCode = "SharedDictionaryIssue"
-	InspectorIssueCodeSelectElementAccessibilityIssue   InspectorIssueCode = "SelectElementAccessibilityIssue"
+	InspectorIssueCodeElementAccessibilityIssue         InspectorIssueCode = "ElementAccessibilityIssue"
 	InspectorIssueCodeSRIMessageSignatureIssue          InspectorIssueCode = "SRIMessageSignatureIssue"
 	InspectorIssueCodeUserReidentificationIssue         InspectorIssueCode = "UserReidentificationIssue"
 )
@@ -1728,8 +1731,8 @@ func (t *InspectorIssueCode) UnmarshalJSON(buf []byte) error {
 		*t = InspectorIssueCodePropertyRuleIssue
 	case InspectorIssueCodeSharedDictionaryIssue:
 		*t = InspectorIssueCodeSharedDictionaryIssue
-	case InspectorIssueCodeSelectElementAccessibilityIssue:
-		*t = InspectorIssueCodeSelectElementAccessibilityIssue
+	case InspectorIssueCodeElementAccessibilityIssue:
+		*t = InspectorIssueCodeElementAccessibilityIssue
 	case InspectorIssueCodeSRIMessageSignatureIssue:
 		*t = InspectorIssueCodeSRIMessageSignatureIssue
 	case InspectorIssueCodeUserReidentificationIssue:
@@ -1767,7 +1770,7 @@ type InspectorIssueDetails struct {
 	PropertyRuleIssueDetails                 *PropertyRuleIssueDetails                 `json:"propertyRuleIssueDetails,omitempty,omitzero"`
 	FederatedAuthUserInfoRequestIssueDetails *FederatedAuthUserInfoRequestIssueDetails `json:"federatedAuthUserInfoRequestIssueDetails,omitempty,omitzero"`
 	SharedDictionaryIssueDetails             *SharedDictionaryIssueDetails             `json:"sharedDictionaryIssueDetails,omitempty,omitzero"`
-	SelectElementAccessibilityIssueDetails   *SelectElementAccessibilityIssueDetails   `json:"selectElementAccessibilityIssueDetails,omitempty,omitzero"`
+	ElementAccessibilityIssueDetails         *ElementAccessibilityIssueDetails         `json:"elementAccessibilityIssueDetails,omitempty,omitzero"`
 	SriMessageSignatureIssueDetails          *SRIMessageSignatureIssueDetails          `json:"sriMessageSignatureIssueDetails,omitempty,omitzero"`
 	UserReidentificationIssueDetails         *UserReidentificationIssueDetails         `json:"userReidentificationIssueDetails,omitempty,omitzero"`
 }

@@ -1625,7 +1625,7 @@ func (p *ClearCompilationCacheParams) Do(ctx context.Context) (err error) {
 // transaction mode.
 // https://w3c.github.io/secure-payment-confirmation/#sctn-automation-set-spc-transaction-mode.
 type SetSPCTransactionModeParams struct {
-	Mode AutoResponseMode `json:"mode"`
+	Mode SetSPCTransactionModeMode `json:"mode"`
 }
 
 // SetSPCTransactionMode sets the Secure Payment Confirmation transaction
@@ -1637,7 +1637,7 @@ type SetSPCTransactionModeParams struct {
 // parameters:
 //
 //	mode
-func SetSPCTransactionMode(mode AutoResponseMode) *SetSPCTransactionModeParams {
+func SetSPCTransactionMode(mode SetSPCTransactionModeMode) *SetSPCTransactionModeParams {
 	return &SetSPCTransactionModeParams{
 		Mode: mode,
 	}
@@ -1651,7 +1651,7 @@ func (p *SetSPCTransactionModeParams) Do(ctx context.Context) (err error) {
 // SetRPHRegistrationModeParams extensions for Custom Handlers API:
 // https://html.spec.whatwg.org/multipage/system-state.html#rph-automation.
 type SetRPHRegistrationModeParams struct {
-	Mode AutoResponseMode `json:"mode"`
+	Mode SetRPHRegistrationModeMode `json:"mode"`
 }
 
 // SetRPHRegistrationMode extensions for Custom Handlers API:
@@ -1662,7 +1662,7 @@ type SetRPHRegistrationModeParams struct {
 // parameters:
 //
 //	mode
-func SetRPHRegistrationMode(mode AutoResponseMode) *SetRPHRegistrationModeParams {
+func SetRPHRegistrationMode(mode SetRPHRegistrationModeMode) *SetRPHRegistrationModeParams {
 	return &SetRPHRegistrationModeParams{
 		Mode: mode,
 	}

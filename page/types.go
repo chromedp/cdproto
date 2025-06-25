@@ -966,45 +966,6 @@ type WebAppManifest struct {
 	ThemeColor                string                `json:"themeColor,omitempty,omitzero"`
 }
 
-// AutoResponseMode enum of possible auto-response for permission / prompt
-// dialogs.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-AutoResponseMode
-type AutoResponseMode string
-
-// String returns the AutoResponseMode as string value.
-func (t AutoResponseMode) String() string {
-	return string(t)
-}
-
-// AutoResponseMode values.
-const (
-	AutoResponseModeNone       AutoResponseMode = "none"
-	AutoResponseModeAutoAccept AutoResponseMode = "autoAccept"
-	AutoResponseModeAutoReject AutoResponseMode = "autoReject"
-	AutoResponseModeAutoOptOut AutoResponseMode = "autoOptOut"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *AutoResponseMode) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch AutoResponseMode(s) {
-	case AutoResponseModeNone:
-		*t = AutoResponseModeNone
-	case AutoResponseModeAutoAccept:
-		*t = AutoResponseModeAutoAccept
-	case AutoResponseModeAutoReject:
-		*t = AutoResponseModeAutoReject
-	case AutoResponseModeAutoOptOut:
-		*t = AutoResponseModeAutoOptOut
-	default:
-		return fmt.Errorf("unknown AutoResponseMode value: %v", s)
-	}
-	return nil
-}
-
 // NavigationType the type of a frameNavigated event.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-NavigationType
@@ -1130,6 +1091,7 @@ const (
 	BackForwardCacheNotRestoredReasonBroadcastChannel                                         BackForwardCacheNotRestoredReason = "BroadcastChannel"
 	BackForwardCacheNotRestoredReasonWebXR                                                    BackForwardCacheNotRestoredReason = "WebXR"
 	BackForwardCacheNotRestoredReasonSharedWorker                                             BackForwardCacheNotRestoredReason = "SharedWorker"
+	BackForwardCacheNotRestoredReasonSharedWorkerMessage                                      BackForwardCacheNotRestoredReason = "SharedWorkerMessage"
 	BackForwardCacheNotRestoredReasonWebLocks                                                 BackForwardCacheNotRestoredReason = "WebLocks"
 	BackForwardCacheNotRestoredReasonWebHID                                                   BackForwardCacheNotRestoredReason = "WebHID"
 	BackForwardCacheNotRestoredReasonWebShare                                                 BackForwardCacheNotRestoredReason = "WebShare"
@@ -1360,6 +1322,8 @@ func (t *BackForwardCacheNotRestoredReason) UnmarshalJSON(buf []byte) error {
 		*t = BackForwardCacheNotRestoredReasonWebXR
 	case BackForwardCacheNotRestoredReasonSharedWorker:
 		*t = BackForwardCacheNotRestoredReasonSharedWorker
+	case BackForwardCacheNotRestoredReasonSharedWorkerMessage:
+		*t = BackForwardCacheNotRestoredReasonSharedWorkerMessage
 	case BackForwardCacheNotRestoredReasonWebLocks:
 		*t = BackForwardCacheNotRestoredReasonWebLocks
 	case BackForwardCacheNotRestoredReasonWebHID:
@@ -1860,6 +1824,82 @@ func (t *SetWebLifecycleStateState) UnmarshalJSON(buf []byte) error {
 		*t = SetWebLifecycleStateStateActive
 	default:
 		return fmt.Errorf("unknown SetWebLifecycleStateState value: %v", s)
+	}
+	return nil
+}
+
+// SetSPCTransactionModeMode [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-setSPCTransactionMode
+type SetSPCTransactionModeMode string
+
+// String returns the SetSPCTransactionModeMode as string value.
+func (t SetSPCTransactionModeMode) String() string {
+	return string(t)
+}
+
+// SetSPCTransactionModeMode values.
+const (
+	SetSPCTransactionModeModeNone                       SetSPCTransactionModeMode = "none"
+	SetSPCTransactionModeModeAutoAccept                 SetSPCTransactionModeMode = "autoAccept"
+	SetSPCTransactionModeModeAutoChooseToAuthAnotherWay SetSPCTransactionModeMode = "autoChooseToAuthAnotherWay"
+	SetSPCTransactionModeModeAutoReject                 SetSPCTransactionModeMode = "autoReject"
+	SetSPCTransactionModeModeAutoOptOut                 SetSPCTransactionModeMode = "autoOptOut"
+)
+
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *SetSPCTransactionModeMode) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
+
+	switch SetSPCTransactionModeMode(s) {
+	case SetSPCTransactionModeModeNone:
+		*t = SetSPCTransactionModeModeNone
+	case SetSPCTransactionModeModeAutoAccept:
+		*t = SetSPCTransactionModeModeAutoAccept
+	case SetSPCTransactionModeModeAutoChooseToAuthAnotherWay:
+		*t = SetSPCTransactionModeModeAutoChooseToAuthAnotherWay
+	case SetSPCTransactionModeModeAutoReject:
+		*t = SetSPCTransactionModeModeAutoReject
+	case SetSPCTransactionModeModeAutoOptOut:
+		*t = SetSPCTransactionModeModeAutoOptOut
+	default:
+		return fmt.Errorf("unknown SetSPCTransactionModeMode value: %v", s)
+	}
+	return nil
+}
+
+// SetRPHRegistrationModeMode [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-setRPHRegistrationMode
+type SetRPHRegistrationModeMode string
+
+// String returns the SetRPHRegistrationModeMode as string value.
+func (t SetRPHRegistrationModeMode) String() string {
+	return string(t)
+}
+
+// SetRPHRegistrationModeMode values.
+const (
+	SetRPHRegistrationModeModeNone       SetRPHRegistrationModeMode = "none"
+	SetRPHRegistrationModeModeAutoAccept SetRPHRegistrationModeMode = "autoAccept"
+	SetRPHRegistrationModeModeAutoReject SetRPHRegistrationModeMode = "autoReject"
+)
+
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *SetRPHRegistrationModeMode) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
+
+	switch SetRPHRegistrationModeMode(s) {
+	case SetRPHRegistrationModeModeNone:
+		*t = SetRPHRegistrationModeModeNone
+	case SetRPHRegistrationModeModeAutoAccept:
+		*t = SetRPHRegistrationModeModeAutoAccept
+	case SetRPHRegistrationModeModeAutoReject:
+		*t = SetRPHRegistrationModeModeAutoReject
+	default:
+		return fmt.Errorf("unknown SetRPHRegistrationModeMode value: %v", s)
 	}
 	return nil
 }
