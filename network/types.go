@@ -1658,10 +1658,10 @@ func (t IPAddressSpace) String() string {
 
 // IPAddressSpace values.
 const (
-	IPAddressSpaceLocal   IPAddressSpace = "Local"
-	IPAddressSpacePrivate IPAddressSpace = "Private"
-	IPAddressSpacePublic  IPAddressSpace = "Public"
-	IPAddressSpaceUnknown IPAddressSpace = "Unknown"
+	IPAddressSpaceLoopback IPAddressSpace = "Loopback"
+	IPAddressSpacePrivate  IPAddressSpace = "Private"
+	IPAddressSpacePublic   IPAddressSpace = "Public"
+	IPAddressSpaceUnknown  IPAddressSpace = "Unknown"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -1670,8 +1670,8 @@ func (t *IPAddressSpace) UnmarshalJSON(buf []byte) error {
 	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
 	switch IPAddressSpace(s) {
-	case IPAddressSpaceLocal:
-		*t = IPAddressSpaceLocal
+	case IPAddressSpaceLoopback:
+		*t = IPAddressSpaceLoopback
 	case IPAddressSpacePrivate:
 		*t = IPAddressSpacePrivate
 	case IPAddressSpacePublic:
