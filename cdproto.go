@@ -745,7 +745,6 @@ const (
 	CommandServiceWorkerDispatchSyncEvent                            = serviceworker.CommandDispatchSyncEvent
 	CommandServiceWorkerDispatchPeriodicSyncEvent                    = serviceworker.CommandDispatchPeriodicSyncEvent
 	CommandServiceWorkerEnable                                       = serviceworker.CommandEnable
-	CommandServiceWorkerInspectWorker                                = serviceworker.CommandInspectWorker
 	CommandServiceWorkerSetForceUpdateOnPageLoad                     = serviceworker.CommandSetForceUpdateOnPageLoad
 	CommandServiceWorkerSkipWaiting                                  = serviceworker.CommandSkipWaiting
 	CommandServiceWorkerStartWorker                                  = serviceworker.CommandStartWorker
@@ -2231,8 +2230,6 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 	case CommandServiceWorkerDispatchPeriodicSyncEvent:
 		return emptyVal, nil
 	case CommandServiceWorkerEnable:
-		return emptyVal, nil
-	case CommandServiceWorkerInspectWorker:
 		return emptyVal, nil
 	case CommandServiceWorkerSetForceUpdateOnPageLoad:
 		return emptyVal, nil
