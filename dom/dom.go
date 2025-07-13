@@ -677,9 +677,10 @@ func (p *GetNodeForLocationParams) Do(ctx context.Context) (backendNodeID cdp.Ba
 
 // GetOuterHTMLParams returns node's HTML markup.
 type GetOuterHTMLParams struct {
-	NodeID        cdp.NodeID             `json:"nodeId,omitempty,omitzero"`        // Identifier of the node.
-	BackendNodeID cdp.BackendNodeID      `json:"backendNodeId,omitempty,omitzero"` // Identifier of the backend node.
-	ObjectID      runtime.RemoteObjectID `json:"objectId,omitempty,omitzero"`      // JavaScript object id of the node wrapper.
+	NodeID           cdp.NodeID             `json:"nodeId,omitempty,omitzero"`        // Identifier of the node.
+	BackendNodeID    cdp.BackendNodeID      `json:"backendNodeId,omitempty,omitzero"` // Identifier of the backend node.
+	ObjectID         runtime.RemoteObjectID `json:"objectId,omitempty,omitzero"`      // JavaScript object id of the node wrapper.
+	IncludeShadowDOM bool                   `json:"includeShadowDOM"`                 // Include all shadow roots. Equals to false if not specified.
 }
 
 // GetOuterHTML returns node's HTML markup.
@@ -688,7 +689,9 @@ type GetOuterHTMLParams struct {
 //
 // parameters:
 func GetOuterHTML() *GetOuterHTMLParams {
-	return &GetOuterHTMLParams{}
+	return &GetOuterHTMLParams{
+		IncludeShadowDOM: false,
+	}
 }
 
 // WithNodeID identifier of the node.
@@ -706,6 +709,13 @@ func (p GetOuterHTMLParams) WithBackendNodeID(backendNodeID cdp.BackendNodeID) *
 // WithObjectID JavaScript object id of the node wrapper.
 func (p GetOuterHTMLParams) WithObjectID(objectID runtime.RemoteObjectID) *GetOuterHTMLParams {
 	p.ObjectID = objectID
+	return &p
+}
+
+// WithIncludeShadowDOM include all shadow roots. Equals to false if not
+// specified.
+func (p GetOuterHTMLParams) WithIncludeShadowDOM(includeShadowDOM bool) *GetOuterHTMLParams {
+	p.IncludeShadowDOM = includeShadowDOM
 	return &p
 }
 

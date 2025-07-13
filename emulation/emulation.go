@@ -1105,6 +1105,35 @@ func (p *SetDisabledImageTypesParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandSetDisabledImageTypes, p, nil)
 }
 
+// SetDataSaverOverrideParams override the value of
+// navigator.connection.saveData.
+type SetDataSaverOverrideParams struct {
+	DataSaverEnabled bool `json:"dataSaverEnabled"` // Override value. Omitting the parameter disables the override.
+}
+
+// SetDataSaverOverride override the value of navigator.connection.saveData.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#method-setDataSaverOverride
+//
+// parameters:
+func SetDataSaverOverride() *SetDataSaverOverrideParams {
+	return &SetDataSaverOverrideParams{
+		DataSaverEnabled: false,
+	}
+}
+
+// WithDataSaverEnabled override value. Omitting the parameter disables the
+// override.
+func (p SetDataSaverOverrideParams) WithDataSaverEnabled(dataSaverEnabled bool) *SetDataSaverOverrideParams {
+	p.DataSaverEnabled = dataSaverEnabled
+	return &p
+}
+
+// Do executes Emulation.setDataSaverOverride against the provided context.
+func (p *SetDataSaverOverrideParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetDataSaverOverride, p, nil)
+}
+
 // SetHardwareConcurrencyOverrideParams [no description].
 type SetHardwareConcurrencyOverrideParams struct {
 	HardwareConcurrency int64 `json:"hardwareConcurrency"` // Hardware concurrency to report
@@ -1263,6 +1292,7 @@ const (
 	CommandSetLocaleOverride                        = "Emulation.setLocaleOverride"
 	CommandSetTimezoneOverride                      = "Emulation.setTimezoneOverride"
 	CommandSetDisabledImageTypes                    = "Emulation.setDisabledImageTypes"
+	CommandSetDataSaverOverride                     = "Emulation.setDataSaverOverride"
 	CommandSetHardwareConcurrencyOverride           = "Emulation.setHardwareConcurrencyOverride"
 	CommandSetUserAgentOverride                     = "Emulation.setUserAgentOverride"
 	CommandSetAutomationOverride                    = "Emulation.setAutomationOverride"

@@ -158,6 +158,7 @@ const (
 	CommandBrowserGetWindowBounds                                    = browser.CommandGetWindowBounds
 	CommandBrowserGetWindowForTarget                                 = browser.CommandGetWindowForTarget
 	CommandBrowserSetWindowBounds                                    = browser.CommandSetWindowBounds
+	CommandBrowserSetContentsSize                                    = browser.CommandSetContentsSize
 	CommandBrowserSetDockTile                                        = browser.CommandSetDockTile
 	CommandBrowserExecuteBrowserCommand                              = browser.CommandExecuteBrowserCommand
 	CommandBrowserAddPrivacySandboxEnrollmentOverride                = browser.CommandAddPrivacySandboxEnrollmentOverride
@@ -381,6 +382,7 @@ const (
 	CommandEmulationSetLocaleOverride                                = emulation.CommandSetLocaleOverride
 	CommandEmulationSetTimezoneOverride                              = emulation.CommandSetTimezoneOverride
 	CommandEmulationSetDisabledImageTypes                            = emulation.CommandSetDisabledImageTypes
+	CommandEmulationSetDataSaverOverride                             = emulation.CommandSetDataSaverOverride
 	CommandEmulationSetHardwareConcurrencyOverride                   = emulation.CommandSetHardwareConcurrencyOverride
 	CommandEmulationSetUserAgentOverride                             = emulation.CommandSetUserAgentOverride
 	CommandEmulationSetAutomationOverride                            = emulation.CommandSetAutomationOverride
@@ -1057,6 +1059,8 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		v = new(browser.GetWindowForTargetReturns)
 	case CommandBrowserSetWindowBounds:
 		return emptyVal, nil
+	case CommandBrowserSetContentsSize:
+		return emptyVal, nil
 	case CommandBrowserSetDockTile:
 		return emptyVal, nil
 	case CommandBrowserExecuteBrowserCommand:
@@ -1502,6 +1506,8 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 	case CommandEmulationSetTimezoneOverride:
 		return emptyVal, nil
 	case CommandEmulationSetDisabledImageTypes:
+		return emptyVal, nil
+	case CommandEmulationSetDataSaverOverride:
 		return emptyVal, nil
 	case CommandEmulationSetHardwareConcurrencyOverride:
 		return emptyVal, nil
