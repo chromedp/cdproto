@@ -268,6 +268,7 @@ const (
 	CommandDOMGetContainerForNode                                    = dom.CommandGetContainerForNode
 	CommandDOMGetQueryingDescendantsForContainer                     = dom.CommandGetQueryingDescendantsForContainer
 	CommandDOMGetAnchorElement                                       = dom.CommandGetAnchorElement
+	CommandDOMForceShowPopover                                       = dom.CommandForceShowPopover
 	EventDOMAttributeModified                                        = "DOM.attributeModified"
 	EventDOMAttributeRemoved                                         = "DOM.attributeRemoved"
 	EventDOMCharacterDataModified                                    = "DOM.characterDataModified"
@@ -1279,6 +1280,8 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		v = new(dom.GetQueryingDescendantsForContainerReturns)
 	case CommandDOMGetAnchorElement:
 		v = new(dom.GetAnchorElementReturns)
+	case CommandDOMForceShowPopover:
+		v = new(dom.ForceShowPopoverReturns)
 	case EventDOMAttributeModified:
 		v = new(dom.EventAttributeModified)
 	case EventDOMAttributeRemoved:
