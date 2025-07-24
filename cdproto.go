@@ -179,6 +179,7 @@ const (
 	CommandCSSGetInlineStylesForNode                                 = css.CommandGetInlineStylesForNode
 	CommandCSSGetAnimatedStylesForNode                               = css.CommandGetAnimatedStylesForNode
 	CommandCSSGetMatchedStylesForNode                                = css.CommandGetMatchedStylesForNode
+	CommandCSSGetEnvironmentVariables                                = css.CommandGetEnvironmentVariables
 	CommandCSSGetMediaQueries                                        = css.CommandGetMediaQueries
 	CommandCSSGetPlatformFontsForNode                                = css.CommandGetPlatformFontsForNode
 	CommandCSSGetStyleSheetText                                      = css.CommandGetStyleSheetText
@@ -1102,6 +1103,8 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		v = new(css.GetAnimatedStylesForNodeReturns)
 	case CommandCSSGetMatchedStylesForNode:
 		v = new(css.GetMatchedStylesForNodeReturns)
+	case CommandCSSGetEnvironmentVariables:
+		v = new(css.GetEnvironmentVariablesReturns)
 	case CommandCSSGetMediaQueries:
 		v = new(css.GetMediaQueriesReturns)
 	case CommandCSSGetPlatformFontsForNode:

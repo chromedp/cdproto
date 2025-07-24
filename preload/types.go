@@ -45,8 +45,9 @@ func (t RuleSetErrorType) String() string {
 
 // RuleSetErrorType values.
 const (
-	RuleSetErrorTypeSourceIsNotJSONObject RuleSetErrorType = "SourceIsNotJsonObject"
-	RuleSetErrorTypeInvalidRulesSkipped   RuleSetErrorType = "InvalidRulesSkipped"
+	RuleSetErrorTypeSourceIsNotJSONObject  RuleSetErrorType = "SourceIsNotJsonObject"
+	RuleSetErrorTypeInvalidRulesSkipped    RuleSetErrorType = "InvalidRulesSkipped"
+	RuleSetErrorTypeInvalidRulesetLevelTag RuleSetErrorType = "InvalidRulesetLevelTag"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -59,6 +60,8 @@ func (t *RuleSetErrorType) UnmarshalJSON(buf []byte) error {
 		*t = RuleSetErrorTypeSourceIsNotJSONObject
 	case RuleSetErrorTypeInvalidRulesSkipped:
 		*t = RuleSetErrorTypeInvalidRulesSkipped
+	case RuleSetErrorTypeInvalidRulesetLevelTag:
+		*t = RuleSetErrorTypeInvalidRulesetLevelTag
 	default:
 		return fmt.Errorf("unknown RuleSetErrorType value: %v", s)
 	}

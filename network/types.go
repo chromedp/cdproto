@@ -949,6 +949,7 @@ type Response struct {
 	AlternateProtocolUsage      AlternateProtocolUsage      `json:"alternateProtocolUsage,omitempty,omitzero"`      // The reason why Chrome uses a specific transport protocol for HTTP semantics.
 	SecurityState               security.State              `json:"securityState"`                                  // Security state of the request resource.
 	SecurityDetails             *SecurityDetails            `json:"securityDetails,omitempty,omitzero"`             // Security details for the request.
+	IsIPProtectionUsed          bool                        `json:"isIpProtectionUsed"`                             // Indicates whether the request was sent through IP Protection proxies. If set to true, the request used the IP Protection privacy feature.
 }
 
 // WebSocketRequest webSocket request data.
@@ -1659,7 +1660,7 @@ func (t IPAddressSpace) String() string {
 // IPAddressSpace values.
 const (
 	IPAddressSpaceLoopback IPAddressSpace = "Loopback"
-	IPAddressSpacePrivate  IPAddressSpace = "Private"
+	IPAddressSpaceLocal    IPAddressSpace = "Local"
 	IPAddressSpacePublic   IPAddressSpace = "Public"
 	IPAddressSpaceUnknown  IPAddressSpace = "Unknown"
 )
@@ -1672,8 +1673,8 @@ func (t *IPAddressSpace) UnmarshalJSON(buf []byte) error {
 	switch IPAddressSpace(s) {
 	case IPAddressSpaceLoopback:
 		*t = IPAddressSpaceLoopback
-	case IPAddressSpacePrivate:
-		*t = IPAddressSpacePrivate
+	case IPAddressSpaceLocal:
+		*t = IPAddressSpaceLocal
 	case IPAddressSpacePublic:
 		*t = IPAddressSpacePublic
 	case IPAddressSpaceUnknown:

@@ -785,9 +785,10 @@ func (p NavigateParams) WithReferrerPolicy(referrerPolicy ReferrerPolicy) *Navig
 
 // NavigateReturns return values.
 type NavigateReturns struct {
-	FrameID   cdp.FrameID  `json:"frameId,omitempty,omitzero"`   // Frame id that has navigated (or failed to navigate)
-	LoaderID  cdp.LoaderID `json:"loaderId,omitempty,omitzero"`  // Loader identifier. This is omitted in case of same-document navigation, as the previously committed loaderId would not change.
-	ErrorText string       `json:"errorText,omitempty,omitzero"` // User friendly error message, present if and only if navigation has failed.
+	FrameID    cdp.FrameID  `json:"frameId,omitempty,omitzero"`   // Frame id that has navigated (or failed to navigate)
+	LoaderID   cdp.LoaderID `json:"loaderId,omitempty,omitzero"`  // Loader identifier. This is omitted in case of same-document navigation, as the previously committed loaderId would not change.
+	ErrorText  string       `json:"errorText,omitempty,omitzero"` // User friendly error message, present if and only if navigation has failed.
+	IsDownload bool         `json:"isDownload"`                   // Whether the navigation resulted in a download.
 }
 
 // Do executes Page.navigate against the provided context.
@@ -797,15 +798,16 @@ type NavigateReturns struct {
 //	frameID - Frame id that has navigated (or failed to navigate)
 //	loaderID - Loader identifier. This is omitted in case of same-document navigation, as the previously committed loaderId would not change.
 //	errorText - User friendly error message, present if and only if navigation has failed.
-func (p *NavigateParams) Do(ctx context.Context) (frameID cdp.FrameID, loaderID cdp.LoaderID, errorText string, err error) {
+//	isDownload - Whether the navigation resulted in a download.
+func (p *NavigateParams) Do(ctx context.Context) (frameID cdp.FrameID, loaderID cdp.LoaderID, errorText string, isDownload bool, err error) {
 	// execute
 	var res NavigateReturns
 	err = cdp.Execute(ctx, CommandNavigate, p, &res)
 	if err != nil {
-		return "", "", "", err
+		return "", "", "", false, err
 	}
 
-	return res.FrameID, res.LoaderID, res.ErrorText, nil
+	return res.FrameID, res.LoaderID, res.ErrorText, res.IsDownload, nil
 }
 
 // NavigateToHistoryEntryParams navigates current page to the given history
