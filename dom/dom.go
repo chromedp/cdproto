@@ -1841,22 +1841,24 @@ func (p *GetFrameOwnerParams) Do(ctx context.Context) (backendNodeID cdp.Backend
 
 // GetContainerForNodeParams returns the query container of the given node
 // based on container query conditions: containerName, physical and logical
-// axes, and whether it queries scroll-state. If no axes are provided and
-// queriesScrollState is false, the style container is returned, which is the
-// direct parent or the closest element with a matching container-name.
+// axes, and whether it queries scroll-state or anchored elements. If no axes
+// are provided and queriesScrollState is false, the style container is
+// returned, which is the direct parent or the closest element with a matching
+// container-name.
 type GetContainerForNodeParams struct {
 	NodeID             cdp.NodeID   `json:"nodeId"`
 	ContainerName      string       `json:"containerName,omitempty,omitzero"`
 	PhysicalAxes       PhysicalAxes `json:"physicalAxes,omitempty,omitzero"`
 	LogicalAxes        LogicalAxes  `json:"logicalAxes,omitempty,omitzero"`
 	QueriesScrollState bool         `json:"queriesScrollState"`
+	QueriesAnchored    bool         `json:"queriesAnchored"`
 }
 
 // GetContainerForNode returns the query container of the given node based on
 // container query conditions: containerName, physical and logical axes, and
-// whether it queries scroll-state. If no axes are provided and
-// queriesScrollState is false, the style container is returned, which is the
-// direct parent or the closest element with a matching container-name.
+// whether it queries scroll-state or anchored elements. If no axes are provided
+// and queriesScrollState is false, the style container is returned, which is
+// the direct parent or the closest element with a matching container-name.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-getContainerForNode
 //
@@ -1867,6 +1869,7 @@ func GetContainerForNode(nodeID cdp.NodeID) *GetContainerForNodeParams {
 	return &GetContainerForNodeParams{
 		NodeID:             nodeID,
 		QueriesScrollState: false,
+		QueriesAnchored:    false,
 	}
 }
 
@@ -1891,6 +1894,12 @@ func (p GetContainerForNodeParams) WithLogicalAxes(logicalAxes LogicalAxes) *Get
 // WithQueriesScrollState [no description].
 func (p GetContainerForNodeParams) WithQueriesScrollState(queriesScrollState bool) *GetContainerForNodeParams {
 	p.QueriesScrollState = queriesScrollState
+	return &p
+}
+
+// WithQueriesAnchored [no description].
+func (p GetContainerForNodeParams) WithQueriesAnchored(queriesAnchored bool) *GetContainerForNodeParams {
+	p.QueriesAnchored = queriesAnchored
 	return &p
 }
 

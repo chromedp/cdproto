@@ -830,6 +830,7 @@ const (
 	CommandTargetAutoAttachRelated                                   = target.CommandAutoAttachRelated
 	CommandTargetSetDiscoverTargets                                  = target.CommandSetDiscoverTargets
 	CommandTargetSetRemoteLocations                                  = target.CommandSetRemoteLocations
+	CommandTargetOpenDevTools                                        = target.CommandOpenDevTools
 	EventTargetAttachedToTarget                                      = "Target.attachedToTarget"
 	EventTargetDetachedFromTarget                                    = "Target.detachedFromTarget"
 	EventTargetReceivedMessageFromTarget                             = "Target.receivedMessageFromTarget"
@@ -2405,6 +2406,8 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		return emptyVal, nil
 	case CommandTargetSetRemoteLocations:
 		return emptyVal, nil
+	case CommandTargetOpenDevTools:
+		v = new(target.OpenDevToolsReturns)
 	case EventTargetAttachedToTarget:
 		v = new(target.EventAttachedToTarget)
 	case EventTargetDetachedFromTarget:

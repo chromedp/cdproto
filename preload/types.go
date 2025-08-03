@@ -261,6 +261,7 @@ const (
 	PrerenderFinalStatusV8optimizerDisabled                                        PrerenderFinalStatus = "V8OptimizerDisabled"
 	PrerenderFinalStatusPrerenderFailedDuringPrefetch                              PrerenderFinalStatus = "PrerenderFailedDuringPrefetch"
 	PrerenderFinalStatusBrowsingDataRemoved                                        PrerenderFinalStatus = "BrowsingDataRemoved"
+	PrerenderFinalStatusPrerenderHostReused                                        PrerenderFinalStatus = "PrerenderHostReused"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -415,6 +416,8 @@ func (t *PrerenderFinalStatus) UnmarshalJSON(buf []byte) error {
 		*t = PrerenderFinalStatusPrerenderFailedDuringPrefetch
 	case PrerenderFinalStatusBrowsingDataRemoved:
 		*t = PrerenderFinalStatusBrowsingDataRemoved
+	case PrerenderFinalStatusPrerenderHostReused:
+		*t = PrerenderFinalStatusPrerenderHostReused
 	default:
 		return fmt.Errorf("unknown PrerenderFinalStatus value: %v", s)
 	}

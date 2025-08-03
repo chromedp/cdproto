@@ -970,6 +970,44 @@ func (t *SRIMessageSignatureError) UnmarshalJSON(buf []byte) error {
 	return nil
 }
 
+// UnencodedDigestError [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-UnencodedDigestError
+type UnencodedDigestError string
+
+// String returns the UnencodedDigestError as string value.
+func (t UnencodedDigestError) String() string {
+	return string(t)
+}
+
+// UnencodedDigestError values.
+const (
+	UnencodedDigestErrorMalformedDictionary   UnencodedDigestError = "MalformedDictionary"
+	UnencodedDigestErrorUnknownAlgorithm      UnencodedDigestError = "UnknownAlgorithm"
+	UnencodedDigestErrorIncorrectDigestType   UnencodedDigestError = "IncorrectDigestType"
+	UnencodedDigestErrorIncorrectDigestLength UnencodedDigestError = "IncorrectDigestLength"
+)
+
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *UnencodedDigestError) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
+
+	switch UnencodedDigestError(s) {
+	case UnencodedDigestErrorMalformedDictionary:
+		*t = UnencodedDigestErrorMalformedDictionary
+	case UnencodedDigestErrorUnknownAlgorithm:
+		*t = UnencodedDigestErrorUnknownAlgorithm
+	case UnencodedDigestErrorIncorrectDigestType:
+		*t = UnencodedDigestErrorIncorrectDigestType
+	case UnencodedDigestErrorIncorrectDigestLength:
+		*t = UnencodedDigestErrorIncorrectDigestLength
+	default:
+		return fmt.Errorf("unknown UnencodedDigestError value: %v", s)
+	}
+	return nil
+}
+
 // AttributionReportingIssueDetails details for issues around "Attribution
 // Reporting API" usage. Explainer:
 // https://github.com/WICG/attribution-reporting-api.
@@ -1010,6 +1048,14 @@ type SRIMessageSignatureIssueDetails struct {
 	SignatureBase       string                   `json:"signatureBase"`
 	IntegrityAssertions []string                 `json:"integrityAssertions"`
 	Request             *AffectedRequest         `json:"request"`
+}
+
+// UnencodedDigestIssueDetails [no description].
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-UnencodedDigestIssueDetails
+type UnencodedDigestIssueDetails struct {
+	Error   UnencodedDigestError `json:"error"`
+	Request *AffectedRequest     `json:"request"`
 }
 
 // GenericIssueErrorType [no description].
@@ -1678,6 +1724,7 @@ const (
 	InspectorIssueCodeSharedDictionaryIssue             InspectorIssueCode = "SharedDictionaryIssue"
 	InspectorIssueCodeElementAccessibilityIssue         InspectorIssueCode = "ElementAccessibilityIssue"
 	InspectorIssueCodeSRIMessageSignatureIssue          InspectorIssueCode = "SRIMessageSignatureIssue"
+	InspectorIssueCodeUnencodedDigestIssue              InspectorIssueCode = "UnencodedDigestIssue"
 	InspectorIssueCodeUserReidentificationIssue         InspectorIssueCode = "UserReidentificationIssue"
 )
 
@@ -1735,6 +1782,8 @@ func (t *InspectorIssueCode) UnmarshalJSON(buf []byte) error {
 		*t = InspectorIssueCodeElementAccessibilityIssue
 	case InspectorIssueCodeSRIMessageSignatureIssue:
 		*t = InspectorIssueCodeSRIMessageSignatureIssue
+	case InspectorIssueCodeUnencodedDigestIssue:
+		*t = InspectorIssueCodeUnencodedDigestIssue
 	case InspectorIssueCodeUserReidentificationIssue:
 		*t = InspectorIssueCodeUserReidentificationIssue
 	default:
@@ -1772,6 +1821,7 @@ type InspectorIssueDetails struct {
 	SharedDictionaryIssueDetails             *SharedDictionaryIssueDetails             `json:"sharedDictionaryIssueDetails,omitempty,omitzero"`
 	ElementAccessibilityIssueDetails         *ElementAccessibilityIssueDetails         `json:"elementAccessibilityIssueDetails,omitempty,omitzero"`
 	SriMessageSignatureIssueDetails          *SRIMessageSignatureIssueDetails          `json:"sriMessageSignatureIssueDetails,omitempty,omitzero"`
+	UnencodedDigestIssueDetails              *UnencodedDigestIssueDetails              `json:"unencodedDigestIssueDetails,omitempty,omitzero"`
 	UserReidentificationIssueDetails         *UserReidentificationIssueDetails         `json:"userReidentificationIssueDetails,omitempty,omitzero"`
 }
 
