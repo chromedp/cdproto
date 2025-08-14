@@ -1663,6 +1663,7 @@ const (
 	IPAddressSpaceLocal    IPAddressSpace = "Local"
 	IPAddressSpacePublic   IPAddressSpace = "Public"
 	IPAddressSpaceUnknown  IPAddressSpace = "Unknown"
+	IPAddressSpacePrivate  IPAddressSpace = "Private"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -1679,6 +1680,8 @@ func (t *IPAddressSpace) UnmarshalJSON(buf []byte) error {
 		*t = IPAddressSpacePublic
 	case IPAddressSpaceUnknown:
 		*t = IPAddressSpaceUnknown
+	case IPAddressSpacePrivate:
+		*t = IPAddressSpacePrivate
 	default:
 		return fmt.Errorf("unknown IPAddressSpace value: %v", s)
 	}
