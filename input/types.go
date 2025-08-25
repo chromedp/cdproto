@@ -23,7 +23,7 @@ type TouchPoint struct {
 	TiltX              float64 `json:"tiltX,omitempty,omitzero"`              // The plane angle between the Y-Z plane and the plane containing both the stylus axis and the Y axis, in degrees of the range [-90,90], a positive tiltX is to the right (default: 0)
 	TiltY              float64 `json:"tiltY,omitempty,omitzero"`              // The plane angle between the X-Z plane and the plane containing both the stylus axis and the X axis, in degrees of the range [-90,90], a positive tiltY is towards the user (default: 0).
 	Twist              int64   `json:"twist,omitempty,omitzero"`              // The clockwise rotation of a pen stylus around its own major axis, in degrees in the range [0,359] (default: 0).
-	ID                 float64 `json:"id,omitempty,omitzero"`                 // Identifier used to track touch sources between events, must be unique within an event.
+	ID                 float64 `json:"id,omitempty"`                          // Identifier used to track touch sources between events, must be unique within an event.
 }
 
 // GestureSourceType [no description].
