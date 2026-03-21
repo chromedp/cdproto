@@ -31,6 +31,7 @@ type RuleSet struct {
 	URL           string            `json:"url,omitempty,omitzero"`
 	RequestID     network.RequestID `json:"requestId,omitempty,omitzero"`
 	ErrorType     RuleSetErrorType  `json:"errorType,omitempty,omitzero"` // Error information errorMessage is null iff errorType is null.
+	Tag           string            `json:"tag,omitempty,omitzero"`       // For more details, see: https://github.com/WICG/nav-speculation/blob/main/speculation-rules-tags.md
 }
 
 // RuleSetErrorType [no description].
@@ -82,8 +83,9 @@ func (t SpeculationAction) String() string {
 
 // SpeculationAction values.
 const (
-	SpeculationActionPrefetch  SpeculationAction = "Prefetch"
-	SpeculationActionPrerender SpeculationAction = "Prerender"
+	SpeculationActionPrefetch             SpeculationAction = "Prefetch"
+	SpeculationActionPrerender            SpeculationAction = "Prerender"
+	SpeculationActionPrerenderUntilScript SpeculationAction = "PrerenderUntilScript"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -96,6 +98,8 @@ func (t *SpeculationAction) UnmarshalJSON(buf []byte) error {
 		*t = SpeculationActionPrefetch
 	case SpeculationActionPrerender:
 		*t = SpeculationActionPrerender
+	case SpeculationActionPrerenderUntilScript:
+		*t = SpeculationActionPrerenderUntilScript
 	default:
 		return fmt.Errorf("unknown SpeculationAction value: %v", s)
 	}

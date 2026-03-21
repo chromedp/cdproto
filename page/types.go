@@ -8,27 +8,7 @@ import (
 
 	"github.com/chromedp/cdproto/cdp"
 	"github.com/chromedp/cdproto/network"
-	"github.com/chromedp/cdproto/runtime"
 )
-
-// AdScriptID identifies the script which caused a script or frame to be
-// labelled as an ad.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-AdScriptId
-type AdScriptID struct {
-	ScriptID   runtime.ScriptID         `json:"scriptId"`   // Script Id of the script which caused a script or frame to be labelled as an ad.
-	DebuggerID runtime.UniqueDebuggerID `json:"debuggerId"` // Id of scriptId's debugger.
-}
-
-// AdScriptAncestry encapsulates the script ancestry and the root script
-// filterlist rule that caused the frame to be labelled as an ad. Only created
-// when ancestryChain is not empty.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-AdScriptAncestry
-type AdScriptAncestry struct {
-	AncestryChain            []*AdScriptID `json:"ancestryChain"`                               // A chain of AdScriptIds representing the ancestry of an ad script that led to the creation of a frame. The chain is ordered from the script itself (lower level) up to its root ancestor that was flagged by filterlist.
-	RootScriptFilterlistRule string        `json:"rootScriptFilterlistRule,omitempty,omitzero"` // The filterlist rule that caused the root (last) script in ancestryChain to be ad-tagged. Only populated if the rule is available.
-}
 
 // PermissionsPolicyFeature all Permissions Policy features. This enum should
 // match the one defined in
@@ -50,6 +30,7 @@ const (
 	PermissionsPolicyFeatureAmbientLightSensor             PermissionsPolicyFeature = "ambient-light-sensor"
 	PermissionsPolicyFeatureAriaNotify                     PermissionsPolicyFeature = "aria-notify"
 	PermissionsPolicyFeatureAttributionReporting           PermissionsPolicyFeature = "attribution-reporting"
+	PermissionsPolicyFeatureAutofill                       PermissionsPolicyFeature = "autofill"
 	PermissionsPolicyFeatureAutoplay                       PermissionsPolicyFeature = "autoplay"
 	PermissionsPolicyFeatureBluetooth                      PermissionsPolicyFeature = "bluetooth"
 	PermissionsPolicyFeatureBrowsingTopics                 PermissionsPolicyFeature = "browsing-topics"
@@ -87,8 +68,10 @@ const (
 	PermissionsPolicyFeatureDeferredFetch                  PermissionsPolicyFeature = "deferred-fetch"
 	PermissionsPolicyFeatureDeferredFetchMinimal           PermissionsPolicyFeature = "deferred-fetch-minimal"
 	PermissionsPolicyFeatureDeviceAttributes               PermissionsPolicyFeature = "device-attributes"
+	PermissionsPolicyFeatureDigitalCredentialsCreate       PermissionsPolicyFeature = "digital-credentials-create"
 	PermissionsPolicyFeatureDigitalCredentialsGet          PermissionsPolicyFeature = "digital-credentials-get"
 	PermissionsPolicyFeatureDirectSockets                  PermissionsPolicyFeature = "direct-sockets"
+	PermissionsPolicyFeatureDirectSocketsMulticast         PermissionsPolicyFeature = "direct-sockets-multicast"
 	PermissionsPolicyFeatureDirectSocketsPrivate           PermissionsPolicyFeature = "direct-sockets-private"
 	PermissionsPolicyFeatureDisplayCapture                 PermissionsPolicyFeature = "display-capture"
 	PermissionsPolicyFeatureDocumentDomain                 PermissionsPolicyFeature = "document-domain"
@@ -111,8 +94,11 @@ const (
 	PermissionsPolicyFeatureLanguageDetector               PermissionsPolicyFeature = "language-detector"
 	PermissionsPolicyFeatureLanguageModel                  PermissionsPolicyFeature = "language-model"
 	PermissionsPolicyFeatureLocalFonts                     PermissionsPolicyFeature = "local-fonts"
+	PermissionsPolicyFeatureLocalNetwork                   PermissionsPolicyFeature = "local-network"
 	PermissionsPolicyFeatureLocalNetworkAccess             PermissionsPolicyFeature = "local-network-access"
+	PermissionsPolicyFeatureLoopbackNetwork                PermissionsPolicyFeature = "loopback-network"
 	PermissionsPolicyFeatureMagnetometer                   PermissionsPolicyFeature = "magnetometer"
+	PermissionsPolicyFeatureManualText                     PermissionsPolicyFeature = "manual-text"
 	PermissionsPolicyFeatureMediaPlaybackWhileNotVisible   PermissionsPolicyFeature = "media-playback-while-not-visible"
 	PermissionsPolicyFeatureMicrophone                     PermissionsPolicyFeature = "microphone"
 	PermissionsPolicyFeatureMidi                           PermissionsPolicyFeature = "midi"
@@ -120,7 +106,6 @@ const (
 	PermissionsPolicyFeatureOtpCredentials                 PermissionsPolicyFeature = "otp-credentials"
 	PermissionsPolicyFeaturePayment                        PermissionsPolicyFeature = "payment"
 	PermissionsPolicyFeaturePictureInPicture               PermissionsPolicyFeature = "picture-in-picture"
-	PermissionsPolicyFeaturePopins                         PermissionsPolicyFeature = "popins"
 	PermissionsPolicyFeaturePrivateAggregation             PermissionsPolicyFeature = "private-aggregation"
 	PermissionsPolicyFeaturePrivateStateTokenIssuance      PermissionsPolicyFeature = "private-state-token-issuance"
 	PermissionsPolicyFeaturePrivateStateTokenRedemption    PermissionsPolicyFeature = "private-state-token-redemption"
@@ -131,7 +116,6 @@ const (
 	PermissionsPolicyFeatureRunAdAuction                   PermissionsPolicyFeature = "run-ad-auction"
 	PermissionsPolicyFeatureScreenWakeLock                 PermissionsPolicyFeature = "screen-wake-lock"
 	PermissionsPolicyFeatureSerial                         PermissionsPolicyFeature = "serial"
-	PermissionsPolicyFeatureSharedAutofill                 PermissionsPolicyFeature = "shared-autofill"
 	PermissionsPolicyFeatureSharedStorage                  PermissionsPolicyFeature = "shared-storage"
 	PermissionsPolicyFeatureSharedStorageSelectURL         PermissionsPolicyFeature = "shared-storage-select-url"
 	PermissionsPolicyFeatureSmartCard                      PermissionsPolicyFeature = "smart-card"
@@ -169,6 +153,8 @@ func (t *PermissionsPolicyFeature) UnmarshalJSON(buf []byte) error {
 		*t = PermissionsPolicyFeatureAriaNotify
 	case PermissionsPolicyFeatureAttributionReporting:
 		*t = PermissionsPolicyFeatureAttributionReporting
+	case PermissionsPolicyFeatureAutofill:
+		*t = PermissionsPolicyFeatureAutofill
 	case PermissionsPolicyFeatureAutoplay:
 		*t = PermissionsPolicyFeatureAutoplay
 	case PermissionsPolicyFeatureBluetooth:
@@ -243,10 +229,14 @@ func (t *PermissionsPolicyFeature) UnmarshalJSON(buf []byte) error {
 		*t = PermissionsPolicyFeatureDeferredFetchMinimal
 	case PermissionsPolicyFeatureDeviceAttributes:
 		*t = PermissionsPolicyFeatureDeviceAttributes
+	case PermissionsPolicyFeatureDigitalCredentialsCreate:
+		*t = PermissionsPolicyFeatureDigitalCredentialsCreate
 	case PermissionsPolicyFeatureDigitalCredentialsGet:
 		*t = PermissionsPolicyFeatureDigitalCredentialsGet
 	case PermissionsPolicyFeatureDirectSockets:
 		*t = PermissionsPolicyFeatureDirectSockets
+	case PermissionsPolicyFeatureDirectSocketsMulticast:
+		*t = PermissionsPolicyFeatureDirectSocketsMulticast
 	case PermissionsPolicyFeatureDirectSocketsPrivate:
 		*t = PermissionsPolicyFeatureDirectSocketsPrivate
 	case PermissionsPolicyFeatureDisplayCapture:
@@ -291,10 +281,16 @@ func (t *PermissionsPolicyFeature) UnmarshalJSON(buf []byte) error {
 		*t = PermissionsPolicyFeatureLanguageModel
 	case PermissionsPolicyFeatureLocalFonts:
 		*t = PermissionsPolicyFeatureLocalFonts
+	case PermissionsPolicyFeatureLocalNetwork:
+		*t = PermissionsPolicyFeatureLocalNetwork
 	case PermissionsPolicyFeatureLocalNetworkAccess:
 		*t = PermissionsPolicyFeatureLocalNetworkAccess
+	case PermissionsPolicyFeatureLoopbackNetwork:
+		*t = PermissionsPolicyFeatureLoopbackNetwork
 	case PermissionsPolicyFeatureMagnetometer:
 		*t = PermissionsPolicyFeatureMagnetometer
+	case PermissionsPolicyFeatureManualText:
+		*t = PermissionsPolicyFeatureManualText
 	case PermissionsPolicyFeatureMediaPlaybackWhileNotVisible:
 		*t = PermissionsPolicyFeatureMediaPlaybackWhileNotVisible
 	case PermissionsPolicyFeatureMicrophone:
@@ -309,8 +305,6 @@ func (t *PermissionsPolicyFeature) UnmarshalJSON(buf []byte) error {
 		*t = PermissionsPolicyFeaturePayment
 	case PermissionsPolicyFeaturePictureInPicture:
 		*t = PermissionsPolicyFeaturePictureInPicture
-	case PermissionsPolicyFeaturePopins:
-		*t = PermissionsPolicyFeaturePopins
 	case PermissionsPolicyFeaturePrivateAggregation:
 		*t = PermissionsPolicyFeaturePrivateAggregation
 	case PermissionsPolicyFeaturePrivateStateTokenIssuance:
@@ -331,8 +325,6 @@ func (t *PermissionsPolicyFeature) UnmarshalJSON(buf []byte) error {
 		*t = PermissionsPolicyFeatureScreenWakeLock
 	case PermissionsPolicyFeatureSerial:
 		*t = PermissionsPolicyFeatureSerial
-	case PermissionsPolicyFeatureSharedAutofill:
-		*t = PermissionsPolicyFeatureSharedAutofill
 	case PermissionsPolicyFeatureSharedStorage:
 		*t = PermissionsPolicyFeatureSharedStorage
 	case PermissionsPolicyFeatureSharedStorageSelectURL:
@@ -1054,6 +1046,7 @@ const (
 	BackForwardCacheNotRestoredReasonBackForwardCacheDisabledForPrerender                     BackForwardCacheNotRestoredReason = "BackForwardCacheDisabledForPrerender"
 	BackForwardCacheNotRestoredReasonUserAgentOverrideDiffers                                 BackForwardCacheNotRestoredReason = "UserAgentOverrideDiffers"
 	BackForwardCacheNotRestoredReasonForegroundCacheLimit                                     BackForwardCacheNotRestoredReason = "ForegroundCacheLimit"
+	BackForwardCacheNotRestoredReasonForwardCacheDisabled                                     BackForwardCacheNotRestoredReason = "ForwardCacheDisabled"
 	BackForwardCacheNotRestoredReasonBrowsingInstanceNotSwapped                               BackForwardCacheNotRestoredReason = "BrowsingInstanceNotSwapped"
 	BackForwardCacheNotRestoredReasonBackForwardCacheDisabledForDelegate                      BackForwardCacheNotRestoredReason = "BackForwardCacheDisabledForDelegate"
 	BackForwardCacheNotRestoredReasonUnloadHandlerExistsInMainFrame                           BackForwardCacheNotRestoredReason = "UnloadHandlerExistsInMainFrame"
@@ -1095,8 +1088,11 @@ const (
 	BackForwardCacheNotRestoredReasonWebXR                                                    BackForwardCacheNotRestoredReason = "WebXR"
 	BackForwardCacheNotRestoredReasonSharedWorker                                             BackForwardCacheNotRestoredReason = "SharedWorker"
 	BackForwardCacheNotRestoredReasonSharedWorkerMessage                                      BackForwardCacheNotRestoredReason = "SharedWorkerMessage"
+	BackForwardCacheNotRestoredReasonSharedWorkerWithNoActiveClient                           BackForwardCacheNotRestoredReason = "SharedWorkerWithNoActiveClient"
 	BackForwardCacheNotRestoredReasonWebLocks                                                 BackForwardCacheNotRestoredReason = "WebLocks"
+	BackForwardCacheNotRestoredReasonWebLocksContention                                       BackForwardCacheNotRestoredReason = "WebLocksContention"
 	BackForwardCacheNotRestoredReasonWebHID                                                   BackForwardCacheNotRestoredReason = "WebHID"
+	BackForwardCacheNotRestoredReasonWebBluetooth                                             BackForwardCacheNotRestoredReason = "WebBluetooth"
 	BackForwardCacheNotRestoredReasonWebShare                                                 BackForwardCacheNotRestoredReason = "WebShare"
 	BackForwardCacheNotRestoredReasonRequestedStorageAccessGrant                              BackForwardCacheNotRestoredReason = "RequestedStorageAccessGrant"
 	BackForwardCacheNotRestoredReasonWebNfc                                                   BackForwardCacheNotRestoredReason = "WebNfc"
@@ -1119,9 +1115,9 @@ const (
 	BackForwardCacheNotRestoredReasonIndexedDBEvent                                           BackForwardCacheNotRestoredReason = "IndexedDBEvent"
 	BackForwardCacheNotRestoredReasonDummy                                                    BackForwardCacheNotRestoredReason = "Dummy"
 	BackForwardCacheNotRestoredReasonJsNetworkRequestReceivedCacheControlNoStoreResource      BackForwardCacheNotRestoredReason = "JsNetworkRequestReceivedCacheControlNoStoreResource"
-	BackForwardCacheNotRestoredReasonWebRTCSticky                                             BackForwardCacheNotRestoredReason = "WebRTCSticky"
-	BackForwardCacheNotRestoredReasonWebTransportSticky                                       BackForwardCacheNotRestoredReason = "WebTransportSticky"
-	BackForwardCacheNotRestoredReasonWebSocketSticky                                          BackForwardCacheNotRestoredReason = "WebSocketSticky"
+	BackForwardCacheNotRestoredReasonWebRTCUsedWithCCNS                                       BackForwardCacheNotRestoredReason = "WebRTCUsedWithCCNS"
+	BackForwardCacheNotRestoredReasonWebTransportUsedWithCCNS                                 BackForwardCacheNotRestoredReason = "WebTransportUsedWithCCNS"
+	BackForwardCacheNotRestoredReasonWebSocketUsedWithCCNS                                    BackForwardCacheNotRestoredReason = "WebSocketUsedWithCCNS"
 	BackForwardCacheNotRestoredReasonSmartCard                                                BackForwardCacheNotRestoredReason = "SmartCard"
 	BackForwardCacheNotRestoredReasonLiveMediaStreamTrack                                     BackForwardCacheNotRestoredReason = "LiveMediaStreamTrack"
 	BackForwardCacheNotRestoredReasonUnloadHandler                                            BackForwardCacheNotRestoredReason = "UnloadHandler"
@@ -1245,6 +1241,8 @@ func (t *BackForwardCacheNotRestoredReason) UnmarshalJSON(buf []byte) error {
 		*t = BackForwardCacheNotRestoredReasonUserAgentOverrideDiffers
 	case BackForwardCacheNotRestoredReasonForegroundCacheLimit:
 		*t = BackForwardCacheNotRestoredReasonForegroundCacheLimit
+	case BackForwardCacheNotRestoredReasonForwardCacheDisabled:
+		*t = BackForwardCacheNotRestoredReasonForwardCacheDisabled
 	case BackForwardCacheNotRestoredReasonBrowsingInstanceNotSwapped:
 		*t = BackForwardCacheNotRestoredReasonBrowsingInstanceNotSwapped
 	case BackForwardCacheNotRestoredReasonBackForwardCacheDisabledForDelegate:
@@ -1327,10 +1325,16 @@ func (t *BackForwardCacheNotRestoredReason) UnmarshalJSON(buf []byte) error {
 		*t = BackForwardCacheNotRestoredReasonSharedWorker
 	case BackForwardCacheNotRestoredReasonSharedWorkerMessage:
 		*t = BackForwardCacheNotRestoredReasonSharedWorkerMessage
+	case BackForwardCacheNotRestoredReasonSharedWorkerWithNoActiveClient:
+		*t = BackForwardCacheNotRestoredReasonSharedWorkerWithNoActiveClient
 	case BackForwardCacheNotRestoredReasonWebLocks:
 		*t = BackForwardCacheNotRestoredReasonWebLocks
+	case BackForwardCacheNotRestoredReasonWebLocksContention:
+		*t = BackForwardCacheNotRestoredReasonWebLocksContention
 	case BackForwardCacheNotRestoredReasonWebHID:
 		*t = BackForwardCacheNotRestoredReasonWebHID
+	case BackForwardCacheNotRestoredReasonWebBluetooth:
+		*t = BackForwardCacheNotRestoredReasonWebBluetooth
 	case BackForwardCacheNotRestoredReasonWebShare:
 		*t = BackForwardCacheNotRestoredReasonWebShare
 	case BackForwardCacheNotRestoredReasonRequestedStorageAccessGrant:
@@ -1375,12 +1379,12 @@ func (t *BackForwardCacheNotRestoredReason) UnmarshalJSON(buf []byte) error {
 		*t = BackForwardCacheNotRestoredReasonDummy
 	case BackForwardCacheNotRestoredReasonJsNetworkRequestReceivedCacheControlNoStoreResource:
 		*t = BackForwardCacheNotRestoredReasonJsNetworkRequestReceivedCacheControlNoStoreResource
-	case BackForwardCacheNotRestoredReasonWebRTCSticky:
-		*t = BackForwardCacheNotRestoredReasonWebRTCSticky
-	case BackForwardCacheNotRestoredReasonWebTransportSticky:
-		*t = BackForwardCacheNotRestoredReasonWebTransportSticky
-	case BackForwardCacheNotRestoredReasonWebSocketSticky:
-		*t = BackForwardCacheNotRestoredReasonWebSocketSticky
+	case BackForwardCacheNotRestoredReasonWebRTCUsedWithCCNS:
+		*t = BackForwardCacheNotRestoredReasonWebRTCUsedWithCCNS
+	case BackForwardCacheNotRestoredReasonWebTransportUsedWithCCNS:
+		*t = BackForwardCacheNotRestoredReasonWebTransportUsedWithCCNS
+	case BackForwardCacheNotRestoredReasonWebSocketUsedWithCCNS:
+		*t = BackForwardCacheNotRestoredReasonWebSocketUsedWithCCNS
 	case BackForwardCacheNotRestoredReasonSmartCard:
 		*t = BackForwardCacheNotRestoredReasonSmartCard
 	case BackForwardCacheNotRestoredReasonLiveMediaStreamTrack:

@@ -14,38 +14,43 @@ import (
 	"github.com/go-json-experiment/json/jsontext"
 )
 
-// GetStorageKeyForFrameParams returns a storage key given a frame id.
-type GetStorageKeyForFrameParams struct {
-	FrameID cdp.FrameID `json:"frameId"`
+// GetStorageKeyParams returns storage key for the given frame. If no frame
+// ID is provided, the storage key of the target executing this command is
+// returned.
+type GetStorageKeyParams struct {
+	FrameID cdp.FrameID `json:"frameId,omitempty,omitzero"`
 }
 
-// GetStorageKeyForFrame returns a storage key given a frame id.
+// GetStorageKey returns storage key for the given frame. If no frame ID is
+// provided, the storage key of the target executing this command is returned.
 //
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#method-getStorageKeyForFrame
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#method-getStorageKey
 //
 // parameters:
-//
-//	frameID
-func GetStorageKeyForFrame(frameID cdp.FrameID) *GetStorageKeyForFrameParams {
-	return &GetStorageKeyForFrameParams{
-		FrameID: frameID,
-	}
+func GetStorageKey() *GetStorageKeyParams {
+	return &GetStorageKeyParams{}
 }
 
-// GetStorageKeyForFrameReturns return values.
-type GetStorageKeyForFrameReturns struct {
+// WithFrameID [no description].
+func (p GetStorageKeyParams) WithFrameID(frameID cdp.FrameID) *GetStorageKeyParams {
+	p.FrameID = frameID
+	return &p
+}
+
+// GetStorageKeyReturns return values.
+type GetStorageKeyReturns struct {
 	StorageKey SerializedStorageKey `json:"storageKey,omitempty,omitzero"`
 }
 
-// Do executes Storage.getStorageKeyForFrame against the provided context.
+// Do executes Storage.getStorageKey against the provided context.
 //
 // returns:
 //
 //	storageKey
-func (p *GetStorageKeyForFrameParams) Do(ctx context.Context) (storageKey SerializedStorageKey, err error) {
+func (p *GetStorageKeyParams) Do(ctx context.Context) (storageKey SerializedStorageKey, err error) {
 	// execute
-	var res GetStorageKeyForFrameReturns
-	err = cdp.Execute(ctx, CommandGetStorageKeyForFrame, p, &res)
+	var res GetStorageKeyReturns
+	err = cdp.Execute(ctx, CommandGetStorageKey, p, &res)
 	if err != nil {
 		return "", err
 	}
@@ -1160,7 +1165,7 @@ func (p *SetProtectedAudienceKAnonymityParams) Do(ctx context.Context) (err erro
 
 // Command names.
 const (
-	CommandGetStorageKeyForFrame                      = "Storage.getStorageKeyForFrame"
+	CommandGetStorageKey                              = "Storage.getStorageKey"
 	CommandClearDataForOrigin                         = "Storage.clearDataForOrigin"
 	CommandClearDataForStorageKey                     = "Storage.clearDataForStorageKey"
 	CommandGetCookies                                 = "Storage.getCookies"
