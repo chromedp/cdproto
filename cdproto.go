@@ -22,6 +22,7 @@ import (
 	"github.com/chromedp/cdproto/cachestorage"
 	"github.com/chromedp/cdproto/cast"
 	"github.com/chromedp/cdproto/cdp"
+	"github.com/chromedp/cdproto/crashreportcontext"
 	"github.com/chromedp/cdproto/css"
 	"github.com/chromedp/cdproto/debugger"
 	"github.com/chromedp/cdproto/deviceaccess"
@@ -222,6 +223,7 @@ const (
 	CommandCastStopCasting                                           = cast.CommandStopCasting
 	EventCastSinksUpdated                                            = "Cast.sinksUpdated"
 	EventCastIssueUpdated                                            = "Cast.issueUpdated"
+	CommandCrashReportContextGetEntries                              = crashreportcontext.CommandGetEntries
 	CommandDOMCollectClassNamesFromSubtree                           = dom.CommandCollectClassNamesFromSubtree
 	CommandDOMCopyTo                                                 = dom.CommandCopyTo
 	CommandDOMDescribeNode                                           = dom.CommandDescribeNode
@@ -934,6 +936,8 @@ const (
 	CommandWebMCPEnable                                              = webmcp.CommandEnable
 	EventWebMCPToolsAdded                                            = "WebMCP.toolsAdded"
 	EventWebMCPToolsRemoved                                          = "WebMCP.toolsRemoved"
+	EventWebMCPToolInvoked                                           = "WebMCP.toolInvoked"
+	EventWebMCPToolResponded                                         = "WebMCP.toolResponded"
 )
 
 // Error error type.
@@ -1238,6 +1242,8 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		v = new(cast.EventSinksUpdated)
 	case EventCastIssueUpdated:
 		v = new(cast.EventIssueUpdated)
+	case CommandCrashReportContextGetEntries:
+		v = new(crashreportcontext.GetEntriesReturns)
 	case CommandDOMCollectClassNamesFromSubtree:
 		v = new(dom.CollectClassNamesFromSubtreeReturns)
 	case CommandDOMCopyTo:
@@ -2662,6 +2668,10 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		v = new(webmcp.EventToolsAdded)
 	case EventWebMCPToolsRemoved:
 		v = new(webmcp.EventToolsRemoved)
+	case EventWebMCPToolInvoked:
+		v = new(webmcp.EventToolInvoked)
+	case EventWebMCPToolResponded:
+		v = new(webmcp.EventToolResponded)
 	default:
 		return nil, cdp.ErrUnknownCommandOrEvent(msg.Method)
 	}
