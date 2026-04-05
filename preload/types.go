@@ -147,10 +147,11 @@ func (t *SpeculationTargetHint) UnmarshalJSON(buf []byte) error {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Preload#type-PreloadingAttemptKey
 type IngAttemptKey struct {
-	LoaderID   cdp.LoaderID          `json:"loaderId"`
-	Action     SpeculationAction     `json:"action"`
-	URL        string                `json:"url"`
-	TargetHint SpeculationTargetHint `json:"targetHint,omitempty,omitzero"`
+	LoaderID       cdp.LoaderID          `json:"loaderId"`
+	Action         SpeculationAction     `json:"action"`
+	URL            string                `json:"url"`
+	FormSubmission bool                  `json:"formSubmission"`
+	TargetHint     SpeculationTargetHint `json:"targetHint,omitempty,omitzero"`
 }
 
 // IngAttemptSource lists sources for a preloading attempt, specifically the
@@ -266,6 +267,7 @@ const (
 	PrerenderFinalStatusPrerenderFailedDuringPrefetch                              PrerenderFinalStatus = "PrerenderFailedDuringPrefetch"
 	PrerenderFinalStatusBrowsingDataRemoved                                        PrerenderFinalStatus = "BrowsingDataRemoved"
 	PrerenderFinalStatusPrerenderHostReused                                        PrerenderFinalStatus = "PrerenderHostReused"
+	PrerenderFinalStatusFormSubmitWhenPrerendering                                 PrerenderFinalStatus = "FormSubmitWhenPrerendering"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -422,6 +424,8 @@ func (t *PrerenderFinalStatus) UnmarshalJSON(buf []byte) error {
 		*t = PrerenderFinalStatusBrowsingDataRemoved
 	case PrerenderFinalStatusPrerenderHostReused:
 		*t = PrerenderFinalStatusPrerenderHostReused
+	case PrerenderFinalStatusFormSubmitWhenPrerendering:
+		*t = PrerenderFinalStatusFormSubmitWhenPrerendering
 	default:
 		return fmt.Errorf("unknown PrerenderFinalStatus value: %v", s)
 	}

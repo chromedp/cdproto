@@ -30,7 +30,23 @@ func (p *EnableParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandEnable, nil, nil)
 }
 
+// DisableParams disables the WebMCP domain.
+type DisableParams struct{}
+
+// Disable disables the WebMCP domain.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/WebMCP#method-disable
+func Disable() *DisableParams {
+	return &DisableParams{}
+}
+
+// Do executes WebMCP.disable against the provided context.
+func (p *DisableParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandDisable, nil, nil)
+}
+
 // Command names.
 const (
-	CommandEnable = "WebMCP.enable"
+	CommandEnable  = "WebMCP.enable"
+	CommandDisable = "WebMCP.disable"
 )

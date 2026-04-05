@@ -839,11 +839,7 @@ const (
 	CommandStorageSetStorageBucketTracking                           = storage.CommandSetStorageBucketTracking
 	CommandStorageDeleteStorageBucket                                = storage.CommandDeleteStorageBucket
 	CommandStorageRunBounceTrackingMitigations                       = storage.CommandRunBounceTrackingMitigations
-	CommandStorageSetAttributionReportingLocalTestingMode            = storage.CommandSetAttributionReportingLocalTestingMode
-	CommandStorageSetAttributionReportingTracking                    = storage.CommandSetAttributionReportingTracking
-	CommandStorageSendPendingAttributionReports                      = storage.CommandSendPendingAttributionReports
 	CommandStorageGetRelatedWebsiteSets                              = storage.CommandGetRelatedWebsiteSets
-	CommandStorageGetAffectedURLsForThirdPartyCookieMetadata         = storage.CommandGetAffectedURLsForThirdPartyCookieMetadata
 	CommandStorageSetProtectedAudienceKAnonymity                     = storage.CommandSetProtectedAudienceKAnonymity
 	EventStorageCacheStorageContentUpdated                           = "Storage.cacheStorageContentUpdated"
 	EventStorageCacheStorageListUpdated                              = "Storage.cacheStorageListUpdated"
@@ -856,10 +852,6 @@ const (
 	EventStorageSharedStorageWorkletOperationExecutionFinished       = "Storage.sharedStorageWorkletOperationExecutionFinished"
 	EventStorageStorageBucketCreatedOrUpdated                        = "Storage.storageBucketCreatedOrUpdated"
 	EventStorageStorageBucketDeleted                                 = "Storage.storageBucketDeleted"
-	EventStorageAttributionReportingSourceRegistered                 = "Storage.attributionReportingSourceRegistered"
-	EventStorageAttributionReportingTriggerRegistered                = "Storage.attributionReportingTriggerRegistered"
-	EventStorageAttributionReportingReportSent                       = "Storage.attributionReportingReportSent"
-	EventStorageAttributionReportingVerboseDebugReportSent           = "Storage.attributionReportingVerboseDebugReportSent"
 	CommandSystemInfoGetInfo                                         = systeminfo.CommandGetInfo
 	CommandSystemInfoGetFeatureState                                 = systeminfo.CommandGetFeatureState
 	CommandSystemInfoGetProcessInfo                                  = systeminfo.CommandGetProcessInfo
@@ -934,6 +926,7 @@ const (
 	EventWebAuthnCredentialUpdated                                   = "WebAuthn.credentialUpdated"
 	EventWebAuthnCredentialAsserted                                  = "WebAuthn.credentialAsserted"
 	CommandWebMCPEnable                                              = webmcp.CommandEnable
+	CommandWebMCPDisable                                             = webmcp.CommandDisable
 	EventWebMCPToolsAdded                                            = "WebMCP.toolsAdded"
 	EventWebMCPToolsRemoved                                          = "WebMCP.toolsRemoved"
 	EventWebMCPToolInvoked                                           = "WebMCP.toolInvoked"
@@ -2474,16 +2467,8 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		return emptyVal, nil
 	case CommandStorageRunBounceTrackingMitigations:
 		v = new(storage.RunBounceTrackingMitigationsReturns)
-	case CommandStorageSetAttributionReportingLocalTestingMode:
-		return emptyVal, nil
-	case CommandStorageSetAttributionReportingTracking:
-		return emptyVal, nil
-	case CommandStorageSendPendingAttributionReports:
-		v = new(storage.SendPendingAttributionReportsReturns)
 	case CommandStorageGetRelatedWebsiteSets:
 		v = new(storage.GetRelatedWebsiteSetsReturns)
-	case CommandStorageGetAffectedURLsForThirdPartyCookieMetadata:
-		v = new(storage.GetAffectedURLsForThirdPartyCookieMetadataReturns)
 	case CommandStorageSetProtectedAudienceKAnonymity:
 		return emptyVal, nil
 	case EventStorageCacheStorageContentUpdated:
@@ -2508,14 +2493,6 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		v = new(storage.EventStorageBucketCreatedOrUpdated)
 	case EventStorageStorageBucketDeleted:
 		v = new(storage.EventStorageBucketDeleted)
-	case EventStorageAttributionReportingSourceRegistered:
-		v = new(storage.EventAttributionReportingSourceRegistered)
-	case EventStorageAttributionReportingTriggerRegistered:
-		v = new(storage.EventAttributionReportingTriggerRegistered)
-	case EventStorageAttributionReportingReportSent:
-		v = new(storage.EventAttributionReportingReportSent)
-	case EventStorageAttributionReportingVerboseDebugReportSent:
-		v = new(storage.EventAttributionReportingVerboseDebugReportSent)
 	case CommandSystemInfoGetInfo:
 		v = new(systeminfo.GetInfoReturns)
 	case CommandSystemInfoGetFeatureState:
@@ -2663,6 +2640,8 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 	case EventWebAuthnCredentialAsserted:
 		v = new(webauthn.EventCredentialAsserted)
 	case CommandWebMCPEnable:
+		return emptyVal, nil
+	case CommandWebMCPDisable:
 		return emptyVal, nil
 	case EventWebMCPToolsAdded:
 		v = new(webmcp.EventToolsAdded)

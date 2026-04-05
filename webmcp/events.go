@@ -36,9 +36,9 @@ type EventToolInvoked struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/WebMCP#event-toolResponded
 type EventToolResponded struct {
-	InvocationID string                `json:"invocationId"` // Invocation identifier.
-	Status       InvocationStatus      `json:"status"`       // Status of the invocation.
-	Output       jsontext.Value        `json:"output,omitempty,omitzero"`
+	InvocationID string                `json:"invocationId"`                 // Invocation identifier.
+	Status       InvocationStatus      `json:"status"`                       // Status of the invocation.
+	Output       jsontext.Value        `json:"output,omitempty,omitzero"`    // Output or error delivered as delivered to the agent. Missing if status is anything other than Success.
 	ErrorText    string                `json:"errorText,omitempty,omitzero"` // Error text for protocol users.
 	Exception    *runtime.RemoteObject `json:"exception,omitempty,omitzero"` // The exception object, if the javascript tool threw an error>
 }
