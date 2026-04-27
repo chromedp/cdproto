@@ -548,6 +548,7 @@ const (
 	CommandNetworkGetSecurityIsolationStatus                         = network.CommandGetSecurityIsolationStatus
 	CommandNetworkEnableReportingAPI                                 = network.CommandEnableReportingAPI
 	CommandNetworkEnableDeviceBoundSessions                          = network.CommandEnableDeviceBoundSessions
+	CommandNetworkDeleteDeviceBoundSession                           = network.CommandDeleteDeviceBoundSession
 	CommandNetworkFetchSchemefulSite                                 = network.CommandFetchSchemefulSite
 	CommandNetworkLoadNetworkResource                                = network.CommandLoadNetworkResource
 	CommandNetworkSetCookieControls                                  = network.CommandSetCookieControls
@@ -927,6 +928,8 @@ const (
 	EventWebAuthnCredentialAsserted                                  = "WebAuthn.credentialAsserted"
 	CommandWebMCPEnable                                              = webmcp.CommandEnable
 	CommandWebMCPDisable                                             = webmcp.CommandDisable
+	CommandWebMCPInvokeTool                                          = webmcp.CommandInvokeTool
+	CommandWebMCPCancelInvocation                                    = webmcp.CommandCancelInvocation
 	EventWebMCPToolsAdded                                            = "WebMCP.toolsAdded"
 	EventWebMCPToolsRemoved                                          = "WebMCP.toolsRemoved"
 	EventWebMCPToolInvoked                                           = "WebMCP.toolInvoked"
@@ -1885,6 +1888,8 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		return emptyVal, nil
 	case CommandNetworkEnableDeviceBoundSessions:
 		return emptyVal, nil
+	case CommandNetworkDeleteDeviceBoundSession:
+		return emptyVal, nil
 	case CommandNetworkFetchSchemefulSite:
 		v = new(network.FetchSchemefulSiteReturns)
 	case CommandNetworkLoadNetworkResource:
@@ -2642,6 +2647,10 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 	case CommandWebMCPEnable:
 		return emptyVal, nil
 	case CommandWebMCPDisable:
+		return emptyVal, nil
+	case CommandWebMCPInvokeTool:
+		v = new(webmcp.InvokeToolReturns)
+	case CommandWebMCPCancelInvocation:
 		return emptyVal, nil
 	case EventWebMCPToolsAdded:
 		v = new(webmcp.EventToolsAdded)

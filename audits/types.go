@@ -1162,6 +1162,10 @@ const (
 	GenericIssueErrorTypeAutofillPolicyControlledFeatureInfo                        GenericIssueErrorType = "AutofillPolicyControlledFeatureInfo"
 	GenericIssueErrorTypeManualTextPolicyControlledFeatureInfo                      GenericIssueErrorType = "ManualTextPolicyControlledFeatureInfo"
 	GenericIssueErrorTypeFormModelContextParameterMissingTitleAndDescription        GenericIssueErrorType = "FormModelContextParameterMissingTitleAndDescription"
+	GenericIssueErrorTypeFormModelContextMissingToolName                            GenericIssueErrorType = "FormModelContextMissingToolName"
+	GenericIssueErrorTypeFormModelContextMissingToolDescription                     GenericIssueErrorType = "FormModelContextMissingToolDescription"
+	GenericIssueErrorTypeFormModelContextRequiredParameterMissingName               GenericIssueErrorType = "FormModelContextRequiredParameterMissingName"
+	GenericIssueErrorTypeFormModelContextParameterMissingName                       GenericIssueErrorType = "FormModelContextParameterMissingName"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -1202,6 +1206,14 @@ func (t *GenericIssueErrorType) UnmarshalJSON(buf []byte) error {
 		*t = GenericIssueErrorTypeManualTextPolicyControlledFeatureInfo
 	case GenericIssueErrorTypeFormModelContextParameterMissingTitleAndDescription:
 		*t = GenericIssueErrorTypeFormModelContextParameterMissingTitleAndDescription
+	case GenericIssueErrorTypeFormModelContextMissingToolName:
+		*t = GenericIssueErrorTypeFormModelContextMissingToolName
+	case GenericIssueErrorTypeFormModelContextMissingToolDescription:
+		*t = GenericIssueErrorTypeFormModelContextMissingToolDescription
+	case GenericIssueErrorTypeFormModelContextRequiredParameterMissingName:
+		*t = GenericIssueErrorTypeFormModelContextRequiredParameterMissingName
+	case GenericIssueErrorTypeFormModelContextParameterMissingName:
+		*t = GenericIssueErrorTypeFormModelContextParameterMissingName
 	default:
 		return fmt.Errorf("unknown GenericIssueErrorType value: %v", s)
 	}

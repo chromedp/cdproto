@@ -10,6 +10,7 @@ import (
 	"context"
 
 	"github.com/chromedp/cdproto/cdp"
+	"github.com/go-json-experiment/json/jsontext"
 )
 
 // EnableParams enables the WebMCP domain, allowing events to be sent.
@@ -45,8 +46,78 @@ func (p *DisableParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandDisable, nil, nil)
 }
 
+// InvokeToolParams invokes a registered tool.
+type InvokeToolParams struct {
+	FrameID  cdp.FrameID    `json:"frameId"`  // Frame in which to invoke the tool.
+	ToolName string         `json:"toolName"` // Name of the tool to invoke.
+	Input    jsontext.Value `json:"input"`
+}
+
+// InvokeTool invokes a registered tool.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/WebMCP#method-invokeTool
+//
+// parameters:
+//
+//	frameID - Frame in which to invoke the tool.
+//	toolName - Name of the tool to invoke.
+//	input - Input parameters for the tool, matching the tool's inputSchema.
+func InvokeTool(frameID cdp.FrameID, toolName string, input jsontext.Value) *InvokeToolParams {
+	return &InvokeToolParams{
+		FrameID:  frameID,
+		ToolName: toolName,
+		Input:    input,
+	}
+}
+
+// InvokeToolReturns return values.
+type InvokeToolReturns struct {
+	InvocationID string `json:"invocationId,omitempty,omitzero"` // Unique identifier for this invocation. Response is sent before tool events.
+}
+
+// Do executes WebMCP.invokeTool against the provided context.
+//
+// returns:
+//
+//	invocationID - Unique identifier for this invocation. Response is sent before tool events.
+func (p *InvokeToolParams) Do(ctx context.Context) (invocationID string, err error) {
+	// execute
+	var res InvokeToolReturns
+	err = cdp.Execute(ctx, CommandInvokeTool, p, &res)
+	if err != nil {
+		return "", err
+	}
+
+	return res.InvocationID, nil
+}
+
+// CancelInvocationParams cancels a pending tool invocation.
+type CancelInvocationParams struct {
+	InvocationID string `json:"invocationId"` // Invocation identifier to cancel.
+}
+
+// CancelInvocation cancels a pending tool invocation.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/WebMCP#method-cancelInvocation
+//
+// parameters:
+//
+//	invocationID - Invocation identifier to cancel.
+func CancelInvocation(invocationID string) *CancelInvocationParams {
+	return &CancelInvocationParams{
+		InvocationID: invocationID,
+	}
+}
+
+// Do executes WebMCP.cancelInvocation against the provided context.
+func (p *CancelInvocationParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandCancelInvocation, p, nil)
+}
+
 // Command names.
 const (
-	CommandEnable  = "WebMCP.enable"
-	CommandDisable = "WebMCP.disable"
+	CommandEnable           = "WebMCP.enable"
+	CommandDisable          = "WebMCP.disable"
+	CommandInvokeTool       = "WebMCP.invokeTool"
+	CommandCancelInvocation = "WebMCP.cancelInvocation"
 )

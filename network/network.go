@@ -170,8 +170,8 @@ func (p *DisableParams) Do(ctx context.Context) (err error) {
 // navigator state. Use Network.overrideNetworkState to explicitly modify
 // navigator behavior.
 type EmulateNetworkConditionsByRuleParams struct {
-	Offline                  bool          `json:"offline"`                  // True to emulate internet disconnection.
-	MatchedNetworkConditions []*Conditions `json:"matchedNetworkConditions"` // Configure conditions for matching requests. If multiple entries match a request, the first entry wins.  Global conditions can be configured by leaving the urlPattern for the conditions empty. These global conditions are also applied for throttling of p2p connections.
+	EmulateOfflineServiceWorker bool          `json:"emulateOfflineServiceWorker"` // True to emulate offline service worker.
+	MatchedNetworkConditions    []*Conditions `json:"matchedNetworkConditions"`    // Configure conditions for matching requests. If multiple entries match a request, the first entry wins.  Global conditions can be configured by leaving the urlPattern for the conditions empty. These global conditions are also applied for throttling of p2p connections.
 }
 
 // EmulateNetworkConditionsByRule activates emulation of network conditions
@@ -183,13 +183,18 @@ type EmulateNetworkConditionsByRuleParams struct {
 //
 // parameters:
 //
-//	offline - True to emulate internet disconnection.
 //	matchedNetworkConditions - Configure conditions for matching requests. If multiple entries match a request, the first entry wins.  Global conditions can be configured by leaving the urlPattern for the conditions empty. These global conditions are also applied for throttling of p2p connections.
-func EmulateNetworkConditionsByRule(offline bool, matchedNetworkConditions []*Conditions) *EmulateNetworkConditionsByRuleParams {
+func EmulateNetworkConditionsByRule(matchedNetworkConditions []*Conditions) *EmulateNetworkConditionsByRuleParams {
 	return &EmulateNetworkConditionsByRuleParams{
-		Offline:                  offline,
-		MatchedNetworkConditions: matchedNetworkConditions,
+		EmulateOfflineServiceWorker: false,
+		MatchedNetworkConditions:    matchedNetworkConditions,
 	}
+}
+
+// WithEmulateOfflineServiceWorker true to emulate offline service worker.
+func (p EmulateNetworkConditionsByRuleParams) WithEmulateOfflineServiceWorker(emulateOfflineServiceWorker bool) *EmulateNetworkConditionsByRuleParams {
+	p.EmulateOfflineServiceWorker = emulateOfflineServiceWorker
+	return &p
 }
 
 // EmulateNetworkConditionsByRuleReturns return values.
@@ -1142,6 +1147,29 @@ func (p *EnableDeviceBoundSessionsParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandEnableDeviceBoundSessions, p, nil)
 }
 
+// DeleteDeviceBoundSessionParams deletes a device bound session.
+type DeleteDeviceBoundSessionParams struct {
+	Key *DeviceBoundSessionKey `json:"key"`
+}
+
+// DeleteDeviceBoundSession deletes a device bound session.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-deleteDeviceBoundSession
+//
+// parameters:
+//
+//	key
+func DeleteDeviceBoundSession(key *DeviceBoundSessionKey) *DeleteDeviceBoundSessionParams {
+	return &DeleteDeviceBoundSessionParams{
+		Key: key,
+	}
+}
+
+// Do executes Network.deleteDeviceBoundSession against the provided context.
+func (p *DeleteDeviceBoundSessionParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandDeleteDeviceBoundSession, p, nil)
+}
+
 // FetchSchemefulSiteParams fetches the schemeful site for a specific origin.
 type FetchSchemefulSiteParams struct {
 	Origin string `json:"origin"` // The URL origin.
@@ -1235,8 +1263,6 @@ func (p *LoadNetworkResourceParams) Do(ctx context.Context) (resource *LoadNetwo
 // reload is required before the new cookie behavior will be observed.
 type SetCookieControlsParams struct {
 	EnableThirdPartyCookieRestriction bool `json:"enableThirdPartyCookieRestriction"` // Whether 3pc restriction is enabled.
-	DisableThirdPartyCookieMetadata   bool `json:"disableThirdPartyCookieMetadata"`   // Whether 3pc grace period exception should be enabled; false by default.
-	DisableThirdPartyCookieHeuristics bool `json:"disableThirdPartyCookieHeuristics"` // Whether 3pc heuristics exceptions should be enabled; false by default.
 }
 
 // SetCookieControls sets Controls for third-party cookie access Page reload
@@ -1247,13 +1273,9 @@ type SetCookieControlsParams struct {
 // parameters:
 //
 //	enableThirdPartyCookieRestriction - Whether 3pc restriction is enabled.
-//	disableThirdPartyCookieMetadata - Whether 3pc grace period exception should be enabled; false by default.
-//	disableThirdPartyCookieHeuristics - Whether 3pc heuristics exceptions should be enabled; false by default.
-func SetCookieControls(enableThirdPartyCookieRestriction bool, disableThirdPartyCookieMetadata bool, disableThirdPartyCookieHeuristics bool) *SetCookieControlsParams {
+func SetCookieControls(enableThirdPartyCookieRestriction bool) *SetCookieControlsParams {
 	return &SetCookieControlsParams{
 		EnableThirdPartyCookieRestriction: enableThirdPartyCookieRestriction,
-		DisableThirdPartyCookieMetadata:   disableThirdPartyCookieMetadata,
-		DisableThirdPartyCookieHeuristics: disableThirdPartyCookieHeuristics,
 	}
 }
 
@@ -1293,6 +1315,7 @@ const (
 	CommandGetSecurityIsolationStatus              = "Network.getSecurityIsolationStatus"
 	CommandEnableReportingAPI                      = "Network.enableReportingApi"
 	CommandEnableDeviceBoundSessions               = "Network.enableDeviceBoundSessions"
+	CommandDeleteDeviceBoundSession                = "Network.deleteDeviceBoundSession"
 	CommandFetchSchemefulSite                      = "Network.fetchSchemefulSite"
 	CommandLoadNetworkResource                     = "Network.loadNetworkResource"
 	CommandSetCookieControls                       = "Network.setCookieControls"

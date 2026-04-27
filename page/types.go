@@ -1145,6 +1145,7 @@ const (
 	BackForwardCacheNotRestoredReasonEmbedderExtensionMessaging                               BackForwardCacheNotRestoredReason = "EmbedderExtensionMessaging"
 	BackForwardCacheNotRestoredReasonEmbedderExtensionMessagingForOpenPort                    BackForwardCacheNotRestoredReason = "EmbedderExtensionMessagingForOpenPort"
 	BackForwardCacheNotRestoredReasonEmbedderExtensionSentMessageToCachedFrame                BackForwardCacheNotRestoredReason = "EmbedderExtensionSentMessageToCachedFrame"
+	BackForwardCacheNotRestoredReasonEmbedderExtensionFrame                                   BackForwardCacheNotRestoredReason = "EmbedderExtensionFrame"
 	BackForwardCacheNotRestoredReasonRequestedByWebViewClient                                 BackForwardCacheNotRestoredReason = "RequestedByWebViewClient"
 	BackForwardCacheNotRestoredReasonPostMessageByWebViewClient                               BackForwardCacheNotRestoredReason = "PostMessageByWebViewClient"
 	BackForwardCacheNotRestoredReasonCacheControlNoStoreDeviceBoundSessionTerminated          BackForwardCacheNotRestoredReason = "CacheControlNoStoreDeviceBoundSessionTerminated"
@@ -1442,6 +1443,8 @@ func (t *BackForwardCacheNotRestoredReason) UnmarshalJSON(buf []byte) error {
 		*t = BackForwardCacheNotRestoredReasonEmbedderExtensionMessagingForOpenPort
 	case BackForwardCacheNotRestoredReasonEmbedderExtensionSentMessageToCachedFrame:
 		*t = BackForwardCacheNotRestoredReasonEmbedderExtensionSentMessageToCachedFrame
+	case BackForwardCacheNotRestoredReasonEmbedderExtensionFrame:
+		*t = BackForwardCacheNotRestoredReasonEmbedderExtensionFrame
 	case BackForwardCacheNotRestoredReasonRequestedByWebViewClient:
 		*t = BackForwardCacheNotRestoredReasonRequestedByWebViewClient
 	case BackForwardCacheNotRestoredReasonPostMessageByWebViewClient:

@@ -15,17 +15,13 @@ import (
 	"github.com/go-json-experiment/json/jsontext"
 )
 
-// TriggerActionParams runs an extension default action. Available if the
-// client is connected using the --remote-debugging-pipe flag and the
-// --enable-unsafe-extension-debugging flag is set.
+// TriggerActionParams runs an extension default action.
 type TriggerActionParams struct {
 	ID       string `json:"id"`       // Extension id.
 	TargetID string `json:"targetId"` // A tab target ID to trigger the default extension action on.
 }
 
-// TriggerAction runs an extension default action. Available if the client is
-// connected using the --remote-debugging-pipe flag and the
-// --enable-unsafe-extension-debugging flag is set.
+// TriggerAction runs an extension default action.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Extensions#method-triggerAction
 //
@@ -47,9 +43,7 @@ func (p *TriggerActionParams) Do(ctx context.Context) (err error) {
 
 // LoadUnpackedParams installs an unpacked extension from the filesystem
 // similar to --load-extension CLI flags. Returns extension ID once the
-// extension has been installed. Available if the client is connected using the
-// --remote-debugging-pipe flag and the --enable-unsafe-extension-debugging flag
-// is set.
+// extension has been installed.
 type LoadUnpackedParams struct {
 	Path              string `json:"path"`              // Absolute file path.
 	EnableInIncognito bool   `json:"enableInIncognito"` // Enable the extension in incognito
@@ -57,9 +51,7 @@ type LoadUnpackedParams struct {
 
 // LoadUnpacked installs an unpacked extension from the filesystem similar to
 // --load-extension CLI flags. Returns extension ID once the extension has been
-// installed. Available if the client is connected using the
-// --remote-debugging-pipe flag and the --enable-unsafe-extension-debugging flag
-// is set.
+// installed.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Extensions#method-loadUnpacked
 //
@@ -100,14 +92,10 @@ func (p *LoadUnpackedParams) Do(ctx context.Context) (id string, err error) {
 	return res.ID, nil
 }
 
-// GetExtensionsParams gets a list of all unpacked extensions. Available if
-// the client is connected using the --remote-debugging-pipe flag and the
-// --enable-unsafe-extension-debugging flag is set.
+// GetExtensionsParams gets a list of all unpacked extensions.
 type GetExtensionsParams struct{}
 
-// GetExtensions gets a list of all unpacked extensions. Available if the
-// client is connected using the --remote-debugging-pipe flag and the
-// --enable-unsafe-extension-debugging flag is set.
+// GetExtensions gets a list of all unpacked extensions.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Extensions#method-getExtensions
 func GetExtensions() *GetExtensionsParams {
@@ -136,15 +124,13 @@ func (p *GetExtensionsParams) Do(ctx context.Context) (extensions []*ExtensionIn
 }
 
 // UninstallParams uninstalls an unpacked extension (others not supported)
-// from the profile. Available if the client is connected using the
-// --remote-debugging-pipe flag and the --enable-unsafe-extension-debugging.
+// from the profile.
 type UninstallParams struct {
 	ID string `json:"id"` // Extension id.
 }
 
 // Uninstall uninstalls an unpacked extension (others not supported) from the
-// profile. Available if the client is connected using the
-// --remote-debugging-pipe flag and the --enable-unsafe-extension-debugging.
+// profile.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Extensions#method-uninstall
 //

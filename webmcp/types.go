@@ -15,8 +15,9 @@ import (
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/WebMCP#type-Annotation
 type Annotation struct {
-	ReadOnly   bool `json:"readOnly"`   // A hint indicating that the tool does not modify any state.
-	Autosubmit bool `json:"autosubmit"` // If the declarative tool was declared with the autosubmit attribute.
+	ReadOnly         bool `json:"readOnly"`         // A hint indicating that the tool does not modify any state.
+	UntrustedContent bool `json:"untrustedContent"` // A hint indicating that the tool output may contain untrusted content, ex: UGC, 3rd party data.
+	Autosubmit       bool `json:"autosubmit"`       // If the declarative tool was declared with the autosubmit attribute.
 }
 
 // InvocationStatus represents the status of a tool invocation.
@@ -31,9 +32,9 @@ func (t InvocationStatus) String() string {
 
 // InvocationStatus values.
 const (
-	InvocationStatusSuccess  InvocationStatus = "Success"
-	InvocationStatusCanceled InvocationStatus = "Canceled"
-	InvocationStatusError    InvocationStatus = "Error"
+	InvocationStatusCompleted InvocationStatus = "Completed"
+	InvocationStatusCanceled  InvocationStatus = "Canceled"
+	InvocationStatusError     InvocationStatus = "Error"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -42,8 +43,8 @@ func (t *InvocationStatus) UnmarshalJSON(buf []byte) error {
 	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
 	switch InvocationStatus(s) {
-	case InvocationStatusSuccess:
-		*t = InvocationStatusSuccess
+	case InvocationStatusCompleted:
+		*t = InvocationStatusCompleted
 	case InvocationStatusCanceled:
 		*t = InvocationStatusCanceled
 	case InvocationStatusError:
@@ -65,4 +66,12 @@ type Tool struct {
 	FrameID       cdp.FrameID         `json:"frameId"`                          // Frame identifier associated with the tool registration.
 	BackendNodeID cdp.BackendNodeID   `json:"backendNodeId,omitempty,omitzero"` // Optional node ID for declarative tools.
 	StackTrace    *runtime.StackTrace `json:"stackTrace,omitempty,omitzero"`    // The stack trace at the time of the registration.
+}
+
+// RemovedTool definition of a tool that was removed.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/WebMCP#type-RemovedTool
+type RemovedTool struct {
+	Name    string      `json:"name"`    // Tool name.
+	FrameID cdp.FrameID `json:"frameId"` // Frame identifier associated with the tool registration.
 }

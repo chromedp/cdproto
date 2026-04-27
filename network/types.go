@@ -1557,6 +1557,7 @@ type Conditions struct {
 	PacketLoss         float64        `json:"packetLoss,omitempty,omitzero"`        // WebRTC packet loss (percent, 0-100). 0 disables packet loss emulation, 100 drops all the packets.
 	PacketQueueLength  int64          `json:"packetQueueLength,omitempty,omitzero"` // WebRTC packet queue length (packet). 0 removes any queue length limitations.
 	PacketReordering   bool           `json:"packetReordering"`                     // WebRTC packetReordering feature.
+	Offline            bool           `json:"offline"`                              // True to emulate internet disconnection.
 }
 
 // BlockPattern [no description].
@@ -2615,6 +2616,7 @@ func (t RefreshEventDetailsRefreshResult) String() string {
 // RefreshEventDetailsRefreshResult values.
 const (
 	RefreshEventDetailsRefreshResultRefreshed            RefreshEventDetailsRefreshResult = "Refreshed"
+	RefreshEventDetailsRefreshResultRefreshedAsWaiter    RefreshEventDetailsRefreshResult = "RefreshedAsWaiter"
 	RefreshEventDetailsRefreshResultInitializedService   RefreshEventDetailsRefreshResult = "InitializedService"
 	RefreshEventDetailsRefreshResultUnreachable          RefreshEventDetailsRefreshResult = "Unreachable"
 	RefreshEventDetailsRefreshResultServerError          RefreshEventDetailsRefreshResult = "ServerError"
@@ -2631,6 +2633,8 @@ func (t *RefreshEventDetailsRefreshResult) UnmarshalJSON(buf []byte) error {
 	switch RefreshEventDetailsRefreshResult(s) {
 	case RefreshEventDetailsRefreshResultRefreshed:
 		*t = RefreshEventDetailsRefreshResultRefreshed
+	case RefreshEventDetailsRefreshResultRefreshedAsWaiter:
+		*t = RefreshEventDetailsRefreshResultRefreshedAsWaiter
 	case RefreshEventDetailsRefreshResultInitializedService:
 		*t = RefreshEventDetailsRefreshResultInitializedService
 	case RefreshEventDetailsRefreshResultUnreachable:
@@ -2670,6 +2674,7 @@ const (
 	TerminationEventDetailsDeletionReasonServerRequested         TerminationEventDetailsDeletionReason = "ServerRequested"
 	TerminationEventDetailsDeletionReasonInvalidSessionParams    TerminationEventDetailsDeletionReason = "InvalidSessionParams"
 	TerminationEventDetailsDeletionReasonRefreshFatalError       TerminationEventDetailsDeletionReason = "RefreshFatalError"
+	TerminationEventDetailsDeletionReasonDevTools                TerminationEventDetailsDeletionReason = "DevTools"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -2694,6 +2699,8 @@ func (t *TerminationEventDetailsDeletionReason) UnmarshalJSON(buf []byte) error 
 		*t = TerminationEventDetailsDeletionReasonInvalidSessionParams
 	case TerminationEventDetailsDeletionReasonRefreshFatalError:
 		*t = TerminationEventDetailsDeletionReasonRefreshFatalError
+	case TerminationEventDetailsDeletionReasonDevTools:
+		*t = TerminationEventDetailsDeletionReasonDevTools
 	default:
 		return fmt.Errorf("unknown TerminationEventDetailsDeletionReason value: %v", s)
 	}
