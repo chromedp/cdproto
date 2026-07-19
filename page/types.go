@@ -29,7 +29,6 @@ const (
 	PermissionsPolicyFeatureAllScreensCapture            PermissionsPolicyFeature = "all-screens-capture"
 	PermissionsPolicyFeatureAmbientLightSensor           PermissionsPolicyFeature = "ambient-light-sensor"
 	PermissionsPolicyFeatureAriaNotify                   PermissionsPolicyFeature = "aria-notify"
-	PermissionsPolicyFeatureAttributionReporting         PermissionsPolicyFeature = "attribution-reporting"
 	PermissionsPolicyFeatureAutofill                     PermissionsPolicyFeature = "autofill"
 	PermissionsPolicyFeatureAutoplay                     PermissionsPolicyFeature = "autoplay"
 	PermissionsPolicyFeatureBluetooth                    PermissionsPolicyFeature = "bluetooth"
@@ -151,8 +150,6 @@ func (t *PermissionsPolicyFeature) UnmarshalJSON(buf []byte) error {
 		*t = PermissionsPolicyFeatureAmbientLightSensor
 	case PermissionsPolicyFeatureAriaNotify:
 		*t = PermissionsPolicyFeatureAriaNotify
-	case PermissionsPolicyFeatureAttributionReporting:
-		*t = PermissionsPolicyFeatureAttributionReporting
 	case PermissionsPolicyFeatureAutofill:
 		*t = PermissionsPolicyFeatureAutofill
 	case PermissionsPolicyFeatureAutoplay:

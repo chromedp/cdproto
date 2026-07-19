@@ -4,9 +4,7 @@ package storage
 
 import (
 	"github.com/chromedp/cdproto/cdp"
-	"github.com/chromedp/cdproto/network"
 	"github.com/chromedp/cdproto/target"
-	"github.com/go-json-experiment/json/jsontext"
 )
 
 // EventCacheStorageContentUpdated a cache's contents have been modified.
@@ -48,45 +46,6 @@ type EventIndexedDBListUpdated struct {
 	Origin     string `json:"origin"`     // Origin to update.
 	StorageKey string `json:"storageKey"` // Storage key to update.
 	BucketID   string `json:"bucketId"`   // Storage bucket to update.
-}
-
-// EventInterestGroupAccessed one of the interest groups was accessed. Note
-// that these events are global to all targets sharing an interest group store.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#event-interestGroupAccessed
-type EventInterestGroupAccessed struct {
-	AccessTime            *cdp.TimeSinceEpoch     `json:"accessTime"`
-	Type                  InterestGroupAccessType `json:"type"`
-	OwnerOrigin           string                  `json:"ownerOrigin"`
-	Name                  string                  `json:"name"`
-	ComponentSellerOrigin string                  `json:"componentSellerOrigin,omitempty,omitzero"` // For topLevelBid/topLevelAdditionalBid, and when appropriate, win and additionalBidWin
-	Bid                   float64                 `json:"bid,omitempty,omitzero"`                   // For bid or somethingBid event, if done locally and not on a server.
-	BidCurrency           string                  `json:"bidCurrency,omitempty,omitzero"`
-	UniqueAuctionID       InterestGroupAuctionID  `json:"uniqueAuctionId,omitempty,omitzero"` // For non-global events --- links to interestGroupAuctionEvent
-}
-
-// EventInterestGroupAuctionEventOccurred an auction involving interest
-// groups is taking place. These events are target-specific.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#event-interestGroupAuctionEventOccurred
-type EventInterestGroupAuctionEventOccurred struct {
-	EventTime       *cdp.TimeSinceEpoch           `json:"eventTime"`
-	Type            InterestGroupAuctionEventType `json:"type"`
-	UniqueAuctionID InterestGroupAuctionID        `json:"uniqueAuctionId"`
-	ParentAuctionID InterestGroupAuctionID        `json:"parentAuctionId,omitempty,omitzero"` // Set for child auctions.
-	AuctionConfig   jsontext.Value                `json:"auctionConfig,omitempty,omitzero"`
-}
-
-// EventInterestGroupAuctionNetworkRequestCreated specifies which auctions a
-// particular network fetch may be related to, and in what role. Note that it is
-// not ordered with respect to Network.requestWillBeSent (but will happen before
-// loadingFinished loadingFailed).
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#event-interestGroupAuctionNetworkRequestCreated
-type EventInterestGroupAuctionNetworkRequestCreated struct {
-	Type      InterestGroupAuctionFetchType `json:"type"`
-	RequestID network.RequestID             `json:"requestId"`
-	Auctions  []InterestGroupAuctionID      `json:"auctions"` // This is the set of the auctions using the worklet that issued this request.  In the case of trusted signals, it's possible that only some of them actually care about the keys being queried.
 }
 
 // EventSharedStorageAccessed shared storage was accessed by the associated

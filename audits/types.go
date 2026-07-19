@@ -336,7 +336,6 @@ func (t MixedContentResourceType) String() string {
 
 // MixedContentResourceType values.
 const (
-	MixedContentResourceTypeAttributionSrc   MixedContentResourceType = "AttributionSrc"
 	MixedContentResourceTypeAudio            MixedContentResourceType = "Audio"
 	MixedContentResourceTypeBeacon           MixedContentResourceType = "Beacon"
 	MixedContentResourceTypeCSPReport        MixedContentResourceType = "CSPReport"
@@ -373,8 +372,6 @@ func (t *MixedContentResourceType) UnmarshalJSON(buf []byte) error {
 	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
 
 	switch MixedContentResourceType(s) {
-	case MixedContentResourceTypeAttributionSrc:
-		*t = MixedContentResourceTypeAttributionSrc
 	case MixedContentResourceTypeAudio:
 		*t = MixedContentResourceTypeAudio
 	case MixedContentResourceTypeBeacon:
@@ -715,95 +712,6 @@ type CorsIssueDetails struct {
 	ClientSecurityState    *network.ClientSecurityState `json:"clientSecurityState,omitempty,omitzero"`
 }
 
-// AttributionReportingIssueType [no description].
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-AttributionReportingIssueType
-type AttributionReportingIssueType string
-
-// String returns the AttributionReportingIssueType as string value.
-func (t AttributionReportingIssueType) String() string {
-	return string(t)
-}
-
-// AttributionReportingIssueType values.
-const (
-	AttributionReportingIssueTypePermissionPolicyDisabled                             AttributionReportingIssueType = "PermissionPolicyDisabled"
-	AttributionReportingIssueTypeUntrustworthyReportingOrigin                         AttributionReportingIssueType = "UntrustworthyReportingOrigin"
-	AttributionReportingIssueTypeInsecureContext                                      AttributionReportingIssueType = "InsecureContext"
-	AttributionReportingIssueTypeInvalidHeader                                        AttributionReportingIssueType = "InvalidHeader"
-	AttributionReportingIssueTypeInvalidRegisterTriggerHeader                         AttributionReportingIssueType = "InvalidRegisterTriggerHeader"
-	AttributionReportingIssueTypeSourceAndTriggerHeaders                              AttributionReportingIssueType = "SourceAndTriggerHeaders"
-	AttributionReportingIssueTypeSourceIgnored                                        AttributionReportingIssueType = "SourceIgnored"
-	AttributionReportingIssueTypeTriggerIgnored                                       AttributionReportingIssueType = "TriggerIgnored"
-	AttributionReportingIssueTypeOsSourceIgnored                                      AttributionReportingIssueType = "OsSourceIgnored"
-	AttributionReportingIssueTypeOsTriggerIgnored                                     AttributionReportingIssueType = "OsTriggerIgnored"
-	AttributionReportingIssueTypeInvalidRegisterOsSourceHeader                        AttributionReportingIssueType = "InvalidRegisterOsSourceHeader"
-	AttributionReportingIssueTypeInvalidRegisterOsTriggerHeader                       AttributionReportingIssueType = "InvalidRegisterOsTriggerHeader"
-	AttributionReportingIssueTypeWebAndOsHeaders                                      AttributionReportingIssueType = "WebAndOsHeaders"
-	AttributionReportingIssueTypeNoWebOrOsSupport                                     AttributionReportingIssueType = "NoWebOrOsSupport"
-	AttributionReportingIssueTypeNavigationRegistrationWithoutTransientUserActivation AttributionReportingIssueType = "NavigationRegistrationWithoutTransientUserActivation"
-	AttributionReportingIssueTypeInvalidInfoHeader                                    AttributionReportingIssueType = "InvalidInfoHeader"
-	AttributionReportingIssueTypeNoRegisterSourceHeader                               AttributionReportingIssueType = "NoRegisterSourceHeader"
-	AttributionReportingIssueTypeNoRegisterTriggerHeader                              AttributionReportingIssueType = "NoRegisterTriggerHeader"
-	AttributionReportingIssueTypeNoRegisterOsSourceHeader                             AttributionReportingIssueType = "NoRegisterOsSourceHeader"
-	AttributionReportingIssueTypeNoRegisterOsTriggerHeader                            AttributionReportingIssueType = "NoRegisterOsTriggerHeader"
-	AttributionReportingIssueTypeNavigationRegistrationUniqueScopeAlreadySet          AttributionReportingIssueType = "NavigationRegistrationUniqueScopeAlreadySet"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *AttributionReportingIssueType) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch AttributionReportingIssueType(s) {
-	case AttributionReportingIssueTypePermissionPolicyDisabled:
-		*t = AttributionReportingIssueTypePermissionPolicyDisabled
-	case AttributionReportingIssueTypeUntrustworthyReportingOrigin:
-		*t = AttributionReportingIssueTypeUntrustworthyReportingOrigin
-	case AttributionReportingIssueTypeInsecureContext:
-		*t = AttributionReportingIssueTypeInsecureContext
-	case AttributionReportingIssueTypeInvalidHeader:
-		*t = AttributionReportingIssueTypeInvalidHeader
-	case AttributionReportingIssueTypeInvalidRegisterTriggerHeader:
-		*t = AttributionReportingIssueTypeInvalidRegisterTriggerHeader
-	case AttributionReportingIssueTypeSourceAndTriggerHeaders:
-		*t = AttributionReportingIssueTypeSourceAndTriggerHeaders
-	case AttributionReportingIssueTypeSourceIgnored:
-		*t = AttributionReportingIssueTypeSourceIgnored
-	case AttributionReportingIssueTypeTriggerIgnored:
-		*t = AttributionReportingIssueTypeTriggerIgnored
-	case AttributionReportingIssueTypeOsSourceIgnored:
-		*t = AttributionReportingIssueTypeOsSourceIgnored
-	case AttributionReportingIssueTypeOsTriggerIgnored:
-		*t = AttributionReportingIssueTypeOsTriggerIgnored
-	case AttributionReportingIssueTypeInvalidRegisterOsSourceHeader:
-		*t = AttributionReportingIssueTypeInvalidRegisterOsSourceHeader
-	case AttributionReportingIssueTypeInvalidRegisterOsTriggerHeader:
-		*t = AttributionReportingIssueTypeInvalidRegisterOsTriggerHeader
-	case AttributionReportingIssueTypeWebAndOsHeaders:
-		*t = AttributionReportingIssueTypeWebAndOsHeaders
-	case AttributionReportingIssueTypeNoWebOrOsSupport:
-		*t = AttributionReportingIssueTypeNoWebOrOsSupport
-	case AttributionReportingIssueTypeNavigationRegistrationWithoutTransientUserActivation:
-		*t = AttributionReportingIssueTypeNavigationRegistrationWithoutTransientUserActivation
-	case AttributionReportingIssueTypeInvalidInfoHeader:
-		*t = AttributionReportingIssueTypeInvalidInfoHeader
-	case AttributionReportingIssueTypeNoRegisterSourceHeader:
-		*t = AttributionReportingIssueTypeNoRegisterSourceHeader
-	case AttributionReportingIssueTypeNoRegisterTriggerHeader:
-		*t = AttributionReportingIssueTypeNoRegisterTriggerHeader
-	case AttributionReportingIssueTypeNoRegisterOsSourceHeader:
-		*t = AttributionReportingIssueTypeNoRegisterOsSourceHeader
-	case AttributionReportingIssueTypeNoRegisterOsTriggerHeader:
-		*t = AttributionReportingIssueTypeNoRegisterOsTriggerHeader
-	case AttributionReportingIssueTypeNavigationRegistrationUniqueScopeAlreadySet:
-		*t = AttributionReportingIssueTypeNavigationRegistrationUniqueScopeAlreadySet
-	default:
-		return fmt.Errorf("unknown AttributionReportingIssueType value: %v", s)
-	}
-	return nil
-}
-
 // SharedDictionaryError [no description].
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-SharedDictionaryError
@@ -1089,18 +997,6 @@ func (t *ConnectionAllowlistError) UnmarshalJSON(buf []byte) error {
 		return fmt.Errorf("unknown ConnectionAllowlistError value: %v", s)
 	}
 	return nil
-}
-
-// AttributionReportingIssueDetails details for issues around "Attribution
-// Reporting API" usage. Explainer:
-// https://github.com/WICG/attribution-reporting-api.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-AttributionReportingIssueDetails
-type AttributionReportingIssueDetails struct {
-	ViolationType    AttributionReportingIssueType `json:"violationType"`
-	Request          *AffectedRequest              `json:"request,omitempty,omitzero"`
-	ViolatingNodeID  cdp.BackendNodeID             `json:"violatingNodeId,omitempty,omitzero"`
-	InvalidParameter string                        `json:"invalidParameter,omitempty,omitzero"`
 }
 
 // QuirksModeIssueDetails details for issues about documents in Quirks Mode
@@ -2120,6 +2016,16 @@ type SelectivePermissionsInterventionIssueDetails struct {
 	StackTrace *runtime.StackTrace `json:"stackTrace,omitempty,omitzero"` // The stack trace at the time of the intervention.
 }
 
+// LazyLoadImageIssueDetails details for issues about lazy-loaded images
+// without explicit dimensions.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-LazyLoadImageIssueDetails
+type LazyLoadImageIssueDetails struct {
+	NodeID  cdp.BackendNodeID `json:"nodeId"`  // DOM node of the problematic HTMLImageElement.
+	URL     string            `json:"url"`     // URL or src attribute of the image.
+	FrameID cdp.FrameID       `json:"frameId"` // Frame containing the image.
+}
+
 // InspectorIssueCode a unique identifier for the type of issue. Each type
 // may use one of the optional fields in InspectorIssueDetails to convey more
 // specific information about the kind of issue.
@@ -2141,7 +2047,6 @@ const (
 	InspectorIssueCodeContentSecurityPolicyIssue            InspectorIssueCode = "ContentSecurityPolicyIssue"
 	InspectorIssueCodeSharedArrayBufferIssue                InspectorIssueCode = "SharedArrayBufferIssue"
 	InspectorIssueCodeCorsIssue                             InspectorIssueCode = "CorsIssue"
-	InspectorIssueCodeAttributionReportingIssue             InspectorIssueCode = "AttributionReportingIssue"
 	InspectorIssueCodeQuirksModeIssue                       InspectorIssueCode = "QuirksModeIssue"
 	InspectorIssueCodePartitioningBlobURLIssue              InspectorIssueCode = "PartitioningBlobURLIssue"
 	InspectorIssueCodeNavigatorUserAgentIssue               InspectorIssueCode = "NavigatorUserAgentIssue"
@@ -2164,6 +2069,7 @@ const (
 	InspectorIssueCodePerformanceIssue                      InspectorIssueCode = "PerformanceIssue"
 	InspectorIssueCodeSelectivePermissionsInterventionIssue InspectorIssueCode = "SelectivePermissionsInterventionIssue"
 	InspectorIssueCodeEmailVerificationRequestIssue         InspectorIssueCode = "EmailVerificationRequestIssue"
+	InspectorIssueCodeLazyLoadImageIssue                    InspectorIssueCode = "LazyLoadImageIssue"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -2186,8 +2092,6 @@ func (t *InspectorIssueCode) UnmarshalJSON(buf []byte) error {
 		*t = InspectorIssueCodeSharedArrayBufferIssue
 	case InspectorIssueCodeCorsIssue:
 		*t = InspectorIssueCodeCorsIssue
-	case InspectorIssueCodeAttributionReportingIssue:
-		*t = InspectorIssueCodeAttributionReportingIssue
 	case InspectorIssueCodeQuirksModeIssue:
 		*t = InspectorIssueCodeQuirksModeIssue
 	case InspectorIssueCodePartitioningBlobURLIssue:
@@ -2232,6 +2136,8 @@ func (t *InspectorIssueCode) UnmarshalJSON(buf []byte) error {
 		*t = InspectorIssueCodeSelectivePermissionsInterventionIssue
 	case InspectorIssueCodeEmailVerificationRequestIssue:
 		*t = InspectorIssueCodeEmailVerificationRequestIssue
+	case InspectorIssueCodeLazyLoadImageIssue:
+		*t = InspectorIssueCodeLazyLoadImageIssue
 	default:
 		return fmt.Errorf("unknown InspectorIssueCode value: %v", s)
 	}
@@ -2251,7 +2157,6 @@ type InspectorIssueDetails struct {
 	ContentSecurityPolicyIssueDetails            *ContentSecurityPolicyIssueDetails            `json:"contentSecurityPolicyIssueDetails,omitempty,omitzero"`
 	SharedArrayBufferIssueDetails                *SharedArrayBufferIssueDetails                `json:"sharedArrayBufferIssueDetails,omitempty,omitzero"`
 	CorsIssueDetails                             *CorsIssueDetails                             `json:"corsIssueDetails,omitempty,omitzero"`
-	AttributionReportingIssueDetails             *AttributionReportingIssueDetails             `json:"attributionReportingIssueDetails,omitempty,omitzero"`
 	QuirksModeIssueDetails                       *QuirksModeIssueDetails                       `json:"quirksModeIssueDetails,omitempty,omitzero"`
 	PartitioningBlobURLIssueDetails              *PartitioningBlobURLIssueDetails              `json:"partitioningBlobURLIssueDetails,omitempty,omitzero"`
 	GenericIssueDetails                          *GenericIssueDetails                          `json:"genericIssueDetails,omitempty,omitzero"`
@@ -2273,6 +2178,7 @@ type InspectorIssueDetails struct {
 	PerformanceIssueDetails                      *PerformanceIssueDetails                      `json:"performanceIssueDetails,omitempty,omitzero"`
 	SelectivePermissionsInterventionIssueDetails *SelectivePermissionsInterventionIssueDetails `json:"selectivePermissionsInterventionIssueDetails,omitempty,omitzero"`
 	EmailVerificationRequestIssueDetails         *EmailVerificationRequestIssueDetails         `json:"emailVerificationRequestIssueDetails,omitempty,omitzero"`
+	LazyLoadImageIssueDetails                    *LazyLoadImageIssueDetails                    `json:"lazyLoadImageIssueDetails,omitempty,omitzero"`
 }
 
 // IssueID a unique id for a DevTools inspector issue. Allows other entities

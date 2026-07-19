@@ -102,149 +102,6 @@ type TrustTokens struct {
 	Count        float64 `json:"count"`
 }
 
-// InterestGroupAuctionID protected audience interest group auction
-// identifier.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-InterestGroupAuctionId
-type InterestGroupAuctionID string
-
-// String returns the InterestGroupAuctionID as string value.
-func (t InterestGroupAuctionID) String() string {
-	return string(t)
-}
-
-// InterestGroupAccessType enum of interest group access types.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-InterestGroupAccessType
-type InterestGroupAccessType string
-
-// String returns the InterestGroupAccessType as string value.
-func (t InterestGroupAccessType) String() string {
-	return string(t)
-}
-
-// InterestGroupAccessType values.
-const (
-	InterestGroupAccessTypeJoin                  InterestGroupAccessType = "join"
-	InterestGroupAccessTypeLeave                 InterestGroupAccessType = "leave"
-	InterestGroupAccessTypeUpdate                InterestGroupAccessType = "update"
-	InterestGroupAccessTypeLoaded                InterestGroupAccessType = "loaded"
-	InterestGroupAccessTypeBid                   InterestGroupAccessType = "bid"
-	InterestGroupAccessTypeWin                   InterestGroupAccessType = "win"
-	InterestGroupAccessTypeAdditionalBid         InterestGroupAccessType = "additionalBid"
-	InterestGroupAccessTypeAdditionalBidWin      InterestGroupAccessType = "additionalBidWin"
-	InterestGroupAccessTypeTopLevelBid           InterestGroupAccessType = "topLevelBid"
-	InterestGroupAccessTypeTopLevelAdditionalBid InterestGroupAccessType = "topLevelAdditionalBid"
-	InterestGroupAccessTypeClear                 InterestGroupAccessType = "clear"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *InterestGroupAccessType) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch InterestGroupAccessType(s) {
-	case InterestGroupAccessTypeJoin:
-		*t = InterestGroupAccessTypeJoin
-	case InterestGroupAccessTypeLeave:
-		*t = InterestGroupAccessTypeLeave
-	case InterestGroupAccessTypeUpdate:
-		*t = InterestGroupAccessTypeUpdate
-	case InterestGroupAccessTypeLoaded:
-		*t = InterestGroupAccessTypeLoaded
-	case InterestGroupAccessTypeBid:
-		*t = InterestGroupAccessTypeBid
-	case InterestGroupAccessTypeWin:
-		*t = InterestGroupAccessTypeWin
-	case InterestGroupAccessTypeAdditionalBid:
-		*t = InterestGroupAccessTypeAdditionalBid
-	case InterestGroupAccessTypeAdditionalBidWin:
-		*t = InterestGroupAccessTypeAdditionalBidWin
-	case InterestGroupAccessTypeTopLevelBid:
-		*t = InterestGroupAccessTypeTopLevelBid
-	case InterestGroupAccessTypeTopLevelAdditionalBid:
-		*t = InterestGroupAccessTypeTopLevelAdditionalBid
-	case InterestGroupAccessTypeClear:
-		*t = InterestGroupAccessTypeClear
-	default:
-		return fmt.Errorf("unknown InterestGroupAccessType value: %v", s)
-	}
-	return nil
-}
-
-// InterestGroupAuctionEventType enum of auction events.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-InterestGroupAuctionEventType
-type InterestGroupAuctionEventType string
-
-// String returns the InterestGroupAuctionEventType as string value.
-func (t InterestGroupAuctionEventType) String() string {
-	return string(t)
-}
-
-// InterestGroupAuctionEventType values.
-const (
-	InterestGroupAuctionEventTypeStarted        InterestGroupAuctionEventType = "started"
-	InterestGroupAuctionEventTypeConfigResolved InterestGroupAuctionEventType = "configResolved"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *InterestGroupAuctionEventType) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch InterestGroupAuctionEventType(s) {
-	case InterestGroupAuctionEventTypeStarted:
-		*t = InterestGroupAuctionEventTypeStarted
-	case InterestGroupAuctionEventTypeConfigResolved:
-		*t = InterestGroupAuctionEventTypeConfigResolved
-	default:
-		return fmt.Errorf("unknown InterestGroupAuctionEventType value: %v", s)
-	}
-	return nil
-}
-
-// InterestGroupAuctionFetchType enum of network fetches auctions can do.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-InterestGroupAuctionFetchType
-type InterestGroupAuctionFetchType string
-
-// String returns the InterestGroupAuctionFetchType as string value.
-func (t InterestGroupAuctionFetchType) String() string {
-	return string(t)
-}
-
-// InterestGroupAuctionFetchType values.
-const (
-	InterestGroupAuctionFetchTypeBidderJs             InterestGroupAuctionFetchType = "bidderJs"
-	InterestGroupAuctionFetchTypeBidderWasm           InterestGroupAuctionFetchType = "bidderWasm"
-	InterestGroupAuctionFetchTypeSellerJs             InterestGroupAuctionFetchType = "sellerJs"
-	InterestGroupAuctionFetchTypeBidderTrustedSignals InterestGroupAuctionFetchType = "bidderTrustedSignals"
-	InterestGroupAuctionFetchTypeSellerTrustedSignals InterestGroupAuctionFetchType = "sellerTrustedSignals"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *InterestGroupAuctionFetchType) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch InterestGroupAuctionFetchType(s) {
-	case InterestGroupAuctionFetchTypeBidderJs:
-		*t = InterestGroupAuctionFetchTypeBidderJs
-	case InterestGroupAuctionFetchTypeBidderWasm:
-		*t = InterestGroupAuctionFetchTypeBidderWasm
-	case InterestGroupAuctionFetchTypeSellerJs:
-		*t = InterestGroupAuctionFetchTypeSellerJs
-	case InterestGroupAuctionFetchTypeBidderTrustedSignals:
-		*t = InterestGroupAuctionFetchTypeBidderTrustedSignals
-	case InterestGroupAuctionFetchTypeSellerTrustedSignals:
-		*t = InterestGroupAuctionFetchTypeSellerTrustedSignals
-	default:
-		return fmt.Errorf("unknown InterestGroupAuctionFetchType value: %v", s)
-	}
-	return nil
-}
-
 // SharedStorageAccessScope enum of shared storage access scopes.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-SharedStorageAccessScope
@@ -257,10 +114,9 @@ func (t SharedStorageAccessScope) String() string {
 
 // SharedStorageAccessScope values.
 const (
-	SharedStorageAccessScopeWindow                   SharedStorageAccessScope = "window"
-	SharedStorageAccessScopeSharedStorageWorklet     SharedStorageAccessScope = "sharedStorageWorklet"
-	SharedStorageAccessScopeProtectedAudienceWorklet SharedStorageAccessScope = "protectedAudienceWorklet"
-	SharedStorageAccessScopeHeader                   SharedStorageAccessScope = "header"
+	SharedStorageAccessScopeWindow               SharedStorageAccessScope = "window"
+	SharedStorageAccessScopeSharedStorageWorklet SharedStorageAccessScope = "sharedStorageWorklet"
+	SharedStorageAccessScopeHeader               SharedStorageAccessScope = "header"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -273,8 +129,6 @@ func (t *SharedStorageAccessScope) UnmarshalJSON(buf []byte) error {
 		*t = SharedStorageAccessScopeWindow
 	case SharedStorageAccessScopeSharedStorageWorklet:
 		*t = SharedStorageAccessScopeSharedStorageWorklet
-	case SharedStorageAccessScopeProtectedAudienceWorklet:
-		*t = SharedStorageAccessScopeProtectedAudienceWorklet
 	case SharedStorageAccessScopeHeader:
 		*t = SharedStorageAccessScopeHeader
 	default:

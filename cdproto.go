@@ -166,7 +166,6 @@ const (
 	CommandBrowserSetDockTile                                        = browser.CommandSetDockTile
 	CommandBrowserExecuteBrowserCommand                              = browser.CommandExecuteBrowserCommand
 	CommandBrowserAddPrivacySandboxEnrollmentOverride                = browser.CommandAddPrivacySandboxEnrollmentOverride
-	CommandBrowserAddPrivacySandboxCoordinatorKeyConfig              = browser.CommandAddPrivacySandboxCoordinatorKeyConfig
 	EventBrowserDownloadWillBegin                                    = "Browser.downloadWillBegin"
 	EventBrowserDownloadProgress                                     = "Browser.downloadProgress"
 	CommandCSSAddRule                                                = css.CommandAddRule
@@ -831,9 +830,6 @@ const (
 	CommandStorageUntrackIndexedDBForStorageKey                      = storage.CommandUntrackIndexedDBForStorageKey
 	CommandStorageGetTrustTokens                                     = storage.CommandGetTrustTokens
 	CommandStorageClearTrustTokens                                   = storage.CommandClearTrustTokens
-	CommandStorageGetInterestGroupDetails                            = storage.CommandGetInterestGroupDetails
-	CommandStorageSetInterestGroupTracking                           = storage.CommandSetInterestGroupTracking
-	CommandStorageSetInterestGroupAuctionTracking                    = storage.CommandSetInterestGroupAuctionTracking
 	CommandStorageGetSharedStorageMetadata                           = storage.CommandGetSharedStorageMetadata
 	CommandStorageGetSharedStorageEntries                            = storage.CommandGetSharedStorageEntries
 	CommandStorageSetSharedStorageEntry                              = storage.CommandSetSharedStorageEntry
@@ -845,14 +841,10 @@ const (
 	CommandStorageDeleteStorageBucket                                = storage.CommandDeleteStorageBucket
 	CommandStorageRunBounceTrackingMitigations                       = storage.CommandRunBounceTrackingMitigations
 	CommandStorageGetRelatedWebsiteSets                              = storage.CommandGetRelatedWebsiteSets
-	CommandStorageSetProtectedAudienceKAnonymity                     = storage.CommandSetProtectedAudienceKAnonymity
 	EventStorageCacheStorageContentUpdated                           = "Storage.cacheStorageContentUpdated"
 	EventStorageCacheStorageListUpdated                              = "Storage.cacheStorageListUpdated"
 	EventStorageIndexedDBContentUpdated                              = "Storage.indexedDBContentUpdated"
 	EventStorageIndexedDBListUpdated                                 = "Storage.indexedDBListUpdated"
-	EventStorageInterestGroupAccessed                                = "Storage.interestGroupAccessed"
-	EventStorageInterestGroupAuctionEventOccurred                    = "Storage.interestGroupAuctionEventOccurred"
-	EventStorageInterestGroupAuctionNetworkRequestCreated            = "Storage.interestGroupAuctionNetworkRequestCreated"
 	EventStorageSharedStorageAccessed                                = "Storage.sharedStorageAccessed"
 	EventStorageSharedStorageWorkletOperationExecutionFinished       = "Storage.sharedStorageWorkletOperationExecutionFinished"
 	EventStorageStorageBucketCreatedOrUpdated                        = "Storage.storageBucketCreatedOrUpdated"
@@ -1123,8 +1115,6 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 	case CommandBrowserExecuteBrowserCommand:
 		return emptyVal, nil
 	case CommandBrowserAddPrivacySandboxEnrollmentOverride:
-		return emptyVal, nil
-	case CommandBrowserAddPrivacySandboxCoordinatorKeyConfig:
 		return emptyVal, nil
 	case EventBrowserDownloadWillBegin:
 		v = new(browser.EventDownloadWillBegin)
@@ -2454,12 +2444,6 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		v = new(storage.GetTrustTokensReturns)
 	case CommandStorageClearTrustTokens:
 		v = new(storage.ClearTrustTokensReturns)
-	case CommandStorageGetInterestGroupDetails:
-		v = new(storage.GetInterestGroupDetailsReturns)
-	case CommandStorageSetInterestGroupTracking:
-		return emptyVal, nil
-	case CommandStorageSetInterestGroupAuctionTracking:
-		return emptyVal, nil
 	case CommandStorageGetSharedStorageMetadata:
 		v = new(storage.GetSharedStorageMetadataReturns)
 	case CommandStorageGetSharedStorageEntries:
@@ -2482,8 +2466,6 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		v = new(storage.RunBounceTrackingMitigationsReturns)
 	case CommandStorageGetRelatedWebsiteSets:
 		v = new(storage.GetRelatedWebsiteSetsReturns)
-	case CommandStorageSetProtectedAudienceKAnonymity:
-		return emptyVal, nil
 	case EventStorageCacheStorageContentUpdated:
 		v = new(storage.EventCacheStorageContentUpdated)
 	case EventStorageCacheStorageListUpdated:
@@ -2492,12 +2474,6 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		v = new(storage.EventIndexedDBContentUpdated)
 	case EventStorageIndexedDBListUpdated:
 		v = new(storage.EventIndexedDBListUpdated)
-	case EventStorageInterestGroupAccessed:
-		v = new(storage.EventInterestGroupAccessed)
-	case EventStorageInterestGroupAuctionEventOccurred:
-		v = new(storage.EventInterestGroupAuctionEventOccurred)
-	case EventStorageInterestGroupAuctionNetworkRequestCreated:
-		v = new(storage.EventInterestGroupAuctionNetworkRequestCreated)
 	case EventStorageSharedStorageAccessed:
 		v = new(storage.EventSharedStorageAccessed)
 	case EventStorageSharedStorageWorkletOperationExecutionFinished:

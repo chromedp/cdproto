@@ -311,38 +311,6 @@ type Histogram struct {
 	Buckets []*Bucket `json:"buckets"` // Buckets.
 }
 
-// PrivacySandboxAPI [no description].
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#type-PrivacySandboxAPI
-type PrivacySandboxAPI string
-
-// String returns the PrivacySandboxAPI as string value.
-func (t PrivacySandboxAPI) String() string {
-	return string(t)
-}
-
-// PrivacySandboxAPI values.
-const (
-	PrivacySandboxAPIBiddingAndAuctionServices PrivacySandboxAPI = "BiddingAndAuctionServices"
-	PrivacySandboxAPITrustedKeyValue           PrivacySandboxAPI = "TrustedKeyValue"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *PrivacySandboxAPI) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch PrivacySandboxAPI(s) {
-	case PrivacySandboxAPIBiddingAndAuctionServices:
-		*t = PrivacySandboxAPIBiddingAndAuctionServices
-	case PrivacySandboxAPITrustedKeyValue:
-		*t = PrivacySandboxAPITrustedKeyValue
-	default:
-		return fmt.Errorf("unknown PrivacySandboxAPI value: %v", s)
-	}
-	return nil
-}
-
 // DownloadProgressState download status.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#event-downloadProgress
