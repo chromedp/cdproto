@@ -40,7 +40,6 @@ const (
 	TypeWebsql         Type = "websql"
 	TypeServiceWorkers Type = "service_workers"
 	TypeCacheStorage   Type = "cache_storage"
-	TypeInterestGroups Type = "interest_groups"
 	TypeSharedStorage  Type = "shared_storage"
 	TypeStorageBuckets Type = "storage_buckets"
 	TypeAll            Type = "all"
@@ -69,8 +68,6 @@ func (t *Type) UnmarshalJSON(buf []byte) error {
 		*t = TypeServiceWorkers
 	case TypeCacheStorage:
 		*t = TypeCacheStorage
-	case TypeInterestGroups:
-		*t = TypeInterestGroups
 	case TypeSharedStorage:
 		*t = TypeSharedStorage
 	case TypeStorageBuckets:

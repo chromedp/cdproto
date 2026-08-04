@@ -535,8 +535,6 @@ const (
 	CommandNetworkGetCookies                                         = network.CommandGetCookies
 	CommandNetworkGetResponseBody                                    = network.CommandGetResponseBody
 	CommandNetworkGetRequestPostData                                 = network.CommandGetRequestPostData
-	CommandNetworkGetResponseBodyForInterception                     = network.CommandGetResponseBodyForInterception
-	CommandNetworkTakeResponseBodyForInterceptionAsStream            = network.CommandTakeResponseBodyForInterceptionAsStream
 	CommandNetworkReplayXHR                                          = network.CommandReplayXHR
 	CommandNetworkSearchInResponseBody                               = network.CommandSearchInResponseBody
 	CommandNetworkSetBlockedURLs                                     = network.CommandSetBlockedURLs
@@ -1854,10 +1852,6 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		v = new(network.GetResponseBodyReturns)
 	case CommandNetworkGetRequestPostData:
 		v = new(network.GetRequestPostDataReturns)
-	case CommandNetworkGetResponseBodyForInterception:
-		v = new(network.GetResponseBodyForInterceptionReturns)
-	case CommandNetworkTakeResponseBodyForInterceptionAsStream:
-		v = new(network.TakeResponseBodyForInterceptionAsStreamReturns)
 	case CommandNetworkReplayXHR:
 		return emptyVal, nil
 	case CommandNetworkSearchInResponseBody:

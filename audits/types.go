@@ -1238,48 +1238,52 @@ func (t FederatedAuthRequestIssueReason) String() string {
 
 // FederatedAuthRequestIssueReason values.
 const (
-	FederatedAuthRequestIssueReasonShouldEmbargo                    FederatedAuthRequestIssueReason = "ShouldEmbargo"
-	FederatedAuthRequestIssueReasonTooManyRequests                  FederatedAuthRequestIssueReason = "TooManyRequests"
-	FederatedAuthRequestIssueReasonWellKnownHTTPNotFound            FederatedAuthRequestIssueReason = "WellKnownHttpNotFound"
-	FederatedAuthRequestIssueReasonWellKnownNoResponse              FederatedAuthRequestIssueReason = "WellKnownNoResponse"
-	FederatedAuthRequestIssueReasonWellKnownInvalidResponse         FederatedAuthRequestIssueReason = "WellKnownInvalidResponse"
-	FederatedAuthRequestIssueReasonWellKnownListEmpty               FederatedAuthRequestIssueReason = "WellKnownListEmpty"
-	FederatedAuthRequestIssueReasonWellKnownInvalidContentType      FederatedAuthRequestIssueReason = "WellKnownInvalidContentType"
-	FederatedAuthRequestIssueReasonConfigNotInWellKnown             FederatedAuthRequestIssueReason = "ConfigNotInWellKnown"
-	FederatedAuthRequestIssueReasonWellKnownTooBig                  FederatedAuthRequestIssueReason = "WellKnownTooBig"
-	FederatedAuthRequestIssueReasonConfigHTTPNotFound               FederatedAuthRequestIssueReason = "ConfigHttpNotFound"
-	FederatedAuthRequestIssueReasonConfigNoResponse                 FederatedAuthRequestIssueReason = "ConfigNoResponse"
-	FederatedAuthRequestIssueReasonConfigInvalidResponse            FederatedAuthRequestIssueReason = "ConfigInvalidResponse"
-	FederatedAuthRequestIssueReasonConfigInvalidContentType         FederatedAuthRequestIssueReason = "ConfigInvalidContentType"
-	FederatedAuthRequestIssueReasonIdpNotPotentiallyTrustworthy     FederatedAuthRequestIssueReason = "IdpNotPotentiallyTrustworthy"
-	FederatedAuthRequestIssueReasonDisabledInSettings               FederatedAuthRequestIssueReason = "DisabledInSettings"
-	FederatedAuthRequestIssueReasonDisabledInFlags                  FederatedAuthRequestIssueReason = "DisabledInFlags"
-	FederatedAuthRequestIssueReasonErrorFetchingSignin              FederatedAuthRequestIssueReason = "ErrorFetchingSignin"
-	FederatedAuthRequestIssueReasonInvalidSigninResponse            FederatedAuthRequestIssueReason = "InvalidSigninResponse"
-	FederatedAuthRequestIssueReasonAccountsHTTPNotFound             FederatedAuthRequestIssueReason = "AccountsHttpNotFound"
-	FederatedAuthRequestIssueReasonAccountsNoResponse               FederatedAuthRequestIssueReason = "AccountsNoResponse"
-	FederatedAuthRequestIssueReasonAccountsInvalidResponse          FederatedAuthRequestIssueReason = "AccountsInvalidResponse"
-	FederatedAuthRequestIssueReasonAccountsListEmpty                FederatedAuthRequestIssueReason = "AccountsListEmpty"
-	FederatedAuthRequestIssueReasonAccountsInvalidContentType       FederatedAuthRequestIssueReason = "AccountsInvalidContentType"
-	FederatedAuthRequestIssueReasonIDTokenHTTPNotFound              FederatedAuthRequestIssueReason = "IdTokenHttpNotFound"
-	FederatedAuthRequestIssueReasonIDTokenNoResponse                FederatedAuthRequestIssueReason = "IdTokenNoResponse"
-	FederatedAuthRequestIssueReasonIDTokenInvalidResponse           FederatedAuthRequestIssueReason = "IdTokenInvalidResponse"
-	FederatedAuthRequestIssueReasonIDTokenIdpErrorResponse          FederatedAuthRequestIssueReason = "IdTokenIdpErrorResponse"
-	FederatedAuthRequestIssueReasonIDTokenCrossSiteIdpErrorResponse FederatedAuthRequestIssueReason = "IdTokenCrossSiteIdpErrorResponse"
-	FederatedAuthRequestIssueReasonIDTokenInvalidRequest            FederatedAuthRequestIssueReason = "IdTokenInvalidRequest"
-	FederatedAuthRequestIssueReasonIDTokenInvalidContentType        FederatedAuthRequestIssueReason = "IdTokenInvalidContentType"
-	FederatedAuthRequestIssueReasonErrorIDToken                     FederatedAuthRequestIssueReason = "ErrorIdToken"
-	FederatedAuthRequestIssueReasonCanceled                         FederatedAuthRequestIssueReason = "Canceled"
-	FederatedAuthRequestIssueReasonRpPageNotVisible                 FederatedAuthRequestIssueReason = "RpPageNotVisible"
-	FederatedAuthRequestIssueReasonSilentMediationFailure           FederatedAuthRequestIssueReason = "SilentMediationFailure"
-	FederatedAuthRequestIssueReasonNotSignedInWithIdp               FederatedAuthRequestIssueReason = "NotSignedInWithIdp"
-	FederatedAuthRequestIssueReasonMissingTransientUserActivation   FederatedAuthRequestIssueReason = "MissingTransientUserActivation"
-	FederatedAuthRequestIssueReasonReplacedByActiveMode             FederatedAuthRequestIssueReason = "ReplacedByActiveMode"
-	FederatedAuthRequestIssueReasonRelyingPartyOriginIsOpaque       FederatedAuthRequestIssueReason = "RelyingPartyOriginIsOpaque"
-	FederatedAuthRequestIssueReasonTypeNotMatching                  FederatedAuthRequestIssueReason = "TypeNotMatching"
-	FederatedAuthRequestIssueReasonUIDismissedNoEmbargo             FederatedAuthRequestIssueReason = "UiDismissedNoEmbargo"
-	FederatedAuthRequestIssueReasonCorsError                        FederatedAuthRequestIssueReason = "CorsError"
-	FederatedAuthRequestIssueReasonSuppressedBySegmentationPlatform FederatedAuthRequestIssueReason = "SuppressedBySegmentationPlatform"
+	FederatedAuthRequestIssueReasonShouldEmbargo                         FederatedAuthRequestIssueReason = "ShouldEmbargo"
+	FederatedAuthRequestIssueReasonTooManyRequests                       FederatedAuthRequestIssueReason = "TooManyRequests"
+	FederatedAuthRequestIssueReasonWellKnownHTTPNotFound                 FederatedAuthRequestIssueReason = "WellKnownHttpNotFound"
+	FederatedAuthRequestIssueReasonWellKnownNoResponse                   FederatedAuthRequestIssueReason = "WellKnownNoResponse"
+	FederatedAuthRequestIssueReasonWellKnownBlockedByConnectionAllowlist FederatedAuthRequestIssueReason = "WellKnownBlockedByConnectionAllowlist"
+	FederatedAuthRequestIssueReasonWellKnownInvalidResponse              FederatedAuthRequestIssueReason = "WellKnownInvalidResponse"
+	FederatedAuthRequestIssueReasonWellKnownListEmpty                    FederatedAuthRequestIssueReason = "WellKnownListEmpty"
+	FederatedAuthRequestIssueReasonWellKnownInvalidContentType           FederatedAuthRequestIssueReason = "WellKnownInvalidContentType"
+	FederatedAuthRequestIssueReasonConfigNotInWellKnown                  FederatedAuthRequestIssueReason = "ConfigNotInWellKnown"
+	FederatedAuthRequestIssueReasonWellKnownTooBig                       FederatedAuthRequestIssueReason = "WellKnownTooBig"
+	FederatedAuthRequestIssueReasonConfigHTTPNotFound                    FederatedAuthRequestIssueReason = "ConfigHttpNotFound"
+	FederatedAuthRequestIssueReasonConfigNoResponse                      FederatedAuthRequestIssueReason = "ConfigNoResponse"
+	FederatedAuthRequestIssueReasonConfigBlockedByConnectionAllowlist    FederatedAuthRequestIssueReason = "ConfigBlockedByConnectionAllowlist"
+	FederatedAuthRequestIssueReasonConfigInvalidResponse                 FederatedAuthRequestIssueReason = "ConfigInvalidResponse"
+	FederatedAuthRequestIssueReasonConfigInvalidContentType              FederatedAuthRequestIssueReason = "ConfigInvalidContentType"
+	FederatedAuthRequestIssueReasonIdpNotPotentiallyTrustworthy          FederatedAuthRequestIssueReason = "IdpNotPotentiallyTrustworthy"
+	FederatedAuthRequestIssueReasonDisabledInSettings                    FederatedAuthRequestIssueReason = "DisabledInSettings"
+	FederatedAuthRequestIssueReasonDisabledInFlags                       FederatedAuthRequestIssueReason = "DisabledInFlags"
+	FederatedAuthRequestIssueReasonErrorFetchingSignin                   FederatedAuthRequestIssueReason = "ErrorFetchingSignin"
+	FederatedAuthRequestIssueReasonInvalidSigninResponse                 FederatedAuthRequestIssueReason = "InvalidSigninResponse"
+	FederatedAuthRequestIssueReasonAccountsHTTPNotFound                  FederatedAuthRequestIssueReason = "AccountsHttpNotFound"
+	FederatedAuthRequestIssueReasonAccountsNoResponse                    FederatedAuthRequestIssueReason = "AccountsNoResponse"
+	FederatedAuthRequestIssueReasonAccountsBlockedByConnectionAllowlist  FederatedAuthRequestIssueReason = "AccountsBlockedByConnectionAllowlist"
+	FederatedAuthRequestIssueReasonAccountsInvalidResponse               FederatedAuthRequestIssueReason = "AccountsInvalidResponse"
+	FederatedAuthRequestIssueReasonAccountsListEmpty                     FederatedAuthRequestIssueReason = "AccountsListEmpty"
+	FederatedAuthRequestIssueReasonAccountsInvalidContentType            FederatedAuthRequestIssueReason = "AccountsInvalidContentType"
+	FederatedAuthRequestIssueReasonIDTokenHTTPNotFound                   FederatedAuthRequestIssueReason = "IdTokenHttpNotFound"
+	FederatedAuthRequestIssueReasonIDTokenNoResponse                     FederatedAuthRequestIssueReason = "IdTokenNoResponse"
+	FederatedAuthRequestIssueReasonIDTokenBlockedByConnectionAllowlist   FederatedAuthRequestIssueReason = "IdTokenBlockedByConnectionAllowlist"
+	FederatedAuthRequestIssueReasonIDTokenInvalidResponse                FederatedAuthRequestIssueReason = "IdTokenInvalidResponse"
+	FederatedAuthRequestIssueReasonIDTokenIdpErrorResponse               FederatedAuthRequestIssueReason = "IdTokenIdpErrorResponse"
+	FederatedAuthRequestIssueReasonIDTokenCrossSiteIdpErrorResponse      FederatedAuthRequestIssueReason = "IdTokenCrossSiteIdpErrorResponse"
+	FederatedAuthRequestIssueReasonIDTokenInvalidRequest                 FederatedAuthRequestIssueReason = "IdTokenInvalidRequest"
+	FederatedAuthRequestIssueReasonIDTokenInvalidContentType             FederatedAuthRequestIssueReason = "IdTokenInvalidContentType"
+	FederatedAuthRequestIssueReasonErrorIDToken                          FederatedAuthRequestIssueReason = "ErrorIdToken"
+	FederatedAuthRequestIssueReasonCanceled                              FederatedAuthRequestIssueReason = "Canceled"
+	FederatedAuthRequestIssueReasonRpPageNotVisible                      FederatedAuthRequestIssueReason = "RpPageNotVisible"
+	FederatedAuthRequestIssueReasonSilentMediationFailure                FederatedAuthRequestIssueReason = "SilentMediationFailure"
+	FederatedAuthRequestIssueReasonNotSignedInWithIdp                    FederatedAuthRequestIssueReason = "NotSignedInWithIdp"
+	FederatedAuthRequestIssueReasonMissingTransientUserActivation        FederatedAuthRequestIssueReason = "MissingTransientUserActivation"
+	FederatedAuthRequestIssueReasonReplacedByActiveMode                  FederatedAuthRequestIssueReason = "ReplacedByActiveMode"
+	FederatedAuthRequestIssueReasonRelyingPartyOriginIsOpaque            FederatedAuthRequestIssueReason = "RelyingPartyOriginIsOpaque"
+	FederatedAuthRequestIssueReasonTypeNotMatching                       FederatedAuthRequestIssueReason = "TypeNotMatching"
+	FederatedAuthRequestIssueReasonUIDismissedNoEmbargo                  FederatedAuthRequestIssueReason = "UiDismissedNoEmbargo"
+	FederatedAuthRequestIssueReasonCorsError                             FederatedAuthRequestIssueReason = "CorsError"
+	FederatedAuthRequestIssueReasonSuppressedBySegmentationPlatform      FederatedAuthRequestIssueReason = "SuppressedBySegmentationPlatform"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -1296,6 +1300,8 @@ func (t *FederatedAuthRequestIssueReason) UnmarshalJSON(buf []byte) error {
 		*t = FederatedAuthRequestIssueReasonWellKnownHTTPNotFound
 	case FederatedAuthRequestIssueReasonWellKnownNoResponse:
 		*t = FederatedAuthRequestIssueReasonWellKnownNoResponse
+	case FederatedAuthRequestIssueReasonWellKnownBlockedByConnectionAllowlist:
+		*t = FederatedAuthRequestIssueReasonWellKnownBlockedByConnectionAllowlist
 	case FederatedAuthRequestIssueReasonWellKnownInvalidResponse:
 		*t = FederatedAuthRequestIssueReasonWellKnownInvalidResponse
 	case FederatedAuthRequestIssueReasonWellKnownListEmpty:
@@ -1310,6 +1316,8 @@ func (t *FederatedAuthRequestIssueReason) UnmarshalJSON(buf []byte) error {
 		*t = FederatedAuthRequestIssueReasonConfigHTTPNotFound
 	case FederatedAuthRequestIssueReasonConfigNoResponse:
 		*t = FederatedAuthRequestIssueReasonConfigNoResponse
+	case FederatedAuthRequestIssueReasonConfigBlockedByConnectionAllowlist:
+		*t = FederatedAuthRequestIssueReasonConfigBlockedByConnectionAllowlist
 	case FederatedAuthRequestIssueReasonConfigInvalidResponse:
 		*t = FederatedAuthRequestIssueReasonConfigInvalidResponse
 	case FederatedAuthRequestIssueReasonConfigInvalidContentType:
@@ -1328,6 +1336,8 @@ func (t *FederatedAuthRequestIssueReason) UnmarshalJSON(buf []byte) error {
 		*t = FederatedAuthRequestIssueReasonAccountsHTTPNotFound
 	case FederatedAuthRequestIssueReasonAccountsNoResponse:
 		*t = FederatedAuthRequestIssueReasonAccountsNoResponse
+	case FederatedAuthRequestIssueReasonAccountsBlockedByConnectionAllowlist:
+		*t = FederatedAuthRequestIssueReasonAccountsBlockedByConnectionAllowlist
 	case FederatedAuthRequestIssueReasonAccountsInvalidResponse:
 		*t = FederatedAuthRequestIssueReasonAccountsInvalidResponse
 	case FederatedAuthRequestIssueReasonAccountsListEmpty:
@@ -1338,6 +1348,8 @@ func (t *FederatedAuthRequestIssueReason) UnmarshalJSON(buf []byte) error {
 		*t = FederatedAuthRequestIssueReasonIDTokenHTTPNotFound
 	case FederatedAuthRequestIssueReasonIDTokenNoResponse:
 		*t = FederatedAuthRequestIssueReasonIDTokenNoResponse
+	case FederatedAuthRequestIssueReasonIDTokenBlockedByConnectionAllowlist:
+		*t = FederatedAuthRequestIssueReasonIDTokenBlockedByConnectionAllowlist
 	case FederatedAuthRequestIssueReasonIDTokenInvalidResponse:
 		*t = FederatedAuthRequestIssueReasonIDTokenInvalidResponse
 	case FederatedAuthRequestIssueReasonIDTokenIdpErrorResponse:

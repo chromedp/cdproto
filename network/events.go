@@ -231,7 +231,7 @@ type EventDirectTCPSocketOpened struct {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-directTCPSocketAborted
 type EventDirectTCPSocketAborted struct {
 	Identifier   RequestID          `json:"identifier"`
-	ErrorMessage string             `json:"errorMessage"`
+	ErrorMessage ErrorReason        `json:"errorMessage"`
 	Timestamp    *cdp.MonotonicTime `json:"timestamp"`
 }
 
@@ -307,7 +307,7 @@ type EventDirectUDPSocketOpened struct {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-directUDPSocketAborted
 type EventDirectUDPSocketAborted struct {
 	Identifier   RequestID          `json:"identifier"`
-	ErrorMessage string             `json:"errorMessage"`
+	ErrorMessage ErrorReason        `json:"errorMessage"`
 	Timestamp    *cdp.MonotonicTime `json:"timestamp"`
 }
 

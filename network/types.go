@@ -110,16 +110,6 @@ func (t RequestID) String() string {
 	return string(t)
 }
 
-// InterceptionID unique intercepted request identifier.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-InterceptionId
-type InterceptionID string
-
-// String returns the InterceptionID as string value.
-func (t InterceptionID) String() string {
-	return string(t)
-}
-
 // ErrorReason network level fetch failure reason.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-ErrorReason
@@ -1360,49 +1350,6 @@ type AuthChallengeResponse struct {
 	Password string                        `json:"password,omitempty,omitzero"` // The password to provide, possibly empty. Should only be set if response is ProvideCredentials.
 }
 
-// InterceptionStage stages of the interception to begin intercepting.
-// Request will intercept before the request is sent. Response will intercept
-// after the response is received.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-InterceptionStage
-type InterceptionStage string
-
-// String returns the InterceptionStage as string value.
-func (t InterceptionStage) String() string {
-	return string(t)
-}
-
-// InterceptionStage values.
-const (
-	InterceptionStageRequest         InterceptionStage = "Request"
-	InterceptionStageHeadersReceived InterceptionStage = "HeadersReceived"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *InterceptionStage) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch InterceptionStage(s) {
-	case InterceptionStageRequest:
-		*t = InterceptionStageRequest
-	case InterceptionStageHeadersReceived:
-		*t = InterceptionStageHeadersReceived
-	default:
-		return fmt.Errorf("unknown InterceptionStage value: %v", s)
-	}
-	return nil
-}
-
-// RequestPattern request pattern for interception.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-RequestPattern
-type RequestPattern struct {
-	URLPattern        string            `json:"urlPattern,omitempty,omitzero"`        // Wildcards ('*' -> zero or more, '?' -> exactly one) are allowed. Escape character is backslash. Omitting is equivalent to "*".
-	ResourceType      ResourceType      `json:"resourceType,omitempty,omitzero"`      // If set, only requests for matching resource types will be intercepted.
-	InterceptionStage InterceptionStage `json:"interceptionStage,omitempty,omitzero"` // Stage at which to begin intercepting requests. Default is Request.
-}
-
 // SignedExchangeSignature information about a signed exchange signature.
 // https://wicg.github.io/webpackage/draft-yasskin-httpbis-origin-signed-exchanges-impl.html#rfc.section.3.1.
 //
@@ -2287,8 +2234,8 @@ type CreationEventDetails struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-RefreshEventDetails
 type RefreshEventDetails struct {
-	RefreshResult            RefreshEventDetailsRefreshResult `json:"refreshResult"`                    // The result of a refresh.
-	FetchResult              DeviceBoundSessionFetchResult    `json:"fetchResult,omitempty,omitzero"`   // If there was a fetch attempt, the result of that.
+	RefreshResult            RefreshEventDetailsRefreshResult `json:"refreshResult"`                    // The result of a refresh. LINT.IfChange(DeviceBoundSessionRefreshResult)
+	FetchResult              DeviceBoundSessionFetchResult    `json:"fetchResult,omitempty,omitzero"`   // LINT.ThenChange(//net/device_bound_sessions/refresh_result.h:DeviceBoundSessionRefreshResult,//content/browser/devtools/protocol/network_handler.cc:DeviceBoundSessionRefreshResult) If there was a fetch attempt, the result of that.
 	NewSession               *DeviceBoundSession              `json:"newSession,omitempty,omitzero"`    // The session display if there was a newly created session. This is populated for any refresh event that modifies the session config.
 	WasFullyProactiveRefresh bool                             `json:"wasFullyProactiveRefresh"`         // See comments on net::device_bound_sessions::RefreshEventResult::was_fully_proactive_refresh.
 	FailedRequest            *DeviceBoundSessionFailedRequest `json:"failedRequest,omitempty,omitzero"` // Details about a failed device bound session network request if there was one.
@@ -2610,6 +2557,7 @@ func (t *DeviceBoundSessionURLRuleRuleType) UnmarshalJSON(buf []byte) error {
 }
 
 // RefreshEventDetailsRefreshResult the result of a refresh.
+// LINT.IfChange(DeviceBoundSessionRefreshResult).
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-RefreshEventDetails
 type RefreshEventDetailsRefreshResult string
@@ -2621,14 +2569,15 @@ func (t RefreshEventDetailsRefreshResult) String() string {
 
 // RefreshEventDetailsRefreshResult values.
 const (
-	RefreshEventDetailsRefreshResultRefreshed             RefreshEventDetailsRefreshResult = "Refreshed"
-	RefreshEventDetailsRefreshResultInitializedService    RefreshEventDetailsRefreshResult = "InitializedService"
-	RefreshEventDetailsRefreshResultUnreachable           RefreshEventDetailsRefreshResult = "Unreachable"
-	RefreshEventDetailsRefreshResultServerError           RefreshEventDetailsRefreshResult = "ServerError"
-	RefreshEventDetailsRefreshResultFatalError            RefreshEventDetailsRefreshResult = "FatalError"
-	RefreshEventDetailsRefreshResultSigningQuotaExceeded  RefreshEventDetailsRefreshResult = "SigningQuotaExceeded"
-	RefreshEventDetailsRefreshResultRefreshedAsWaiter     RefreshEventDetailsRefreshResult = "RefreshedAsWaiter"
-	RefreshEventDetailsRefreshResultTransientSigningError RefreshEventDetailsRefreshResult = "TransientSigningError"
+	RefreshEventDetailsRefreshResultRefreshed                  RefreshEventDetailsRefreshResult = "Refreshed"
+	RefreshEventDetailsRefreshResultInitializedService         RefreshEventDetailsRefreshResult = "InitializedService"
+	RefreshEventDetailsRefreshResultUnreachable                RefreshEventDetailsRefreshResult = "Unreachable"
+	RefreshEventDetailsRefreshResultServerError                RefreshEventDetailsRefreshResult = "ServerError"
+	RefreshEventDetailsRefreshResultFatalError                 RefreshEventDetailsRefreshResult = "FatalError"
+	RefreshEventDetailsRefreshResultSigningQuotaExceeded       RefreshEventDetailsRefreshResult = "SigningQuotaExceeded"
+	RefreshEventDetailsRefreshResultRefreshedAsWaiter          RefreshEventDetailsRefreshResult = "RefreshedAsWaiter"
+	RefreshEventDetailsRefreshResultTransientSigningError      RefreshEventDetailsRefreshResult = "TransientSigningError"
+	RefreshEventDetailsRefreshResultInScopeRefreshNotYetNeeded RefreshEventDetailsRefreshResult = "InScopeRefreshNotYetNeeded"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -2653,6 +2602,8 @@ func (t *RefreshEventDetailsRefreshResult) UnmarshalJSON(buf []byte) error {
 		*t = RefreshEventDetailsRefreshResultRefreshedAsWaiter
 	case RefreshEventDetailsRefreshResultTransientSigningError:
 		*t = RefreshEventDetailsRefreshResultTransientSigningError
+	case RefreshEventDetailsRefreshResultInScopeRefreshNotYetNeeded:
+		*t = RefreshEventDetailsRefreshResultInScopeRefreshNotYetNeeded
 	default:
 		return fmt.Errorf("unknown RefreshEventDetailsRefreshResult value: %v", s)
 	}

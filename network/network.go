@@ -16,7 +16,6 @@ import (
 
 	"github.com/chromedp/cdproto/cdp"
 	"github.com/chromedp/cdproto/debugger"
-	"github.com/chromedp/cdproto/io"
 )
 
 // SetAcceptedEncodingsParams sets a list of content encodings that will be
@@ -551,105 +550,6 @@ func (p *GetRequestPostDataParams) Do(ctx context.Context) (postData []byte, err
 		dec = []byte(res.PostData)
 	}
 	return dec, nil
-}
-
-// GetResponseBodyForInterceptionParams returns content served for the given
-// currently intercepted request.
-type GetResponseBodyForInterceptionParams struct {
-	InterceptionID InterceptionID `json:"interceptionId"` // Identifier for the intercepted request to get body for.
-}
-
-// GetResponseBodyForInterception returns content served for the given
-// currently intercepted request.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-getResponseBodyForInterception
-//
-// parameters:
-//
-//	interceptionID - Identifier for the intercepted request to get body for.
-func GetResponseBodyForInterception(interceptionID InterceptionID) *GetResponseBodyForInterceptionParams {
-	return &GetResponseBodyForInterceptionParams{
-		InterceptionID: interceptionID,
-	}
-}
-
-// GetResponseBodyForInterceptionReturns return values.
-type GetResponseBodyForInterceptionReturns struct {
-	Body          string `json:"body,omitempty,omitzero"` // Response body.
-	Base64encoded bool   `json:"base64Encoded"`           // True, if content was sent as base64.
-}
-
-// Do executes Network.getResponseBodyForInterception against the provided context.
-//
-// returns:
-//
-//	body - Response body.
-func (p *GetResponseBodyForInterceptionParams) Do(ctx context.Context) (body []byte, err error) {
-	// execute
-	var res GetResponseBodyForInterceptionReturns
-	err = cdp.Execute(ctx, CommandGetResponseBodyForInterception, p, &res)
-	if err != nil {
-		return nil, err
-	}
-
-	// decode
-	var dec []byte
-	if res.Base64encoded {
-		dec, err = base64.StdEncoding.DecodeString(res.Body)
-		if err != nil {
-			return nil, err
-		}
-	} else {
-		dec = []byte(res.Body)
-	}
-	return dec, nil
-}
-
-// TakeResponseBodyForInterceptionAsStreamParams returns a handle to the
-// stream representing the response body. Note that after this command, the
-// intercepted request can't be continued as is -- you either need to cancel it
-// or to provide the response body. The stream only supports sequential read,
-// IO.read will fail if the position is specified.
-type TakeResponseBodyForInterceptionAsStreamParams struct {
-	InterceptionID InterceptionID `json:"interceptionId"`
-}
-
-// TakeResponseBodyForInterceptionAsStream returns a handle to the stream
-// representing the response body. Note that after this command, the intercepted
-// request can't be continued as is -- you either need to cancel it or to
-// provide the response body. The stream only supports sequential read, IO.read
-// will fail if the position is specified.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#method-takeResponseBodyForInterceptionAsStream
-//
-// parameters:
-//
-//	interceptionID
-func TakeResponseBodyForInterceptionAsStream(interceptionID InterceptionID) *TakeResponseBodyForInterceptionAsStreamParams {
-	return &TakeResponseBodyForInterceptionAsStreamParams{
-		InterceptionID: interceptionID,
-	}
-}
-
-// TakeResponseBodyForInterceptionAsStreamReturns return values.
-type TakeResponseBodyForInterceptionAsStreamReturns struct {
-	Stream io.StreamHandle `json:"stream,omitempty,omitzero"`
-}
-
-// Do executes Network.takeResponseBodyForInterceptionAsStream against the provided context.
-//
-// returns:
-//
-//	stream
-func (p *TakeResponseBodyForInterceptionAsStreamParams) Do(ctx context.Context) (stream io.StreamHandle, err error) {
-	// execute
-	var res TakeResponseBodyForInterceptionAsStreamReturns
-	err = cdp.Execute(ctx, CommandTakeResponseBodyForInterceptionAsStream, p, &res)
-	if err != nil {
-		return "", err
-	}
-
-	return res.Stream, nil
 }
 
 // ReplayXHRParams this method sends a new XMLHttpRequest which is identical
@@ -1286,37 +1186,35 @@ func (p *SetCookieControlsParams) Do(ctx context.Context) (err error) {
 
 // Command names.
 const (
-	CommandSetAcceptedEncodings                    = "Network.setAcceptedEncodings"
-	CommandClearAcceptedEncodingsOverride          = "Network.clearAcceptedEncodingsOverride"
-	CommandClearBrowserCache                       = "Network.clearBrowserCache"
-	CommandClearBrowserCookies                     = "Network.clearBrowserCookies"
-	CommandDeleteCookies                           = "Network.deleteCookies"
-	CommandDisable                                 = "Network.disable"
-	CommandEmulateNetworkConditionsByRule          = "Network.emulateNetworkConditionsByRule"
-	CommandOverrideNetworkState                    = "Network.overrideNetworkState"
-	CommandEnable                                  = "Network.enable"
-	CommandConfigureDurableMessages                = "Network.configureDurableMessages"
-	CommandGetCertificate                          = "Network.getCertificate"
-	CommandGetCookies                              = "Network.getCookies"
-	CommandGetResponseBody                         = "Network.getResponseBody"
-	CommandGetRequestPostData                      = "Network.getRequestPostData"
-	CommandGetResponseBodyForInterception          = "Network.getResponseBodyForInterception"
-	CommandTakeResponseBodyForInterceptionAsStream = "Network.takeResponseBodyForInterceptionAsStream"
-	CommandReplayXHR                               = "Network.replayXHR"
-	CommandSearchInResponseBody                    = "Network.searchInResponseBody"
-	CommandSetBlockedURLs                          = "Network.setBlockedURLs"
-	CommandSetBypassServiceWorker                  = "Network.setBypassServiceWorker"
-	CommandSetCacheDisabled                        = "Network.setCacheDisabled"
-	CommandSetCookie                               = "Network.setCookie"
-	CommandSetCookies                              = "Network.setCookies"
-	CommandSetExtraHTTPHeaders                     = "Network.setExtraHTTPHeaders"
-	CommandSetAttachDebugStack                     = "Network.setAttachDebugStack"
-	CommandStreamResourceContent                   = "Network.streamResourceContent"
-	CommandGetSecurityIsolationStatus              = "Network.getSecurityIsolationStatus"
-	CommandEnableReportingAPI                      = "Network.enableReportingApi"
-	CommandEnableDeviceBoundSessions               = "Network.enableDeviceBoundSessions"
-	CommandDeleteDeviceBoundSession                = "Network.deleteDeviceBoundSession"
-	CommandFetchSchemefulSite                      = "Network.fetchSchemefulSite"
-	CommandLoadNetworkResource                     = "Network.loadNetworkResource"
-	CommandSetCookieControls                       = "Network.setCookieControls"
+	CommandSetAcceptedEncodings           = "Network.setAcceptedEncodings"
+	CommandClearAcceptedEncodingsOverride = "Network.clearAcceptedEncodingsOverride"
+	CommandClearBrowserCache              = "Network.clearBrowserCache"
+	CommandClearBrowserCookies            = "Network.clearBrowserCookies"
+	CommandDeleteCookies                  = "Network.deleteCookies"
+	CommandDisable                        = "Network.disable"
+	CommandEmulateNetworkConditionsByRule = "Network.emulateNetworkConditionsByRule"
+	CommandOverrideNetworkState           = "Network.overrideNetworkState"
+	CommandEnable                         = "Network.enable"
+	CommandConfigureDurableMessages       = "Network.configureDurableMessages"
+	CommandGetCertificate                 = "Network.getCertificate"
+	CommandGetCookies                     = "Network.getCookies"
+	CommandGetResponseBody                = "Network.getResponseBody"
+	CommandGetRequestPostData             = "Network.getRequestPostData"
+	CommandReplayXHR                      = "Network.replayXHR"
+	CommandSearchInResponseBody           = "Network.searchInResponseBody"
+	CommandSetBlockedURLs                 = "Network.setBlockedURLs"
+	CommandSetBypassServiceWorker         = "Network.setBypassServiceWorker"
+	CommandSetCacheDisabled               = "Network.setCacheDisabled"
+	CommandSetCookie                      = "Network.setCookie"
+	CommandSetCookies                     = "Network.setCookies"
+	CommandSetExtraHTTPHeaders            = "Network.setExtraHTTPHeaders"
+	CommandSetAttachDebugStack            = "Network.setAttachDebugStack"
+	CommandStreamResourceContent          = "Network.streamResourceContent"
+	CommandGetSecurityIsolationStatus     = "Network.getSecurityIsolationStatus"
+	CommandEnableReportingAPI             = "Network.enableReportingApi"
+	CommandEnableDeviceBoundSessions      = "Network.enableDeviceBoundSessions"
+	CommandDeleteDeviceBoundSession       = "Network.deleteDeviceBoundSession"
+	CommandFetchSchemefulSite             = "Network.fetchSchemefulSite"
+	CommandLoadNetworkResource            = "Network.loadNetworkResource"
+	CommandSetCookieControls              = "Network.setCookieControls"
 )
