@@ -11,9 +11,9 @@ package digitalcredentials
 
 import (
 	"context"
+	"encoding/json/jsontext"
 
 	"github.com/chromedp/cdproto/cdp"
-	"github.com/go-json-experiment/json/jsontext"
 )
 
 // SetVirtualWalletBehaviorParams sets the behavior of the virtual wallet for

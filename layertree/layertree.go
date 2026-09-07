@@ -8,10 +8,10 @@ package layertree
 
 import (
 	"context"
+	"encoding/json/jsontext"
 
 	"github.com/chromedp/cdproto/cdp"
 	"github.com/chromedp/cdproto/dom"
-	"github.com/go-json-experiment/json/jsontext"
 )
 
 // CompositingReasonsParams provides the reasons why the given layer was
