@@ -8,9 +8,9 @@ package webmcp
 
 import (
 	"context"
+	"encoding/json/jsontext"
 
 	"github.com/chromedp/cdproto/cdp"
-	"github.com/go-json-experiment/json/jsontext"
 )
 
 // EnableParams enables the WebMCP domain, allowing events to be sent.

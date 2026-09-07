@@ -17,9 +17,9 @@ package css
 
 import (
 	"context"
+	"encoding/json/jsontext"
 
 	"github.com/chromedp/cdproto/cdp"
-	"github.com/go-json-experiment/json/jsontext"
 )
 
 // AddRuleParams inserts a new rule with the given ruleText in a stylesheet

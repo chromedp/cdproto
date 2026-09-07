@@ -10,9 +10,9 @@ package extensions
 
 import (
 	"context"
+	"encoding/json/jsontext"
 
 	"github.com/chromedp/cdproto/cdp"
-	"github.com/go-json-experiment/json/jsontext"
 )
 
 // TriggerActionParams runs an extension default action.
