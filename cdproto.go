@@ -100,6 +100,7 @@ const (
 	EventAccessibilityLoadComplete                                   = "Accessibility.loadComplete"
 	EventAccessibilityNodesUpdated                                   = "Accessibility.nodesUpdated"
 	CommandAdsGetAdMetrics                                           = ads.CommandGetAdMetrics
+	CommandAdsGetAdScripts                                           = ads.CommandGetAdScripts
 	CommandAnimationDisable                                          = animation.CommandDisable
 	CommandAnimationEnable                                           = animation.CommandEnable
 	CommandAnimationGetCurrentTime                                   = animation.CommandGetCurrentTime
@@ -157,6 +158,7 @@ const (
 	CommandBrowserCrashGPUProcess                                    = browser.CommandCrashGPUProcess
 	CommandBrowserGetVersion                                         = browser.CommandGetVersion
 	CommandBrowserGetBrowserCommandLine                              = browser.CommandGetBrowserCommandLine
+	CommandBrowserAddMockCamera                                      = browser.CommandAddMockCamera
 	CommandBrowserGetHistograms                                      = browser.CommandGetHistograms
 	CommandBrowserGetHistogram                                       = browser.CommandGetHistogram
 	CommandBrowserGetWindowBounds                                    = browser.CommandGetWindowBounds
@@ -166,6 +168,8 @@ const (
 	CommandBrowserSetDockTile                                        = browser.CommandSetDockTile
 	CommandBrowserExecuteBrowserCommand                              = browser.CommandExecuteBrowserCommand
 	CommandBrowserAddPrivacySandboxEnrollmentOverride                = browser.CommandAddPrivacySandboxEnrollmentOverride
+	CommandBrowserGetGlobalPrivacyControl                            = browser.CommandGetGlobalPrivacyControl
+	CommandBrowserSetGlobalPrivacyControl                            = browser.CommandSetGlobalPrivacyControl
 	EventBrowserDownloadWillBegin                                    = "Browser.downloadWillBegin"
 	EventBrowserDownloadProgress                                     = "Browser.downloadProgress"
 	CommandCSSAddRule                                                = css.CommandAddRule
@@ -275,6 +279,7 @@ const (
 	CommandDOMGetQueryingDescendantsForContainer                     = dom.CommandGetQueryingDescendantsForContainer
 	CommandDOMGetAnchorElement                                       = dom.CommandGetAnchorElement
 	CommandDOMForceShowPopover                                       = dom.CommandForceShowPopover
+	CommandDOMForceShowInterest                                      = dom.CommandForceShowInterest
 	EventDOMAttributeModified                                        = "DOM.attributeModified"
 	EventDOMAdoptedStyleSheetsModified                               = "DOM.adoptedStyleSheetsModified"
 	EventDOMAttributeRemoved                                         = "DOM.attributeRemoved"
@@ -340,7 +345,6 @@ const (
 	CommandDebuggerSetBreakpointsActive                              = debugger.CommandSetBreakpointsActive
 	CommandDebuggerSetPauseOnExceptions                              = debugger.CommandSetPauseOnExceptions
 	CommandDebuggerSetReturnValue                                    = debugger.CommandSetReturnValue
-	CommandDebuggerSetScriptSource                                   = debugger.CommandSetScriptSource
 	CommandDebuggerSetSkipAllPauses                                  = debugger.CommandSetSkipAllPauses
 	CommandDebuggerSetVariableValue                                  = debugger.CommandSetVariableValue
 	CommandDebuggerStepInto                                          = debugger.CommandStepInto
@@ -366,6 +370,7 @@ const (
 	CommandEmulationSetCPUThrottlingRate                             = emulation.CommandSetCPUThrottlingRate
 	CommandEmulationSetDefaultBackgroundColorOverride                = emulation.CommandSetDefaultBackgroundColorOverride
 	CommandEmulationSetSafeAreaInsetsOverride                        = emulation.CommandSetSafeAreaInsetsOverride
+	CommandEmulationSetVirtualKeyboardGeometryOverride               = emulation.CommandSetVirtualKeyboardGeometryOverride
 	CommandEmulationSetDeviceMetricsOverride                         = emulation.CommandSetDeviceMetricsOverride
 	CommandEmulationSetDevicePostureOverride                         = emulation.CommandSetDevicePostureOverride
 	CommandEmulationClearDevicePostureOverride                       = emulation.CommandClearDevicePostureOverride
@@ -394,6 +399,7 @@ const (
 	CommandEmulationSetDisabledImageTypes                            = emulation.CommandSetDisabledImageTypes
 	CommandEmulationSetDataSaverOverride                             = emulation.CommandSetDataSaverOverride
 	CommandEmulationSetHardwareConcurrencyOverride                   = emulation.CommandSetHardwareConcurrencyOverride
+	CommandEmulationSetCPUPerformanceOverride                        = emulation.CommandSetCPUPerformanceOverride
 	CommandEmulationSetUserAgentOverride                             = emulation.CommandSetUserAgentOverride
 	CommandEmulationSetAutomationOverride                            = emulation.CommandSetAutomationOverride
 	CommandEmulationSetSmallViewportHeightDifferenceOverride         = emulation.CommandSetSmallViewportHeightDifferenceOverride
@@ -521,8 +527,6 @@ const (
 	CommandMemoryGetAllTimeSamplingProfile                           = memory.CommandGetAllTimeSamplingProfile
 	CommandMemoryGetBrowserSamplingProfile                           = memory.CommandGetBrowserSamplingProfile
 	CommandMemoryGetSamplingProfile                                  = memory.CommandGetSamplingProfile
-	CommandNetworkSetAcceptedEncodings                               = network.CommandSetAcceptedEncodings
-	CommandNetworkClearAcceptedEncodingsOverride                     = network.CommandClearAcceptedEncodingsOverride
 	CommandNetworkClearBrowserCache                                  = network.CommandClearBrowserCache
 	CommandNetworkClearBrowserCookies                                = network.CommandClearBrowserCookies
 	CommandNetworkDeleteCookies                                      = network.CommandDeleteCookies
@@ -670,6 +674,8 @@ const (
 	CommandPageSetDocumentContent                                    = page.CommandSetDocumentContent
 	CommandPageSetLifecycleEventsEnabled                             = page.CommandSetLifecycleEventsEnabled
 	CommandPageStartScreencast                                       = page.CommandStartScreencast
+	CommandPageStartScreenRecording                                  = page.CommandStartScreenRecording
+	CommandPageStopScreenRecording                                   = page.CommandStopScreenRecording
 	CommandPageStopLoading                                           = page.CommandStopLoading
 	CommandPageCrash                                                 = page.CommandCrash
 	CommandPageClose                                                 = page.CommandClose
@@ -828,13 +834,6 @@ const (
 	CommandStorageUntrackIndexedDBForStorageKey                      = storage.CommandUntrackIndexedDBForStorageKey
 	CommandStorageGetTrustTokens                                     = storage.CommandGetTrustTokens
 	CommandStorageClearTrustTokens                                   = storage.CommandClearTrustTokens
-	CommandStorageGetSharedStorageMetadata                           = storage.CommandGetSharedStorageMetadata
-	CommandStorageGetSharedStorageEntries                            = storage.CommandGetSharedStorageEntries
-	CommandStorageSetSharedStorageEntry                              = storage.CommandSetSharedStorageEntry
-	CommandStorageDeleteSharedStorageEntry                           = storage.CommandDeleteSharedStorageEntry
-	CommandStorageClearSharedStorageEntries                          = storage.CommandClearSharedStorageEntries
-	CommandStorageResetSharedStorageBudget                           = storage.CommandResetSharedStorageBudget
-	CommandStorageSetSharedStorageTracking                           = storage.CommandSetSharedStorageTracking
 	CommandStorageSetStorageBucketTracking                           = storage.CommandSetStorageBucketTracking
 	CommandStorageDeleteStorageBucket                                = storage.CommandDeleteStorageBucket
 	CommandStorageRunBounceTrackingMitigations                       = storage.CommandRunBounceTrackingMitigations
@@ -843,8 +842,6 @@ const (
 	EventStorageCacheStorageListUpdated                              = "Storage.cacheStorageListUpdated"
 	EventStorageIndexedDBContentUpdated                              = "Storage.indexedDBContentUpdated"
 	EventStorageIndexedDBListUpdated                                 = "Storage.indexedDBListUpdated"
-	EventStorageSharedStorageAccessed                                = "Storage.sharedStorageAccessed"
-	EventStorageSharedStorageWorkletOperationExecutionFinished       = "Storage.sharedStorageWorkletOperationExecutionFinished"
 	EventStorageStorageBucketCreatedOrUpdated                        = "Storage.storageBucketCreatedOrUpdated"
 	EventStorageStorageBucketDeleted                                 = "Storage.storageBucketDeleted"
 	CommandSystemInfoGetInfo                                         = systeminfo.CommandGetInfo
@@ -982,6 +979,8 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		v = new(accessibility.EventNodesUpdated)
 	case CommandAdsGetAdMetrics:
 		v = new(ads.GetAdMetricsReturns)
+	case CommandAdsGetAdScripts:
+		v = new(ads.GetAdScriptsReturns)
 	case CommandAnimationDisable:
 		return emptyVal, nil
 	case CommandAnimationEnable:
@@ -1096,6 +1095,8 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		v = new(browser.GetVersionReturns)
 	case CommandBrowserGetBrowserCommandLine:
 		v = new(browser.GetBrowserCommandLineReturns)
+	case CommandBrowserAddMockCamera:
+		return emptyVal, nil
 	case CommandBrowserGetHistograms:
 		v = new(browser.GetHistogramsReturns)
 	case CommandBrowserGetHistogram:
@@ -1114,6 +1115,10 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		return emptyVal, nil
 	case CommandBrowserAddPrivacySandboxEnrollmentOverride:
 		return emptyVal, nil
+	case CommandBrowserGetGlobalPrivacyControl:
+		v = new(browser.GetGlobalPrivacyControlReturns)
+	case CommandBrowserSetGlobalPrivacyControl:
+		v = new(browser.SetGlobalPrivacyControlReturns)
 	case EventBrowserDownloadWillBegin:
 		v = new(browser.EventDownloadWillBegin)
 	case EventBrowserDownloadProgress:
@@ -1332,6 +1337,8 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		v = new(dom.GetAnchorElementReturns)
 	case CommandDOMForceShowPopover:
 		v = new(dom.ForceShowPopoverReturns)
+	case CommandDOMForceShowInterest:
+		return emptyVal, nil
 	case EventDOMAttributeModified:
 		v = new(dom.EventAttributeModified)
 	case EventDOMAdoptedStyleSheetsModified:
@@ -1462,8 +1469,6 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		return emptyVal, nil
 	case CommandDebuggerSetReturnValue:
 		return emptyVal, nil
-	case CommandDebuggerSetScriptSource:
-		v = new(debugger.SetScriptSourceReturns)
 	case CommandDebuggerSetSkipAllPauses:
 		return emptyVal, nil
 	case CommandDebuggerSetVariableValue:
@@ -1513,6 +1518,8 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 	case CommandEmulationSetDefaultBackgroundColorOverride:
 		return emptyVal, nil
 	case CommandEmulationSetSafeAreaInsetsOverride:
+		return emptyVal, nil
+	case CommandEmulationSetVirtualKeyboardGeometryOverride:
 		return emptyVal, nil
 	case CommandEmulationSetDeviceMetricsOverride:
 		return emptyVal, nil
@@ -1569,6 +1576,8 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 	case CommandEmulationSetDataSaverOverride:
 		return emptyVal, nil
 	case CommandEmulationSetHardwareConcurrencyOverride:
+		return emptyVal, nil
+	case CommandEmulationSetCPUPerformanceOverride:
 		return emptyVal, nil
 	case CommandEmulationSetUserAgentOverride:
 		return emptyVal, nil
@@ -1824,10 +1833,6 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		v = new(memory.GetBrowserSamplingProfileReturns)
 	case CommandMemoryGetSamplingProfile:
 		v = new(memory.GetSamplingProfileReturns)
-	case CommandNetworkSetAcceptedEncodings:
-		return emptyVal, nil
-	case CommandNetworkClearAcceptedEncodingsOverride:
-		return emptyVal, nil
 	case CommandNetworkClearBrowserCache:
 		return emptyVal, nil
 	case CommandNetworkClearBrowserCookies:
@@ -2122,6 +2127,10 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		return emptyVal, nil
 	case CommandPageStartScreencast:
 		return emptyVal, nil
+	case CommandPageStartScreenRecording:
+		v = new(page.StartScreenRecordingReturns)
+	case CommandPageStopScreenRecording:
+		v = new(page.StopScreenRecordingReturns)
 	case CommandPageStopLoading:
 		return emptyVal, nil
 	case CommandPageCrash:
@@ -2438,20 +2447,6 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		v = new(storage.GetTrustTokensReturns)
 	case CommandStorageClearTrustTokens:
 		v = new(storage.ClearTrustTokensReturns)
-	case CommandStorageGetSharedStorageMetadata:
-		v = new(storage.GetSharedStorageMetadataReturns)
-	case CommandStorageGetSharedStorageEntries:
-		v = new(storage.GetSharedStorageEntriesReturns)
-	case CommandStorageSetSharedStorageEntry:
-		return emptyVal, nil
-	case CommandStorageDeleteSharedStorageEntry:
-		return emptyVal, nil
-	case CommandStorageClearSharedStorageEntries:
-		return emptyVal, nil
-	case CommandStorageResetSharedStorageBudget:
-		return emptyVal, nil
-	case CommandStorageSetSharedStorageTracking:
-		return emptyVal, nil
 	case CommandStorageSetStorageBucketTracking:
 		return emptyVal, nil
 	case CommandStorageDeleteStorageBucket:
@@ -2468,10 +2463,6 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		v = new(storage.EventIndexedDBContentUpdated)
 	case EventStorageIndexedDBListUpdated:
 		v = new(storage.EventIndexedDBListUpdated)
-	case EventStorageSharedStorageAccessed:
-		v = new(storage.EventSharedStorageAccessed)
-	case EventStorageSharedStorageWorkletOperationExecutionFinished:
-		v = new(storage.EventSharedStorageWorkletOperationExecutionFinished)
 	case EventStorageStorageBucketCreatedOrUpdated:
 		v = new(storage.EventStorageBucketCreatedOrUpdated)
 	case EventStorageStorageBucketDeleted:

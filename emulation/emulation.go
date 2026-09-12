@@ -12,6 +12,7 @@ import (
 	"context"
 
 	"github.com/chromedp/cdproto/cdp"
+	"github.com/chromedp/cdproto/dom"
 	"github.com/chromedp/cdproto/page"
 )
 
@@ -200,6 +201,43 @@ func (p *SetSafeAreaInsetsOverrideParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandSetSafeAreaInsetsOverride, p, nil)
 }
 
+// SetVirtualKeyboardGeometryOverrideParams overrides virtual keyboard
+// geometry in CSS pixels, relative to the top-level viewport. The provided rect
+// is used for navigator.virtualKeyboard.boundingRect, geometrychange events,
+// and env(keyboard-inset-*) values on the inspected frame. The override applies
+// independently of navigator.virtualKeyboard.overlaysContent so clients can
+// preview overlay geometry without mutating page state. Values are rounded to
+// the nearest CSS pixel. Omitting the rect clears the override.
+type SetVirtualKeyboardGeometryOverrideParams struct {
+	KeyboardRect *dom.Rect `json:"keyboardRect,omitempty,omitzero"`
+}
+
+// SetVirtualKeyboardGeometryOverride overrides virtual keyboard geometry in
+// CSS pixels, relative to the top-level viewport. The provided rect is used for
+// navigator.virtualKeyboard.boundingRect, geometrychange events, and
+// env(keyboard-inset-*) values on the inspected frame. The override applies
+// independently of navigator.virtualKeyboard.overlaysContent so clients can
+// preview overlay geometry without mutating page state. Values are rounded to
+// the nearest CSS pixel. Omitting the rect clears the override.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#method-setVirtualKeyboardGeometryOverride
+//
+// parameters:
+func SetVirtualKeyboardGeometryOverride() *SetVirtualKeyboardGeometryOverrideParams {
+	return &SetVirtualKeyboardGeometryOverrideParams{}
+}
+
+// WithKeyboardRect [no description].
+func (p SetVirtualKeyboardGeometryOverrideParams) WithKeyboardRect(keyboardRect *dom.Rect) *SetVirtualKeyboardGeometryOverrideParams {
+	p.KeyboardRect = keyboardRect
+	return &p
+}
+
+// Do executes Emulation.setVirtualKeyboardGeometryOverride against the provided context.
+func (p *SetVirtualKeyboardGeometryOverrideParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetVirtualKeyboardGeometryOverride, p, nil)
+}
+
 // SetDeviceMetricsOverrideParams overrides the values of device screen
 // dimensions (window.screen.width, window.screen.height, window.innerWidth,
 // window.innerHeight, and "device-width"/"device-height"-related CSS media
@@ -219,6 +257,7 @@ type SetDeviceMetricsOverrideParams struct {
 	Viewport                       *page.Viewport                        `json:"viewport,omitempty,omitzero"`          // If set, the visible area of the page will be overridden to this viewport. This viewport change is not observed by the page, e.g. viewport-relative elements do not change positions.
 	ScrollbarType                  SetDeviceMetricsOverrideScrollbarType `json:"scrollbarType,omitempty,omitzero"`     // Scrollbar type. Default: default.
 	ScreenOrientationLockEmulation bool                                  `json:"screenOrientationLockEmulation"`       // If set to true, enables screen orientation lock emulation, which intercepts screen.orientation.lock() calls from the page and reports orientation changes via screenOrientationLockChanged events. This is useful for emulating mobile device orientation lock behavior in responsive design mode.
+	ViewportMeta                   SetDeviceMetricsOverrideViewportMeta  `json:"viewportMeta,omitempty,omitzero"`      // Viewport meta tag behavior. Default: default. Note: if mobile is true, the viewport meta tag is always enabled.
 }
 
 // SetDeviceMetricsOverride overrides the values of device screen dimensions
@@ -313,6 +352,13 @@ func (p SetDeviceMetricsOverrideParams) WithScrollbarType(scrollbarType SetDevic
 // device orientation lock behavior in responsive design mode.
 func (p SetDeviceMetricsOverrideParams) WithScreenOrientationLockEmulation(screenOrientationLockEmulation bool) *SetDeviceMetricsOverrideParams {
 	p.ScreenOrientationLockEmulation = screenOrientationLockEmulation
+	return &p
+}
+
+// WithViewportMeta viewport meta tag behavior. Default: default. Note: if
+// mobile is true, the viewport meta tag is always enabled.
+func (p SetDeviceMetricsOverrideParams) WithViewportMeta(viewportMeta SetDeviceMetricsOverrideViewportMeta) *SetDeviceMetricsOverrideParams {
+	p.ViewportMeta = viewportMeta
 	return &p
 }
 
@@ -1137,6 +1183,33 @@ func (p *SetHardwareConcurrencyOverrideParams) Do(ctx context.Context) (err erro
 	return cdp.Execute(ctx, CommandSetHardwareConcurrencyOverride, p, nil)
 }
 
+// SetCPUPerformanceOverrideParams overrides the value of
+// navigator.cpuPerformance.
+type SetCPUPerformanceOverrideParams struct {
+	PerformanceTier SetCPUPerformanceOverridePerformanceTier `json:"performanceTier,omitempty,omitzero"` // Override value. Omitting the parameter disables the override.
+}
+
+// SetCPUPerformanceOverride overrides the value of navigator.cpuPerformance.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#method-setCPUPerformanceOverride
+//
+// parameters:
+func SetCPUPerformanceOverride() *SetCPUPerformanceOverrideParams {
+	return &SetCPUPerformanceOverrideParams{}
+}
+
+// WithPerformanceTier override value. Omitting the parameter disables the
+// override.
+func (p SetCPUPerformanceOverrideParams) WithPerformanceTier(performanceTier SetCPUPerformanceOverridePerformanceTier) *SetCPUPerformanceOverrideParams {
+	p.PerformanceTier = performanceTier
+	return &p
+}
+
+// Do executes Emulation.setCPUPerformanceOverride against the provided context.
+func (p *SetCPUPerformanceOverrideParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandSetCPUPerformanceOverride, p, nil)
+}
+
 // SetUserAgentOverrideParams allows overriding user agent with the given
 // string. userAgentMetadata must be set for Client Hint headers to be sent.
 type SetUserAgentOverrideParams struct {
@@ -1544,6 +1617,7 @@ const (
 	CommandSetCPUThrottlingRate                     = "Emulation.setCPUThrottlingRate"
 	CommandSetDefaultBackgroundColorOverride        = "Emulation.setDefaultBackgroundColorOverride"
 	CommandSetSafeAreaInsetsOverride                = "Emulation.setSafeAreaInsetsOverride"
+	CommandSetVirtualKeyboardGeometryOverride       = "Emulation.setVirtualKeyboardGeometryOverride"
 	CommandSetDeviceMetricsOverride                 = "Emulation.setDeviceMetricsOverride"
 	CommandSetDevicePostureOverride                 = "Emulation.setDevicePostureOverride"
 	CommandClearDevicePostureOverride               = "Emulation.clearDevicePostureOverride"
@@ -1572,6 +1646,7 @@ const (
 	CommandSetDisabledImageTypes                    = "Emulation.setDisabledImageTypes"
 	CommandSetDataSaverOverride                     = "Emulation.setDataSaverOverride"
 	CommandSetHardwareConcurrencyOverride           = "Emulation.setHardwareConcurrencyOverride"
+	CommandSetCPUPerformanceOverride                = "Emulation.setCPUPerformanceOverride"
 	CommandSetUserAgentOverride                     = "Emulation.setUserAgentOverride"
 	CommandSetAutomationOverride                    = "Emulation.setAutomationOverride"
 	CommandSetSmallViewportHeightDifferenceOverride = "Emulation.setSmallViewportHeightDifferenceOverride"

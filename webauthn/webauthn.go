@@ -404,7 +404,7 @@ type SetCredentialPropertiesParams struct {
 	BackupState                    bool            `json:"backupState"`
 	ActiveCmtgKeyIndex             int64           `json:"activeCmtgKeyIndex,omitempty,omitzero"`
 	GenerateCmtgKeyOnNextOperation bool            `json:"generateCmtgKeyOnNextOperation"`
-	SignCount                      int64           `json:"signCount,omitempty,omitzero"` // Must be equal to or greater than -1. If -1, the signature counter is removed from the credential, and every assertion operation will report a value of 0. See https://w3c.github.io/webauthn/#signature-counter
+	SignCount                      float64         `json:"signCount,omitempty,omitzero"` // Must be equal to or greater than -1. If -1, the signature counter is removed from the credential, and every assertion operation will report a value of 0. See https://w3c.github.io/webauthn/#signature-counter
 }
 
 // SetCredentialProperties allows setting credential properties.
@@ -453,7 +453,7 @@ func (p SetCredentialPropertiesParams) WithGenerateCmtgKeyOnNextOperation(genera
 // WithSignCount must be equal to or greater than -1. If -1, the signature
 // counter is removed from the credential, and every assertion operation will
 // report a value of 0. See https://w3c.github.io/webauthn/#signature-counter.
-func (p SetCredentialPropertiesParams) WithSignCount(signCount int64) *SetCredentialPropertiesParams {
+func (p SetCredentialPropertiesParams) WithSignCount(signCount float64) *SetCredentialPropertiesParams {
 	p.SignCount = signCount
 	return &p
 }

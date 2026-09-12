@@ -121,6 +121,7 @@ type EvaluateOnCallFrameParams struct {
 	GeneratePreview       bool              `json:"generatePreview"`                // Whether preview should be generated for the result.
 	ThrowOnSideEffect     bool              `json:"throwOnSideEffect"`              // Whether to throw an exception if side effect cannot be ruled out during evaluation.
 	Timeout               runtime.TimeDelta `json:"timeout,omitempty,omitzero"`     // Terminate execution after timing out (number of milliseconds).
+	ScopeNumber           int64             `json:"scopeNumber,omitempty,omitzero"` // Specifies the scope number to evaluate the expression in (default: 0, innermost scope).
 }
 
 // EvaluateOnCallFrame evaluates expression on a given call frame.
@@ -187,6 +188,13 @@ func (p EvaluateOnCallFrameParams) WithThrowOnSideEffect(throwOnSideEffect bool)
 // WithTimeout terminate execution after timing out (number of milliseconds).
 func (p EvaluateOnCallFrameParams) WithTimeout(timeout runtime.TimeDelta) *EvaluateOnCallFrameParams {
 	p.Timeout = timeout
+	return &p
+}
+
+// WithScopeNumber specifies the scope number to evaluate the expression in
+// (default: 0, innermost scope).
+func (p EvaluateOnCallFrameParams) WithScopeNumber(scopeNumber int64) *EvaluateOnCallFrameParams {
+	p.ScopeNumber = scopeNumber
 	return &p
 }
 
@@ -1052,79 +1060,6 @@ func (p *SetReturnValueParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandSetReturnValue, p, nil)
 }
 
-// SetScriptSourceParams edits JavaScript source live. In general, functions
-// that are currently on the stack can not be edited with a single exception: If
-// the edited function is the top-most stack frame and that is the only
-// activation of that function on the stack. In this case the live edit will be
-// successful and a Debugger.restartFrame for the top-most function is
-// automatically triggered.
-type SetScriptSourceParams struct {
-	ScriptID             cdp.ScriptID `json:"scriptId"`             // Id of the script to edit.
-	ScriptSource         string       `json:"scriptSource"`         // New content of the script.
-	DryRun               bool         `json:"dryRun"`               // If true the change will not actually be applied. Dry run may be used to get result description without actually modifying the code.
-	AllowTopFrameEditing bool         `json:"allowTopFrameEditing"` // If true, then scriptSource is allowed to change the function on top of the stack as long as the top-most stack frame is the only activation of that function.
-}
-
-// SetScriptSource edits JavaScript source live. In general, functions that
-// are currently on the stack can not be edited with a single exception: If the
-// edited function is the top-most stack frame and that is the only activation
-// of that function on the stack. In this case the live edit will be successful
-// and a Debugger.restartFrame for the top-most function is automatically
-// triggered.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-setScriptSource
-//
-// parameters:
-//
-//	scriptID - Id of the script to edit.
-//	scriptSource - New content of the script.
-func SetScriptSource(scriptID cdp.ScriptID, scriptSource string) *SetScriptSourceParams {
-	return &SetScriptSourceParams{
-		ScriptID:             scriptID,
-		ScriptSource:         scriptSource,
-		DryRun:               false,
-		AllowTopFrameEditing: false,
-	}
-}
-
-// WithDryRun if true the change will not actually be applied. Dry run may be
-// used to get result description without actually modifying the code.
-func (p SetScriptSourceParams) WithDryRun(dryRun bool) *SetScriptSourceParams {
-	p.DryRun = dryRun
-	return &p
-}
-
-// WithAllowTopFrameEditing if true, then scriptSource is allowed to change
-// the function on top of the stack as long as the top-most stack frame is the
-// only activation of that function.
-func (p SetScriptSourceParams) WithAllowTopFrameEditing(allowTopFrameEditing bool) *SetScriptSourceParams {
-	p.AllowTopFrameEditing = allowTopFrameEditing
-	return &p
-}
-
-// SetScriptSourceReturns return values.
-type SetScriptSourceReturns struct {
-	Status           SetScriptSourceStatus     `json:"status,omitempty,omitzero"`           // Whether the operation was successful or not. Only Ok denotes a successful live edit while the other enum variants denote why the live edit failed.
-	ExceptionDetails *runtime.ExceptionDetails `json:"exceptionDetails,omitempty,omitzero"` // Exception details if any. Only present when status is CompileError.
-}
-
-// Do executes Debugger.setScriptSource against the provided context.
-//
-// returns:
-//
-//	status - Whether the operation was successful or not. Only Ok denotes a successful live edit while the other enum variants denote why the live edit failed.
-//	exceptionDetails - Exception details if any. Only present when status is CompileError.
-func (p *SetScriptSourceParams) Do(ctx context.Context) (status SetScriptSourceStatus, exceptionDetails *runtime.ExceptionDetails, err error) {
-	// execute
-	var res SetScriptSourceReturns
-	err = cdp.Execute(ctx, CommandSetScriptSource, p, &res)
-	if err != nil {
-		return "", nil, err
-	}
-
-	return res.Status, res.ExceptionDetails, nil
-}
-
 // SetSkipAllPausesParams makes page not interrupt on any pauses (breakpoint,
 // exception, dom exception etc).
 type SetSkipAllPausesParams struct {
@@ -1288,7 +1223,6 @@ const (
 	CommandSetBreakpointsActive         = "Debugger.setBreakpointsActive"
 	CommandSetPauseOnExceptions         = "Debugger.setPauseOnExceptions"
 	CommandSetReturnValue               = "Debugger.setReturnValue"
-	CommandSetScriptSource              = "Debugger.setScriptSource"
 	CommandSetSkipAllPauses             = "Debugger.setSkipAllPauses"
 	CommandSetVariableValue             = "Debugger.setVariableValue"
 	CommandStepInto                     = "Debugger.stepInto"

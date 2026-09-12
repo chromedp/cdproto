@@ -873,7 +873,7 @@ type AdAncestry struct {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-AdProvenance
 type AdProvenance struct {
 	FilterlistRule   string      `json:"filterlistRule,omitempty,omitzero"`   // The filterlist rule that matched, if any.
-	AdScriptAncestry *AdAncestry `json:"adScriptAncestry,omitempty,omitzero"` // The script ancestry that created the ad, if any.
+	AdScriptAncestry *AdAncestry `json:"adScriptAncestry,omitempty,omitzero"` // The script ancestry that created the ad, if any. Note: depending on the context, this may represent the full ancestry up to the root script, or it may contain only one script representing the immediate ancestor.
 }
 
 // TimeSinceEpochMilli special timestamp type for Response's responseTime

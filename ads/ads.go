@@ -45,7 +45,43 @@ func (p *GetAdMetricsParams) Do(ctx context.Context) (metrics *AdMetrics, err er
 	return res.Metrics, nil
 }
 
+// GetAdScriptsParams retrieves ad scripts for the current page. To minimize
+// payload size, this only returns the newly tracked ad scripts since the last
+// call to getAdScripts (i.e., the delta).
+type GetAdScriptsParams struct{}
+
+// GetAdScripts retrieves ad scripts for the current page. To minimize
+// payload size, this only returns the newly tracked ad scripts since the last
+// call to getAdScripts (i.e., the delta).
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Ads#method-getAdScripts
+func GetAdScripts() *GetAdScriptsParams {
+	return &GetAdScriptsParams{}
+}
+
+// GetAdScriptsReturns return values.
+type GetAdScriptsReturns struct {
+	NewScripts []*AdScript `json:"newScripts,omitempty,omitzero"`
+}
+
+// Do executes Ads.getAdScripts against the provided context.
+//
+// returns:
+//
+//	newScripts
+func (p *GetAdScriptsParams) Do(ctx context.Context) (newScripts []*AdScript, err error) {
+	// execute
+	var res GetAdScriptsReturns
+	err = cdp.Execute(ctx, CommandGetAdScripts, nil, &res)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.NewScripts, nil
+}
+
 // Command names.
 const (
 	CommandGetAdMetrics = "Ads.getAdMetrics"
+	CommandGetAdScripts = "Ads.getAdScripts"
 )

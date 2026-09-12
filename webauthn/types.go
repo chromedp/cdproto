@@ -84,7 +84,7 @@ func (t *Ctap2version) UnmarshalJSON(buf []byte) error {
 	return nil
 }
 
-// AuthenticatorTransport [no description].
+// AuthenticatorTransport LINT.IfChange(AuthenticatorTransport).
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/WebAuthn#type-AuthenticatorTransport
 type AuthenticatorTransport string
@@ -96,11 +96,13 @@ func (t AuthenticatorTransport) String() string {
 
 // AuthenticatorTransport values.
 const (
-	AuthenticatorTransportUsb      AuthenticatorTransport = "usb"
-	AuthenticatorTransportNfc      AuthenticatorTransport = "nfc"
-	AuthenticatorTransportBle      AuthenticatorTransport = "ble"
-	AuthenticatorTransportCable    AuthenticatorTransport = "cable"
-	AuthenticatorTransportInternal AuthenticatorTransport = "internal"
+	AuthenticatorTransportUsb       AuthenticatorTransport = "usb"
+	AuthenticatorTransportNfc       AuthenticatorTransport = "nfc"
+	AuthenticatorTransportBle       AuthenticatorTransport = "ble"
+	AuthenticatorTransportCable     AuthenticatorTransport = "cable"
+	AuthenticatorTransportHybrid    AuthenticatorTransport = "hybrid"
+	AuthenticatorTransportSmartCard AuthenticatorTransport = "smart-card"
+	AuthenticatorTransportInternal  AuthenticatorTransport = "internal"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -117,6 +119,10 @@ func (t *AuthenticatorTransport) UnmarshalJSON(buf []byte) error {
 		*t = AuthenticatorTransportBle
 	case AuthenticatorTransportCable:
 		*t = AuthenticatorTransportCable
+	case AuthenticatorTransportHybrid:
+		*t = AuthenticatorTransportHybrid
+	case AuthenticatorTransportSmartCard:
+		*t = AuthenticatorTransportSmartCard
 	case AuthenticatorTransportInternal:
 		*t = AuthenticatorTransportInternal
 	default:
@@ -156,7 +162,7 @@ type Credential struct {
 	RpID                           string   `json:"rpId,omitempty,omitzero"`               // Relying Party ID the credential is scoped to. Must be set when adding a credential.
 	PrivateKey                     string   `json:"privateKey"`                            // The ECDSA P-256 private key in PKCS#8 format.
 	UserHandle                     string   `json:"userHandle,omitempty,omitzero"`         // An opaque byte sequence with a maximum size of 64 bytes mapping the credential to a specific user.
-	SignCount                      int64    `json:"signCount,omitempty,omitzero"`          // Signature counter. Must be equal to or greater than -1. If -1, the credential won't have an associated signature counter, and every assertion operation will report a value of 0. See https://w3c.github.io/webauthn/#signature-counter
+	SignCount                      float64  `json:"signCount"`                             // Signature counter. Must be equal to or greater than -1. If -1, the credential won't have an associated signature counter, and every assertion operation will report a value of 0. See https://w3c.github.io/webauthn/#signature-counter
 	LargeBlob                      string   `json:"largeBlob,omitempty,omitzero"`          // The large blob associated with the credential. See https://w3c.github.io/webauthn/#sctn-large-blob-extension
 	BackupEligibility              bool     `json:"backupEligibility"`                     // Assertions returned by this credential will have the backup eligibility (BE) flag set to this value. Defaults to the authenticator's defaultBackupEligibility value.
 	BackupState                    bool     `json:"backupState"`                           // Assertions returned by this credential will have the backup state (BS) flag set to this value. Defaults to the authenticator's defaultBackupState value.

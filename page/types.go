@@ -82,11 +82,11 @@ const (
 	PermissionsPolicyFeatureGamepad                      PermissionsPolicyFeature = "gamepad"
 	PermissionsPolicyFeatureGeolocation                  PermissionsPolicyFeature = "geolocation"
 	PermissionsPolicyFeatureGyroscope                    PermissionsPolicyFeature = "gyroscope"
+	PermissionsPolicyFeatureHaptics                      PermissionsPolicyFeature = "haptics"
 	PermissionsPolicyFeatureHid                          PermissionsPolicyFeature = "hid"
 	PermissionsPolicyFeatureIdentityCredentialsGet       PermissionsPolicyFeature = "identity-credentials-get"
 	PermissionsPolicyFeatureIdleDetection                PermissionsPolicyFeature = "idle-detection"
 	PermissionsPolicyFeatureInterestCohort               PermissionsPolicyFeature = "interest-cohort"
-	PermissionsPolicyFeatureJoinAdInterestGroup          PermissionsPolicyFeature = "join-ad-interest-group"
 	PermissionsPolicyFeatureKeyboardMap                  PermissionsPolicyFeature = "keyboard-map"
 	PermissionsPolicyFeatureLanguageDetector             PermissionsPolicyFeature = "language-detector"
 	PermissionsPolicyFeatureLanguageModel                PermissionsPolicyFeature = "language-model"
@@ -103,14 +103,11 @@ const (
 	PermissionsPolicyFeatureOtpCredentials               PermissionsPolicyFeature = "otp-credentials"
 	PermissionsPolicyFeaturePayment                      PermissionsPolicyFeature = "payment"
 	PermissionsPolicyFeaturePictureInPicture             PermissionsPolicyFeature = "picture-in-picture"
-	PermissionsPolicyFeaturePrivateAggregation           PermissionsPolicyFeature = "private-aggregation"
 	PermissionsPolicyFeaturePrivateStateTokenIssuance    PermissionsPolicyFeature = "private-state-token-issuance"
 	PermissionsPolicyFeaturePrivateStateTokenRedemption  PermissionsPolicyFeature = "private-state-token-redemption"
 	PermissionsPolicyFeaturePublickeyCredentialsCreate   PermissionsPolicyFeature = "publickey-credentials-create"
 	PermissionsPolicyFeaturePublickeyCredentialsGet      PermissionsPolicyFeature = "publickey-credentials-get"
-	PermissionsPolicyFeatureRecordAdAuctionEvents        PermissionsPolicyFeature = "record-ad-auction-events"
 	PermissionsPolicyFeatureRewriter                     PermissionsPolicyFeature = "rewriter"
-	PermissionsPolicyFeatureRunAdAuction                 PermissionsPolicyFeature = "run-ad-auction"
 	PermissionsPolicyFeatureScreenWakeLock               PermissionsPolicyFeature = "screen-wake-lock"
 	PermissionsPolicyFeatureSerial                       PermissionsPolicyFeature = "serial"
 	PermissionsPolicyFeatureSharedStorage                PermissionsPolicyFeature = "shared-storage"
@@ -256,6 +253,8 @@ func (t *PermissionsPolicyFeature) UnmarshalJSON(buf []byte) error {
 		*t = PermissionsPolicyFeatureGeolocation
 	case PermissionsPolicyFeatureGyroscope:
 		*t = PermissionsPolicyFeatureGyroscope
+	case PermissionsPolicyFeatureHaptics:
+		*t = PermissionsPolicyFeatureHaptics
 	case PermissionsPolicyFeatureHid:
 		*t = PermissionsPolicyFeatureHid
 	case PermissionsPolicyFeatureIdentityCredentialsGet:
@@ -264,8 +263,6 @@ func (t *PermissionsPolicyFeature) UnmarshalJSON(buf []byte) error {
 		*t = PermissionsPolicyFeatureIdleDetection
 	case PermissionsPolicyFeatureInterestCohort:
 		*t = PermissionsPolicyFeatureInterestCohort
-	case PermissionsPolicyFeatureJoinAdInterestGroup:
-		*t = PermissionsPolicyFeatureJoinAdInterestGroup
 	case PermissionsPolicyFeatureKeyboardMap:
 		*t = PermissionsPolicyFeatureKeyboardMap
 	case PermissionsPolicyFeatureLanguageDetector:
@@ -298,8 +295,6 @@ func (t *PermissionsPolicyFeature) UnmarshalJSON(buf []byte) error {
 		*t = PermissionsPolicyFeaturePayment
 	case PermissionsPolicyFeaturePictureInPicture:
 		*t = PermissionsPolicyFeaturePictureInPicture
-	case PermissionsPolicyFeaturePrivateAggregation:
-		*t = PermissionsPolicyFeaturePrivateAggregation
 	case PermissionsPolicyFeaturePrivateStateTokenIssuance:
 		*t = PermissionsPolicyFeaturePrivateStateTokenIssuance
 	case PermissionsPolicyFeaturePrivateStateTokenRedemption:
@@ -308,12 +303,8 @@ func (t *PermissionsPolicyFeature) UnmarshalJSON(buf []byte) error {
 		*t = PermissionsPolicyFeaturePublickeyCredentialsCreate
 	case PermissionsPolicyFeaturePublickeyCredentialsGet:
 		*t = PermissionsPolicyFeaturePublickeyCredentialsGet
-	case PermissionsPolicyFeatureRecordAdAuctionEvents:
-		*t = PermissionsPolicyFeatureRecordAdAuctionEvents
 	case PermissionsPolicyFeatureRewriter:
 		*t = PermissionsPolicyFeatureRewriter
-	case PermissionsPolicyFeatureRunAdAuction:
-		*t = PermissionsPolicyFeatureRunAdAuction
 	case PermissionsPolicyFeatureScreenWakeLock:
 		*t = PermissionsPolicyFeatureScreenWakeLock
 	case PermissionsPolicyFeatureSerial:
@@ -852,11 +843,10 @@ type FileFilter struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-FileHandler
 type FileHandler struct {
-	Action     string           `json:"action"`
-	Name       string           `json:"name"`
-	Icons      []*ImageResource `json:"icons,omitempty,omitzero"`
-	Accepts    []*FileFilter    `json:"accepts,omitempty,omitzero"` // Mimic a map, name is the key, accepts is the value.
-	LaunchType string           `json:"launchType"`                 // Won't repeat the enums, using string for easy comparison. Same as the other enums below.
+	Action     string        `json:"action"`
+	Name       string        `json:"name"`
+	Accepts    []*FileFilter `json:"accepts,omitempty,omitzero"` // Mimic a map, name is the key, accepts is the value.
+	LaunchType string        `json:"launchType"`                 // Won't repeat the enums, using string for easy comparison. Same as the other enums below.
 }
 
 // ImageResource the image definition used in both icon and screenshot.
@@ -1146,6 +1136,7 @@ const (
 	BackForwardCacheNotRestoredReasonEmbedderExtensionMessagingForOpenPort                    BackForwardCacheNotRestoredReason = "EmbedderExtensionMessagingForOpenPort"
 	BackForwardCacheNotRestoredReasonEmbedderExtensionSentMessageToCachedFrame                BackForwardCacheNotRestoredReason = "EmbedderExtensionSentMessageToCachedFrame"
 	BackForwardCacheNotRestoredReasonEmbedderExtensionFrame                                   BackForwardCacheNotRestoredReason = "EmbedderExtensionFrame"
+	BackForwardCacheNotRestoredReasonEmbedderPrivilegedWebContents                            BackForwardCacheNotRestoredReason = "EmbedderPrivilegedWebContents"
 	BackForwardCacheNotRestoredReasonRequestedByWebViewClient                                 BackForwardCacheNotRestoredReason = "RequestedByWebViewClient"
 	BackForwardCacheNotRestoredReasonPostMessageByWebViewClient                               BackForwardCacheNotRestoredReason = "PostMessageByWebViewClient"
 	BackForwardCacheNotRestoredReasonCacheControlNoStoreDeviceBoundSessionTerminated          BackForwardCacheNotRestoredReason = "CacheControlNoStoreDeviceBoundSessionTerminated"
@@ -1445,6 +1436,8 @@ func (t *BackForwardCacheNotRestoredReason) UnmarshalJSON(buf []byte) error {
 		*t = BackForwardCacheNotRestoredReasonEmbedderExtensionSentMessageToCachedFrame
 	case BackForwardCacheNotRestoredReasonEmbedderExtensionFrame:
 		*t = BackForwardCacheNotRestoredReasonEmbedderExtensionFrame
+	case BackForwardCacheNotRestoredReasonEmbedderPrivilegedWebContents:
+		*t = BackForwardCacheNotRestoredReasonEmbedderPrivilegedWebContents
 	case BackForwardCacheNotRestoredReasonRequestedByWebViewClient:
 		*t = BackForwardCacheNotRestoredReasonRequestedByWebViewClient
 	case BackForwardCacheNotRestoredReasonPostMessageByWebViewClient:

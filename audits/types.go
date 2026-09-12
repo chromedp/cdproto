@@ -967,12 +967,15 @@ func (t ConnectionAllowlistError) String() string {
 
 // ConnectionAllowlistError values.
 const (
-	ConnectionAllowlistErrorInvalidHeader             ConnectionAllowlistError = "InvalidHeader"
-	ConnectionAllowlistErrorMoreThanOneList           ConnectionAllowlistError = "MoreThanOneList"
-	ConnectionAllowlistErrorItemNotInnerList          ConnectionAllowlistError = "ItemNotInnerList"
-	ConnectionAllowlistErrorInvalidAllowlistItemType  ConnectionAllowlistError = "InvalidAllowlistItemType"
-	ConnectionAllowlistErrorReportingEndpointNotToken ConnectionAllowlistError = "ReportingEndpointNotToken"
-	ConnectionAllowlistErrorInvalidURLPattern         ConnectionAllowlistError = "InvalidUrlPattern"
+	ConnectionAllowlistErrorInvalidHeader                              ConnectionAllowlistError = "InvalidHeader"
+	ConnectionAllowlistErrorMoreThanOneList                            ConnectionAllowlistError = "MoreThanOneList"
+	ConnectionAllowlistErrorItemNotInnerList                           ConnectionAllowlistError = "ItemNotInnerList"
+	ConnectionAllowlistErrorInvalidAllowlistItemType                   ConnectionAllowlistError = "InvalidAllowlistItemType"
+	ConnectionAllowlistErrorReportingEndpointNotToken                  ConnectionAllowlistError = "ReportingEndpointNotToken"
+	ConnectionAllowlistErrorInvalidURLPattern                          ConnectionAllowlistError = "InvalidUrlPattern"
+	ConnectionAllowlistErrorIFrameAttributeLoosensEmbeddingRequirement ConnectionAllowlistError = "IFrameAttributeLoosensEmbeddingRequirement"
+	ConnectionAllowlistErrorInvalidAllowConnectionAllowlistFrom        ConnectionAllowlistError = "InvalidAllowConnectionAllowlistFrom"
+	ConnectionAllowlistErrorEmbeddingRequirementNotSatisfied           ConnectionAllowlistError = "EmbeddingRequirementNotSatisfied"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -993,6 +996,12 @@ func (t *ConnectionAllowlistError) UnmarshalJSON(buf []byte) error {
 		*t = ConnectionAllowlistErrorReportingEndpointNotToken
 	case ConnectionAllowlistErrorInvalidURLPattern:
 		*t = ConnectionAllowlistErrorInvalidURLPattern
+	case ConnectionAllowlistErrorIFrameAttributeLoosensEmbeddingRequirement:
+		*t = ConnectionAllowlistErrorIFrameAttributeLoosensEmbeddingRequirement
+	case ConnectionAllowlistErrorInvalidAllowConnectionAllowlistFrom:
+		*t = ConnectionAllowlistErrorInvalidAllowConnectionAllowlistFrom
+	case ConnectionAllowlistErrorEmbeddingRequirementNotSatisfied:
+		*t = ConnectionAllowlistErrorEmbeddingRequirementNotSatisfied
 	default:
 		return fmt.Errorf("unknown ConnectionAllowlistError value: %v", s)
 	}
@@ -1284,6 +1293,7 @@ const (
 	FederatedAuthRequestIssueReasonUIDismissedNoEmbargo                  FederatedAuthRequestIssueReason = "UiDismissedNoEmbargo"
 	FederatedAuthRequestIssueReasonCorsError                             FederatedAuthRequestIssueReason = "CorsError"
 	FederatedAuthRequestIssueReasonSuppressedBySegmentationPlatform      FederatedAuthRequestIssueReason = "SuppressedBySegmentationPlatform"
+	FederatedAuthRequestIssueReasonPopupBlockedByConnectionAllowlist     FederatedAuthRequestIssueReason = "PopupBlockedByConnectionAllowlist"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -1384,6 +1394,8 @@ func (t *FederatedAuthRequestIssueReason) UnmarshalJSON(buf []byte) error {
 		*t = FederatedAuthRequestIssueReasonCorsError
 	case FederatedAuthRequestIssueReasonSuppressedBySegmentationPlatform:
 		*t = FederatedAuthRequestIssueReasonSuppressedBySegmentationPlatform
+	case FederatedAuthRequestIssueReasonPopupBlockedByConnectionAllowlist:
+		*t = FederatedAuthRequestIssueReasonPopupBlockedByConnectionAllowlist
 	default:
 		return fmt.Errorf("unknown FederatedAuthRequestIssueReason value: %v", s)
 	}
@@ -1532,6 +1544,7 @@ const (
 	EmailVerificationRequestIssueReasonTokenVerificationKbInvalidSdHash             EmailVerificationRequestIssueReason = "TokenVerificationKbInvalidSdHash"
 	EmailVerificationRequestIssueReasonTokenVerificationKbMissingCnf                EmailVerificationRequestIssueReason = "TokenVerificationKbMissingCnf"
 	EmailVerificationRequestIssueReasonTokenVerificationKbSignatureFailed           EmailVerificationRequestIssueReason = "TokenVerificationKbSignatureFailed"
+	EmailVerificationRequestIssueReasonCrossOriginIframeNotSupported                EmailVerificationRequestIssueReason = "CrossOriginIframeNotSupported"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -1654,6 +1667,8 @@ func (t *EmailVerificationRequestIssueReason) UnmarshalJSON(buf []byte) error {
 		*t = EmailVerificationRequestIssueReasonTokenVerificationKbMissingCnf
 	case EmailVerificationRequestIssueReasonTokenVerificationKbSignatureFailed:
 		*t = EmailVerificationRequestIssueReasonTokenVerificationKbSignatureFailed
+	case EmailVerificationRequestIssueReasonCrossOriginIframeNotSupported:
+		*t = EmailVerificationRequestIssueReasonCrossOriginIframeNotSupported
 	default:
 		return fmt.Errorf("unknown EmailVerificationRequestIssueReason value: %v", s)
 	}

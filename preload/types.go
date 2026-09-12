@@ -509,6 +509,7 @@ const (
 	PrefetchStatusPrefetchIsStale                                             PrefetchStatus = "PrefetchIsStale"
 	PrefetchStatusPrefetchNotEligibleBlockedByConnectionAllowlist             PrefetchStatus = "PrefetchNotEligibleBlockedByConnectionAllowlist"
 	PrefetchStatusPrefetchNotEligibleBrowserContextOffTheRecord               PrefetchStatus = "PrefetchNotEligibleBrowserContextOffTheRecord"
+	PrefetchStatusPrefetchNotEligibleCrossOrigin                              PrefetchStatus = "PrefetchNotEligibleCrossOrigin"
 	PrefetchStatusPrefetchNotEligibleDataSaverEnabled                         PrefetchStatus = "PrefetchNotEligibleDataSaverEnabled"
 	PrefetchStatusPrefetchNotEligibleExistingProxy                            PrefetchStatus = "PrefetchNotEligibleExistingProxy"
 	PrefetchStatusPrefetchNotEligibleHostIsNonUnique                          PrefetchStatus = "PrefetchNotEligibleHostIsNonUnique"
@@ -568,6 +569,8 @@ func (t *PrefetchStatus) UnmarshalJSON(buf []byte) error {
 		*t = PrefetchStatusPrefetchNotEligibleBlockedByConnectionAllowlist
 	case PrefetchStatusPrefetchNotEligibleBrowserContextOffTheRecord:
 		*t = PrefetchStatusPrefetchNotEligibleBrowserContextOffTheRecord
+	case PrefetchStatusPrefetchNotEligibleCrossOrigin:
+		*t = PrefetchStatusPrefetchNotEligibleCrossOrigin
 	case PrefetchStatusPrefetchNotEligibleDataSaverEnabled:
 		*t = PrefetchStatusPrefetchNotEligibleDataSaverEnabled
 	case PrefetchStatusPrefetchNotEligibleExistingProxy:

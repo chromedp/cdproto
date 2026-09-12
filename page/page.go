@@ -1419,11 +1419,13 @@ func (p *SetLifecycleEventsEnabledParams) Do(ctx context.Context) (err error) {
 // StartScreencastParams starts sending each frame using the screencastFrame
 // event.
 type StartScreencastParams struct {
-	Format        ScreencastFormat `json:"format,omitempty,omitzero"`        // Image compression format.
-	Quality       int64            `json:"quality,omitempty,omitzero"`       // Compression quality from range [0..100].
-	MaxWidth      int64            `json:"maxWidth,omitempty,omitzero"`      // Maximum screenshot width.
-	MaxHeight     int64            `json:"maxHeight,omitempty,omitzero"`     // Maximum screenshot height.
-	EveryNthFrame int64            `json:"everyNthFrame,omitempty,omitzero"` // Send every n-th frame.
+	Format            ScreencastFormat `json:"format,omitempty,omitzero"`            // Image compression format.
+	Quality           int64            `json:"quality,omitempty,omitzero"`           // Compression quality from range [0..100].
+	MaxWidth          int64            `json:"maxWidth,omitempty,omitzero"`          // Maximum screenshot width.
+	MaxHeight         int64            `json:"maxHeight,omitempty,omitzero"`         // Maximum screenshot height.
+	EveryNthFrame     int64            `json:"everyNthFrame,omitempty,omitzero"`     // Send every n-th frame. Must be a positive integer.
+	MaxFramesInFlight int64            `json:"maxFramesInFlight,omitempty,omitzero"` // Maximum number of frames sent until screencastFrameAck is required. Defaults to 3. Must be a positive integer.
+	SendLastFrame     bool             `json:"sendLastFrame"`                        // By default, after screencastFrameAck arrives, the next produced frame is sent. Passing this flag enables storing the last produced frame in memory, which is immediately sent upon screencastFrameAck. This way, overall performance is traded for a better latency.
 }
 
 // StartScreencast starts sending each frame using the screencastFrame event.
@@ -1432,7 +1434,9 @@ type StartScreencastParams struct {
 //
 // parameters:
 func StartScreencast() *StartScreencastParams {
-	return &StartScreencastParams{}
+	return &StartScreencastParams{
+		SendLastFrame: false,
+	}
 }
 
 // WithFormat image compression format.
@@ -1459,15 +1463,126 @@ func (p StartScreencastParams) WithMaxHeight(maxHeight int64) *StartScreencastPa
 	return &p
 }
 
-// WithEveryNthFrame send every n-th frame.
+// WithEveryNthFrame send every n-th frame. Must be a positive integer.
 func (p StartScreencastParams) WithEveryNthFrame(everyNthFrame int64) *StartScreencastParams {
 	p.EveryNthFrame = everyNthFrame
+	return &p
+}
+
+// WithMaxFramesInFlight maximum number of frames sent until
+// screencastFrameAck is required. Defaults to 3. Must be a positive integer.
+func (p StartScreencastParams) WithMaxFramesInFlight(maxFramesInFlight int64) *StartScreencastParams {
+	p.MaxFramesInFlight = maxFramesInFlight
+	return &p
+}
+
+// WithSendLastFrame by default, after screencastFrameAck arrives, the next
+// produced frame is sent. Passing this flag enables storing the last produced
+// frame in memory, which is immediately sent upon screencastFrameAck. This way,
+// overall performance is traded for a better latency.
+func (p StartScreencastParams) WithSendLastFrame(sendLastFrame bool) *StartScreencastParams {
+	p.SendLastFrame = sendLastFrame
 	return &p
 }
 
 // Do executes Page.startScreencast against the provided context.
 func (p *StartScreencastParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandStartScreencast, p, nil)
+}
+
+// StartScreenRecordingParams starts screencast video recording.
+type StartScreenRecordingParams struct {
+	Audio     bool  `json:"audio"`
+	MaxWidth  int64 `json:"maxWidth,omitempty,omitzero"`  // Maximum frame width in pixels.
+	MaxHeight int64 `json:"maxHeight,omitempty,omitzero"` // Maximum frame height in pixels.
+	FrameRate int64 `json:"frameRate,omitempty,omitzero"` // Maximum frame rate in frames per second.
+}
+
+// StartScreenRecording starts screencast video recording.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-startScreenRecording
+//
+// parameters:
+func StartScreenRecording() *StartScreenRecordingParams {
+	return &StartScreenRecordingParams{
+		Audio: false,
+	}
+}
+
+// WithAudio [no description].
+func (p StartScreenRecordingParams) WithAudio(audio bool) *StartScreenRecordingParams {
+	p.Audio = audio
+	return &p
+}
+
+// WithMaxWidth maximum frame width in pixels.
+func (p StartScreenRecordingParams) WithMaxWidth(maxWidth int64) *StartScreenRecordingParams {
+	p.MaxWidth = maxWidth
+	return &p
+}
+
+// WithMaxHeight maximum frame height in pixels.
+func (p StartScreenRecordingParams) WithMaxHeight(maxHeight int64) *StartScreenRecordingParams {
+	p.MaxHeight = maxHeight
+	return &p
+}
+
+// WithFrameRate maximum frame rate in frames per second.
+func (p StartScreenRecordingParams) WithFrameRate(frameRate int64) *StartScreenRecordingParams {
+	p.FrameRate = frameRate
+	return &p
+}
+
+// StartScreenRecordingReturns return values.
+type StartScreenRecordingReturns struct {
+	Stream io.StreamHandle `json:"stream,omitempty,omitzero"` // A handle of the stream that holds resulting screencast data.
+}
+
+// Do executes Page.startScreenRecording against the provided context.
+//
+// returns:
+//
+//	stream - A handle of the stream that holds resulting screencast data.
+func (p *StartScreenRecordingParams) Do(ctx context.Context) (stream io.StreamHandle, err error) {
+	// execute
+	var res StartScreenRecordingReturns
+	err = cdp.Execute(ctx, CommandStartScreenRecording, p, &res)
+	if err != nil {
+		return "", err
+	}
+
+	return res.Stream, nil
+}
+
+// StopScreenRecordingParams stops screencast video recording.
+type StopScreenRecordingParams struct{}
+
+// StopScreenRecording stops screencast video recording.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-stopScreenRecording
+func StopScreenRecording() *StopScreenRecordingParams {
+	return &StopScreenRecordingParams{}
+}
+
+// StopScreenRecordingReturns return values.
+type StopScreenRecordingReturns struct {
+	Stream io.StreamHandle `json:"stream,omitempty,omitzero"` // A handle of the stream that holds resulting screencast data.
+}
+
+// Do executes Page.stopScreenRecording against the provided context.
+//
+// returns:
+//
+//	stream - A handle of the stream that holds resulting screencast data.
+func (p *StopScreenRecordingParams) Do(ctx context.Context) (stream io.StreamHandle, err error) {
+	// execute
+	var res StopScreenRecordingReturns
+	err = cdp.Execute(ctx, CommandStopScreenRecording, nil, &res)
+	if err != nil {
+		return "", err
+	}
+
+	return res.Stream, nil
 }
 
 // StopLoadingParams force the page stop all navigations and pending resource
@@ -1892,6 +2007,8 @@ const (
 	CommandSetDocumentContent                  = "Page.setDocumentContent"
 	CommandSetLifecycleEventsEnabled           = "Page.setLifecycleEventsEnabled"
 	CommandStartScreencast                     = "Page.startScreencast"
+	CommandStartScreenRecording                = "Page.startScreenRecording"
+	CommandStopScreenRecording                 = "Page.stopScreenRecording"
 	CommandStopLoading                         = "Page.stopLoading"
 	CommandCrash                               = "Page.crash"
 	CommandClose                               = "Page.close"

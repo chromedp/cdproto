@@ -2072,6 +2072,34 @@ func (p *ForceShowPopoverParams) Do(ctx context.Context) (nodeIDs []cdp.NodeID, 
 	return res.NodeIDs, nil
 }
 
+// ForceShowInterestParams when enabling, this API forces an element to gain
+// interest in its target, keeping interest active until disabled.
+type ForceShowInterestParams struct {
+	NodeID cdp.NodeID `json:"nodeId"` // Id of the interest invoker HTMLElement.
+	Enable bool       `json:"enable"` // If true, opens and holds interest. If false, releases forced interest.
+}
+
+// ForceShowInterest when enabling, this API forces an element to gain
+// interest in its target, keeping interest active until disabled.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-forceShowInterest
+//
+// parameters:
+//
+//	nodeID - Id of the interest invoker HTMLElement.
+//	enable - If true, opens and holds interest. If false, releases forced interest.
+func ForceShowInterest(nodeID cdp.NodeID, enable bool) *ForceShowInterestParams {
+	return &ForceShowInterestParams{
+		NodeID: nodeID,
+		Enable: enable,
+	}
+}
+
+// Do executes DOM.forceShowInterest against the provided context.
+func (p *ForceShowInterestParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandForceShowInterest, p, nil)
+}
+
 // Command names.
 const (
 	CommandCollectClassNamesFromSubtree       = "DOM.collectClassNamesFromSubtree"
@@ -2123,4 +2151,5 @@ const (
 	CommandGetQueryingDescendantsForContainer = "DOM.getQueryingDescendantsForContainer"
 	CommandGetAnchorElement                   = "DOM.getAnchorElement"
 	CommandForceShowPopover                   = "DOM.forceShowPopover"
+	CommandForceShowInterest                  = "DOM.forceShowInterest"
 )

@@ -502,6 +502,39 @@ func (t *SetDeviceMetricsOverrideScrollbarType) UnmarshalJSON(buf []byte) error 
 	return nil
 }
 
+// SetDeviceMetricsOverrideViewportMeta viewport meta tag behavior. Default:
+// default. Note: if mobile is true, the viewport meta tag is always enabled.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#method-setDeviceMetricsOverride
+type SetDeviceMetricsOverrideViewportMeta string
+
+// String returns the SetDeviceMetricsOverrideViewportMeta as string value.
+func (t SetDeviceMetricsOverrideViewportMeta) String() string {
+	return string(t)
+}
+
+// SetDeviceMetricsOverrideViewportMeta values.
+const (
+	SetDeviceMetricsOverrideViewportMetaEnable  SetDeviceMetricsOverrideViewportMeta = "enable"
+	SetDeviceMetricsOverrideViewportMetaDefault SetDeviceMetricsOverrideViewportMeta = "default"
+)
+
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *SetDeviceMetricsOverrideViewportMeta) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
+
+	switch SetDeviceMetricsOverrideViewportMeta(s) {
+	case SetDeviceMetricsOverrideViewportMetaEnable:
+		*t = SetDeviceMetricsOverrideViewportMetaEnable
+	case SetDeviceMetricsOverrideViewportMetaDefault:
+		*t = SetDeviceMetricsOverrideViewportMetaDefault
+	default:
+		return fmt.Errorf("unknown SetDeviceMetricsOverrideViewportMeta value: %v", s)
+	}
+	return nil
+}
+
 // SetEmitTouchEventsForMouseConfiguration touch/gesture events
 // configuration. Default: current platform.
 //
@@ -580,6 +613,48 @@ func (t *SetEmulatedVisionDeficiencyType) UnmarshalJSON(buf []byte) error {
 		*t = SetEmulatedVisionDeficiencyTypeTritanopia
 	default:
 		return fmt.Errorf("unknown SetEmulatedVisionDeficiencyType value: %v", s)
+	}
+	return nil
+}
+
+// SetCPUPerformanceOverridePerformanceTier override value. Omitting the
+// parameter disables the override.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Emulation#method-setCPUPerformanceOverride
+type SetCPUPerformanceOverridePerformanceTier string
+
+// String returns the SetCPUPerformanceOverridePerformanceTier as string value.
+func (t SetCPUPerformanceOverridePerformanceTier) String() string {
+	return string(t)
+}
+
+// SetCPUPerformanceOverridePerformanceTier values.
+const (
+	SetCPUPerformanceOverridePerformanceTierUnknown SetCPUPerformanceOverridePerformanceTier = "unknown"
+	SetCPUPerformanceOverridePerformanceTierLow     SetCPUPerformanceOverridePerformanceTier = "low"
+	SetCPUPerformanceOverridePerformanceTierMid     SetCPUPerformanceOverridePerformanceTier = "mid"
+	SetCPUPerformanceOverridePerformanceTierHigh    SetCPUPerformanceOverridePerformanceTier = "high"
+	SetCPUPerformanceOverridePerformanceTierUltra   SetCPUPerformanceOverridePerformanceTier = "ultra"
+)
+
+// UnmarshalJSON satisfies [json.Unmarshaler].
+func (t *SetCPUPerformanceOverridePerformanceTier) UnmarshalJSON(buf []byte) error {
+	s := string(buf)
+	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
+
+	switch SetCPUPerformanceOverridePerformanceTier(s) {
+	case SetCPUPerformanceOverridePerformanceTierUnknown:
+		*t = SetCPUPerformanceOverridePerformanceTierUnknown
+	case SetCPUPerformanceOverridePerformanceTierLow:
+		*t = SetCPUPerformanceOverridePerformanceTierLow
+	case SetCPUPerformanceOverridePerformanceTierMid:
+		*t = SetCPUPerformanceOverridePerformanceTierMid
+	case SetCPUPerformanceOverridePerformanceTierHigh:
+		*t = SetCPUPerformanceOverridePerformanceTierHigh
+	case SetCPUPerformanceOverridePerformanceTierUltra:
+		*t = SetCPUPerformanceOverridePerformanceTierUltra
+	default:
+		return fmt.Errorf("unknown SetCPUPerformanceOverridePerformanceTier value: %v", s)
 	}
 	return nil
 }

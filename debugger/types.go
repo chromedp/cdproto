@@ -79,6 +79,7 @@ type Scope struct {
 	Name          string                `json:"name,omitempty,omitzero"`
 	StartLocation *Location             `json:"startLocation,omitempty,omitzero"` // Location in the source code where scope starts
 	EndLocation   *Location             `json:"endLocation,omitempty,omitzero"`   // Location in the source code where scope ends
+	Empty         bool                  `json:"empty"`                            // True if the scope does not declare any variables or have a runtime context. Only present if true. Empty scopes are retained in the scope chain because they can be targeted via evaluateOnCallFrame (using scopeNumber) or matched against scopes in source maps.
 }
 
 // SearchMatch search match for resource.
@@ -474,49 +475,6 @@ func (t *ExceptionsState) UnmarshalJSON(buf []byte) error {
 		*t = ExceptionsStateAll
 	default:
 		return fmt.Errorf("unknown ExceptionsState value: %v", s)
-	}
-	return nil
-}
-
-// SetScriptSourceStatus whether the operation was successful or not. Only Ok
-// denotes a successful live edit while the other enum variants denote why the
-// live edit failed.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Debugger#method-setScriptSource
-type SetScriptSourceStatus string
-
-// String returns the SetScriptSourceStatus as string value.
-func (t SetScriptSourceStatus) String() string {
-	return string(t)
-}
-
-// SetScriptSourceStatus values.
-const (
-	SetScriptSourceStatusOk                              SetScriptSourceStatus = "Ok"
-	SetScriptSourceStatusCompileError                    SetScriptSourceStatus = "CompileError"
-	SetScriptSourceStatusBlockedByActiveGenerator        SetScriptSourceStatus = "BlockedByActiveGenerator"
-	SetScriptSourceStatusBlockedByActiveFunction         SetScriptSourceStatus = "BlockedByActiveFunction"
-	SetScriptSourceStatusBlockedByTopLevelEsModuleChange SetScriptSourceStatus = "BlockedByTopLevelEsModuleChange"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *SetScriptSourceStatus) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch SetScriptSourceStatus(s) {
-	case SetScriptSourceStatusOk:
-		*t = SetScriptSourceStatusOk
-	case SetScriptSourceStatusCompileError:
-		*t = SetScriptSourceStatusCompileError
-	case SetScriptSourceStatusBlockedByActiveGenerator:
-		*t = SetScriptSourceStatusBlockedByActiveGenerator
-	case SetScriptSourceStatusBlockedByActiveFunction:
-		*t = SetScriptSourceStatusBlockedByActiveFunction
-	case SetScriptSourceStatusBlockedByTopLevelEsModuleChange:
-		*t = SetScriptSourceStatusBlockedByTopLevelEsModuleChange
-	default:
-		return fmt.Errorf("unknown SetScriptSourceStatus value: %v", s)
 	}
 	return nil
 }

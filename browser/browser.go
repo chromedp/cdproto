@@ -290,6 +290,35 @@ func (p *GetBrowserCommandLineParams) Do(ctx context.Context) (arguments []strin
 	return res.Arguments, nil
 }
 
+// AddMockCameraParams adds or updates a mock camera in the shared video
+// capture device list for test automation. The mock camera is not scoped to a
+// particular page or frame and is removed when the DevTools session that
+// created it disconnects.
+type AddMockCameraParams struct {
+	DeviceID string `json:"deviceId"` // Required non-empty identifier for the mock camera. This is mapped to an internal virtual-device identifier and is not the MediaDeviceInfo.deviceId exposed to the page.
+}
+
+// AddMockCamera adds or updates a mock camera in the shared video capture
+// device list for test automation. The mock camera is not scoped to a
+// particular page or frame and is removed when the DevTools session that
+// created it disconnects.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#method-addMockCamera
+//
+// parameters:
+//
+//	deviceID - Required non-empty identifier for the mock camera. This is mapped to an internal virtual-device identifier and is not the MediaDeviceInfo.deviceId exposed to the page.
+func AddMockCamera(deviceID string) *AddMockCameraParams {
+	return &AddMockCameraParams{
+		DeviceID: deviceID,
+	}
+}
+
+// Do executes Browser.addMockCamera against the provided context.
+func (p *AddMockCameraParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandAddMockCamera, p, nil)
+}
+
 // GetHistogramsParams get Chrome histograms.
 type GetHistogramsParams struct {
 	Query string `json:"query,omitempty,omitzero"` // Requested substring in name. Only histograms which have query as a substring in their name are extracted. An empty or absent query returns all histograms.
@@ -624,6 +653,82 @@ func (p *AddPrivacySandboxEnrollmentOverrideParams) Do(ctx context.Context) (err
 	return cdp.Execute(ctx, CommandAddPrivacySandboxEnrollmentOverride, p, nil)
 }
 
+// GetGlobalPrivacyControlParams gets the current globally-applied privacy
+// control status See https://www.w3.org/TR/gpc/#get-global-privacy-control.
+type GetGlobalPrivacyControlParams struct{}
+
+// GetGlobalPrivacyControl gets the current globally-applied privacy control
+// status See https://www.w3.org/TR/gpc/#get-global-privacy-control.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#method-getGlobalPrivacyControl
+func GetGlobalPrivacyControl() *GetGlobalPrivacyControlParams {
+	return &GetGlobalPrivacyControlParams{}
+}
+
+// GetGlobalPrivacyControlReturns return values.
+type GetGlobalPrivacyControlReturns struct {
+	Gpc bool `json:"gpc"`
+}
+
+// Do executes Browser.getGlobalPrivacyControl against the provided context.
+//
+// returns:
+//
+//	gpc
+func (p *GetGlobalPrivacyControlParams) Do(ctx context.Context) (gpc bool, err error) {
+	// execute
+	var res GetGlobalPrivacyControlReturns
+	err = cdp.Execute(ctx, CommandGetGlobalPrivacyControl, nil, &res)
+	if err != nil {
+		return false, err
+	}
+
+	return res.Gpc, nil
+}
+
+// SetGlobalPrivacyControlParams sets and then gets the current
+// globally-applied privacy control status See
+// https://www.w3.org/TR/gpc/#set-global-privacy-control.
+type SetGlobalPrivacyControlParams struct {
+	Gpc bool `json:"gpc"`
+}
+
+// SetGlobalPrivacyControl sets and then gets the current globally-applied
+// privacy control status See
+// https://www.w3.org/TR/gpc/#set-global-privacy-control.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#method-setGlobalPrivacyControl
+//
+// parameters:
+//
+//	gpc
+func SetGlobalPrivacyControl(gpc bool) *SetGlobalPrivacyControlParams {
+	return &SetGlobalPrivacyControlParams{
+		Gpc: gpc,
+	}
+}
+
+// SetGlobalPrivacyControlReturns return values.
+type SetGlobalPrivacyControlReturns struct {
+	Gpc bool `json:"gpc"`
+}
+
+// Do executes Browser.setGlobalPrivacyControl against the provided context.
+//
+// returns:
+//
+//	gpc
+func (p *SetGlobalPrivacyControlParams) Do(ctx context.Context) (gpc bool, err error) {
+	// execute
+	var res SetGlobalPrivacyControlReturns
+	err = cdp.Execute(ctx, CommandSetGlobalPrivacyControl, p, &res)
+	if err != nil {
+		return false, err
+	}
+
+	return res.Gpc, nil
+}
+
 // Command names.
 const (
 	CommandSetPermission                       = "Browser.setPermission"
@@ -635,6 +740,7 @@ const (
 	CommandCrashGPUProcess                     = "Browser.crashGpuProcess"
 	CommandGetVersion                          = "Browser.getVersion"
 	CommandGetBrowserCommandLine               = "Browser.getBrowserCommandLine"
+	CommandAddMockCamera                       = "Browser.addMockCamera"
 	CommandGetHistograms                       = "Browser.getHistograms"
 	CommandGetHistogram                        = "Browser.getHistogram"
 	CommandGetWindowBounds                     = "Browser.getWindowBounds"
@@ -644,4 +750,6 @@ const (
 	CommandSetDockTile                         = "Browser.setDockTile"
 	CommandExecuteBrowserCommand               = "Browser.executeBrowserCommand"
 	CommandAddPrivacySandboxEnrollmentOverride = "Browser.addPrivacySandboxEnrollmentOverride"
+	CommandGetGlobalPrivacyControl             = "Browser.getGlobalPrivacyControl"
+	CommandSetGlobalPrivacyControl             = "Browser.setGlobalPrivacyControl"
 )

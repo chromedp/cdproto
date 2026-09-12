@@ -490,6 +490,7 @@ const (
 	SubtypeDataview          Subtype = "dataview"
 	SubtypeWebassemblymemory Subtype = "webassemblymemory"
 	SubtypeWasmvalue         Subtype = "wasmvalue"
+	SubtypeDeferredmodule    Subtype = "deferredmodule"
 	SubtypeTrustedtype       Subtype = "trustedtype"
 )
 
@@ -537,6 +538,8 @@ func (t *Subtype) UnmarshalJSON(buf []byte) error {
 		*t = SubtypeWebassemblymemory
 	case SubtypeWasmvalue:
 		*t = SubtypeWasmvalue
+	case SubtypeDeferredmodule:
+		*t = SubtypeDeferredmodule
 	case SubtypeTrustedtype:
 		*t = SubtypeTrustedtype
 	default:

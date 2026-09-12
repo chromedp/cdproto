@@ -1442,44 +1442,6 @@ type SignedExchangeInfo struct {
 	Errors          []*SignedExchangeError `json:"errors,omitempty,omitzero"`          // Errors occurred while handling the signed exchange.
 }
 
-// ContentEncoding list of content encodings supported by the backend.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-ContentEncoding
-type ContentEncoding string
-
-// String returns the ContentEncoding as string value.
-func (t ContentEncoding) String() string {
-	return string(t)
-}
-
-// ContentEncoding values.
-const (
-	ContentEncodingDeflate ContentEncoding = "deflate"
-	ContentEncodingGzip    ContentEncoding = "gzip"
-	ContentEncodingBr      ContentEncoding = "br"
-	ContentEncodingZstd    ContentEncoding = "zstd"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *ContentEncoding) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch ContentEncoding(s) {
-	case ContentEncodingDeflate:
-		*t = ContentEncodingDeflate
-	case ContentEncodingGzip:
-		*t = ContentEncodingGzip
-	case ContentEncodingBr:
-		*t = ContentEncodingBr
-	case ContentEncodingZstd:
-		*t = ContentEncodingZstd
-	default:
-		return fmt.Errorf("unknown ContentEncoding value: %v", s)
-	}
-	return nil
-}
-
 // Conditions [no description].
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-NetworkConditions
@@ -2048,6 +2010,8 @@ const (
 	DeviceBoundSessionFetchResultInvalidPreProvisionedKeyInitiatorMissing          DeviceBoundSessionFetchResult = "InvalidPreProvisionedKeyInitiatorMissing"
 	DeviceBoundSessionFetchResultPreProvisionedKeyAccessNotGranted                 DeviceBoundSessionFetchResult = "PreProvisionedKeyAccessNotGranted"
 	DeviceBoundSessionFetchResultPreProvisionedKeyNotFound                         DeviceBoundSessionFetchResult = "PreProvisionedKeyNotFound"
+	DeviceBoundSessionFetchResultAttestationCertificationError                     DeviceBoundSessionFetchResult = "AttestationCertificationError"
+	DeviceBoundSessionFetchResultAttestationSigningError                           DeviceBoundSessionFetchResult = "AttestationSigningError"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -2204,6 +2168,10 @@ func (t *DeviceBoundSessionFetchResult) UnmarshalJSON(buf []byte) error {
 		*t = DeviceBoundSessionFetchResultPreProvisionedKeyAccessNotGranted
 	case DeviceBoundSessionFetchResultPreProvisionedKeyNotFound:
 		*t = DeviceBoundSessionFetchResultPreProvisionedKeyNotFound
+	case DeviceBoundSessionFetchResultAttestationCertificationError:
+		*t = DeviceBoundSessionFetchResultAttestationCertificationError
+	case DeviceBoundSessionFetchResultAttestationSigningError:
+		*t = DeviceBoundSessionFetchResultAttestationSigningError
 	default:
 		return fmt.Errorf("unknown DeviceBoundSessionFetchResult value: %v", s)
 	}
@@ -2632,6 +2600,7 @@ const (
 	TerminationEventDetailsDeletionReasonInvalidSessionParams    TerminationEventDetailsDeletionReason = "InvalidSessionParams"
 	TerminationEventDetailsDeletionReasonRefreshFatalError       TerminationEventDetailsDeletionReason = "RefreshFatalError"
 	TerminationEventDetailsDeletionReasonDevTools                TerminationEventDetailsDeletionReason = "DevTools"
+	TerminationEventDetailsDeletionReasonReplaced                TerminationEventDetailsDeletionReason = "Replaced"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -2658,6 +2627,8 @@ func (t *TerminationEventDetailsDeletionReason) UnmarshalJSON(buf []byte) error 
 		*t = TerminationEventDetailsDeletionReasonRefreshFatalError
 	case TerminationEventDetailsDeletionReasonDevTools:
 		*t = TerminationEventDetailsDeletionReasonDevTools
+	case TerminationEventDetailsDeletionReasonReplaced:
+		*t = TerminationEventDetailsDeletionReasonReplaced
 	default:
 		return fmt.Errorf("unknown TerminationEventDetailsDeletionReason value: %v", s)
 	}

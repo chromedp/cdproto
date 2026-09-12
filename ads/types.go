@@ -29,3 +29,15 @@ type AdMetrics struct {
 	UpdateAdFrames                 []*AdFrameData `json:"updateAdFrames"`                 // The list of ad frames that have been updated since the last event.
 	RemoveAdFrames                 []cdp.FrameID  `json:"removeAdFrames"`                 // The list of ad frame IDs that have been removed since the last event.
 }
+
+// AdScript an ad script. Note: when the script is a transitive ad script, we
+// only fill in the immediate ancestor script in the provenance's
+// adScriptAncestry field (as its first entry), rather than filling in the full
+// ancestry. This saves work for the backend, and the frontend can reconstruct
+// the full ancestry if necessary.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Ads#type-AdScript
+type AdScript struct {
+	ScriptID   cdp.ScriptID      `json:"scriptId"`   // The script ID.
+	Provenance *cdp.AdProvenance `json:"provenance"` // The ad provenance.
+}
