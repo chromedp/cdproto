@@ -69,7 +69,7 @@ type EventMetadata struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/BackgroundService#type-BackgroundServiceEvent
 type Event struct {
-	Timestamp                   *cdp.TimeSinceEpoch          `json:"timestamp"`                   // Timestamp of the event (in seconds).
+	Timestamp                   cdp.TimeSinceEpoch           `json:"timestamp"`                   // Timestamp of the event (in seconds).
 	Origin                      string                       `json:"origin"`                      // The origin this event belongs to.
 	ServiceWorkerRegistrationID serviceworker.RegistrationID `json:"serviceWorkerRegistrationId"` // The Service Worker ID that initiated the event.
 	Service                     ServiceName                  `json:"service"`                     // The Background Service this event belongs to.

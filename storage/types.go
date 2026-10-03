@@ -99,13 +99,22 @@ type TrustTokens struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-PrivateVerificationToken
 type PrivateVerificationToken struct {
-	ID           string              `json:"id"`           // Unique identifier of the token in the database.
-	IssuerOrigin string              `json:"issuerOrigin"` // Origin of the token issuer.
-	KeyID        int64               `json:"keyId"`        // Public key ID used to issue the token.
-	Expiration   *cdp.TimeSinceEpoch `json:"expiration"`   // Expiration timestamp in seconds since the epoch.
-	CreationTime *cdp.TimeSinceEpoch `json:"creationTime"` // Token creation timestamp in seconds since the epoch.
-	Version      int64               `json:"version"`      // Token protocol version.
-	Token        string              `json:"token"`        // Base64-encoded serialized token.
+	ID           string             `json:"id"`           // Unique identifier of the token in the database.
+	IssuerOrigin string             `json:"issuerOrigin"` // Origin of the token issuer.
+	KeyID        int64              `json:"keyId"`        // Public key ID used to issue the token.
+	Expiration   cdp.TimeSinceEpoch `json:"expiration"`   // Expiration timestamp in seconds since the epoch.
+	CreationTime cdp.TimeSinceEpoch `json:"creationTime"` // Token creation timestamp in seconds since the epoch.
+	Version      int64              `json:"version"`      // Token protocol version.
+	Token        string             `json:"token"`        // Base64-encoded serialized token.
+}
+
+// PrivateVerificationTokensIssuerConfig configuration for a Private
+// Verification Tokens issuer.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-PrivateVerificationTokensIssuerConfig
+type PrivateVerificationTokensIssuerConfig struct {
+	IssuerOrigin    string   `json:"issuerOrigin"`    // Origin of the token issuer.
+	RedeemerOrigins []string `json:"redeemerOrigins"` // Origins authorized to redeem tokens from this issuer.
 }
 
 // BucketsDurability [no description].
@@ -152,10 +161,10 @@ type Bucket struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Storage#type-StorageBucketInfo
 type BucketInfo struct {
-	Bucket     *Bucket             `json:"bucket"`
-	ID         string              `json:"id"`
-	Expiration *cdp.TimeSinceEpoch `json:"expiration"`
-	Quota      float64             `json:"quota"` // Storage quota (bytes).
-	Persistent bool                `json:"persistent"`
-	Durability BucketsDurability   `json:"durability"`
+	Bucket     *Bucket            `json:"bucket"`
+	ID         string             `json:"id"`
+	Expiration cdp.TimeSinceEpoch `json:"expiration"`
+	Quota      float64            `json:"quota"` // Storage quota (bytes).
+	Persistent bool               `json:"persistent"`
+	Durability BucketsDurability  `json:"durability"`
 }

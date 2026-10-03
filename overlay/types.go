@@ -73,8 +73,8 @@ type FlexItemHighlightConfig struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Overlay#type-LineStyle
 type LineStyle struct {
-	Color   *cdp.RGBA        `json:"color,omitempty,omitzero"`   // The color of the line (default: transparent)
-	Pattern LineStylePattern `json:"pattern,omitempty,omitzero"` // The line pattern (default: solid)
+	Color   *cdp.RGBA `json:"color,omitempty,omitzero"`   // The color of the line (default: transparent)
+	Pattern string    `json:"pattern,omitempty,omitzero"` // The line pattern (default: solid)
 }
 
 // BoxStyle style information for drawing a box.
@@ -382,36 +382,4 @@ func (t *InspectMode) UnmarshalJSON(buf []byte) error {
 type InspectedElementAnchorConfig struct {
 	NodeID        cdp.NodeID        `json:"nodeId,omitempty,omitzero"`        // Identifier of the node to highlight.
 	BackendNodeID cdp.BackendNodeID `json:"backendNodeId,omitempty,omitzero"` // Identifier of the backend node to highlight.
-}
-
-// LineStylePattern the line pattern (default: solid).
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Overlay#type-LineStyle
-type LineStylePattern string
-
-// String returns the LineStylePattern as string value.
-func (t LineStylePattern) String() string {
-	return string(t)
-}
-
-// LineStylePattern values.
-const (
-	LineStylePatternDashed LineStylePattern = "dashed"
-	LineStylePatternDotted LineStylePattern = "dotted"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *LineStylePattern) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch LineStylePattern(s) {
-	case LineStylePatternDashed:
-		*t = LineStylePatternDashed
-	case LineStylePatternDotted:
-		*t = LineStylePatternDotted
-	default:
-		return fmt.Errorf("unknown LineStylePattern value: %v", s)
-	}
-	return nil
 }

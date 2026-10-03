@@ -17,7 +17,7 @@ type MemoryDumpConfig struct{}
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Tracing#type-TraceConfig
 type TraceConfig struct {
-	RecordMode           RecordMode        `json:"recordMode,omitempty,omitzero"`          // Controls how the trace buffer stores data. The default is recordUntilFull.
+	RecordMode           string            `json:"recordMode,omitempty,omitzero"`          // Controls how the trace buffer stores data. The default is recordUntilFull.
 	TraceBufferSizeInKb  float64           `json:"traceBufferSizeInKb,omitempty,omitzero"` // Size of the trace buffer in kilobytes. If not specified or zero is passed, a default value of 200 MB would be used.
 	EnableSampling       bool              `json:"enableSampling"`                         // Turns on JavaScript stack sampling.
 	EnableSystrace       bool              `json:"enableSystrace"`                         // Turns on system tracing.
@@ -166,78 +166,6 @@ func (t *Backend) UnmarshalJSON(buf []byte) error {
 		*t = BackendSystem
 	default:
 		return fmt.Errorf("unknown Backend value: %v", s)
-	}
-	return nil
-}
-
-// RecordMode controls how the trace buffer stores data. The default is
-// recordUntilFull.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Tracing#type-TraceConfig
-type RecordMode string
-
-// String returns the RecordMode as string value.
-func (t RecordMode) String() string {
-	return string(t)
-}
-
-// RecordMode values.
-const (
-	RecordModeRecordUntilFull        RecordMode = "recordUntilFull"
-	RecordModeRecordContinuously     RecordMode = "recordContinuously"
-	RecordModeRecordAsMuchAsPossible RecordMode = "recordAsMuchAsPossible"
-	RecordModeEchoToConsole          RecordMode = "echoToConsole"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *RecordMode) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch RecordMode(s) {
-	case RecordModeRecordUntilFull:
-		*t = RecordModeRecordUntilFull
-	case RecordModeRecordContinuously:
-		*t = RecordModeRecordContinuously
-	case RecordModeRecordAsMuchAsPossible:
-		*t = RecordModeRecordAsMuchAsPossible
-	case RecordModeEchoToConsole:
-		*t = RecordModeEchoToConsole
-	default:
-		return fmt.Errorf("unknown RecordMode value: %v", s)
-	}
-	return nil
-}
-
-// TransferMode whether to report trace events as series of dataCollected
-// events or to save trace to a stream (defaults to ReportEvents).
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Tracing#method-start
-type TransferMode string
-
-// String returns the TransferMode as string value.
-func (t TransferMode) String() string {
-	return string(t)
-}
-
-// TransferMode values.
-const (
-	TransferModeReportEvents   TransferMode = "ReportEvents"
-	TransferModeReturnAsStream TransferMode = "ReturnAsStream"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *TransferMode) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch TransferMode(s) {
-	case TransferModeReportEvents:
-		*t = TransferModeReportEvents
-	case TransferModeReturnAsStream:
-		*t = TransferModeReturnAsStream
-	default:
-		return fmt.Errorf("unknown TransferMode value: %v", s)
 	}
 	return nil
 }

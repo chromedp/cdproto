@@ -75,87 +75,17 @@ type HeaderEntry struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Fetch#type-AuthChallenge
 type AuthChallenge struct {
-	Source AuthChallengeSource `json:"source,omitempty,omitzero"` // Source of the authentication challenge.
-	Origin string              `json:"origin"`                    // Origin of the challenger.
-	Scheme string              `json:"scheme"`                    // The authentication scheme used, such as basic or digest
-	Realm  string              `json:"realm"`                     // The realm of the challenge. May be empty.
+	Source string `json:"source,omitempty,omitzero"` // Source of the authentication challenge.
+	Origin string `json:"origin"`                    // Origin of the challenger.
+	Scheme string `json:"scheme"`                    // The authentication scheme used, such as basic or digest
+	Realm  string `json:"realm"`                     // The realm of the challenge. May be empty.
 }
 
 // AuthChallengeResponse response to an AuthChallenge.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Fetch#type-AuthChallengeResponse
 type AuthChallengeResponse struct {
-	Response AuthChallengeResponseResponse `json:"response"`                    // The decision on what to do in response to the authorization challenge.  Default means deferring to the default behavior of the net stack, which will likely either the Cancel authentication or display a popup dialog box.
-	Username string                        `json:"username,omitempty,omitzero"` // The username to provide, possibly empty. Should only be set if response is ProvideCredentials.
-	Password string                        `json:"password,omitempty,omitzero"` // The password to provide, possibly empty. Should only be set if response is ProvideCredentials.
-}
-
-// AuthChallengeSource source of the authentication challenge.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Fetch#type-AuthChallenge
-type AuthChallengeSource string
-
-// String returns the AuthChallengeSource as string value.
-func (t AuthChallengeSource) String() string {
-	return string(t)
-}
-
-// AuthChallengeSource values.
-const (
-	AuthChallengeSourceServer AuthChallengeSource = "Server"
-	AuthChallengeSourceProxy  AuthChallengeSource = "Proxy"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *AuthChallengeSource) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch AuthChallengeSource(s) {
-	case AuthChallengeSourceServer:
-		*t = AuthChallengeSourceServer
-	case AuthChallengeSourceProxy:
-		*t = AuthChallengeSourceProxy
-	default:
-		return fmt.Errorf("unknown AuthChallengeSource value: %v", s)
-	}
-	return nil
-}
-
-// AuthChallengeResponseResponse the decision on what to do in response to
-// the authorization challenge. Default means deferring to the default behavior
-// of the net stack, which will likely either the Cancel authentication or
-// display a popup dialog box.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Fetch#type-AuthChallengeResponse
-type AuthChallengeResponseResponse string
-
-// String returns the AuthChallengeResponseResponse as string value.
-func (t AuthChallengeResponseResponse) String() string {
-	return string(t)
-}
-
-// AuthChallengeResponseResponse values.
-const (
-	AuthChallengeResponseResponseDefault            AuthChallengeResponseResponse = "Default"
-	AuthChallengeResponseResponseCancelAuth         AuthChallengeResponseResponse = "CancelAuth"
-	AuthChallengeResponseResponseProvideCredentials AuthChallengeResponseResponse = "ProvideCredentials"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *AuthChallengeResponseResponse) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch AuthChallengeResponseResponse(s) {
-	case AuthChallengeResponseResponseDefault:
-		*t = AuthChallengeResponseResponseDefault
-	case AuthChallengeResponseResponseCancelAuth:
-		*t = AuthChallengeResponseResponseCancelAuth
-	case AuthChallengeResponseResponseProvideCredentials:
-		*t = AuthChallengeResponseResponseProvideCredentials
-	default:
-		return fmt.Errorf("unknown AuthChallengeResponseResponse value: %v", s)
-	}
-	return nil
+	Response string `json:"response"`                    // The decision on what to do in response to the authorization challenge.  Default means deferring to the default behavior of the net stack, which will likely either the Cancel authentication or display a popup dialog box.
+	Username string `json:"username,omitempty,omitzero"` // The username to provide, possibly empty. Should only be set if response is ProvideCredentials.
+	Password string `json:"password,omitempty,omitzero"` // The password to provide, possibly empty. Should only be set if response is ProvideCredentials.
 }

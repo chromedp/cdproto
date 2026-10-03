@@ -12,7 +12,7 @@ import (
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/DOMSnapshot#type-DOMNode
 type DOMNode struct {
-	NodeType             cdp.NodeType                 `json:"nodeType"`                                // Node's nodeType.
+	NodeType             int64                        `json:"nodeType"`                                // Node's nodeType.
 	NodeName             string                       `json:"nodeName"`                                // Node's nodeName.
 	NodeValue            string                       `json:"nodeValue"`                               // Node's nodeValue.
 	TextValue            string                       `json:"textValue,omitempty,omitzero"`            // Only set for textarea elements, contains the text value.

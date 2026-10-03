@@ -685,7 +685,7 @@ type SetCookieParams struct {
 	Secure       bool                `json:"secure"`                          // True if cookie is secure.
 	HTTPOnly     bool                `json:"httpOnly"`                        // True if cookie is http-only.
 	SameSite     CookieSameSite      `json:"sameSite,omitempty,omitzero"`     // Cookie SameSite type.
-	Expires      *cdp.TimeSinceEpoch `json:"expires,omitempty,omitzero"`      // Cookie expiration date, session cookie if not set
+	Expires      cdp.TimeSinceEpoch  `json:"expires,omitempty,omitzero"`      // Cookie expiration date, session cookie if not set
 	Priority     CookiePriority      `json:"priority,omitempty,omitzero"`     // Cookie Priority type.
 	SourceScheme CookieSourceScheme  `json:"sourceScheme,omitempty,omitzero"` // Cookie source scheme type.
 	SourcePort   int64               `json:"sourcePort,omitempty,omitzero"`   // Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port. An unspecified port value allows protocol clients to emulate legacy cookie scope for the port. This is a temporary ability and it will be removed in the future.
@@ -749,7 +749,7 @@ func (p SetCookieParams) WithSameSite(sameSite CookieSameSite) *SetCookieParams 
 }
 
 // WithExpires cookie expiration date, session cookie if not set.
-func (p SetCookieParams) WithExpires(expires *cdp.TimeSinceEpoch) *SetCookieParams {
+func (p SetCookieParams) WithExpires(expires cdp.TimeSinceEpoch) *SetCookieParams {
 	p.Expires = expires
 	return &p
 }
@@ -813,7 +813,7 @@ func (p *SetCookiesParams) Do(ctx context.Context) (err error) {
 // SetExtraHTTPHeadersParams specifies whether to always send extra HTTP
 // headers with the requests from this page.
 type SetExtraHTTPHeadersParams struct {
-	Headers Headers `json:"headers"` // Map with extra HTTP headers.
+	Headers *Headers `json:"headers"` // Map with extra HTTP headers.
 }
 
 // SetExtraHTTPHeaders specifies whether to always send extra HTTP headers
@@ -824,7 +824,7 @@ type SetExtraHTTPHeadersParams struct {
 // parameters:
 //
 //	headers - Map with extra HTTP headers.
-func SetExtraHTTPHeaders(headers Headers) *SetExtraHTTPHeadersParams {
+func SetExtraHTTPHeaders(headers *Headers) *SetExtraHTTPHeadersParams {
 	return &SetExtraHTTPHeadersParams{
 		Headers: headers,
 	}

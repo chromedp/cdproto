@@ -29,7 +29,7 @@ func (p *DisableParams) Do(ctx context.Context) (err error) {
 
 // EnableParams enable collecting and reporting metrics.
 type EnableParams struct {
-	TimeDomain EnableTimeDomain `json:"timeDomain,omitempty,omitzero"` // Time domain to use for collecting and reporting duration metrics.
+	TimeDomain string `json:"timeDomain,omitempty,omitzero"` // Time domain to use for collecting and reporting duration metrics.
 }
 
 // Enable enable collecting and reporting metrics.
@@ -43,7 +43,7 @@ func Enable() *EnableParams {
 
 // WithTimeDomain time domain to use for collecting and reporting duration
 // metrics.
-func (p EnableParams) WithTimeDomain(timeDomain EnableTimeDomain) *EnableParams {
+func (p EnableParams) WithTimeDomain(timeDomain string) *EnableParams {
 	p.TimeDomain = timeDomain
 	return &p
 }

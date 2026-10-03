@@ -10,11 +10,11 @@ import (
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-dataReceived
 type EventDataReceived struct {
-	RequestID         RequestID          `json:"requestId"`               // Request identifier.
-	Timestamp         *cdp.MonotonicTime `json:"timestamp"`               // Timestamp.
-	DataLength        int64              `json:"dataLength"`              // Data chunk length.
-	EncodedDataLength int64              `json:"encodedDataLength"`       // Actual bytes received (might be less than dataLength for compressed encodings).
-	Data              string             `json:"data,omitempty,omitzero"` // Data that was received.
+	RequestID         RequestID         `json:"requestId"`               // Request identifier.
+	Timestamp         cdp.MonotonicTime `json:"timestamp"`               // Timestamp.
+	DataLength        int64             `json:"dataLength"`              // Data chunk length.
+	EncodedDataLength int64             `json:"encodedDataLength"`       // Actual bytes received (might be less than dataLength for compressed encodings).
+	Data              string            `json:"data,omitempty,omitzero"` // Data that was received.
 }
 
 // EventEventSourceMessageReceived fired when EventSource message is
@@ -22,33 +22,33 @@ type EventDataReceived struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-eventSourceMessageReceived
 type EventEventSourceMessageReceived struct {
-	RequestID RequestID          `json:"requestId"` // Request identifier.
-	Timestamp *cdp.MonotonicTime `json:"timestamp"` // Timestamp.
-	EventName string             `json:"eventName"` // Message type.
-	EventID   string             `json:"eventId"`   // Message identifier.
-	Data      string             `json:"data"`      // Message content.
+	RequestID RequestID         `json:"requestId"` // Request identifier.
+	Timestamp cdp.MonotonicTime `json:"timestamp"` // Timestamp.
+	EventName string            `json:"eventName"` // Message type.
+	EventID   string            `json:"eventId"`   // Message identifier.
+	Data      string            `json:"data"`      // Message content.
 }
 
 // EventLoadingFailed fired when HTTP request has failed to load.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-loadingFailed
 type EventLoadingFailed struct {
-	RequestID       RequestID          `json:"requestId"`                          // Request identifier.
-	Timestamp       *cdp.MonotonicTime `json:"timestamp"`                          // Timestamp.
-	Type            ResourceType       `json:"type"`                               // Resource type.
-	ErrorText       string             `json:"errorText"`                          // Error message. List of network errors: https://cs.chromium.org/chromium/src/net/base/net_error_list.h
-	Canceled        bool               `json:"canceled"`                           // True if loading was canceled.
-	BlockedReason   BlockedReason      `json:"blockedReason,omitempty,omitzero"`   // The reason why loading was blocked, if any.
-	CorsErrorStatus *CorsErrorStatus   `json:"corsErrorStatus,omitempty,omitzero"` // The reason why loading was blocked by CORS, if any.
+	RequestID       RequestID         `json:"requestId"`                          // Request identifier.
+	Timestamp       cdp.MonotonicTime `json:"timestamp"`                          // Timestamp.
+	Type            ResourceType      `json:"type"`                               // Resource type.
+	ErrorText       string            `json:"errorText"`                          // Error message. List of network errors: https://cs.chromium.org/chromium/src/net/base/net_error_list.h
+	Canceled        bool              `json:"canceled"`                           // True if loading was canceled.
+	BlockedReason   BlockedReason     `json:"blockedReason,omitempty,omitzero"`   // The reason why loading was blocked, if any.
+	CorsErrorStatus *CorsErrorStatus  `json:"corsErrorStatus,omitempty,omitzero"` // The reason why loading was blocked by CORS, if any.
 }
 
 // EventLoadingFinished fired when HTTP request has finished loading.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-loadingFinished
 type EventLoadingFinished struct {
-	RequestID         RequestID          `json:"requestId"`         // Request identifier.
-	Timestamp         *cdp.MonotonicTime `json:"timestamp"`         // Timestamp.
-	EncodedDataLength float64            `json:"encodedDataLength"` // Total number of bytes received for this request.
+	RequestID         RequestID         `json:"requestId"`         // Request identifier.
+	Timestamp         cdp.MonotonicTime `json:"timestamp"`         // Timestamp.
+	EncodedDataLength float64           `json:"encodedDataLength"` // Total number of bytes received for this request.
 }
 
 // EventRequestServedFromCache fired if request ended up loading from cache.
@@ -66,8 +66,8 @@ type EventRequestWillBeSent struct {
 	LoaderID               cdp.LoaderID           `json:"loaderId"`                                  // Loader identifier. Empty string if the request is fetched from worker.
 	DocumentURL            string                 `json:"documentURL"`                               // URL of the document this request is loaded for.
 	Request                *Request               `json:"request"`                                   // Request data.
-	Timestamp              *cdp.MonotonicTime     `json:"timestamp"`                                 // Timestamp.
-	WallTime               *cdp.TimeSinceEpoch    `json:"wallTime"`                                  // Timestamp.
+	Timestamp              cdp.MonotonicTime      `json:"timestamp"`                                 // Timestamp.
+	WallTime               cdp.TimeSinceEpoch     `json:"wallTime"`                                  // Timestamp.
 	Initiator              *Initiator             `json:"initiator"`                                 // Request initiator.
 	RedirectHasExtraInfo   bool                   `json:"redirectHasExtraInfo"`                      // In the case that redirectResponse is populated, this flag indicates whether requestWillBeSentExtraInfo and responseReceivedExtraInfo events will be or were emitted for the request which was just redirected.
 	RedirectResponse       *Response              `json:"redirectResponse,omitempty,omitzero"`       // Redirect response data.
@@ -82,9 +82,9 @@ type EventRequestWillBeSent struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-resourceChangedPriority
 type EventResourceChangedPriority struct {
-	RequestID   RequestID          `json:"requestId"`   // Request identifier.
-	NewPriority ResourcePriority   `json:"newPriority"` // New priority
-	Timestamp   *cdp.MonotonicTime `json:"timestamp"`   // Timestamp.
+	RequestID   RequestID         `json:"requestId"`   // Request identifier.
+	NewPriority ResourcePriority  `json:"newPriority"` // New priority
+	Timestamp   cdp.MonotonicTime `json:"timestamp"`   // Timestamp.
 }
 
 // EventSignedExchangeReceived fired when a signed exchange was received over
@@ -100,21 +100,21 @@ type EventSignedExchangeReceived struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-responseReceived
 type EventResponseReceived struct {
-	RequestID    RequestID          `json:"requestId"`                  // Request identifier.
-	LoaderID     cdp.LoaderID       `json:"loaderId"`                   // Loader identifier. Empty string if the request is fetched from worker.
-	Timestamp    *cdp.MonotonicTime `json:"timestamp"`                  // Timestamp.
-	Type         ResourceType       `json:"type"`                       // Resource type.
-	Response     *Response          `json:"response"`                   // Response data.
-	HasExtraInfo bool               `json:"hasExtraInfo"`               // Indicates whether requestWillBeSentExtraInfo and responseReceivedExtraInfo events will be or were emitted for this request.
-	FrameID      cdp.FrameID        `json:"frameId,omitempty,omitzero"` // Frame identifier.
+	RequestID    RequestID         `json:"requestId"`                  // Request identifier.
+	LoaderID     cdp.LoaderID      `json:"loaderId"`                   // Loader identifier. Empty string if the request is fetched from worker.
+	Timestamp    cdp.MonotonicTime `json:"timestamp"`                  // Timestamp.
+	Type         ResourceType      `json:"type"`                       // Resource type.
+	Response     *Response         `json:"response"`                   // Response data.
+	HasExtraInfo bool              `json:"hasExtraInfo"`               // Indicates whether requestWillBeSentExtraInfo and responseReceivedExtraInfo events will be or were emitted for this request.
+	FrameID      cdp.FrameID       `json:"frameId,omitempty,omitzero"` // Frame identifier.
 }
 
 // EventWebSocketClosed fired when WebSocket is closed.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-webSocketClosed
 type EventWebSocketClosed struct {
-	RequestID RequestID          `json:"requestId"` // Request identifier.
-	Timestamp *cdp.MonotonicTime `json:"timestamp"` // Timestamp.
+	RequestID RequestID         `json:"requestId"` // Request identifier.
+	Timestamp cdp.MonotonicTime `json:"timestamp"` // Timestamp.
 }
 
 // EventWebSocketCreated fired upon WebSocket creation.
@@ -130,27 +130,27 @@ type EventWebSocketCreated struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-webSocketFrameError
 type EventWebSocketFrameError struct {
-	RequestID    RequestID          `json:"requestId"`    // Request identifier.
-	Timestamp    *cdp.MonotonicTime `json:"timestamp"`    // Timestamp.
-	ErrorMessage string             `json:"errorMessage"` // WebSocket error message.
+	RequestID    RequestID         `json:"requestId"`    // Request identifier.
+	Timestamp    cdp.MonotonicTime `json:"timestamp"`    // Timestamp.
+	ErrorMessage string            `json:"errorMessage"` // WebSocket error message.
 }
 
 // EventWebSocketFrameReceived fired when WebSocket message is received.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-webSocketFrameReceived
 type EventWebSocketFrameReceived struct {
-	RequestID RequestID          `json:"requestId"` // Request identifier.
-	Timestamp *cdp.MonotonicTime `json:"timestamp"` // Timestamp.
-	Response  *WebSocketFrame    `json:"response"`  // WebSocket response data.
+	RequestID RequestID         `json:"requestId"` // Request identifier.
+	Timestamp cdp.MonotonicTime `json:"timestamp"` // Timestamp.
+	Response  *WebSocketFrame   `json:"response"`  // WebSocket response data.
 }
 
 // EventWebSocketFrameSent fired when WebSocket message is sent.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-webSocketFrameSent
 type EventWebSocketFrameSent struct {
-	RequestID RequestID          `json:"requestId"` // Request identifier.
-	Timestamp *cdp.MonotonicTime `json:"timestamp"` // Timestamp.
-	Response  *WebSocketFrame    `json:"response"`  // WebSocket response data.
+	RequestID RequestID         `json:"requestId"` // Request identifier.
+	Timestamp cdp.MonotonicTime `json:"timestamp"` // Timestamp.
+	Response  *WebSocketFrame   `json:"response"`  // WebSocket response data.
 }
 
 // EventWebSocketHandshakeResponseReceived fired when WebSocket handshake
@@ -159,7 +159,7 @@ type EventWebSocketFrameSent struct {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-webSocketHandshakeResponseReceived
 type EventWebSocketHandshakeResponseReceived struct {
 	RequestID RequestID          `json:"requestId"` // Request identifier.
-	Timestamp *cdp.MonotonicTime `json:"timestamp"` // Timestamp.
+	Timestamp cdp.MonotonicTime  `json:"timestamp"` // Timestamp.
 	Response  *WebSocketResponse `json:"response"`  // WebSocket response data.
 }
 
@@ -168,20 +168,20 @@ type EventWebSocketHandshakeResponseReceived struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-webSocketWillSendHandshakeRequest
 type EventWebSocketWillSendHandshakeRequest struct {
-	RequestID RequestID           `json:"requestId"` // Request identifier.
-	Timestamp *cdp.MonotonicTime  `json:"timestamp"` // Timestamp.
-	WallTime  *cdp.TimeSinceEpoch `json:"wallTime"`  // UTC Timestamp.
-	Request   *WebSocketRequest   `json:"request"`   // WebSocket request data.
+	RequestID RequestID          `json:"requestId"` // Request identifier.
+	Timestamp cdp.MonotonicTime  `json:"timestamp"` // Timestamp.
+	WallTime  cdp.TimeSinceEpoch `json:"wallTime"`  // UTC Timestamp.
+	Request   *WebSocketRequest  `json:"request"`   // WebSocket request data.
 }
 
 // EventWebTransportCreated fired upon WebTransport creation.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-webTransportCreated
 type EventWebTransportCreated struct {
-	TransportID RequestID          `json:"transportId"`                  // WebTransport identifier.
-	URL         string             `json:"url"`                          // WebTransport request URL.
-	Timestamp   *cdp.MonotonicTime `json:"timestamp"`                    // Timestamp.
-	Initiator   *Initiator         `json:"initiator,omitempty,omitzero"` // Request initiator.
+	TransportID RequestID         `json:"transportId"`                  // WebTransport identifier.
+	URL         string            `json:"url"`                          // WebTransport request URL.
+	Timestamp   cdp.MonotonicTime `json:"timestamp"`                    // Timestamp.
+	Initiator   *Initiator        `json:"initiator,omitempty,omitzero"` // Request initiator.
 }
 
 // EventWebTransportConnectionEstablished fired when WebTransport handshake
@@ -189,16 +189,16 @@ type EventWebTransportCreated struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-webTransportConnectionEstablished
 type EventWebTransportConnectionEstablished struct {
-	TransportID RequestID          `json:"transportId"` // WebTransport identifier.
-	Timestamp   *cdp.MonotonicTime `json:"timestamp"`   // Timestamp.
+	TransportID RequestID         `json:"transportId"` // WebTransport identifier.
+	Timestamp   cdp.MonotonicTime `json:"timestamp"`   // Timestamp.
 }
 
 // EventWebTransportClosed fired when WebTransport is disposed.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-webTransportClosed
 type EventWebTransportClosed struct {
-	TransportID RequestID          `json:"transportId"` // WebTransport identifier.
-	Timestamp   *cdp.MonotonicTime `json:"timestamp"`   // Timestamp.
+	TransportID RequestID         `json:"transportId"` // WebTransport identifier.
+	Timestamp   cdp.MonotonicTime `json:"timestamp"`   // Timestamp.
 }
 
 // EventDirectTCPSocketCreated fired upon direct_socket.TCPSocket creation.
@@ -209,7 +209,7 @@ type EventDirectTCPSocketCreated struct {
 	RemoteAddr string                  `json:"remoteAddr"`
 	RemotePort int64                   `json:"remotePort"` // Unsigned int 16.
 	Options    *DirectTCPSocketOptions `json:"options"`
-	Timestamp  *cdp.MonotonicTime      `json:"timestamp"`
+	Timestamp  cdp.MonotonicTime       `json:"timestamp"`
 	Initiator  *Initiator              `json:"initiator,omitempty,omitzero"`
 }
 
@@ -218,29 +218,29 @@ type EventDirectTCPSocketCreated struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-directTCPSocketOpened
 type EventDirectTCPSocketOpened struct {
-	Identifier RequestID          `json:"identifier"`
-	RemoteAddr string             `json:"remoteAddr"`
-	RemotePort int64              `json:"remotePort"` // Expected to be unsigned integer.
-	Timestamp  *cdp.MonotonicTime `json:"timestamp"`
-	LocalAddr  string             `json:"localAddr,omitempty,omitzero"`
-	LocalPort  int64              `json:"localPort,omitempty,omitzero"` // Expected to be unsigned integer.
+	Identifier RequestID         `json:"identifier"`
+	RemoteAddr string            `json:"remoteAddr"`
+	RemotePort int64             `json:"remotePort"` // Expected to be unsigned integer.
+	Timestamp  cdp.MonotonicTime `json:"timestamp"`
+	LocalAddr  string            `json:"localAddr,omitempty,omitzero"`
+	LocalPort  int64             `json:"localPort,omitempty,omitzero"` // Expected to be unsigned integer.
 }
 
 // EventDirectTCPSocketAborted fired when direct_socket.TCPSocket is aborted.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-directTCPSocketAborted
 type EventDirectTCPSocketAborted struct {
-	Identifier   RequestID          `json:"identifier"`
-	ErrorMessage ErrorReason        `json:"errorMessage"`
-	Timestamp    *cdp.MonotonicTime `json:"timestamp"`
+	Identifier   RequestID         `json:"identifier"`
+	ErrorMessage ErrorReason       `json:"errorMessage"`
+	Timestamp    cdp.MonotonicTime `json:"timestamp"`
 }
 
 // EventDirectTCPSocketClosed fired when direct_socket.TCPSocket is closed.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-directTCPSocketClosed
 type EventDirectTCPSocketClosed struct {
-	Identifier RequestID          `json:"identifier"`
-	Timestamp  *cdp.MonotonicTime `json:"timestamp"`
+	Identifier RequestID         `json:"identifier"`
+	Timestamp  cdp.MonotonicTime `json:"timestamp"`
 }
 
 // EventDirectTCPSocketChunkSent fired when data is sent to tcp direct socket
@@ -248,9 +248,9 @@ type EventDirectTCPSocketClosed struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-directTCPSocketChunkSent
 type EventDirectTCPSocketChunkSent struct {
-	Identifier RequestID          `json:"identifier"`
-	Data       string             `json:"data"`
-	Timestamp  *cdp.MonotonicTime `json:"timestamp"`
+	Identifier RequestID         `json:"identifier"`
+	Data       string            `json:"data"`
+	Timestamp  cdp.MonotonicTime `json:"timestamp"`
 }
 
 // EventDirectTCPSocketChunkReceived fired when data is received from tcp
@@ -258,9 +258,9 @@ type EventDirectTCPSocketChunkSent struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-directTCPSocketChunkReceived
 type EventDirectTCPSocketChunkReceived struct {
-	Identifier RequestID          `json:"identifier"`
-	Data       string             `json:"data"`
-	Timestamp  *cdp.MonotonicTime `json:"timestamp"`
+	Identifier RequestID         `json:"identifier"`
+	Data       string            `json:"data"`
+	Timestamp  cdp.MonotonicTime `json:"timestamp"`
 }
 
 // EventDirectUDPSocketJoinedMulticastGroup [no description].
@@ -285,7 +285,7 @@ type EventDirectUDPSocketLeftMulticastGroup struct {
 type EventDirectUDPSocketCreated struct {
 	Identifier RequestID               `json:"identifier"`
 	Options    *DirectUDPSocketOptions `json:"options"`
-	Timestamp  *cdp.MonotonicTime      `json:"timestamp"`
+	Timestamp  cdp.MonotonicTime       `json:"timestamp"`
 	Initiator  *Initiator              `json:"initiator,omitempty,omitzero"`
 }
 
@@ -294,29 +294,29 @@ type EventDirectUDPSocketCreated struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-directUDPSocketOpened
 type EventDirectUDPSocketOpened struct {
-	Identifier RequestID          `json:"identifier"`
-	LocalAddr  string             `json:"localAddr"`
-	LocalPort  int64              `json:"localPort"` // Expected to be unsigned integer.
-	Timestamp  *cdp.MonotonicTime `json:"timestamp"`
-	RemoteAddr string             `json:"remoteAddr,omitempty,omitzero"`
-	RemotePort int64              `json:"remotePort,omitempty,omitzero"` // Expected to be unsigned integer.
+	Identifier RequestID         `json:"identifier"`
+	LocalAddr  string            `json:"localAddr"`
+	LocalPort  int64             `json:"localPort"` // Expected to be unsigned integer.
+	Timestamp  cdp.MonotonicTime `json:"timestamp"`
+	RemoteAddr string            `json:"remoteAddr,omitempty,omitzero"`
+	RemotePort int64             `json:"remotePort,omitempty,omitzero"` // Expected to be unsigned integer.
 }
 
 // EventDirectUDPSocketAborted fired when direct_socket.UDPSocket is aborted.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-directUDPSocketAborted
 type EventDirectUDPSocketAborted struct {
-	Identifier   RequestID          `json:"identifier"`
-	ErrorMessage ErrorReason        `json:"errorMessage"`
-	Timestamp    *cdp.MonotonicTime `json:"timestamp"`
+	Identifier   RequestID         `json:"identifier"`
+	ErrorMessage ErrorReason       `json:"errorMessage"`
+	Timestamp    cdp.MonotonicTime `json:"timestamp"`
 }
 
 // EventDirectUDPSocketClosed fired when direct_socket.UDPSocket is closed.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-directUDPSocketClosed
 type EventDirectUDPSocketClosed struct {
-	Identifier RequestID          `json:"identifier"`
-	Timestamp  *cdp.MonotonicTime `json:"timestamp"`
+	Identifier RequestID         `json:"identifier"`
+	Timestamp  cdp.MonotonicTime `json:"timestamp"`
 }
 
 // EventDirectUDPSocketChunkSent fired when message is sent to udp direct
@@ -324,9 +324,9 @@ type EventDirectUDPSocketClosed struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-directUDPSocketChunkSent
 type EventDirectUDPSocketChunkSent struct {
-	Identifier RequestID          `json:"identifier"`
-	Message    *DirectUDPMessage  `json:"message"`
-	Timestamp  *cdp.MonotonicTime `json:"timestamp"`
+	Identifier RequestID         `json:"identifier"`
+	Message    *DirectUDPMessage `json:"message"`
+	Timestamp  cdp.MonotonicTime `json:"timestamp"`
 }
 
 // EventDirectUDPSocketChunkReceived fired when message is received from udp
@@ -334,9 +334,9 @@ type EventDirectUDPSocketChunkSent struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-directUDPSocketChunkReceived
 type EventDirectUDPSocketChunkReceived struct {
-	Identifier RequestID          `json:"identifier"`
-	Message    *DirectUDPMessage  `json:"message"`
-	Timestamp  *cdp.MonotonicTime `json:"timestamp"`
+	Identifier RequestID         `json:"identifier"`
+	Message    *DirectUDPMessage `json:"message"`
+	Timestamp  cdp.MonotonicTime `json:"timestamp"`
 }
 
 // EventRequestWillBeSentExtraInfo fired when additional information about a
@@ -349,7 +349,7 @@ type EventDirectUDPSocketChunkReceived struct {
 type EventRequestWillBeSentExtraInfo struct {
 	RequestID                     RequestID                      `json:"requestId"`                                     // Request identifier. Used to match this information to an existing requestWillBeSent event.
 	AssociatedCookies             []*AssociatedCookie            `json:"associatedCookies"`                             // A list of cookies potentially associated to the requested URL. This includes both cookies sent with the request and the ones not sent; the latter are distinguished by having blockedReasons field set.
-	Headers                       Headers                        `json:"headers"`                                       // Raw request headers as they will be sent over the wire.
+	Headers                       *Headers                       `json:"headers"`                                       // Raw request headers as they will be sent over the wire.
 	ConnectTiming                 *ConnectTiming                 `json:"connectTiming"`                                 // Connection timing information for the request.
 	DeviceBoundSessionUsages      []*DeviceBoundSessionWithUsage `json:"deviceBoundSessionUsages,omitempty,omitzero"`   // How the request site's device bound sessions were used during this request.
 	ClientSecurityState           *ClientSecurityState           `json:"clientSecurityState,omitempty,omitzero"`        // The client security state set for the request.
@@ -367,7 +367,7 @@ type EventRequestWillBeSentExtraInfo struct {
 type EventResponseReceivedExtraInfo struct {
 	RequestID                RequestID                      `json:"requestId"`                             // Request identifier. Used to match this information to another responseReceived event.
 	BlockedCookies           []*BlockedSetCookieWithReason  `json:"blockedCookies"`                        // A list of cookies which were not stored from the response along with the corresponding reasons for blocking. The cookies here may not be valid due to syntax errors, which are represented by the invalid cookie line string instead of a proper cookie.
-	Headers                  Headers                        `json:"headers"`                               // Raw response headers as they were received over the wire. Duplicate headers in the response are represented as a single key with their values concatentated using \n as the separator. See also headersText that contains verbatim text for HTTP/1.*.
+	Headers                  *Headers                       `json:"headers"`                               // Raw response headers as they were received over the wire. Duplicate headers in the response are represented as a single key with their values concatentated using \n as the separator. See also headersText that contains verbatim text for HTTP/1.*.
 	ResourceIPAddressSpace   IPAddressSpace                 `json:"resourceIPAddressSpace"`                // The IP address space of the resource. The address space can only be determined once the transport established the connection, so we can't send it in requestWillBeSentExtraInfo.
 	StatusCode               int64                          `json:"statusCode"`                            // The status code of the response. This is useful in cases the request failed and no responseReceived event is triggered, which is the case for, e.g., CORS errors. This is also the correct status code for cached requests, where the status in responseReceived is a 200 and this will be 304.
 	HeadersText              string                         `json:"headersText,omitempty,omitzero"`        // Raw response header text as it was received over the wire. The raw text may not always be available, such as in the case of HTTP/2 or QUIC.
@@ -384,7 +384,7 @@ type EventResponseReceivedExtraInfo struct {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-responseReceivedEarlyHints
 type EventResponseReceivedEarlyHints struct {
 	RequestID RequestID `json:"requestId"` // Request identifier. Used to match this information to another responseReceived event.
-	Headers   Headers   `json:"headers"`   // Raw response headers as they were received over the wire. Duplicate headers in the response are represented as a single key with their values concatentated using \n as the separator. See also headersText that contains verbatim text for HTTP/1.*.
+	Headers   *Headers  `json:"headers"`   // Raw response headers as they were received over the wire. Duplicate headers in the response are represented as a single key with their values concatentated using \n as the separator. See also headersText that contains verbatim text for HTTP/1.*.
 }
 
 // EventTrustTokenOperationDone fired exactly once for each Trust Token
@@ -394,12 +394,12 @@ type EventResponseReceivedEarlyHints struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-trustTokenOperationDone
 type EventTrustTokenOperationDone struct {
-	Status           TrustTokenOperationDoneStatus `json:"status"` // Detailed success or error status of the operation. 'AlreadyExists' also signifies a successful operation, as the result of the operation already exists und thus, the operation was abort preemptively (e.g. a cache hit).
-	Type             TrustTokenOperationType       `json:"type"`
-	RequestID        RequestID                     `json:"requestId"`
-	TopLevelOrigin   string                        `json:"topLevelOrigin,omitempty,omitzero"`   // Top level origin. The context in which the operation was attempted.
-	IssuerOrigin     string                        `json:"issuerOrigin,omitempty,omitzero"`     // Origin of the issuer in case of a "Issuance" or "Redemption" operation.
-	IssuedTokenCount int64                         `json:"issuedTokenCount,omitempty,omitzero"` // The number of obtained Trust Tokens on a successful "Issuance" operation.
+	Status           string                  `json:"status"` // Detailed success or error status of the operation. 'AlreadyExists' also signifies a successful operation, as the result of the operation already exists und thus, the operation was abort preemptively (e.g. a cache hit).
+	Type             TrustTokenOperationType `json:"type"`
+	RequestID        RequestID               `json:"requestId"`
+	TopLevelOrigin   string                  `json:"topLevelOrigin,omitempty,omitzero"`   // Top level origin. The context in which the operation was attempted.
+	IssuerOrigin     string                  `json:"issuerOrigin,omitempty,omitzero"`     // Origin of the issuer in case of a "Issuance" or "Redemption" operation.
+	IssuedTokenCount int64                   `json:"issuedTokenCount,omitempty,omitzero"` // The number of obtained Trust Tokens on a successful "Issuance" operation.
 }
 
 // EventPolicyUpdated fired once security policy has been updated.

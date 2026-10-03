@@ -104,24 +104,24 @@ func (t *State) UnmarshalJSON(buf []byte) error {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Security#type-CertificateSecurityState
 type CertificateSecurityState struct {
-	Protocol                    string              `json:"protocol"`                                   // Protocol name (e.g. "TLS 1.2" or "QUIC").
-	KeyExchange                 string              `json:"keyExchange"`                                // Key Exchange used by the connection, or the empty string if not applicable.
-	KeyExchangeGroup            string              `json:"keyExchangeGroup,omitempty,omitzero"`        // (EC)DH group used by the connection, if applicable.
-	Cipher                      string              `json:"cipher"`                                     // Cipher name.
-	Mac                         string              `json:"mac,omitempty,omitzero"`                     // TLS MAC. Note that AEAD ciphers do not have separate MACs.
-	Certificate                 []string            `json:"certificate"`                                // Page certificate.
-	SubjectName                 string              `json:"subjectName"`                                // Certificate subject name.
-	Issuer                      string              `json:"issuer"`                                     // Name of the issuing CA.
-	ValidFrom                   *cdp.TimeSinceEpoch `json:"validFrom"`                                  // Certificate valid from date.
-	ValidTo                     *cdp.TimeSinceEpoch `json:"validTo"`                                    // Certificate valid to (expiration) date
-	CertificateNetworkError     string              `json:"certificateNetworkError,omitempty,omitzero"` // The highest priority network error code, if the certificate has an error.
-	CertificateHasWeakSignature bool                `json:"certificateHasWeakSignature"`                // True if the certificate uses a weak signature algorithm.
-	CertificateHasSha1signature bool                `json:"certificateHasSha1Signature"`                // True if the certificate has a SHA1 signature in the chain.
-	ModernSSL                   bool                `json:"modernSSL"`                                  // True if modern SSL
-	ObsoleteSslProtocol         bool                `json:"obsoleteSslProtocol"`                        // True if the connection is using an obsolete SSL protocol.
-	ObsoleteSslKeyExchange      bool                `json:"obsoleteSslKeyExchange"`                     // True if the connection is using an obsolete SSL key exchange.
-	ObsoleteSslCipher           bool                `json:"obsoleteSslCipher"`                          // True if the connection is using an obsolete SSL cipher.
-	ObsoleteSslSignature        bool                `json:"obsoleteSslSignature"`                       // True if the connection is using an obsolete SSL signature.
+	Protocol                    string             `json:"protocol"`                                   // Protocol name (e.g. "TLS 1.2" or "QUIC").
+	KeyExchange                 string             `json:"keyExchange"`                                // Key Exchange used by the connection, or the empty string if not applicable.
+	KeyExchangeGroup            string             `json:"keyExchangeGroup,omitempty,omitzero"`        // (EC)DH group used by the connection, if applicable.
+	Cipher                      string             `json:"cipher"`                                     // Cipher name.
+	Mac                         string             `json:"mac,omitempty,omitzero"`                     // TLS MAC. Note that AEAD ciphers do not have separate MACs.
+	Certificate                 []string           `json:"certificate"`                                // Page certificate.
+	SubjectName                 string             `json:"subjectName"`                                // Certificate subject name.
+	Issuer                      string             `json:"issuer"`                                     // Name of the issuing CA.
+	ValidFrom                   cdp.TimeSinceEpoch `json:"validFrom"`                                  // Certificate valid from date.
+	ValidTo                     cdp.TimeSinceEpoch `json:"validTo"`                                    // Certificate valid to (expiration) date
+	CertificateNetworkError     string             `json:"certificateNetworkError,omitempty,omitzero"` // The highest priority network error code, if the certificate has an error.
+	CertificateHasWeakSignature bool               `json:"certificateHasWeakSignature"`                // True if the certificate uses a weak signature algorithm.
+	CertificateHasSha1signature bool               `json:"certificateHasSha1Signature"`                // True if the certificate has a SHA1 signature in the chain.
+	ModernSSL                   bool               `json:"modernSSL"`                                  // True if modern SSL
+	ObsoleteSslProtocol         bool               `json:"obsoleteSslProtocol"`                        // True if the connection is using an obsolete SSL protocol.
+	ObsoleteSslKeyExchange      bool               `json:"obsoleteSslKeyExchange"`                     // True if the connection is using an obsolete SSL key exchange.
+	ObsoleteSslCipher           bool               `json:"obsoleteSslCipher"`                          // True if the connection is using an obsolete SSL cipher.
+	ObsoleteSslSignature        bool               `json:"obsoleteSslSignature"`                       // True if the connection is using an obsolete SSL signature.
 }
 
 // SafetyTipStatus [no description].

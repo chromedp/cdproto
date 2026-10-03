@@ -105,12 +105,12 @@ func (p *BringToFrontParams) Do(ctx context.Context) (err error) {
 
 // CaptureScreenshotParams capture page screenshot.
 type CaptureScreenshotParams struct {
-	Format                CaptureScreenshotFormat `json:"format,omitempty,omitzero"`  // Image compression format (defaults to png).
-	Quality               int64                   `json:"quality,omitempty,omitzero"` // Compression quality from range [0..100] (jpeg only).
-	Clip                  *Viewport               `json:"clip,omitempty,omitzero"`    // Capture the screenshot of a given region only.
-	FromSurface           bool                    `json:"fromSurface"`                // Capture the screenshot from the surface, rather than the view. Defaults to true.
-	CaptureBeyondViewport bool                    `json:"captureBeyondViewport"`      // Capture the screenshot beyond the viewport. Defaults to false.
-	OptimizeForSpeed      bool                    `json:"optimizeForSpeed"`           // Optimize image encoding for speed, not for resulting size (defaults to false)
+	Format                string    `json:"format,omitempty,omitzero"`  // Image compression format (defaults to png).
+	Quality               int64     `json:"quality,omitempty,omitzero"` // Compression quality from range [0..100] (jpeg only).
+	Clip                  *Viewport `json:"clip,omitempty,omitzero"`    // Capture the screenshot of a given region only.
+	FromSurface           bool      `json:"fromSurface"`                // Capture the screenshot from the surface, rather than the view. Defaults to true.
+	CaptureBeyondViewport bool      `json:"captureBeyondViewport"`      // Capture the screenshot beyond the viewport. Defaults to false.
+	OptimizeForSpeed      bool      `json:"optimizeForSpeed"`           // Optimize image encoding for speed, not for resulting size (defaults to false)
 }
 
 // CaptureScreenshot capture page screenshot.
@@ -127,7 +127,7 @@ func CaptureScreenshot() *CaptureScreenshotParams {
 }
 
 // WithFormat image compression format (defaults to png).
-func (p CaptureScreenshotParams) WithFormat(format CaptureScreenshotFormat) *CaptureScreenshotParams {
+func (p CaptureScreenshotParams) WithFormat(format string) *CaptureScreenshotParams {
 	p.Format = format
 	return &p
 }
@@ -196,7 +196,7 @@ func (p *CaptureScreenshotParams) Do(ctx context.Context) (data []byte, err erro
 // MHTML format, the serialization includes iframes, shadow DOM, external
 // resources, and element-inline styles.
 type CaptureSnapshotParams struct {
-	Format CaptureSnapshotFormat `json:"format,omitempty,omitzero"` // Format (defaults to mhtml).
+	Format string `json:"format,omitempty,omitzero"` // Format (defaults to mhtml).
 }
 
 // CaptureSnapshot returns a snapshot of the page as a string. For MHTML
@@ -211,7 +211,7 @@ func CaptureSnapshot() *CaptureSnapshotParams {
 }
 
 // WithFormat format (defaults to mhtml).
-func (p CaptureSnapshotParams) WithFormat(format CaptureSnapshotFormat) *CaptureSnapshotParams {
+func (p CaptureSnapshotParams) WithFormat(format string) *CaptureSnapshotParams {
 	p.Format = format
 	return &p
 }
@@ -624,33 +624,27 @@ func GetLayoutMetrics() *GetLayoutMetricsParams {
 
 // GetLayoutMetricsReturns return values.
 type GetLayoutMetricsReturns struct {
-	LayoutViewport    *LayoutViewport `json:"layoutViewport"`    // Deprecated metrics relating to the layout viewport. Is in device pixels. Use cssLayoutViewport instead.
-	VisualViewport    *VisualViewport `json:"visualViewport"`    // Deprecated metrics relating to the visual viewport. Is in device pixels. Use cssVisualViewport instead.
-	ContentSize       *dom.Rect       `json:"contentSize"`       // Deprecated size of scrollable area. Is in DP. Use cssContentSize instead.
-	CSSLayoutViewport *LayoutViewport `json:"cssLayoutViewport"` // Metrics relating to the layout viewport in CSS pixels.
-	CSSVisualViewport *VisualViewport `json:"cssVisualViewport"` // Metrics relating to the visual viewport in CSS pixels.
-	CSSContentSize    *dom.Rect       `json:"cssContentSize"`    // Size of scrollable area in CSS pixels.
+	CSSLayoutViewport *LayoutViewport `json:"cssLayoutViewport,omitempty,omitzero"` // Metrics relating to the layout viewport in CSS pixels.
+	CSSVisualViewport *VisualViewport `json:"cssVisualViewport,omitempty,omitzero"` // Metrics relating to the visual viewport in CSS pixels.
+	CSSContentSize    *dom.Rect       `json:"cssContentSize,omitempty,omitzero"`    // Size of scrollable area in CSS pixels.
 }
 
 // Do executes Page.getLayoutMetrics against the provided context.
 //
 // returns:
 //
-//	layoutViewport - Deprecated metrics relating to the layout viewport. Is in device pixels. Use cssLayoutViewport instead.
-//	visualViewport - Deprecated metrics relating to the visual viewport. Is in device pixels. Use cssVisualViewport instead.
-//	contentSize - Deprecated size of scrollable area. Is in DP. Use cssContentSize instead.
 //	cssLayoutViewport - Metrics relating to the layout viewport in CSS pixels.
 //	cssVisualViewport - Metrics relating to the visual viewport in CSS pixels.
 //	cssContentSize - Size of scrollable area in CSS pixels.
-func (p *GetLayoutMetricsParams) Do(ctx context.Context) (layoutViewport *LayoutViewport, visualViewport *VisualViewport, contentSize *dom.Rect, cssLayoutViewport *LayoutViewport, cssVisualViewport *VisualViewport, cssContentSize *dom.Rect, err error) {
+func (p *GetLayoutMetricsParams) Do(ctx context.Context) (cssLayoutViewport *LayoutViewport, cssVisualViewport *VisualViewport, cssContentSize *dom.Rect, err error) {
 	// execute
 	var res GetLayoutMetricsReturns
 	err = cdp.Execute(ctx, CommandGetLayoutMetrics, nil, &res)
 	if err != nil {
-		return nil, nil, nil, nil, nil, nil, err
+		return nil, nil, nil, err
 	}
 
-	return res.LayoutViewport, res.VisualViewport, res.ContentSize, res.CSSLayoutViewport, res.CSSVisualViewport, res.CSSContentSize, nil
+	return res.CSSLayoutViewport, res.CSSVisualViewport, res.CSSContentSize, nil
 }
 
 // GetNavigationHistoryParams returns navigation history for the current
@@ -920,23 +914,23 @@ func (p *NavigateToHistoryEntryParams) Do(ctx context.Context) (err error) {
 
 // PrintToPDFParams print page as PDF.
 type PrintToPDFParams struct {
-	Landscape               bool                   `json:"landscape"`                         // Paper orientation. Defaults to false.
-	DisplayHeaderFooter     bool                   `json:"displayHeaderFooter"`               // Display header and footer. Defaults to false.
-	PrintBackground         bool                   `json:"printBackground"`                   // Print background graphics. Defaults to false.
-	Scale                   float64                `json:"scale,omitempty,omitzero"`          // Scale of the webpage rendering. Defaults to 1.
-	PaperWidth              float64                `json:"paperWidth,omitempty,omitzero"`     // Paper width in inches. Defaults to 8.5 inches.
-	PaperHeight             float64                `json:"paperHeight,omitempty,omitzero"`    // Paper height in inches. Defaults to 11 inches.
-	MarginTop               float64                `json:"marginTop"`                         // Top margin in inches. Defaults to 1cm (~0.4 inches).
-	MarginBottom            float64                `json:"marginBottom"`                      // Bottom margin in inches. Defaults to 1cm (~0.4 inches).
-	MarginLeft              float64                `json:"marginLeft"`                        // Left margin in inches. Defaults to 1cm (~0.4 inches).
-	MarginRight             float64                `json:"marginRight"`                       // Right margin in inches. Defaults to 1cm (~0.4 inches).
-	PageRanges              string                 `json:"pageRanges,omitempty,omitzero"`     // Paper ranges to print, one based, e.g., '1-5, 8, 11-13'. Pages are printed in the document order, not in the order specified, and no more than once. Defaults to empty string, which implies the entire document is printed. The page numbers are quietly capped to actual page count of the document, and ranges beyond the end of the document are ignored. If this results in no pages to print, an error is reported. It is an error to specify a range with start greater than end.
-	HeaderTemplate          string                 `json:"headerTemplate,omitempty,omitzero"` // HTML template for the print header. Should be valid HTML markup with following classes used to inject printing values into them: - date: formatted print date - title: document title - url: document location - pageNumber: current page number - totalPages: total pages in the document  For example, <span class=title></span> would generate span containing the title.
-	FooterTemplate          string                 `json:"footerTemplate,omitempty,omitzero"` // HTML template for the print footer. Should use the same format as the headerTemplate.
-	PreferCSSPageSize       bool                   `json:"preferCSSPageSize"`                 // Whether or not to prefer page size as defined by css. Defaults to false, in which case the content will be scaled to fit the paper size.
-	TransferMode            PrintToPDFTransferMode `json:"transferMode,omitempty,omitzero"`   // return as stream
-	GenerateTaggedPDF       bool                   `json:"generateTaggedPDF"`                 // Whether or not to generate tagged (accessible) PDF. Defaults to embedder choice.
-	GenerateDocumentOutline bool                   `json:"generateDocumentOutline"`           // Whether or not to embed the document outline into the PDF.
+	Landscape               bool    `json:"landscape"`                         // Paper orientation. Defaults to false.
+	DisplayHeaderFooter     bool    `json:"displayHeaderFooter"`               // Display header and footer. Defaults to false.
+	PrintBackground         bool    `json:"printBackground"`                   // Print background graphics. Defaults to false.
+	Scale                   float64 `json:"scale,omitempty,omitzero"`          // Scale of the webpage rendering. Defaults to 1.
+	PaperWidth              float64 `json:"paperWidth,omitempty,omitzero"`     // Paper width in inches. Defaults to 8.5 inches.
+	PaperHeight             float64 `json:"paperHeight,omitempty,omitzero"`    // Paper height in inches. Defaults to 11 inches.
+	MarginTop               float64 `json:"marginTop,omitempty,omitzero"`      // Top margin in inches. Defaults to 1cm (~0.4 inches).
+	MarginBottom            float64 `json:"marginBottom,omitempty,omitzero"`   // Bottom margin in inches. Defaults to 1cm (~0.4 inches).
+	MarginLeft              float64 `json:"marginLeft,omitempty,omitzero"`     // Left margin in inches. Defaults to 1cm (~0.4 inches).
+	MarginRight             float64 `json:"marginRight,omitempty,omitzero"`    // Right margin in inches. Defaults to 1cm (~0.4 inches).
+	PageRanges              string  `json:"pageRanges,omitempty,omitzero"`     // Paper ranges to print, one based, e.g., '1-5, 8, 11-13'. Pages are printed in the document order, not in the order specified, and no more than once. Defaults to empty string, which implies the entire document is printed. The page numbers are quietly capped to actual page count of the document, and ranges beyond the end of the document are ignored. If this results in no pages to print, an error is reported. It is an error to specify a range with start greater than end.
+	HeaderTemplate          string  `json:"headerTemplate,omitempty,omitzero"` // HTML template for the print header. Should be valid HTML markup with following classes used to inject printing values into them: - date: formatted print date - title: document title - url: document location - pageNumber: current page number - totalPages: total pages in the document  For example, <span class=title></span> would generate span containing the title.
+	FooterTemplate          string  `json:"footerTemplate,omitempty,omitzero"` // HTML template for the print footer. Should use the same format as the headerTemplate.
+	PreferCSSPageSize       bool    `json:"preferCSSPageSize"`                 // Whether or not to prefer page size as defined by css. Defaults to false, in which case the content will be scaled to fit the paper size.
+	TransferMode            string  `json:"transferMode,omitempty,omitzero"`   // return as stream
+	GenerateTaggedPDF       bool    `json:"generateTaggedPDF"`                 // Whether or not to generate tagged (accessible) PDF. Defaults to embedder choice.
+	GenerateDocumentOutline bool    `json:"generateDocumentOutline"`           // Whether or not to embed the document outline into the PDF.
 }
 
 // PrintToPDF print page as PDF.
@@ -1054,7 +1048,7 @@ func (p PrintToPDFParams) WithPreferCSSPageSize(preferCSSPageSize bool) *PrintTo
 }
 
 // WithTransferMode return as stream.
-func (p PrintToPDFParams) WithTransferMode(transferMode PrintToPDFTransferMode) *PrintToPDFParams {
+func (p PrintToPDFParams) WithTransferMode(transferMode string) *PrintToPDFParams {
 	p.TransferMode = transferMode
 	return &p
 }
@@ -1491,13 +1485,13 @@ func (p *SetLifecycleEventsEnabledParams) Do(ctx context.Context) (err error) {
 // StartScreencastParams starts sending each frame using the screencastFrame
 // event.
 type StartScreencastParams struct {
-	Format            ScreencastFormat `json:"format,omitempty,omitzero"`            // Image compression format.
-	Quality           int64            `json:"quality,omitempty,omitzero"`           // Compression quality from range [0..100].
-	MaxWidth          int64            `json:"maxWidth,omitempty,omitzero"`          // Maximum screenshot width.
-	MaxHeight         int64            `json:"maxHeight,omitempty,omitzero"`         // Maximum screenshot height.
-	EveryNthFrame     int64            `json:"everyNthFrame,omitempty,omitzero"`     // Send every n-th frame. Must be a positive integer.
-	MaxFramesInFlight int64            `json:"maxFramesInFlight,omitempty,omitzero"` // Maximum number of frames sent until screencastFrameAck is required. Defaults to 3. Must be a positive integer.
-	SendLastFrame     bool             `json:"sendLastFrame"`                        // By default, after screencastFrameAck arrives, the next produced frame is sent. Passing this flag enables storing the last produced frame in memory, which is immediately sent upon screencastFrameAck. This way, overall performance is traded for a better latency.
+	Format            string `json:"format,omitempty,omitzero"`            // Image compression format.
+	Quality           int64  `json:"quality,omitempty,omitzero"`           // Compression quality from range [0..100].
+	MaxWidth          int64  `json:"maxWidth,omitempty,omitzero"`          // Maximum screenshot width.
+	MaxHeight         int64  `json:"maxHeight,omitempty,omitzero"`         // Maximum screenshot height.
+	EveryNthFrame     int64  `json:"everyNthFrame,omitempty,omitzero"`     // Send every n-th frame. Must be a positive integer.
+	MaxFramesInFlight int64  `json:"maxFramesInFlight,omitempty,omitzero"` // Maximum number of frames sent until screencastFrameAck is required. Defaults to 3. Must be a positive integer.
+	SendLastFrame     bool   `json:"sendLastFrame"`                        // By default, after screencastFrameAck arrives, the next produced frame is sent. Passing this flag enables storing the last produced frame in memory, which is immediately sent upon screencastFrameAck. This way, overall performance is traded for a better latency.
 }
 
 // StartScreencast starts sending each frame using the screencastFrame event.
@@ -1512,7 +1506,7 @@ func StartScreencast() *StartScreencastParams {
 }
 
 // WithFormat image compression format.
-func (p StartScreencastParams) WithFormat(format ScreencastFormat) *StartScreencastParams {
+func (p StartScreencastParams) WithFormat(format string) *StartScreencastParams {
 	p.Format = format
 	return &p
 }
@@ -1708,7 +1702,7 @@ func (p *CloseParams) Do(ctx context.Context) (err error) {
 // page. It will transition the page to the given state according to:
 // https://github.com/WICG/web-lifecycle/.
 type SetWebLifecycleStateParams struct {
-	State SetWebLifecycleStateState `json:"state"` // Target lifecycle state
+	State string `json:"state"` // Target lifecycle state
 }
 
 // SetWebLifecycleState tries to update the web lifecycle state of the page.
@@ -1720,7 +1714,7 @@ type SetWebLifecycleStateParams struct {
 // parameters:
 //
 //	state - Target lifecycle state
-func SetWebLifecycleState(state SetWebLifecycleStateState) *SetWebLifecycleStateParams {
+func SetWebLifecycleState(state string) *SetWebLifecycleStateParams {
 	return &SetWebLifecycleStateParams{
 		State: state,
 	}
@@ -1826,7 +1820,7 @@ func (p *ClearCompilationCacheParams) Do(ctx context.Context) (err error) {
 // transaction mode.
 // https://w3c.github.io/secure-payment-confirmation/#sctn-automation-set-spc-transaction-mode.
 type SetSPCTransactionModeParams struct {
-	Mode SetSPCTransactionModeMode `json:"mode"`
+	Mode string `json:"mode"`
 }
 
 // SetSPCTransactionMode sets the Secure Payment Confirmation transaction
@@ -1838,7 +1832,7 @@ type SetSPCTransactionModeParams struct {
 // parameters:
 //
 //	mode
-func SetSPCTransactionMode(mode SetSPCTransactionModeMode) *SetSPCTransactionModeParams {
+func SetSPCTransactionMode(mode string) *SetSPCTransactionModeParams {
 	return &SetSPCTransactionModeParams{
 		Mode: mode,
 	}
@@ -1852,7 +1846,7 @@ func (p *SetSPCTransactionModeParams) Do(ctx context.Context) (err error) {
 // SetRPHRegistrationModeParams extensions for Custom Handlers API:
 // https://html.spec.whatwg.org/multipage/system-state.html#rph-automation.
 type SetRPHRegistrationModeParams struct {
-	Mode SetRPHRegistrationModeMode `json:"mode"`
+	Mode string `json:"mode"`
 }
 
 // SetRPHRegistrationMode extensions for Custom Handlers API:
@@ -1863,7 +1857,7 @@ type SetRPHRegistrationModeParams struct {
 // parameters:
 //
 //	mode
-func SetRPHRegistrationMode(mode SetRPHRegistrationModeMode) *SetRPHRegistrationModeParams {
+func SetRPHRegistrationMode(mode string) *SetRPHRegistrationModeParams {
 	return &SetRPHRegistrationModeParams{
 		Mode: mode,
 	}

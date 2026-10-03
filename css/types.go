@@ -313,7 +313,7 @@ type Property struct {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#type-CSSMedia
 type Media struct {
 	Text         string           `json:"text"`                            // Media query text.
-	Source       MediaSource      `json:"source"`                          // Source of the media query: "mediaRule" if specified by a @media rule, "importRule" if specified by an @import rule, "linkedSheet" if specified by a "media" attribute in a linked stylesheet's LINK tag, "inlineSheet" if specified by a "media" attribute in an inline stylesheet's STYLE tag.
+	Source       string           `json:"source"`                          // Source of the media query: "mediaRule" if specified by a @media rule, "importRule" if specified by an @import rule, "linkedSheet" if specified by a "media" attribute in a linked stylesheet's LINK tag, "inlineSheet" if specified by a "media" attribute in an inline stylesheet's STYLE tag.
 	SourceURL    string           `json:"sourceURL,omitempty,omitzero"`    // URL of the document containing the media query description.
 	Range        *SourceRange     `json:"range,omitempty,omitzero"`        // The associated rule (@media or @import) header range in the enclosing stylesheet (if available).
 	StyleSheetID cdp.StyleSheetID `json:"styleSheetId,omitempty,omitzero"` // Identifier of the stylesheet containing this object (if exists).
@@ -492,8 +492,8 @@ type PropertyRegistration struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#type-CSSAtRule
 type AtRule struct {
-	Type         AtRuleType       `json:"type"`                            // Type of at-rule.
-	Subsection   AtRuleSubsection `json:"subsection,omitempty,omitzero"`   // Subsection of font-feature-values, if this is a subsection.
+	Type         string           `json:"type"`                            // Type of at-rule.
+	Subsection   string           `json:"subsection,omitempty,omitzero"`   // Subsection of font-feature-values, if this is a subsection.
 	Name         *Value           `json:"name,omitempty,omitzero"`         // LINT.ThenChange(//third_party/blink/renderer/core/inspector/inspector_style_sheet.cc:FontVariantAlternatesFeatureType,//third_party/blink/renderer/core/inspector/inspector_css_agent.cc:FontVariantAlternatesFeatureType) Associated name, if applicable.
 	StyleSheetID cdp.StyleSheetID `json:"styleSheetId,omitempty,omitzero"` // The css style sheet identifier (absent for user agent stylesheet and user-specified stylesheet rules) this rule came from.
 	Origin       StyleSheetOrigin `json:"origin"`                          // Parent stylesheet's origin.
@@ -568,129 +568,4 @@ type StyleDeclarationEdit struct {
 	StyleSheetID cdp.StyleSheetID `json:"styleSheetId"` // The css style sheet identifier.
 	Range        *SourceRange     `json:"range"`        // The range of the style text in the enclosing stylesheet.
 	Text         string           `json:"text"`         // New style text.
-}
-
-// MediaSource source of the media query: "mediaRule" if specified by a
-// @media rule, "importRule" if specified by an @import rule, "linkedSheet" if
-// specified by a "media" attribute in a linked stylesheet's LINK tag,
-// "inlineSheet" if specified by a "media" attribute in an inline stylesheet's
-// STYLE tag.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#type-CSSMedia
-type MediaSource string
-
-// String returns the MediaSource as string value.
-func (t MediaSource) String() string {
-	return string(t)
-}
-
-// MediaSource values.
-const (
-	MediaSourceMediaRule   MediaSource = "mediaRule"
-	MediaSourceImportRule  MediaSource = "importRule"
-	MediaSourceLinkedSheet MediaSource = "linkedSheet"
-	MediaSourceInlineSheet MediaSource = "inlineSheet"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *MediaSource) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch MediaSource(s) {
-	case MediaSourceMediaRule:
-		*t = MediaSourceMediaRule
-	case MediaSourceImportRule:
-		*t = MediaSourceImportRule
-	case MediaSourceLinkedSheet:
-		*t = MediaSourceLinkedSheet
-	case MediaSourceInlineSheet:
-		*t = MediaSourceInlineSheet
-	default:
-		return fmt.Errorf("unknown MediaSource value: %v", s)
-	}
-	return nil
-}
-
-// AtRuleType type of at-rule.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#type-CSSAtRule
-type AtRuleType string
-
-// String returns the AtRuleType as string value.
-func (t AtRuleType) String() string {
-	return string(t)
-}
-
-// AtRuleType values.
-const (
-	AtRuleTypeFontFace          AtRuleType = "font-face"
-	AtRuleTypeFontFeatureValues AtRuleType = "font-feature-values"
-	AtRuleTypeFontPaletteValues AtRuleType = "font-palette-values"
-	AtRuleTypeCounterStyle      AtRuleType = "counter-style"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *AtRuleType) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch AtRuleType(s) {
-	case AtRuleTypeFontFace:
-		*t = AtRuleTypeFontFace
-	case AtRuleTypeFontFeatureValues:
-		*t = AtRuleTypeFontFeatureValues
-	case AtRuleTypeFontPaletteValues:
-		*t = AtRuleTypeFontPaletteValues
-	case AtRuleTypeCounterStyle:
-		*t = AtRuleTypeCounterStyle
-	default:
-		return fmt.Errorf("unknown AtRuleType value: %v", s)
-	}
-	return nil
-}
-
-// AtRuleSubsection subsection of font-feature-values, if this is a
-// subsection.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#type-CSSAtRule
-type AtRuleSubsection string
-
-// String returns the AtRuleSubsection as string value.
-func (t AtRuleSubsection) String() string {
-	return string(t)
-}
-
-// AtRuleSubsection values.
-const (
-	AtRuleSubsectionSwash            AtRuleSubsection = "swash"
-	AtRuleSubsectionAnnotation       AtRuleSubsection = "annotation"
-	AtRuleSubsectionOrnaments        AtRuleSubsection = "ornaments"
-	AtRuleSubsectionStylistic        AtRuleSubsection = "stylistic"
-	AtRuleSubsectionStyleset         AtRuleSubsection = "styleset"
-	AtRuleSubsectionCharacterVariant AtRuleSubsection = "character-variant"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *AtRuleSubsection) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch AtRuleSubsection(s) {
-	case AtRuleSubsectionSwash:
-		*t = AtRuleSubsectionSwash
-	case AtRuleSubsectionAnnotation:
-		*t = AtRuleSubsectionAnnotation
-	case AtRuleSubsectionOrnaments:
-		*t = AtRuleSubsectionOrnaments
-	case AtRuleSubsectionStylistic:
-		*t = AtRuleSubsectionStylistic
-	case AtRuleSubsectionStyleset:
-		*t = AtRuleSubsectionStyleset
-	case AtRuleSubsectionCharacterVariant:
-		*t = AtRuleSubsectionCharacterVariant
-	default:
-		return fmt.Errorf("unknown AtRuleSubsection value: %v", s)
-	}
-	return nil
 }

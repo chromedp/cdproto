@@ -11,10 +11,10 @@ import (
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/FileSystem#type-File
 type File struct {
-	Name         string              `json:"name"`
-	LastModified *cdp.TimeSinceEpoch `json:"lastModified"` // Timestamp
-	Size         float64             `json:"size"`         // Size in bytes
-	Type         string              `json:"type"`
+	Name         string             `json:"name"`
+	LastModified cdp.TimeSinceEpoch `json:"lastModified"` // Timestamp
+	Size         float64            `json:"size"`         // Size in bytes
+	Type         string             `json:"type"`
 }
 
 // Directory [no description].

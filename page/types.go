@@ -25,112 +25,113 @@ func (t PermissionsPolicyFeature) String() string {
 
 // PermissionsPolicyFeature values.
 const (
-	PermissionsPolicyFeatureAccelerometer                PermissionsPolicyFeature = "accelerometer"
-	PermissionsPolicyFeatureAllScreensCapture            PermissionsPolicyFeature = "all-screens-capture"
-	PermissionsPolicyFeatureAmbientLightSensor           PermissionsPolicyFeature = "ambient-light-sensor"
-	PermissionsPolicyFeatureAriaNotify                   PermissionsPolicyFeature = "aria-notify"
-	PermissionsPolicyFeatureAutofill                     PermissionsPolicyFeature = "autofill"
-	PermissionsPolicyFeatureAutoplay                     PermissionsPolicyFeature = "autoplay"
-	PermissionsPolicyFeatureBluetooth                    PermissionsPolicyFeature = "bluetooth"
-	PermissionsPolicyFeatureBrowsingTopics               PermissionsPolicyFeature = "browsing-topics"
-	PermissionsPolicyFeatureCamera                       PermissionsPolicyFeature = "camera"
-	PermissionsPolicyFeatureCapturedSurfaceControl       PermissionsPolicyFeature = "captured-surface-control"
-	PermissionsPolicyFeatureChDpr                        PermissionsPolicyFeature = "ch-dpr"
-	PermissionsPolicyFeatureChDeviceMemory               PermissionsPolicyFeature = "ch-device-memory"
-	PermissionsPolicyFeatureChDownlink                   PermissionsPolicyFeature = "ch-downlink"
-	PermissionsPolicyFeatureChEct                        PermissionsPolicyFeature = "ch-ect"
-	PermissionsPolicyFeatureChPrefersColorScheme         PermissionsPolicyFeature = "ch-prefers-color-scheme"
-	PermissionsPolicyFeatureChPrefersReducedMotion       PermissionsPolicyFeature = "ch-prefers-reduced-motion"
-	PermissionsPolicyFeatureChPrefersReducedTransparency PermissionsPolicyFeature = "ch-prefers-reduced-transparency"
-	PermissionsPolicyFeatureChRtt                        PermissionsPolicyFeature = "ch-rtt"
-	PermissionsPolicyFeatureChSaveData                   PermissionsPolicyFeature = "ch-save-data"
-	PermissionsPolicyFeatureChUa                         PermissionsPolicyFeature = "ch-ua"
-	PermissionsPolicyFeatureChUaArch                     PermissionsPolicyFeature = "ch-ua-arch"
-	PermissionsPolicyFeatureChUaBitness                  PermissionsPolicyFeature = "ch-ua-bitness"
-	PermissionsPolicyFeatureChUaHighEntropyValues        PermissionsPolicyFeature = "ch-ua-high-entropy-values"
-	PermissionsPolicyFeatureChUaPlatform                 PermissionsPolicyFeature = "ch-ua-platform"
-	PermissionsPolicyFeatureChUaModel                    PermissionsPolicyFeature = "ch-ua-model"
-	PermissionsPolicyFeatureChUaMobile                   PermissionsPolicyFeature = "ch-ua-mobile"
-	PermissionsPolicyFeatureChUaFormFactors              PermissionsPolicyFeature = "ch-ua-form-factors"
-	PermissionsPolicyFeatureChUaFullVersion              PermissionsPolicyFeature = "ch-ua-full-version"
-	PermissionsPolicyFeatureChUaFullVersionList          PermissionsPolicyFeature = "ch-ua-full-version-list"
-	PermissionsPolicyFeatureChUaPlatformVersion          PermissionsPolicyFeature = "ch-ua-platform-version"
-	PermissionsPolicyFeatureChUaWow64                    PermissionsPolicyFeature = "ch-ua-wow64"
-	PermissionsPolicyFeatureChViewportHeight             PermissionsPolicyFeature = "ch-viewport-height"
-	PermissionsPolicyFeatureChViewportWidth              PermissionsPolicyFeature = "ch-viewport-width"
-	PermissionsPolicyFeatureChWidth                      PermissionsPolicyFeature = "ch-width"
-	PermissionsPolicyFeatureClipboardRead                PermissionsPolicyFeature = "clipboard-read"
-	PermissionsPolicyFeatureClipboardWrite               PermissionsPolicyFeature = "clipboard-write"
-	PermissionsPolicyFeatureComputePressure              PermissionsPolicyFeature = "compute-pressure"
-	PermissionsPolicyFeatureControlledFrame              PermissionsPolicyFeature = "controlled-frame"
-	PermissionsPolicyFeatureCrossOriginIsolated          PermissionsPolicyFeature = "cross-origin-isolated"
-	PermissionsPolicyFeatureDeferredFetch                PermissionsPolicyFeature = "deferred-fetch"
-	PermissionsPolicyFeatureDeferredFetchMinimal         PermissionsPolicyFeature = "deferred-fetch-minimal"
-	PermissionsPolicyFeatureDeviceAttributes             PermissionsPolicyFeature = "device-attributes"
-	PermissionsPolicyFeatureDigitalCredentialsCreate     PermissionsPolicyFeature = "digital-credentials-create"
-	PermissionsPolicyFeatureDigitalCredentialsGet        PermissionsPolicyFeature = "digital-credentials-get"
-	PermissionsPolicyFeatureDirectSockets                PermissionsPolicyFeature = "direct-sockets"
-	PermissionsPolicyFeatureDirectSocketsMulticast       PermissionsPolicyFeature = "direct-sockets-multicast"
-	PermissionsPolicyFeatureDisplayCapture               PermissionsPolicyFeature = "display-capture"
-	PermissionsPolicyFeatureDocumentDomain               PermissionsPolicyFeature = "document-domain"
-	PermissionsPolicyFeatureEncryptedMedia               PermissionsPolicyFeature = "encrypted-media"
-	PermissionsPolicyFeatureExecutionWhileOutOfViewport  PermissionsPolicyFeature = "execution-while-out-of-viewport"
-	PermissionsPolicyFeatureExecutionWhileNotRendered    PermissionsPolicyFeature = "execution-while-not-rendered"
-	PermissionsPolicyFeatureFocusWithoutUserActivation   PermissionsPolicyFeature = "focus-without-user-activation"
-	PermissionsPolicyFeatureFullscreen                   PermissionsPolicyFeature = "fullscreen"
-	PermissionsPolicyFeatureFrobulate                    PermissionsPolicyFeature = "frobulate"
-	PermissionsPolicyFeatureGamepad                      PermissionsPolicyFeature = "gamepad"
-	PermissionsPolicyFeatureGeolocation                  PermissionsPolicyFeature = "geolocation"
-	PermissionsPolicyFeatureGyroscope                    PermissionsPolicyFeature = "gyroscope"
-	PermissionsPolicyFeatureHaptics                      PermissionsPolicyFeature = "haptics"
-	PermissionsPolicyFeatureHid                          PermissionsPolicyFeature = "hid"
-	PermissionsPolicyFeatureIdentityCredentialsGet       PermissionsPolicyFeature = "identity-credentials-get"
-	PermissionsPolicyFeatureIdleDetection                PermissionsPolicyFeature = "idle-detection"
-	PermissionsPolicyFeatureInterestCohort               PermissionsPolicyFeature = "interest-cohort"
-	PermissionsPolicyFeatureKeyboardMap                  PermissionsPolicyFeature = "keyboard-map"
-	PermissionsPolicyFeatureLanguageDetector             PermissionsPolicyFeature = "language-detector"
-	PermissionsPolicyFeatureLanguageModel                PermissionsPolicyFeature = "language-model"
-	PermissionsPolicyFeatureLocalFonts                   PermissionsPolicyFeature = "local-fonts"
-	PermissionsPolicyFeatureLocalNetwork                 PermissionsPolicyFeature = "local-network"
-	PermissionsPolicyFeatureLocalNetworkAccess           PermissionsPolicyFeature = "local-network-access"
-	PermissionsPolicyFeatureLoopbackNetwork              PermissionsPolicyFeature = "loopback-network"
-	PermissionsPolicyFeatureMagnetometer                 PermissionsPolicyFeature = "magnetometer"
-	PermissionsPolicyFeatureManualText                   PermissionsPolicyFeature = "manual-text"
-	PermissionsPolicyFeatureMediaPlaybackWhileNotVisible PermissionsPolicyFeature = "media-playback-while-not-visible"
-	PermissionsPolicyFeatureMicrophone                   PermissionsPolicyFeature = "microphone"
-	PermissionsPolicyFeatureMidi                         PermissionsPolicyFeature = "midi"
-	PermissionsPolicyFeatureOnDeviceSpeechRecognition    PermissionsPolicyFeature = "on-device-speech-recognition"
-	PermissionsPolicyFeatureOtpCredentials               PermissionsPolicyFeature = "otp-credentials"
-	PermissionsPolicyFeaturePayment                      PermissionsPolicyFeature = "payment"
-	PermissionsPolicyFeaturePictureInPicture             PermissionsPolicyFeature = "picture-in-picture"
-	PermissionsPolicyFeaturePrivateStateTokenIssuance    PermissionsPolicyFeature = "private-state-token-issuance"
-	PermissionsPolicyFeaturePrivateStateTokenRedemption  PermissionsPolicyFeature = "private-state-token-redemption"
-	PermissionsPolicyFeaturePublickeyCredentialsCreate   PermissionsPolicyFeature = "publickey-credentials-create"
-	PermissionsPolicyFeaturePublickeyCredentialsGet      PermissionsPolicyFeature = "publickey-credentials-get"
-	PermissionsPolicyFeatureRewriter                     PermissionsPolicyFeature = "rewriter"
-	PermissionsPolicyFeatureScreenWakeLock               PermissionsPolicyFeature = "screen-wake-lock"
-	PermissionsPolicyFeatureSerial                       PermissionsPolicyFeature = "serial"
-	PermissionsPolicyFeatureSharedStorage                PermissionsPolicyFeature = "shared-storage"
-	PermissionsPolicyFeatureSharedStorageSelectURL       PermissionsPolicyFeature = "shared-storage-select-url"
-	PermissionsPolicyFeatureSmartCard                    PermissionsPolicyFeature = "smart-card"
-	PermissionsPolicyFeatureSpeakerSelection             PermissionsPolicyFeature = "speaker-selection"
-	PermissionsPolicyFeatureStorageAccess                PermissionsPolicyFeature = "storage-access"
-	PermissionsPolicyFeatureSubApps                      PermissionsPolicyFeature = "sub-apps"
-	PermissionsPolicyFeatureSummarizer                   PermissionsPolicyFeature = "summarizer"
-	PermissionsPolicyFeatureSyncXhr                      PermissionsPolicyFeature = "sync-xhr"
-	PermissionsPolicyFeatureTools                        PermissionsPolicyFeature = "tools"
-	PermissionsPolicyFeatureTranslator                   PermissionsPolicyFeature = "translator"
-	PermissionsPolicyFeatureUnload                       PermissionsPolicyFeature = "unload"
-	PermissionsPolicyFeatureUsb                          PermissionsPolicyFeature = "usb"
-	PermissionsPolicyFeatureUsbUnrestricted              PermissionsPolicyFeature = "usb-unrestricted"
-	PermissionsPolicyFeatureVerticalScroll               PermissionsPolicyFeature = "vertical-scroll"
-	PermissionsPolicyFeatureWebAppInstallation           PermissionsPolicyFeature = "web-app-installation"
-	PermissionsPolicyFeatureWebnn                        PermissionsPolicyFeature = "webnn"
-	PermissionsPolicyFeatureWebPrinting                  PermissionsPolicyFeature = "web-printing"
-	PermissionsPolicyFeatureWebShare                     PermissionsPolicyFeature = "web-share"
-	PermissionsPolicyFeatureWindowManagement             PermissionsPolicyFeature = "window-management"
-	PermissionsPolicyFeatureWriter                       PermissionsPolicyFeature = "writer"
-	PermissionsPolicyFeatureXrSpatialTracking            PermissionsPolicyFeature = "xr-spatial-tracking"
+	PermissionsPolicyFeatureAccelerometer                            PermissionsPolicyFeature = "accelerometer"
+	PermissionsPolicyFeatureAllScreensCapture                        PermissionsPolicyFeature = "all-screens-capture"
+	PermissionsPolicyFeatureAmbientLightSensor                       PermissionsPolicyFeature = "ambient-light-sensor"
+	PermissionsPolicyFeatureAriaNotify                               PermissionsPolicyFeature = "aria-notify"
+	PermissionsPolicyFeatureAutofill                                 PermissionsPolicyFeature = "autofill"
+	PermissionsPolicyFeatureAutoplay                                 PermissionsPolicyFeature = "autoplay"
+	PermissionsPolicyFeatureBluetooth                                PermissionsPolicyFeature = "bluetooth"
+	PermissionsPolicyFeatureBrowsingTopics                           PermissionsPolicyFeature = "browsing-topics"
+	PermissionsPolicyFeatureCamera                                   PermissionsPolicyFeature = "camera"
+	PermissionsPolicyFeatureCapturedSurfaceControl                   PermissionsPolicyFeature = "captured-surface-control"
+	PermissionsPolicyFeatureChDpr                                    PermissionsPolicyFeature = "ch-dpr"
+	PermissionsPolicyFeatureChDeviceMemory                           PermissionsPolicyFeature = "ch-device-memory"
+	PermissionsPolicyFeatureChDownlink                               PermissionsPolicyFeature = "ch-downlink"
+	PermissionsPolicyFeatureChEct                                    PermissionsPolicyFeature = "ch-ect"
+	PermissionsPolicyFeatureChPrefersColorScheme                     PermissionsPolicyFeature = "ch-prefers-color-scheme"
+	PermissionsPolicyFeatureChPrefersReducedMotion                   PermissionsPolicyFeature = "ch-prefers-reduced-motion"
+	PermissionsPolicyFeatureChPrefersReducedTransparency             PermissionsPolicyFeature = "ch-prefers-reduced-transparency"
+	PermissionsPolicyFeatureChRtt                                    PermissionsPolicyFeature = "ch-rtt"
+	PermissionsPolicyFeatureChSaveData                               PermissionsPolicyFeature = "ch-save-data"
+	PermissionsPolicyFeatureChUa                                     PermissionsPolicyFeature = "ch-ua"
+	PermissionsPolicyFeatureChUaArch                                 PermissionsPolicyFeature = "ch-ua-arch"
+	PermissionsPolicyFeatureChUaBitness                              PermissionsPolicyFeature = "ch-ua-bitness"
+	PermissionsPolicyFeatureChUaHighEntropyValues                    PermissionsPolicyFeature = "ch-ua-high-entropy-values"
+	PermissionsPolicyFeatureChUaPlatform                             PermissionsPolicyFeature = "ch-ua-platform"
+	PermissionsPolicyFeatureChUaModel                                PermissionsPolicyFeature = "ch-ua-model"
+	PermissionsPolicyFeatureChUaMobile                               PermissionsPolicyFeature = "ch-ua-mobile"
+	PermissionsPolicyFeatureChUaFormFactors                          PermissionsPolicyFeature = "ch-ua-form-factors"
+	PermissionsPolicyFeatureChUaFullVersion                          PermissionsPolicyFeature = "ch-ua-full-version"
+	PermissionsPolicyFeatureChUaFullVersionList                      PermissionsPolicyFeature = "ch-ua-full-version-list"
+	PermissionsPolicyFeatureChUaPlatformVersion                      PermissionsPolicyFeature = "ch-ua-platform-version"
+	PermissionsPolicyFeatureChUaWow64                                PermissionsPolicyFeature = "ch-ua-wow64"
+	PermissionsPolicyFeatureChViewportHeight                         PermissionsPolicyFeature = "ch-viewport-height"
+	PermissionsPolicyFeatureChViewportWidth                          PermissionsPolicyFeature = "ch-viewport-width"
+	PermissionsPolicyFeatureChWidth                                  PermissionsPolicyFeature = "ch-width"
+	PermissionsPolicyFeatureClipboardRead                            PermissionsPolicyFeature = "clipboard-read"
+	PermissionsPolicyFeatureClipboardWrite                           PermissionsPolicyFeature = "clipboard-write"
+	PermissionsPolicyFeatureComputePressure                          PermissionsPolicyFeature = "compute-pressure"
+	PermissionsPolicyFeatureControlledFrame                          PermissionsPolicyFeature = "controlled-frame"
+	PermissionsPolicyFeatureCrossOriginIsolated                      PermissionsPolicyFeature = "cross-origin-isolated"
+	PermissionsPolicyFeatureDeferredFetch                            PermissionsPolicyFeature = "deferred-fetch"
+	PermissionsPolicyFeatureDeferredFetchMinimal                     PermissionsPolicyFeature = "deferred-fetch-minimal"
+	PermissionsPolicyFeatureDeviceAttributes                         PermissionsPolicyFeature = "device-attributes"
+	PermissionsPolicyFeatureDigitalCredentialsCreate                 PermissionsPolicyFeature = "digital-credentials-create"
+	PermissionsPolicyFeatureDigitalCredentialsGet                    PermissionsPolicyFeature = "digital-credentials-get"
+	PermissionsPolicyFeatureDirectSockets                            PermissionsPolicyFeature = "direct-sockets"
+	PermissionsPolicyFeatureDirectSocketsMulticast                   PermissionsPolicyFeature = "direct-sockets-multicast"
+	PermissionsPolicyFeatureDisplayCapture                           PermissionsPolicyFeature = "display-capture"
+	PermissionsPolicyFeatureDocumentDomain                           PermissionsPolicyFeature = "document-domain"
+	PermissionsPolicyFeatureEncryptedMedia                           PermissionsPolicyFeature = "encrypted-media"
+	PermissionsPolicyFeatureExecutionWhileOutOfViewport              PermissionsPolicyFeature = "execution-while-out-of-viewport"
+	PermissionsPolicyFeatureExecutionWhileNotRendered                PermissionsPolicyFeature = "execution-while-not-rendered"
+	PermissionsPolicyFeatureFocusWithoutUserActivation               PermissionsPolicyFeature = "focus-without-user-activation"
+	PermissionsPolicyFeatureFullscreen                               PermissionsPolicyFeature = "fullscreen"
+	PermissionsPolicyFeatureFrobulate                                PermissionsPolicyFeature = "frobulate"
+	PermissionsPolicyFeatureGamepad                                  PermissionsPolicyFeature = "gamepad"
+	PermissionsPolicyFeatureGeolocation                              PermissionsPolicyFeature = "geolocation"
+	PermissionsPolicyFeatureGyroscope                                PermissionsPolicyFeature = "gyroscope"
+	PermissionsPolicyFeatureHaptics                                  PermissionsPolicyFeature = "haptics"
+	PermissionsPolicyFeatureHid                                      PermissionsPolicyFeature = "hid"
+	PermissionsPolicyFeatureIdentityCredentialsGet                   PermissionsPolicyFeature = "identity-credentials-get"
+	PermissionsPolicyFeatureIdleDetection                            PermissionsPolicyFeature = "idle-detection"
+	PermissionsPolicyFeatureInterestCohort                           PermissionsPolicyFeature = "interest-cohort"
+	PermissionsPolicyFeatureKeyboardMap                              PermissionsPolicyFeature = "keyboard-map"
+	PermissionsPolicyFeatureLanguageDetector                         PermissionsPolicyFeature = "language-detector"
+	PermissionsPolicyFeatureLanguageModel                            PermissionsPolicyFeature = "language-model"
+	PermissionsPolicyFeatureLocalFonts                               PermissionsPolicyFeature = "local-fonts"
+	PermissionsPolicyFeatureLocalNetwork                             PermissionsPolicyFeature = "local-network"
+	PermissionsPolicyFeatureLocalNetworkAccess                       PermissionsPolicyFeature = "local-network-access"
+	PermissionsPolicyFeatureLoopbackNetwork                          PermissionsPolicyFeature = "loopback-network"
+	PermissionsPolicyFeatureMagnetometer                             PermissionsPolicyFeature = "magnetometer"
+	PermissionsPolicyFeatureManualText                               PermissionsPolicyFeature = "manual-text"
+	PermissionsPolicyFeatureMediaPlaybackWhileNotVisible             PermissionsPolicyFeature = "media-playback-while-not-visible"
+	PermissionsPolicyFeatureMicrophone                               PermissionsPolicyFeature = "microphone"
+	PermissionsPolicyFeatureMidi                                     PermissionsPolicyFeature = "midi"
+	PermissionsPolicyFeatureOnDeviceSpeechRecognition                PermissionsPolicyFeature = "on-device-speech-recognition"
+	PermissionsPolicyFeatureOtpCredentials                           PermissionsPolicyFeature = "otp-credentials"
+	PermissionsPolicyFeaturePayment                                  PermissionsPolicyFeature = "payment"
+	PermissionsPolicyFeaturePictureInPicture                         PermissionsPolicyFeature = "picture-in-picture"
+	PermissionsPolicyFeaturePrivateStateTokenIssuance                PermissionsPolicyFeature = "private-state-token-issuance"
+	PermissionsPolicyFeaturePrivateStateTokenRedemption              PermissionsPolicyFeature = "private-state-token-redemption"
+	PermissionsPolicyFeaturePublickeyCredentialsCreate               PermissionsPolicyFeature = "publickey-credentials-create"
+	PermissionsPolicyFeaturePublickeyCredentialsGet                  PermissionsPolicyFeature = "publickey-credentials-get"
+	PermissionsPolicyFeaturePublickeyCredentialsRemoteClientDataJSON PermissionsPolicyFeature = "publickey-credentials-remote-client-data-json"
+	PermissionsPolicyFeatureRewriter                                 PermissionsPolicyFeature = "rewriter"
+	PermissionsPolicyFeatureScreenWakeLock                           PermissionsPolicyFeature = "screen-wake-lock"
+	PermissionsPolicyFeatureSerial                                   PermissionsPolicyFeature = "serial"
+	PermissionsPolicyFeatureSharedStorage                            PermissionsPolicyFeature = "shared-storage"
+	PermissionsPolicyFeatureSharedStorageSelectURL                   PermissionsPolicyFeature = "shared-storage-select-url"
+	PermissionsPolicyFeatureSmartCard                                PermissionsPolicyFeature = "smart-card"
+	PermissionsPolicyFeatureSpeakerSelection                         PermissionsPolicyFeature = "speaker-selection"
+	PermissionsPolicyFeatureStorageAccess                            PermissionsPolicyFeature = "storage-access"
+	PermissionsPolicyFeatureSubApps                                  PermissionsPolicyFeature = "sub-apps"
+	PermissionsPolicyFeatureSummarizer                               PermissionsPolicyFeature = "summarizer"
+	PermissionsPolicyFeatureSyncXhr                                  PermissionsPolicyFeature = "sync-xhr"
+	PermissionsPolicyFeatureTools                                    PermissionsPolicyFeature = "tools"
+	PermissionsPolicyFeatureTranslator                               PermissionsPolicyFeature = "translator"
+	PermissionsPolicyFeatureUnload                                   PermissionsPolicyFeature = "unload"
+	PermissionsPolicyFeatureUsb                                      PermissionsPolicyFeature = "usb"
+	PermissionsPolicyFeatureUsbUnrestricted                          PermissionsPolicyFeature = "usb-unrestricted"
+	PermissionsPolicyFeatureVerticalScroll                           PermissionsPolicyFeature = "vertical-scroll"
+	PermissionsPolicyFeatureWebAppInstallation                       PermissionsPolicyFeature = "web-app-installation"
+	PermissionsPolicyFeatureWebnn                                    PermissionsPolicyFeature = "webnn"
+	PermissionsPolicyFeatureWebPrinting                              PermissionsPolicyFeature = "web-printing"
+	PermissionsPolicyFeatureWebShare                                 PermissionsPolicyFeature = "web-share"
+	PermissionsPolicyFeatureWindowManagement                         PermissionsPolicyFeature = "window-management"
+	PermissionsPolicyFeatureWriter                                   PermissionsPolicyFeature = "writer"
+	PermissionsPolicyFeatureXrSpatialTracking                        PermissionsPolicyFeature = "xr-spatial-tracking"
 )
 
 // UnmarshalJSON satisfies [json.Unmarshaler].
@@ -303,6 +304,8 @@ func (t *PermissionsPolicyFeature) UnmarshalJSON(buf []byte) error {
 		*t = PermissionsPolicyFeaturePublickeyCredentialsCreate
 	case PermissionsPolicyFeaturePublickeyCredentialsGet:
 		*t = PermissionsPolicyFeaturePublickeyCredentialsGet
+	case PermissionsPolicyFeaturePublickeyCredentialsRemoteClientDataJSON:
+		*t = PermissionsPolicyFeaturePublickeyCredentialsRemoteClientDataJSON
 	case PermissionsPolicyFeatureRewriter:
 		*t = PermissionsPolicyFeatureRewriter
 	case PermissionsPolicyFeatureScreenWakeLock:
@@ -420,7 +423,7 @@ type FrameResource struct {
 	URL          string               `json:"url"`                             // Resource URL.
 	Type         network.ResourceType `json:"type"`                            // Type of this resource.
 	MimeType     string               `json:"mimeType"`                        // Resource mimeType as determined by the browser.
-	LastModified *cdp.TimeSinceEpoch  `json:"lastModified,omitempty,omitzero"` // last-modified timestamp as reported by server.
+	LastModified cdp.TimeSinceEpoch   `json:"lastModified,omitempty,omitzero"` // last-modified timestamp as reported by server.
 	ContentSize  float64              `json:"contentSize,omitempty,omitzero"`  // Resource content size.
 	Failed       bool                 `json:"failed"`                          // True if the resource failed to load.
 	Canceled     bool                 `json:"canceled"`                        // True if the resource was canceled during loading.
@@ -534,13 +537,14 @@ type NavigationEntry struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#type-ScreencastFrameMetadata
 type ScreencastFrameMetadata struct {
-	OffsetTop       float64             `json:"offsetTop"`                    // Top offset in DIP.
-	PageScaleFactor float64             `json:"pageScaleFactor"`              // Page scale factor.
-	DeviceWidth     float64             `json:"deviceWidth"`                  // Device screen width in DIP.
-	DeviceHeight    float64             `json:"deviceHeight"`                 // Device screen height in DIP.
-	ScrollOffsetX   float64             `json:"scrollOffsetX"`                // Position of horizontal scroll in CSS pixels.
-	ScrollOffsetY   float64             `json:"scrollOffsetY"`                // Position of vertical scroll in CSS pixels.
-	Timestamp       *cdp.TimeSinceEpoch `json:"timestamp,omitempty,omitzero"` // Frame swap timestamp.
+	OffsetTop          float64            `json:"offsetTop"`                             // Top offset in DIP.
+	PageScaleFactor    float64            `json:"pageScaleFactor"`                       // Page scale factor.
+	DeviceWidth        float64            `json:"deviceWidth"`                           // Device screen width in DIP.
+	DeviceHeight       float64            `json:"deviceHeight"`                          // Device screen height in DIP.
+	ScrollOffsetX      float64            `json:"scrollOffsetX"`                         // Position of horizontal scroll in CSS pixels.
+	ScrollOffsetY      float64            `json:"scrollOffsetY"`                         // Position of vertical scroll in CSS pixels.
+	Timestamp          cdp.TimeSinceEpoch `json:"timestamp,omitempty,omitzero"`          // Frame swap timestamp.
+	MonotonicTimestamp cdp.MonotonicTime  `json:"monotonicTimestamp,omitempty,omitzero"` // Frame swap timestamp as monotonic time.
 }
 
 // DialogType javascript dialog type.
@@ -1527,389 +1531,4 @@ type BackForwardCacheNotRestoredExplanationTree struct {
 	URL          string                                        `json:"url"`          // URL of each frame
 	Explanations []*BackForwardCacheNotRestoredExplanation     `json:"explanations"` // Not restored reasons of each frame
 	Children     []*BackForwardCacheNotRestoredExplanationTree `json:"children"`     // Array of children frame
-}
-
-// FileChooserOpenedMode input mode.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-fileChooserOpened
-type FileChooserOpenedMode string
-
-// String returns the FileChooserOpenedMode as string value.
-func (t FileChooserOpenedMode) String() string {
-	return string(t)
-}
-
-// FileChooserOpenedMode values.
-const (
-	FileChooserOpenedModeSelectSingle   FileChooserOpenedMode = "selectSingle"
-	FileChooserOpenedModeSelectMultiple FileChooserOpenedMode = "selectMultiple"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *FileChooserOpenedMode) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch FileChooserOpenedMode(s) {
-	case FileChooserOpenedModeSelectSingle:
-		*t = FileChooserOpenedModeSelectSingle
-	case FileChooserOpenedModeSelectMultiple:
-		*t = FileChooserOpenedModeSelectMultiple
-	default:
-		return fmt.Errorf("unknown FileChooserOpenedMode value: %v", s)
-	}
-	return nil
-}
-
-// FrameDetachedReason [no description].
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-frameDetached
-type FrameDetachedReason string
-
-// String returns the FrameDetachedReason as string value.
-func (t FrameDetachedReason) String() string {
-	return string(t)
-}
-
-// FrameDetachedReason values.
-const (
-	FrameDetachedReasonRemove FrameDetachedReason = "remove"
-	FrameDetachedReasonSwap   FrameDetachedReason = "swap"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *FrameDetachedReason) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch FrameDetachedReason(s) {
-	case FrameDetachedReasonRemove:
-		*t = FrameDetachedReasonRemove
-	case FrameDetachedReasonSwap:
-		*t = FrameDetachedReasonSwap
-	default:
-		return fmt.Errorf("unknown FrameDetachedReason value: %v", s)
-	}
-	return nil
-}
-
-// FrameStartedNavigatingNavigationType [no description].
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-frameStartedNavigating
-type FrameStartedNavigatingNavigationType string
-
-// String returns the FrameStartedNavigatingNavigationType as string value.
-func (t FrameStartedNavigatingNavigationType) String() string {
-	return string(t)
-}
-
-// FrameStartedNavigatingNavigationType values.
-const (
-	FrameStartedNavigatingNavigationTypeReload                   FrameStartedNavigatingNavigationType = "reload"
-	FrameStartedNavigatingNavigationTypeReloadBypassingCache     FrameStartedNavigatingNavigationType = "reloadBypassingCache"
-	FrameStartedNavigatingNavigationTypeRestore                  FrameStartedNavigatingNavigationType = "restore"
-	FrameStartedNavigatingNavigationTypeRestoreWithPost          FrameStartedNavigatingNavigationType = "restoreWithPost"
-	FrameStartedNavigatingNavigationTypeHistorySameDocument      FrameStartedNavigatingNavigationType = "historySameDocument"
-	FrameStartedNavigatingNavigationTypeHistoryDifferentDocument FrameStartedNavigatingNavigationType = "historyDifferentDocument"
-	FrameStartedNavigatingNavigationTypeSameDocument             FrameStartedNavigatingNavigationType = "sameDocument"
-	FrameStartedNavigatingNavigationTypeDifferentDocument        FrameStartedNavigatingNavigationType = "differentDocument"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *FrameStartedNavigatingNavigationType) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch FrameStartedNavigatingNavigationType(s) {
-	case FrameStartedNavigatingNavigationTypeReload:
-		*t = FrameStartedNavigatingNavigationTypeReload
-	case FrameStartedNavigatingNavigationTypeReloadBypassingCache:
-		*t = FrameStartedNavigatingNavigationTypeReloadBypassingCache
-	case FrameStartedNavigatingNavigationTypeRestore:
-		*t = FrameStartedNavigatingNavigationTypeRestore
-	case FrameStartedNavigatingNavigationTypeRestoreWithPost:
-		*t = FrameStartedNavigatingNavigationTypeRestoreWithPost
-	case FrameStartedNavigatingNavigationTypeHistorySameDocument:
-		*t = FrameStartedNavigatingNavigationTypeHistorySameDocument
-	case FrameStartedNavigatingNavigationTypeHistoryDifferentDocument:
-		*t = FrameStartedNavigatingNavigationTypeHistoryDifferentDocument
-	case FrameStartedNavigatingNavigationTypeSameDocument:
-		*t = FrameStartedNavigatingNavigationTypeSameDocument
-	case FrameStartedNavigatingNavigationTypeDifferentDocument:
-		*t = FrameStartedNavigatingNavigationTypeDifferentDocument
-	default:
-		return fmt.Errorf("unknown FrameStartedNavigatingNavigationType value: %v", s)
-	}
-	return nil
-}
-
-// NavigatedWithinDocumentNavigationType navigation type.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-navigatedWithinDocument
-type NavigatedWithinDocumentNavigationType string
-
-// String returns the NavigatedWithinDocumentNavigationType as string value.
-func (t NavigatedWithinDocumentNavigationType) String() string {
-	return string(t)
-}
-
-// NavigatedWithinDocumentNavigationType values.
-const (
-	NavigatedWithinDocumentNavigationTypeFragment   NavigatedWithinDocumentNavigationType = "fragment"
-	NavigatedWithinDocumentNavigationTypeHistoryAPI NavigatedWithinDocumentNavigationType = "historyApi"
-	NavigatedWithinDocumentNavigationTypeOther      NavigatedWithinDocumentNavigationType = "other"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *NavigatedWithinDocumentNavigationType) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch NavigatedWithinDocumentNavigationType(s) {
-	case NavigatedWithinDocumentNavigationTypeFragment:
-		*t = NavigatedWithinDocumentNavigationTypeFragment
-	case NavigatedWithinDocumentNavigationTypeHistoryAPI:
-		*t = NavigatedWithinDocumentNavigationTypeHistoryAPI
-	case NavigatedWithinDocumentNavigationTypeOther:
-		*t = NavigatedWithinDocumentNavigationTypeOther
-	default:
-		return fmt.Errorf("unknown NavigatedWithinDocumentNavigationType value: %v", s)
-	}
-	return nil
-}
-
-// CaptureScreenshotFormat image compression format (defaults to png).
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-captureScreenshot
-type CaptureScreenshotFormat string
-
-// String returns the CaptureScreenshotFormat as string value.
-func (t CaptureScreenshotFormat) String() string {
-	return string(t)
-}
-
-// CaptureScreenshotFormat values.
-const (
-	CaptureScreenshotFormatJpeg CaptureScreenshotFormat = "jpeg"
-	CaptureScreenshotFormatPng  CaptureScreenshotFormat = "png"
-	CaptureScreenshotFormatWebp CaptureScreenshotFormat = "webp"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *CaptureScreenshotFormat) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch CaptureScreenshotFormat(s) {
-	case CaptureScreenshotFormatJpeg:
-		*t = CaptureScreenshotFormatJpeg
-	case CaptureScreenshotFormatPng:
-		*t = CaptureScreenshotFormatPng
-	case CaptureScreenshotFormatWebp:
-		*t = CaptureScreenshotFormatWebp
-	default:
-		return fmt.Errorf("unknown CaptureScreenshotFormat value: %v", s)
-	}
-	return nil
-}
-
-// CaptureSnapshotFormat format (defaults to mhtml).
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-captureSnapshot
-type CaptureSnapshotFormat string
-
-// String returns the CaptureSnapshotFormat as string value.
-func (t CaptureSnapshotFormat) String() string {
-	return string(t)
-}
-
-// CaptureSnapshotFormat values.
-const (
-	CaptureSnapshotFormatMhtml CaptureSnapshotFormat = "mhtml"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *CaptureSnapshotFormat) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch CaptureSnapshotFormat(s) {
-	case CaptureSnapshotFormatMhtml:
-		*t = CaptureSnapshotFormatMhtml
-	default:
-		return fmt.Errorf("unknown CaptureSnapshotFormat value: %v", s)
-	}
-	return nil
-}
-
-// PrintToPDFTransferMode return as stream.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-printToPDF
-type PrintToPDFTransferMode string
-
-// String returns the PrintToPDFTransferMode as string value.
-func (t PrintToPDFTransferMode) String() string {
-	return string(t)
-}
-
-// PrintToPDFTransferMode values.
-const (
-	PrintToPDFTransferModeReturnAsBase64 PrintToPDFTransferMode = "ReturnAsBase64"
-	PrintToPDFTransferModeReturnAsStream PrintToPDFTransferMode = "ReturnAsStream"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *PrintToPDFTransferMode) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch PrintToPDFTransferMode(s) {
-	case PrintToPDFTransferModeReturnAsBase64:
-		*t = PrintToPDFTransferModeReturnAsBase64
-	case PrintToPDFTransferModeReturnAsStream:
-		*t = PrintToPDFTransferModeReturnAsStream
-	default:
-		return fmt.Errorf("unknown PrintToPDFTransferMode value: %v", s)
-	}
-	return nil
-}
-
-// ScreencastFormat image compression format.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-startScreencast
-type ScreencastFormat string
-
-// String returns the ScreencastFormat as string value.
-func (t ScreencastFormat) String() string {
-	return string(t)
-}
-
-// ScreencastFormat values.
-const (
-	ScreencastFormatJpeg ScreencastFormat = "jpeg"
-	ScreencastFormatPng  ScreencastFormat = "png"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *ScreencastFormat) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch ScreencastFormat(s) {
-	case ScreencastFormatJpeg:
-		*t = ScreencastFormatJpeg
-	case ScreencastFormatPng:
-		*t = ScreencastFormatPng
-	default:
-		return fmt.Errorf("unknown ScreencastFormat value: %v", s)
-	}
-	return nil
-}
-
-// SetWebLifecycleStateState target lifecycle state.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-setWebLifecycleState
-type SetWebLifecycleStateState string
-
-// String returns the SetWebLifecycleStateState as string value.
-func (t SetWebLifecycleStateState) String() string {
-	return string(t)
-}
-
-// SetWebLifecycleStateState values.
-const (
-	SetWebLifecycleStateStateFrozen SetWebLifecycleStateState = "frozen"
-	SetWebLifecycleStateStateActive SetWebLifecycleStateState = "active"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *SetWebLifecycleStateState) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch SetWebLifecycleStateState(s) {
-	case SetWebLifecycleStateStateFrozen:
-		*t = SetWebLifecycleStateStateFrozen
-	case SetWebLifecycleStateStateActive:
-		*t = SetWebLifecycleStateStateActive
-	default:
-		return fmt.Errorf("unknown SetWebLifecycleStateState value: %v", s)
-	}
-	return nil
-}
-
-// SetSPCTransactionModeMode [no description].
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-setSPCTransactionMode
-type SetSPCTransactionModeMode string
-
-// String returns the SetSPCTransactionModeMode as string value.
-func (t SetSPCTransactionModeMode) String() string {
-	return string(t)
-}
-
-// SetSPCTransactionModeMode values.
-const (
-	SetSPCTransactionModeModeNone                       SetSPCTransactionModeMode = "none"
-	SetSPCTransactionModeModeAutoAccept                 SetSPCTransactionModeMode = "autoAccept"
-	SetSPCTransactionModeModeAutoChooseToAuthAnotherWay SetSPCTransactionModeMode = "autoChooseToAuthAnotherWay"
-	SetSPCTransactionModeModeAutoReject                 SetSPCTransactionModeMode = "autoReject"
-	SetSPCTransactionModeModeAutoOptOut                 SetSPCTransactionModeMode = "autoOptOut"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *SetSPCTransactionModeMode) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch SetSPCTransactionModeMode(s) {
-	case SetSPCTransactionModeModeNone:
-		*t = SetSPCTransactionModeModeNone
-	case SetSPCTransactionModeModeAutoAccept:
-		*t = SetSPCTransactionModeModeAutoAccept
-	case SetSPCTransactionModeModeAutoChooseToAuthAnotherWay:
-		*t = SetSPCTransactionModeModeAutoChooseToAuthAnotherWay
-	case SetSPCTransactionModeModeAutoReject:
-		*t = SetSPCTransactionModeModeAutoReject
-	case SetSPCTransactionModeModeAutoOptOut:
-		*t = SetSPCTransactionModeModeAutoOptOut
-	default:
-		return fmt.Errorf("unknown SetSPCTransactionModeMode value: %v", s)
-	}
-	return nil
-}
-
-// SetRPHRegistrationModeMode [no description].
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-setRPHRegistrationMode
-type SetRPHRegistrationModeMode string
-
-// String returns the SetRPHRegistrationModeMode as string value.
-func (t SetRPHRegistrationModeMode) String() string {
-	return string(t)
-}
-
-// SetRPHRegistrationModeMode values.
-const (
-	SetRPHRegistrationModeModeNone       SetRPHRegistrationModeMode = "none"
-	SetRPHRegistrationModeModeAutoAccept SetRPHRegistrationModeMode = "autoAccept"
-	SetRPHRegistrationModeModeAutoReject SetRPHRegistrationModeMode = "autoReject"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *SetRPHRegistrationModeMode) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch SetRPHRegistrationModeMode(s) {
-	case SetRPHRegistrationModeModeNone:
-		*t = SetRPHRegistrationModeModeNone
-	case SetRPHRegistrationModeModeAutoAccept:
-		*t = SetRPHRegistrationModeModeAutoAccept
-	case SetRPHRegistrationModeModeAutoReject:
-		*t = SetRPHRegistrationModeModeAutoReject
-	default:
-		return fmt.Errorf("unknown SetRPHRegistrationModeMode value: %v", s)
-	}
-	return nil
 }

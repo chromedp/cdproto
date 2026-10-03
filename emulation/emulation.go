@@ -243,21 +243,22 @@ func (p *SetVirtualKeyboardGeometryOverrideParams) Do(ctx context.Context) (err 
 // window.innerHeight, and "device-width"/"device-height"-related CSS media
 // query results).
 type SetDeviceMetricsOverrideParams struct {
-	Width                          int64                                 `json:"width"`                                // Overriding width value in pixels (minimum 0, maximum 10000000). 0 disables the override.
-	Height                         int64                                 `json:"height"`                               // Overriding height value in pixels (minimum 0, maximum 10000000). 0 disables the override.
-	DeviceScaleFactor              float64                               `json:"deviceScaleFactor"`                    // Overriding device scale factor value. 0 disables the override.
-	Mobile                         bool                                  `json:"mobile"`                               // Whether to emulate mobile device. This includes viewport meta tag, overlay scrollbars, text autosizing and more.
-	Scale                          float64                               `json:"scale,omitempty,omitzero"`             // Scale to apply to resulting view image.
-	ScreenWidth                    int64                                 `json:"screenWidth,omitempty,omitzero"`       // Overriding screen width value in pixels (minimum 0, maximum 10000000).
-	ScreenHeight                   int64                                 `json:"screenHeight,omitempty,omitzero"`      // Overriding screen height value in pixels (minimum 0, maximum 10000000).
-	PositionX                      int64                                 `json:"positionX,omitempty,omitzero"`         // Overriding view X position on screen in pixels (minimum 0, maximum 10000000).
-	PositionY                      int64                                 `json:"positionY,omitempty,omitzero"`         // Overriding view Y position on screen in pixels (minimum 0, maximum 10000000).
-	DontSetVisibleSize             bool                                  `json:"dontSetVisibleSize"`                   // Do not set visible view size, rely upon explicit setVisibleSize call.
-	ScreenOrientation              *ScreenOrientation                    `json:"screenOrientation,omitempty,omitzero"` // Screen orientation override.
-	Viewport                       *page.Viewport                        `json:"viewport,omitempty,omitzero"`          // If set, the visible area of the page will be overridden to this viewport. This viewport change is not observed by the page, e.g. viewport-relative elements do not change positions.
-	ScrollbarType                  SetDeviceMetricsOverrideScrollbarType `json:"scrollbarType,omitempty,omitzero"`     // Scrollbar type. Default: default.
-	ScreenOrientationLockEmulation bool                                  `json:"screenOrientationLockEmulation"`       // If set to true, enables screen orientation lock emulation, which intercepts screen.orientation.lock() calls from the page and reports orientation changes via screenOrientationLockChanged events. This is useful for emulating mobile device orientation lock behavior in responsive design mode.
-	ViewportMeta                   SetDeviceMetricsOverrideViewportMeta  `json:"viewportMeta,omitempty,omitzero"`      // Viewport meta tag behavior. Default: default. Note: if mobile is true, the viewport meta tag is always enabled.
+	Width                          int64              `json:"width"`                                // Overriding width value in pixels (minimum 0, maximum 10000000). 0 disables the override.
+	Height                         int64              `json:"height"`                               // Overriding height value in pixels (minimum 0, maximum 10000000). 0 disables the override.
+	DeviceScaleFactor              float64            `json:"deviceScaleFactor"`                    // Overriding device scale factor value. 0 disables the override.
+	Mobile                         bool               `json:"mobile"`                               // Whether to emulate mobile device. This includes viewport meta tag, overlay scrollbars, text autosizing and more.
+	Scale                          float64            `json:"scale,omitempty,omitzero"`             // Scale to apply to resulting view image.
+	ScreenWidth                    int64              `json:"screenWidth,omitempty,omitzero"`       // Overriding screen width value in pixels (minimum 0, maximum 10000000).
+	ScreenHeight                   int64              `json:"screenHeight,omitempty,omitzero"`      // Overriding screen height value in pixels (minimum 0, maximum 10000000).
+	PositionX                      int64              `json:"positionX,omitempty,omitzero"`         // Overriding view X position on screen in pixels (minimum 0, maximum 10000000).
+	PositionY                      int64              `json:"positionY,omitempty,omitzero"`         // Overriding view Y position on screen in pixels (minimum 0, maximum 10000000).
+	DontSetVisibleSize             bool               `json:"dontSetVisibleSize"`                   // Do not set visible view size, rely upon explicit setVisibleSize call.
+	ScreenOrientation              *ScreenOrientation `json:"screenOrientation,omitempty,omitzero"` // Screen orientation override.
+	Viewport                       *page.Viewport     `json:"viewport,omitempty,omitzero"`          // If set, the visible area of the page will be overridden to this viewport. This viewport change is not observed by the page, e.g. viewport-relative elements do not change positions.
+	ScrollbarType                  string             `json:"scrollbarType,omitempty,omitzero"`     // Scrollbar type. Default: default.
+	ScreenOrientationLockEmulation bool               `json:"screenOrientationLockEmulation"`       // If set to true, enables screen orientation lock emulation, which intercepts screen.orientation.lock() calls from the page and reports orientation changes via screenOrientationLockChanged events. This is useful for emulating mobile device orientation lock behavior in responsive design mode.
+	ViewportMeta                   string             `json:"viewportMeta,omitempty,omitzero"`      // Viewport meta tag behavior. Default: default. Note: if mobile is true, the viewport meta tag is always enabled.
+	TextLayoutMode                 string             `json:"textLayoutMode,omitempty,omitzero"`    // Text layout mode. Default: default. Note: if mobile is true, mobile text layout mode (text autosizing) is always enabled.
 }
 
 // SetDeviceMetricsOverride overrides the values of device screen dimensions
@@ -340,7 +341,7 @@ func (p SetDeviceMetricsOverrideParams) WithViewport(viewport *page.Viewport) *S
 }
 
 // WithScrollbarType scrollbar type. Default: default.
-func (p SetDeviceMetricsOverrideParams) WithScrollbarType(scrollbarType SetDeviceMetricsOverrideScrollbarType) *SetDeviceMetricsOverrideParams {
+func (p SetDeviceMetricsOverrideParams) WithScrollbarType(scrollbarType string) *SetDeviceMetricsOverrideParams {
 	p.ScrollbarType = scrollbarType
 	return &p
 }
@@ -357,8 +358,15 @@ func (p SetDeviceMetricsOverrideParams) WithScreenOrientationLockEmulation(scree
 
 // WithViewportMeta viewport meta tag behavior. Default: default. Note: if
 // mobile is true, the viewport meta tag is always enabled.
-func (p SetDeviceMetricsOverrideParams) WithViewportMeta(viewportMeta SetDeviceMetricsOverrideViewportMeta) *SetDeviceMetricsOverrideParams {
+func (p SetDeviceMetricsOverrideParams) WithViewportMeta(viewportMeta string) *SetDeviceMetricsOverrideParams {
 	p.ViewportMeta = viewportMeta
+	return &p
+}
+
+// WithTextLayoutMode text layout mode. Default: default. Note: if mobile is
+// true, mobile text layout mode (text autosizing) is always enabled.
+func (p SetDeviceMetricsOverrideParams) WithTextLayoutMode(textLayoutMode string) *SetDeviceMetricsOverrideParams {
+	p.TextLayoutMode = textLayoutMode
 	return &p
 }
 
@@ -511,8 +519,8 @@ func (p *SetDocumentCookieDisabledParams) Do(ctx context.Context) (err error) {
 
 // SetEmitTouchEventsForMouseParams [no description].
 type SetEmitTouchEventsForMouseParams struct {
-	Enabled       bool                                    `json:"enabled"`                          // Whether touch emulation based on mouse input should be enabled.
-	Configuration SetEmitTouchEventsForMouseConfiguration `json:"configuration,omitempty,omitzero"` // Touch/gesture events configuration. Default: current platform.
+	Enabled       bool   `json:"enabled"`                          // Whether touch emulation based on mouse input should be enabled.
+	Configuration string `json:"configuration,omitempty,omitzero"` // Touch/gesture events configuration. Default: current platform.
 }
 
 // SetEmitTouchEventsForMouse [no description].
@@ -530,7 +538,7 @@ func SetEmitTouchEventsForMouse(enabled bool) *SetEmitTouchEventsForMouseParams 
 
 // WithConfiguration touch/gesture events configuration. Default: current
 // platform.
-func (p SetEmitTouchEventsForMouseParams) WithConfiguration(configuration SetEmitTouchEventsForMouseConfiguration) *SetEmitTouchEventsForMouseParams {
+func (p SetEmitTouchEventsForMouseParams) WithConfiguration(configuration string) *SetEmitTouchEventsForMouseParams {
 	p.Configuration = configuration
 	return &p
 }
@@ -576,7 +584,7 @@ func (p *SetEmulatedMediaParams) Do(ctx context.Context) (err error) {
 
 // SetEmulatedVisionDeficiencyParams emulates the given vision deficiency.
 type SetEmulatedVisionDeficiencyParams struct {
-	Type SetEmulatedVisionDeficiencyType `json:"type"` // Vision deficiency to emulate. Order: best-effort emulations come first, followed by any physiologically accurate emulations for medically recognized color vision deficiencies.
+	Type string `json:"type"` // Vision deficiency to emulate. Order: best-effort emulations come first, followed by any physiologically accurate emulations for medically recognized color vision deficiencies.
 }
 
 // SetEmulatedVisionDeficiency emulates the given vision deficiency.
@@ -586,7 +594,7 @@ type SetEmulatedVisionDeficiencyParams struct {
 // parameters:
 //
 //	type - Vision deficiency to emulate. Order: best-effort emulations come first, followed by any physiologically accurate emulations for medically recognized color vision deficiencies.
-func SetEmulatedVisionDeficiency(typeVal SetEmulatedVisionDeficiencyType) *SetEmulatedVisionDeficiencyParams {
+func SetEmulatedVisionDeficiency(typeVal string) *SetEmulatedVisionDeficiencyParams {
 	return &SetEmulatedVisionDeficiencyParams{
 		Type: typeVal,
 	}
@@ -991,10 +999,10 @@ func (p *SetTouchEmulationEnabledParams) Do(ctx context.Context) (err error) {
 // real-time with a synthetic time source) and sets the current virtual time
 // policy. Note this supersedes any previous time budget.
 type SetVirtualTimePolicyParams struct {
-	Policy                            VirtualTimePolicy   `json:"policy"`
-	Budget                            float64             `json:"budget,omitempty,omitzero"`                            // If set, after this many virtual milliseconds have elapsed virtual time will be paused and a virtualTimeBudgetExpired event is sent.
-	MaxVirtualTimeTaskStarvationCount int64               `json:"maxVirtualTimeTaskStarvationCount,omitempty,omitzero"` // If set this specifies the maximum number of tasks that can be run before virtual is forced forwards to prevent deadlock.
-	InitialVirtualTime                *cdp.TimeSinceEpoch `json:"initialVirtualTime,omitempty,omitzero"`                // If set, base::Time::Now will be overridden to initially return this value.
+	Policy                            VirtualTimePolicy  `json:"policy"`
+	Budget                            float64            `json:"budget,omitempty,omitzero"`                            // If set, after this many virtual milliseconds have elapsed virtual time will be paused and a virtualTimeBudgetExpired event is sent.
+	MaxVirtualTimeTaskStarvationCount int64              `json:"maxVirtualTimeTaskStarvationCount,omitempty,omitzero"` // If set this specifies the maximum number of tasks that can be run before virtual is forced forwards to prevent deadlock.
+	InitialVirtualTime                cdp.TimeSinceEpoch `json:"initialVirtualTime,omitempty,omitzero"`                // If set, base::Time::Now will be overridden to initially return this value.
 }
 
 // SetVirtualTimePolicy turns on virtual time for all frames (replacing
@@ -1029,7 +1037,7 @@ func (p SetVirtualTimePolicyParams) WithMaxVirtualTimeTaskStarvationCount(maxVir
 
 // WithInitialVirtualTime if set, base::Time::Now will be overridden to
 // initially return this value.
-func (p SetVirtualTimePolicyParams) WithInitialVirtualTime(initialVirtualTime *cdp.TimeSinceEpoch) *SetVirtualTimePolicyParams {
+func (p SetVirtualTimePolicyParams) WithInitialVirtualTime(initialVirtualTime cdp.TimeSinceEpoch) *SetVirtualTimePolicyParams {
 	p.InitialVirtualTime = initialVirtualTime
 	return &p
 }
@@ -1186,7 +1194,7 @@ func (p *SetHardwareConcurrencyOverrideParams) Do(ctx context.Context) (err erro
 // SetCPUPerformanceOverrideParams overrides the value of
 // navigator.cpuPerformance.
 type SetCPUPerformanceOverrideParams struct {
-	PerformanceTier SetCPUPerformanceOverridePerformanceTier `json:"performanceTier,omitempty,omitzero"` // Override value. Omitting the parameter disables the override.
+	PerformanceTier string `json:"performanceTier,omitempty,omitzero"` // Override value. Omitting the parameter disables the override.
 }
 
 // SetCPUPerformanceOverride overrides the value of navigator.cpuPerformance.
@@ -1200,7 +1208,7 @@ func SetCPUPerformanceOverride() *SetCPUPerformanceOverrideParams {
 
 // WithPerformanceTier override value. Omitting the parameter disables the
 // override.
-func (p SetCPUPerformanceOverrideParams) WithPerformanceTier(performanceTier SetCPUPerformanceOverridePerformanceTier) *SetCPUPerformanceOverrideParams {
+func (p SetCPUPerformanceOverrideParams) WithPerformanceTier(performanceTier string) *SetCPUPerformanceOverrideParams {
 	p.PerformanceTier = performanceTier
 	return &p
 }

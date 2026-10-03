@@ -11,7 +11,7 @@ import (
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-domContentEventFired
 type EventDomContentEventFired struct {
-	Timestamp *cdp.MonotonicTime `json:"timestamp"`
+	Timestamp cdp.MonotonicTime `json:"timestamp"`
 }
 
 // EventFileChooserOpened emitted only when page.interceptFileChooser is
@@ -19,9 +19,9 @@ type EventDomContentEventFired struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-fileChooserOpened
 type EventFileChooserOpened struct {
-	FrameID       cdp.FrameID           `json:"frameId"`                          // Id of the frame containing input node.
-	Mode          FileChooserOpenedMode `json:"mode"`                             // Input mode.
-	BackendNodeID cdp.BackendNodeID     `json:"backendNodeId,omitempty,omitzero"` // Input node id. Only present for file choosers opened via an <input type="file"> element.
+	FrameID       cdp.FrameID       `json:"frameId"`                          // Id of the frame containing input node.
+	Mode          string            `json:"mode"`                             // Input mode.
+	BackendNodeID cdp.BackendNodeID `json:"backendNodeId,omitempty,omitzero"` // Input node id. Only present for file choosers opened via an <input type="file"> element.
 }
 
 // EventFrameAttached fired when frame has been attached to its parent.
@@ -37,8 +37,8 @@ type EventFrameAttached struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-frameDetached
 type EventFrameDetached struct {
-	FrameID cdp.FrameID         `json:"frameId"` // Id of the frame that has been detached.
-	Reason  FrameDetachedReason `json:"reason"`
+	FrameID cdp.FrameID `json:"frameId"` // Id of the frame that has been detached.
+	Reason  string      `json:"reason"`
 }
 
 // EventFrameSubtreeWillBeDetached fired before frame subtree is detached.
@@ -80,10 +80,10 @@ type EventFrameResized struct{}
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-frameStartedNavigating
 type EventFrameStartedNavigating struct {
-	FrameID        cdp.FrameID                          `json:"frameId"`  // ID of the frame that is being navigated.
-	URL            string                               `json:"url"`      // The URL the navigation started with. The final URL can be different.
-	LoaderID       cdp.LoaderID                         `json:"loaderId"` // Loader identifier. Even though it is present in case of same-document navigation, the previously committed loaderId would not change unless the navigation changes from a same-document to a cross-document navigation.
-	NavigationType FrameStartedNavigatingNavigationType `json:"navigationType"`
+	FrameID        cdp.FrameID  `json:"frameId"`  // ID of the frame that is being navigated.
+	URL            string       `json:"url"`      // The URL the navigation started with. The final URL can be different.
+	LoaderID       cdp.LoaderID `json:"loaderId"` // Loader identifier. Even though it is present in case of same-document navigation, the previously committed loaderId would not change unless the navigation changes from a same-document to a cross-document navigation.
+	NavigationType string       `json:"navigationType"`
 }
 
 // EventFrameRequestedNavigation fired when a renderer-initiated navigation
@@ -149,10 +149,10 @@ type EventJavascriptDialogOpening struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-lifecycleEvent
 type EventLifecycleEvent struct {
-	FrameID   cdp.FrameID        `json:"frameId"`  // Id of the frame.
-	LoaderID  cdp.LoaderID       `json:"loaderId"` // Loader identifier. Empty string if the request is fetched from worker.
-	Name      string             `json:"name"`
-	Timestamp *cdp.MonotonicTime `json:"timestamp"`
+	FrameID   cdp.FrameID       `json:"frameId"`  // Id of the frame.
+	LoaderID  cdp.LoaderID      `json:"loaderId"` // Loader identifier. Empty string if the request is fetched from worker.
+	Name      string            `json:"name"`
+	Timestamp cdp.MonotonicTime `json:"timestamp"`
 }
 
 // EventBackForwardCacheNotUsed fired for failed bfcache history navigations
@@ -173,7 +173,7 @@ type EventBackForwardCacheNotUsed struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-loadEventFired
 type EventLoadEventFired struct {
-	Timestamp *cdp.MonotonicTime `json:"timestamp"`
+	Timestamp cdp.MonotonicTime `json:"timestamp"`
 }
 
 // EventNavigatedWithinDocument fired when same-document navigation happens,
@@ -181,9 +181,9 @@ type EventLoadEventFired struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-navigatedWithinDocument
 type EventNavigatedWithinDocument struct {
-	FrameID        cdp.FrameID                           `json:"frameId"`        // Id of the frame.
-	URL            string                                `json:"url"`            // Frame's new url.
-	NavigationType NavigatedWithinDocumentNavigationType `json:"navigationType"` // Navigation type
+	FrameID        cdp.FrameID `json:"frameId"`        // Id of the frame.
+	URL            string      `json:"url"`            // Frame's new url.
+	NavigationType string      `json:"navigationType"` // Navigation type
 }
 
 // EventScreencastFrame compressed image data requested by the

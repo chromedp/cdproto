@@ -11,11 +11,11 @@ package overlay
 
 import (
 	"context"
+	"encoding/json/jsontext"
 
 	"github.com/chromedp/cdproto/cdp"
 	"github.com/chromedp/cdproto/dom"
 	"github.com/chromedp/cdproto/runtime"
-	"github.com/go-json-experiment/json/jsontext"
 )
 
 // DisableParams disables domain notifications.

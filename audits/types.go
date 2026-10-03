@@ -2278,38 +2278,3 @@ type InspectorIssue struct {
 	Details *InspectorIssueDetails `json:"details"`
 	IssueID IssueID                `json:"issueId,omitempty,omitzero"` // A unique id for this issue. May be omitted if no other entity (e.g. exception, CDP message, etc.) is referencing this issue.
 }
-
-// GetEncodedResponseEncoding the encoding to use.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#method-getEncodedResponse
-type GetEncodedResponseEncoding string
-
-// String returns the GetEncodedResponseEncoding as string value.
-func (t GetEncodedResponseEncoding) String() string {
-	return string(t)
-}
-
-// GetEncodedResponseEncoding values.
-const (
-	GetEncodedResponseEncodingWebp GetEncodedResponseEncoding = "webp"
-	GetEncodedResponseEncodingJpeg GetEncodedResponseEncoding = "jpeg"
-	GetEncodedResponseEncodingPng  GetEncodedResponseEncoding = "png"
-)
-
-// UnmarshalJSON satisfies [json.Unmarshaler].
-func (t *GetEncodedResponseEncoding) UnmarshalJSON(buf []byte) error {
-	s := string(buf)
-	s = strings.TrimSuffix(strings.TrimPrefix(s, `"`), `"`)
-
-	switch GetEncodedResponseEncoding(s) {
-	case GetEncodedResponseEncodingWebp:
-		*t = GetEncodedResponseEncodingWebp
-	case GetEncodedResponseEncodingJpeg:
-		*t = GetEncodedResponseEncodingJpeg
-	case GetEncodedResponseEncodingPng:
-		*t = GetEncodedResponseEncodingPng
-	default:
-		return fmt.Errorf("unknown GetEncodedResponseEncoding value: %v", s)
-	}
-	return nil
-}

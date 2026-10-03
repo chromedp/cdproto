@@ -17,9 +17,9 @@ package css
 
 import (
 	"context"
+	"encoding/json/jsontext"
 
 	"github.com/chromedp/cdproto/cdp"
-	"github.com/go-json-experiment/json/jsontext"
 )
 
 // AddRuleParams inserts a new rule with the given ruleText in a stylesheet
@@ -258,6 +258,38 @@ func ForceStartingStyle(nodeID cdp.NodeID, forced bool) *ForceStartingStyleParam
 // Do executes CSS.forceStartingStyle against the provided context.
 func (p *ForceStartingStyleParams) Do(ctx context.Context) (err error) {
 	return cdp.Execute(ctx, CommandForceStartingStyle, p, nil)
+}
+
+// ForcePositionTryOptionParams forces a position-try option for the given
+// node.
+type ForcePositionTryOptionParams struct {
+	NodeID cdp.NodeID `json:"nodeId"`                   // The element id for which to force the position-try option.
+	Index  int64      `json:"index,omitempty,omitzero"` // The 1-based index of the position-try fallback option, 0 for base position (no fallback), or omitted to clear the forced state.
+}
+
+// ForcePositionTryOption forces a position-try option for the given node.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/CSS#method-forcePositionTryOption
+//
+// parameters:
+//
+//	nodeID - The element id for which to force the position-try option.
+func ForcePositionTryOption(nodeID cdp.NodeID) *ForcePositionTryOptionParams {
+	return &ForcePositionTryOptionParams{
+		NodeID: nodeID,
+	}
+}
+
+// WithIndex the 1-based index of the position-try fallback option, 0 for
+// base position (no fallback), or omitted to clear the forced state.
+func (p ForcePositionTryOptionParams) WithIndex(index int64) *ForcePositionTryOptionParams {
+	p.Index = index
+	return &p
+}
+
+// Do executes CSS.forcePositionTryOption against the provided context.
+func (p *ForcePositionTryOptionParams) Do(ctx context.Context) (err error) {
+	return cdp.Execute(ctx, CommandForcePositionTryOption, p, nil)
 }
 
 // GetBackgroundColorsParams [no description].
@@ -1575,6 +1607,7 @@ const (
 	CommandEnable                           = "CSS.enable"
 	CommandForcePseudoState                 = "CSS.forcePseudoState"
 	CommandForceStartingStyle               = "CSS.forceStartingStyle"
+	CommandForcePositionTryOption           = "CSS.forcePositionTryOption"
 	CommandGetBackgroundColors              = "CSS.getBackgroundColors"
 	CommandGetComputedStyleForNode          = "CSS.getComputedStyleForNode"
 	CommandResolveValues                    = "CSS.resolveValues"

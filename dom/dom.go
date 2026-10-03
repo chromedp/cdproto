@@ -286,7 +286,7 @@ func (p *DiscardSearchResultsParams) Do(ctx context.Context) (err error) {
 
 // EnableParams enables DOM agent for the given page.
 type EnableParams struct {
-	IncludeWhitespace EnableIncludeWhitespace `json:"includeWhitespace,omitempty,omitzero"` // Whether to include whitespaces in the children array of returned Nodes.
+	IncludeWhitespace string `json:"includeWhitespace,omitempty,omitzero"` // Whether to include whitespaces in the children array of returned Nodes.
 }
 
 // Enable enables DOM agent for the given page.
@@ -300,7 +300,7 @@ func Enable() *EnableParams {
 
 // WithIncludeWhitespace whether to include whitespaces in the children array
 // of returned Nodes.
-func (p EnableParams) WithIncludeWhitespace(includeWhitespace EnableIncludeWhitespace) *EnableParams {
+func (p EnableParams) WithIncludeWhitespace(includeWhitespace string) *EnableParams {
 	p.IncludeWhitespace = includeWhitespace
 	return &p
 }
@@ -1152,8 +1152,8 @@ func (p *GetTopLayerElementsParams) Do(ctx context.Context) (nodeIDs []cdp.NodeI
 // GetElementByRelationParams returns the NodeId of the matched element
 // according to certain relations.
 type GetElementByRelationParams struct {
-	NodeID   cdp.NodeID                   `json:"nodeId"`   // Id of the node from which to query the relation.
-	Relation GetElementByRelationRelation `json:"relation"` // Type of relation to get.
+	NodeID   cdp.NodeID `json:"nodeId"`   // Id of the node from which to query the relation.
+	Relation string     `json:"relation"` // Type of relation to get.
 }
 
 // GetElementByRelation returns the NodeId of the matched element according
@@ -1165,7 +1165,7 @@ type GetElementByRelationParams struct {
 //
 //	nodeID - Id of the node from which to query the relation.
 //	relation - Type of relation to get.
-func GetElementByRelation(nodeID cdp.NodeID, relation GetElementByRelationRelation) *GetElementByRelationParams {
+func GetElementByRelation(nodeID cdp.NodeID, relation string) *GetElementByRelationParams {
 	return &GetElementByRelationParams{
 		NodeID:   nodeID,
 		Relation: relation,
@@ -2150,7 +2150,7 @@ type SetTextMarkerParams struct {
 	NodeID        cdp.NodeID             `json:"nodeId,omitempty,omitzero"`        // Identifier of the node.
 	BackendNodeID cdp.BackendNodeID      `json:"backendNodeId,omitempty,omitzero"` // Identifier of the backend node.
 	ObjectID      runtime.RemoteObjectID `json:"objectId,omitempty,omitzero"`      // JavaScript object id of the node wrapper.
-	Type          SetTextMarkerType      `json:"type"`                             // The type of marker to set on the given range of text.
+	Type          string                 `json:"type"`                             // The type of marker to set on the given range of text.
 	Start         int64                  `json:"start"`                            // Start offset into the element's rendered text in UTF-16 code units. For a text control, an offset into the control's value. Offsets count text in DOM order and do not enter shadow trees. To mark text inside a shadow tree, pass the element inside the shadow tree.
 	End           int64                  `json:"end"`                              // End offset (exclusive) in the same units and space as start.
 }
@@ -2168,7 +2168,7 @@ type SetTextMarkerParams struct {
 //	type - The type of marker to set on the given range of text.
 //	start - Start offset into the element's rendered text in UTF-16 code units. For a text control, an offset into the control's value. Offsets count text in DOM order and do not enter shadow trees. To mark text inside a shadow tree, pass the element inside the shadow tree.
 //	end - End offset (exclusive) in the same units and space as start.
-func SetTextMarker(typeVal SetTextMarkerType, start int64, end int64) *SetTextMarkerParams {
+func SetTextMarker(typeVal string, start int64, end int64) *SetTextMarkerParams {
 	return &SetTextMarkerParams{
 		Type:  typeVal,
 		Start: start,
