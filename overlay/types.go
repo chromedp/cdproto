@@ -229,8 +229,8 @@ type DisplayCutoutConfig struct {
 	BorderRadius int64              `json:"borderRadius,omitempty,omitzero"` // Border radius for rounded cutout shapes.
 	UpperRadius  int64              `json:"upperRadius,omitempty,omitzero"`  // Upper shoulder radius for notch cutout shapes.
 	LowerRadius  int64              `json:"lowerRadius,omitempty,omitzero"`  // Lower transition radius for notch cutout shapes.
-	Cx           int64              `json:"cx,omitempty,omitzero"`           // Center x coordinate for circle cutout shapes.
-	Cy           int64              `json:"cy,omitempty,omitzero"`           // Center y coordinate for circle cutout shapes.
+	Cx           *int64             `json:"cx,omitempty,omitzero"`           // Center x coordinate for circle cutout shapes.
+	Cy           *int64             `json:"cy,omitempty,omitzero"`           // Center y coordinate for circle cutout shapes.
 	Radius       int64              `json:"radius,omitempty,omitzero"`       // Radius for circle cutout shapes.
 	ContentColor *cdp.RGBA          `json:"contentColor,omitempty,omitzero"` // The cutout fill color (default: black).
 }

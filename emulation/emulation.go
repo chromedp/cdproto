@@ -252,13 +252,13 @@ var SetEmulatedOSTextScale = cdp.Command[SetEmulatedOSTextScaleParams, cdp.Empty
 // SetGeolocationOverrideParams are the parameters of the command
 // Emulation.setGeolocationOverride.
 type SetGeolocationOverrideParams struct {
-	Latitude         float64 `json:"latitude,omitempty,omitzero"`         // Mock latitude
-	Longitude        float64 `json:"longitude,omitempty,omitzero"`        // Mock longitude
-	Accuracy         float64 `json:"accuracy,omitempty,omitzero"`         // Mock accuracy
-	Altitude         float64 `json:"altitude,omitempty,omitzero"`         // Mock altitude
-	AltitudeAccuracy float64 `json:"altitudeAccuracy,omitempty,omitzero"` // Mock altitudeAccuracy
-	Heading          float64 `json:"heading,omitempty,omitzero"`          // Mock heading
-	Speed            float64 `json:"speed,omitempty,omitzero"`            // Mock speed
+	Latitude         *float64 `json:"latitude,omitempty,omitzero"`         // Mock latitude
+	Longitude        *float64 `json:"longitude,omitempty,omitzero"`        // Mock longitude
+	Accuracy         *float64 `json:"accuracy,omitempty,omitzero"`         // Mock accuracy
+	Altitude         *float64 `json:"altitude,omitempty,omitzero"`         // Mock altitude
+	AltitudeAccuracy *float64 `json:"altitudeAccuracy,omitempty,omitzero"` // Mock altitudeAccuracy
+	Heading          *float64 `json:"heading,omitempty,omitzero"`          // Mock heading
+	Speed            *float64 `json:"speed,omitempty,omitzero"`            // Mock speed
 }
 
 // SetGeolocationOverride overrides the Geolocation Position or Error.
@@ -400,7 +400,7 @@ var SetTouchEmulationEnabled = cdp.Command[SetTouchEmulationEnabledParams, cdp.E
 // Emulation.setVirtualTimePolicy.
 type SetVirtualTimePolicyParams struct {
 	Policy                            VirtualTimePolicy  `json:"policy"`
-	Budget                            float64            `json:"budget,omitempty,omitzero"`                            // If set, after this many virtual milliseconds have elapsed virtual time will be paused and a virtualTimeBudgetExpired event is sent.
+	Budget                            *float64           `json:"budget,omitempty,omitzero"`                            // If set, after this many virtual milliseconds have elapsed virtual time will be paused and a virtualTimeBudgetExpired event is sent.
 	MaxVirtualTimeTaskStarvationCount int64              `json:"maxVirtualTimeTaskStarvationCount,omitempty,omitzero"` // If set this specifies the maximum number of tasks that can be run before virtual is forced forwards to prevent deadlock.
 	InitialVirtualTime                cdp.TimeSinceEpoch `json:"initialVirtualTime,omitempty,omitzero"`                // If set, base::Time::Now will be overridden to initially return this value.
 }
@@ -566,13 +566,13 @@ var AddScreen = cdp.Command[AddScreenParams, AddScreenResult]{Method: CommandAdd
 // Emulation.updateScreen.
 type UpdateScreenParams struct {
 	ScreenID         ScreenID        `json:"screenId"`                            // Target screen identifier.
-	Left             int64           `json:"left,omitempty,omitzero"`             // Offset of the left edge of the screen in pixels.
-	Top              int64           `json:"top,omitempty,omitzero"`              // Offset of the top edge of the screen in pixels.
+	Left             *int64          `json:"left,omitempty,omitzero"`             // Offset of the left edge of the screen in pixels.
+	Top              *int64          `json:"top,omitempty,omitzero"`              // Offset of the top edge of the screen in pixels.
 	Width            int64           `json:"width,omitempty,omitzero"`            // The width of the screen in pixels.
 	Height           int64           `json:"height,omitempty,omitzero"`           // The height of the screen in pixels.
 	WorkAreaInsets   *WorkAreaInsets `json:"workAreaInsets,omitempty,omitzero"`   // Specifies the screen's work area.
 	DevicePixelRatio float64         `json:"devicePixelRatio,omitempty,omitzero"` // Specifies the screen's device pixel ratio.
-	Rotation         int64           `json:"rotation,omitempty,omitzero"`         // Specifies the screen's rotation angle. Available values are 0, 90, 180 and 270.
+	Rotation         *int64          `json:"rotation,omitempty,omitzero"`         // Specifies the screen's rotation angle. Available values are 0, 90, 180 and 270.
 	ColorDepth       int64           `json:"colorDepth,omitempty,omitzero"`       // Specifies the screen's color depth in bits.
 	Label            string          `json:"label,omitempty,omitzero"`            // Specifies the descriptive label for the screen.
 	IsInternal       *bool           `json:"isInternal,omitempty,omitzero"`       // Indicates whether the screen is internal to the device or external, attached to the device. Default is false.

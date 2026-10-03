@@ -14,7 +14,7 @@ import (
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#type-SerializationOptions
 type SerializationOptions struct {
 	Serialization        SerializationOptionsSerialization `json:"serialization"`
-	MaxDepth             int64                             `json:"maxDepth,omitempty,omitzero"` // Deep serialization depth. Default is full depth. Respected only in deep serialization mode.
+	MaxDepth             *int64                            `json:"maxDepth,omitempty,omitzero"` // Deep serialization depth. Default is full depth. Respected only in deep serialization mode.
 	AdditionalParameters jsontext.Value                    `json:"additionalParameters,omitempty,omitzero"`
 }
 

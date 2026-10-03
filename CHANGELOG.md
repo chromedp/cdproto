@@ -5,6 +5,38 @@ definitions listed below. The minor version is the Chromium major version. As
 the protocol definitions deprecate and remove commands, events, types, and
 fields, any release can contain incompatible changes to the generated API.
 
+## v0.157.4 - 2026-10-03
+
+- Chromium: 157.0.8085.1
+- V8: 15.7.33
+- API changes since v0.157.3: 72 incompatible, 1 compatible
+
+By package, as removed, changed and added names:
+
+  accessibility               0 removed    1 changed    0 added
+  animation                   0 removed    1 changed    0 added
+  audits                      0 removed    1 changed    0 added
+  browser                     0 removed    2 changed    0 added
+  cdp                         1 removed    0 changed    0 added
+  css                         0 removed    1 changed    0 added
+  debugger                    0 removed    2 changed    0 added
+  dom                         0 removed    3 changed    0 added
+  domdebugger                 0 removed    1 changed    0 added
+  emulation                   0 removed   19 changed    0 added
+  har                         0 removed    7 changed    0 added
+  headlessexperimental        0 removed    1 changed    0 added
+  indexeddb                   0 removed    2 changed    0 added
+  input                       0 removed    8 changed    0 added
+  io                          0 removed    1 changed    0 added
+  layertree                   0 removed    1 changed    0 added
+  network                     0 removed    5 changed    1 added
+  overlay                     0 removed    2 changed    0 added
+  page                        0 removed    6 changed    0 added
+  runtime                     0 removed    1 changed    0 added
+  storage                     0 removed    1 changed    0 added
+  target                      0 removed    2 changed    0 added
+  webauthn                    0 removed    3 changed    0 added
+
 ## v0.157.3 - 2026-10-03
 
 - Chromium: 157.0.8085.1

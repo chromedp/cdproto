@@ -110,7 +110,7 @@ var ReleaseSnapshot = cdp.Command[ReleaseSnapshotParams, cdp.Empty]{Method: Comm
 type ReplaySnapshotParams struct {
 	SnapshotID SnapshotID `json:"snapshotId"`                  // The id of the layer snapshot.
 	FromStep   int64      `json:"fromStep,omitempty,omitzero"` // The first step to replay from (replay from the very start if not specified).
-	ToStep     int64      `json:"toStep,omitempty,omitzero"`   // The last step to replay to (replay till the end if not specified).
+	ToStep     *int64     `json:"toStep,omitempty,omitzero"`   // The last step to replay to (replay till the end if not specified).
 	Scale      float64    `json:"scale,omitempty,omitzero"`    // The scale to apply while replaying (defaults to 1).
 }
 

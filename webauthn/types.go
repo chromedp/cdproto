@@ -104,6 +104,6 @@ type Credential struct {
 	UserName                       string   `json:"userName,omitempty,omitzero"`           // The credential's user.name property. Equivalent to empty if not set. https://w3c.github.io/webauthn/#dom-publickeycredentialentity-name
 	UserDisplayName                string   `json:"userDisplayName,omitempty,omitzero"`    // The credential's user.displayName property. Equivalent to empty if not set. https://w3c.github.io/webauthn/#dom-publickeycredentialuserentity-displayname
 	CmtgKeys                       [][]byte `json:"cmtgKeys,omitempty,omitzero"`           // The CMTG keys associated with the credential.
-	ActiveCmtgKeyIndex             int64    `json:"activeCmtgKeyIndex,omitempty,omitzero"` // The 0-based index of the active key in cmtgKeys.
+	ActiveCmtgKeyIndex             *int64   `json:"activeCmtgKeyIndex,omitempty,omitzero"` // The 0-based index of the active key in cmtgKeys.
 	GenerateCmtgKeyOnNextOperation bool     `json:"generateCmtgKeyOnNextOperation"`        // If true, the authenticator will generate a new CMTG key on the next operation.
 }

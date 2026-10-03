@@ -67,8 +67,8 @@ type ImeSetCompositionParams struct {
 	Text             string `json:"text"`                                // The text to insert
 	SelectionStart   int64  `json:"selectionStart"`                      // selection start
 	SelectionEnd     int64  `json:"selectionEnd"`                        // selection end
-	ReplacementStart int64  `json:"replacementStart,omitempty,omitzero"` // replacement start
-	ReplacementEnd   int64  `json:"replacementEnd,omitempty,omitzero"`   // replacement end
+	ReplacementStart *int64 `json:"replacementStart,omitempty,omitzero"` // replacement start
+	ReplacementEnd   *int64 `json:"replacementEnd,omitempty,omitzero"`   // replacement end
 }
 
 // ImeSetComposition this method sets the current candidate text for IME. Use
@@ -196,7 +196,7 @@ type SynthesizeScrollGestureParams struct {
 	Speed                 int64             `json:"speed,omitempty,omitzero"`                 // Swipe speed in pixels per second (default: 800).
 	GestureSourceType     GestureSourceType `json:"gestureSourceType,omitempty,omitzero"`     // Which type of input events to be generated (default: 'default', which queries the platform for the preferred input type).
 	RepeatCount           int64             `json:"repeatCount,omitempty,omitzero"`           // The number of times to repeat the gesture (default: 0).
-	RepeatDelayMs         int64             `json:"repeatDelayMs,omitempty,omitzero"`         // The number of milliseconds delay between each repeat. (default: 250).
+	RepeatDelayMs         *int64            `json:"repeatDelayMs,omitempty,omitzero"`         // The number of milliseconds delay between each repeat. (default: 250).
 	InteractionMarkerName string            `json:"interactionMarkerName,omitempty,omitzero"` // The name of the interaction markers to generate, if not empty (default: "").
 }
 
@@ -211,7 +211,7 @@ var SynthesizeScrollGesture = cdp.Command[SynthesizeScrollGestureParams, cdp.Emp
 type SynthesizeTapGestureParams struct {
 	X                 float64           `json:"x"`                                    // X coordinate of the start of the gesture in CSS pixels.
 	Y                 float64           `json:"y"`                                    // Y coordinate of the start of the gesture in CSS pixels.
-	Duration          int64             `json:"duration,omitempty,omitzero"`          // Duration between touchdown and touchup events in ms (default: 50).
+	Duration          *int64            `json:"duration,omitempty,omitzero"`          // Duration between touchdown and touchup events in ms (default: 50).
 	TapCount          int64             `json:"tapCount,omitempty,omitzero"`          // Number of times to perform the tap (e.g. 2 for double tap, default: 1).
 	GestureSourceType GestureSourceType `json:"gestureSourceType,omitempty,omitzero"` // Which type of input events to be generated (default: 'default', which queries the platform for the preferred input type).
 }

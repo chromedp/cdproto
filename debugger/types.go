@@ -33,7 +33,7 @@ func (t CallFrameID) String() string {
 type Location struct {
 	ScriptID     cdp.ScriptID `json:"scriptId"`                        // Script identifier as reported in the Debugger.scriptParsed.
 	LineNumber   int64        `json:"lineNumber"`                      // Line number in the script (0-based).
-	ColumnNumber int64        `json:"columnNumber,omitempty,omitzero"` // Column number in the script (0-based).
+	ColumnNumber *int64       `json:"columnNumber,omitempty,omitzero"` // Column number in the script (0-based).
 }
 
 // ScriptPosition location in the source code.

@@ -38,8 +38,8 @@ A tag has the form `v0.<major>.<patch>`, where the minor version is the
 Chromium major version of the protocol. Any release can contain incompatible
 changes, because the protocol removes and renames things. `CHANGELOG.md` and the
 annotation of each tag list the changes. The releases up to `v0.157.2` have the
-old API, which had a `Do` method on each command. The first release after
-`v0.157.2` has the typed API.
+old API, which had a `Do` method on each command. The release `v0.157.3` is the
+first one with the typed API.
 
 ## Contributing
 

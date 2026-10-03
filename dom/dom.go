@@ -62,7 +62,7 @@ type DescribeNodeParams struct {
 	NodeID        cdp.NodeID             `json:"nodeId,omitempty,omitzero"`        // Identifier of the node.
 	BackendNodeID cdp.BackendNodeID      `json:"backendNodeId,omitempty,omitzero"` // Identifier of the backend node.
 	ObjectID      runtime.RemoteObjectID `json:"objectId,omitempty,omitzero"`      // JavaScript object id of the node wrapper.
-	Depth         int64                  `json:"depth,omitempty,omitzero"`         // The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the entire subtree or provide an integer larger than 0.
+	Depth         *int64                 `json:"depth,omitempty,omitzero"`         // The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the entire subtree or provide an integer larger than 0.
 	Pierce        *bool                  `json:"pierce,omitempty,omitzero"`        // Whether or not iframes and shadow roots should be traversed when returning the subtree (default is false).
 }
 
@@ -185,8 +185,8 @@ var GetContentQuads = cdp.Command[GetContentQuadsParams, GetContentQuadsResult]{
 
 // GetDocumentParams are the parameters of the command DOM.getDocument.
 type GetDocumentParams struct {
-	Depth  int64 `json:"depth,omitempty,omitzero"`  // The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the entire subtree or provide an integer larger than 0.
-	Pierce *bool `json:"pierce,omitempty,omitzero"` // Whether or not iframes and shadow roots should be traversed when returning the subtree (default is false).
+	Depth  *int64 `json:"depth,omitempty,omitzero"`  // The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the entire subtree or provide an integer larger than 0.
+	Pierce *bool  `json:"pierce,omitempty,omitzero"` // Whether or not iframes and shadow roots should be traversed when returning the subtree (default is false).
 }
 
 // GetDocumentResult is the result of the command DOM.getDocument.
@@ -473,7 +473,7 @@ var RemoveNode = cdp.Command[RemoveNodeParams, cdp.Empty]{Method: CommandRemoveN
 // DOM.requestChildNodes.
 type RequestChildNodesParams struct {
 	NodeID cdp.NodeID `json:"nodeId"`                    // Id of the node to get children for.
-	Depth  int64      `json:"depth,omitempty,omitzero"`  // The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the entire subtree or provide an integer larger than 0.
+	Depth  *int64     `json:"depth,omitempty,omitzero"`  // The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the entire subtree or provide an integer larger than 0.
 	Pierce *bool      `json:"pierce,omitempty,omitzero"` // Whether or not iframes and shadow roots should be traversed when returning the sub-tree (default is false).
 }
 

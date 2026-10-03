@@ -117,7 +117,7 @@ var ForceStartingStyle = cdp.Command[ForceStartingStyleParams, cdp.Empty]{Method
 // CSS.forcePositionTryOption.
 type ForcePositionTryOptionParams struct {
 	NodeID cdp.NodeID `json:"nodeId"`                   // The element id for which to force the position-try option.
-	Index  int64      `json:"index,omitempty,omitzero"` // The 1-based index of the position-try fallback option, 0 for base position (no fallback), or omitted to clear the forced state.
+	Index  *int64     `json:"index,omitempty,omitzero"` // The 1-based index of the position-try fallback option, 0 for base position (no fallback), or omitted to clear the forced state.
 }
 
 // ForcePositionTryOption forces a position-try option for the given node.

@@ -51,7 +51,7 @@ var BringToFront = cdp.Command[cdp.Empty, cdp.Empty]{Method: CommandBringToFront
 // Page.captureScreenshot.
 type CaptureScreenshotParams struct {
 	Format                CaptureScreenshotFormat `json:"format,omitempty,omitzero"`                // Image compression format (defaults to png).
-	Quality               int64                   `json:"quality,omitempty,omitzero"`               // Compression quality from range [0..100] (jpeg only).
+	Quality               *int64                  `json:"quality,omitempty,omitzero"`               // Compression quality from range [0..100] (jpeg only).
 	Clip                  *Viewport               `json:"clip,omitempty,omitzero"`                  // Capture the screenshot of a given region only.
 	FromSurface           *bool                   `json:"fromSurface,omitempty,omitzero"`           // Capture the screenshot from the surface, rather than the view. Defaults to true.
 	CaptureBeyondViewport *bool                   `json:"captureBeyondViewport,omitempty,omitzero"` // Capture the screenshot beyond the viewport. Defaults to false.
@@ -356,10 +356,10 @@ type PrintToPDFParams struct {
 	Scale                   float64                `json:"scale,omitempty,omitzero"`                   // Scale of the webpage rendering. Defaults to 1.
 	PaperWidth              float64                `json:"paperWidth,omitempty,omitzero"`              // Paper width in inches. Defaults to 8.5 inches.
 	PaperHeight             float64                `json:"paperHeight,omitempty,omitzero"`             // Paper height in inches. Defaults to 11 inches.
-	MarginTop               float64                `json:"marginTop,omitempty,omitzero"`               // Top margin in inches. Defaults to 1cm (~0.4 inches).
-	MarginBottom            float64                `json:"marginBottom,omitempty,omitzero"`            // Bottom margin in inches. Defaults to 1cm (~0.4 inches).
-	MarginLeft              float64                `json:"marginLeft,omitempty,omitzero"`              // Left margin in inches. Defaults to 1cm (~0.4 inches).
-	MarginRight             float64                `json:"marginRight,omitempty,omitzero"`             // Right margin in inches. Defaults to 1cm (~0.4 inches).
+	MarginTop               *float64               `json:"marginTop,omitempty,omitzero"`               // Top margin in inches. Defaults to 1cm (~0.4 inches).
+	MarginBottom            *float64               `json:"marginBottom,omitempty,omitzero"`            // Bottom margin in inches. Defaults to 1cm (~0.4 inches).
+	MarginLeft              *float64               `json:"marginLeft,omitempty,omitzero"`              // Left margin in inches. Defaults to 1cm (~0.4 inches).
+	MarginRight             *float64               `json:"marginRight,omitempty,omitzero"`             // Right margin in inches. Defaults to 1cm (~0.4 inches).
 	PageRanges              string                 `json:"pageRanges,omitempty,omitzero"`              // Paper ranges to print, one based, e.g., '1-5, 8, 11-13'. Pages are printed in the document order, not in the order specified, and no more than once. Defaults to empty string, which implies the entire document is printed. The page numbers are quietly capped to actual page count of the document, and ranges beyond the end of the document are ignored. If this results in no pages to print, an error is reported. It is an error to specify a range with start greater than end.
 	HeaderTemplate          string                 `json:"headerTemplate,omitempty,omitzero"`          // HTML template for the print header. Should be valid HTML markup with following classes used to inject printing values into them: - date: formatted print date - title: document title - url: document location - pageNumber: current page number - totalPages: total pages in the document  For example, <span class=title></span> would generate span containing the title.
 	FooterTemplate          string                 `json:"footerTemplate,omitempty,omitzero"`          // HTML template for the print footer. Should use the same format as the headerTemplate.
@@ -539,7 +539,7 @@ var SetLifecycleEventsEnabled = cdp.Command[SetLifecycleEventsEnabledParams, cdp
 // Page.startScreencast.
 type StartScreencastParams struct {
 	Format            StartScreencastFormat `json:"format,omitempty,omitzero"`            // Image compression format.
-	Quality           int64                 `json:"quality,omitempty,omitzero"`           // Compression quality from range [0..100].
+	Quality           *int64                `json:"quality,omitempty,omitzero"`           // Compression quality from range [0..100].
 	MaxWidth          int64                 `json:"maxWidth,omitempty,omitzero"`          // Maximum screenshot width.
 	MaxHeight         int64                 `json:"maxHeight,omitempty,omitzero"`         // Maximum screenshot height.
 	EveryNthFrame     int64                 `json:"everyNthFrame,omitempty,omitzero"`     // Send every n-th frame. Must be a positive integer.

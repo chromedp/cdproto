@@ -34,7 +34,7 @@ type CacheData struct {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/HAR#type-Content
 type Content struct {
 	Size        int64  `json:"size"`                           // Length of the returned content in bytes. Should be equal to response.bodySize if there is no compression and bigger when the content has been compressed.
-	Compression int64  `json:"compression,omitempty,omitzero"` // Number of bytes saved. Leave out this field if the information is not available.
+	Compression *int64 `json:"compression,omitempty,omitzero"` // Number of bytes saved. Leave out this field if the information is not available.
 	MimeType    string `json:"mimeType"`                       // MIME type of the response text (value of the Content-Type response header). The charset attribute of the MIME type is included (if available).
 	Text        []byte `json:"text,omitempty,omitzero"`        // Response body sent from the server or loaded from the browser cache. This field is populated with textual content only. The text field is either HTTP decoded text or a encoded (e.g. "base64") representation of the response body. Leave out this field if the information is not available.
 	Encoding    string `json:"encoding,omitempty,omitzero"`    // Encoding used for response text field e.g "base64". Leave out this field if the text field is HTTP decoded (decompressed & unchunked), than trans-coded from its original character set into UTF-8.
@@ -152,9 +152,9 @@ type Page struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/HAR#type-PageTimings
 type PageTimings struct {
-	OnContentLoad float64 `json:"onContentLoad,omitempty,omitzero"` // Content of the page loaded. Number of milliseconds since page load started (page.startedDateTime). Use -1 if the timing does not apply to the current request.
-	OnLoad        float64 `json:"onLoad,omitempty,omitzero"`        // Page is loaded (onLoad event fired). Number of milliseconds since page load started (page.startedDateTime). Use -1 if the timing does not apply to the current request.
-	Comment       string  `json:"comment,omitempty,omitzero"`       // A comment provided by the user or the application.
+	OnContentLoad *float64 `json:"onContentLoad,omitempty,omitzero"` // Content of the page loaded. Number of milliseconds since page load started (page.startedDateTime). Use -1 if the timing does not apply to the current request.
+	OnLoad        *float64 `json:"onLoad,omitempty,omitzero"`        // Page is loaded (onLoad event fired). Number of milliseconds since page load started (page.startedDateTime). Use -1 if the timing does not apply to the current request.
+	Comment       string   `json:"comment,omitempty,omitzero"`       // A comment provided by the user or the application.
 }
 
 // Param list of posted parameters, if any (embedded in [PostData] object).
@@ -215,12 +215,12 @@ type Response struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/HAR#type-Timings
 type Timings struct {
-	Blocked float64 `json:"blocked,omitempty,omitzero"` // Time spent in a queue waiting for a network connection. Use -1 if the timing does not apply to the current request.
-	DNS     float64 `json:"dns,omitempty,omitzero"`     // DNS resolution time. The time required to resolve a host name. Use -1 if the timing does not apply to the current request.
-	Connect float64 `json:"connect,omitempty,omitzero"` // Time required to create TCP connection. Use -1 if the timing does not apply to the current request.
-	Send    float64 `json:"send"`                       // Time required to send HTTP request to the server.
-	Wait    float64 `json:"wait"`                       // Waiting for a response from the server.
-	Receive float64 `json:"receive"`                    // Time required to read entire response from the server (or cache).
-	Ssl     float64 `json:"ssl,omitempty,omitzero"`     // Time required for SSL/TLS negotiation. If this field is defined then the time is also included in the connect field (to ensure backward compatibility with HAR 1.1). Use -1 if the timing does not apply to the current request.
-	Comment string  `json:"comment,omitempty,omitzero"` // A comment provided by the user or the application.
+	Blocked *float64 `json:"blocked,omitempty,omitzero"` // Time spent in a queue waiting for a network connection. Use -1 if the timing does not apply to the current request.
+	DNS     *float64 `json:"dns,omitempty,omitzero"`     // DNS resolution time. The time required to resolve a host name. Use -1 if the timing does not apply to the current request.
+	Connect *float64 `json:"connect,omitempty,omitzero"` // Time required to create TCP connection. Use -1 if the timing does not apply to the current request.
+	Send    float64  `json:"send"`                       // Time required to send HTTP request to the server.
+	Wait    float64  `json:"wait"`                       // Waiting for a response from the server.
+	Receive float64  `json:"receive"`                    // Time required to read entire response from the server (or cache).
+	Ssl     *float64 `json:"ssl,omitempty,omitzero"`     // Time required for SSL/TLS negotiation. If this field is defined then the time is also included in the connect field (to ensure backward compatibility with HAR 1.1). Use -1 if the timing does not apply to the current request.
+	Comment string   `json:"comment,omitempty,omitzero"` // A comment provided by the user or the application.
 }

@@ -608,6 +608,22 @@ type CookiePartitionKey struct {
 	HasCrossSiteAncestor bool   `json:"hasCrossSiteAncestor"` // Indicates if the cookie has any ancestors that are cross-site to the topLevelSite.
 }
 
+// UnmarshalJSON decodes the partition key from an object, or from the plain
+// string that older versions of the browser send. The string is the top level
+// site. The type always encodes as an object.
+func (t *CookiePartitionKey) UnmarshalJSON(buf []byte) error {
+	if jsontext.Value(buf).Kind() == '"' {
+		var site string
+		if err := jsonv2.Unmarshal(buf, &site); err != nil {
+			return err
+		}
+		*t = CookiePartitionKey{TopLevelSite: site}
+		return nil
+	}
+	type plain CookiePartitionKey
+	return jsonv2.Unmarshal(buf, (*plain)(t))
+}
+
 // Cookie cookie object.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-Cookie

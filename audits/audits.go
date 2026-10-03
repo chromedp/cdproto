@@ -19,7 +19,7 @@ import (
 type GetEncodedResponseParams struct {
 	RequestID network.RequestID          `json:"requestId"`                   // Identifier of the network request to get content for.
 	Encoding  GetEncodedResponseEncoding `json:"encoding"`                    // The encoding to use.
-	Quality   float64                    `json:"quality,omitempty,omitzero"`  // The quality of the encoding (0-1). (defaults to 1)
+	Quality   *float64                   `json:"quality,omitempty,omitzero"`  // The quality of the encoding (0-1). (defaults to 1)
 	SizeOnly  *bool                      `json:"sizeOnly,omitempty,omitzero"` // Whether to only return the size information (defaults to false).
 }
 

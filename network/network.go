@@ -90,11 +90,11 @@ var OverrideNetworkState = cdp.Command[OverrideNetworkStateParams, cdp.Empty]{Me
 
 // EnableParams are the parameters of the command Network.enable.
 type EnableParams struct {
-	MaxTotalBufferSize        int64 `json:"maxTotalBufferSize,omitempty,omitzero"`        // Buffer size in bytes to use when preserving network payloads (XHRs, etc). This is the maximum number of bytes that will be collected by this DevTools session.
-	MaxResourceBufferSize     int64 `json:"maxResourceBufferSize,omitempty,omitzero"`     // Per-resource buffer size in bytes to use when preserving network payloads (XHRs, etc).
-	MaxPostDataSize           int64 `json:"maxPostDataSize,omitempty,omitzero"`           // Longest post body size (in bytes) that would be included in requestWillBeSent notification
-	ReportDirectSocketTraffic *bool `json:"reportDirectSocketTraffic,omitempty,omitzero"` // Whether DirectSocket chunk send/receive events should be reported.
-	EnableDurableMessages     *bool `json:"enableDurableMessages,omitempty,omitzero"`     // Enable storing response bodies outside of renderer, so that these survive a cross-process navigation. Requires maxTotalBufferSize to be set. Currently defaults to false. This field is being deprecated in favor of the dedicated configureDurableMessages command, due to the possibility of deadlocks when awaiting Network.enable before issuing Runtime.runIfWaitingForDebugger.
+	MaxTotalBufferSize        *int64 `json:"maxTotalBufferSize,omitempty,omitzero"`        // Buffer size in bytes to use when preserving network payloads (XHRs, etc). This is the maximum number of bytes that will be collected by this DevTools session.
+	MaxResourceBufferSize     *int64 `json:"maxResourceBufferSize,omitempty,omitzero"`     // Per-resource buffer size in bytes to use when preserving network payloads (XHRs, etc).
+	MaxPostDataSize           *int64 `json:"maxPostDataSize,omitempty,omitzero"`           // Longest post body size (in bytes) that would be included in requestWillBeSent notification
+	ReportDirectSocketTraffic *bool  `json:"reportDirectSocketTraffic,omitempty,omitzero"` // Whether DirectSocket chunk send/receive events should be reported.
+	EnableDurableMessages     *bool  `json:"enableDurableMessages,omitempty,omitzero"`     // Enable storing response bodies outside of renderer, so that these survive a cross-process navigation. Requires maxTotalBufferSize to be set. Currently defaults to false. This field is being deprecated in favor of the dedicated configureDurableMessages command, due to the possibility of deadlocks when awaiting Network.enable before issuing Runtime.runIfWaitingForDebugger.
 }
 
 // Enable enables network tracking, network events will now be delivered to
@@ -106,8 +106,8 @@ var Enable = cdp.Command[EnableParams, cdp.Empty]{Method: CommandEnable}
 // ConfigureDurableMessagesParams are the parameters of the command
 // Network.configureDurableMessages.
 type ConfigureDurableMessagesParams struct {
-	MaxTotalBufferSize    int64 `json:"maxTotalBufferSize,omitempty,omitzero"`    // Buffer size in bytes to use when preserving network payloads (XHRs, etc).
-	MaxResourceBufferSize int64 `json:"maxResourceBufferSize,omitempty,omitzero"` // Per-resource buffer size in bytes to use when preserving network payloads (XHRs, etc).
+	MaxTotalBufferSize    *int64 `json:"maxTotalBufferSize,omitempty,omitzero"`    // Buffer size in bytes to use when preserving network payloads (XHRs, etc).
+	MaxResourceBufferSize *int64 `json:"maxResourceBufferSize,omitempty,omitzero"` // Per-resource buffer size in bytes to use when preserving network payloads (XHRs, etc).
 }
 
 // ConfigureDurableMessages configures storing response bodies outside of

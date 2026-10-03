@@ -111,8 +111,8 @@ var GetUsageAndQuota = cdp.Command[GetUsageAndQuotaParams, GetUsageAndQuotaResul
 // OverrideQuotaForOriginParams are the parameters of the command
 // Storage.overrideQuotaForOrigin.
 type OverrideQuotaForOriginParams struct {
-	Origin    string  `json:"origin"`                       // Security origin.
-	QuotaSize float64 `json:"quotaSize,omitempty,omitzero"` // The quota size (in bytes) to override the original quota with. If this is called multiple times, the overridden quota will be equal to the quotaSize provided in the final call. If this is called without specifying a quotaSize, the quota will be reset to the default value for the specified origin. If this is called multiple times with different origins, the override will be maintained for each origin until it is disabled (called without a quotaSize).
+	Origin    string   `json:"origin"`                       // Security origin.
+	QuotaSize *float64 `json:"quotaSize,omitempty,omitzero"` // The quota size (in bytes) to override the original quota with. If this is called multiple times, the overridden quota will be equal to the quotaSize provided in the final call. If this is called without specifying a quotaSize, the quota will be reset to the default value for the specified origin. If this is called multiple times with different origins, the override will be maintained for each origin until it is disabled (called without a quotaSize).
 }
 
 // OverrideQuotaForOrigin override quota for the specified origin.

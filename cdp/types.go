@@ -15,9 +15,6 @@ type Error string
 
 // Error values.
 const (
-	// ErrInvalidContext is the invalid context error.
-	ErrInvalidContext Error = "invalid context"
-
 	// ErrMsgMissingParamsOrResult is the error for a message that has neither
 	// params nor a result.
 	ErrMsgMissingParamsOrResult Error = "msg missing params or result"

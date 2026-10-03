@@ -47,7 +47,7 @@ var GetPartialAXTree = cdp.Command[GetPartialAXTreeParams, GetPartialAXTreeResul
 // GetFullAXTreeParams are the parameters of the command
 // Accessibility.getFullAXTree.
 type GetFullAXTreeParams struct {
-	Depth   int64       `json:"depth,omitempty,omitzero"`   // The maximum depth at which descendants of the root node should be retrieved. If omitted, the full tree is returned.
+	Depth   *int64      `json:"depth,omitempty,omitzero"`   // The maximum depth at which descendants of the root node should be retrieved. If omitted, the full tree is returned.
 	FrameID cdp.FrameID `json:"frameId,omitempty,omitzero"` // The frame for whose document the AX tree should be retrieved. If omitted, the root frame is used.
 }
 

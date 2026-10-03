@@ -334,7 +334,7 @@ type SetBreakpointByURLParams struct {
 	URL          string `json:"url,omitempty,omitzero"`          // URL of the resources to set breakpoint on.
 	URLRegex     string `json:"urlRegex,omitempty,omitzero"`     // Regex pattern for the URLs of the resources to set breakpoints on. Either url or urlRegex must be specified.
 	ScriptHash   string `json:"scriptHash,omitempty,omitzero"`   // Script hash of the resources to set breakpoint on.
-	ColumnNumber int64  `json:"columnNumber,omitempty,omitzero"` // Offset in the line to set breakpoint at.
+	ColumnNumber *int64 `json:"columnNumber,omitempty,omitzero"` // Offset in the line to set breakpoint at.
 	Condition    string `json:"condition,omitempty,omitzero"`    // Expression to use as a breakpoint condition. When specified, debugger will only stop on the breakpoint if this expression evaluates to true.
 }
 

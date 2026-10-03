@@ -39,11 +39,11 @@ type ObjectStoreIndex struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/IndexedDB#type-Key
 type Key struct {
-	Type   KeyType `json:"type"`                      // Key type.
-	Number float64 `json:"number,omitempty,omitzero"` // Number value.
-	String string  `json:"string,omitempty,omitzero"` // String value.
-	Date   float64 `json:"date,omitempty,omitzero"`   // Date value.
-	Array  []*Key  `json:"array,omitempty,omitzero"`  // Array value.
+	Type   KeyType  `json:"type"`                      // Key type.
+	Number *float64 `json:"number,omitempty,omitzero"` // Number value.
+	String string   `json:"string,omitempty,omitzero"` // String value.
+	Date   *float64 `json:"date,omitempty,omitzero"`   // Date value.
+	Array  []*Key   `json:"array,omitempty,omitzero"`  // Array value.
 }
 
 // KeyRange key range.

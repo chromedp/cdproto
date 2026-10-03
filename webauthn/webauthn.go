@@ -176,9 +176,9 @@ type SetCredentialPropertiesParams struct {
 	CredentialID                   []byte          `json:"credentialId"`
 	BackupEligibility              *bool           `json:"backupEligibility,omitempty,omitzero"`
 	BackupState                    *bool           `json:"backupState,omitempty,omitzero"`
-	ActiveCmtgKeyIndex             int64           `json:"activeCmtgKeyIndex,omitempty,omitzero"`
+	ActiveCmtgKeyIndex             *int64          `json:"activeCmtgKeyIndex,omitempty,omitzero"`
 	GenerateCmtgKeyOnNextOperation *bool           `json:"generateCmtgKeyOnNextOperation,omitempty,omitzero"`
-	SignCount                      float64         `json:"signCount,omitempty,omitzero"` // Must be equal to or greater than -1. If -1, the signature counter is removed from the credential, and every assertion operation will report a value of 0. See https://w3c.github.io/webauthn/#signature-counter
+	SignCount                      *float64        `json:"signCount,omitempty,omitzero"` // Must be equal to or greater than -1. If -1, the signature counter is removed from the credential, and every assertion operation will report a value of 0. See https://w3c.github.io/webauthn/#signature-counter
 }
 
 // SetCredentialProperties allows setting credential properties.

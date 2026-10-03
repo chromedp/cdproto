@@ -19,7 +19,7 @@ import (
 // DOMDebugger.getEventListeners.
 type GetEventListenersParams struct {
 	ObjectID runtime.RemoteObjectID `json:"objectId"`                  // Identifier of the object to return listeners for.
-	Depth    int64                  `json:"depth,omitempty,omitzero"`  // The maximum depth at which Node children should be retrieved, defaults to 1. Use -1 for the entire subtree or provide an integer larger than 0.
+	Depth    *int64                 `json:"depth,omitempty,omitzero"`  // The maximum depth at which Node children should be retrieved, defaults to 1. Use -1 for the entire subtree or provide an integer larger than 0.
 	Pierce   *bool                  `json:"pierce,omitempty,omitzero"` // Whether or not iframes and shadow roots should be traversed when returning the subtree (default is false). Reports listeners for all contexts if pierce is enabled.
 }
 

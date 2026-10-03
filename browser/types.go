@@ -34,8 +34,8 @@ const (
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Browser#type-Bounds
 type Bounds struct {
-	Left        int64       `json:"left,omitempty,omitzero"`        // The offset from the left edge of the screen to the window in pixels.
-	Top         int64       `json:"top,omitempty,omitzero"`         // The offset from the top edge of the screen to the window in pixels.
+	Left        *int64      `json:"left,omitempty,omitzero"`        // The offset from the left edge of the screen to the window in pixels.
+	Top         *int64      `json:"top,omitempty,omitzero"`         // The offset from the top edge of the screen to the window in pixels.
 	Width       int64       `json:"width,omitempty,omitzero"`       // The window width in pixels.
 	Height      int64       `json:"height,omitempty,omitzero"`      // The window height in pixels.
 	WindowState WindowState `json:"windowState,omitempty,omitzero"` // The window state. Default to normal.

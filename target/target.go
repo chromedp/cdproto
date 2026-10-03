@@ -118,8 +118,8 @@ var GetBrowserContexts = cdp.Command[cdp.Empty, GetBrowserContextsResult]{Method
 // CreateTargetParams are the parameters of the command Target.createTarget.
 type CreateTargetParams struct {
 	URL                     string               `json:"url"`                                        // The initial URL the page will be navigated to. An empty string indicates about:blank.
-	Left                    int64                `json:"left,omitempty,omitzero"`                    // Frame left origin in DIP (requires newWindow to be true or headless shell).
-	Top                     int64                `json:"top,omitempty,omitzero"`                     // Frame top origin in DIP (requires newWindow to be true or headless shell).
+	Left                    *int64               `json:"left,omitempty,omitzero"`                    // Frame left origin in DIP (requires newWindow to be true or headless shell).
+	Top                     *int64               `json:"top,omitempty,omitzero"`                     // Frame top origin in DIP (requires newWindow to be true or headless shell).
 	Width                   int64                `json:"width,omitempty,omitzero"`                   // Frame width in DIP (requires newWindow to be true or headless shell).
 	Height                  int64                `json:"height,omitempty,omitzero"`                  // Frame height in DIP (requires newWindow to be true or headless shell).
 	WindowState             WindowState          `json:"windowState,omitempty,omitzero"`             // Frame window state (requires newWindow to be true or headless shell). Default is normal.

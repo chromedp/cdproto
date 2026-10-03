@@ -30,7 +30,7 @@ var Close = cdp.Command[CloseParams, cdp.Empty]{Method: CommandClose}
 // ReadParams are the parameters of the command IO.read.
 type ReadParams struct {
 	Handle StreamHandle `json:"handle"`                    // Handle of the stream to read.
-	Offset int64        `json:"offset,omitempty,omitzero"` // Seek to the specified offset before reading (if not specified, proceed with offset following the last read). Some types of streams may only support sequential reads.
+	Offset *int64       `json:"offset,omitempty,omitzero"` // Seek to the specified offset before reading (if not specified, proceed with offset following the last read). Some types of streams may only support sequential reads.
 	Size   int64        `json:"size,omitempty,omitzero"`   // Maximum number of bytes to read (left upon the agent discretion if not specified).
 }
 

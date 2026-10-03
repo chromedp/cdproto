@@ -82,7 +82,7 @@ var ResolveAnimation = cdp.Command[ResolveAnimationParams, ResolveAnimationResul
 // Animation.seekAnimations.
 type SeekAnimationsParams struct {
 	Animations   []string  `json:"animations"`                      // List of animation ids to seek.
-	CurrentTime  float64   `json:"currentTime,omitempty,omitzero"`  // Set each animation to the same time.
+	CurrentTime  *float64  `json:"currentTime,omitempty,omitzero"`  // Set each animation to the same time.
 	CurrentTimes []float64 `json:"currentTimes,omitempty,omitzero"` // Set each animation to a different time. If set, should have the same length as animations. Exactly one of currentTime or currentTimes should be set.
 }
 
