@@ -5,6 +5,12 @@ definitions listed below. The minor version is the Chromium major version. As
 the protocol definitions deprecate and remove commands, events, types, and
 fields, any release can contain incompatible changes to the generated API.
 
+## v0.157.5 - 2026-10-04
+
+- Chromium: 157.0.8085.2 (was 157.0.8085.1)
+- V8: 15.7.33
+- API changes since v0.157.4: 0 incompatible, 0 compatible
+
 ## v0.157.4 - 2026-10-03
 
 - Chromium: 157.0.8085.1
