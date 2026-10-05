@@ -44,8 +44,8 @@ The function `cdp.Events` returns an iterator for it.
 res, err := cdp.Call(ctx, session, page.Navigate, page.NavigateParams{URL: "https://example.com"})
 ```
 
-See the [Go Reference][goref-cdproto] for the API, and `docs/API.md` in the
-[`pdlgen`][pdlgen] project for the rules that the generator follows.
+See the [Go Reference][goref-cdproto] for the API, and
+[`docs/API.md`][pdlgen-api] in the [`pdlgen`][pdlgen] project for the rules that the generator follows.
 
 ## Versions
 
@@ -55,6 +55,11 @@ changes, because the protocol removes and renames things. `CHANGELOG.md` and the
 annotation of each tag list the changes. The releases up to `v0.157.2` have the
 old API, which had a `Do` method on each command. The release `v0.157.3` is the
 first one with the typed API.
+
+A new Chromium or V8 version alone makes no release. If the generated API is
+the same, the workflow makes no commit and no tag. For this reason,
+`cdproto.ChromiumVersion()` can name an older Chromium build than the newest
+one.
 
 ## Contributing
 
@@ -69,6 +74,7 @@ Requests submitted to this project will be closed without being reviewed.
 [goref-cdproto]: https://pkg.go.dev/github.com/chromedp/cdproto
 [goref-cdproto-status]: https://pkg.go.dev/badge/github.com/chromedp/cdproto.svg
 [pdlgen]: https://github.com/chromedp/pdlgen
+[pdlgen-api]: https://github.com/chromedp/pdlgen/blob/main/docs/API.md
 [release-status]: https://img.shields.io/github/v/tag/chromedp/cdproto?sort=semver&label=release (Latest Tag)
 [releases]: https://github.com/chromedp/cdproto/tags (Tags)
 [discord]: https://discord.gg/WDWAgXwJqN "Discord Discussion"
