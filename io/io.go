@@ -10,10 +10,10 @@ package io
 
 import (
 	"encoding/base64"
-	jsonv2 "encoding/json/v2"
 	"fmt"
 
 	"github.com/chromedp/cdproto/cdp"
+	jsonv2 "github.com/chromedp/cdproto/cdp/jsonv2"
 	"github.com/chromedp/cdproto/runtime"
 )
 

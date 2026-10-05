@@ -3,9 +3,8 @@
 package media
 
 import (
-	"encoding/json/jsontext"
-
 	"github.com/chromedp/cdproto/cdp"
+	jsonv2 "github.com/chromedp/cdproto/cdp/jsonv2"
 )
 
 // PlayerID players will get an ID that is unique within the agent context.
@@ -71,7 +70,7 @@ type PlayerError struct {
 	Code      int64                        `json:"code"`  // Code is the numeric enum entry for a specific set of error codes, such as PipelineStatusCodes in media/base/pipeline_status.h
 	Stack     []*PlayerErrorSourceLocation `json:"stack"` // A trace of where this error was caused / where it passed through.
 	Cause     []*PlayerError               `json:"cause"` // Errors potentially have a root cause error, ie, a DecoderError might be caused by an WindowsError
-	Data      jsontext.Value               `json:"data"`
+	Data      jsonv2.Value                 `json:"data"`
 }
 
 // Player [no description].

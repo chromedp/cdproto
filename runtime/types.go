@@ -3,9 +3,8 @@
 package runtime
 
 import (
-	"encoding/json/jsontext"
-
 	"github.com/chromedp/cdproto/cdp"
+	jsonv2 "github.com/chromedp/cdproto/cdp/jsonv2"
 )
 
 // SerializationOptions represents options for serialization. Overrides
@@ -15,7 +14,7 @@ import (
 type SerializationOptions struct {
 	Serialization        SerializationOptionsSerialization `json:"serialization"`
 	MaxDepth             *int64                            `json:"maxDepth,omitempty,omitzero"` // Deep serialization depth. Default is full depth. Respected only in deep serialization mode.
-	AdditionalParameters jsontext.Value                    `json:"additionalParameters,omitempty,omitzero"`
+	AdditionalParameters jsonv2.Value                      `json:"additionalParameters,omitempty,omitzero"`
 }
 
 // DeepSerializedValue represents deep serialized value.
@@ -23,7 +22,7 @@ type SerializationOptions struct {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#type-DeepSerializedValue
 type DeepSerializedValue struct {
 	Type                     DeepSerializedValueType `json:"type"`
-	Value                    jsontext.Value          `json:"value,omitempty,omitzero"`
+	Value                    jsonv2.Value            `json:"value,omitempty,omitzero"`
 	ObjectID                 string                  `json:"objectId,omitempty,omitzero"`
 	WeakLocalObjectReference int64                   `json:"weakLocalObjectReference,omitempty,omitzero"` // Set if value reference met more then once during serialization. In such case, value is provided only to one of the serialized values. Unique per value in the scope of one CDP call.
 }
@@ -56,7 +55,7 @@ type RemoteObject struct {
 	Type                RemoteObjectType     `json:"type"`                                   // Object type.
 	Subtype             RemoteObjectSubtype  `json:"subtype,omitempty,omitzero"`             // Object subtype hint. Specified for object type values only. NOTE: If you change anything here, make sure to also update subtype in ObjectPreview and PropertyPreview below.
 	ClassName           string               `json:"className,omitempty,omitzero"`           // Object class (constructor) name. Specified for object type values only.
-	Value               jsontext.Value       `json:"value,omitempty,omitzero"`               // Remote object value in case of primitive values or JSON values (if it was requested).
+	Value               jsonv2.Value         `json:"value,omitempty,omitzero"`               // Remote object value in case of primitive values or JSON values (if it was requested).
 	UnserializableValue UnserializableValue  `json:"unserializableValue,omitempty,omitzero"` // Primitive value which can not be JSON-stringified does not have value, but gets this property.
 	Description         string               `json:"description,omitempty,omitzero"`         // String representation of the object.
 	DeepSerializedValue *DeepSerializedValue `json:"deepSerializedValue,omitempty,omitzero"` // Deep serialized value.
@@ -145,7 +144,7 @@ type PrivatePropertyDescriptor struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#type-CallArgument
 type CallArgument struct {
-	Value               jsontext.Value      `json:"value,omitempty,omitzero"`               // Primitive value or serializable javascript object.
+	Value               jsonv2.Value        `json:"value,omitempty,omitzero"`               // Primitive value or serializable javascript object.
 	UnserializableValue UnserializableValue `json:"unserializableValue,omitempty,omitzero"` // Primitive value which can not be JSON-stringified.
 	ObjectID            RemoteObjectID      `json:"objectId,omitempty,omitzero"`            // Remote object handle.
 }
@@ -168,7 +167,7 @@ type ExecutionContextDescription struct {
 	Origin   string             `json:"origin"`   // Execution context origin.
 	Name     string             `json:"name"`     // Human readable name describing given context.
 	UniqueID string             `json:"uniqueId"` // A system-unique execution context identifier. Unlike the id, this is unique across multiple processes, so can be reliably used to identify specific context while backend performs a cross-process navigation.
-	AuxData  jsontext.Value     `json:"auxData,omitempty,omitzero"`
+	AuxData  jsonv2.Value       `json:"auxData,omitempty,omitzero"`
 }
 
 // ExceptionDetails detailed information about exception (or error) that was
@@ -185,7 +184,7 @@ type ExceptionDetails struct {
 	StackTrace         *StackTrace        `json:"stackTrace,omitempty,omitzero"`         // JavaScript stack trace if available.
 	Exception          *RemoteObject      `json:"exception,omitempty,omitzero"`          // Exception object if available.
 	ExecutionContextID ExecutionContextID `json:"executionContextId,omitempty,omitzero"` // Identifier of the context where exception happened.
-	ExceptionMetaData  jsontext.Value     `json:"exceptionMetaData,omitempty,omitzero"`
+	ExceptionMetaData  jsonv2.Value       `json:"exceptionMetaData,omitempty,omitzero"`
 }
 
 // Timestamp number of milliseconds since epoch.

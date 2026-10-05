@@ -9,9 +9,8 @@
 package extensions
 
 import (
-	"encoding/json/jsontext"
-
 	"github.com/chromedp/cdproto/cdp"
+	jsonv2 "github.com/chromedp/cdproto/cdp/jsonv2"
 )
 
 // TriggerActionParams are the parameters of the command
@@ -77,7 +76,7 @@ type GetStorageItemsParams struct {
 // GetStorageItemsResult is the result of the command
 // Extensions.getStorageItems.
 type GetStorageItemsResult struct {
-	Data jsontext.Value `json:"data,omitempty,omitzero"`
+	Data jsonv2.Value `json:"data,omitempty,omitzero"`
 }
 
 // GetStorageItems gets data from extension storage in the given storageArea.
@@ -115,9 +114,9 @@ var ClearStorageItems = cdp.Command[ClearStorageItemsParams, cdp.Empty]{Method: 
 // SetStorageItemsParams are the parameters of the command
 // Extensions.setStorageItems.
 type SetStorageItemsParams struct {
-	ID          string         `json:"id"`          // ID of extension.
-	StorageArea StorageArea    `json:"storageArea"` // StorageArea to set data in.
-	Values      jsontext.Value `json:"values"`
+	ID          string       `json:"id"`          // ID of extension.
+	StorageArea StorageArea  `json:"storageArea"` // StorageArea to set data in.
+	Values      jsonv2.Value `json:"values"`
 }
 
 // SetStorageItems sets values in extension storage in the given storageArea.

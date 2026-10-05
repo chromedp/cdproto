@@ -4,10 +4,10 @@ package cdp
 
 import (
 	"context"
-	"encoding/json/jsontext"
-	jsonv2 "encoding/json/v2"
 	"fmt"
 	"iter"
+
+	jsonv2 "github.com/chromedp/cdproto/cdp/jsonv2"
 )
 
 // Error is the type of the constant errors of this package.
@@ -62,7 +62,7 @@ type Session interface {
 	// channel that they arrive on and a func that stops the subscription. A
 	// subscription starts when Subscribe returns, so no event that follows is
 	// lost.
-	Subscribe(method string) (events <-chan jsontext.Value, cancel func())
+	Subscribe(method string) (events <-chan jsonv2.Value, cancel func())
 }
 
 // Call runs the command on the session, and returns its result.

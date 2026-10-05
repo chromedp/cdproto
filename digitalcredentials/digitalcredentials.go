@@ -10,9 +10,8 @@
 package digitalcredentials
 
 import (
-	"encoding/json/jsontext"
-
 	"github.com/chromedp/cdproto/cdp"
+	jsonv2 "github.com/chromedp/cdproto/cdp/jsonv2"
 )
 
 // SetVirtualWalletBehaviorParams are the parameters of the command
@@ -20,7 +19,7 @@ import (
 type SetVirtualWalletBehaviorParams struct {
 	Action   VirtualWalletAction `json:"action"`                      // The action of the virtual wallet.
 	Protocol string              `json:"protocol,omitempty,omitzero"` // The protocol identifier (e.g. "openid4vp"). Required when |action| is "respond", forbidden otherwise.
-	Response jsontext.Value      `json:"response,omitempty,omitzero"`
+	Response jsonv2.Value        `json:"response,omitempty,omitzero"`
 	FrameID  cdp.FrameID         `json:"frameId,omitempty,omitzero"` // The frame to scope the virtual wallet behavior to.
 }
 

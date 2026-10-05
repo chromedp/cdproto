@@ -5,6 +5,12 @@ definitions listed below. The minor version is the Chromium major version. As
 the protocol definitions deprecate and remove commands, events, types, and
 fields, any release can contain incompatible changes to the generated API.
 
+Since 2026-10-06 the package builds with Go 1.25 and later. The package
+`cdp/jsonv2` defines the JSON types and funcs that the generated code uses, such
+as `jsonv2.Value` and `jsonv2.Unmarshal`. They are aliases of the standard types with Go
+1.27 or `GOEXPERIMENT=jsonv2`. Otherwise they come from the module
+`github.com/go-json-experiment/json`.
+
 ## v0.157.7 - 2026-10-05
 
 - Chromium: 157.0.8086.1 (was 157.0.8085.3)

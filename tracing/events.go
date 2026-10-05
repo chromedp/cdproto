@@ -3,8 +3,7 @@
 package tracing
 
 import (
-	"encoding/json/jsontext"
-
+	jsonv2 "github.com/chromedp/cdproto/cdp/jsonv2"
 	"github.com/chromedp/cdproto/io"
 )
 
@@ -23,7 +22,7 @@ type EventBufferUsage struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Tracing#event-dataCollected
 type EventDataCollected struct {
-	Value []jsontext.Value `json:"value"`
+	Value []jsonv2.Value `json:"value"`
 }
 
 // EventTracingComplete signals that tracing is stopped and there is no trace

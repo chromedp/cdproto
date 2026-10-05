@@ -7,9 +7,8 @@
 package webmcp
 
 import (
-	"encoding/json/jsontext"
-
 	"github.com/chromedp/cdproto/cdp"
+	jsonv2 "github.com/chromedp/cdproto/cdp/jsonv2"
 )
 
 // Enable enables the WebMCP domain, allowing events to be sent. Enabling the
@@ -25,9 +24,9 @@ var Disable = cdp.Command[cdp.Empty, cdp.Empty]{Method: CommandDisable}
 
 // InvokeToolParams are the parameters of the command WebMCP.invokeTool.
 type InvokeToolParams struct {
-	FrameID  cdp.FrameID    `json:"frameId"`  // Frame in which to invoke the tool.
-	ToolName string         `json:"toolName"` // Name of the tool to invoke.
-	Input    jsontext.Value `json:"input"`
+	FrameID  cdp.FrameID  `json:"frameId"`  // Frame in which to invoke the tool.
+	ToolName string       `json:"toolName"` // Name of the tool to invoke.
+	Input    jsonv2.Value `json:"input"`
 }
 
 // InvokeToolResult is the result of the command WebMCP.invokeTool.

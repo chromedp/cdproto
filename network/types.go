@@ -4,11 +4,10 @@ package network
 
 import (
 	"encoding/base64"
-	"encoding/json/jsontext"
-	jsonv2 "encoding/json/v2"
 	"fmt"
 
 	"github.com/chromedp/cdproto/cdp"
+	jsonv2 "github.com/chromedp/cdproto/cdp/jsonv2"
 	"github.com/chromedp/cdproto/io"
 	"github.com/chromedp/cdproto/runtime"
 	"github.com/chromedp/cdproto/security"
@@ -612,7 +611,7 @@ type CookiePartitionKey struct {
 // string that older versions of the browser send. The string is the top level
 // site. The type always encodes as an object.
 func (t *CookiePartitionKey) UnmarshalJSON(buf []byte) error {
-	if jsontext.Value(buf).Kind() == '"' {
+	if jsonv2.Value(buf).Kind() == '"' {
 		var site string
 		if err := jsonv2.Unmarshal(buf, &site); err != nil {
 			return err
@@ -1131,7 +1130,7 @@ type ReportingAPIReport struct {
 	Timestamp         cdp.TimeSinceEpoch `json:"timestamp"`         // When the report was generated.
 	Depth             int64              `json:"depth"`             // How many uploads deep the related request was.
 	CompletedAttempts int64              `json:"completedAttempts"` // The number of delivery attempts made so far, not including an active attempt.
-	Body              jsontext.Value     `json:"body"`
+	Body              jsonv2.Value       `json:"body"`
 	Status            ReportStatus       `json:"status"`
 }
 

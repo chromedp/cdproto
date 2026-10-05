@@ -10,9 +10,8 @@
 package overlay
 
 import (
-	"encoding/json/jsontext"
-
 	"github.com/chromedp/cdproto/cdp"
+	jsonv2 "github.com/chromedp/cdproto/cdp/jsonv2"
 	"github.com/chromedp/cdproto/dom"
 	"github.com/chromedp/cdproto/runtime"
 )
@@ -40,7 +39,7 @@ type GetHighlightObjectForTestParams struct {
 // GetHighlightObjectForTestResult is the result of the command
 // Overlay.getHighlightObjectForTest.
 type GetHighlightObjectForTestResult struct {
-	Highlight jsontext.Value `json:"highlight,omitempty,omitzero"`
+	Highlight jsonv2.Value `json:"highlight,omitempty,omitzero"`
 }
 
 // GetHighlightObjectForTest for testing.
@@ -57,7 +56,7 @@ type GetGridHighlightObjectsForTestParams struct {
 // GetGridHighlightObjectsForTestResult is the result of the command
 // Overlay.getGridHighlightObjectsForTest.
 type GetGridHighlightObjectsForTestResult struct {
-	Highlights jsontext.Value `json:"highlights,omitempty,omitzero"`
+	Highlights jsonv2.Value `json:"highlights,omitempty,omitzero"`
 }
 
 // GetGridHighlightObjectsForTest for Persistent Grid testing.
@@ -74,7 +73,7 @@ type GetSourceOrderHighlightObjectForTestParams struct {
 // GetSourceOrderHighlightObjectForTestResult is the result of the command
 // Overlay.getSourceOrderHighlightObjectForTest.
 type GetSourceOrderHighlightObjectForTestResult struct {
-	Highlight jsontext.Value `json:"highlight,omitempty,omitzero"`
+	Highlight jsonv2.Value `json:"highlight,omitempty,omitzero"`
 }
 
 // GetSourceOrderHighlightObjectForTest for Source Order Viewer testing.

@@ -2,18 +2,66 @@ on: [push, pull_request]
 name: Build
 jobs:
   test:
+    name: Test (Go ${{ matrix.go-version }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        go-version: ['1.25', '1.26', 'stable']
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v7
+        with:
+          go-version: ${{ matrix.go-version }}
+      - name: Checkout code
+        uses: actions/checkout@v7
+      - name: Build
+        run: go build ./...
+      - name: Vet
+        run: go vet ./...
+      - name: Test
+        run: go test ./...
+      - name: Test the JSON layer
+        run: go test -count=1 ./cdp/jsonv2/
+  jsonv2:
+    name: Test (Go 1.25, GOEXPERIMENT=jsonv2)
+    runs-on: ubuntu-latest
+    env:
+      GOEXPERIMENT: jsonv2
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v7
+        with:
+          go-version: '1.25'
+      - name: Checkout code
+        uses: actions/checkout@v7
+      - name: Build
+        run: go build ./...
+      - name: Vet
+        run: go vet ./...
+      - name: Test
+        run: go test ./...
+      - name: Test the JSON layer
+        run: go test -count=1 ./cdp/jsonv2/
+  jsoncompat:
+    name: Test (stable, tag cdproto_jsoncompat)
+    runs-on: ubuntu-latest
+    env:
+      # Go 1.27 turns the jsonv2 experiment on, and the pinned module does not
+      # build with it.
+      GOEXPERIMENT: nojsonv2
     steps:
       - name: Install Go
         uses: actions/setup-go@v7
         with:
           go-version: stable
-      - name: Install Packages
-        run: |
-          sudo apt-get -qq update
-          sudo apt-get install -y build-essential
       - name: Checkout code
         uses: actions/checkout@v7
       - name: Build
-        run: |
-          go build ./...
+        run: go build -tags cdproto_jsoncompat ./...
+      - name: Vet
+        run: go vet -tags cdproto_jsoncompat ./...
+      - name: Test
+        run: go test -tags cdproto_jsoncompat ./...
+      - name: Test the JSON layer
+        run: go test -count=1 -tags cdproto_jsoncompat ./cdp/jsonv2/

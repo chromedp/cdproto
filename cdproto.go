@@ -9,8 +9,6 @@
 package cdproto
 
 import (
-	"encoding/json/jsontext"
-	jsonv2 "encoding/json/v2"
 	"fmt"
 	"strings"
 
@@ -25,6 +23,7 @@ import (
 	"github.com/chromedp/cdproto/cachestorage"
 	"github.com/chromedp/cdproto/cast"
 	"github.com/chromedp/cdproto/cdp"
+	jsonv2 "github.com/chromedp/cdproto/cdp/jsonv2"
 	"github.com/chromedp/cdproto/crashreportcontext"
 	"github.com/chromedp/cdproto/css"
 	"github.com/chromedp/cdproto/debugger"
@@ -960,8 +959,8 @@ type Message struct {
 	ID        int64            `json:"id,omitempty,omitzero"`        // Unique message identifier.
 	SessionID target.SessionID `json:"sessionId,omitempty,omitzero"` // Session that the message belongs to when using flat access.
 	Method    MethodType       `json:"method,omitempty,omitzero"`    // Event or command type.
-	Params    jsontext.Value   `json:"params,omitempty,omitzero"`    // Event or command parameters.
-	Result    jsontext.Value   `json:"result,omitempty,omitzero"`    // Command return values.
+	Params    jsonv2.Value     `json:"params,omitempty,omitzero"`    // Event or command parameters.
+	Result    jsonv2.Value     `json:"result,omitempty,omitzero"`    // Command return values.
 	Error     *Error           `json:"error,omitempty,omitzero"`     // Error message.
 }
 
@@ -2679,7 +2678,7 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		return nil, cdp.ErrUnknownCommandOrEvent(msg.Method)
 	}
 
-	var buf jsontext.Value
+	var buf jsonv2.Value
 	switch {
 	case msg.Params != nil:
 		buf = msg.Params

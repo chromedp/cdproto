@@ -4,8 +4,9 @@ package har
 
 import (
 	"encoding/base64"
-	jsonv2 "encoding/json/v2"
 	"fmt"
+
+	jsonv2 "github.com/chromedp/cdproto/cdp/jsonv2"
 )
 
 // Cache contains info about a request coming from browser cache.

@@ -16,9 +16,8 @@
 package css
 
 import (
-	"encoding/json/jsontext"
-
 	"github.com/chromedp/cdproto/cdp"
+	jsonv2 "github.com/chromedp/cdproto/cdp/jsonv2"
 )
 
 // AddRuleParams are the parameters of the command CSS.addRule.
@@ -284,7 +283,7 @@ var GetMatchedStylesForNode = cdp.Command[GetMatchedStylesForNodeParams, GetMatc
 // GetEnvironmentVariablesResult is the result of the command
 // CSS.getEnvironmentVariables.
 type GetEnvironmentVariablesResult struct {
-	EnvironmentVariables jsontext.Value `json:"environmentVariables,omitempty,omitzero"`
+	EnvironmentVariables jsonv2.Value `json:"environmentVariables,omitempty,omitzero"`
 }
 
 // GetEnvironmentVariables returns the values of the default UA-defined

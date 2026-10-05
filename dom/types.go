@@ -3,9 +3,8 @@
 package dom
 
 import (
-	"encoding/json/jsontext"
-
 	"github.com/chromedp/cdproto/cdp"
+	jsonv2 "github.com/chromedp/cdproto/cdp/jsonv2"
 )
 
 // PhysicalAxes containerSelector physical axes.
@@ -90,9 +89,9 @@ type BoxModel struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#type-ShapeOutsideInfo
 type ShapeOutsideInfo struct {
-	Bounds      Quad             `json:"bounds"`      // Shape bounds
-	Shape       []jsontext.Value `json:"shape"`       // Shape coordinate details
-	MarginShape []jsontext.Value `json:"marginShape"` // Margin shape bounds
+	Bounds      Quad           `json:"bounds"`      // Shape bounds
+	Shape       []jsonv2.Value `json:"shape"`       // Shape coordinate details
+	MarginShape []jsonv2.Value `json:"marginShape"` // Margin shape bounds
 }
 
 // Rect Rectangle.

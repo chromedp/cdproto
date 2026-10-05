@@ -16,8 +16,17 @@ using the commands, types, and events available here.
 go get github.com/chromedp/cdproto@latest
 ```
 
-The package needs Go 1.27 or later, because the generated code uses
-`encoding/json/v2` from the standard library.
+The package needs Go 1.25 or later. Go 1.27 has `encoding/json/v2` in the
+standard library, but Go 1.25 and Go 1.26 have it only with
+`GOEXPERIMENT=jsonv2`. To work without that setting, the package `cdp/jsonv2` is
+the only package that imports a JSON package. It has the names of the standard
+library, such as `jsonv2.Value`, `jsonv2.Options`, `jsonv2.Marshal` and
+`jsonv2.Unmarshal`. With Go 1.27, or with
+`GOEXPERIMENT=jsonv2`, they are aliases of the standard types. In all other
+cases they come from the module `github.com/go-json-experiment/json`. The build
+tag `cdproto_jsoncompat` selects the module on every version of Go. With Go 1.27,
+set `GOEXPERIMENT=nojsonv2` as well, because the pinned version of the module
+does not build with the standard package of Go 1.27.
 
 ## Using the API
 

@@ -7,9 +7,8 @@
 package layertree
 
 import (
-	"encoding/json/jsontext"
-
 	"github.com/chromedp/cdproto/cdp"
+	jsonv2 "github.com/chromedp/cdproto/cdp/jsonv2"
 	"github.com/chromedp/cdproto/dom"
 )
 
@@ -135,7 +134,7 @@ type SnapshotCommandLogParams struct {
 // SnapshotCommandLogResult is the result of the command
 // LayerTree.snapshotCommandLog.
 type SnapshotCommandLogResult struct {
-	CommandLog []jsontext.Value `json:"commandLog,omitempty,omitzero"` // The array of canvas function calls.
+	CommandLog []jsonv2.Value `json:"commandLog,omitempty,omitzero"` // The array of canvas function calls.
 }
 
 // SnapshotCommandLog replays the layer snapshot and returns canvas log.

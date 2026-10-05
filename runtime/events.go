@@ -3,7 +3,7 @@
 package runtime
 
 import (
-	"encoding/json/jsontext"
+	jsonv2 "github.com/chromedp/cdproto/cdp/jsonv2"
 )
 
 // EventBindingCalled notification is issued every time when binding is
@@ -70,6 +70,6 @@ type EventExecutionContextsCleared struct{}
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Runtime#event-inspectRequested
 type EventInspectRequested struct {
 	Object             *RemoteObject      `json:"object"`
-	Hints              jsontext.Value     `json:"hints"`
+	Hints              jsonv2.Value       `json:"hints"`
 	ExecutionContextID ExecutionContextID `json:"executionContextId,omitempty,omitzero"` // Identifier of the context where the call was made.
 }

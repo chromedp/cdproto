@@ -3,9 +3,8 @@
 package webmcp
 
 import (
-	"encoding/json/jsontext"
-
 	"github.com/chromedp/cdproto/cdp"
+	jsonv2 "github.com/chromedp/cdproto/cdp/jsonv2"
 	"github.com/chromedp/cdproto/runtime"
 )
 
@@ -43,7 +42,7 @@ const (
 type Tool struct {
 	Name          string              `json:"name"`        // Tool name.
 	Description   string              `json:"description"` // Tool description.
-	InputSchema   jsontext.Value      `json:"inputSchema,omitempty,omitzero"`
+	InputSchema   jsonv2.Value        `json:"inputSchema,omitempty,omitzero"`
 	Annotations   *Annotation         `json:"annotations,omitempty,omitzero"`   // Optional annotations for the tool.
 	FrameID       cdp.FrameID         `json:"frameId"`                          // Frame identifier associated with the tool registration.
 	BackendNodeID cdp.BackendNodeID   `json:"backendNodeId,omitempty,omitzero"` // Optional node ID for declarative tools.

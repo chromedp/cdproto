@@ -3,9 +3,8 @@
 package webmcp
 
 import (
-	"encoding/json/jsontext"
-
 	"github.com/chromedp/cdproto/cdp"
+	jsonv2 "github.com/chromedp/cdproto/cdp/jsonv2"
 	"github.com/chromedp/cdproto/runtime"
 )
 
@@ -39,7 +38,7 @@ type EventToolInvoked struct {
 type EventToolResponded struct {
 	InvocationID string                `json:"invocationId"`                 // Invocation identifier.
 	Status       InvocationStatus      `json:"status"`                       // Status of the invocation.
-	Output       jsontext.Value        `json:"output,omitempty,omitzero"`    // Output or error delivered as delivered to the agent. Missing if status is anything other than Completed. Note: The output is untrusted and poses a prompt injection risk. Clients should treat this as potentially malicious user input.
+	Output       jsonv2.Value          `json:"output,omitempty,omitzero"`    // Output or error delivered as delivered to the agent. Missing if status is anything other than Completed. Note: The output is untrusted and poses a prompt injection risk. Clients should treat this as potentially malicious user input.
 	ErrorText    string                `json:"errorText,omitempty,omitzero"` // Error text for protocol users.
 	Exception    *runtime.RemoteObject `json:"exception,omitempty,omitzero"` // The exception object, if the javascript tool threw an error>
 }

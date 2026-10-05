@@ -3,9 +3,8 @@
 package accessibility
 
 import (
-	"encoding/json/jsontext"
-
 	"github.com/chromedp/cdproto/cdp"
+	jsonv2 "github.com/chromedp/cdproto/cdp/jsonv2"
 )
 
 // NodeID unique accessibility node identifier.
@@ -131,7 +130,7 @@ type Property struct {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Accessibility#type-AXValue
 type Value struct {
 	Type         ValueType      `json:"type"`                            // The type of this value.
-	Value        jsontext.Value `json:"value,omitempty,omitzero"`        // The computed value of this property.
+	Value        jsonv2.Value   `json:"value,omitempty,omitzero"`        // The computed value of this property.
 	RelatedNodes []*RelatedNode `json:"relatedNodes,omitempty,omitzero"` // One or more related nodes, if applicable.
 	Sources      []*ValueSource `json:"sources,omitempty,omitzero"`      // The sources which contributed to the computation of this property.
 }

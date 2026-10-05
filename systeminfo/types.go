@@ -3,7 +3,7 @@
 package systeminfo
 
 import (
-	"encoding/json/jsontext"
+	jsonv2 "github.com/chromedp/cdproto/cdp/jsonv2"
 )
 
 // GPUDevice describes a single graphics processor (GPU).
@@ -88,8 +88,8 @@ const (
 // See: https://chromedevtools.github.io/devtools-protocol/tot/SystemInfo#type-GPUInfo
 type GPUInfo struct {
 	Devices              []*GPUDevice                        `json:"devices"` // The graphics devices on the system. Element 0 is the primary GPU.
-	AuxAttributes        jsontext.Value                      `json:"auxAttributes,omitempty,omitzero"`
-	FeatureStatus        jsontext.Value                      `json:"featureStatus,omitempty,omitzero"`
+	AuxAttributes        jsonv2.Value                        `json:"auxAttributes,omitempty,omitzero"`
+	FeatureStatus        jsonv2.Value                        `json:"featureStatus,omitempty,omitzero"`
 	DriverBugWorkarounds []string                            `json:"driverBugWorkarounds"` // An optional array of GPU driver bug workarounds.
 	VideoDecoding        []*VideoDecodeAcceleratorCapability `json:"videoDecoding"`        // Supported accelerated video decoding capabilities.
 	VideoEncoding        []*VideoEncodeAcceleratorCapability `json:"videoEncoding"`        // Supported accelerated video encoding capabilities.
