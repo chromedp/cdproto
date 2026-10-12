@@ -599,6 +599,7 @@ const (
 	GenericIssueErrorTypeFormModelContextMissingToolDescription                     GenericIssueErrorType = "FormModelContextMissingToolDescription"
 	GenericIssueErrorTypeFormModelContextRequiredParameterMissingName               GenericIssueErrorType = "FormModelContextRequiredParameterMissingName"
 	GenericIssueErrorTypeFormModelContextParameterMissingName                       GenericIssueErrorType = "FormModelContextParameterMissingName"
+	GenericIssueErrorTypeGeolocationPromptWithoutUserGesture                        GenericIssueErrorType = "GeolocationPromptWithoutUserGesture"
 )
 
 // GenericIssueDetails depending on the concrete errorType, different

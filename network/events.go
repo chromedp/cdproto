@@ -46,9 +46,10 @@ type EventLoadingFailed struct {
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Network#event-loadingFinished
 type EventLoadingFinished struct {
-	RequestID         RequestID         `json:"requestId"`         // Request identifier.
-	Timestamp         cdp.MonotonicTime `json:"timestamp"`         // Timestamp.
-	EncodedDataLength float64           `json:"encodedDataLength"` // Total number of bytes received for this request.
+	RequestID         RequestID         `json:"requestId"`                            // Request identifier.
+	Timestamp         cdp.MonotonicTime `json:"timestamp"`                            // Timestamp.
+	EncodedDataLength float64           `json:"encodedDataLength"`                    // Total number of bytes received for this request.
+	EncodedBodyLength float64           `json:"encodedBodyLength,omitempty,omitzero"` // Size of the response body before removing content encodings. Includes cached bodies, but excludes headers and transfer framing.
 }
 
 // EventRequestServedFromCache fired if request ended up loading from cache.

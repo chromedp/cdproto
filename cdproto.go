@@ -661,6 +661,7 @@ const (
 	CommandPageGetSubApps                                            = page.CommandGetSubApps
 	CommandPageGetSiblingSubApps                                     = page.CommandGetSiblingSubApps
 	CommandPageGetAdScriptAncestry                                   = page.CommandGetAdScriptAncestry
+	CommandPageGetSpellCheckCustomDictionary                         = page.CommandGetSpellCheckCustomDictionary
 	CommandPageGetFrameTree                                          = page.CommandGetFrameTree
 	CommandPageGetLayoutMetrics                                      = page.CommandGetLayoutMetrics
 	CommandPageGetNavigationHistory                                  = page.CommandGetNavigationHistory
@@ -2116,6 +2117,8 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		v = new(page.GetSiblingSubAppsResult)
 	case CommandPageGetAdScriptAncestry:
 		v = new(page.GetAdScriptAncestryResult)
+	case CommandPageGetSpellCheckCustomDictionary:
+		v = new(page.GetSpellCheckCustomDictionaryResult)
 	case CommandPageGetFrameTree:
 		v = new(page.GetFrameTreeResult)
 	case CommandPageGetLayoutMetrics:

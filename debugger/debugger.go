@@ -455,7 +455,8 @@ var StepOut = cdp.Command[cdp.Empty, cdp.Empty]{Method: CommandStepOut}
 
 // StepOverParams are the parameters of the command Debugger.stepOver.
 type StepOverParams struct {
-	SkipList []*LocationRange `json:"skipList,omitempty,omitzero"` // The skipList specifies location ranges that should be skipped on step over.
+	SkipList    []*LocationRange `json:"skipList,omitempty,omitzero"`    // The skipList specifies location ranges that should be skipped on step over.
+	EnterRanges []*LocationRange `json:"enterRanges,omitempty,omitzero"` // Functions whose source range lies within one of the enterRanges are entered as if by stepInto, even when they are called (directly or indirectly) from a call that is stepped over.
 }
 
 // StepOver steps over the statement.

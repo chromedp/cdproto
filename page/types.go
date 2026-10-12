@@ -108,8 +108,6 @@ const (
 	PermissionsPolicyFeatureRewriter                                 PermissionsPolicyFeature = "rewriter"
 	PermissionsPolicyFeatureScreenWakeLock                           PermissionsPolicyFeature = "screen-wake-lock"
 	PermissionsPolicyFeatureSerial                                   PermissionsPolicyFeature = "serial"
-	PermissionsPolicyFeatureSharedStorage                            PermissionsPolicyFeature = "shared-storage"
-	PermissionsPolicyFeatureSharedStorageSelectURL                   PermissionsPolicyFeature = "shared-storage-select-url"
 	PermissionsPolicyFeatureSmartCard                                PermissionsPolicyFeature = "smart-card"
 	PermissionsPolicyFeatureSpeakerSelection                         PermissionsPolicyFeature = "speaker-selection"
 	PermissionsPolicyFeatureStorageAccess                            PermissionsPolicyFeature = "storage-access"
