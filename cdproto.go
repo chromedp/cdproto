@@ -470,7 +470,6 @@ const (
 	EventHeapProfilerResetProfiles                                   = "HeapProfiler.resetProfiles"
 	CommandIOClose                                                   = io.CommandClose
 	CommandIORead                                                    = io.CommandRead
-	CommandIOResolveBlob                                             = io.CommandResolveBlob
 	CommandIndexedDBClearObjectStore                                 = indexeddb.CommandClearObjectStore
 	CommandIndexedDBDeleteDatabase                                   = indexeddb.CommandDeleteDatabase
 	CommandIndexedDBDeleteObjectStoreEntries                         = indexeddb.CommandDeleteObjectStoreEntries
@@ -702,6 +701,7 @@ const (
 	CommandPageSetInterceptFileChooserDialog                         = page.CommandSetInterceptFileChooserDialog
 	CommandPageSetPrerenderingAllowed                                = page.CommandSetPrerenderingAllowed
 	CommandPageGetAnnotatedPageContent                               = page.CommandGetAnnotatedPageContent
+	CommandPageSetInputVisualization                                 = page.CommandSetInputVisualization
 	EventPageDomContentEventFired                                    = "Page.domContentEventFired"
 	EventPageFileChooserOpened                                       = "Page.fileChooserOpened"
 	EventPageFrameAttached                                           = "Page.frameAttached"
@@ -1735,8 +1735,6 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		return emptyVal, nil
 	case CommandIORead:
 		v = new(io.ReadResult)
-	case CommandIOResolveBlob:
-		v = new(io.ResolveBlobResult)
 	case CommandIndexedDBClearObjectStore:
 		return emptyVal, nil
 	case CommandIndexedDBDeleteDatabase:
@@ -2199,6 +2197,8 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		return emptyVal, nil
 	case CommandPageGetAnnotatedPageContent:
 		v = new(page.GetAnnotatedPageContentResult)
+	case CommandPageSetInputVisualization:
+		return emptyVal, nil
 	case EventPageDomContentEventFired:
 		v = new(page.EventDomContentEventFired)
 	case EventPageFileChooserOpened:

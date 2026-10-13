@@ -14,7 +14,6 @@ import (
 
 	"github.com/chromedp/cdproto/cdp"
 	jsonv2 "github.com/chromedp/cdproto/cdp/jsonv2"
-	"github.com/chromedp/cdproto/runtime"
 )
 
 // CloseParams are the parameters of the command IO.close.
@@ -69,24 +68,8 @@ func (r *ReadResult) UnmarshalJSON(buf []byte) error {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/IO#method-read
 var Read = cdp.Command[ReadParams, ReadResult]{Method: CommandRead}
 
-// ResolveBlobParams are the parameters of the command IO.resolveBlob.
-type ResolveBlobParams struct {
-	ObjectID runtime.RemoteObjectID `json:"objectId"` // Object id of a Blob object wrapper.
-}
-
-// ResolveBlobResult is the result of the command IO.resolveBlob.
-type ResolveBlobResult struct {
-	UUID string `json:"uuid,omitempty,omitzero"` // UUID of the specified Blob.
-}
-
-// ResolveBlob return UUID of Blob object specified by a remote object id.
-//
-// See: https://chromedevtools.github.io/devtools-protocol/tot/IO#method-resolveBlob
-var ResolveBlob = cdp.Command[ResolveBlobParams, ResolveBlobResult]{Method: CommandResolveBlob}
-
 // Command names.
 const (
-	CommandClose       = "IO.close"
-	CommandRead        = "IO.read"
-	CommandResolveBlob = "IO.resolveBlob"
+	CommandClose = "IO.close"
+	CommandRead  = "IO.read"
 )

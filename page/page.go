@@ -762,6 +762,17 @@ type GetAnnotatedPageContentResult struct {
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-getAnnotatedPageContent
 var GetAnnotatedPageContent = cdp.Command[GetAnnotatedPageContentParams, GetAnnotatedPageContentResult]{Method: CommandGetAnnotatedPageContent}
 
+// SetInputVisualizationParams are the parameters of the command
+// Page.setInputVisualization.
+type SetInputVisualizationParams struct {
+	Clicks *bool `json:"clicks,omitempty,omitzero"` // Whether to enable click visualization.
+}
+
+// SetInputVisualization configures input visualization on the page.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-setInputVisualization
+var SetInputVisualization = cdp.Command[SetInputVisualizationParams, cdp.Empty]{Method: CommandSetInputVisualization}
+
 // DomContentEventFired [no description].
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#event-domContentEventFired
@@ -957,4 +968,5 @@ const (
 	CommandSetInterceptFileChooserDialog       = "Page.setInterceptFileChooserDialog"
 	CommandSetPrerenderingAllowed              = "Page.setPrerenderingAllowed"
 	CommandGetAnnotatedPageContent             = "Page.getAnnotatedPageContent"
+	CommandSetInputVisualization               = "Page.setInputVisualization"
 )
