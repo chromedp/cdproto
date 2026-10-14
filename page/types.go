@@ -116,6 +116,7 @@ const (
 	PermissionsPolicyFeatureSyncXhr                                  PermissionsPolicyFeature = "sync-xhr"
 	PermissionsPolicyFeatureTools                                    PermissionsPolicyFeature = "tools"
 	PermissionsPolicyFeatureTranslator                               PermissionsPolicyFeature = "translator"
+	PermissionsPolicyFeatureUnboundedElement                         PermissionsPolicyFeature = "unbounded-element"
 	PermissionsPolicyFeatureUnload                                   PermissionsPolicyFeature = "unload"
 	PermissionsPolicyFeatureUsb                                      PermissionsPolicyFeature = "usb"
 	PermissionsPolicyFeatureUsbUnrestricted                          PermissionsPolicyFeature = "usb-unrestricted"
