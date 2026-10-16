@@ -1528,6 +1528,7 @@ const (
 	RefreshEventDetailsRefreshResultRefreshedAsWaiter          RefreshEventDetailsRefreshResult = "RefreshedAsWaiter"
 	RefreshEventDetailsRefreshResultTransientSigningError      RefreshEventDetailsRefreshResult = "TransientSigningError"
 	RefreshEventDetailsRefreshResultInScopeRefreshNotYetNeeded RefreshEventDetailsRefreshResult = "InScopeRefreshNotYetNeeded"
+	RefreshEventDetailsRefreshResultCanceled                   RefreshEventDetailsRefreshResult = "Canceled"
 )
 
 // TerminationEventDetailsDeletionReason the reason for a session being
