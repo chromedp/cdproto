@@ -110,7 +110,7 @@ var GetBrowserCommandLine = cdp.Command[cdp.Empty, GetBrowserCommandLineResult]{
 // AddMockCameraParams are the parameters of the command
 // Browser.addMockCamera.
 type AddMockCameraParams struct {
-	DeviceID string `json:"deviceId"` // Required non-empty identifier for the mock camera. This is mapped to an internal virtual-device identifier and is not the MediaDeviceInfo.deviceId exposed to the page.
+	DeviceID string `json:"deviceId"` // Required non-empty identifier for the mock camera within the current DevTools session. Different sessions can use the same identifier without replacing each other's cameras. This is not the MediaDeviceInfo.deviceId exposed to the page.
 }
 
 // AddMockCamera adds or updates a mock camera in the shared video capture
