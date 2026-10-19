@@ -21,7 +21,8 @@ type TriggerParams struct {
 }
 
 // Trigger trigger autofill on a form identified by the fieldId. If the field
-// and related form cannot be autofilled, returns an error.
+// and related form cannot be autofilled, returns an error. Returns once the
+// values have been applied to the form fields.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Autofill#method-trigger
 var Trigger = cdp.Command[TriggerParams, cdp.Empty]{Method: CommandTrigger}
