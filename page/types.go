@@ -936,6 +936,22 @@ const (
 	StartScreencastFormatPng  StartScreencastFormat = "png"
 )
 
+// StartScreenRecordingCaptureArea the area to record. Defaults to target.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-startScreenRecording
+type StartScreenRecordingCaptureArea string
+
+// String returns the StartScreenRecordingCaptureArea as string value.
+func (t StartScreenRecordingCaptureArea) String() string {
+	return string(t)
+}
+
+// StartScreenRecordingCaptureArea values.
+const (
+	StartScreenRecordingCaptureAreaTarget        StartScreenRecordingCaptureArea = "target"
+	StartScreenRecordingCaptureAreaBrowserWindow StartScreenRecordingCaptureArea = "browserWindow"
+)
+
 // SetWebLifecycleStateState target lifecycle state.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Page#method-setWebLifecycleState
