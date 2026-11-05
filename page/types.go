@@ -105,6 +105,7 @@ const (
 	PermissionsPolicyFeaturePublickeyCredentialsRemoteClientDataJSON PermissionsPolicyFeature = "publickey-credentials-remote-client-data-json"
 	PermissionsPolicyFeatureRewriter                                 PermissionsPolicyFeature = "rewriter"
 	PermissionsPolicyFeatureScreenWakeLock                           PermissionsPolicyFeature = "screen-wake-lock"
+	PermissionsPolicyFeatureSemanticEmbedder                         PermissionsPolicyFeature = "semantic-embedder"
 	PermissionsPolicyFeatureSerial                                   PermissionsPolicyFeature = "serial"
 	PermissionsPolicyFeatureSmartCard                                PermissionsPolicyFeature = "smart-card"
 	PermissionsPolicyFeatureSpeakerSelection                         PermissionsPolicyFeature = "speaker-selection"

@@ -5,8 +5,8 @@ package cdproto
 // The versions of the protocol definitions that the generator read to write
 // this package.
 const (
-	chromiumVersion = "159.0.8140.1"
-	v8Version       = "15.9.67"
+	chromiumVersion = "159.0.8144.1"
+	v8Version       = "15.9.95"
 )
 
 // ChromiumVersion returns the Chromium version of the browser protocol
