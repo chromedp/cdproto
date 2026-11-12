@@ -167,7 +167,6 @@ const (
 	CommandBrowserSetContentsSize                                    = browser.CommandSetContentsSize
 	CommandBrowserSetDockTile                                        = browser.CommandSetDockTile
 	CommandBrowserExecuteBrowserCommand                              = browser.CommandExecuteBrowserCommand
-	CommandBrowserAddPrivacySandboxEnrollmentOverride                = browser.CommandAddPrivacySandboxEnrollmentOverride
 	CommandBrowserGetGlobalPrivacyControl                            = browser.CommandGetGlobalPrivacyControl
 	CommandBrowserSetGlobalPrivacyControl                            = browser.CommandSetGlobalPrivacyControl
 	EventBrowserDownloadWillBegin                                    = "Browser.downloadWillBegin"
@@ -1128,8 +1127,6 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 	case CommandBrowserSetDockTile:
 		return emptyVal, nil
 	case CommandBrowserExecuteBrowserCommand:
-		return emptyVal, nil
-	case CommandBrowserAddPrivacySandboxEnrollmentOverride:
 		return emptyVal, nil
 	case CommandBrowserGetGlobalPrivacyControl:
 		v = new(browser.GetGlobalPrivacyControlResult)
