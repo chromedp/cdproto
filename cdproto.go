@@ -328,6 +328,7 @@ const (
 	CommandDebuggerEnable                                            = debugger.CommandEnable
 	CommandDebuggerEvaluateOnCallFrame                               = debugger.CommandEvaluateOnCallFrame
 	CommandDebuggerGetPossibleBreakpoints                            = debugger.CommandGetPossibleBreakpoints
+	CommandDebuggerGetScopeChain                                     = debugger.CommandGetScopeChain
 	CommandDebuggerGetScriptSource                                   = debugger.CommandGetScriptSource
 	CommandDebuggerDisassembleWasmModule                             = debugger.CommandDisassembleWasmModule
 	CommandDebuggerNextWasmDisassemblyChunk                          = debugger.CommandNextWasmDisassemblyChunk
@@ -1450,6 +1451,8 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 		v = new(debugger.EvaluateOnCallFrameResult)
 	case CommandDebuggerGetPossibleBreakpoints:
 		v = new(debugger.GetPossibleBreakpointsResult)
+	case CommandDebuggerGetScopeChain:
+		v = new(debugger.GetScopeChainResult)
 	case CommandDebuggerGetScriptSource:
 		v = new(debugger.GetScriptSourceResult)
 	case CommandDebuggerDisassembleWasmModule:
