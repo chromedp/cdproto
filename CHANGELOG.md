@@ -11,6 +11,17 @@ as `jsonv2.Value` and `jsonv2.Unmarshal`. They are aliases of the standard types
 1.27 or `GOEXPERIMENT=jsonv2`. Otherwise they come from the module
 `github.com/go-json-experiment/json`.
 
+## v0.160.2 - 2026-11-14
+
+- Chromium: 160.0.8161.1 (was 160.0.8159.0)
+- V8: 16.0.30 (was 16.0.29)
+- API changes since v0.160.1: 0 incompatible, 4 compatible
+
+By package, as removed, changed and added names:
+
+  bluetoothemulation          0 removed    0 changed    3 added
+  cdproto                     0 removed    0 changed    1 added
+
 ## v0.160.1 - 2026-11-13
 
 - Chromium: 160.0.8159.0 (was 160.0.8157.1)

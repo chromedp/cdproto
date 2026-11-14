@@ -146,6 +146,7 @@ const (
 	CommandBluetoothEmulationAddDescriptor                           = bluetoothemulation.CommandAddDescriptor
 	CommandBluetoothEmulationRemoveDescriptor                        = bluetoothemulation.CommandRemoveDescriptor
 	CommandBluetoothEmulationSimulateGATTDisconnection               = bluetoothemulation.CommandSimulateGATTDisconnection
+	CommandBluetoothEmulationSimulateGATTMtuChange                   = bluetoothemulation.CommandSimulateGATTMtuChange
 	EventBluetoothEmulationGattOperationReceived                     = "BluetoothEmulation.gattOperationReceived"
 	EventBluetoothEmulationCharacteristicOperationReceived           = "BluetoothEmulation.characteristicOperationReceived"
 	EventBluetoothEmulationDescriptorOperationReceived               = "BluetoothEmulation.descriptorOperationReceived"
@@ -1086,6 +1087,8 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 	case CommandBluetoothEmulationRemoveDescriptor:
 		return emptyVal, nil
 	case CommandBluetoothEmulationSimulateGATTDisconnection:
+		return emptyVal, nil
+	case CommandBluetoothEmulationSimulateGATTMtuChange:
 		return emptyVal, nil
 	case EventBluetoothEmulationGattOperationReceived:
 		v = new(bluetoothemulation.EventGattOperationReceived)
