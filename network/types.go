@@ -1303,6 +1303,7 @@ const (
 	DeviceBoundSessionFetchResultAttestationCertificationError                     DeviceBoundSessionFetchResult = "AttestationCertificationError"
 	DeviceBoundSessionFetchResultAttestationSigningError                           DeviceBoundSessionFetchResult = "AttestationSigningError"
 	DeviceBoundSessionFetchResultFederatedRegistrationRedirected                   DeviceBoundSessionFetchResult = "FederatedRegistrationRedirected"
+	DeviceBoundSessionFetchResultCrossSiteRefreshSessionConfig                     DeviceBoundSessionFetchResult = "CrossSiteRefreshSessionConfig"
 )
 
 // DeviceBoundSessionFailedRequest details about a failed device bound

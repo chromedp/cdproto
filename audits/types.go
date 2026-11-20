@@ -915,10 +915,13 @@ const (
 	ElementAccessibilityIssueReasonInteractiveContentOptionChild       ElementAccessibilityIssueReason = "InteractiveContentOptionChild"
 	ElementAccessibilityIssueReasonInteractiveContentLegendChild       ElementAccessibilityIssueReason = "InteractiveContentLegendChild"
 	ElementAccessibilityIssueReasonInteractiveContentSummaryDescendant ElementAccessibilityIssueReason = "InteractiveContentSummaryDescendant"
+	ElementAccessibilityIssueReasonAnchorMenuDescendant                ElementAccessibilityIssueReason = "AnchorMenuDescendant"
+	ElementAccessibilityIssueReasonInteractiveContentMenuDescendant    ElementAccessibilityIssueReason = "InteractiveContentMenuDescendant"
+	ElementAccessibilityIssueReasonTextMenuDescendant                  ElementAccessibilityIssueReason = "TextMenuDescendant"
 )
 
 // ElementAccessibilityIssueDetails this issue warns about errors in the
-// select or summary element content model.
+// select, summary, or menu element content model.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/Audits#type-ElementAccessibilityIssueDetails
 type ElementAccessibilityIssueDetails struct {
