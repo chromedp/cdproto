@@ -43,6 +43,7 @@ const (
 	ResourceTypeCSPViolationReport ResourceType = "CSPViolationReport"
 	ResourceTypePreflight          ResourceType = "Preflight"
 	ResourceTypeFedCM              ResourceType = "FedCM"
+	ResourceTypeEmailVerification  ResourceType = "EmailVerification"
 	ResourceTypeOther              ResourceType = "Other"
 )
 
@@ -1426,13 +1427,14 @@ func (t InitiatorType) String() string {
 
 // InitiatorType values.
 const (
-	InitiatorTypeParser         InitiatorType = "parser"
-	InitiatorTypeScript         InitiatorType = "script"
-	InitiatorTypePreload        InitiatorType = "preload"
-	InitiatorTypeSignedExchange InitiatorType = "SignedExchange"
-	InitiatorTypePreflight      InitiatorType = "preflight"
-	InitiatorTypeFedCM          InitiatorType = "FedCM"
-	InitiatorTypeOther          InitiatorType = "other"
+	InitiatorTypeParser            InitiatorType = "parser"
+	InitiatorTypeScript            InitiatorType = "script"
+	InitiatorTypePreload           InitiatorType = "preload"
+	InitiatorTypeSignedExchange    InitiatorType = "SignedExchange"
+	InitiatorTypePreflight         InitiatorType = "preflight"
+	InitiatorTypeFedCM             InitiatorType = "FedCM"
+	InitiatorTypeEmailVerification InitiatorType = "EmailVerification"
+	InitiatorTypeOther             InitiatorType = "other"
 )
 
 // AuthChallengeSource source of the authentication challenge.
