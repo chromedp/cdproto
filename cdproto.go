@@ -375,7 +375,6 @@ const (
 	CommandEmulationSetCPUThrottlingRate                             = emulation.CommandSetCPUThrottlingRate
 	CommandEmulationSetDefaultBackgroundColorOverride                = emulation.CommandSetDefaultBackgroundColorOverride
 	CommandEmulationSetSafeAreaInsetsOverride                        = emulation.CommandSetSafeAreaInsetsOverride
-	CommandEmulationSetVirtualKeyboardGeometryOverride               = emulation.CommandSetVirtualKeyboardGeometryOverride
 	CommandEmulationSetDeviceMetricsOverride                         = emulation.CommandSetDeviceMetricsOverride
 	CommandEmulationSetDevicePostureOverride                         = emulation.CommandSetDevicePostureOverride
 	CommandEmulationClearDevicePostureOverride                       = emulation.CommandClearDevicePostureOverride
@@ -1545,8 +1544,6 @@ func UnmarshalMessage(msg *Message, opts ...jsonv2.Options) (any, error) {
 	case CommandEmulationSetDefaultBackgroundColorOverride:
 		return emptyVal, nil
 	case CommandEmulationSetSafeAreaInsetsOverride:
-		return emptyVal, nil
-	case CommandEmulationSetVirtualKeyboardGeometryOverride:
 		return emptyVal, nil
 	case CommandEmulationSetDeviceMetricsOverride:
 		return emptyVal, nil
