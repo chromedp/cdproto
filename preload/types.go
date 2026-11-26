@@ -216,6 +216,7 @@ const (
 	PrerenderFinalStatusCrossDocumentRestart                                       PrerenderFinalStatus = "CrossDocumentRestart"
 	PrerenderFinalStatusPrefetchFailedCrossOriginSubframe                          PrerenderFinalStatus = "PrefetchFailedCrossOriginSubframe"
 	PrerenderFinalStatusUnexpectedMainFrameNavigation                              PrerenderFinalStatus = "UnexpectedMainFrameNavigation"
+	PrerenderFinalStatusAudioOutput                                                PrerenderFinalStatus = "AudioOutput"
 )
 
 // IngStatus preloading status values, see also PreloadingTriggeringOutcome.

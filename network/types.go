@@ -260,6 +260,7 @@ type Request struct {
 	TrustTokenParams *TrustTokenParams         `json:"trustTokenParams,omitempty,omitzero"` // Set for requests when the TrustToken API is used. Contains the parameters passed by the developer (e.g. via "fetch") as understood by the backend.
 	IsSameSite       bool                      `json:"isSameSite"`                          // True if this resource request is considered to be the 'same site' as the request corresponding to the main frame.
 	IsAdRelated      bool                      `json:"isAdRelated"`                         // True when the resource request is ad-related.
+	AdProvenance     *cdp.AdProvenance         `json:"adProvenance,omitempty,omitzero"`     // The provenance of an ad resource request, if it is ad-related and provenance is available.
 }
 
 // SignedCertificateTimestamp details of a signed certificate timestamp
